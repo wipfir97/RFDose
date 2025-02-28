@@ -8,7 +8,6 @@
 #' @import yaml
 #' @export
 calculate_emf_doses <- function(data) {
-
   # Load parameters and default values
   params      <- load_params("params2.yaml")
 
@@ -85,9 +84,3 @@ get_total_dose <- function(sample,
   return(output_list)
 }
 
-temp_test <- function(data) {
-  params      <- load_params("params2.yaml")
-  #get_mobilecall_dose(424.5, params)
-  #get_mobiledata_dose(10800, params)
-  get_farfield_dose(86400, params)
-}
