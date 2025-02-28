@@ -1,0 +1,80 @@
+# Calculate total RF-EMF dose (for brain and body) from cordless calls
+
+# =============================================================================
+#' Calculate Dose from Cordless Calling
+#'
+#' @param dur_cordless Duration of cordless calls in seconds
+#' @param params Parameter list
+#' @returns List with brain dose and body dose in mJ/kg/day
+#' @export
+get_cordless_dose <- function(dur_cordless,
+                              params) {
+
+  # Extract parameters ========================================================
+  ## Extract shared (non-tissue specific) parameters for wifi -----------------
+  dect_params  <- load_device_params(params, "dect")
+
+  ## Extract brain-specific parameters (SAR values) for wifi ------------------
+  brain_params <- load_tissue_params(params, "dect", "brain")
+
+  ## Extract body-specific parameters (SAR values) for wifi -------------------
+  body_params  <- load_tissue_params(params, "dect", "body")
+
+
+  # Calculate aggregated power ================================================
+  aggr_pwr     <- get_cordless_pwr(dect_params)
+
+  # Calculate tissue-specific SAR =============================================
+  ## Brain SAR ----------------------------------------------------------------
+  brain_sar    <- get_cordless_sar(dect_params, brain_params)
+
+  ## Body SAR -----------------------------------------------------------------
+  body_sar     <- get_cordless_sar(dect_params, body_params)
+
+
+  # Calculate total doses =====================================================
+  ## Calculate total brain dose -----------------------------------------------
+  brain_dose   <- dur_cordless*aggr_pwr*brain_sar
+
+  ## Calculate total body dose ------------------------------------------------
+  body_dose    <- dur_cordless*aggr_pwr*body_sar
+
+  # Return results ============================================================
+  dect_output  <- list("dect_brain_dose" = brain_dose,
+                       "dect_body_dose"  = body_dose)
+
+  return(dect_output)
+}
+
+
+# =============================================================================
+#' Calculate Aggregated Power of Cordless Phone
+#'
+#' @param params descr
+#' @returns descr
+get_cordless_pwr  <- function(params) {
+  # Calculate aggregated power and return output
+  aggr_pwr <- params$dect_pwr * params$dect_duty_factor
+
+  return(aggr_pwr)
+}
+
+
+# =============================================================================
+#' Calculate Aggregated SAR during cordless call (tissue-specific)
+#'
+#' @param params descr
+#' @param tissue_params descr
+#' @returns sar
+get_cordless_sar  <- function(params, tissue_params) {
+  # Contribution from holding phone on ear
+  ear_contr     <- params$dect_ear_prop*tissue_params$dect_ear_sar
+  # Contribution from phone in speaker mode
+  speaker_contr <- params$dect_speaker_prop*tissue_params$dect_speaker_sar
+  # Combine and return results
+  aggr_sar      <- sum(ear_contr, speaker_contr)
+
+  return(aggr_sar)
+}
+
+# -----------------------------------------------------------------------------
