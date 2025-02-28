@@ -1,12 +1,11 @@
 Package: ETAINDoseCalculator
 Type: Package
-Title: What the Package Does (Title Case)
+Title: Functions for RF-EMF Dose Calculations
 Version: 0.1.0
-Author: Who wrote it
-Maintainer: The package maintainer <yourself@somewhere.net>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
-License: What license is it under?
+Author: Irina Wipf
+Maintainer: <irina.wipf@swisstph.ch>
+Description: Package for calculating RF-EMF doses for cohorts. Calculations are based on the ETAIN Dose model.
+License: GPL-3
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.3.2
