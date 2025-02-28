@@ -1,0 +1,4 @@
+sample_id;mpc_duration;mpc_ear_prop;urbanicity;mpd_duration;mpd_wifi_prop;dect_duration;dect_ear_prop;lptp_duration;tblt_duration;wifi_duration
+TEST1;425;0.66;suburban;10800;0.5;204;0.9;4371;1617;59400
+TEST2;120;0.8;rural;12400;0.4;580;0.8;2394;4321;70000
+TEST3;903;0.9;urban;8900;0.6;90;0.5;7562;0;60000
