@@ -1,5 +1,5 @@
 ---
-title: "ETAIN Dose Calculator - R Version"
+title: "my_vignette"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{my_vignette}
@@ -15,9 +15,5 @@ knitr::opts_chunk$set(
 ```
 
 ```{r setup}
-library(ETAINDoseCalculatoR)
+library(ETAINDoseCalculator)
 ```
-
-# ETAINDoseCalculatoR
-
-Hello! This is a test. I will put a use example here soon.
