@@ -1,0 +1,23 @@
+---
+title: "ETAIN Dose Calculator - R Version"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{my_vignette}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(ETAINDoseCalculatoR)
+```
+
+# ETAINDoseCalculatoR
+
+Hello! This is a test. I will put a use example here soon.
