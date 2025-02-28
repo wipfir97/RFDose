@@ -1,0 +1,33 @@
+---
+title: "Introduction"
+author: "Irina Wipf"
+date: "2025-02-19"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Hello
+
+This is the R implementation of the ETAIN Dose calculator.
+
+## EMF Dose calculations
+
+In general: dose = exposure duration * output power of device * SAR of tissue
+
+# Which EMF sources are considered?
+
+* Mobile calls
+* Mobile data
+* WiFi
+* Laptop
+* Tablet
+* Cordless phone
+* Far-field
+* Other devices
+
+# Acknowledgements and contact
+
+

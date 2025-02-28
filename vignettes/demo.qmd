@@ -1,0 +1,45 @@
+---
+title: "Dose Calculator R Demo"
+author: "Test"
+format: html
+---
+
+# Intro
+
+# Setup
+
+```{r}
+#| label: set_knitr_options
+#| echo: False
+#| eval: True
+#| output: False
+# Set project root directory as working directory
+knitr::opts_knit$set(root.dir = here::here())
+```
+
+```{r}
+#| label: load_emfdosecalculator
+#| echo: True
+#| eval: True
+#| output: False
+devtools::load_all()
+```
+
+```{r}
+#| label: load_example_data
+#| echo: True
+#| eval: True
+#| output: False
+example_data <- read.csv(file.path(here::here(),
+                                   "data",
+                                   "example_data.csv"),
+                         sep = ";")
+```
+
+
+# Calculate total dose
+```{r}
+# | label: calculate_total_dose_all_samples
+# Apply function row-wise
+results <- calculate_emf_doses(data = example_data)
+```
