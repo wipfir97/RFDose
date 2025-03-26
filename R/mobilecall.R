@@ -69,8 +69,8 @@ get_mobilecall_dose <- function(duration,
                              body_dose_headp_bt)
 
   # Return output -------------------------------------------------------------
-  output_list <- list("mobilecall_dose_brain" = brain_dose_total,
-                      "mobilecall_dose_body"  = body_dose_total)
+  output_list <- list("brain_call_dose" = brain_dose_total,
+                      "body_call_dose"  = body_dose_total)
   return(output_list)
 }
 
@@ -107,17 +107,16 @@ get_mobilecall_pwr <- function(headp_prop,
 }
 
 # -----------------------------------------------------------------------------
-#' Calculate mobile call aggregated power from phone itself
+#' Calculate aggregated output power from mobile phone during call (no bluetooth)
 #'
-#' We calculate the total output power of the mobile phone itself (no bluetooth)
-#' by multiplying the proportion of the time a technology is used times its
-#' output power.
-#' \deqn{AggrPwr = test}
-#' At the moment, the output power of each technology is a constant, but this
+#' Calculation of total output power of the mobile phone (no bluetooth) during
+#' voice calling by multiplying the proportion of the time a technology is used
+#' times its output power (mW):
+#' \deqn{AggregatedPower = ProportionNative \times PowerNative + ProportionData \times PowerData + ProportionWifi \times PowerWifi}
+#' At the moment, the output power of each technology is constant, but this
 #' will be refined to take user-specific parameters into account in the future.
-#'
 #' @param params Mobile call related parameter list
-#' @returns aggregated power from mobile call from phone (no bluetooth)
+#' @returns aggregated output power (mW) during mobile call with phone (no bluetooth)
 get_mobilecall_pwr_phone <- function(params) {
   # Calculate contribution from native calling
   native_pwr <- params$native_prop * params$native_pwr

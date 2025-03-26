@@ -56,8 +56,8 @@ get_mobiledata_dose <- function(duration,
 
 
   # Return output =============================================================
-  output_list <- list("mobiledata_dose_brain" = brain_dose,
-                      "mobiledata_dose_body"  = body_dose)
+  output_list <- list("brain_data_dose" = brain_dose,
+                      "body_data_dose"  = body_dose)
   return(output_list)
 }
 

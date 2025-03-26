@@ -41,8 +41,8 @@ get_wifi_dose <- function(duration,
 
 
   # Return output =============================================================
-  wifi_output <- list("wifi_dose_brain" = brain_dose,
-                      "wifi_dose_body"  = body_dose)
+  wifi_output <- list("brain_wifi_dose" = brain_dose,
+                      "body_wifi_dose"  = body_dose)
 
   return(wifi_output)
 }

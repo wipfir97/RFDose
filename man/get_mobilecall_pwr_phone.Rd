@@ -2,7 +2,7 @@
 % Please edit documentation in R/mobilecall.R
 \name{get_mobilecall_pwr_phone}
 \alias{get_mobilecall_pwr_phone}
-\title{Calculate mobile call aggregated power from phone itself}
+\title{Calculate aggregated output power from mobile phone during call (no bluetooth)}
 \usage{
 get_mobilecall_pwr_phone(params)
 }
@@ -10,13 +10,13 @@ get_mobilecall_pwr_phone(params)
 \item{params}{Mobile call related parameter list}
 }
 \value{
-aggregated power from mobile call from phone (no bluetooth)
+aggregated output power (mW) during mobile call with phone (no bluetooth)
 }
 \description{
-We calculate the total output power of the mobile phone itself (no bluetooth)
-by multiplying the proportion of the time a technology is used times its
-output power.
-\deqn{AggrPwr = test}
-At the moment, the output power of each technology is a constant, but this
+Calculation of total output power of the mobile phone (no bluetooth) during
+voice calling by multiplying the proportion of the time a technology is used
+times its output power (mW):
+\deqn{AggregatedPower = ProportionNative \times PowerNative + ProportionData \times PowerData + ProportionWifi \times PowerWifi}
+At the moment, the output power of each technology is constant, but this
 will be refined to take user-specific parameters into account in the future.
 }

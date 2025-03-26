@@ -7,10 +7,22 @@
 calculate_emf_doses(data)
 }
 \arguments{
-\item{test}{a data frame}
+\item{data}{A data frame. Must have the following columns:
+sample_id: unique participant identifier
+mpc_duration: daily duration of mobile phone call in seconds
+mpc_ear_prop: proportion of time phone is held against ear during call
+urbanicity: urban, suburban, or rural
+mpd_duration: daily duration of mobile data traffic in seconds
+mpd_wifi_prop: proportion of time WiFi is used (vs data) for mobile data traffic
+dect_duration: daily duration of DECT/cordless phone call in seconds
+dect_ear_prop:
+lptp_duration:
+tblt_duration:
+wifi_duration:}
 }
 \value{
-a data frame
+A data frame. Columns named SOURCE_dose_TISSUE contain RF-EMF dose
+of each participant in mJ/kg/day
 }
 \description{
 Calculate Total RF-EMF Doses for ALL samples

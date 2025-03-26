@@ -4,12 +4,20 @@
 \alias{get_other_dose}
 \title{Calculate Dose from other exposure sources}
 \usage{
-get_other_dose()
+get_other_dose(
+  duration_hotspot,
+  duration_smartwatch,
+  duration_tracker,
+  duration_vr,
+  duration_headphones,
+  duration_smarthome,
+  params
+)
 }
 \arguments{
-\item{dur_tablet}{Duration of other exposure sources in seconds}
-
 \item{params}{Parameter list}
+
+\item{duration_watch}{Duration of smart watch on wrist in seconds}
 }
 \value{
 List with brain dose and body dose in mJ/kg/day

@@ -148,9 +148,57 @@ devices:
       sar: 0.006517857
     body:
       sar: 0.00876
-
-
-
+  watch:
+    shared:
+      watch_pwr: 0.00008
+      watch_phone_pwr: 0.00008
+    brain:
+      watch_sar: 0.0000017
+      watch_phone_sar: 0.000329981    
+    body:
+      watch_sar: 0.01365
+      watch_phone_sar: 0.0036465
+  tracker:
+    shared:
+      tracker_pwr: 0.00008
+      tracker_phone_pwr: 0.00008
+    brain:
+      tracker_sar: 0.000031
+      tracker_phone_sar: 0.000329981
+    body:      
+      tracker_sar: 0.0118
+      tracker_phone_sar: 0.0036465
+  headp:
+    shared:
+      headp_pwr: 0.00008
+      headp_phone_pwr: 0.15
+    brain:
+      headp_sar: 0.016990171
+      headp_phone_sar: 0.000329981
+    body:      
+      headp_sar: 0.00985
+      headp_phone_sar: 0.0036465     
+  hots:
+    shared:
+      hots_pwr: 5.595
+    brain:
+      hots_sar: 0.000329981
+    body:
+      hots_sar: 0.0036465
+  vr:
+    shared:
+      vr_pwr: 14.5
+    brain:
+      vr_sar: 0.0163776
+    body:
+      vr_sar: 0.0101
+  smah:
+    shared:
+      smah_pwr: 1.64109
+    brain: 
+      smah_sar: 0.00133
+    body:
+      smah_sar: 0.005295
 
 
 

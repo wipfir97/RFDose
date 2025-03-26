@@ -40,8 +40,8 @@ get_tablet_dose <- function(duration,
   body_dose    <- duration * aggr_pwr * body_sar
 
   # Return output =============================================================
-  tblt_output  <- list("tblt_brain_dose" = brain_dose,
-                       "tblt_body_dose"  = body_dose)
+  tblt_output  <- list("brain_tblt_dose" = brain_dose,
+                       "body_tblt_dose"  = body_dose)
   return(tblt_output)
 }
 

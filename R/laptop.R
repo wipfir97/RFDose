@@ -39,8 +39,8 @@ get_laptop_dose <- function(duration,
   body_dose  <- duration * aggr_pwr * body_sar
 
   # Return output =============================================================
-  lptp_output <- list("lptp_brain_dose" = brain_dose,
-                      "lptp_body_dose"  = body_dose)
+  lptp_output <- list("brain_lptp_dose" = brain_dose,
+                      "body_lptp_dose"  = body_dose)
   return(lptp_output)
 }
 

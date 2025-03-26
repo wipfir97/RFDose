@@ -44,8 +44,8 @@ get_farfield_dose <- function(urbanicity,
   body_dose    <- 86400*aggr_pwr*body_sar
 
   # Return output =============================================================
-  output_list <- list("farfield_dose_brain" = brain_dose,
-                      "farfield_dose_body"  = body_dose)
+  output_list <- list("brain_farf_dose" = brain_dose,
+                      "body_farf_dose"  = body_dose)
   return(output_list)
 }
 

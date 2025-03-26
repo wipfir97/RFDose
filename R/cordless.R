@@ -3,11 +3,11 @@
 # =============================================================================
 #' Calculate Dose from Cordless Calling
 #'
-#' @param dur_cordless Duration of cordless calls in seconds
+#' @param duration Duration of cordless calls in seconds
 #' @param params Parameter list
 #' @returns List with brain dose and body dose in mJ/kg/day
 #' @export
-get_cordless_dose <- function(dur_cordless,
+get_cordless_dose <- function(duration,
                               params) {
 
   # Extract parameters ========================================================
@@ -34,14 +34,14 @@ get_cordless_dose <- function(dur_cordless,
 
   # Calculate total doses =====================================================
   ## Calculate total brain dose -----------------------------------------------
-  brain_dose   <- dur_cordless*aggr_pwr*brain_sar
+  brain_dose   <- duration*aggr_pwr*brain_sar
 
   ## Calculate total body dose ------------------------------------------------
-  body_dose    <- dur_cordless*aggr_pwr*body_sar
+  body_dose    <- duration*aggr_pwr*body_sar
 
   # Return results ============================================================
-  dect_output  <- list("dect_brain_dose" = brain_dose,
-                       "dect_body_dose"  = body_dose)
+  dect_output  <- list("brain_dect_dose" = brain_dose,
+                       "body_dect_dose"  = body_dose)
 
   return(dect_output)
 }
