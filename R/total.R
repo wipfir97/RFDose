@@ -47,9 +47,9 @@ get_total_dose <- function(sample,
   # Calculate contribution of each exposure source ============================
   ## Calculate mobile call contribution ---------------------------------------
   call_dose <- get_mobilecall_dose(duration   = sample$mpc_duration,
-                                   ear_prop   = sample$mpc_ear_prop,
-                                   urbanicity = sample$urbanicity,
-                                   params     = params)
+                                    ear_prop   = sample$mpc_ear_prop,
+                                    urbanicity = sample$urbanicity,
+                                    params     = params)
 
   ## Calculate mobile data contribution ---------------------------------------
   data_dose <- get_mobiledata_dose(duration   = sample$mpd_duration,

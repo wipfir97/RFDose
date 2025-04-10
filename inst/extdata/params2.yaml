@@ -1,6 +1,10 @@
 global:
-    wifi_2_prop: 0.5
-    wifi_5_prop: 0.5
+  wifi_2_prop: 0.5
+  wifi_5_prop: 0.5
+  home_prop: 0.69
+  outdoor_prop: 0.08
+  work_prop: 0.21
+  travel_prop: 0.02
 devices:
   dect:
     shared:
@@ -57,14 +61,19 @@ devices:
       wifi_prop: 0.1
       native_pwr: 6.78
       data_pwr: 5.90
-      wifi_pwr: 2.738
+      wifi_2_pwr: 100
+      wifi_5_pwr: 100
+      wifi_2_duty_cycle: 0.02738
+      wifi_5_duty_cycle: 0.02738
       headp_face_prop: 0.333
       headp_pock_prop: 0.333
       headp_else_prop: 0.333
       headp_phone_bt_pwr: 0.15
     brain:
       native_ear_sar: 0.061597475
-      native_headp_sar: 0.001005179
+      native_headp_face_sar: 0.003007437
+      native_headp_pock_sar: 0.000011
+      native_headp_else_sar: 0
       native_speaker_sar: 0.005168032
       data_ear_sar: 0.061597475
       data_headp_face_sar: 0.003007437
@@ -130,10 +139,6 @@ devices:
       wifi_5_face_sar: 0.0009
   farf:
     shared:
-      home_prop: 0.69
-      outdoor_prop: 0.08
-      work_prop: 0.21
-      travel_prop: 0.02
       home_urban_pwr: 0.05198939
       outdoor_urban_pwr: 1.375066313
       work_urban_pwr: 0.214854111
