@@ -4,9 +4,11 @@
 \alias{get_cordless_sar}
 \title{Calculate Aggregated SAR during cordless call (tissue-specific)}
 \usage{
-get_cordless_sar(params, tissue_params)
+get_cordless_sar(ear_proportion, params, tissue_params)
 }
 \arguments{
+\item{ear_proportion}{Proportion of holding cordless phone against ear}
+
 \item{params}{descr}
 
 \item{tissue_params}{descr}

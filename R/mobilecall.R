@@ -1,14 +1,41 @@
 # Calculate total RF-EMF dose (for brain and body) from mobile call
 
 # =============================================================================
-#' Calculate Dose from mobile call
-#' This is a test equation:
-#' \deqn{a + b}
+#' Calculate RF-EMF Dose from Mobile Calling
 #'
-#' @param duration Duration of mobile call in seconds
-#' @param ear_prop Proportion of time mobile phone is held against the ear
+#' In general, the RF-EMF dose from a specific source is calculated using this equation:
+#' \deqn{
+#' \text{Dose} = \text{SAR} \times \text{Power} \times \text{Duration}
+#' }
+#' Where:
+#' \itemize{
+#'   \item \eqn{\text{Dose}} is the RF-EMF dose from mobile calling (mJ/kg/day).
+#'   \item \eqn{\text{SAR}} is the Specific Absorption Rate (W/kg/W).
+#'   \item \eqn{\text{Power}} is the source or device output power (mW).
+#'   \item \eqn{\text{Duration}} is the exposure or use duration per day (s).
+#' }
+#' Users may wear bluetooth headphones during mobile calls.
+#' Because of this, we consider three sources of RF-EMF exposure:
+#' 1) The dose from the mobile phone itself, 2) the dose from the bluetooth headphones,
+#' and 3) the dose from the mobile phone while using bluetooth.
+#' Thus, the final RF-EMF dose is calculated by adding these three sources:
+#' \deqn{
+#' \text{Dose}_{\text{total}} = \text{Dose}_{\text{mp}} + \text{Dose}_{\text{bthp}} + \text{Dose}_{\text{btmp}}
+#' }
+#' Where:
+#' \itemize{
+#'   \item \eqn{\text{Dose}_{\text{total}}} is the total RF-EMF dose from mobile calling (mJ/kg/day).
+#'   \item \eqn{\text{Dose}_{\text{mp}}} is the RF-EMF dose from the mobile phone (no Bluetooth, mJ/kg/day).
+#'   \item \eqn{\text{Dose}_{\text{bthp}}} is the RF-EMF dose from the Bluetooth headphones (mJ/kg/day).
+#'   \item \eqn{\text{Dose}_{\text{btmp}}} is the RF-EMF dose from the mobile phone while using Bluetooth (mJ/kg/day).
+#' }
+#' See also \link{get_mobilecall_sar}
+#'
+#' @param duration Duration of daily mobile calling in seconds
+#' @param ear_prop Proportion of time mobile phone is held against the ear during mobile call
 #' @param urbanicity Urbanicity of environment (rural, suburban, urban)
 #' @param params Parameter list
+#'
 #' @returns List with brain dose and body dose in mJ/kg/day
 #' @export
 get_mobilecall_dose <- function(duration,
@@ -18,13 +45,10 @@ get_mobilecall_dose <- function(duration,
   # Extract parameters ========================================================
   ## Extract shared (non-tissue specific) parameters for mobile calling -------
   call_params  <- load_device_params(params, "call")
-
   ## Extract brain-specific parameters (SAR values) for mobile calling --------
   brain_params <- load_tissue_params(params, "call", "brain")
-
   ## Extract body-specific parameters (SAR values) for mobile calling ---------
   body_params  <- load_tissue_params(params, "call", "body")
-
   ## Derive phone position proportions ----------------------------------------
   speaker_prop <- (1-ear_prop)/2
   headp_prop   <- (1-ear_prop)/2
@@ -36,9 +60,10 @@ get_mobilecall_dose <- function(duration,
 
   # Calculate aggregated power ================================================
   aggr_pwr     <- get_mobilecall_pwr(headp_prop = headp_prop,
-                                     params = call_params)
+                                     params     = call_params)
+  print(paste("aggr_pwr", aggr_pwr))
 
-
+  # Calculate SAR =============================================================
   # Calculate brain SAR -------------------------------------------------------
   brain_sar    <- get_mobilecall_sar(ear_prop      = ear_prop,
                                      speaker_prop  = speaker_prop,
@@ -51,24 +76,32 @@ get_mobilecall_dose <- function(duration,
                                      headp_prop    = headp_prop,
                                      params        = call_params,
                                      tissue_params = body_params)
+  print(paste("brain_sar", brain_sar))
+  print(paste("body_sar",  body_sar))
 
+  # Calculate total dose ======================================================
   # Calculate brain dose ------------------------------------------------------
   brain_dose_phone    <- duration*aggr_pwr$pwr_phone*brain_sar$sar_phone
   brain_dose_phone_bt <- duration*aggr_pwr$pwr_phone_bt*brain_sar$sar_phone_bt
-  brain_dose_headp_bt <- duration*aggr_pwr$pwr_headp_bt*brain_sar$sar_headp_bt
+  brain_dose_headp_bt <- duration*aggr_pwr$pwr_headp_bt*brain_sar$sar_headp_bt*2
   brain_dose_total    <- sum(brain_dose_phone,
                              brain_dose_phone_bt,
                              brain_dose_headp_bt)
 
+  #print(paste("brain dose phone", brain_dose_phone))
+  #print(paste("brain dose phone bt", brain_dose_phone_bt))
+  #print(paste("brain dose headp bt", brain_dose_headp_bt))
+  #print(paste("1", aggr_pwr$pwr_headp_bt, "2",brain_sar$sar_headp_bt))
+
   # Calculate body dose -------------------------------------------------------
   body_dose_phone     <- duration*aggr_pwr$pwr_phone*body_sar$sar_phone
   body_dose_phone_bt  <- duration*aggr_pwr$pwr_phone_bt*body_sar$sar_phone_bt
-  body_dose_headp_bt  <- duration*aggr_pwr$pwr_headp_bt*body_sar$sar_headp_bt
+  body_dose_headp_bt  <- duration*aggr_pwr$pwr_headp_bt*body_sar$sar_headp_bt*2
   body_dose_total     <- sum(body_dose_phone,
                              body_dose_phone_bt,
                              body_dose_headp_bt)
 
-  # Return output -------------------------------------------------------------
+  # Return output =============================================================
   output_list <- list("brain_call_dose" = brain_dose_total,
                       "body_call_dose"  = body_dose_total)
   return(output_list)
@@ -90,19 +123,18 @@ get_mobilecall_pwr <- function(headp_prop,
   # Calculate output power ====================================================
   ## Calculate power of phone itself ------------------------------------------
   pwr_phone    <- get_mobilecall_pwr_phone(params = params)
-
   # Calculate power from phone using bluetooth headphones
   pwr_phone_bt <- get_mobilecall_pwr_phone_bt(headp_prop = headp_prop,
-                                              params = params)
-
+                                              params     = params)
   # Calculate power from bluetooth headphones
   pwr_headp_bt <- get_mobilecall_pwr_headp_bt(headp_prop = headp_prop,
-                                              params = params)
+                                              params     = params)
 
-  # return output
+  # return output =============================================================
   output <- list("pwr_phone"    = pwr_phone,
                  "pwr_phone_bt" = pwr_phone_bt,
-                 "pwr_headp_pt" = pwr_headp_bt)
+                 "pwr_headp_bt" = pwr_headp_bt)
+
   return(output)
 }
 
@@ -156,7 +188,7 @@ get_mobilecall_pwr_phone_bt <- function(headp_prop,
 #' scaled with headphone use proportion, multiplied by two (headphone in two ears)
 get_mobilecall_pwr_headp_bt <- function(headp_prop,
                                         params) {
-  aggr_pwr <- headp_prop * params$headp_phone_bt_pwr * 2
+  aggr_pwr <- headp_prop * params$headp_phone_bt_pwr
   return(aggr_pwr)
 }
 
@@ -243,6 +275,8 @@ get_mobilecall_sar_phone <- function(ear_prop,
                                              native_headp,
                                              native_speaker)
 
+  #print(paste("native_sar", native_contr))
+
   # Calculate contribution from mobile data calling ---------------------------
   ## Calculate for phone against ear
   data_ear        <- ear_prop * tissue_params$data_ear_sar
@@ -267,7 +301,7 @@ get_mobilecall_sar_phone <- function(ear_prop,
                                             data_headp,
                                             data_speaker)
 
-
+  #print(paste("data_sar", data_contr))
   # Calculate contribution from Wifi calling ----------------------------------
   # TODO: double check wifi calculation because it doesn't return same value!
   ## Calculate for phone against ear
@@ -309,12 +343,37 @@ get_mobilecall_sar_phone <- function(ear_prop,
   wifi_contr <- params$wifi_prop * sum(wifi_2,
                                        wifi_5)
 
+  #print(paste("wifi_sar", wifi_contr))
+
   # Add contributions of different technologies and return result -------------
   aggr_sar <- sum(native_contr,
                   data_contr,
                   wifi_contr)
-
   return(aggr_sar)
+}
+
+# -----------------------------------------------------------------------------
+#' Calculate SAR from native phone calling (no bluetooth)
+#'
+#'
+get_mobilecall_sar_native <- function() {
+  return(NA)
+}
+
+# -----------------------------------------------------------------------------
+#' Calculate SAR from mobile data phone calling (no bluetooth)
+#'
+#'
+get_mobilecall_sar_data <- function() {
+  return(NA)
+}
+
+# -----------------------------------------------------------------------------
+#' Calculate SAR from WiFi phone calling (no bluetooth)
+#'
+#'
+get_mobilecall_sar_wifi <- function() {
+  return(NA)
 }
 
 # -----------------------------------------------------------------------------
@@ -331,7 +390,7 @@ get_mobilecall_sar_phone_bt <- function(params, tissue_params){
   # Phone elsewhere
   sar_else <- params$headp_else_prop * tissue_params$bt_phone_else_sar
 
-  # Sum up locations and return tissue SAR
+  # Sum up locations
   aggr_sar <- sum(sar_face, sar_pock, sar_else)
 
   return(aggr_sar)

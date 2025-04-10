@@ -7,7 +7,7 @@
 check_proportions(proportions)
 }
 \arguments{
-\item{proportions}{Vector with proportions to check}
+\item{proportions}{Single proportion avlue or vector with proportions to check}
 }
 \value{
 TRUE if proportions are valid, FALSE if invalid

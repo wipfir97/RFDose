@@ -4,10 +4,12 @@
 \alias{get_cordless_dose}
 \title{Calculate Dose from Cordless Calling}
 \usage{
-get_cordless_dose(duration, params)
+get_cordless_dose(duration, ear_proportion, params)
 }
 \arguments{
 \item{duration}{Duration of cordless calls in seconds}
+
+\item{ear_proportion}{Proportion of holding cordless phone against ear}
 
 \item{params}{Parameter list}
 }

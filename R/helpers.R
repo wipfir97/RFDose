@@ -57,19 +57,29 @@ load_tissue_params <- function(params, device_type, tissue_name) {
 # =============================================================================
 #' Check input values - proportions
 #'
-#' @param proportions Vector with proportions to check
+#' @param proportions Single proportion avlue or vector with proportions to check
 #' @returns TRUE if proportions are valid, FALSE if invalid
 check_proportions <- function(proportions) {
   # Ensure input is numeric
   if (!is.numeric(proportions)) {
-    warning("Input proportions must be numeric.")
+    warning("Input proportions must be numeric. Check your input values.")
     return(FALSE)
   }
 
-  # Check if proportions sum to approximately 1
-  if (!isTRUE(all.equal(sum(proportions), 1, tolerance = 1e-6))) {
-    warning("Proportions do not sum to 1. Check your input values.")
-    return(FALSE)
+  # Check if proportions are each below 0
+  for (proportion in proportions) {
+    if (proportion > 1 | proportion < 0) {
+      warning("Input proportions must be between 0 and 1. Check your input values.")
+      return(FALSE)
+    }
+  }
+
+  # For vector of proportions, check if they add up to 1
+  if (length(proportions) > 1) {
+    if (!isTRUE(all.equal(sum(proportions), 1, tolerance = 1e-6))) {
+      warning("Proportions do not sum to 1. Check your input values.")
+      return(FALSE)
+    }
   }
   return(TRUE)  # Valid proportions
 }
@@ -82,7 +92,12 @@ check_proportions <- function(proportions) {
 check_duration <- function(duration) {
   # Ensure input is numeric
   if (!is.numeric(duration)) {
-    warning("Duration must be numeric.")
+    warning("Duration must be numeric. Check your input values.")
+    return(FALSE)
+  }
+
+  if (duration < 0 | duration > 86400) {
+    warning("Duration must be between 0 and 86400 seconds. Check your input values.")
     return(FALSE)
   }
   return(TRUE)
@@ -97,7 +112,7 @@ recode_urbanicity <- function(urbanicity) {
   # Ensure input contains only valid urbanicity values
   valid_values <- c("urban", "rural", "suburban")
   if (!urbanicity %in% valid_values) {
-    stop("Invalid values found. Allowed values are: 'urban', 'suburban', 'rural'.")
+    stop("Invalid urbanicity values found. Allowed values are: 'urban', 'suburban', 'rural'.")
   }
   # Create output list with recoded urbanicity variable
   out <- list()
@@ -112,4 +127,13 @@ recode_urbanicity <- function(urbanicity) {
   out$outd_rural  <- as.integer(urbanicity == "rural")
 
   return(out)
+}
+
+# =============================================================================
+#' Check input parameter list
+#'
+#' @param params parameter list in YAML format
+#' @returns TRUE if parameter list is valid, FALSE if parameter list is invalid
+check_input_param_list <- function(params) {
+  return(TRUE)
 }

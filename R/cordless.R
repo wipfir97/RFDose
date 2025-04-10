@@ -4,11 +4,21 @@
 #' Calculate Dose from Cordless Calling
 #'
 #' @param duration Duration of cordless calls in seconds
+#' @param ear_proportion Proportion of holding cordless phone against ear
 #' @param params Parameter list
 #' @returns List with brain dose and body dose in mJ/kg/day
 #' @export
 get_cordless_dose <- function(duration,
+                              ear_proportion,
                               params) {
+
+  # Check input values ========================================================
+  ## Duration
+  check_duration(duration = duration)
+  ## Proportion
+  check_proportions(proportions = ear_proportion)
+  ## Parameters
+  check_input_param_list(params = params)
 
   # Extract parameters ========================================================
   ## Extract shared (non-tissue specific) parameters for wifi -----------------
@@ -26,10 +36,10 @@ get_cordless_dose <- function(duration,
 
   # Calculate tissue-specific SAR =============================================
   ## Brain SAR ----------------------------------------------------------------
-  brain_sar    <- get_cordless_sar(dect_params, brain_params)
+  brain_sar    <- get_cordless_sar(ear_proportion, dect_params, brain_params)
 
   ## Body SAR -----------------------------------------------------------------
-  body_sar     <- get_cordless_sar(dect_params, body_params)
+  body_sar     <- get_cordless_sar(ear_proportion, dect_params, body_params)
 
 
   # Calculate total doses =====================================================
@@ -55,7 +65,6 @@ get_cordless_dose <- function(duration,
 get_cordless_pwr  <- function(params) {
   # Calculate aggregated power and return output
   aggr_pwr <- params$dect_pwr * params$dect_duty_factor
-
   return(aggr_pwr)
 }
 
@@ -63,17 +72,19 @@ get_cordless_pwr  <- function(params) {
 # =============================================================================
 #' Calculate Aggregated SAR during cordless call (tissue-specific)
 #'
+#' @param ear_proportion Proportion of holding cordless phone against ear
 #' @param params descr
 #' @param tissue_params descr
 #' @returns sar
-get_cordless_sar  <- function(params, tissue_params) {
+get_cordless_sar  <- function(ear_proportion,
+                              params,
+                              tissue_params) {
   # Contribution from holding phone on ear
-  ear_contr     <- params$dect_ear_prop*tissue_params$dect_ear_sar
+  ear_contr     <- ear_proportion*tissue_params$dect_ear_sar
   # Contribution from phone in speaker mode
-  speaker_contr <- params$dect_speaker_prop*tissue_params$dect_speaker_sar
+  speaker_contr <- (1-ear_proportion)*tissue_params$dect_speaker_sar
   # Combine and return results
   aggr_sar      <- sum(ear_contr, speaker_contr)
-
   return(aggr_sar)
 }
 

@@ -2,16 +2,14 @@
 % Please edit documentation in R/mobilecall.R
 \name{get_mobilecall_dose}
 \alias{get_mobilecall_dose}
-\title{Calculate Dose from mobile call
-This is a test equation:
-\deqn{a + b}}
+\title{Calculate RF-EMF Dose from Mobile Calling}
 \usage{
 get_mobilecall_dose(duration, ear_prop, urbanicity, params)
 }
 \arguments{
-\item{duration}{Duration of mobile call in seconds}
+\item{duration}{Duration of daily mobile calling in seconds}
 
-\item{ear_prop}{Proportion of time mobile phone is held against the ear}
+\item{ear_prop}{Proportion of time mobile phone is held against the ear during mobile call}
 
 \item{urbanicity}{Urbanicity of environment (rural, suburban, urban)}
 
@@ -21,7 +19,31 @@ get_mobilecall_dose(duration, ear_prop, urbanicity, params)
 List with brain dose and body dose in mJ/kg/day
 }
 \description{
-Calculate Dose from mobile call
-This is a test equation:
-\deqn{a + b}
+In general, the RF-EMF dose from a specific source is calculated using this equation:
+\deqn{
+\text{Dose} = \text{SAR} \times \text{Power} \times \text{Duration}
+}
+Where:
+\itemize{
+  \item \eqn{\text{Dose}} is the RF-EMF dose from mobile calling (mJ/kg/day).
+  \item \eqn{\text{SAR}} is the Specific Absorption Rate (W/kg/W).
+  \item \eqn{\text{Power}} is the source or device output power (mW).
+  \item \eqn{\text{Duration}} is the exposure or use duration per day (s).
+}
+Users may wear bluetooth headphones during mobile calls.
+Because of this, we consider three sources of RF-EMF exposure:
+1) The dose from the mobile phone itself, 2) the dose from the bluetooth headphones,
+and 3) the dose from the mobile phone while using bluetooth.
+Thus, the final RF-EMF dose is calculated by adding these three sources:
+\deqn{
+\text{Dose}_{\text{total}} = \text{Dose}_{\text{mp}} + \text{Dose}_{\text{bthp}} + \text{Dose}_{\text{btmp}}
+}
+Where:
+\itemize{
+  \item \eqn{\text{Dose}_{\text{total}}} is the total RF-EMF dose from mobile calling (mJ/kg/day).
+  \item \eqn{\text{Dose}_{\text{mp}}} is the RF-EMF dose from the mobile phone (no Bluetooth, mJ/kg/day).
+  \item \eqn{\text{Dose}_{\text{bthp}}} is the RF-EMF dose from the Bluetooth headphones (mJ/kg/day).
+  \item \eqn{\text{Dose}_{\text{btmp}}} is the RF-EMF dose from the mobile phone while using Bluetooth (mJ/kg/day).
+}
+See also \link{get_mobilecall_sar}
 }

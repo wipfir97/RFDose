@@ -73,8 +73,9 @@ get_total_dose <- function(sample,
                                params   = params)
 
   ## Calculate cordless contribution ------------------------------------------
-  dect_dose <- get_cordless_dose(duration = sample$dect_duration,
-                                 params = params)
+  dect_dose <- get_cordless_dose(duration       = sample$dect_duration,
+                                 ear_proportion = sample$dect_ear_prop,
+                                 params         = params)
 
   ## Calculate contribution of other sources -----------------------------------
   othe_dose <- get_other_dose(duration_hotspot    = sample$hotspot_duration,
@@ -90,21 +91,21 @@ get_total_dose <- function(sample,
   ## Brain
   total_brain_dose <- sum(call_dose$brain_call_dose,
                           data_dose$brain_data_dose,
+                          dect_dose$brain_dect_dose,
                           farf_dose$brain_farf_dose,
                           wifi_dose$brain_wifi_dose,
                           lptp_dose$brain_lptp_dose,
                           tblt_dose$brain_tblt_dose,
-                          dect_dose$brain_dect_dose,
                           othe_dose$brain_othe_dose)
 
   ## Body
   total_body_dose <- sum(call_dose$body_call_dose,
                          data_dose$body_data_dose,
+                         dect_dose$body_dect_dose,
                          farf_dose$body_farf_dose,
                          wifi_dose$body_wifi_dose,
                          lptp_dose$body_lptp_dose,
                          tblt_dose$body_tblt_dose,
-                         dect_dose$body_dect_dose,
                          othe_dose$body_othe_dose)
 
   ## Save as list
@@ -114,13 +115,14 @@ get_total_dose <- function(sample,
   # Return output =============================================================
   output_list <- c(call_dose,
                    data_dose,
+                   dect_dose,
                    farf_dose,
                    wifi_dose,
                    lptp_dose,
                    tblt_dose,
-                   dect_dose,
                    othe_dose,
                    tota_dose)
+
   return(output_list)
 }
 
