@@ -18,48 +18,59 @@ knitr::opts_chunk$set(
 library(ETAINDoseCalculator)
 ```
 
-# Overview
+## Overview
 
 ETAINDoseCalculatoR is an R package designed to estimate personal radio-frequency electromagnetic field (RF-EMF) doses. It takes into account different device types and tissues, as well as exposure from far-field sources.
 
 ⚠️ *This package is currently under development. Calculations, functions and code structure are subject to change.*
 
-# Goals
+## Goals
 
 -  Provide reproducible RF-EMF dose estimates based on user input variables and pre-defined parameters.
 -  Enable modular calculation of RF-EMF doses across tissues and exposure source types.
 -  Support parameter overrides for additional flexibility.
 
-# Theoretical Background
+## Theoretical Background
 
 The calculations in this package are based on [INSERT REFERENCES]. They rely on scaling factors, device- and tissue-specific parameters, and user variables.
 
-# Expected Input Data
+## Expected Input Data
 
 The expected input is a csv file that contains ...
 
-# Example Useage
+## Example Useage
+### Basic Use
 ```{r}
 # Example use
 print("Insert use example here!")
 ```
 
-# Custom Parameters
+### Customizing Parameters
 
-Parameters may be overridden by the user. 
+By default, the ETAINDoseCalculatoR uses a pre-defined parameter list. However, it is possible to override these parameters. If you would like to do so, please follow these steps:
 ```{r}
-# Example parameter override
-print("Show how to override parameters here!")
+# Example use
+print("Insert use example here!")
 ```
+### Generated output and documentation
 
-# Development Status
+Running the `{r}calculate_emf_doses()` function returns a data frame with a column containing the dose for each exposure source and tissue, as well as the total dose (which is simply the doses of each exposure source added together for a particular tissue).
+```{r}
+# Example use
+print("Insert use example here!")
+```
+In addition, in the future `{r}calculate_emf_doses()` will also generate a log file that records the parameters used in the calculations and the number of missing variables that were replaced by default variables.
+
+## Development Status
 
 -  ✔️ Basic calculations implemented
 -  ✔️ YAML parameter file generated
--  ⌛ Validation of calculations in progress
+-  ⌛ Validation of calculations and unit testing in progress
 -  ⌛ Customization of parameter file in progress
 -  ❗ Default values not implemented yet
+-  ❗ Output log file not implemented yet
+-  ❗ Possible Shiny interface not implemented yet
 
-# References
+## References
 
-# Contributors and Acknowledgements
+## Contributors and Acknowledgements
