@@ -71,7 +71,6 @@ get_mobilecall_dose <- function(duration,
                     headp_bt_dose_body)
   output_list <- list("brain_call_dose" = brain_dose,
                       "body_call_dose"  = body_dose)
-  print(output_list)
   return(output_list)
 }
 

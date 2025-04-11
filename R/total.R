@@ -21,7 +21,12 @@
 #' @export
 calculate_emf_doses <- function(data) {
   # Load parameters and default values
-  params      <- load_params("params2.yaml")
+  params      <- load_params("params.yaml")
+  flatdf      <- read.csv(system.file("extdata", "params_reference.csv",
+                                      package = "ETAINDoseCalculator"),
+                          sep=";")
+  print(flatdf)
+  print(flat_params_to_nested(flatdf))
 
   # Calculate total dose for each row in input data
   results <- data %>%

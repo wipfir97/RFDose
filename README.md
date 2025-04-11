@@ -43,4 +43,6 @@ Please refer to ...
 
 ## 🙏 Contributors and Acknowledgements
 
+*This package was developed with the assistance of R Wizard (ChatGPT), an AI assistant powered by OpenAI, for R programming guidance, code review, and best practices.*
+
 ## 📚 References and Further Resources

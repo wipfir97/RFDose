@@ -54,6 +54,33 @@ load_tissue_params <- function(params, device_type, tissue_name) {
   return(tissue_params)
 }
 
+# ============================================================================
+#' Merge custom parameters with base parameters
+
+
+# ============================================================================
+#' Convert nested parameter YAML to flat parameter table
+#'
+#' @param nested nested YAML parameter list
+#' @param parent_path parent path (optional)
+#' @returns flat parameter list
+nested_params_to_flat <- function(nested,
+                                  parent_path = NULL) {
+  # Generate output list
+  out <- list()
+  # Go through nested list elements, paste names with .
+  for (name in names(nested)) {
+    full_path <- c(parent_path, name)
+    if (is.list(nested[[name]])) {
+      out <- c(out, nested_params_to_flat(nested[[name]], full_path))
+    } else {
+      path_str <- paste(full_path, collapse = ".")
+      out[[path_str]] <- nested[[name]]
+    }
+  }
+  return(out)
+}
+
 # =============================================================================
 #' Check input values - proportions
 #'

@@ -1,64 +1,209 @@
-dect_pwr: 8.5
-dect_duty_factor: 0.185
-dect_ear_prop: 0.9
-dect_speaker_prop: 0.1
-dect_ear_brain_sar: 0.034926
-dect_speaker_brain_sar: 0.002603877
-dect_ear_body_sar: 0.007
-dect_speaker_body_sar: 0.0021
-tblt_2.4_prop: 0.5
-tblt_5.0_prop: 0.5
-tblt_2.4_pwr: 11.7588
-tblt_5.0_pwr: 11.7588
-tblt_2.4_brain_sar: 0.000999468
-tblt_5.0_brain_sar: 0.000163091
-tblt_2.4_body_sar: 0.0009
-tblt_5.0_body_sar: 0.000999468230864152
-lptp_2.4_prop: 0.5
-lptp_5.0_prop: 0.5
-lptp_2.4_pwr: 11.7588
-lptp_5.0_pwr: 11.7588
-lptp_legs_prop: 0.2
-lptp_tabl_prop: 0.8
-lptp_2.4_legs_brain_sar: 5.18942E-05
-lptp_2.4_tabl_brain_sar: 6.89201E-05
-lptp_5.0_legs_brain_sar: 6.75E-06
-lptp_5.0_tabl_brain_sar: 9.50E-06
-lptp_2.4_legs_body_sar: 0.005
-lptp_2.4_tabl_body_sar: 0.00125
-lptp_5.0_legs_body_sar: 0.005
-lptp_5.0_tabl_body_sar: 0.00125
-wifi_2.4_prop: 0.5
-wifi_5.0_prop: 0.5
-wifi_2.4_pwr: 0.017
-wifi_5.0_pwr: 0.016
-wifi_2.4_brain_sar: 0.00133
-wifi_5.0_brain_sar: 0.00133
-wifi_2.4_body_sar: 0.005295
-wifi_5.0_body_sar: 0.005295
-call_native_prop: 0.7
-call_data_prop: 0.21
-call_wifi_prop: 0.09
-call_native_pwr: 6.78
-call_data_pwr: 5.96
-call_wifi_pwr: 2.738
-call_ear_prop: 0.66
-call_headp_prop: 0.17
-call_speaker_prop: 0.17
-call_native_ear_brain_sar: 0.061597475
-call_native_headp_brain_sar: 0.001005179
-call_native_speaker_brain_sar: 0.005168032
-call_data_ear_brain_sar: 0.061597475
-call_data_headp_brain_sar: 0.000332981
-call_data_speaker_brain_sar: 0.005168032
-call_2.4_prop: 0.5
-call_5.0_prop: 0.5
-call_wifi_2.4_ear_brain_sar: 0.016377585
-call_wifi_2.4_headp_brain_sar: 0.000332981
-call_wifi_2.4_speaker_brain_sar: 0.001272228
-call_wifi_5.0_ear_brain_sar: 0.000606727
-call_wifi_5.0_headp_brain_sar: 5.43165E-05
-call_wifi_5.0_speaker_brain_sar: 0.000169973
+global:
+  wifi_2_prop: 0.5
+  wifi_5_prop: 0.5
+  home_prop: 0.69
+  outdoor_prop: 0.08
+  work_prop: 0.21
+  travel_prop: 0.02
+devices:
+  dect:
+    shared:
+      dect_pwr: 250
+      dect_duty_factor: 0.04
+      dect_ear_prop: 0.9
+      dect_speaker_prop: 0.1
+    brain:
+      dect_ear_sar: 0.034926
+      dect_speaker_sar: 0.002603877
+    body:
+      dect_ear_sar: 0.007
+      dect_speaker_sar: 0.0021
+  tblt:
+    shared:
+      wifi_2_pwr: 11.7588
+      wifi_5_pwr: 11.7588
+    brain:
+      tblt_2_sar: 0.000999468
+      tblt_5_sar: 0.000163091
+    body:
+      tblt_2_sar: 0.0009
+      tblt_5_sar: 0.000999468230864152
+  lptp:
+    shared:
+      wifi_2_pwr: 11.7588
+      wifi_5_pwr: 11.7588
+      legs_prop: 0.2
+      tabl_prop: 0.8
+    brain:
+      wifi_2_legs_sar: 5.18942E-05
+      wifi_2_tabl_sar: 6.89201E-05
+      wifi_5_legs_sar: 6.75E-06
+      wifi_5_tabl_sar: 9.50E-06
+    body:
+      wifi_2_legs_sar: 0.005
+      wifi_2_tabl_sar: 0.00125
+      wifi_5_legs_sar: 0.005
+      wifi_5_tabl_sar: 0.00125
+  wifi:
+    shared:
+      wifi_2_pwr: 0.017
+      wifi_5_pwr: 0.016
+    brain:
+      wifi_2_sar: 0.00133
+      wifi_5_sar: 0.00133
+    body:
+      wifi_2_sar: 0.005295
+      wifi_5_sar: 0.005295
+  call:
+    shared:
+      native_prop: 0.7
+      data_prop: 0.2
+      wifi_prop: 0.1
+      native_pwr: 6.78
+      data_pwr: 5.90
+      wifi_2_pwr: 100
+      wifi_5_pwr: 100
+      wifi_2_duty_cycle: 0.02738
+      wifi_5_duty_cycle: 0.02738
+      headp_face_prop: 0.333
+      headp_pock_prop: 0.333
+      headp_else_prop: 0.333
+      headp_phone_bt_pwr: 0.15
+    brain:
+      native_ear_sar: 0.061597475
+      native_headp_face_sar: 0.003007437
+      native_headp_pock_sar: 0.000011
+      native_headp_else_sar: 0
+      native_speaker_sar: 0.005168032
+      data_ear_sar: 0.061597475
+      data_headp_face_sar: 0.003007437
+      data_headp_pock_sar: 0.000011118
+      data_headp_else_sar: 0
+      data_speaker_sar: 0.00516803
+      wifi_2_ear_sar: 0.016377585
+      wifi_2_headp_face_sar: 0.000999468230864152
+      wifi_2_headp_pock_sar: 4.75109794184096E-07
+      wifi_2_headp_else_sar: 0
+      wifi_2_speaker_sar: 0.001272228
+      wifi_5_ear_sar: 0.000606727
+      wifi_5_headp_face_sar: 0.000163091243340056
+      wifi_5_headp_pock_sar: 2.14027078663862E-08
+      wifi_5_headp_else_sar: 0
+      wifi_5_speaker_sar: 0.000169973
+      bt_phone_face_sar: 0.000999468
+      bt_phone_pock_sar: 0.000000475
+      bt_phone_else_sar: 0
+      bt_headp_sar: 0.01699017
+    body:
+      native_ear_sar: 0.007
+      native_headp_face_sar: 0.00095
+      native_headp_pock_sar: 0.01235
+      native_headp_else_sar: 0
+      native_speaker_sar: 0.0021
+      data_ear_sar: 0.007
+      data_headp_face_sar: 0.00095 
+      data_headp_pock_sar: 0.01235
+      data_headp_else_sar: 0
+      data_speaker_sar: 0.0021
+      wifi_2_ear_sar: 0.00515
+      wifi_2_headp_face_sar: 0.0009
+      wifi_2_headp_pock_sar: 0.01015
+      wifi_2_headp_else_sar: 0
+      wifi_2_speaker_sar: 0.00175
+      wifi_5_ear_sar: 0.00515
+      wifi_5_headp_face_sar: 0.00090 
+      wifi_5_headp_pock_sar: 0.01015
+      wifi_5_headp_else_sar: 0
+      wifi_5_speaker_sar: 0.00175
+      bt_phone_face_sar: 0.0009
+      bt_phone_pock_sar: 0.01015
+      bt_phone_else_sar: 0
+      bt_headp_sar: 0.00985
+  data:
+    shared:
+      tech_3g_prop: 0.1
+      tech_4g_prop: 0.75
+      tech_5g_prop: 0.15
+      tech_3g_pwr: 56.95982344
+      tech_4g_pwr: 12.89889866
+      tech_5g_pwr: 23.54376238
+      wifi_2_pwr: 2.534323234
+      wifi_5_pwr: 2.534323234 
+    brain:
+      data_face_sar: 0.003007437
+      wifi_2_face_sar: 0.000999468
+      wifi_5_face_sar: 0.000163091
+    body:
+      data_face_sar: 0.00095
+      wifi_2_face_sar: 0.0009
+      wifi_5_face_sar: 0.0009
+  farf:
+    shared:
+      home_urban_pwr: 0.05198939
+      outdoor_urban_pwr: 1.375066313
+      work_urban_pwr: 0.214854111
+      home_suburb_pwr: 0.021485411
+      outdoor_suburb_pwr: 0.513527851
+      work_suburb_pwr: 0.131083287
+      home_rural_pwr: 0.004244032
+      outdoor_rural_pwr: 0.067904509
+      work_rural_pwr: 0.067904509
+      travel_pwr: 1.120689655
+    brain:
+      sar: 0.006517857
+    body:
+      sar: 0.00876
+  watch:
+    shared:
+      watch_pwr: 0.00008
+      watch_phone_pwr: 0.00008
+    brain:
+      watch_sar: 0.0000017
+      watch_phone_sar: 0.000329981    
+    body:
+      watch_sar: 0.01365
+      watch_phone_sar: 0.0036465
+  tracker:
+    shared:
+      tracker_pwr: 0.00008
+      tracker_phone_pwr: 0.00008
+    brain:
+      tracker_sar: 0.000031
+      tracker_phone_sar: 0.000329981
+    body:      
+      tracker_sar: 0.0118
+      tracker_phone_sar: 0.0036465
+  headp:
+    shared:
+      headp_pwr: 0.00008
+      headp_phone_pwr: 0.15
+    brain:
+      headp_sar: 0.016990171
+      headp_phone_sar: 0.000329981
+    body:      
+      headp_sar: 0.00985
+      headp_phone_sar: 0.0036465     
+  hots:
+    shared:
+      hots_pwr: 5.595
+    brain:
+      hots_sar: 0.000329981
+    body:
+      hots_sar: 0.0036465
+  vr:
+    shared:
+      vr_pwr: 14.5
+    brain:
+      vr_sar: 0.0163776
+    body:
+      vr_sar: 0.0101
+  smah:
+    shared:
+      smah_pwr: 1.64109
+    brain: 
+      smah_sar: 0.00133
+    body:
+      smah_sar: 0.005295
 
 
 
