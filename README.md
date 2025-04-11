@@ -33,7 +33,7 @@ print("Quick example will be added here")
 -  ❗ Output log file not implemented yet
 -  ❗ Possible Shiny interface not implemented yet
 
-## 📚 Documentation
+## 🔍 Documentation
 
 Please refer to ...
 
