@@ -1,4 +1,13 @@
 # =============================================================================
+#' Purrr-style operator (grapes or or grapes)
+#'
+#' @param a a
+#' @param b b
+`%||%` <- function(a, b) {
+  if (!is.null(a)) a else b
+}
+
+# =============================================================================
 #' Loading parameters
 #'
 #'@param filename Name of parameter file to load (must be in yaml format)
@@ -56,6 +65,47 @@ load_tissue_params <- function(params, device_type, tissue_name) {
 
 # ============================================================================
 #' Merge custom parameters with base parameters
+#'
+#' @param base base parameter list
+#' @param custom custom parameter list
+#' @returns Modified parameter YAML
+merge_custom_base_params <- function(base,
+                                     custom) {
+  return(NA)
+}
+
+
+# ============================================================================
+#' Helper function to convert flat parameter list to nested YAML
+#'
+#' @param lst list
+#' @param keys keys
+#' @param value value
+#' @returns nested parameter list
+add_path <- function(lst, keys, value) {
+  if (length(keys) == 1) {
+    lst[[keys]] <- value
+  } else {
+    key <- keys[1]
+    rest <- keys[-1]
+    lst[[key]] <- add_path(lst[[key]], rest, value)
+  }
+  return(lst)
+}
+
+#' Convert flat parameter table to nested parameter YAML
+#'
+#' @param flat Flat parameter data frame with "path" and "value" columns
+#' @returns nested parameter list
+flat_params_to_nested <- function(flat) {
+  nested_list <- list()
+
+  for (i in seq_len(nrow(flat))) {
+    keys <- strsplit(flat$path[i], "\\.")[[1]]
+    nested_list <- add_path(nested_list, keys, flat$value[i])
+  }
+  return(nested_list)
+}
 
 
 # ============================================================================

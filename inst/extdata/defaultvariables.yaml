@@ -1,0 +1,19 @@
+mpc_duration: 424.5
+mpc_ear_prop: 0.66
+urbanicity: "suburban"
+mpd_duration: 10800
+mpd_wifi_prop: 0.5
+dect_duration: 204
+dect_ear_prop: 0.9
+lptp_duration: 4371
+tblt_duration: 1617
+wifi_duration: 59400
+hotspot_duration: 0
+smartwatch_duration: 0
+tracker_duration: 0
+vr_duration: 0
+headphone_duration: 0
+smarthome_duration: 0
+
+
+

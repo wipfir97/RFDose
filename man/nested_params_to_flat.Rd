@@ -2,9 +2,7 @@
 % Please edit documentation in R/helpers.R
 \name{nested_params_to_flat}
 \alias{nested_params_to_flat}
-\title{Convert flat parameter table to nested YAML
-# =============================================================================
-Convert nested parameter YAML to flat parameter table}
+\title{Convert nested parameter YAML to flat parameter table}
 \usage{
 nested_params_to_flat(nested, parent_path = NULL)
 }
@@ -17,7 +15,5 @@ nested_params_to_flat(nested, parent_path = NULL)
 flat parameter list
 }
 \description{
-Convert flat parameter table to nested YAML
-# =============================================================================
 Convert nested parameter YAML to flat parameter table
 }
