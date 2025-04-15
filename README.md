@@ -51,8 +51,6 @@ License will be added here.
 
 Contributors will be listed here.
 
-*This package was developed with the assistance of R Wizard (ChatGPT), an AI assistant powered by OpenAI, for R programming guidance, code review, and best practices.*
-
 ## 📚 References and Further Resources
 
 Additional resources and references will be added here.
