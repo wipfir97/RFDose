@@ -10,30 +10,73 @@
 
 ## 🛠️ Installation
 
-Installation instructions will be added here.
+This R package is currently hosted on a **private GitHub repository**. To install it, you need: 
+
+- A GitHub account
+- Access to the repository
+- A personal access token (PAT) to authenticate your connection to GitHub
+
+### Generate personal access token (PAT)
+
+Follow these steps to generate a PAT:
+
+1. Go to [https://github.com/settings/tokens](https://github.com/settings/tokens)
+2. Click **Generate new token (classic)**
+3. Set a name (e.g. `R package install`)
+4. Under **Select scopes**, check `repo` (this allows access to private repositories)
+5. Select an expiration (e.g. 30 days)
+6. Click **Generate token**
+7. **Copy the token immediately** (you cannot view it again later)
+
+### Prerequisites
+
+If you do not have the '{r} remotes' package installed and loaded, please follow the steps below.
 
 ```{r}
-print("Installation instructions will be added here")
+# install "remotes" package (needed to install R packages from GitHub)
+install.packages("remotes")
+# load "remotes" package
+library(remotes)
 ```
 
-## 🚀 Quick Example
+### Install ETAIN dose calculator
 
-For a quick start, use the in-build example data set.
+To install the R package, please follow the steps below.
 
 ```{r}
-print("Quick example will be added here")
+# Set your personal access token (replace YOUR_PAT with the token you generated and copied)
+Sys.setenv(GITHUB_PAT = "YOUR_PAT")
+# Install the ETAIN dose calculator using your PAT
+remotes::install_github("wipfir97/ETAINDoseCalculator")
+```
+
+## 🚀 Quick Start
+
+For a quick start, you can load the in-build example data set:
+
+```{r}
+# Load package
+library(ETAINDoseCalculator)
+# Load example data
+data(example_data)
+# View example data
+head(example_data)
+```
+To calculate the RF-EMF doses for each participant, run the following code:
+
+```{r}
+# Calculate example doses
+calculate_emf_doses(example_data)
 ```
 
 ## 🧪 Development Status
 
--  ✔️ Basic calculations implemented
+-  ✔️ Basic dose calculations implemented and validated
 -  ✔️ YAML parameter file generated
--  ⌛ Validation of calculations and unit testing in progress
+-  ⌛ Final validation of calculations in progress
 -  ⌛ Customization of parameter file in progress
 -  ⌛ Documentation of functions and input data in progress
 -  ❗ Default values not implemented yet
--  ❗ Output log file not implemented yet
--  ❗ Possible Shiny interface not implemented yet
 
 ## 🔍 Documentation
 
