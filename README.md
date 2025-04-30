@@ -30,7 +30,7 @@ Follow these steps to generate a PAT:
 
 ### Prerequisites
 
-If you do not have the '{r} remotes' package installed and loaded, please follow the steps below.
+If you do not have the `remotes` package installed and loaded, please follow the steps below.
 
 ```{r}
 # install "remotes" package (needed to install R packages from GitHub)
