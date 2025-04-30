@@ -154,6 +154,7 @@ check_proportions <- function(proportions) {
   # For vector of proportions, check if they add up to 1
   if (length(proportions) > 1) {
     if (!isTRUE(all.equal(sum(proportions), 1, tolerance = 1e-6))) {
+      print(proportions)
       warning("Proportions do not sum to 1. Check your input values.")
       return(FALSE)
     }

@@ -17,6 +17,8 @@ get_mobilecall_phone_sar(
 
 \item{headp_prop}{Headphone proportion}
 
+\item{speaker_prop}{Speaker proportion}
+
 \item{params}{Parameter list}
 
 \item{tissue_params}{SAR values}

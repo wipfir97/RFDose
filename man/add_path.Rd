@@ -6,6 +6,13 @@
 \usage{
 add_path(lst, keys, value)
 }
+\arguments{
+\item{lst}{list}
+
+\item{keys}{keys}
+
+\item{value}{value}
+}
 \value{
 nested parameter list
 }

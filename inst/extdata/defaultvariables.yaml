@@ -1,5 +1,6 @@
 mpc_duration: 424.5
 mpc_ear_prop: 0.66
+mpc_headp_prop: 0.5
 urbanicity: "suburban"
 mpd_duration: 10800
 mpd_wifi_prop: 0.5

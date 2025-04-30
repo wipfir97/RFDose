@@ -2,10 +2,15 @@
 % Please edit documentation in R/helpers.R
 \name{\%||\%}
 \alias{\%||\%}
-\title{Purrr-style operator}
+\title{Purrr-style operator (grapes or or grapes)}
 \usage{
 a \%||\% b
 }
+\arguments{
+\item{a}{a}
+
+\item{b}{b}
+}
 \description{
-Purrr-style operator
+Purrr-style operator (grapes or or grapes)
 }

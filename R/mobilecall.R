@@ -4,9 +4,10 @@
 
 # Total mobile call dose from all sources =====================================
 get_mobilecall_dose <- function(duration,
-                                 ear_prop,
-                                 urbanicity,
-                                 params) {
+                                ear_prop,
+                                headp_prop,
+                                urbanicity,
+                                params) {
   # Extract parameters ========================================================
   ## Extract shared (non-tissue specific) parameters for mobile calling -------
   call_params  <- load_device_params(params, "call")
@@ -14,9 +15,10 @@ get_mobilecall_dose <- function(duration,
   brain_params <- load_tissue_params(params, "call", "brain")
   ## Extract body-specific parameters (SAR values) for mobile calling ---------
   body_params  <- load_tissue_params(params, "call", "body")
-  ## Derive phone position proportions ----------------------------------------
-  speaker_prop <- (1-ear_prop)/2
-  headp_prop   <- (1-ear_prop)/2
+  ## Derive speaker mode use proportion ---------------------------------------
+  speaker_prop <- (1-ear_prop)*(1-headp_prop)
+  ## Update headp prop to scale by total mobile call duration
+  headp_prop   <-(1-ear_prop)*headp_prop
 
   # Check input values for validity ===========================================
   check_proportions(proportions = c(ear_prop, speaker_prop, headp_prop))
@@ -80,6 +82,8 @@ get_mobilecall_dose <- function(duration,
 #'
 #' @param duration User duration
 #' @param ear_prop Ear proportion
+#' @param speaker_prop Speaker proportion
+#' @param headp_prop Headphone proportion
 #' @param urbanicity Urbanicity
 #' @param params Parameter list
 #' @param tissue_params Tissue-specific parameter list
@@ -187,6 +191,7 @@ get_mobilecall_phone_native_pwr <- function(urbanicity,
 #'
 #' @param ear_prop Ear proportion
 #' @param headp_prop Headphone proportion
+#' @param speaker_prop Speaker proportion
 #' @param params Parameter list
 #' @param tissue_params SAR values
 get_mobilecall_phone_sar <- function(ear_prop,

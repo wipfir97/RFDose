@@ -19,6 +19,10 @@ get_mobilecall_phone_dose(
 
 \item{ear_prop}{Ear proportion}
 
+\item{speaker_prop}{Speaker proportion}
+
+\item{headp_prop}{Headphone proportion}
+
 \item{urbanicity}{Urbanicity}
 
 \item{params}{Parameter list}

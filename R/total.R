@@ -12,6 +12,7 @@
 #' lptp_duration:
 #' tblt_duration:
 #' wifi_duration:
+#' @param param_file optional YAML parameter configuration file
 #' @returns A data frame. Columns named SOURCE_dose_TISSUE contain RF-EMF dose
 #' of each participant in mJ/kg/day
 #' @import dplyr
@@ -19,16 +20,13 @@
 #' @importFrom tidyr unnest_wider
 #' @import yaml
 #' @export
-calculate_emf_doses <- function(data) {
+calculate_emf_doses <- function(data, param_file = NULL) {
   # Load parameters and default values
-  params      <- load_params("params.yaml")
-  print(params)
-
-  flat        <- read.csv(system.file("extdata", "params_reference.csv",
-                                      package = "ETAINDoseCalculator"),
-                          sep = ";")
-  test_list <- flat_params_to_nested(flat)
-  print(test_list)
+  params <- if (is.null(param_file)) {
+    load_params("params.yaml")  # from inst/extdata
+  } else {
+    yaml::read_yaml(param_file)
+  }
 
   # Calculate total dose for each row in input data
   results <- data %>%
@@ -55,6 +53,7 @@ get_total_dose <- function(sample,
   ## Calculate mobile call contribution ---------------------------------------
   call_dose <- get_mobilecall_dose(duration   = sample$mpc_duration,
                                     ear_prop   = sample$mpc_ear_prop,
+                                    headp_prop = sample$mpc_headp_prop,
                                     urbanicity = sample$urbanicity,
                                     params     = params)
 
