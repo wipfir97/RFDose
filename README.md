@@ -87,7 +87,7 @@ We consider the following exposure sources in the dose calculations:
 
 | Exposure | Abbreviation | Description |
 | --- | --- | --- |
-| Mobile phone calling | mpc | Voice calling using mobile phone, with or without App | 
+| Mobile calling | mpc | Voice calling using mobile phone, with or without App | 
 | Mobile data | mpd | WiFi and mobile data use during mobile phone use |
 | WiFi | wifi | WiFi router |
 | Cordless Phone | dect | Cordless phone use |
@@ -96,14 +96,17 @@ We consider the following exposure sources in the dose calculations:
 | Far-field | farf | Far-field exposure |
 | Other | other | Other devices: smart watch, tracker, VR headset, hotspot, bluetooth headphones, smart home |
 
-### Required input variables
+### Input variables
 
-| Name  | Unit | Type | Description | Constraints | Status |
-| --- | --- | --- | --- | --- | --- |
-| test | test | test | test | test | test |
+| Name  | Unit | Type | Exposure | Description | Constraints | Default value | Status |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| mpc_duration | s | numeric | Mobile calling | ... | >= 0 and <= 86400 | 425 | implemented |
+| mpc_ear_prop | - | numeric | Mobile calling | ... | >= 0 and <= 1 | ... | implemented |
+| mpc_headp_prop | - | numeric | Mobile calling | ... | >= 0 and <= 1 | ... | implemented |
+| urbanicity | - | numeric | Multiple | ... | urban, suburban, or rural | suburban | implemented |
+| ... | ... | ... | ... | ... | ... | ... | ... |
 
-
-For detailed information about the required input variables, please refer to:
+For detailed information about the required input variables, please refer to the [variable overview file](data/user_variables.xlsx).
 
 ### Generated output variables
 
@@ -113,7 +116,7 @@ Parameters are specified in this YAML file:
 
 The YAML file must be structured like this:
 
-More detailed descriptions of each parameter, including units, can be found here:
+More detailed descriptions of each parameter, including units, can be found in the [parameter reference file](inst/extdata/params_reference.csv).
 
 Parameters can be customized by ...
 
