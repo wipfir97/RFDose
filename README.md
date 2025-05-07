@@ -73,6 +73,7 @@ calculate_emf_doses(example_data)
 
 -  ✔️ Basic dose calculations implemented and validated
 -  ✔️ YAML parameter file generated
+-  ⌛ Adding additional variables: high vs low data transfer activities
 -  ⌛ Final validation of calculations in progress
 -  ⌛ Customization of parameter file in progress
 -  ⌛ Documentation of functions and input data in progress
@@ -80,7 +81,38 @@ calculate_emf_doses(example_data)
 
 ## 🔍 Documentation
 
-Please refer to ...
+### Exposure sources
+
+| Exposure | Abbreviation | Examples |
+| --- | --- | --- |
+| Mobile phone calling | mpc | Voice calling using mobile phone, with or without App | 
+
+### Required input variables
+
+| Name  | Unit | Type | Description | Constraints | Status |
+| --- | --- | --- | --- | --- | --- |
+| test | test | test | test | test | test |
+
+
+For detailed information about the required input variables, please refer to:
+
+### Generated output variables
+
+### Parameters
+
+Parameters are specified in this YAML file: 
+
+The YAML file must be structured like this:
+
+More detailed descriptions of each parameter, including units, can be found here:
+
+Parameters can be customized by ...
+
+### Missing data and default values
+
+Default values are specified in this YAML file:
+
+Default values can be customized by ...
 
 ## 💬 Feedback
 
