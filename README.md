@@ -73,7 +73,7 @@ calculate_emf_doses(example_data)
 
 -  ✔️ Basic dose calculations implemented and validated
 -  ✔️ YAML parameter file generated
--  ⌛ Adding additional variables: high vs low data transfer activities
+-  ✔️ Added additional variable: high vs low data transfer activities
 -  ⌛ Final validation of calculations in progress
 -  ⌛ Customization of parameter file in progress
 -  ⌛ Documentation of functions and input data in progress
@@ -83,9 +83,18 @@ calculate_emf_doses(example_data)
 
 ### Exposure sources
 
-| Exposure | Abbreviation | Examples |
+We consider the following exposure sources in the dose calculations:
+
+| Exposure | Abbreviation | Description |
 | --- | --- | --- |
 | Mobile phone calling | mpc | Voice calling using mobile phone, with or without App | 
+| Mobile data | mpd | WiFi and mobile data use during mobile phone use |
+| WiFi | wifi | WiFi router |
+| Cordless Phone | dect | Cordless phone use |
+| Laptop | lptp | Laptop use |
+| Tablet | tblt | Tablet use |
+| Far-field | farf | Far-field exposure |
+| Other | other | Other devices: smart watch, tracker, VR headset, hotspot, bluetooth headphones, smart home |
 
 ### Required input variables
 

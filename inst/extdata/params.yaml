@@ -129,6 +129,32 @@ devices:
       tech_5g_pwr: 23.54376238
       wifi_2_pwr: 2.534323234
       wifi_5_pwr: 2.534323234 
+      data_3g_high_ind_pwr: 70.00
+      data_3g_high_otd_pwr: 29.86
+      data_3g_high_tra_pwr: 29.86
+      data_3g_low_ind_pwr: 51.16
+      data_3g_low_otd_pwr: 21.82
+      data_3g_low_tra_pwr: 21.82
+      data_4g_high_ind_pwr: 24.31
+      data_4g_high_otd_pwr: 24.33
+      data_4g_high_tra_pwr: 24.33
+      data_4g_low_ind_pwr: 1.49
+      data_4g_low_otd_pwr: 1.49
+      data_4g_low_tra_pwr: 1.49
+      data_5g_high_ind_pwr: 46.43
+      data_5g_high_otd_pwr: 41.31
+      data_5g_high_tra_pwr: 41.31
+      data_5g_low_ind_pwr: 1.21
+      data_5g_low_otd_pwr: 1.08
+      data_5g_low_tra_pwr: 1.08
+      wifi_2_high_pwr: 22.49
+      wifi_2_low_pwr: 1.03
+      wifi_5_high_pwr: 22.49
+      wifi_5_low_pwr: 1.03
+      wifi_2_high_dutycycle: 0.22
+      wifi_2_low_dutycycle: 0.01
+      wifi_5_high_dutycycle: 0.22
+      wifi_5_low_dutycycle: 0.01
     brain:
       data_face_sar: 0.003007437
       wifi_2_face_sar: 0.000999468

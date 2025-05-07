@@ -4,12 +4,14 @@
 \alias{get_mobiledata_pwr}
 \title{Calculate mobile data aggregated power}
 \usage{
-get_mobiledata_pwr(wifi_prop, data_prop, params)
+get_mobiledata_pwr(wifi_prop, data_prop, high_pwr_prop, params)
 }
 \arguments{
 \item{wifi_prop}{wifi proportion}
 
 \item{data_prop}{data proportion}
+
+\item{high_pwr_prop}{Proportion of time spent on high data transfer activities}
 
 \item{params}{parameter list}
 }

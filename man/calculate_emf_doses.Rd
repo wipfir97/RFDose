@@ -20,7 +20,7 @@ lptp_duration:
 tblt_duration:
 wifi_duration:}
 
-\item{param_file:}{optional YAML parameter configuration file}
+\item{param_file}{optional YAML parameter configuration file}
 }
 \value{
 A data frame. Columns named SOURCE_dose_TISSUE contain RF-EMF dose

@@ -6,11 +6,13 @@
 #' @param duration Duration of mobile data transfer in seconds
 #' @param wifi_prop Proportion of time WiFi connection is used for data
 #' transfer (vs mobile data)
+#' @param high_pwr_prop Proportion of time spent on high data transfer activities
 #' @param params Parameter list
 #' @returns List with brain dose and body dose in mJ/kg/day
 #' @export
 get_mobiledata_dose <- function(duration,
                                 wifi_prop,
+                                high_pwr_prop,
                                 params) {
   # Extract parameters ========================================================
   ## Extract shared (non-tissue specific) parameters for mobile data ----------
@@ -32,6 +34,7 @@ get_mobiledata_dose <- function(duration,
   # Calculate aggregated power ================================================
   aggr_pwr     <- get_mobiledata_pwr(wifi_prop = wifi_prop,
                                      data_prop = data_prop,
+                                     high_pwr_prop = high_pwr_prop,
                                      params = data_params)
 
   # Calculate tissue-specific SAR =============================================
@@ -66,34 +69,130 @@ get_mobiledata_dose <- function(duration,
 #'
 #' @param wifi_prop wifi proportion
 #' @param data_prop data proportion
+#' @param high_pwr_prop Proportion of time spent on high data transfer activities
 #' @param params parameter list
 #' @returns aggregated power
 get_mobiledata_pwr <- function(wifi_prop,
                                data_prop,
+                               high_pwr_prop,
                                params) {
-  # From mobile data
-  ## 3g
-  data_3g    <- params$tech_3g_prop*params$tech_3g_pwr
-  ## 4g
-  data_4g    <- params$tech_4g_prop*params$tech_4g_pwr
-  ## 5g
-  data_5g    <- params$tech_5g_prop*params$tech_5g_pwr
-  ## Total
+  # Get low power proportion ==================================================
+  low_pwr_prop <- 1-high_pwr_prop
+  check_proportions(high_pwr_prop)
+  # From mobile data ==========================================================
+  # TODO: write separate function for mobile data contribution
+  ## 3g -----------------------------------------------------------------------
+  ### High data transfer ----
+  #### Home/work (indoor)
+  data_3g_high_indo  <- (params$home_prop+params$work_prop)*params$data_3g_high_ind_pwr
+  #### Outdoors
+  data_3g_high_outd  <- params$outdoor_prop*params$data_3g_high_otd_pwr
+  #### Transport
+  data_3g_high_trans <- params$travel_prop*params$data_3g_high_tra_pwr
+  #### All locations
+  data_3g_high <- high_pwr_prop*sum(data_3g_high_indo,
+                                    data_3g_high_outd,
+                                    data_3g_high_trans)
+  ### Low data transfer ----
+  #### Home/work
+  data_3g_low_indo  <- (params$home_prop+params$work_prop)*params$data_3g_low_ind_pwr
+  #### Outdoors
+  data_3g_low_outd  <- params$outdoor_prop*params$data_3g_low_otd_pwr
+  #### Transport
+  data_3g_low_trans <- params$travel_prop*params$data_3g_low_tra_pwr
+  #### All locations
+  data_3g_low <- low_pwr_prop*sum(data_3g_low_indo,
+                                  data_3g_low_outd,
+                                  data_3g_low_trans)
+  ### Total 3g ----
+  #data_3g    <- params$tech_3g_prop*params$tech_3g_pwr
+  data_3g <- sum(data_3g_high, data_3g_low) * params$tech_3g_prop
+
+
+  ## 4g -----------------------------------------------------------------------
+  ### High data transfer ----
+  #### Home/work (indoor)
+  data_4g_high_indo  <- (params$home_prop+params$work_prop)*params$data_4g_high_ind_pwr
+  #### Outdoors
+  data_4g_high_outd  <- params$outdoor_prop*params$data_4g_high_otd_pwr
+  #### Transport
+  data_4g_high_trans <- params$travel_prop*params$data_4g_high_tra_pwr
+  #### All locations
+  data_4g_high <- high_pwr_prop*sum(data_4g_high_indo,
+                                    data_4g_high_outd,
+                                    data_4g_high_trans)
+  ### Low data transfer ----
+  #### Home/work
+  data_4g_low_indo  <- (params$home_prop+params$work_prop)*params$data_4g_low_ind_pwr
+  #### Outdoors
+  data_4g_low_outd  <- params$outdoor_prop*params$data_4g_low_otd_pwr
+  #### Transport
+  data_4g_low_trans <- params$travel_prop*params$data_4g_low_tra_pwr
+  #### All locations
+  data_4g_low <- low_pwr_prop*sum(data_4g_low_indo,
+                                  data_4g_low_outd,
+                                  data_4g_low_trans)
+  ### Total 4g ----
+  #data_4g    <- params$tech_4g_prop*params$tech_4g_pwr
+  data_4g <- sum(data_4g_high, data_4g_low)  * params$tech_4g_prop
+
+  ## 5g -----------------------------------------------------------------------
+  ### High data transfer ----
+  #### Home/work (indoor)
+  data_5g_high_indo  <- (params$home_prop+params$work_prop)*params$data_5g_high_ind_pwr
+  #### Outdoors
+  data_5g_high_outd  <- params$outdoor_prop*params$data_5g_high_otd_pwr
+  #### Transport
+  data_5g_high_trans <- params$travel_prop*params$data_5g_high_tra_pwr
+  #### All locations
+  data_5g_high <- high_pwr_prop*sum(data_5g_high_indo,
+                                    data_5g_high_outd,
+                                    data_5g_high_trans)
+  ### Low data transfer ----
+  #### Home/work
+  data_5g_low_indo  <- (params$home_prop+params$work_prop)*params$data_5g_low_ind_pwr
+  #### Outdoors
+  data_5g_low_outd  <- params$outdoor_prop*params$data_5g_low_otd_pwr
+  #### Transport
+  data_5g_low_trans <- params$travel_prop*params$data_5g_low_tra_pwr
+  #### All locations
+  data_5g_low <- low_pwr_prop*sum(data_5g_low_indo,
+                                  data_5g_low_outd,
+                                  data_5g_low_trans)
+  ### Total 5g ----
+  #data_5g    <- params$tech_5g_prop*params$tech_5g_pwr
+  data_5g <- sum(data_5g_high, data_5g_low) * params$tech_5g_prop
+
+
+  ## Total mobile data --------------------------------------------------------
   data_contr <- data_prop * sum(data_3g,
                                 data_4g,
                                 data_5g)
 
-  # From WiFi
-  ## 2.4 GHz
-  wifi_2     <- params$wifi_2_prop * params$wifi_2_pwr
-  ## 5.0 GHz
-  wifi_5     <- params$wifi_5_prop * params$wifi_5_pwr
-  ## Total
+  # From WiFi =================================================================
+  ## 2.4 GHz ------------------------------------------------------------------
+  ### High data transfer
+  wifi_2_high <- high_pwr_prop*params$wifi_2_high_pwr*params$wifi_2_high_dutycycle
+  ### Low data transfer
+  wifi_2_low  <- low_pwr_prop*params$wifi_2_low_pwr*params$wifi_2_low_dutycycle
+  ### Total 2.4GHz
+  wifi_2      <- params$wifi_2_prop * sum(wifi_2_high, wifi_2_low)
+
+  ## 5.0 GHz ------------------------------------------------------------------
+  ### High data transfer
+  wifi_5_high <- high_pwr_prop*params$wifi_5_high_pwr*params$wifi_5_high_dutycycle
+  ### Low data transfer
+  wifi_5_low  <- low_pwr_prop*params$wifi_5_low_pwr*params$wifi_5_low_dutycycle
+  ### Total 5.0GHz
+  wifi_5      <- params$wifi_5_prop * sum(wifi_5_high, wifi_5_low)
+
+  ## Total WiFi ---------------------------------------------------------------
   wifi_contr <- wifi_prop * sum(wifi_2,
                                 wifi_5)
 
-  # Total output power
+  # Total mobile data =========================================================
   aggr_pwr <- sum(data_contr, wifi_contr)
+
   return(aggr_pwr)
 }
 

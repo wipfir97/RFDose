@@ -60,6 +60,7 @@ get_total_dose <- function(sample,
   ## Calculate mobile data contribution ---------------------------------------
   data_dose <- get_mobiledata_dose(duration   = sample$mpd_duration,
                                    wifi_prop  = sample$mpd_wifi_prop,
+                                   high_pwr_prop = sample$mpd_high_dt_prop,
                                    params)
 
   ## Calculate far-field contribution -----------------------------------------
