@@ -4,7 +4,7 @@
 \alias{calculate_emf_doses}
 \title{Calculate Total RF-EMF Doses for ALL samples}
 \usage{
-calculate_emf_doses(data, param_file = NULL)
+calculate_emf_doses(data, param_file = NULL, default_value_file = NULL)
 }
 \arguments{
 \item{data}{A data frame. Must have the following columns:
@@ -20,7 +20,9 @@ lptp_duration:
 tblt_duration:
 wifi_duration:}
 
-\item{param_file}{optional YAML parameter configuration file}
+\item{param_file}{optional path to YAML parameter configuration file}
+
+\item{default_value_file}{optional path to YAML default value file in case of missing data}
 }
 \value{
 A data frame. Columns named SOURCE_dose_TISSUE contain RF-EMF dose

@@ -12,7 +12,8 @@
 #' lptp_duration:
 #' tblt_duration:
 #' wifi_duration:
-#' @param param_file optional YAML parameter configuration file
+#' @param param_file optional path to YAML parameter configuration file
+#' @param default_value_file optional path to YAML default value file in case of missing data
 #' @returns A data frame. Columns named SOURCE_dose_TISSUE contain RF-EMF dose
 #' of each participant in mJ/kg/day
 #' @import dplyr
@@ -20,21 +21,52 @@
 #' @importFrom tidyr unnest_wider
 #' @import yaml
 #' @export
-calculate_emf_doses <- function(data, param_file = NULL) {
-  # Load parameters and default values
+calculate_emf_doses <- function(data,
+                                param_file = NULL,
+                                default_value_file = NULL) {
+
+  # Parameters ================================================================
+  ## Load internal parameter file if no param_file is supplied ----------------
   params <- if (is.null(param_file)) {
     load_params("params.yaml")  # from inst/extdata
   } else {
     yaml::read_yaml(param_file)
   }
+  ## Check parameter file for validity if supplied ----------------------------
+  # TODO: add validity check
 
-  # Calculate total dose for each row in input data
+  # Default values ============================================================
+  ## Load internal default value file if no default_value_file is supplied ----
+  defaultvars <- if (is.null(default_value_file)) {
+    yaml::read_yaml(system.file("extdata", "defaultvariables.yaml",
+                                package = "ETAINDoseCalculator"))  # from inst/extdata
+  } else {
+    yaml::read_yaml(default_value_file)
+  }
+
+  ## Check default value file for validity if supplied ------------------------
+  # TODO: add validity check
+
+  ## Replace NAs with default values ------------------------------------------
+  results <- fill_missing_variables(data = data,
+                                    defaults = defaultvars,
+                                    warn_threshold = 0.1)
+  data <- results$data
+  replaced <-results$replaced
+
+  ## Save default value documentation -----------------------------------------
+  # TODO: document how many values were replaced for each sample
+
+
+  # Calculate RF-EMF Dose for all entries in dataset ==========================
+  ## Go through each row, calculate doses, append results as column
   results <- data %>%
     rowwise() %>%
     mutate(outcome = list(get_total_dose(as.list(cur_data()), params))) %>%
     unnest_wider(outcome) %>%
     ungroup()
 
+  ## Return output as data frame
   return(as.data.frame(results))
 }
 

@@ -213,5 +213,56 @@ recode_urbanicity <- function(urbanicity) {
 #' @param params parameter list in YAML format
 #' @returns TRUE if parameter list is valid, FALSE if parameter list is invalid
 check_input_param_list <- function(params) {
-  return(TRUE)
+  return(FALSE)
+}
+
+# =============================================================================
+#' Load default parameter list
+#'
+#' @param dest_file location where downloaded YAML file should be saved
+save_default_params_file <- function(dest_file = NULL) {
+  if (is.null(dest_file)) {dest_file <- "default_parameters.yaml"}
+
+  yaml::write_yaml(params, file = dest_file)
+  return(FALSE)
+}
+
+# =============================================================================
+#' Fill missing variables
+#'
+#' @param data data
+#' @param defaults defaults
+#' @param warn_threshold threshold proportion of missing data to raise warning
+#' @returns data frame with missing data replaced with default values
+fill_missing_variables <- function(data, defaults, warn_threshold = 0.1) {
+  # List that stores number of replacements for each variable
+  replaced <- list()
+  # Count number of rows
+  n_rows <- nrow(data)
+  # Replace empty strings with NA for character variables
+  data[data==""]<-NA
+
+  for (var in names(defaults)) {
+    if (!var %in% colnames(data)) {
+      # Entirely missing column → fill with default
+      data[[var]] <- rep(defaults[[var]], n_rows)
+      replaced[[var]] <- n_rows
+    } else {
+      # Count NAs
+      n_missing <- sum(is.na(data[[var]]))
+      replaced[[var]] <- n_missing
+
+      if (n_missing > 0) {
+        data[[var]][is.na(data[[var]])] <- defaults[[var]]
+      }
+
+      # Warn if proportion missing exceeds threshold
+      if (n_missing / n_rows > warn_threshold) {
+        warning(sprintf("Variable '%s' had %.1f%% missing values replaced (threshold %.0f%%)",
+                        var, 100 * n_missing / n_rows, 100 * warn_threshold))
+      }
+    }
+  }
+
+  return(list(data = data, replaced = replaced))
 }

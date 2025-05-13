@@ -68,16 +68,16 @@ To calculate the RF-EMF doses for each participant, run the following code:
 # Calculate example doses
 calculate_emf_doses(example_data)
 ```
-
 ## 🧪 Development Status
 
 -  ✔️ Basic dose calculations implemented and validated
 -  ✔️ YAML parameter file generated
 -  ✔️ Added additional variable: high vs low data transfer activities
--  ⌛ Final validation of calculations in progress
--  ⌛ Customization of parameter file in progress
+-  ✔️ Default values implemented
+-  ✔️ Optional modification of parameters and default values enabled
 -  ⌛ Documentation of functions and input data in progress
--  ❗ Default values not implemented yet
+-  ⌛ Documentation and easily accessible parameter file in progress
+-  ❗ Final validation of calculations: custom parameters, new variables
 
 ## 🔍 Documentation
 
@@ -110,21 +110,29 @@ For detailed information about the required input variables, please refer to the
 
 ### Generated output variables
 
+| Name  | Unit | Type | Exposure | Description | 
+| --- | --- | --- | --- | --- | 
+| **brain_dotal_dose** | mJ/kg/day | numeric | All exposures | ... | 
+| **body_dotal_dose** | mJ/kg/day | numeric | All exposures | ... |
+| brain_call_dose | mJ/kg/day | numeric | Mobile calling | ... | 
+
+
 ### Parameters
 
 Parameters are specified in this YAML file: 
 
-The YAML file must be structured like this:
-
 More detailed descriptions of each parameter, including units, can be found in the [parameter reference file](inst/extdata/params_reference.csv).
 
-Parameters can be customized by ...
+The parameter file can be customized by the user. 
+Users can supply their own parameter file, but it must be structured exactly like the in-built parameter file.
 
 ### Missing data and default values
 
-Default values are specified in this YAML file:
+Default values are specified in [this YAML file](inst/extdata/defaultvariables.yaml)
 
-Default values can be customized by ...
+Missing values will be replaced with the values in this file. Variables with more than 10% missing data will cause a warning message to be raised.
+
+Users can supply their own default values. The custom file must follow the same structure as the in-build default variable file.
 
 ## 💬 Feedback
 
