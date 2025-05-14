@@ -4,7 +4,7 @@
 \alias{fill_missing_variables}
 \title{Fill missing variables}
 \usage{
-fill_missing_variables(data, defaults, warn_threshold = 0.2)
+fill_missing_variables(data, defaults, warn_threshold = 0.1)
 }
 \arguments{
 \item{data}{data}
