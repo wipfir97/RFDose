@@ -4,9 +4,13 @@
 
 ⚠️ Development status: work in progress ⌛
 
+---
+
 ## 📦 About
 
 📶 The ETAIN Dose Calculator ... 
+
+---
 
 ## 🛠️ Installation
 
@@ -50,6 +54,8 @@ Sys.setenv(GITHUB_PAT = "YOUR_PAT")
 remotes::install_github("wipfir97/ETAINDoseCalculator")
 ```
 
+---
+
 ## 🚀 Quick Start
 
 For a quick start, you can load the in-build example data set:
@@ -69,6 +75,8 @@ To calculate the RF-EMF doses for each participant, run the following code:
 calculate_emf_doses(example_data)
 ```
 
+---
+
 ## 🧪 Development Status
 
 -  ✔️ Basic dose calculations implemented and validated
@@ -79,6 +87,8 @@ calculate_emf_doses(example_data)
 -  ⌛ Documentation of functions and input data in progress
 -  ⌛ Documentation and easily accessible parameter file in progress
 -  ❗ Final validation of calculations: custom parameters, new variables
+
+---
 
 ## 🔍 Documentation
 
@@ -126,12 +136,26 @@ For detailed information about the required input variables, please refer to the
 
 ### Generated output variables
 
-| Name  | Unit | Type | Exposure | Description | 
-| --- | --- | --- | --- | --- | 
-| **brain_dotal_dose** | mJ/kg/day | numeric | All exposures | ... | 
-| **body_dotal_dose** | mJ/kg/day | numeric | All exposures | ... |
-| brain_call_dose | mJ/kg/day | numeric | Mobile calling | ... | 
-
+| Name  | Unit | Type | Exposure | Tissue | Description | 
+| --- | --- | --- | --- | --- | --- |
+| **brain_dotal_dose** | mJ/kg/day | numeric | All exposures | ... | ... |
+| **body_dotal_dose** | mJ/kg/day | numeric | All exposures | ... | ... |
+| brain_call_dose | mJ/kg/day | numeric | Mobile calling | ... | ... | 
+| body_call_dose | mJ/kg/day | numeric | Mobile calling | ... | ... | 
+| brain_data_dose | mJ/kg/day | numeric | Mobile data | ... | ... | 
+| body_data_dose | mJ/kg/day | numeric | Mobile data | ... | ... |
+| brain_dect_dose | mJ/kg/day | numeric | Cordless phone | ... | ... |
+| body_dect_dose | mJ/kg/day | numeric | Cordless phone | ... | ... |
+| brain_farf_dose | mJ/kg/day | numeric | Farfield | ... | ... | 
+| body_farf_dose | mJ/kg/day | numeric | Farfield | ... | ... |
+| brain_wifi_dose | mJ/kg/day | numeric | WiFi router | ... | ... | 
+| body_wifi_dose | mJ/kg/day | numeric | Wifi router | ... | ... |
+| brain_lptp_dose | mJ/kg/day | numeric | Laptop | ... | ... | 
+| body_lptp_dose | mJ/kg/day | numeric | Laptop | ... | ... |
+| brain_tblt_dose | mJ/kg/day | numeric | Tablet | ... | ... | 
+| body_tblt_dose | mJ/kg/day | numeric | Tablet | ... | ... |
+| brain_othe_dose | mJ/kg/day | numeric | Other | ... | ... | 
+| body_othe_dose | mJ/kg/day | numeric | Other | ... | ... |
 
 ### Parameters
 
@@ -161,18 +185,28 @@ Users may supply their own default values. The custom file must follow the same 
 print("Instructions on how to supply own default values will be added here")
 ```
 
+---
+
 ## 💬 Feedback
 
 Please submit feedback to ...
+
+---
 
 ## 📃 License
 
 License will be added here.
 
+---
+
 ## 🙏 Contributors and Acknowledgements
 
 Contributors will be listed here.
 
+---
+
 ## 📚 References and Further Resources
 
 Additional resources and references will be added here.
+
+---
