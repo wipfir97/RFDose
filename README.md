@@ -68,6 +68,7 @@ To calculate the RF-EMF doses for each participant, run the following code:
 # Calculate example doses
 calculate_emf_doses(example_data)
 ```
+
 ## 🧪 Development Status
 
 -  ✔️ Basic dose calculations implemented and validated
@@ -98,27 +99,30 @@ We consider the following exposure sources in the dose calculations:
 
 ### Input variables
 
+At the moment (version 0.1.0), **all input variables are optional**. 
+
 | Name  | Unit | Type | Exposure | Description | Assumptions | Constraints | Default value | Status | Required? |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | mpc_duration | s | numeric | Mobile calling | Daily duration of mobile phone calls (with or without app) | ... | >= 0 and <= 86400 | 425 | implemented | no |
-| mpc_ear_prop | - | numeric | Mobile calling | Proportion of time the mobile phone is held against head during mobile calls | ... | >= 0 and <= 1 | ... | implemented | no |
-| mpc_headp_prop | - | numeric | Mobile calling | Proportion of time headphones are used during mobile phone calls when mobile phone is NOT held against the ear. | ... | >= 0 and <= 1 | ... | implemented | no |
-| urbanicity | - | character | Far-field, mobile data | Urbanicity of participant's home | ... | urban, suburban, or rural | suburban | implemented | no |
-| mpd_duration | s | numeric | Mobile data | ... | ... | ... | ... | implemented | no |
-| mpd_wifi_prop | - | numeric | Mobile data | ... | ... | ... | ... | implemented | no |
-| dect_duration | s | numeric | Cordless phone | ... | ... | ... | ... | implemented | no |
-| dect_ear_prop | - | numeric | Cordless phone | ... | ... | ... | ... | implemented | no |
-| lptp_duration | s | numeric | Laptop | ... | ... | ... | ... | implemented | no |
-| tblt_duration | s | numeric | Tablet | ... | ... | ... | ... | implemented | no |
-| wifi_duration | s | numeric | WiFi router | ... | ... | ... | ... | implemented | no |
-| hotspot_duration | s | numeric | Other (Mobile hotspot) | ... | ... | ... | ... | implemented | no |
-| smartwatch_duration | s | numeric | Other (Smartwatch) | ... | ... | ... | ... | implemented | no |
-| tracker_duration | s | numeric | Other (Activity tracker) | ... | ... | ... | ... | implemented | no |
-| smarthome_duration | s | numeric | Other (Smarthome) | ... | ... | ... | ... | implemented | no |
-| vr_duration | s | numeric | Other (Virtual reality headset) | ... | ... | ... | ... | implemented | no |
-| headphone_duration | s | numeric | Other (Bluetooth headphones) | ... | ... | ... | ... | implemented | no |
+| mpc_ear_prop | - | numeric | Mobile calling | Proportion of time the mobile phone is held against head during mobile calls | Mobile phone used with headphones or in speaker mode in remaining time | >= 0 and <= 1 | 0.66 | implemented | no |
+| mpc_headp_prop | - | numeric | Mobile calling | Proportion of time headphones are used during mobile phone calls when mobile phone is NOT held against the ear. | 0.5 | >= 0 and <= 1 | Mobile phone used in speaker mode in remaining time while NOT held against head | implemented | no |
+| urbanicity | - | character | Far-field, mobile data | Urbanicity of participant's home | Home urbanicity and work urbanicity is the same | urban, suburban, or rural | suburban | implemented | no |
+| mpd_duration | s | numeric | Mobile data | Daily duration of data use on mobile phone | ... | >= 0 and <= 86400 | 10800 | implemented | no |
+| mpd_wifi_prop | - | numeric | Mobile data | Proportion of time mobile phone is connected to wifi during data use | Mobile data (3G/4G/5G) used in the remaining time | >= 0 and <= 1 | 0.5 | implemented | no |
+| mpd_high_dt_prop | - | numeric | Mobile data | Proportion of time spend with high data transfer activities during data use on mobile phone | Low data transfer activities done during remaining time | >= 0 and <= 1 | 0.5 | implemented | yes |
+| dect_duration | s | numeric | Cordless phone | Daily call duration of DECT/cordless phone calls | ... | >= 0 and <= 86400 | 204 | implemented | no |
+| dect_ear_prop | - | numeric | Cordless phone | Proportion of time DECT/cordless phone is held against ear during call | Cordless phone used in speaker mode in the remaining time | >= 0 and <= 1 | 0.9 | implemented | no |
+| lptp_duration | s | numeric | Laptop | Daily duration of laptop use | ... | >= 0 and <= 86400 | 4371 | implemented | no |
+| tblt_duration | s | numeric | Tablet | Daily duration of tablet use | ... | >= 0 and <= 86400 | 1617 | implemented | no |
+| wifi_duration | s | numeric | WiFi router | Daily duration of being in proximity to WiFi router | ... | >= 0 and <= 86400 | 59400 | implemented | no |
+| hotspot_duration | s | numeric | Other (Mobile hotspot) | Daily duration of using mobile phone as hotspot | ... | >= 0 and <= 86400 | 0 | implemented | no |
+| smartwatch_duration | s | numeric | Other (Smartwatch) | Daily duration of wearing smartwatch on wrist | ... | >= 0 and <= 86400 | 0 | implemented | no |
+| tracker_duration | s | numeric | Other (Activity tracker) | Daily duration of wearing tracker on arm | ... | >= 0 and <= 86400 | 0 | implemented | no |
+| smarthome_duration | s | numeric | Other (Smarthome) | Daily duration spent in a smarthome | ... | >= 0 and <= 86400 | 0 | implemented | no |
+| vr_duration | s | numeric | Other (Virtual reality headset) | Daily durarion of virtual reality headset use | ... | >= 0 and <= 86400 | 0 | implemented | no |
+| headphone_duration | s | numeric | Other (Bluetooth headphones) | Daily duration of using bluetooth headphones (all types of usage except for mobile phone call) | ... | >= 0 and <= 86400 | 8280 | implemented | no |
 
-For detailed information about the required input variables, please refer to the [variable overview file](data/user_variables.xlsx).
+For detailed information about the required input variables, please refer to the [input variable overview file](doc/user_variables.xlsx).
 
 ### Generated output variables
 
@@ -131,20 +135,31 @@ For detailed information about the required input variables, please refer to the
 
 ### Parameters
 
-Parameters are specified in this YAML file: 
+Parameters are specified in [this YAML file](inst/extdata/params.yaml)
 
-More detailed descriptions of each parameter, including units, can be found in the [parameter reference file](inst/extdata/params_reference.csv).
+More detailed descriptions of each parameter, including units, can be found in the [parameter reference file](doc/params_reference.csv). **Note: this parameter reference file is continuously updated and not yet completed.**
 
-The parameter file can be customized by the user. 
-Users can supply their own parameter file, but it must be structured exactly like the in-built parameter file.
+Users may supply their own parameter file. It must be structured exactly like the in-built parameter file (containing same parameter names and hierarchy).
+
+```{r}
+# Supply own parameter file
+print("Instructions on how to supply own parameter file will be added here")
+```
 
 ### Missing data and default values
 
 Default values are specified in [this YAML file](inst/extdata/defaultvariables.yaml)
 
-Missing values will be replaced with the values in this file. Variables with more than 10% missing data will cause a warning message to be raised.
+Missing values in the dataset supplied by the user will be replaced with the values in this file. 
 
-Users can supply their own default values. The custom file must follow the same structure as the in-build default variable file.
+At the moment, there is no limit to how much missing data is allowed. **However, variables with more than 10% missing data will raise a warning message.**
+
+Users may supply their own default values. The custom file must follow the same structure as the in-build default variable file (containing the same default value names).
+
+```{r}
+# Supply own default values
+print("Instructions on how to supply own default values will be added here")
+```
 
 ## 💬 Feedback
 
