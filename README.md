@@ -94,17 +94,17 @@ We consider the following exposure sources in the dose calculations:
 | Laptop | lptp | Laptop use |
 | Tablet | tblt | Tablet use |
 | Far-field | farf | Far-field exposure |
-| Other | other | Other devices: smart watch, tracker, VR headset, hotspot, bluetooth headphones, smart home |
+| Other | othe | Other devices: smart watch, tracker, VR headset, hotspot, bluetooth headphones, smart home |
 
 ### Input variables
 
-| Name  | Unit | Type | Exposure | Description | Constraints | Default value | Status |
-| --- | --- | --- | --- | --- | --- | --- | --- |
-| mpc_duration | s | numeric | Mobile calling | ... | >= 0 and <= 86400 | 425 | implemented |
-| mpc_ear_prop | - | numeric | Mobile calling | ... | >= 0 and <= 1 | ... | implemented |
-| mpc_headp_prop | - | numeric | Mobile calling | ... | >= 0 and <= 1 | ... | implemented |
-| urbanicity | - | numeric | Multiple | ... | urban, suburban, or rural | suburban | implemented |
-| ... | ... | ... | ... | ... | ... | ... | ... |
+| Name  | Unit | Type | Exposure | Description | Assumptions | Constraints | Default value | Status | Required? |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| mpc_duration | s | numeric | Mobile calling | Daily duration of mobile phone calls (with or without app) | ... | >= 0 and <= 86400 | 425 | implemented | no |
+| mpc_ear_prop | - | numeric | Mobile calling | Proportion of time the mobile phone is held against head during mobile calls | ... | >= 0 and <= 1 | ... | implemented | no |
+| mpc_headp_prop | - | numeric | Mobile calling | Proportion of time headphones are used during mobile phone calls when mobile phone is NOT held against the ear. | ... | >= 0 and <= 1 | ... | implemented | no |
+| urbanicity | - | numeric | Multiple | Urbanicity of participant's home | ... | urban, suburban, or rural | suburban | implemented | no |
+| ... | ... | ... | ... | ... | ... | ... | ... | ... | ... |
 
 For detailed information about the required input variables, please refer to the [variable overview file](data/user_variables.xlsx).
 
