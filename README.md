@@ -103,8 +103,20 @@ We consider the following exposure sources in the dose calculations:
 | mpc_duration | s | numeric | Mobile calling | Daily duration of mobile phone calls (with or without app) | ... | >= 0 and <= 86400 | 425 | implemented | no |
 | mpc_ear_prop | - | numeric | Mobile calling | Proportion of time the mobile phone is held against head during mobile calls | ... | >= 0 and <= 1 | ... | implemented | no |
 | mpc_headp_prop | - | numeric | Mobile calling | Proportion of time headphones are used during mobile phone calls when mobile phone is NOT held against the ear. | ... | >= 0 and <= 1 | ... | implemented | no |
-| urbanicity | - | numeric | Multiple | Urbanicity of participant's home | ... | urban, suburban, or rural | suburban | implemented | no |
-| ... | ... | ... | ... | ... | ... | ... | ... | ... | ... |
+| urbanicity | - | character | Far-field, mobile data | Urbanicity of participant's home | ... | urban, suburban, or rural | suburban | implemented | no |
+| mpd_duration | s | numeric | Mobile data | ... | ... | ... | ... | implemented | no |
+| mpd_wifi_prop | - | numeric | Mobile data | ... | ... | ... | ... | implemented | no |
+| dect_duration | s | numeric | Cordless phone | ... | ... | ... | ... | implemented | no |
+| dect_ear_prop | - | numeric | Cordless phone | ... | ... | ... | ... | implemented | no |
+| lptp_duration | s | numeric | Laptop | ... | ... | ... | ... | implemented | no |
+| tblt_duration | s | numeric | Tablet | ... | ... | ... | ... | implemented | no |
+| wifi_duration | s | numeric | WiFi router | ... | ... | ... | ... | implemented | no |
+| hotspot_duration | s | numeric | Other (Mobile hotspot) | ... | ... | ... | ... | implemented | no |
+| smartwatch_duration | s | numeric | Other (Smartwatch) | ... | ... | ... | ... | implemented | no |
+| tracker_duration | s | numeric | Other (Activity tracker) | ... | ... | ... | ... | implemented | no |
+| smarthome_duration | s | numeric | Other (Smarthome) | ... | ... | ... | ... | implemented | no |
+| vr_duration | s | numeric | Other (Virtual reality headset) | ... | ... | ... | ... | implemented | no |
+| headphone_duration | s | numeric | Other (Bluetooth headphones) | ... | ... | ... | ... | implemented | no |
 
 For detailed information about the required input variables, please refer to the [variable overview file](data/user_variables.xlsx).
 
