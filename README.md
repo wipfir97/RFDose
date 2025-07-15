@@ -2,13 +2,12 @@
 
 ⚡ An R package for RF-EMF dose calculations
 
-⚠️ Development status: work in progress ⌛
-
 ---
 
 ## 📦 About
 
-📶 The ETAIN Dose Calculator ... 
+📶 The Dose Calculator ... 
+
 
 ---
 
@@ -79,20 +78,42 @@ calculate_emf_doses(example_data)
 
 ## 🧪 Development Status
 
--  ✔️ Basic dose calculations implemented and validated
--  ✔️ YAML parameter file generated
--  ✔️ Added additional variable: high vs low data transfer activities
--  ✔️ Default values implemented
--  ✔️ Optional modification of parameters and default values enabled
--  ⌛ Documentation of functions and input data in progress
--  ⌛ Documentation and easily accessible parameter file in progress
--  ❗ Final validation of calculations: custom parameters, new variables
+### Version overview
 
-### TODOs after GOLIAT Meeting
+| Version | Name | Status |
+| --- | --- | --- |
+| 0.0.1 | Basic test version (not on Github) | Completed |
+| 0.1.0 | Initial draft version | Completed |
+| 0.2.0 | Revised draft version with updated calculations and variables | In development |
 
--  Change mpd_high_dt_prop and mpd_duration to two durations: mpd_dur_high and mpd_dur_low
--  Add additional variables? e.g. position of phone (which is a variable at the moment)
--  Combine smartwatch and activity tracker
+
+| Revision | Status | Version |
+| --- | --- | --- |
+| Implement basic dose calculations | Completed | 0.0.1 |
+| Add default values for missing data | Completed | 0.1.0 |
+| Add customizable parameter and default value input option | Completed | 0.1.0 |
+| Update calculations and parameters | In progress | 0.2.0 |
+| Add additional input variables | Planned | 0.2.0 |
+| Validation of calculations | Planned | 0.2.0 |
+| Completion of function and parameter documentation | Planned | 0.2.0 |
+
+### Upcoming new variables in version 0.2.0
+
+| Name  | Unit | Type | Exposure | Description | Assumptions | Constraints | Default value | Status | Required? |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| comp_5g | - | binary | --- | Ownership of 5G compatible phone | --- | --- | --- | --- | --- |
+| bt_headp_pref | - | binary | --- | Using 1 or both headphones | --- | --- | --- | --- | --- |
+| mpd_dur_low | s | numeric | --- | --- | --- | --- | --- | --- | --- |
+| mpd_dur_lowtomed | s | numeric | --- | --- | --- | --- | --- | --- | --- |
+| mpd_dur_medtohigh | s | numeric | --- | --- | --- | --- | --- | --- | --- |
+| mpd_dur_high | s | numeric | --- | --- | --- | --- | --- | --- | --- |
+| wifi_dur (will have different name) | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+
+### Variables to be removed in version 0.2.0
+
+- smarthome_duration: to be removed
+- wifi_duration: to be replaced
+- mpd_high_dt_prop: to be replaced
 
 ---
 
