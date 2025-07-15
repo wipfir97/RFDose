@@ -83,19 +83,9 @@ calculate_emf_doses(example_data)
 | Version | Name | Status |
 | --- | --- | --- |
 | 0.0.1 | Basic test version (not on Github) | Completed |
-| 0.1.0 | Initial draft version | Completed |
+| 0.1.0 | Initial draft version fo | Completed |
 | 0.2.0 | Revised draft version with updated calculations and variables | In development |
 
-
-| Revision | Status | Version |
-| --- | --- | --- |
-| Implement basic dose calculations | Completed | 0.0.1 |
-| Add default values for missing data | Completed | 0.1.0 |
-| Add customizable parameter and default value input option | Completed | 0.1.0 |
-| Update calculations and parameters | In progress | 0.2.0 |
-| Add additional input variables | Planned | 0.2.0 |
-| Validation of calculations | Planned | 0.2.0 |
-| Completion of function and parameter documentation | Planned | 0.2.0 |
 
 ### Upcoming new variables in version 0.2.0
 
