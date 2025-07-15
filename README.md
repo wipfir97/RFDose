@@ -88,6 +88,12 @@ calculate_emf_doses(example_data)
 -  ⌛ Documentation and easily accessible parameter file in progress
 -  ❗ Final validation of calculations: custom parameters, new variables
 
+### TODOs after GOLIAT Meeting
+
+-  Change mpd_high_dt_prop and mpd_duration to two durations: mpd_dur_high and mpd_dur_low
+-  Add additional variables? e.g. position of phone (which is a variable at the moment)
+-  Combine smartwatch and activity tracker
+
 ---
 
 ## 🔍 Documentation
