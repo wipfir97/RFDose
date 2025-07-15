@@ -83,7 +83,7 @@ calculate_emf_doses(example_data)
 | Version | Name | Status |
 | --- | --- | --- |
 | 0.0.1 | Basic test version (not on Github) | Completed |
-| 0.1.0 | Initial draft version fo | Completed |
+| 0.1.0 | Initial draft version for internal use | Completed |
 | 0.2.0 | Revised draft version with updated calculations and variables | In development |
 
 
@@ -155,8 +155,8 @@ For detailed information about the required input variables, please refer to the
 
 | Name  | Unit | Type | Exposure | Tissue | Description | 
 | --- | --- | --- | --- | --- | --- |
-| **brain_dotal_dose** | mJ/kg/day | numeric | All exposures | ... | ... |
-| **body_dotal_dose** | mJ/kg/day | numeric | All exposures | ... | ... |
+| **brain_total_dose** | mJ/kg/day | numeric | All exposures | ... | ... |
+| **body_total_dose** | mJ/kg/day | numeric | All exposures | ... | ... |
 | brain_call_dose | mJ/kg/day | numeric | Mobile calling | ... | ... | 
 | body_call_dose | mJ/kg/day | numeric | Mobile calling | ... | ... | 
 | brain_data_dose | mJ/kg/day | numeric | Mobile data | ... | ... | 
