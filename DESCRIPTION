@@ -1,7 +1,7 @@
 Package: ETAINDoseCalculator
 Type: Package
 Title: Functions for RF-EMF Dose Calculations
-Version: 0.1.0
+Version: 0.2.0
 Author: Irina Wipf
 Maintainer: <irina.wipf@swisstph.ch>
 Description: Package for calculating RF-EMF doses for cohorts. Calculations are based on the ETAIN Dose model.
