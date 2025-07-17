@@ -28,22 +28,22 @@ get_mobilecall_dose <- function(duration,
   # Calculate doses from different sources ====================================
   ## Calculate dose from phone (no bluetooth contribution) --------------------
   ### Brain
-  phone_dose_brain   <- get_mobilecall_phone_dose(duration      = duration,
-                                                  ear_prop      = ear_prop,
-                                                  speaker_prop  = speaker_prop,
-                                                  headp_prop    = headp_prop,
-                                                  urbanicity    = urbanicity,
-                                                  params        = call_params,
-                                                  tissue_params = brain_params)
+  phone_dose_brain <- get_mobilecall_phone_dose(duration      = duration,
+                                                ear_prop      = ear_prop,
+                                                speaker_prop  = speaker_prop,
+                                                headp_prop    = headp_prop,
+                                                urbanicity    = urbanicity,
+                                                params        = call_params,
+                                                tissue_params = brain_params)
 
-  ### Brain
-  phone_dose_body   <- get_mobilecall_phone_dose(duration      = duration,
-                                                 ear_prop      = ear_prop,
-                                                 speaker_prop  = speaker_prop,
-                                                 headp_prop    = headp_prop,
-                                                 urbanicity    = urbanicity,
-                                                 params        = call_params,
-                                                 tissue_params = body_params)
+  ### Body
+  phone_dose_body <- get_mobilecall_phone_dose(duration      = duration,
+                                               ear_prop      = ear_prop,
+                                               speaker_prop  = speaker_prop,
+                                               headp_prop    = headp_prop,
+                                               urbanicity    = urbanicity,
+                                               params        = call_params,
+                                               tissue_params = body_params)
 
   ## Calculate dose from phone (bluetooth contribution) -----------------------
   ### scaled with headphone use proportion!
