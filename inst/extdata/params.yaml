@@ -124,9 +124,6 @@ devices:
       tech_3g_prop: 0.1
       tech_4g_prop: 0.75
       tech_5g_prop: 0.15
-      tech_3g_pwr: 56.95982344
-      tech_4g_pwr: 12.89889866
-      tech_5g_pwr: 23.54376238
       wifi_2_pwr: 2.534323234
       wifi_5_pwr: 2.534323234 
       data_3g_high_ind_pwr: 70.00
@@ -135,34 +132,34 @@ devices:
       data_3g_low_ind_pwr: 51.16
       data_3g_low_otd_pwr: 21.82
       data_3g_low_tra_pwr: 21.82
-      data_4g_high_ind_pwr: 24.31
-      data_4g_high_otd_pwr: 24.33
-      data_4g_high_tra_pwr: 24.33
-      data_4g_low_ind_pwr: 1.49
-      data_4g_low_otd_pwr: 1.49
-      data_4g_low_tra_pwr: 1.49
-      data_5g_high_ind_pwr: 46.43
-      data_5g_high_otd_pwr: 41.31
-      data_5g_high_tra_pwr: 41.31
-      data_5g_low_ind_pwr: 1.21
-      data_5g_low_otd_pwr: 1.08
-      data_5g_low_tra_pwr: 1.08
-      wifi_2_high_pwr: 22.49
+      data_4g_high_ind_pwr: 22.39
+      data_4g_high_otd_pwr: 19.66
+      data_4g_high_tra_pwr: 21.35
+      data_4g_low_ind_pwr: 1.26
+      data_4g_low_otd_pwr: 1.11
+      data_4g_low_tra_pwr: 1.20
+      data_5g_high_ind_pwr: 20.26
+      data_5g_high_otd_pwr: 16.51
+      data_5g_high_tra_pwr: 9.06
+      data_5g_low_ind_pwr: 0.45
+      data_5g_low_otd_pwr: 0.37
+      data_5g_low_tra_pwr: 0.29
+      wifi_2_high_pwr: 7.21
       wifi_2_low_pwr: 1.03
-      wifi_5_high_pwr: 22.49
-      wifi_5_low_pwr: 1.03
+      wifi_5_high_pwr: 14.42
+      wifi_5_low_pwr: 6.54
       wifi_2_high_dutycycle: 0.22
       wifi_2_low_dutycycle: 0.01
-      wifi_5_high_dutycycle: 0.22
-      wifi_5_low_dutycycle: 0.01
+      wifi_5_high_dutycycle: 0.07
+      wifi_5_low_dutycycle: 0.03
     brain:
-      data_face_sar: 0.003007437
+      data_face_sar: 0.002870465
       wifi_2_face_sar: 0.000999468
       wifi_5_face_sar: 0.000163091
     body:
-      data_face_sar: 0.00095
-      wifi_2_face_sar: 0.0009
-      wifi_5_face_sar: 0.0009
+      data_face_sar: 0.000988818
+      wifi_2_face_sar: 0.000861
+      wifi_5_face_sar: 0.000586175
   farf:
     shared:
       home_urban_pwr: 0.05198939

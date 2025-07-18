@@ -57,10 +57,10 @@ get_mobiledata_dose <- function(duration,
   ## Calculate body dose ------------------------------------------------------
   body_dose    <- duration*aggr_pwr*body_sar
 
-
   # Return output =============================================================
   output_list <- list("brain_data_dose" = brain_dose,
                       "body_data_dose"  = body_dose)
+
   return(output_list)
 }
 
@@ -105,9 +105,7 @@ get_mobiledata_pwr <- function(wifi_prop,
                                   data_3g_low_outd,
                                   data_3g_low_trans)
   ### Total 3g ----
-  #data_3g    <- params$tech_3g_prop*params$tech_3g_pwr
   data_3g <- sum(data_3g_high, data_3g_low) * params$tech_3g_prop
-
 
   ## 4g -----------------------------------------------------------------------
   ### High data transfer ----
@@ -133,7 +131,6 @@ get_mobiledata_pwr <- function(wifi_prop,
                                   data_4g_low_outd,
                                   data_4g_low_trans)
   ### Total 4g ----
-  #data_4g    <- params$tech_4g_prop*params$tech_4g_pwr
   data_4g <- sum(data_4g_high, data_4g_low)  * params$tech_4g_prop
 
   ## 5g -----------------------------------------------------------------------
@@ -160,7 +157,6 @@ get_mobiledata_pwr <- function(wifi_prop,
                                   data_5g_low_outd,
                                   data_5g_low_trans)
   ### Total 5g ----
-  #data_5g    <- params$tech_5g_prop*params$tech_5g_pwr
   data_5g <- sum(data_5g_high, data_5g_low) * params$tech_5g_prop
 
 
