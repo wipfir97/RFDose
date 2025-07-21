@@ -25,7 +25,7 @@ get_farfield_dose <- function(urbanicity,
 
   # Calculate aggregated power ================================================
   aggr_pwr     <- get_farfield_pwr(urb_list = urb_list,
-                                   params = farf_params)
+                                   params   = farf_params)
 
   # Calculate tissue-specific SAR =============================================
   ## Calculate aggregated brain SAR -------------------------------------------
@@ -46,6 +46,7 @@ get_farfield_dose <- function(urbanicity,
   # Return output =============================================================
   output_list <- list("brain_farf_dose" = brain_dose,
                       "body_farf_dose"  = body_dose)
+
   return(output_list)
 }
 
@@ -71,6 +72,7 @@ get_farfield_pwr <- function(urb_list,
                                           home_subur,
                                           home_rural)
 
+
   # Calculate far-field power outdoors ========================================
   ## Urban outdoors
   outd_urban    <- urb_list$home_urban * params$outdoor_urban_pwr
@@ -82,6 +84,7 @@ get_farfield_pwr <- function(urb_list,
   outd_contr    <- params$outdoor_prop * sum(outd_urban,
                                              outd_subur,
                                              outd_rural)
+
 
   # Calculate far-field power at work =========================================
   ## Urban work
@@ -95,6 +98,7 @@ get_farfield_pwr <- function(urb_list,
                                           work_subur,
                                           work_rural)
 
+
   # Calculate far-field power during commute/transport ========================
   tran_contr    <- params$travel_prop * params$travel_pwr
 
@@ -103,6 +107,7 @@ get_farfield_pwr <- function(urb_list,
                        outd_contr,
                        work_contr,
                        tran_contr)
+
   return(aggr_pwr)
 }
 

@@ -1,13 +1,4 @@
 # =============================================================================
-#' Purrr-style operator (grapes or or grapes)
-#'
-#' @param a a
-#' @param b b
-`%||%` <- function(a, b) {
-  if (!is.null(a)) a else b
-}
-
-# =============================================================================
 #' Loading parameters
 #'
 #'@param filename Name of parameter file to load (must be in yaml format)
@@ -63,35 +54,7 @@ load_tissue_params <- function(params, device_type, tissue_name) {
   return(tissue_params)
 }
 
-# ============================================================================
-#' Merge custom parameters with base parameters
-#'
-#' @param base base parameter list
-#' @param custom custom parameter list
-#' @returns Modified parameter YAML
-merge_custom_base_params <- function(base,
-                                     custom) {
-  return(NA)
-}
 
-
-# ============================================================================
-#' Helper function to convert flat parameter list to nested YAML
-#'
-#' @param lst list
-#' @param keys keys
-#' @param value value
-#' @returns nested parameter list
-add_path <- function(lst, keys, value) {
-  if (length(keys) == 1) {
-    lst[[keys]] <- value
-  } else {
-    key <- keys[1]
-    rest <- keys[-1]
-    lst[[key]] <- add_path(lst[[key]], rest, value)
-  }
-  return(lst)
-}
 
 #' Convert flat parameter table to nested parameter YAML
 #'
@@ -105,30 +68,6 @@ flat_params_to_nested <- function(flat) {
     nested_list <- add_path(nested_list, keys, flat$value[i])
   }
   return(nested_list)
-}
-
-
-# ============================================================================
-#' Convert nested parameter YAML to flat parameter table
-#'
-#' @param nested nested YAML parameter list
-#' @param parent_path parent path (optional)
-#' @returns flat parameter list
-nested_params_to_flat <- function(nested,
-                                  parent_path = NULL) {
-  # Generate output list
-  out <- list()
-  # Go through nested list elements, paste names with .
-  for (name in names(nested)) {
-    full_path <- c(parent_path, name)
-    if (is.list(nested[[name]])) {
-      out <- c(out, nested_params_to_flat(nested[[name]], full_path))
-    } else {
-      path_str <- paste(full_path, collapse = ".")
-      out[[path_str]] <- nested[[name]]
-    }
-  }
-  return(out)
 }
 
 # =============================================================================

@@ -32,6 +32,7 @@ get_wifi_dose <- function(duration,
                                body_params)
 
 
+
   # Calculate total doses =====================================================
   # Calculate brain dose ------------------------------------------------------
   brain_dose   <- duration*aggr_pwr*brain_sar

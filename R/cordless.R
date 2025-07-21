@@ -41,7 +41,6 @@ get_cordless_dose <- function(duration,
   ## Body SAR -----------------------------------------------------------------
   body_sar     <- get_cordless_sar(ear_proportion, dect_params, body_params)
 
-
   # Calculate total doses =====================================================
   ## Calculate total brain dose -----------------------------------------------
   brain_dose   <- duration*aggr_pwr*brain_sar

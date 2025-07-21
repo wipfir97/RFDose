@@ -13,6 +13,7 @@ get_other_dose <- function(duration_hotspot,
                            duration_vr,
                            duration_headphones,
                            duration_smarthome,
+                           duration_gaming,
                            params) {
   # Calculate doses from individual devices ===================================
   ## From hotspot -------------------------------------------------------------
@@ -39,6 +40,11 @@ get_other_dose <- function(duration_hotspot,
   smah_dose <- get_smarthome_dose(duration_smarthome,
                                   params)
 
+  ## From portaple gaming device ----------------------------------------------
+  game_dose <- get_gaming_dose(duration_gaming,
+                               params)
+
+
   # Add doses and return total dose ===========================================
   ## Brain
   total_brain_dose <- sum(hots_dose$hots_brain_dose,
@@ -46,14 +52,16 @@ get_other_dose <- function(duration_hotspot,
                           trac_dose$tracker_brain_dose,
                           virt_dose$vr_brain_dose,
                           head_dose$headphone_brain_dose,
-                          smah_dose$smah_brain_dose)
+                          smah_dose$smah_brain_dose,
+                          game_dose$game_brain_dose)
   ## Body
   total_body_dose  <- sum(hots_dose$hots_body_dose,
                           watc_dose$watch_body_dose,
                           trac_dose$tracker_body_dose,
                           virt_dose$vr_body_dose,
                           head_dose$headphone_body_dose,
-                          smah_dose$smah_body_dose)
+                          smah_dose$smah_body_dose,
+                          game_dose$game_body_dose)
   ## Save output
   output <- list("brain_othe_dose" = total_brain_dose,
                  "body_othe_dose"  = total_body_dose)
@@ -468,6 +476,47 @@ get_smarthome_dose <- function(duration_smarthome,
   return(output)
 }
 
+# Gaming with portable console ------------------------------------------------
+#' Calculate brain and body dose from gaming with a portable console
+#'
+#' @param duration_gaming Daily gaming duration with portable console in seconds
+#' @param params Parameter list
+#' @returns list with daily brain and body dose from smart home
+get_gaming_dose <- function(duration_gaming,
+                               params) {
+  # Get smart home parameters from parameter list -----------------------------
+  ## Device-specific
+  game_params        <- load_device_params(params, "game")
+  ## Brain-specific
+  game_brain_params  <- load_tissue_params(params, "game", "brain")
+  ## Body-specific
+  game_body_params   <- load_tissue_params(params, "game", "body")
+
+  # Brain
+  ## TODO: this calculation should be simplified and harmonized with other calculations!
+  ## 2.4GHz
+  game_brain_2 <- game_brain_params$game_2_sar*game_params$wifi_2_prop*game_params$game_2_pwr*game_params$game_2_dutycycle
+  ## 5.0GHz
+  game_brain_5 <- game_brain_params$game_5_sar*game_params$wifi_5_prop*game_params$game_5_pwr*game_params$game_5_dutycycle
+  ## Aggregated
+  game_brain_dose <- duration_gaming*game_params$game_online_prop*sum(game_brain_2, game_brain_5)
+
+  # Body
+  ## TODO: this calculation should be simplified and harmonized with other calculations!
+  ## 2.4GHz
+  game_body_2 <- game_body_params$game_2_sar*game_params$wifi_2_prop*game_params$game_2_pwr*game_params$game_2_dutycycle
+  ## 5.0GHz
+  game_body_5 <- game_body_params$game_5_sar*game_params$wifi_5_prop*game_params$game_5_pwr*game_params$game_5_dutycycle
+  ## Aggregated
+  game_body_dose <- duration_gaming*game_params$game_online_prop*sum(game_body_2, game_body_5)
+
+  # Make list with brain and body dose and return output
+  output <- list("game_brain_dose" = game_brain_dose,
+                 "game_body_dose"  = game_body_dose)
+
+
+  return(output)
+}
 
 # Output power calculations ===================================================
 # -----------------------------------------------------------------------------
@@ -560,6 +609,7 @@ get_smarthome_pwr <- function(params) {
   smah_pwr <- params$smah_pwr
   return(smah_pwr)
 }
+
 
 
 
@@ -664,3 +714,5 @@ get_smarthome_sar <- function(params, tissue_params) {
   smah_sar <- tissue_params$smah_sar
   return(smah_sar)
 }
+
+

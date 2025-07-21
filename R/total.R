@@ -123,6 +123,7 @@ get_total_dose <- function(sample,
                               duration_vr         = sample$vr_duration,
                               duration_headphones = sample$headphone_duration,
                               duration_smarthome  = sample$smarthome_duration,
+                              duration_gaming     = sample$gaming_duration,
                               params              = params)
 
 
