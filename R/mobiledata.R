@@ -7,6 +7,9 @@
 #' @param use_5g If participant uses 5G or not
 #' @param wifi_prop Proportion of time WiFi connection is used for data
 #' transfer (vs mobile data)
+#' @param urbanicity urbanicity
+#' @param act_pwr_props activity power proportions
+#' @param travel_time travel time
 #' @param high_pwr_prop Proportion of time spent on high data transfer activities
 #' @param params Parameter list
 #' @returns List with brain dose and body dose in mJ/kg/day
@@ -14,6 +17,9 @@
 get_mobiledata_dose <- function(duration,
                                 use_5g,
                                 wifi_prop,
+                                urbanicity,
+                                act_pwr_props,
+                                travel_time,
                                 high_pwr_prop,
                                 params) {
   # Extract parameters ========================================================
@@ -29,16 +35,27 @@ get_mobiledata_dose <- function(duration,
   ## Derive phone wifi/data proportions ---------------------------------------
   data_prop    <- 1 - wifi_prop
 
+  ## Derive proportion spent at home vs work vs outdoors vs travelling --------
+  loc_props <- calculate_location_proportions(travel_time = travel_time,
+                                              home_prop   = params$home_prop,
+                                              work_prop   = params$work_prop,
+                                              outd_prop   = params$outd_prop)
+
+  print(loc_props)
+  print(act_pwr_props)
   # Check input values for validity ===========================================
   check_proportions(proportions = c(wifi_prop, data_prop))
   check_duration(duration       = duration)
 
   # Calculate aggregated power ================================================
-  aggr_pwr     <- get_mobiledata_pwr(wifi_prop = wifi_prop,
-                                     use_5g = use_5g,
-                                     data_prop = data_prop,
+  aggr_pwr     <- get_mobiledata_pwr(wifi_prop     = wifi_prop,
+                                     use_5g        = use_5g,
+                                     urbanicity    = urbanicity,
+                                     loc_props     = loc_props,
+                                     act_pwr_props = act_pwr_props,
+                                     data_prop     = data_prop,
                                      high_pwr_prop = high_pwr_prop,
-                                     params = data_params)
+                                     params        = data_params)
 
   # Calculate tissue-specific SAR =============================================
   ## Calculate aggregated brain SAR -------------------------------------------
@@ -71,16 +88,36 @@ get_mobiledata_dose <- function(duration,
 #' Calculate mobile data aggregated power
 #'
 #' @param wifi_prop wifi proportion
+#' @param use_5g ...
+#' @param urbanicity ...
 #' @param data_prop data proportion
+#' @param loc_props ....
+#' @param act_pwr_props ....
 #' @param high_pwr_prop Proportion of time spent on high data transfer activities
 #' @param params parameter list
 #' @returns aggregated power
 get_mobiledata_pwr <- function(wifi_prop,
-                               use_5g,
-                               data_prop,
-                               high_pwr_prop,
+                               use_5g, #new
+                               act_pwr_props, #new
+                               loc_props, #new
+                               data_prop, #deprecated
+                               high_pwr_prop, #deprecated
+                               urbanicity, #new
                                params) {
-  # Get low power proportion ==================================================
+  # NEW CODE IN DEVELOPMENT ===================================================
+  # Get power from data
+  data_pwr <- get_mpd_data_pwr(use_5g = use_5g,
+                               urbanicity = urbanicity,
+                               act_pwr_props = act_pwr_props,
+                               loc_props = loc_props,
+                               params = params)
+  # Get power from wifi
+  wifi_pwr <- get_mpd_wifi_pwr(params)
+  # scale by wifi vs data use and return result
+  aggr_pwr <- wifi_prop*wifi_pwr + (1-wifi_prop)*data_pwr
+  # return(aggr_pwr)
+
+  # OLD CODE below - Get low power proportion =================================
   low_pwr_prop <- 1-high_pwr_prop
   check_proportions(high_pwr_prop)
   # From mobile data ==========================================================
@@ -208,59 +245,113 @@ get_mobiledata_pwr <- function(wifi_prop,
 }
 
 # -----------------------------------------------------------------------------
-#' Calculate mobile data output power from low power activities
+#' Calculate mpd power from data
 #'
-#' Examples for low output power activities: ...
-#' @param mpd_low_dt_dur daily duration of low output power activities (s)
+#' @param use_5g TRUE if participant uses 5G, FALSE otherwise
+#' @param urbanicity urbanicity of home/work environment
+#' @param act_pwr_props ...
+#' @param loc_props location proportions
 #' @param params device-specific parameters
 #' @returns pwr
-get_mobiledata_low_pwr <- function(mpd_low_dt_dur,
-                                   params) {
+get_mpd_data_pwr <- function(use_5g,
+                             urbanicity,
+                             act_pwr_props,
+                             loc_props,
+                             params) {
+  # 3G
+  data_3g_pwr <- get_mpd_data_3g_pwr(params)
+  # 4G
+  data_4g_pwr <- get_mpd_data_4g_pwr(params)
+  # 5G
+  data_5g_pwr <- get_mpd_data_5g_pwr(params)
+  # Scale by use proportions depending on 5G use variable
+  props <- calculate_data_tech_proportions(use_5g = use_5g,
+                                           params = params)
+  data_pwr <- sum(props$prop_3g*data_3g_pwr,
+                  props$prop_4g*data_4g_pwr,
+                  props$prop_5g*data_5g_pwr)
+
+  return(data_pwr)
+}
+
+# -----------------------------------------------------------------------------
+#' Calculate mpd power from wifi
+#'
+#' @param params device-specific parameters
+#' @returns pwr
+get_mpd_wifi_pwr <- function(params) {
+  # 2.4GHz
+  wifi_2_pwr <- get_mpd_wifi_2_pwr(params)
+  # 5.0GHz
+  wifi_5_pwr <- get_mpd_wifi_5_pwr(params)
+  # Scale by use proportions and add
+  wifi_pwr <- sum(params$wifi_2_prop*wifi_2_pwr,
+                  params$wifi_5_prop*wifi_5_pwr)
+  return(wifi_pwr)
+}
+
+# -----------------------------------------------------------------------------
+#' Calculate mpd power from 3G
+#'
+#' @param urbanicity urbanicity
+#' @param loc_props loc props
+#' @param act_pwr_props ...
+#' @param params device-specific parameters
+#' @returns pwr
+get_mpd_data_3g_pwr <- function(urbanicity,
+                                loc_props,
+                                act_pwr_props,
+                                params) {
+  # High data transfer
+  # Low data transfer
   return(NA)
 }
 
 # -----------------------------------------------------------------------------
-#' Calculate mobile data output power from low-medium power activities
+#' Calculate mpd power from 4G
 #'
-#' Examples for low-medium output power activities: ...
-#' @param mpd_lowmed_dt_dur daily duration of low-medium output power activities (s)
+#' @param urbanicity urbanicity
+#' @param loc_props loc props
+#' @param act_pwr_props ...
 #' @param params device-specific parameters
 #' @returns pwr
-get_mobiledata_lowmed_pwr <- function(mpd_lowmed_dt_dur,
-                                      params) {
+get_mpd_data_4g_pwr <- function(urbanicity,
+                                loc_props,
+                                act_pwr_props,
+                                params) {
   return(NA)
 }
 
 # -----------------------------------------------------------------------------
-#' Calculate mobile data output power from medium-high power activities
+#' Calculate mpd power from 5G
 #'
-#' Examples for medium-high output power activities: ...
-#' @param mpd_medhigh_dt_dur daily duration of medium-high output power activities (s)
+#' @param urbanicity urbanicity
+#' @param loc_props loc props
+#' @param act_pwr_props ...
 #' @param params device-specific parameters
 #' @returns pwr
-get_mobiledata_medhigh_pwr <- function(mpd_medhigh_dt_dur,
-                                       params) {
+get_mpd_data_5g_pwr <- function(urbanicty,
+                                loc_props,
+                                act_pwr_props,
+                                params) {
   return(NA)
 }
 
 # -----------------------------------------------------------------------------
-#' Calculate mobile data output power from high power activities
+#' Calculate wifi power from 2.4ghz
 #'
-#' Examples for high output power activities: ...
-#' @param mpd_high_dt_dur daily duration of high output power activities (s)
 #' @param params device-specific parameters
 #' @returns pwr
-get_mobiledata_high_pwr <- function(mpd_high_dt_dur,
-                                    params) {
+get_mpd_wifi_2_pwr <- function(params) {
   return(NA)
 }
 
 # -----------------------------------------------------------------------------
-#' Calculate mobile data output power from WiFi
+#' Calculate wifi power from 5.0ghz
 #'
 #' @param params device-specific parameters
 #' @returns pwr
-get_mobiledata_wifi_pwr <- function(params) {
+get_mpd_wifi_5_pwr <- function(params) {
   return(NA)
 }
 

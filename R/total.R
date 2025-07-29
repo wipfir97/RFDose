@@ -81,6 +81,8 @@ calculate_emf_doses <- function(data,
 get_total_dose <- function(sample,
                            params) {
 
+
+
   # Calculate contribution of each exposure source ============================
   ## Calculate mobile call contribution ---------------------------------------
   call_dose <- get_mobilecall_dose(duration   = sample$mpc_duration,
@@ -90,8 +92,17 @@ get_total_dose <- function(sample,
                                     params     = params)
 
   ## Calculate mobile data contribution ---------------------------------------
+  ### Calculate proportions of mobile data activities
+  act_pwr_props <- get_act_pwr_props(low_dur     = sample$mpd_low_dt_dur,
+                                     lowmed_dur  = sample$mpd_lowmed_dt_dur,
+                                     medhigh_dur = sample$mpd_medhigh_dt_dur,
+                                     high_dur    = sample$mpd_high_dt_dur)
+  ### Calculate dose
   data_dose <- get_mobiledata_dose(duration      = sample$mpd_duration,
                                    use_5g        = sample$use_5g,
+                                   urbanicity    = sample$urbanicity,
+                                   travel_time   = sample$travel_time,
+                                   act_pwr_props = act_pwr_props,
                                    wifi_prop     = sample$mpd_wifi_prop,
                                    high_pwr_prop = sample$mpd_high_dt_prop,
                                    params)

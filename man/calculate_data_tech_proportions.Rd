@@ -4,10 +4,12 @@
 \alias{calculate_data_tech_proportions}
 \title{Get mobile data technology use proportions}
 \usage{
-calculate_data_tech_proportions(use_5g)
+calculate_data_tech_proportions(use_5g, params)
 }
 \arguments{
 \item{use_5g}{boolean variable (TRUE if participant uses 5G, FALSE otherwise)}
+
+\item{params}{parameter list}
 }
 \value{
 list with technology use proportions

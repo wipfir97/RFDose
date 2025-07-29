@@ -94,7 +94,6 @@ check_proportions <- function(proportions) {
   # For vector of proportions, check if they add up to 1
   if (length(proportions) > 1) {
     if (!isTRUE(all.equal(sum(proportions), 1, tolerance = 1e-6))) {
-      print(proportions)
       warning("Proportions do not sum to 1. Check your input values.")
       return(FALSE)
     }
@@ -242,7 +241,51 @@ calculate_location_proportions <- function(travel_time,
 #' Based on user variable use_5g that indicates if participant uses 5G on mobile
 #' phone or not.
 #' @param use_5g boolean variable (TRUE if participant uses 5G, FALSE otherwise)
+#' @param params parameter list
 #' @returns list with technology use proportions
-calculate_data_tech_proportions <- function(use_5g) {
-  return(NA)
+calculate_data_tech_proportions <- function(use_5g,
+                                            params) {
+  ## Scale by 3G/4G/5G proportions for 5G users or 5G non-users
+  if (use_5g) {
+    data_3g <- params$tech_3g_prop
+    data_4g <- params$tech_4g_prop
+    data_5g <- params$tech_5g_prop
+  } else {
+    data_3g <- params$tech_3g_prop_5gno
+    data_4g <- params$tech_4g_prop_5gno
+    data_5g <- params$tech_5g_prop_5gno
+  }
+  output <- list("prop_3g" = data_3g,
+                 "prop_4g" = data_4g,
+                 "prop_5g" = data_5g)
+  return(output)
+}
+
+# =============================================================================
+#' Get low/lowmed/medhigh/high activity power proportions
+#'
+#' @param low_dur ...
+#' @param lowmed_dur ...
+#' @param medhigh_dur ...
+#' @param high_dur ...
+get_act_pwr_props <- function(low_dur,
+                              lowmed_dur,
+                              medhigh_dur,
+                              high_dur) {
+  total_dur    <- sum(low_dur, lowmed_dur, medhigh_dur, high_dur)
+  if (total_dur == 0) {
+    return(list("low_prop"     = 0,
+                "lowmed_prop"  = 0,
+                "medhigh_prop" = 0,
+                "high_prop"    = 0))
+  } else {
+    low_prop     <- low_dur/total_dur
+    lowmed_prop  <- lowmed_dur/total_dur
+    medhigh_prop <- medhigh_dur/total_dur
+    high_prop    <- high_dur/total_dur
+    return(list("low_prop"     = low_prop,
+                "lowmed_prop"  = lowmed_prop,
+                "medhigh_prop" = medhigh_prop,
+                "high_prop"    = high_prop))
+  }
 }

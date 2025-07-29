@@ -4,7 +4,16 @@
 \alias{get_mobiledata_dose}
 \title{Calculate Dose from mobile data}
 \usage{
-get_mobiledata_dose(duration, use_5g, wifi_prop, high_pwr_prop, params)
+get_mobiledata_dose(
+  duration,
+  use_5g,
+  wifi_prop,
+  urbanicity,
+  act_pwr_props,
+  travel_time,
+  high_pwr_prop,
+  params
+)
 }
 \arguments{
 \item{duration}{Duration of mobile data transfer in seconds}
@@ -13,6 +22,12 @@ get_mobiledata_dose(duration, use_5g, wifi_prop, high_pwr_prop, params)
 
 \item{wifi_prop}{Proportion of time WiFi connection is used for data
 transfer (vs mobile data)}
+
+\item{urbanicity}{urbanicity}
+
+\item{act_pwr_props}{activity power proportions}
+
+\item{travel_time}{travel time}
 
 \item{high_pwr_prop}{Proportion of time spent on high data transfer activities}
 
