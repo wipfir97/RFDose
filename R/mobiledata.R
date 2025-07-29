@@ -4,6 +4,7 @@
 #' Calculate Dose from mobile data
 #'
 #' @param duration Duration of mobile data transfer in seconds
+#' @param use_5g If participant uses 5G or not
 #' @param wifi_prop Proportion of time WiFi connection is used for data
 #' transfer (vs mobile data)
 #' @param high_pwr_prop Proportion of time spent on high data transfer activities
@@ -11,6 +12,7 @@
 #' @returns List with brain dose and body dose in mJ/kg/day
 #' @export
 get_mobiledata_dose <- function(duration,
+                                use_5g,
                                 wifi_prop,
                                 high_pwr_prop,
                                 params) {
@@ -33,6 +35,7 @@ get_mobiledata_dose <- function(duration,
 
   # Calculate aggregated power ================================================
   aggr_pwr     <- get_mobiledata_pwr(wifi_prop = wifi_prop,
+                                     use_5g = use_5g,
                                      data_prop = data_prop,
                                      high_pwr_prop = high_pwr_prop,
                                      params = data_params)
@@ -73,6 +76,7 @@ get_mobiledata_dose <- function(duration,
 #' @param params parameter list
 #' @returns aggregated power
 get_mobiledata_pwr <- function(wifi_prop,
+                               use_5g,
                                data_prop,
                                high_pwr_prop,
                                params) {
@@ -105,7 +109,7 @@ get_mobiledata_pwr <- function(wifi_prop,
                                   data_3g_low_outd,
                                   data_3g_low_trans)
   ### Total 3g ----
-  data_3g <- sum(data_3g_high, data_3g_low) * params$tech_3g_prop
+  data_3g <- sum(data_3g_high, data_3g_low)
 
   ## 4g -----------------------------------------------------------------------
   ### High data transfer ----
@@ -131,7 +135,7 @@ get_mobiledata_pwr <- function(wifi_prop,
                                   data_4g_low_outd,
                                   data_4g_low_trans)
   ### Total 4g ----
-  data_4g <- sum(data_4g_high, data_4g_low)  * params$tech_4g_prop
+  data_4g <- sum(data_4g_high, data_4g_low)
 
   ## 5g -----------------------------------------------------------------------
   ### High data transfer ----
@@ -157,13 +161,24 @@ get_mobiledata_pwr <- function(wifi_prop,
                                   data_5g_low_outd,
                                   data_5g_low_trans)
   ### Total 5g ----
-  data_5g <- sum(data_5g_high, data_5g_low) * params$tech_5g_prop
+  data_5g <- sum(data_5g_high, data_5g_low)
+
+  ## Scale by 3G/4G/5G proportions for 5G users or 5G non-users
+  if (use_5g) {
+    data_3g_scaled <- data_3g*params$tech_3g_prop
+    data_4g_scaled <- data_4g*params$tech_4g_prop
+    data_5g_scaled <- data_5g*params$tech_5g_prop
+  } else {
+    data_3g_scaled <- data_3g*params$tech_3g_prop_5gno
+    data_4g_scaled <- data_4g*params$tech_4g_prop_5gno
+    data_5g_scaled <- data_5g*params$tech_5g_prop_5gno
+  }
 
 
   ## Total mobile data --------------------------------------------------------
-  data_contr <- data_prop * sum(data_3g,
-                                data_4g,
-                                data_5g)
+  data_contr <- data_prop * sum(data_3g_scaled,
+                                data_4g_scaled,
+                                data_5g_scaled)
 
   # From WiFi =================================================================
   ## 2.4 GHz ------------------------------------------------------------------

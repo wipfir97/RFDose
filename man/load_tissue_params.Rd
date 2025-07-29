@@ -7,9 +7,11 @@
 load_tissue_params(params, device_type, tissue_name)
 }
 \arguments{
-\item{tissue_name}{Name of tissue}
+\item{params}{Device-specific parameter list}
 
-\item{device_params}{Device-specific parameter list}
+\item{device_type}{Name of device}
+
+\item{tissue_name}{Name of tissue}
 }
 \value{
 Parameter list specific to selected device and tissue

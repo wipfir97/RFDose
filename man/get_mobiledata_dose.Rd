@@ -4,10 +4,12 @@
 \alias{get_mobiledata_dose}
 \title{Calculate Dose from mobile data}
 \usage{
-get_mobiledata_dose(duration, wifi_prop, high_pwr_prop, params)
+get_mobiledata_dose(duration, use_5g, wifi_prop, high_pwr_prop, params)
 }
 \arguments{
 \item{duration}{Duration of mobile data transfer in seconds}
+
+\item{use_5g}{If participant uses 5G or not}
 
 \item{wifi_prop}{Proportion of time WiFi connection is used for data
 transfer (vs mobile data)}

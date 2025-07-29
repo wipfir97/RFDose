@@ -35,7 +35,8 @@ load_device_params <- function(params, device_type) {
 # =============================================================================
 #' Load tissue-specific parameters
 #'
-#' @param device_params Device-specific parameter list
+#' @param params Device-specific parameter list
+#' @param device_type Name of device
 #' @param tissue_name Name of tissue
 #' @returns Parameter list specific to selected device and tissue
 load_tissue_params <- function(params, device_type, tissue_name) {

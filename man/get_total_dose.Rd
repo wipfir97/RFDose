@@ -8,9 +8,9 @@ For a SINGLE SAMPLE!}
 get_total_dose(sample, params)
 }
 \arguments{
-\item{params}{A parameter list}
+\item{sample}{A list with input values for a single sample}
 
-\item{inputtable}{A list with input values for a single sample}
+\item{params}{A parameter list}
 }
 \value{
 A list with results for brain and body dose for a single sample

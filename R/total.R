@@ -74,7 +74,7 @@ calculate_emf_doses <- function(data,
 #' Calculate Total RF-EMF Dose for Brain and Body from All Sources
 #' For a SINGLE SAMPLE!
 #'
-#' @param inputtable A list with input values for a single sample
+#' @param sample A list with input values for a single sample
 #' @param params A parameter list
 #' @returns A list with results for brain and body dose for a single sample
 #' @export
@@ -90,17 +90,19 @@ get_total_dose <- function(sample,
                                     params     = params)
 
   ## Calculate mobile data contribution ---------------------------------------
-  data_dose <- get_mobiledata_dose(duration   = sample$mpd_duration,
-                                   wifi_prop  = sample$mpd_wifi_prop,
+  data_dose <- get_mobiledata_dose(duration      = sample$mpd_duration,
+                                   use_5g        = sample$use_5g,
+                                   wifi_prop     = sample$mpd_wifi_prop,
                                    high_pwr_prop = sample$mpd_high_dt_prop,
                                    params)
 
   ## Calculate far-field contribution -----------------------------------------
   farf_dose <- get_farfield_dose(urbanicity   = sample$urbanicity,
+                                 travel_time  = sample$travel_time,
                                  params       = params)
 
   ## Calculate WiFi contribution ----------------------------------------------
-  wifi_dose <- get_wifi_dose(duration = sample$wifi_duration,
+  wifi_dose <- get_wifi_dose(travel_time = sample$travel_time,
                              params   = params)
 
   ## Calculate laptop contribution --------------------------------------------

@@ -4,10 +4,12 @@
 #' Calculate Dose from far-field exposure
 #'
 #' @param urbanicity Urbanicity of home environment
+#' @param travel_time Time per day spent commuting (s)
 #' @param params Parameter list
 #' @returns List with brain dose and body dose in mJ/kg/day
 #' @export
 get_farfield_dose <- function(urbanicity,
+                              travel_time,
                               params) {
 
   # Extract parameters ========================================================
@@ -25,6 +27,7 @@ get_farfield_dose <- function(urbanicity,
 
   # Calculate aggregated power ================================================
   aggr_pwr     <- get_farfield_pwr(urb_list = urb_list,
+                                   travel_time = travel_time,
                                    params   = farf_params)
 
   # Calculate tissue-specific SAR =============================================
@@ -58,7 +61,18 @@ get_farfield_dose <- function(urbanicity,
 #' @param params description
 #' @returns far-field power
 get_farfield_pwr <- function(urb_list,
+                             travel_time,
                              params) {
+
+  # Calculate proportion of time travelling, home, at work and outdoors
+  travel_prop_scaled <- travel_time/86400
+  home_prop_scaled   <- (1-travel_prop_scaled)*params$home_prop
+  work_prop_scaled   <- (1-travel_prop_scaled)*params$work_prop
+  outd_prop_scaled   <- (1-travel_prop_scaled)*params$outdoor_prop
+  check_proportions(c(travel_prop_scaled,
+                      home_prop_scaled,
+                      work_prop_scaled,
+                      outd_prop_scaled))
 
   # Calculate far-field power at home =========================================
   ## Urban home
@@ -68,7 +82,7 @@ get_farfield_pwr <- function(urb_list,
   ## Rural home
   home_rural    <- urb_list$home_rural * params$home_rural_pwr
   ## Total
-  home_contr    <- params$home_prop * sum(home_urban,
+  home_contr    <- home_prop_scaled * sum(home_urban,
                                           home_subur,
                                           home_rural)
 
@@ -81,9 +95,9 @@ get_farfield_pwr <- function(urb_list,
   ## Rural outdoors
   outd_rural    <- urb_list$home_rural * params$outdoor_rural_pwr
   ## Total
-  outd_contr    <- params$outdoor_prop * sum(outd_urban,
-                                             outd_subur,
-                                             outd_rural)
+  outd_contr    <- outd_prop_scaled * sum(outd_urban,
+                                          outd_subur,
+                                          outd_rural)
 
 
   # Calculate far-field power at work =========================================
@@ -94,13 +108,13 @@ get_farfield_pwr <- function(urb_list,
   ## Rural work
   work_rural    <- urb_list$work_rural * params$work_rural_pwr
   ## Total
-  work_contr    <- params$work_prop * sum(work_urban,
+  work_contr    <- work_prop_scaled * sum(work_urban,
                                           work_subur,
                                           work_rural)
 
 
   # Calculate far-field power during commute/transport ========================
-  tran_contr    <- params$travel_prop * params$travel_pwr
+  tran_contr    <- travel_prop_scaled * params$travel_pwr
 
   # Calculate total far-field power and return result =========================
   aggr_pwr      <- sum(home_contr,

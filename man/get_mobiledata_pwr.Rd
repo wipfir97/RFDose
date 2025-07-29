@@ -4,7 +4,7 @@
 \alias{get_mobiledata_pwr}
 \title{Calculate mobile data aggregated power}
 \usage{
-get_mobiledata_pwr(wifi_prop, data_prop, high_pwr_prop, params)
+get_mobiledata_pwr(wifi_prop, use_5g, data_prop, high_pwr_prop, params)
 }
 \arguments{
 \item{wifi_prop}{wifi proportion}

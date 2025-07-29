@@ -4,7 +4,7 @@
 \alias{get_farfield_pwr}
 \title{Calculate far-field exposure aggregated power}
 \usage{
-get_farfield_pwr(urb_list, params)
+get_farfield_pwr(urb_list, travel_time, params)
 }
 \arguments{
 \item{urb_list}{list of binary urbanicitiy values created with recode_urbanicity

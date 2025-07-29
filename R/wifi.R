@@ -3,11 +3,11 @@
 # =============================================================================
 #' Calculate Dose from wifi Use
 #'
-#' @param duration Duration of exposure to WiFi router
+#' @param travel_time Daily time spent commuting (s)
 #' @param params Parameter list
 #' @returns List with brain dose and body dose in mJ/kg/day
 #' @export
-get_wifi_dose <- function(duration,
+get_wifi_dose <- function(travel_time,
                           params) {
   # Extract parameters ========================================================
   ## Extract shared (non-tissue specific) parameters for wifi -----------------
@@ -18,6 +18,12 @@ get_wifi_dose <- function(duration,
 
   ## Extract body-specific parameters (SAR values) for wifi -------------------
   body_params  <- load_tissue_params(params, "wifi", "body")
+
+  # Calculate duration of exposure to WiFi router =============================
+  ## Assumption: exposed at home and at work,
+  ## not exposed during travel and outdoors
+  time_not_travelling <- 86400-travel_time
+  duration <- time_not_travelling*(wifi_params$home_prop+wifi_params$work_prop)
 
   # Calculate aggregated power ================================================
   aggr_pwr     <- get_wifi_pwr(params = wifi_params)

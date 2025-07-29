@@ -3,7 +3,13 @@
 # =============================================================================
 #' Calculate Dose from other exposure sources
 #'
-#' @param duration_watch Duration of smart watch on wrist in seconds
+#' @param duration_hotspot daily hotspot use duration (s)
+#' @param duration_smartwatch daily smart watch use duration (s)
+#' @param duration_tracker daily tracker use duration (s)
+#' @param duration_vr daily vr use duration (s)
+#' @param duration_headphones daily bluetooth headphone use duration (s)
+#' @param duration_smarthome daily time spend in smarthome (s)
+#' @param duration_gaming daily portable gaming console use duration (s)
 #' @param params Parameter list
 #' @returns List with brain dose and body dose in mJ/kg/day
 #' @export

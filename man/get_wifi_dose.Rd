@@ -4,10 +4,10 @@
 \alias{get_wifi_dose}
 \title{Calculate Dose from wifi Use}
 \usage{
-get_wifi_dose(duration, params)
+get_wifi_dose(travel_time, params)
 }
 \arguments{
-\item{duration}{Duration of exposure to WiFi router}
+\item{travel_time}{Daily time spent commuting (s)}
 
 \item{params}{Parameter list}
 }

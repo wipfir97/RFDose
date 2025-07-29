@@ -1,10 +1,15 @@
 global:
   wifi_2_prop: 0.5
   wifi_5_prop: 0.5
-  home_prop: 0.69
+  home_prop: 0.7
   outdoor_prop: 0.08
-  work_prop: 0.21
-  travel_prop: 0.02
+  work_prop: 0.22
+  tech_3g_prop_5gno: 0.12
+  tech_4g_prop_5gno: 0.88
+  tech_5g_prop_5gno: 0
+  tech_3g_prop: 0.1
+  tech_4g_prop: 0.75
+  tech_5g_prop: 0.15
 devices:
   dect:
     shared:
@@ -121,9 +126,6 @@ devices:
       bt_headp_sar: 0.00985
   data:
     shared:
-      tech_3g_prop: 0.1
-      tech_4g_prop: 0.75
-      tech_5g_prop: 0.15
       wifi_2_pwr: 2.534323234
       wifi_5_pwr: 2.534323234 
       data_3g_high_ind_pwr: 70.00

@@ -11,13 +11,26 @@ get_other_dose(
   duration_vr,
   duration_headphones,
   duration_smarthome,
+  duration_gaming,
   params
 )
 }
 \arguments{
-\item{params}{Parameter list}
+\item{duration_hotspot}{daily hotspot use duration (s)}
 
-\item{duration_watch}{Duration of smart watch on wrist in seconds}
+\item{duration_smartwatch}{daily smart watch use duration (s)}
+
+\item{duration_tracker}{daily tracker use duration (s)}
+
+\item{duration_vr}{daily vr use duration (s)}
+
+\item{duration_headphones}{daily bluetooth headphone use duration (s)}
+
+\item{duration_smarthome}{daily time spend in smarthome (s)}
+
+\item{duration_gaming}{daily portable gaming console use duration (s)}
+
+\item{params}{Parameter list}
 }
 \value{
 List with brain dose and body dose in mJ/kg/day
