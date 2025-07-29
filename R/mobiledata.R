@@ -207,6 +207,63 @@ get_mobiledata_pwr <- function(wifi_prop,
   return(aggr_pwr)
 }
 
+# -----------------------------------------------------------------------------
+#' Calculate mobile data output power from low power activities
+#'
+#' Examples for low output power activities: ...
+#' @param mpd_low_dt_dur daily duration of low output power activities (s)
+#' @param params device-specific parameters
+#' @returns pwr
+get_mobiledata_low_pwr <- function(mpd_low_dt_dur,
+                                   params) {
+  return(NA)
+}
+
+# -----------------------------------------------------------------------------
+#' Calculate mobile data output power from low-medium power activities
+#'
+#' Examples for low-medium output power activities: ...
+#' @param mpd_lowmed_dt_dur daily duration of low-medium output power activities (s)
+#' @param params device-specific parameters
+#' @returns pwr
+get_mobiledata_lowmed_pwr <- function(mpd_lowmed_dt_dur,
+                                      params) {
+  return(NA)
+}
+
+# -----------------------------------------------------------------------------
+#' Calculate mobile data output power from medium-high power activities
+#'
+#' Examples for medium-high output power activities: ...
+#' @param mpd_medhigh_dt_dur daily duration of medium-high output power activities (s)
+#' @param params device-specific parameters
+#' @returns pwr
+get_mobiledata_medhigh_pwr <- function(mpd_medhigh_dt_dur,
+                                       params) {
+  return(NA)
+}
+
+# -----------------------------------------------------------------------------
+#' Calculate mobile data output power from high power activities
+#'
+#' Examples for high output power activities: ...
+#' @param mpd_high_dt_dur daily duration of high output power activities (s)
+#' @param params device-specific parameters
+#' @returns pwr
+get_mobiledata_high_pwr <- function(mpd_high_dt_dur,
+                                    params) {
+  return(NA)
+}
+
+# -----------------------------------------------------------------------------
+#' Calculate mobile data output power from WiFi
+#'
+#' @param params device-specific parameters
+#' @returns pwr
+get_mobiledata_wifi_pwr <- function(params) {
+  return(NA)
+}
+
 # =============================================================================
 #' Calculate mobile data SAR
 #'

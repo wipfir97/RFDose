@@ -206,3 +206,43 @@ fill_missing_variables <- function(data, defaults, warn_threshold = 0.1) {
 
   return(list(data = data, replaced = replaced))
 }
+
+# =============================================================================
+#' Calculate proportion of time spent at home vs work vs outdoors vs travelling
+#'
+#' Based on travel time (input variable by user), assuming a fixed ration for
+#' time spent at home vs work vs outdoors
+#' @param travel_time daily time spent travelling / commuting in seconds (s)
+#' @param home_prop proportion of time spent at home WITHOUT considering commute
+#' @param work_prop proportion of time spent at work WITHOUT considering commute
+#' @param outd_prop proportion of time spent outside WITHOUT considering commute
+#' @returns list with proportions
+calculate_location_proportions <- function(travel_time,
+                                           home_prop,
+                                           work_prop,
+                                           outd_prop) {
+  # Check if input proportions add up to 1
+  check_proportions(c(home_prop, work_prop, outd_prop))
+  # Calculate proportion of time travelling, home, at work and outdoors
+  travel_prop_scaled <- travel_time/86400
+  home_prop_scaled   <- (1-travel_prop_scaled)*home_prop
+  work_prop_scaled   <- (1-travel_prop_scaled)*work_prop
+  outd_prop_scaled   <- (1-travel_prop_scaled)*outd_prop
+  scaled_props <- list("travel" = travel_prop_scaled,
+                       "home"   = home_prop_scaled,
+                       "work"   = work_prop_scaled,
+                       "outd"   = outd_prop_scaled)
+  print(scaled_props)
+  return(scaled_props)
+}
+
+# =============================================================================
+#' Get mobile data technology use proportions
+#'
+#' Based on user variable use_5g that indicates if participant uses 5G on mobile
+#' phone or not.
+#' @param use_5g boolean variable (TRUE if participant uses 5G, FALSE otherwise)
+#' @returns list with technology use proportions
+calculate_data_tech_proportions <- function(use_5g) {
+  return(NA)
+}
