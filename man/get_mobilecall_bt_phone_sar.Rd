@@ -2,15 +2,18 @@
 % Please edit documentation in R/mobilecall.R
 \name{get_mobilecall_bt_phone_sar}
 \alias{get_mobilecall_bt_phone_sar}
-\title{Mobilecall bluetooth phone sar}
+\title{Calculate SAR from mobile calling using Bluetooth headphones (phone contribution)}
 \usage{
 get_mobilecall_bt_phone_sar(params, tissue_params)
 }
 \arguments{
-\item{params}{params}
+\item{params}{Parameter list}
 
-\item{tissue_params}{tissue params}
+\item{tissue_params}{Tissue parameter list}
+}
+\value{
+SAR from mobile calling using Bluetooth headphones in W/kg/W (phone contribution)
 }
 \description{
-Mobilecall bluetooth phone sar
+Calculates the specific absorption rate from mobile calling using Bluetooth headphones (phone contribution).
 }

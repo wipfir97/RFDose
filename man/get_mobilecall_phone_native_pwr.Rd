@@ -2,18 +2,30 @@
 % Please edit documentation in R/mobilecall.R
 \name{get_mobilecall_phone_native_pwr}
 \alias{get_mobilecall_phone_native_pwr}
-\title{Mobilecall Native Power}
+\title{Calculate mobile phone output power from native mobile calling (no Bluetooth)}
 \usage{
-get_mobilecall_phone_native_pwr(urbanicity, params)
+get_mobilecall_phone_native_pwr(urbanicity, travel_time, params)
 }
 \arguments{
-\item{urbanicity}{Urbanicity}
+\item{urbanicity}{Urbanicity of home / workplace}
+
+\item{travel_time}{Time spent commuting in seconds per day}
 
 \item{params}{Parameter list}
 }
 \value{
-mobilecall native power
+Mobile phone output power during native mobile calling (no Bluetooth) in mJ
 }
 \description{
-TODO: adapt calculations to urbanicity levels
+Calculates the output power of the mobile phone during native mobile calls in mJ (No Bluetooth)
+}
+\details{
+The mobile phone output power during native mobile calling (no Bluetooth) is calculated as:
+\deqn{Power_{Data} = Prop_{2G} \times Power_{2G} + Prop_{3G} \times Power_{3G} + Prop_{4G} \times Power_{4G} + Prop_{5G} \times Power_{5G}}
+
+Where:
+\itemize{
+\item \eqn{Prop_{2G}}, \eqn{Prop_{3G}}, \eqn{Prop_{4G}}, \eqn{Prop_{5G}} are the proportion of 2G, 3G, 4G and 5G during native mobile calls, respectively
+\item \eqn{Power_{2G}}, \eqn{Power_{3G}}, \eqn{Power_{4G}}, \eqn{Power_{5G}} are the output power of the mobile phone using 2G, 3G, 4G and 5G during native mobile calls, respectively
+}
 }

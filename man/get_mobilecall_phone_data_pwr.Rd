@@ -2,18 +2,32 @@
 % Please edit documentation in R/mobilecall.R
 \name{get_mobilecall_phone_data_pwr}
 \alias{get_mobilecall_phone_data_pwr}
-\title{Mobilecall Data Power}
+\title{Calculate mobile phone output power from data mobile calling (no Bluetooth)}
 \usage{
-get_mobilecall_phone_data_pwr(urbanicity, params)
+get_mobilecall_phone_data_pwr(urbanicity, use_5g, travel_time, params)
 }
 \arguments{
-\item{urbanicity}{Urbanicity}
+\item{urbanicity}{Urbanicity of home / workplace}
+
+\item{use_5g}{TRUE if participant uses 5G services on mobile phone, FALSE if not}
+
+\item{travel_time}{Time spent commuting in seconds per day}
 
 \item{params}{Parameter list}
 }
 \value{
-mobilecall data power
+Mobile phone output power during data (3G, 4G, 5G) mobile calling (no Bluetooth) in mJ
 }
 \description{
-TODO: adapt calculations to urbanicity levels
+Calculates the output power of the mobile phone during data (3G, 4G, 5G) mobile calls in mJ (No Bluetooth)
+}
+\details{
+The mobile phone output power during data mobile calling (no Bluetooth) is calculated as:
+\deqn{Power_{Data} = Prop_{3G} \times Power_{3G} + Prop_{4G} \times Power_{4G} + Prop_{5G} \times Power_{5G}}
+
+Where:
+\itemize{
+\item \eqn{Prop_{3G}}, \eqn{Prop_{4G}}, \eqn{Prop_{5G}} are the proportion of 3G, 4G and 5G during mobile calls, respectively
+\item \eqn{Power_{3G}}, \eqn{Power_{4G}}, \eqn{Power_{5G}} are the output power of the mobile phone using 3G, 4G and 5G during mobile calls, respectively
+}
 }

@@ -2,17 +2,36 @@
 % Please edit documentation in R/mobilecall.R
 \name{get_mobilecall_bt_phone_dose}
 \alias{get_mobilecall_bt_phone_dose}
-\title{Mobilecall bluetooth phone dose}
+\title{Calculate RF-EMF dose from mobile calling using Bluetooth headphones (phone contribution)}
 \usage{
-get_mobilecall_bt_phone_dose(duration, params, tissue_params)
+get_mobilecall_bt_phone_dose(duration, headp_prop, params, tissue_params)
 }
 \arguments{
-\item{duration}{duration}
+\item{duration}{Duration of mobile phone call in seconds per day}
 
-\item{params}{parameter list}
+\item{headp_prop}{Proportion of time Bluetooth headphones are used during mobile call}
 
-\item{tissue_params}{tissue parameters}
+\item{params}{Parameter list}
+
+\item{tissue_params}{Tissue parameter list}
+}
+\value{
+Dose from mobile calling using Bluetooth headphones in mJ/kg/day (phone contribution)
 }
 \description{
-Mobilecall bluetooth phone dose
+Calculates the RF-EMF dose from mobile calling using Bluetooth headphones (phone contribution).
+}
+\details{
+The dose is calculated as:
+\deqn{Dose = Duration \times Power \times SAR}
+
+Where:
+\itemize{
+\item \eqn{Duration} is the duration of mobile phone call in seconds per day
+\item \eqn{SAR} is the specific absorption rate from Bluetooth in W/kg/W
+\item \eqn{Power} is the Bluetooth output power of the mobile phone during mobile calling mJ
+}
+}
+\seealso{
+\code{\link[=get_mobilecall_bt_headp_dose]{get_mobilecall_bt_headp_dose()}}, \code{\link[=get_mobilecall_bt_phone_pwr]{get_mobilecall_bt_phone_pwr()}}, \code{\link[=get_mobilecall_bt_phone_sar]{get_mobilecall_bt_phone_sar()}}
 }

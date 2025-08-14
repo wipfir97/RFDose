@@ -1,0 +1,3 @@
+sample_id,use_5g,travel_time,urbanicity,headp_ear_num,mpc_duration,mpc_ear_prop,mpc_headp_prop,brain_dose,body_dose
+TEST1,TRUE,1800,suburban,2,425,0.66,0.5,,
+TEST2,FALSE,900,rural,1,800,0.5,0.8,,

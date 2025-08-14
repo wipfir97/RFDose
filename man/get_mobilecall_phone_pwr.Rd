@@ -2,18 +2,35 @@
 % Please edit documentation in R/mobilecall.R
 \name{get_mobilecall_phone_pwr}
 \alias{get_mobilecall_phone_pwr}
-\title{Mobilecall Phone Power}
+\title{Calculate output power from mobile phone during mobile call (no Bluetooth)}
 \usage{
-get_mobilecall_phone_pwr(urbanicity, params)
+get_mobilecall_phone_pwr(urbanicity, use_5g, travel_time, params)
 }
 \arguments{
-\item{urbanicity}{Urbanicity}
+\item{urbanicity}{Urbanicity of home / workplace}
+
+\item{use_5g}{TRUE if participant uses 5G services on mobile phone, FALSE if not}
+
+\item{travel_time}{Time spent commuting in seconds per day}
 
 \item{params}{Parameter list}
 }
 \value{
-Power
+Mobile phone output power during mobile calling (no Bluetooth) in mJ
 }
 \description{
-Mobilecall Phone Power
+Calculates the output power of the mobile phone during mobile calls in mJ (No Bluetooth)
+}
+\details{
+The mobile phone output power during mobile calling (no Bluetooth) is calculated as:
+\deqn{Power = Prop_{WiFi} \times Power_{WiFi} + Prop_{Data} \times Power_{Data} + Prop_{Native} \times Power_{Native}}
+
+Where:
+\itemize{
+\item \eqn{Prop_{WiFi}}, \eqn{Prop_{Data}}, \eqn{Prop_{Native}} are the proportion of time mobile calls are done using WiFi, mobile data, or native network, respectively.
+\item \eqn{Power_{WiFi}}, \eqn{Prop_{Data}}, \eqn{Prop_{Native}} are the output power (mJ) of the mobile phone using WiFi, mobile data, or native phone calls, respectively.
+}
+}
+\seealso{
+\code{\link[=get_mobilecall_phone_wifi_pwr]{get_mobilecall_phone_wifi_pwr()}}, \code{\link[=get_mobilecall_phone_data_pwr]{get_mobilecall_phone_data_pwr()}}, \code{\link[=get_mobilecall_phone_native_pwr]{get_mobilecall_phone_native_pwr()}}
 }

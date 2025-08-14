@@ -2,7 +2,7 @@
 % Please edit documentation in R/mobilecall.R
 \name{get_mobilecall_phone_sar}
 \alias{get_mobilecall_phone_sar}
-\title{Mobilecall SAR}
+\title{Calculate SAR from mobile calling (no Bluetooth)}
 \usage{
 get_mobilecall_phone_sar(
   ear_prop,
@@ -13,16 +13,32 @@ get_mobilecall_phone_sar(
 )
 }
 \arguments{
-\item{ear_prop}{Ear proportion}
+\item{ear_prop}{Proportion of time mobile phone is held against ear during call}
 
-\item{headp_prop}{Headphone proportion}
+\item{headp_prop}{Proportion of time Bluetooth headphones are used during mobile call while phone is NOT held against ear}
 
-\item{speaker_prop}{Speaker proportion}
+\item{speaker_prop}{Proportion of time speaker mode is used during mobile call while phone is NOT held against ear}
 
 \item{params}{Parameter list}
 
 \item{tissue_params}{SAR values}
 }
+\value{
+SAR from mobile calling (no Bluetooth) in W/kg/W
+}
 \description{
-Mobilecall SAR
+Calculates the tissue-specific absorption rate (SAR) for calling with a mobile phone (no Bluetooth).
+}
+\details{
+The SAR from mobile calling (no Bluetooth) is calculated as:
+\deqn{SAR = Prop_{WiFi} \times SAR_{WiFi} + Prop_{Data} \times SAR_{Data} + Prop_{Native} \times SAR_{Native}}
+
+Where:
+\itemize{
+\item \eqn{Prop_{WiFi}}, \eqn{Prop_{Data}}, \eqn{Prop_{Native}} are the proportion of WiFi, mobile data, and native network used during mobile calls, respectively
+\item \eqn{SAR_{WiFi}}, \eqn{SAR_{Data}}, \eqn{SAR_{Native}} are the SAR values for WiFi, mobile data, and native network used during mobile calls, respectively
+}
+}
+\seealso{
+\code{\link[=get_mobilecall_phone_wifi_sar]{get_mobilecall_phone_wifi_sar()}}, \code{\link[=get_mobilecall_phone_data_sar]{get_mobilecall_phone_data_sar()}}, \code{\link[=get_mobilecall_phone_native_sar]{get_mobilecall_phone_native_sar()}}
 }

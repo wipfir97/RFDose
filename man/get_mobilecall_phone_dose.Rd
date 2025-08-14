@@ -2,7 +2,7 @@
 % Please edit documentation in R/mobilecall.R
 \name{get_mobilecall_phone_dose}
 \alias{get_mobilecall_phone_dose}
-\title{Mobilecall Phone dose}
+\title{Calculate RF-EMF dose from mobile phone (no Bluetooth)}
 \usage{
 get_mobilecall_phone_dose(
   duration,
@@ -10,28 +10,49 @@ get_mobilecall_phone_dose(
   speaker_prop,
   headp_prop,
   urbanicity,
+  use_5g,
+  travel_time,
   params,
   tissue_params
 )
 }
 \arguments{
-\item{duration}{User duration}
+\item{duration}{Duration of mobile phone call in seconds per day}
 
-\item{ear_prop}{Ear proportion}
+\item{ear_prop}{Proportion of time mobile phone is held against ear during call}
 
-\item{speaker_prop}{Speaker proportion}
+\item{speaker_prop}{Proportion of time speaker mode is used during mobile call while phone is NOT held against ear}
 
-\item{headp_prop}{Headphone proportion}
+\item{headp_prop}{Proportion of time Bluetooth headphones are used during mobile call while phone is NOT held against ear}
 
-\item{urbanicity}{Urbanicity}
+\item{urbanicity}{Urbanicity of home / workplace}
+
+\item{use_5g}{TRUE if participant uses 5G services on mobile phone, FALSE if not}
+
+\item{travel_time}{Time spent commuting in seconds per day}
 
 \item{params}{Parameter list}
 
 \item{tissue_params}{Tissue-specific parameter list}
 }
 \value{
-Dose
+RF-EMF dose in mJ/kg/day
 }
 \description{
-Mobilecall Phone dose
+Calculates the total RF-EMF dose from mobile calling from the mobile phone
+(No Bluetooth)
+}
+\details{
+The mobile call RF-EMF dose (no Bluetooth) is calculated as:
+\deqn{Dose = Duration \times SAR \times Power}
+
+Where:
+\itemize{
+\item \eqn{Duration} is the duration of mobile phone call in seconds per day
+\item \eqn{SAR} is the specific absorption rate in W/kg/W
+\item \eqn{Power} is the output power of the mobile phone during mobile calling mJ
+}
+}
+\seealso{
+\code{\link[=get_mobilecall_phone_pwr]{get_mobilecall_phone_pwr()}}, \code{\link[=get_mobilecall_phone_sar]{get_mobilecall_phone_sar()}}
 }

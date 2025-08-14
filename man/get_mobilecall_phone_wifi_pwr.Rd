@@ -2,7 +2,7 @@
 % Please edit documentation in R/mobilecall.R
 \name{get_mobilecall_phone_wifi_pwr}
 \alias{get_mobilecall_phone_wifi_pwr}
-\title{Wifi Phone Power}
+\title{Calculate mobile phone output power from WiFi mobile calling (no Bluetooth)}
 \usage{
 get_mobilecall_phone_wifi_pwr(
   wifi_2_prop,
@@ -26,6 +26,20 @@ get_mobilecall_phone_wifi_pwr(
 
 \item{wifi_5_duty_cycle}{5.0GHz WiFi Duty Cycle}
 }
+\value{
+Mobile phone output power during WiFi mobile calling (no Bluetooth) in mJ
+}
 \description{
-Wifi Phone Power
+Calculates the output power of the mobile phone during WiFi mobile calls in mJ (No Bluetooth)
+}
+\details{
+The mobile phone output power during WiFi mobile calling (no Bluetooth) is calculated as:
+\deqn{Power_{WiFi} = Prop_{2.4GHz} \times Power_{2.4GHz} \times DutyCycle_{2.4GHz} + Prop_{5.0GHz} \times Power_{5.0GHz} \times DutyCycle_{5.0GHz}}
+
+Where:
+\itemize{
+\item \eqn{Prop_{2.4GHz}}, \eqn{Prop_{5.0GHz}} are the proportion of 2.4GHz and 5.0GHz WiFi, respectively
+\item \eqn{Power_{2.4GHz}}, \eqn{Power_{5.0GHz}} are the output power of 2.4GHz and 5.0GHz WiFi calls from the mobile phone (no Bluetooth), respectively
+\item \eqn{DutyCycle_{2.4GHz}}, \eqn{DutyCycle_{5.0GHz}} are the duty cycle of 2.4GHz and 5.0GHz WiFi, respectively
+}
 }
