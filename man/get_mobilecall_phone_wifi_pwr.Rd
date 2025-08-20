@@ -27,10 +27,10 @@ get_mobilecall_phone_wifi_pwr(
 \item{wifi_5_duty_cycle}{5.0GHz WiFi Duty Cycle}
 }
 \value{
-Mobile phone output power during WiFi mobile calling (no Bluetooth) in mJ
+Mobile phone output power during WiFi mobile calling (no Bluetooth) in mW
 }
 \description{
-Calculates the output power of the mobile phone during WiFi mobile calls in mJ (No Bluetooth)
+Calculates the output power of the mobile phone during WiFi mobile calls in mW (No Bluetooth)
 }
 \details{
 The mobile phone output power during WiFi mobile calling (no Bluetooth) is calculated as:

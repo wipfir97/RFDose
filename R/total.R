@@ -98,14 +98,17 @@ get_total_dose <- function(sample,
                                      lowmed_dur  = sample$mpd_lowmed_dt_dur,
                                      medhigh_dur = sample$mpd_medhigh_dt_dur,
                                      high_dur    = sample$mpd_high_dt_dur)
+  mpd_duration  <- sum(sample$mpd_low_dt_dur,
+                       sample$mpd_lowmed_dt_dur,
+                       sample$mpd_medhigh_dt_dur,
+                       sample$mpd_high_dt_dur)
   ### Calculate dose
-  data_dose <- get_mobiledata_dose(duration      = sample$mpd_duration,
+  data_dose <- get_mobiledata_dose(duration      = mpd_duration,
                                    use_5g        = sample$use_5g,
                                    urbanicity    = sample$urbanicity,
                                    travel_time   = sample$travel_time,
                                    act_pwr_props = act_pwr_props,
                                    wifi_prop     = sample$mpd_wifi_prop,
-                                   high_pwr_prop = sample$mpd_high_dt_prop,
                                    params)
 
   ## Calculate far-field contribution -----------------------------------------

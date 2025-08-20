@@ -1,0 +1,18 @@
+Package: ETAINDoseCalculator
+Type: Package
+Title: Functions for RF-EMF Dose Calculations
+Version: 0.2.0
+Author: Irina Wipf
+Maintainer: <irina.wipf@swisstph.ch>
+Description: Package for calculating RF-EMF doses for cohorts. Calculations are based on the ETAIN Dose model.
+License: GPL-3
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 7.3.2
+Roxygen: list(markdown = TRUE)
+Imports: dplyr, tidyr, yaml
+Suggests: knitr, rmarkdown, testthat (>= 3.0.0)
+VignetteBuilder: knitr
+Depends: R (>= 3.5)
+Config/testthat/edition: 3
+Built: R 4.5.1; ; 2025-08-20 11:38:30 UTC; windows

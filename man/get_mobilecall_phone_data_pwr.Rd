@@ -16,10 +16,10 @@ get_mobilecall_phone_data_pwr(urbanicity, use_5g, travel_time, params)
 \item{params}{Parameter list}
 }
 \value{
-Mobile phone output power during data (3G, 4G, 5G) mobile calling (no Bluetooth) in mJ
+Mobile phone output power during data (3G, 4G, 5G) mobile calling (no Bluetooth) in mW
 }
 \description{
-Calculates the output power of the mobile phone during data (3G, 4G, 5G) mobile calls in mJ (No Bluetooth)
+Calculates the output power of the mobile phone during data (3G, 4G, 5G) mobile calls in mW (No Bluetooth)
 }
 \details{
 The mobile phone output power during data mobile calling (no Bluetooth) is calculated as:

@@ -1,0 +1,3 @@
+sample_id,use_5g,travel_time,urbanicity,mpd_wifi_prop,mpd_low_dt_dur,mpd_lowmed_dt_dur,mpd_medhigh_dt_dur,mpd_high_dt_dur,brain_dose,body_dose
+TEST1,TRUE,1800,suburban,0.5,4860,540,4860,540,,
+TEST2,FALSE,900,rural,0.5,2700,2700,2700,2700,,

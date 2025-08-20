@@ -50,7 +50,7 @@ Where:
 \itemize{
 \item \eqn{Duration} is the duration of mobile phone call in seconds per day
 \item \eqn{SAR} is the specific absorption rate in W/kg/W
-\item \eqn{Power} is the output power of the mobile phone during mobile calling mJ
+\item \eqn{Power} is the output power of the mobile phone during mobile calling mW
 }
 }
 \seealso{

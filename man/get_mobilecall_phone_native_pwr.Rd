@@ -14,10 +14,10 @@ get_mobilecall_phone_native_pwr(urbanicity, travel_time, params)
 \item{params}{Parameter list}
 }
 \value{
-Mobile phone output power during native mobile calling (no Bluetooth) in mJ
+Mobile phone output power during native mobile calling (no Bluetooth) in mW
 }
 \description{
-Calculates the output power of the mobile phone during native mobile calls in mJ (No Bluetooth)
+Calculates the output power of the mobile phone during native mobile calls in mW (No Bluetooth)
 }
 \details{
 The mobile phone output power during native mobile calling (no Bluetooth) is calculated as:

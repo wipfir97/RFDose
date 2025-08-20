@@ -1,0 +1,2462 @@
+\nonstopmode{}
+\documentclass[a4paper]{book}
+\usepackage[times,inconsolata,hyper]{Rd}
+\usepackage{makeidx}
+\makeatletter\@ifl@t@r\fmtversion{2018/04/01}{}{\usepackage[utf8]{inputenc}}\makeatother
+% \usepackage{graphicx} % @USE GRAPHICX@
+\makeindex{}
+\begin{document}
+\chapter*{}
+\begin{center}
+{\textbf{\huge Package `ETAINDoseCalculator'}}
+\par\bigskip{\large \today}
+\end{center}
+\ifthenelse{\boolean{Rd@use@hyper}}{\hypersetup{pdftitle = {ETAINDoseCalculator: Functions for RF-EMF Dose Calculations}}}{}
+\begin{description}
+\raggedright{}
+\item[Type]\AsIs{Package}
+\item[Title]\AsIs{Functions for RF-EMF Dose Calculations}
+\item[Version]\AsIs{0.2.0}
+\item[Author]\AsIs{Irina Wipf}
+\item[Maintainer]\AsIs{}\email{irina.wipf@swisstph.ch}\AsIs{}
+\item[Description]\AsIs{Package for calculating RF-EMF doses for cohorts. Calculations are based on the ETAIN Dose model.}
+\item[License]\AsIs{GPL-3}
+\item[Encoding]\AsIs{UTF-8}
+\item[LazyData]\AsIs{true}
+\item[RoxygenNote]\AsIs{7.3.2}
+\item[Roxygen]\AsIs{list(markdown = TRUE)}
+\item[Imports]\AsIs{dplyr, tidyr, yaml}
+\item[Suggests]\AsIs{knitr, rmarkdown, testthat (>= 3.0.0)}
+\item[VignetteBuilder]\AsIs{knitr}
+\item[Depends]\AsIs{R (>= 3.5)}
+\item[Config/testthat/edition]\AsIs{3}
+\end{description}
+\Rdcontents{Contents}
+\HeaderA{calculate\_data\_tech\_proportions}{Get mobile data technology use proportions}{calculate.Rul.data.Rul.tech.Rul.proportions}
+%
+\begin{Description}
+Based on user variable use\_5g that indicates if participant uses 5G on mobile
+phone or not.
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+calculate_data_tech_proportions(use_5g, params)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{use\_5g}] boolean variable (TRUE if participant uses 5G, FALSE otherwise)
+
+\item[\code{params}] parameter list
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Value}
+list with technology use proportions
+\end{Value}
+\HeaderA{calculate\_emf\_doses}{Calculate Total RF-EMF Doses for ALL samples}{calculate.Rul.emf.Rul.doses}
+%
+\begin{Description}
+Calculate Total RF-EMF Doses for ALL samples
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+calculate_emf_doses(data, param_file = NULL, default_value_file = NULL)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{data}] A data frame. Must have the following columns:
+sample\_id: unique participant identifier
+mpc\_duration: daily duration of mobile phone call in seconds
+mpc\_ear\_prop: proportion of time phone is held against ear during call
+urbanicity: urban, suburban, or rural
+mpd\_duration: daily duration of mobile data traffic in seconds
+mpd\_wifi\_prop: proportion of time WiFi is used (vs data) for mobile data traffic
+dect\_duration: daily duration of DECT/cordless phone call in seconds
+dect\_ear\_prop:
+lptp\_duration:
+tblt\_duration:
+wifi\_duration:
+
+\item[\code{param\_file}] optional path to YAML parameter configuration file
+
+\item[\code{default\_value\_file}] optional path to YAML default value file in case of missing data
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Value}
+A data frame. Columns named SOURCE\_dose\_TISSUE contain RF-EMF dose
+of each participant in mJ/kg/day
+\end{Value}
+\HeaderA{calculate\_location\_proportions}{Calculate proportion of time spent at home vs work vs outdoors vs travelling}{calculate.Rul.location.Rul.proportions}
+%
+\begin{Description}
+Based on travel time (input variable by user), assuming a fixed ration for
+time spent at home vs work vs outdoors
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+calculate_location_proportions(travel_time, home_prop, work_prop, outd_prop)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{travel\_time}] daily time spent travelling / commuting in seconds (s)
+
+\item[\code{home\_prop}] proportion of time spent at home WITHOUT considering commute
+
+\item[\code{work\_prop}] proportion of time spent at work WITHOUT considering commute
+
+\item[\code{outd\_prop}] proportion of time spent outside WITHOUT considering commute
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Value}
+list with proportions
+\end{Value}
+\HeaderA{check\_duration}{Check input values - duration}{check.Rul.duration}
+%
+\begin{Description}
+Check input values - duration
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+check_duration(duration)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{duration}] duration
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Value}
+TRUE if duration is valid, FALSE if duration is not valid
+\end{Value}
+\HeaderA{check\_input\_param\_list}{Check input parameter list}{check.Rul.input.Rul.param.Rul.list}
+%
+\begin{Description}
+Check input parameter list
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+check_input_param_list(params)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{params}] parameter list in YAML format
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Value}
+TRUE if parameter list is valid, FALSE if parameter list is invalid
+\end{Value}
+\HeaderA{check\_proportions}{Check input values - proportions}{check.Rul.proportions}
+%
+\begin{Description}
+Check input values - proportions
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+check_proportions(proportions)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{proportions}] Single proportion avlue or vector with proportions to check
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Value}
+TRUE if proportions are valid, FALSE if invalid
+\end{Value}
+\HeaderA{example\_data}{Example data for testing}{example.Rul.data}
+\keyword{datasets}{example\_data}
+%
+\begin{Description}
+A dataset containing example user data (made up)
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+example_data
+\end{verbatim}
+\end{Usage}
+%
+\begin{Format}
+A data frame with 50 rows
+\begin{description}
+
+\item[dect\_duration] test
+\item[dect\_ear\_prop] test
+\item[gaming\_duration] test
+\item[headp\_ear\_num] test
+\item[headphone\_duration] test
+\item[hotspot\_duration] test
+\item[lptp\_duration] test
+\item[mpc\_duration] test
+\item[mpc\_ear\_prop] test
+\item[mpc\_headp\_prop] test
+\item[mpd\_duration] test
+\item[mpd\_high\_dt\_dur] test
+\item[mpd\_high\_dt\_prop] test
+\item[mpd\_low\_dt\_dur] test
+\item[mpd\_lowmed\_dt\_dur] test
+\item[mpd\_medhigh\_dt\_dur] test
+\item[mpd\_wifi\_prop] test
+\item[sample\_id] test
+\item[smarthome\_duration] test
+\item[smartwatch\_duration] test
+\item[tblt\_duration] test
+\item[tracker\_duration] test
+\item[travel\_time] test
+\item[urbanicity] test
+\item[use\_5g] test
+\item[vr\_duration] test
+\item[wifi\_duration] test
+
+\end{description}
+
+\end{Format}
+%
+\begin{Source}
+Generated for package testing.
+\end{Source}
+\HeaderA{fill\_missing\_variables}{Fill missing variables}{fill.Rul.missing.Rul.variables}
+%
+\begin{Description}
+Fill missing variables
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+fill_missing_variables(data, defaults, warn_threshold = 0.1)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{data}] data
+
+\item[\code{defaults}] defaults
+
+\item[\code{warn\_threshold}] threshold proportion of missing data to raise warning
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Value}
+data frame with missing data replaced with default values
+\end{Value}
+\HeaderA{flat\_params\_to\_nested}{Convert flat parameter table to nested parameter YAML}{flat.Rul.params.Rul.to.Rul.nested}
+%
+\begin{Description}
+Convert flat parameter table to nested parameter YAML
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+flat_params_to_nested(flat)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{flat}] Flat parameter data frame with "path" and "value" columns
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Value}
+nested parameter list
+\end{Value}
+\HeaderA{get\_act\_pwr\_props}{Get low/lowmed/medhigh/high activity power proportions}{get.Rul.act.Rul.pwr.Rul.props}
+%
+\begin{Description}
+Get low/lowmed/medhigh/high activity power proportions
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+get_act_pwr_props(low_dur, lowmed_dur, medhigh_dur, high_dur)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{low\_dur}] ...
+
+\item[\code{lowmed\_dur}] ...
+
+\item[\code{medhigh\_dur}] ...
+
+\item[\code{high\_dur}] ...
+\end{ldescription}
+\end{Arguments}
+\HeaderA{get\_cordless\_dose}{Calculate Dose from Cordless Calling}{get.Rul.cordless.Rul.dose}
+%
+\begin{Description}
+Calculate Dose from Cordless Calling
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+get_cordless_dose(duration, ear_proportion, params)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{duration}] Duration of cordless calls in seconds
+
+\item[\code{ear\_proportion}] Proportion of holding cordless phone against ear
+
+\item[\code{params}] Parameter list
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Value}
+List with brain dose and body dose in mJ/kg/day
+\end{Value}
+\HeaderA{get\_cordless\_pwr}{Calculate Aggregated Power of Cordless Phone}{get.Rul.cordless.Rul.pwr}
+%
+\begin{Description}
+Calculate Aggregated Power of Cordless Phone
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+get_cordless_pwr(params)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{params}] descr
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Value}
+descr
+\end{Value}
+\HeaderA{get\_cordless\_sar}{Calculate Aggregated SAR during cordless call (tissue-specific)}{get.Rul.cordless.Rul.sar}
+%
+\begin{Description}
+Calculate Aggregated SAR during cordless call (tissue-specific)
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+get_cordless_sar(ear_proportion, params, tissue_params)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{ear\_proportion}] Proportion of holding cordless phone against ear
+
+\item[\code{params}] descr
+
+\item[\code{tissue\_params}] descr
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Value}
+sar
+\end{Value}
+\HeaderA{get\_farfield\_dose}{Calculate Dose from far-field exposure}{get.Rul.farfield.Rul.dose}
+%
+\begin{Description}
+Calculate Dose from far-field exposure
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+get_farfield_dose(urbanicity, travel_time, params)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{urbanicity}] Urbanicity of home environment
+
+\item[\code{travel\_time}] Time per day spent commuting (s)
+
+\item[\code{params}] Parameter list
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Value}
+List with brain dose and body dose in mJ/kg/day
+\end{Value}
+\HeaderA{get\_farfield\_pwr}{Calculate far-field exposure aggregated power}{get.Rul.farfield.Rul.pwr}
+%
+\begin{Description}
+Calculate far-field exposure aggregated power
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+get_farfield_pwr(urb_list, travel_time, params)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{urb\_list}] list of binary urbanicitiy values created with recode\_urbanicity
+function
+
+\item[\code{params}] description
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Value}
+far-field power
+\end{Value}
+\HeaderA{get\_farfield\_sar}{Calculate far-field exposure SAR}{get.Rul.farfield.Rul.sar}
+%
+\begin{Description}
+This function will be expanded in the future to provide a more fine-tuned
+calculation of the far-field SAR values.
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+get_farfield_sar(params, tissue_params)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{params}] descr
+
+\item[\code{tissue\_params}] descr
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Value}
+aggregated sar
+\end{Value}
+\HeaderA{get\_gaming\_dose}{Calculate brain and body dose from gaming with a portable console}{get.Rul.gaming.Rul.dose}
+%
+\begin{Description}
+Calculate brain and body dose from gaming with a portable console
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+get_gaming_dose(duration_gaming, params)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{duration\_gaming}] Daily gaming duration with portable console in seconds
+
+\item[\code{params}] Parameter list
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Value}
+list with daily brain and body dose from smart home
+\end{Value}
+\HeaderA{get\_headphone\_dose}{Calculate brain and body dose from using bluetooth headphones}{get.Rul.headphone.Rul.dose}
+%
+\begin{Description}
+Important: exposure comes from both mobile phone and from smart watch.
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+get_headphone_dose(duration_headphones, params)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{duration\_headphones}] Daily duration of using bt headphones connected to phone
+
+\item[\code{params}] Parameter list
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Value}
+list with daily brain and body dose from bt headphones connected to phone
+\end{Value}
+\HeaderA{get\_headp\_headp\_dose}{Calculate contribution from headp}{get.Rul.headp.Rul.headp.Rul.dose}
+%
+\begin{Description}
+Calculate contribution from headp
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+get_headp_headp_dose(duration_headphones, params, tissue_params)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{duration\_headphones}] Daily duration of headphone use in seconds
+
+\item[\code{params}] Parameter list
+
+\item[\code{tissue\_params}] tissue-specific parameter list
+\end{ldescription}
+\end{Arguments}
+\HeaderA{get\_headp\_phone\_dose}{Calculate contribution from mobile phone while using headp}{get.Rul.headp.Rul.phone.Rul.dose}
+%
+\begin{Description}
+Calculate contribution from mobile phone while using headp
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+get_headp_phone_dose(duration_headphones, params, tissue_params)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{duration\_headphones}] Daily duration of headphone use in seconds
+
+\item[\code{params}] Parameter list
+
+\item[\code{tissue\_params}] tissue-specific parameter list
+\end{ldescription}
+\end{Arguments}
+\HeaderA{get\_headp\_phone\_pwr}{Calculate power from bluetooth headphones (phone contribution only)}{get.Rul.headp.Rul.phone.Rul.pwr}
+%
+\begin{Description}
+Calculate power from bluetooth headphones (phone contribution only)
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+get_headp_phone_pwr(params)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{params}] Parameter list
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Value}
+output power
+\end{Value}
+\HeaderA{get\_headp\_phone\_sar}{Calculate SAR from bluetooth headphones (phone contribution only)}{get.Rul.headp.Rul.phone.Rul.sar}
+%
+\begin{Description}
+Calculate SAR from bluetooth headphones (phone contribution only)
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+get_headp_phone_sar(params, tissue_params)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{params}] Parameter list
+
+\item[\code{tissue\_params}] Tissue-specific parameter list (SAR values)
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Value}
+SAR value
+\end{Value}
+\HeaderA{get\_headp\_pwr}{Calculate power from bluetooth headphones (headphone contribution only)}{get.Rul.headp.Rul.pwr}
+%
+\begin{Description}
+Calculate power from bluetooth headphones (headphone contribution only)
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+get_headp_pwr(params)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{params}] Parameter list
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Value}
+output power
+\end{Value}
+\HeaderA{get\_headp\_sar}{Calculate SAR from bluetooth headphones (watch contribution only)}{get.Rul.headp.Rul.sar}
+%
+\begin{Description}
+Calculate SAR from bluetooth headphones (watch contribution only)
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+get_headp_sar(params, tissue_params)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{params}] Parameter list
+
+\item[\code{tissue\_params}] Tissue-specific parameter list (SAR values)
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Value}
+SAR value
+\end{Value}
+\HeaderA{get\_hotspot\_dose}{Calculate brain and body dose from using mobile phone as hotspot}{get.Rul.hotspot.Rul.dose}
+%
+\begin{Description}
+Calculate brain and body dose from using mobile phone as hotspot
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+get_hotspot_dose(duration_hotspot, params)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{duration\_hotspot}] Daily duration of using phone as hotspot in seconds
+
+\item[\code{params}] Parameter list
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Value}
+list with daily brain and body dose from hotspot use
+\end{Value}
+\HeaderA{get\_hotspot\_pwr}{Calculate output power from using mobile phone as hotspot}{get.Rul.hotspot.Rul.pwr}
+%
+\begin{Description}
+Calculate output power from using mobile phone as hotspot
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+get_hotspot_pwr(params)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{params}] Parameter list
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Value}
+Aggregated output power of mobile phone hotspot in mW
+\end{Value}
+\HeaderA{get\_hotspot\_sar}{Calculate SAR from hotspot}{get.Rul.hotspot.Rul.sar}
+%
+\begin{Description}
+Calculate SAR from hotspot
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+get_hotspot_sar(params, tissue_params)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{params}] Parameter list
+
+\item[\code{tissue\_params}] Tissue params
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Value}
+tissue-specific SAR from hotspot
+\end{Value}
+\HeaderA{get\_laptop\_dose}{Calculate Dose from Laptop Use}{get.Rul.laptop.Rul.dose}
+%
+\begin{Description}
+Calculate Dose from Laptop Use
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+get_laptop_dose(duration, params)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{duration}] Duration of laptop use in seconds
+
+\item[\code{params}] Parameter list
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Value}
+List with brain dose and body dose in mJ/kg/day
+\end{Value}
+\HeaderA{get\_laptop\_pwr}{Calculate Laptop Aggregated Power}{get.Rul.laptop.Rul.pwr}
+%
+\begin{Description}
+Calculate Laptop Aggregated Power
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+get_laptop_pwr(params)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{params}] text
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Value}
+text
+\end{Value}
+\HeaderA{get\_laptop\_sar}{Calculate Laptop Aggregated SAR}{get.Rul.laptop.Rul.sar}
+%
+\begin{Description}
+Calculate Laptop Aggregated SAR
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+get_laptop_sar(params, tissue_params)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{params}] descr
+
+\item[\code{tissue\_params}] descr
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Value}
+Aggregated tissue SAR from laptop use (W/kg/W)
+\end{Value}
+\HeaderA{get\_mobilecall\_bt\_headp\_dose}{Calculate RF-EMF dose from mobile calling using Bluetooth headphones (headphone contribution)}{get.Rul.mobilecall.Rul.bt.Rul.headp.Rul.dose}
+%
+\begin{Description}
+Calculates the RF-EMF dose from mobile calling using Bluetooth headphones (headphone contribution).
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+get_mobilecall_bt_headp_dose(
+  duration,
+  headp_prop,
+  headp_ear_num,
+  params,
+  tissue_params
+)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{duration}] Duration of mobile phone call in seconds per day
+
+\item[\code{headp\_prop}] Proportion of time Bluetooth headphones are used during mobile call
+
+\item[\code{headp\_ear\_num}] If particpant uses 1 or 2 Bluetooth headphones during mobile call
+
+\item[\code{params}] Parameter list
+
+\item[\code{tissue\_params}] Tissue parameter list
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Details}
+The dose is calculated as:
+\deqn{Dose = Duration \times Power \times SAR \times headp_prop \times headp_ear_num}{}
+
+Where:
+\begin{itemize}
+
+\item{} \eqn{Duration}{} is the duration of mobile phone call in seconds per day
+\item{} \eqn{SAR}{} is the specific absorption rate from Bluetooth in W/kg/W
+\item{} \eqn{Power}{} is the Bluetooth output power of the mobile phone during mobile calling mW
+\item{} \eqn{headp_prop}{} is the proportion of time Bluetooth headphones are used during mobile calls
+\item{} \eqn{headp_ear_num}{} is the number of Bluetooth headphones (1 or 2) used during mobile calls
+
+\end{itemize}
+
+\end{Details}
+%
+\begin{Value}
+Dose from mobile calling using Bluetooth headphones in mJ/kg/day (headphone contribution)
+\end{Value}
+%
+\begin{SeeAlso}
+\code{\LinkA{get\_mobilecall\_bt\_phone\_dose()}{get.Rul.mobilecall.Rul.bt.Rul.phone.Rul.dose}}, \code{\LinkA{get\_mobilecall\_bt\_headp\_pwr()}{get.Rul.mobilecall.Rul.bt.Rul.headp.Rul.pwr}}, \code{\LinkA{get\_mobilecall\_bt\_headp\_sar()}{get.Rul.mobilecall.Rul.bt.Rul.headp.Rul.sar}}
+\end{SeeAlso}
+\HeaderA{get\_mobilecall\_bt\_headp\_pwr}{Calculate output power from mobile calling using Bluetooth headphones (headphone contribution)}{get.Rul.mobilecall.Rul.bt.Rul.headp.Rul.pwr}
+%
+\begin{Description}
+Calculates the output power from mobile calling using Bluetooth headphones (headphone Bluetooth contribution).
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+get_mobilecall_bt_headp_pwr(params)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{params}] Parameter list
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Details}
+In this version, this function serves as a placeholder and simply fetches the corresponding parameter from the parameter list.
+\end{Details}
+%
+\begin{Value}
+Output power from mobile phone (Bluetooth contribution) during mobile phone call in mW
+\end{Value}
+\HeaderA{get\_mobilecall\_bt\_headp\_sar}{Calculate SAR from mobile calling using Bluetooth headphones (headphone contribution)}{get.Rul.mobilecall.Rul.bt.Rul.headp.Rul.sar}
+%
+\begin{Description}
+Calculates SAR from mobile calling using Bluetooth headphones (headphone Bluetooth contribution).
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+get_mobilecall_bt_headp_sar(params, tissue_params)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{params}] Parameter list
+
+\item[\code{tissue\_params}] Tissue parameter list
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Details}
+In this version, this function serves as a placeholder and simply fetches the corresponding parameter from the parameter list.
+\end{Details}
+%
+\begin{Value}
+Output power from mobile phone (Bluetooth contribution) during mobile phone call in mW
+\end{Value}
+\HeaderA{get\_mobilecall\_bt\_phone\_dose}{Calculate RF-EMF dose from mobile calling using Bluetooth headphones (phone contribution)}{get.Rul.mobilecall.Rul.bt.Rul.phone.Rul.dose}
+%
+\begin{Description}
+Calculates the RF-EMF dose from mobile calling using Bluetooth headphones (phone contribution).
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+get_mobilecall_bt_phone_dose(duration, headp_prop, params, tissue_params)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{duration}] Duration of mobile phone call in seconds per day
+
+\item[\code{headp\_prop}] Proportion of time Bluetooth headphones are used during mobile call
+
+\item[\code{params}] Parameter list
+
+\item[\code{tissue\_params}] Tissue parameter list
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Details}
+The dose is calculated as:
+\deqn{Dose = Duration \times Power \times SAR}{}
+
+Where:
+\begin{itemize}
+
+\item{} \eqn{Duration}{} is the duration of mobile phone call in seconds per day
+\item{} \eqn{SAR}{} is the specific absorption rate from Bluetooth in W/kg/W
+\item{} \eqn{Power}{} is the Bluetooth output power of the mobile phone during mobile calling mW
+
+\end{itemize}
+
+\end{Details}
+%
+\begin{Value}
+Dose from mobile calling using Bluetooth headphones in mJ/kg/day (phone contribution)
+\end{Value}
+%
+\begin{SeeAlso}
+\code{\LinkA{get\_mobilecall\_bt\_headp\_dose()}{get.Rul.mobilecall.Rul.bt.Rul.headp.Rul.dose}}, \code{\LinkA{get\_mobilecall\_bt\_phone\_pwr()}{get.Rul.mobilecall.Rul.bt.Rul.phone.Rul.pwr}}, \code{\LinkA{get\_mobilecall\_bt\_phone\_sar()}{get.Rul.mobilecall.Rul.bt.Rul.phone.Rul.sar}}
+\end{SeeAlso}
+\HeaderA{get\_mobilecall\_bt\_phone\_pwr}{Calculate output power from mobile calling using Bluetooth headphones (phone contribution)}{get.Rul.mobilecall.Rul.bt.Rul.phone.Rul.pwr}
+%
+\begin{Description}
+Calculates the output power from mobile calling using Bluetooth headphones (phone Bluetooth contribution).
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+get_mobilecall_bt_phone_pwr(params)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{params}] Parameter list
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Details}
+In this version, this function serves as a placeholder and simply fetches the corresponding parameter from the parameter list.
+\end{Details}
+%
+\begin{Value}
+Output power from mobile phone (Bluetooth contribution) during mobile phone call in mW
+\end{Value}
+\HeaderA{get\_mobilecall\_bt\_phone\_sar}{Calculate SAR from mobile calling using Bluetooth headphones (phone contribution)}{get.Rul.mobilecall.Rul.bt.Rul.phone.Rul.sar}
+%
+\begin{Description}
+Calculates the specific absorption rate from mobile calling using Bluetooth headphones (phone contribution).
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+get_mobilecall_bt_phone_sar(params, tissue_params)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{params}] Parameter list
+
+\item[\code{tissue\_params}] Tissue parameter list
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Value}
+SAR from mobile calling using Bluetooth headphones in W/kg/W (phone contribution)
+\end{Value}
+\HeaderA{get\_mobilecall\_dose}{Calculate RF-EMF dose from mobile calling (mobile phone and Bluethooth)}{get.Rul.mobilecall.Rul.dose}
+%
+\begin{Description}
+Includes all sources: RF-EMF from phone itself, for Bluetooth connection to
+headphones, and from headphones themselves
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+get_mobilecall_dose(
+  duration,
+  ear_prop,
+  headp_prop,
+  urbanicity,
+  use_5g,
+  travel_time,
+  headp_ear_num,
+  params
+)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{duration}] Duration of mobile phone call in seconds per day
+
+\item[\code{ear\_prop}] Proportion of time mobile phone is held against ear during call
+
+\item[\code{headp\_prop}] Proportion of time Bluetooth headphones are used during mobile call while phone is NOT held against ear
+
+\item[\code{urbanicity}] Urbanicity of home / workplace
+
+\item[\code{use\_5g}] TRUE if participant uses 5G services on mobile phone, FALSE if not
+
+\item[\code{travel\_time}] Time spent commuting in seconds per day
+
+\item[\code{headp\_ear\_num}] If particpant uses 1 or 2 Bluetooth headphones during mobile call
+
+\item[\code{params}] Parameter list
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Details}
+The mobile call RF-EMF dose is calculated as:
+\deqn{Dose_{mobilecall} = Dose_{phone} + Dose_{phoneBluetooth} + Dose_{headphonesBluetooth}}{}
+
+Where:
+\begin{itemize}
+
+\item{} \eqn{Dose_{mobilecall}}{} is the total dose from all mobile call activities
+\item{} \eqn{Dose_{phone}}{} is the dose from the mobile phone (no Bluetooth)
+\item{} \eqn{Dose_{phoneBluetooth}}{} is the dose from Bluetooth by the phone
+\item{} \eqn{Dose_{headphonesBluetooth}}{} is the dose from Bluetooth by the Bluetooth headphones
+
+\end{itemize}
+
+\end{Details}
+%
+\begin{Value}
+List with two values:
+\begin{itemize}
+
+\item{} "brain\_call\_dose" (brain RF-EMF dose from mobile calls in mJ/kg/day)
+\item{} "body\_call\_dose" (body RF-EMF dose from mobile calls in mJ/kg/day)
+
+\end{itemize}
+
+\end{Value}
+%
+\begin{SeeAlso}
+\code{\LinkA{get\_mobilecall\_phone\_dose()}{get.Rul.mobilecall.Rul.phone.Rul.dose}}, \code{\LinkA{get\_mobilecall\_bt\_phone\_dose()}{get.Rul.mobilecall.Rul.bt.Rul.phone.Rul.dose}}, \code{\LinkA{get\_mobilecall\_bt\_headp\_dose()}{get.Rul.mobilecall.Rul.bt.Rul.headp.Rul.dose}}
+\end{SeeAlso}
+\HeaderA{get\_mobilecall\_phone\_data\_pwr}{Calculate mobile phone output power from data mobile calling (no Bluetooth)}{get.Rul.mobilecall.Rul.phone.Rul.data.Rul.pwr}
+%
+\begin{Description}
+Calculates the output power of the mobile phone during data (3G, 4G, 5G) mobile calls in mW (No Bluetooth)
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+get_mobilecall_phone_data_pwr(urbanicity, use_5g, travel_time, params)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{urbanicity}] Urbanicity of home / workplace
+
+\item[\code{use\_5g}] TRUE if participant uses 5G services on mobile phone, FALSE if not
+
+\item[\code{travel\_time}] Time spent commuting in seconds per day
+
+\item[\code{params}] Parameter list
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Details}
+The mobile phone output power during data mobile calling (no Bluetooth) is calculated as:
+\deqn{Power_{Data} = Prop_{3G} \times Power_{3G} + Prop_{4G} \times Power_{4G} + Prop_{5G} \times Power_{5G}}{}
+
+Where:
+\begin{itemize}
+
+\item{} \eqn{Prop_{3G}}{}, \eqn{Prop_{4G}}{}, \eqn{Prop_{5G}}{} are the proportion of 3G, 4G and 5G during mobile calls, respectively
+\item{} \eqn{Power_{3G}}{}, \eqn{Power_{4G}}{}, \eqn{Power_{5G}}{} are the output power of the mobile phone using 3G, 4G and 5G during mobile calls, respectively
+
+\end{itemize}
+
+\end{Details}
+%
+\begin{Value}
+Mobile phone output power during data (3G, 4G, 5G) mobile calling (no Bluetooth) in mW
+\end{Value}
+\HeaderA{get\_mobilecall\_phone\_data\_sar}{Calculate SAR from data mobile calling (no Bluetooth)}{get.Rul.mobilecall.Rul.phone.Rul.data.Rul.sar}
+%
+\begin{Description}
+Calculates the tissue-specific absorption rate (SAR) for calling with a mobile phone (no Bluetooth) using mobile data (3G, 4G, 5G).
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+get_mobilecall_phone_data_sar(
+  ear_prop,
+  headp_prop,
+  speaker_prop,
+  params,
+  tissue_params
+)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{ear\_prop}] Proportion of time mobile phone is held against ear during call
+
+\item[\code{headp\_prop}] Proportion of time Bluetooth headphones are used during mobile call while phone is NOT held against ear
+
+\item[\code{speaker\_prop}] Proportion of time speaker mode is used during mobile call while phone is NOT held against ear
+
+\item[\code{params}] Parameter list
+
+\item[\code{tissue\_params}] Tissue parameter list
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Details}
+The SAR from mobile calling using data is calculated as:
+\deqn{SAR_{Data} = Prop_{Ear} \times SAR_{Ear} + Prop_{Speaker} \times SAR_{Speaker} + Prop_{Headphones} \times SAR_{Headphones}}{}
+
+Where:
+\begin{itemize}
+
+\item{} \eqn{Prop_{Ear}}{}, \eqn{Prop_{Speaker}}{}, \eqn{Prop_{Headphones}}{} are the proportion of time phone is held against ear, used in speaker mode, and used with headphones, respectively
+\item{} \eqn{SAR_{Ear}}{}, \eqn{SAR_{Speaker}}{}, \eqn{SAR_{Headphones}}{} are the SAR values from holding phone to ear, using it in speaker mode, and using it with headphones, respectively
+
+\end{itemize}
+
+\end{Details}
+%
+\begin{Value}
+SAR value from mobile phone during data (3G, 4G, 5G) calls in W/kg/W
+\end{Value}
+\HeaderA{get\_mobilecall\_phone\_dose}{Calculate RF-EMF dose from mobile phone (no Bluetooth)}{get.Rul.mobilecall.Rul.phone.Rul.dose}
+%
+\begin{Description}
+Calculates the total RF-EMF dose from mobile calling from the mobile phone
+(No Bluetooth)
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+get_mobilecall_phone_dose(
+  duration,
+  ear_prop,
+  speaker_prop,
+  headp_prop,
+  urbanicity,
+  use_5g,
+  travel_time,
+  params,
+  tissue_params
+)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{duration}] Duration of mobile phone call in seconds per day
+
+\item[\code{ear\_prop}] Proportion of time mobile phone is held against ear during call
+
+\item[\code{speaker\_prop}] Proportion of time speaker mode is used during mobile call while phone is NOT held against ear
+
+\item[\code{headp\_prop}] Proportion of time Bluetooth headphones are used during mobile call while phone is NOT held against ear
+
+\item[\code{urbanicity}] Urbanicity of home / workplace
+
+\item[\code{use\_5g}] TRUE if participant uses 5G services on mobile phone, FALSE if not
+
+\item[\code{travel\_time}] Time spent commuting in seconds per day
+
+\item[\code{params}] Parameter list
+
+\item[\code{tissue\_params}] Tissue-specific parameter list
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Details}
+The mobile call RF-EMF dose (no Bluetooth) is calculated as:
+\deqn{Dose = Duration \times SAR \times Power}{}
+
+Where:
+\begin{itemize}
+
+\item{} \eqn{Duration}{} is the duration of mobile phone call in seconds per day
+\item{} \eqn{SAR}{} is the specific absorption rate in W/kg/W
+\item{} \eqn{Power}{} is the output power of the mobile phone during mobile calling mW
+
+\end{itemize}
+
+\end{Details}
+%
+\begin{Value}
+RF-EMF dose in mJ/kg/day
+\end{Value}
+%
+\begin{SeeAlso}
+\code{\LinkA{get\_mobilecall\_phone\_pwr()}{get.Rul.mobilecall.Rul.phone.Rul.pwr}}, \code{\LinkA{get\_mobilecall\_phone\_sar()}{get.Rul.mobilecall.Rul.phone.Rul.sar}}
+\end{SeeAlso}
+\HeaderA{get\_mobilecall\_phone\_native\_pwr}{Calculate mobile phone output power from native mobile calling (no Bluetooth)}{get.Rul.mobilecall.Rul.phone.Rul.native.Rul.pwr}
+%
+\begin{Description}
+Calculates the output power of the mobile phone during native mobile calls in mW (No Bluetooth)
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+get_mobilecall_phone_native_pwr(urbanicity, travel_time, params)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{urbanicity}] Urbanicity of home / workplace
+
+\item[\code{travel\_time}] Time spent commuting in seconds per day
+
+\item[\code{params}] Parameter list
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Details}
+The mobile phone output power during native mobile calling (no Bluetooth) is calculated as:
+\deqn{Power_{Data} = Prop_{2G} \times Power_{2G} + Prop_{3G} \times Power_{3G} + Prop_{4G} \times Power_{4G} + Prop_{5G} \times Power_{5G}}{}
+
+Where:
+\begin{itemize}
+
+\item{} \eqn{Prop_{2G}}{}, \eqn{Prop_{3G}}{}, \eqn{Prop_{4G}}{}, \eqn{Prop_{5G}}{} are the proportion of 2G, 3G, 4G and 5G during native mobile calls, respectively
+\item{} \eqn{Power_{2G}}{}, \eqn{Power_{3G}}{}, \eqn{Power_{4G}}{}, \eqn{Power_{5G}}{} are the output power of the mobile phone using 2G, 3G, 4G and 5G during native mobile calls, respectively
+
+\end{itemize}
+
+\end{Details}
+%
+\begin{Value}
+Mobile phone output power during native mobile calling (no Bluetooth) in mW
+\end{Value}
+\HeaderA{get\_mobilecall\_phone\_native\_sar}{Calculate SAR from native mobile calling (no Bluetooth)}{get.Rul.mobilecall.Rul.phone.Rul.native.Rul.sar}
+%
+\begin{Description}
+Calculates the tissue-specific absorption rate (SAR) for calling with a mobile phone (no Bluetooth) using native network.
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+get_mobilecall_phone_native_sar(
+  ear_prop,
+  headp_prop,
+  speaker_prop,
+  params,
+  tissue_params
+)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{ear\_prop}] Proportion of time mobile phone is held against ear during call
+
+\item[\code{headp\_prop}] Proportion of time Bluetooth headphones are used during mobile call while phone is NOT held against ear
+
+\item[\code{speaker\_prop}] Proportion of time speaker mode is used during mobile call while phone is NOT held against ear
+
+\item[\code{params}] Parameter list
+
+\item[\code{tissue\_params}] Tissue parameter list
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Details}
+The SAR from native mobile calling is calculated as:
+\deqn{SAR_{Native} = Prop_{Ear} \times SAR_{Ear} + Prop_{Speaker} \times SAR_{Speaker} + Prop_{Headphones} \times SAR_{Headphones}}{}
+
+Where:
+\begin{itemize}
+
+\item{} \eqn{Prop_{Ear}}{}, \eqn{Prop_{Speaker}}{}, \eqn{Prop_{Headphones}}{} are the proportion of time phone is held against ear, used in speaker mode, and used with headphones, respectively
+\item{} \eqn{SAR_{Ear}}{}, \eqn{SAR_{Speaker}}{}, \eqn{SAR_{Headphones}}{} are the SAR values from holding phone to ear, using it in speaker mode, and using it with headphones, respectively
+
+\end{itemize}
+
+\end{Details}
+%
+\begin{Value}
+SAR value from mobile phone during native calls in W/kg/W
+\end{Value}
+\HeaderA{get\_mobilecall\_phone\_pwr}{Calculate output power from mobile phone during mobile call (no Bluetooth)}{get.Rul.mobilecall.Rul.phone.Rul.pwr}
+%
+\begin{Description}
+Calculates the output power of the mobile phone during mobile calls in mW (No Bluetooth)
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+get_mobilecall_phone_pwr(urbanicity, use_5g, travel_time, params)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{urbanicity}] Urbanicity of home / workplace
+
+\item[\code{use\_5g}] TRUE if participant uses 5G services on mobile phone, FALSE if not
+
+\item[\code{travel\_time}] Time spent commuting in seconds per day
+
+\item[\code{params}] Parameter list
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Details}
+The mobile phone output power during mobile calling (no Bluetooth) is calculated as:
+\deqn{Power = Prop_{WiFi} \times Power_{WiFi} + Prop_{Data} \times Power_{Data} + Prop_{Native} \times Power_{Native}}{}
+
+Where:
+\begin{itemize}
+
+\item{} \eqn{Prop_{WiFi}}{}, \eqn{Prop_{Data}}{}, \eqn{Prop_{Native}}{} are the proportion of time mobile calls are done using WiFi, mobile data, or native network, respectively.
+\item{} \eqn{Power_{WiFi}}{}, \eqn{Prop_{Data}}{}, \eqn{Prop_{Native}}{} are the output power (mW) of the mobile phone using WiFi, mobile data, or native phone calls, respectively.
+
+\end{itemize}
+
+\end{Details}
+%
+\begin{Value}
+Mobile phone output power during mobile calling (no Bluetooth) in mW
+\end{Value}
+%
+\begin{SeeAlso}
+\code{\LinkA{get\_mobilecall\_phone\_wifi\_pwr()}{get.Rul.mobilecall.Rul.phone.Rul.wifi.Rul.pwr}}, \code{\LinkA{get\_mobilecall\_phone\_data\_pwr()}{get.Rul.mobilecall.Rul.phone.Rul.data.Rul.pwr}}, \code{\LinkA{get\_mobilecall\_phone\_native\_pwr()}{get.Rul.mobilecall.Rul.phone.Rul.native.Rul.pwr}}
+\end{SeeAlso}
+\HeaderA{get\_mobilecall\_phone\_sar}{Calculate SAR from mobile calling (no Bluetooth)}{get.Rul.mobilecall.Rul.phone.Rul.sar}
+%
+\begin{Description}
+Calculates the tissue-specific absorption rate (SAR) for calling with a mobile phone (no Bluetooth).
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+get_mobilecall_phone_sar(
+  ear_prop,
+  headp_prop,
+  speaker_prop,
+  params,
+  tissue_params
+)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{ear\_prop}] Proportion of time mobile phone is held against ear during call
+
+\item[\code{headp\_prop}] Proportion of time Bluetooth headphones are used during mobile call while phone is NOT held against ear
+
+\item[\code{speaker\_prop}] Proportion of time speaker mode is used during mobile call while phone is NOT held against ear
+
+\item[\code{params}] Parameter list
+
+\item[\code{tissue\_params}] SAR values
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Details}
+The SAR from mobile calling (no Bluetooth) is calculated as:
+\deqn{SAR = Prop_{WiFi} \times SAR_{WiFi} + Prop_{Data} \times SAR_{Data} + Prop_{Native} \times SAR_{Native}}{}
+
+Where:
+\begin{itemize}
+
+\item{} \eqn{Prop_{WiFi}}{}, \eqn{Prop_{Data}}{}, \eqn{Prop_{Native}}{} are the proportion of WiFi, mobile data, and native network used during mobile calls, respectively
+\item{} \eqn{SAR_{WiFi}}{}, \eqn{SAR_{Data}}{}, \eqn{SAR_{Native}}{} are the SAR values for WiFi, mobile data, and native network used during mobile calls, respectively
+
+\end{itemize}
+
+\end{Details}
+%
+\begin{Value}
+SAR from mobile calling (no Bluetooth) in W/kg/W
+\end{Value}
+%
+\begin{SeeAlso}
+\code{\LinkA{get\_mobilecall\_phone\_wifi\_sar()}{get.Rul.mobilecall.Rul.phone.Rul.wifi.Rul.sar}}, \code{\LinkA{get\_mobilecall\_phone\_data\_sar()}{get.Rul.mobilecall.Rul.phone.Rul.data.Rul.sar}}, \code{\LinkA{get\_mobilecall\_phone\_native\_sar()}{get.Rul.mobilecall.Rul.phone.Rul.native.Rul.sar}}
+\end{SeeAlso}
+\HeaderA{get\_mobilecall\_phone\_wifi\_pwr}{Calculate mobile phone output power from WiFi mobile calling (no Bluetooth)}{get.Rul.mobilecall.Rul.phone.Rul.wifi.Rul.pwr}
+%
+\begin{Description}
+Calculates the output power of the mobile phone during WiFi mobile calls in mW (No Bluetooth)
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+get_mobilecall_phone_wifi_pwr(
+  wifi_2_prop,
+  wifi_5_prop,
+  wifi_2_pwr,
+  wifi_5_pwr,
+  wifi_2_duty_cycle,
+  wifi_5_duty_cycle
+)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{wifi\_2\_prop}] Proportion of 2.4GHz WiFi
+
+\item[\code{wifi\_5\_prop}] Proportion of 5.0GHz WiFi
+
+\item[\code{wifi\_2\_pwr}] 2.4GHz WiFi Call Power
+
+\item[\code{wifi\_5\_pwr}] 5.0GHz WiFi Call Power
+
+\item[\code{wifi\_2\_duty\_cycle}] 2.4GHz WiFi Duty Cycle
+
+\item[\code{wifi\_5\_duty\_cycle}] 5.0GHz WiFi Duty Cycle
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Details}
+The mobile phone output power during WiFi mobile calling (no Bluetooth) is calculated as:
+\deqn{Power_{WiFi} = Prop_{2.4GHz} \times Power_{2.4GHz} \times DutyCycle_{2.4GHz} + Prop_{5.0GHz} \times Power_{5.0GHz} \times DutyCycle_{5.0GHz}}{}
+
+Where:
+\begin{itemize}
+
+\item{} \eqn{Prop_{2.4GHz}}{}, \eqn{Prop_{5.0GHz}}{} are the proportion of 2.4GHz and 5.0GHz WiFi, respectively
+\item{} \eqn{Power_{2.4GHz}}{}, \eqn{Power_{5.0GHz}}{} are the output power of 2.4GHz and 5.0GHz WiFi calls from the mobile phone (no Bluetooth), respectively
+\item{} \eqn{DutyCycle_{2.4GHz}}{}, \eqn{DutyCycle_{5.0GHz}}{} are the duty cycle of 2.4GHz and 5.0GHz WiFi, respectively
+
+\end{itemize}
+
+\end{Details}
+%
+\begin{Value}
+Mobile phone output power during WiFi mobile calling (no Bluetooth) in mW
+\end{Value}
+\HeaderA{get\_mobilecall\_phone\_wifi\_sar}{Calculate SAR from WiFi mobile calling (no Bluetooth)}{get.Rul.mobilecall.Rul.phone.Rul.wifi.Rul.sar}
+%
+\begin{Description}
+Calculates the tissue-specific absorption rate (SAR) for calling with a mobile phone (no Bluetooth) using WiFi.
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+get_mobilecall_phone_wifi_sar(
+  ear_prop,
+  headp_prop,
+  speaker_prop,
+  params,
+  tissue_params
+)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{ear\_prop}] Proportion of time mobile phone is held against ear during call
+
+\item[\code{headp\_prop}] Proportion of time Bluetooth headphones are used during mobile call while phone is NOT held against ear
+
+\item[\code{speaker\_prop}] Proportion of time speaker mode is used during mobile call while phone is NOT held against ear
+
+\item[\code{params}] Parameter list
+
+\item[\code{tissue\_params}] Tissue parameter list
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Details}
+The SAR from mobile calling using WiFi is calculated as:
+\deqn{SAR_{WiFi} = Prop_{2.4GHz} \times SAR_{2.4GHz} + Prop_{5.0GHz} \times SAR_{5.0GHz}}{}
+
+Where:
+\begin{itemize}
+
+\item{} \eqn{Prop_{2.4GHz}}{}, \eqn{Prop_{5.0GHz}}{} are the proportion of 2.4GHz and 5.0GHz WiFi, respectively
+\item{} \eqn{SAR_{2.4GHz}}{}, \eqn{SAR_{5.0GHz}}{} are the SAR values from 2.4GHz and 5.0GHz WiFi calls from the mobile phone (no Bluetooth), respectively
+
+\end{itemize}
+
+\end{Details}
+%
+\begin{Value}
+SAR value from mobile phone during WiFi calls in W/kg/W
+\end{Value}
+\HeaderA{get\_mobiledata\_dose}{Calculate dose from using data on mobile phone (mobile data and WiFi)}{get.Rul.mobiledata.Rul.dose}
+%
+\begin{Description}
+Calculates the total RF-EMF dose from data transfer using a mobile phone.
+This includes mobile data (3G, 4G, 5G) and WiFi use.
+It does NOT include RF-EMF exposure from voice calling, which is calculated separately.
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+get_mobiledata_dose(
+  duration,
+  use_5g,
+  wifi_prop,
+  urbanicity,
+  act_pwr_props,
+  travel_time,
+  params
+)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{duration}] Duration of mobile data use in seconds per day
+
+\item[\code{use\_5g}] TRUE if participant uses 5G services on mobile phone, FALSE if not
+
+\item[\code{wifi\_prop}] Proportion of time WiFi connection is used for data transfer (vs mobile data)
+
+\item[\code{urbanicity}] Urbanicity of home / workplace
+
+\item[\code{act\_pwr\_props}] List with proportion of time spent in low vs low-mid vs mid-high vs high output power activities
+
+\item[\code{travel\_time}] Time spent commuting in seconds per day
+
+\item[\code{params}] Parameter list
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Details}
+The mobile data RF-EMF dose is calculated as:
+\deqn{Dose_{mobiledata} = Duration_{mobiledata} \times Power_{mobiledata} \times SAR_{mobiledata}}{}
+
+Where:
+\begin{itemize}
+
+\item{} \eqn{Duration_{mobiledata}}{} is the duration of mobile data use in seconds per day
+\item{} \eqn{Power_{mobiledata}}{} is the output power of the mobile phone during mobile data use in mW
+\item{} \eqn{SAR_{mobiledata}}{} is the specific absorption rate in W/kg/W
+
+\end{itemize}
+
+\end{Details}
+%
+\begin{Value}
+List with two values:
+\begin{itemize}
+
+\item{} "brain\_data\_dose" (brain RF-EMF dose from mobile data use in mJ/kg/day)
+\item{} "body\_data\_dose" (body RF-EMF dose from mobile data use in mJ/kg/day)
+
+\end{itemize}
+
+\end{Value}
+%
+\begin{SeeAlso}
+\code{\LinkA{get\_mobiledata\_pwr()}{get.Rul.mobiledata.Rul.pwr}}, \code{\LinkA{get\_mobiledata\_sar()}{get.Rul.mobiledata.Rul.sar}}, \code{\LinkA{get\_mobilecall\_dose()}{get.Rul.mobilecall.Rul.dose}}
+\end{SeeAlso}
+\HeaderA{get\_mobiledata\_pwr}{Calculate mobile data aggregated output power}{get.Rul.mobiledata.Rul.pwr}
+%
+\begin{Description}
+Calculates the output power of the mobile phone during mobile data use in mW
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+get_mobiledata_pwr(
+  wifi_prop,
+  use_5g,
+  act_pwr_props,
+  travel_time,
+  urbanicity,
+  params
+)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{wifi\_prop}] Proportion of time WiFi connection is used for data transfer (vs mobile data)
+
+\item[\code{use\_5g}] TRUE if participant uses 5G services on mobile phone, FALSE if not
+
+\item[\code{act\_pwr\_props}] List with proportion of time spent in low vs low-mid vs mid-high vs high output power activities
+
+\item[\code{travel\_time}] Time spent commuting in seconds per day
+
+\item[\code{urbanicity}] Urbanicity of home / workplace
+
+\item[\code{params}] parameter list
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Details}
+The mobile phone output power during mobile data use is calculated as:
+\deqn{Power = Prop_{WiFi} \times Power_{WiFi} + Prop_{Data} \times Power_{Data}}{}
+
+Where:
+\begin{itemize}
+
+\item{} \eqn{Prop_{WiFi}}{}, \eqn{Prop_{Data}}{} are the proportion of time mobile calls are done using WiFi and mobile data, respectively.
+\item{} \eqn{Power_{WiFi}}{}, \eqn{Prop_{Data}}{} are the output power (mW) of the mobile phone using WiFi and mobile data respectively.
+
+\end{itemize}
+
+\end{Details}
+%
+\begin{Value}
+Mobile phone output power during mobile data use in mW
+\end{Value}
+%
+\begin{SeeAlso}
+\code{\LinkA{get\_mpd\_wifi\_pwr()}{get.Rul.mpd.Rul.wifi.Rul.pwr}}, \code{\LinkA{get\_mpd\_data\_pwr()}{get.Rul.mpd.Rul.data.Rul.pwr}}
+\end{SeeAlso}
+\HeaderA{get\_mobiledata\_sar}{Calculate SAR from data use on mobile phone (mobile data and WiFi)}{get.Rul.mobiledata.Rul.sar}
+%
+\begin{Description}
+Calculates specific absorption rate (SAR) from data use on mobile phone (mobile data and WiFi)
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+get_mobiledata_sar(wifi_prop, params, tissue_params)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{wifi\_prop}] Proportion of time WiFi connection is used for data transfer (vs mobile data)
+
+\item[\code{params}] Parameter list
+
+\item[\code{tissue\_params}] Tissue-specific parameters (SAR-values)
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Details}
+The SAR is calculated as follows:
+\deqn{SAR = Prop_{WiFi}\times SAR_{WiFi} + Prop_{Data}\times SAR_{data}}{}
+
+Where:
+\eqn{Prop_{WiFi}}{}, \eqn{Prop_{Data}}{} are the WiFi and data use proportions
+\eqn{SAR_{WiFi}}{}, \eqn{SAR_{Data}}{} are the SAR values from WiFi and from data
+\end{Details}
+\HeaderA{get\_mpd\_data\_pwr}{Calculate mobile phone aggregated output power from mobile data (3G, 4G, 5G) use}{get.Rul.mpd.Rul.data.Rul.pwr}
+%
+\begin{Description}
+Calculates mobile phone aggregated output power from mobile data (3G, 4G, 5G) use
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+get_mpd_data_pwr(use_5g, urbanicity, act_pwr_props, travel_time, params)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{use\_5g}] TRUE if participant uses 5G, FALSE otherwise
+
+\item[\code{urbanicity}] Urbanicity of home/work environment
+
+\item[\code{act\_pwr\_props}] List with proportion of time spent in low vs low-mid vs mid-high vs high output power activities
+
+\item[\code{travel\_time}] Time spent commuting in seconds per day
+
+\item[\code{params}] Device-specific parameter list
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Details}
+The mobile phone output power from mobile data use is calculated as:
+\deqn{Power = Prop_{3G} \times Power_{3G} + Prop_{4G} \times Power_{4G} + Prop_{5G} \times Power_{5G}}{}
+
+Where:
+\begin{itemize}
+
+\item{} \eqn{Prop_{3G}}{}, \eqn{Prop_{4G}}{}, \eqn{Prop_{5G}}{} are the proportions of 3G, 4G and 5G
+\item{} \eqn{Power_{3G}}{}, \eqn{Power_{4G}}{}, \eqn{Power_{5G}}{} are the output powers of 3G, 4G and 5G (to be refined further)
+
+\end{itemize}
+
+\end{Details}
+%
+\begin{Value}
+Output power from mobile data (3G, 4G, 5G) use on mobile phone in mW
+\end{Value}
+\HeaderA{get\_mpd\_wifi\_pwr}{Calculate mobile phone aggregated output power from WiFi use}{get.Rul.mpd.Rul.wifi.Rul.pwr}
+%
+\begin{Description}
+Calculates mobile phone aggregated output power from WiFi use (2.4GHz, 5.0GHz)
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+get_mpd_wifi_pwr(act_pwr_props, params)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{act\_pwr\_props}] List with proportion of time spent in low vs low-mid vs mid-high vs high output power activities
+
+\item[\code{params}] device-specific parameters
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Details}
+The output power is calculated as:
+
+\deqn{Power_{WiFi} = Prop_{2.4GHz}\times Power_{2.4GHz} + Prop_{5.0GHz}\times Power_{5.0GHz}}{}
+
+Where:
+\eqn{Prop_{2.4GHz}}{}, \eqn{Prop_{5.0GHz}}{} are the proportions of 2.4GHz vs 5.0GHz WiFi
+\eqn{Power_{2.4GHz}}{}, \eqn{Power_{5.0GHz}}{} are the output power from 2.4GHz and 5.0GHz WiFi in mW, respectively
+\end{Details}
+%
+\begin{Value}
+Output power from WiFi use on mobile phone in mW
+\end{Value}
+\HeaderA{get\_other\_dose}{Calculate Dose from other exposure sources}{get.Rul.other.Rul.dose}
+%
+\begin{Description}
+Calculate Dose from other exposure sources
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+get_other_dose(
+  duration_hotspot,
+  duration_smartwatch,
+  duration_tracker,
+  duration_vr,
+  duration_headphones,
+  duration_smarthome,
+  duration_gaming,
+  params
+)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{duration\_hotspot}] daily hotspot use duration (s)
+
+\item[\code{duration\_smartwatch}] daily smart watch use duration (s)
+
+\item[\code{duration\_tracker}] daily tracker use duration (s)
+
+\item[\code{duration\_vr}] daily vr use duration (s)
+
+\item[\code{duration\_headphones}] daily bluetooth headphone use duration (s)
+
+\item[\code{duration\_smarthome}] daily time spend in smarthome (s)
+
+\item[\code{duration\_gaming}] daily portable gaming console use duration (s)
+
+\item[\code{params}] Parameter list
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Value}
+List with brain dose and body dose in mJ/kg/day
+\end{Value}
+\HeaderA{get\_smarthome\_dose}{Calculate brain and body dose from smart home}{get.Rul.smarthome.Rul.dose}
+%
+\begin{Description}
+Calculate brain and body dose from smart home
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+get_smarthome_dose(duration_smarthome, params)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{duration\_smarthome}] Daily duration of being in smart home
+
+\item[\code{params}] Parameter list
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Value}
+list with daily brain and body dose from smart home
+\end{Value}
+\HeaderA{get\_smarthome\_pwr}{Calculate output power from smart home}{get.Rul.smarthome.Rul.pwr}
+%
+\begin{Description}
+Calculate output power from smart home
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+get_smarthome_pwr(params)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{params}] Parameter list
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Value}
+Aggregated output power smart home in mW
+\end{Value}
+\HeaderA{get\_smarthome\_sar}{Calculate SAR from smart home}{get.Rul.smarthome.Rul.sar}
+%
+\begin{Description}
+Calculate SAR from smart home
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+get_smarthome_sar(params, tissue_params)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{params}] Parameter list
+
+\item[\code{tissue\_params}] Tissue params
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Value}
+tissue-specific SAR from smart home
+\end{Value}
+\HeaderA{get\_smartwatch\_dose}{Calculate brain and body dose from using smart watch connected to mobile phone}{get.Rul.smartwatch.Rul.dose}
+%
+\begin{Description}
+Important: exposure comes from both mobile phone and from smart watch.
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+get_smartwatch_dose(duration_smartwatch, params)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{duration\_smartwatch}] Daily duration of using smart watch in seconds
+
+\item[\code{params}] Parameter list
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Value}
+list with daily brain and body dose from smart watch use
+\end{Value}
+\HeaderA{get\_smartwatch\_phone\_dose}{Calculate contribution from mobile phone while using smart watch}{get.Rul.smartwatch.Rul.phone.Rul.dose}
+%
+\begin{Description}
+Calculate contribution from mobile phone while using smart watch
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+get_smartwatch_phone_dose(duration_smartwatch, params, tissue_params)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{duration\_smartwatch}] Daily duration of smartwatch use in seconds
+
+\item[\code{params}] Parameter list
+
+\item[\code{tissue\_params}] tissue-specific parameter list
+\end{ldescription}
+\end{Arguments}
+\HeaderA{get\_smartwatch\_phone\_pwr}{Calculate power from smart watch (phone contribution only)}{get.Rul.smartwatch.Rul.phone.Rul.pwr}
+%
+\begin{Description}
+Calculate power from smart watch (phone contribution only)
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+get_smartwatch_phone_pwr(params)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{params}] Parameter list
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Value}
+output power
+\end{Value}
+\HeaderA{get\_smartwatch\_phone\_sar}{Calculate SAR from smart watch (phone contribution only)}{get.Rul.smartwatch.Rul.phone.Rul.sar}
+%
+\begin{Description}
+Calculate SAR from smart watch (phone contribution only)
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+get_smartwatch_phone_sar(params, tissue_params)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{params}] Parameter list
+
+\item[\code{tissue\_params}] Tissue-specific parameter list (SAR values)
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Value}
+SAR value
+\end{Value}
+\HeaderA{get\_smartwatch\_pwr}{Calculate power from smart watch (watch contribution only)}{get.Rul.smartwatch.Rul.pwr}
+%
+\begin{Description}
+Calculate power from smart watch (watch contribution only)
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+get_smartwatch_pwr(params)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{params}] Parameter list
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Value}
+output power
+\end{Value}
+\HeaderA{get\_smartwatch\_sar}{Calculate SAR from smart watch (watch contribution only)}{get.Rul.smartwatch.Rul.sar}
+%
+\begin{Description}
+Calculate SAR from smart watch (watch contribution only)
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+get_smartwatch_sar(params, tissue_params)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{params}] Parameter list
+
+\item[\code{tissue\_params}] Tissue-specific parameter list (SAR values)
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Value}
+SAR value
+\end{Value}
+\HeaderA{get\_smartwatch\_watch\_dose}{Calculate contribution from smart watch}{get.Rul.smartwatch.Rul.watch.Rul.dose}
+%
+\begin{Description}
+Calculate contribution from smart watch
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+get_smartwatch_watch_dose(duration_smartwatch, params, tissue_params)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{duration\_smartwatch}] Daily duration of smartwatch use in seconds
+
+\item[\code{params}] Parameter list
+
+\item[\code{tissue\_params}] tissue-specific parameter list
+\end{ldescription}
+\end{Arguments}
+\HeaderA{get\_tablet\_dose}{Calculate Dose from Tablet Use}{get.Rul.tablet.Rul.dose}
+%
+\begin{Description}
+Calculate Dose from Tablet Use
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+get_tablet_dose(duration, params)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{duration}] Duration of tablet use in seconds
+
+\item[\code{params}] Parameter list
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Value}
+List with brain dose and body dose in mJ/kg/day
+\end{Value}
+\HeaderA{get\_tablet\_pwr}{Calculate Tablet Aggregated Power}{get.Rul.tablet.Rul.pwr}
+%
+\begin{Description}
+Calculate Tablet Aggregated Power
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+get_tablet_pwr(params)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{params}] descr
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Value}
+Aggregated tablet power
+\end{Value}
+\HeaderA{get\_tablet\_sar}{Calculate Tablet Aggregated SAR}{get.Rul.tablet.Rul.sar}
+%
+\begin{Description}
+Calculate Tablet Aggregated SAR
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+get_tablet_sar(params, tissue_params)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{params}] descr
+
+\item[\code{tissue\_params}] descr
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Value}
+Aggregated tablet SAR
+\end{Value}
+\HeaderA{get\_total\_dose}{Calculate Total RF-EMF Dose for Brain and Body from All Sources For a SINGLE SAMPLE!}{get.Rul.total.Rul.dose}
+%
+\begin{Description}
+Calculate Total RF-EMF Dose for Brain and Body from All Sources
+For a SINGLE SAMPLE!
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+get_total_dose(sample, params)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{sample}] A list with input values for a single sample
+
+\item[\code{params}] A parameter list
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Value}
+A list with results for brain and body dose for a single sample
+\end{Value}
+\HeaderA{get\_tracker\_dose}{Calculate brain and body dose from using personal tracker connected to mobile phone}{get.Rul.tracker.Rul.dose}
+%
+\begin{Description}
+Important: exposure comes from both mobile phone and from smart watch.
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+get_tracker_dose(duration_tracker, params)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{duration\_tracker}] Daily duration of using tracker in seconds
+
+\item[\code{params}] Parameter list
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Value}
+list with daily brain and body dose from tracker use
+\end{Value}
+\HeaderA{get\_tracker\_phone\_dose}{Calculate contribution from mobile phone while using tracker}{get.Rul.tracker.Rul.phone.Rul.dose}
+%
+\begin{Description}
+Calculate contribution from mobile phone while using tracker
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+get_tracker_phone_dose(duration_tracker, params, tissue_params)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{duration\_tracker}] Daily duration of tracker use in seconds
+
+\item[\code{params}] Parameter list
+
+\item[\code{tissue\_params}] tissue-specific parameter list
+\end{ldescription}
+\end{Arguments}
+\HeaderA{get\_tracker\_phone\_pwr}{Calculate power from tracker (phone contribution only)}{get.Rul.tracker.Rul.phone.Rul.pwr}
+%
+\begin{Description}
+Calculate power from tracker (phone contribution only)
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+get_tracker_phone_pwr(params)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{params}] Parameter list
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Value}
+output power
+\end{Value}
+\HeaderA{get\_tracker\_phone\_sar}{Calculate SAR from tracker (phone contribution only)}{get.Rul.tracker.Rul.phone.Rul.sar}
+%
+\begin{Description}
+Calculate SAR from tracker (phone contribution only)
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+get_tracker_phone_sar(params, tissue_params)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{params}] Parameter list
+
+\item[\code{tissue\_params}] Tissue-specific parameter list (SAR values)
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Value}
+SAR value
+\end{Value}
+\HeaderA{get\_tracker\_pwr}{Calculate power from tracker (tracker contribution only)}{get.Rul.tracker.Rul.pwr}
+%
+\begin{Description}
+Calculate power from tracker (tracker contribution only)
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+get_tracker_pwr(params)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{params}] Parameter list
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Value}
+output power
+\end{Value}
+\HeaderA{get\_tracker\_sar}{Calculate SAR from tracker (watch contribution only)}{get.Rul.tracker.Rul.sar}
+%
+\begin{Description}
+Calculate SAR from tracker (watch contribution only)
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+get_tracker_sar(params, tissue_params)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{params}] Parameter list
+
+\item[\code{tissue\_params}] Tissue-specific parameter list (SAR values)
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Value}
+SAR value
+\end{Value}
+\HeaderA{get\_tracker\_tracker\_dose}{Calculate contribution from tracker}{get.Rul.tracker.Rul.tracker.Rul.dose}
+%
+\begin{Description}
+Calculate contribution from tracker
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+get_tracker_tracker_dose(duration_tracker, params, tissue_params)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{duration\_tracker}] Daily duration of tracker use in seconds
+
+\item[\code{params}] Parameter list
+
+\item[\code{tissue\_params}] tissue-specific parameter list
+\end{ldescription}
+\end{Arguments}
+\HeaderA{get\_vr\_dose}{Calculate brain and body dose from using VR headset}{get.Rul.vr.Rul.dose}
+%
+\begin{Description}
+Calculate brain and body dose from using VR headset
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+get_vr_dose(duration_vr, params)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{duration\_vr}] Daily duration of using VR headset in seconds
+
+\item[\code{params}] Parameter list
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Value}
+list with daily brain and body dose from VR headset
+\end{Value}
+\HeaderA{get\_vr\_pwr}{Calculate output power from virtual reality headset}{get.Rul.vr.Rul.pwr}
+%
+\begin{Description}
+Calculate output power from virtual reality headset
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+get_vr_pwr(params)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{params}] Parameter list
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Value}
+Aggregated output power of VR headset in mW
+\end{Value}
+\HeaderA{get\_vr\_sar}{Calculate SAR from VR headset}{get.Rul.vr.Rul.sar}
+%
+\begin{Description}
+Calculate SAR from VR headset
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+get_vr_sar(params, tissue_params)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{params}] Parameter list
+
+\item[\code{tissue\_params}] Tissue params
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Value}
+tissue-specific SAR from VR headset
+\end{Value}
+\HeaderA{get\_wifi\_dose}{Calculate Dose from wifi Use}{get.Rul.wifi.Rul.dose}
+%
+\begin{Description}
+Calculate Dose from wifi Use
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+get_wifi_dose(travel_time, params)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{travel\_time}] Daily time spent commuting (s)
+
+\item[\code{params}] Parameter list
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Value}
+List with brain dose and body dose in mJ/kg/day
+\end{Value}
+\HeaderA{get\_wifi\_pwr}{Calculate WiFi Aggregated Power}{get.Rul.wifi.Rul.pwr}
+%
+\begin{Description}
+Calculate WiFi Aggregated Power
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+get_wifi_pwr(params)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{params}] parameter list
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Value}
+aggregated output power wifi
+\end{Value}
+\HeaderA{get\_wifi\_sar}{Calculate WiFi Aggregated SAR}{get.Rul.wifi.Rul.sar}
+%
+\begin{Description}
+Calculate WiFi Aggregated SAR
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+get_wifi_sar(params, tissue_params)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{params}] description
+
+\item[\code{tissue\_params}] description
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Value}
+description
+\end{Value}
+\HeaderA{load\_device\_params}{Load device-specific parameters}{load.Rul.device.Rul.params}
+%
+\begin{Description}
+Load device-specific parameters
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+load_device_params(params, device_type)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{params}] Parameter list
+
+\item[\code{device\_type}] Device type
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Value}
+Parameter list specific to selected device
+\end{Value}
+\HeaderA{load\_params}{Loading parameters}{load.Rul.params}
+%
+\begin{Description}
+Loading parameters
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+load_params(filename)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{filename}] Name of parameter file to load (must be in yaml format)
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Value}
+List of parameters loaded from yaml input file
+\end{Value}
+\HeaderA{load\_tissue\_params}{Load tissue-specific parameters}{load.Rul.tissue.Rul.params}
+%
+\begin{Description}
+Load tissue-specific parameters
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+load_tissue_params(params, device_type, tissue_name)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{params}] Device-specific parameter list
+
+\item[\code{device\_type}] Name of device
+
+\item[\code{tissue\_name}] Name of tissue
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Value}
+Parameter list specific to selected device and tissue
+\end{Value}
+\HeaderA{recode\_urbanicity}{Check and re-code input values - urbanicity}{recode.Rul.urbanicity}
+%
+\begin{Description}
+Check and re-code input values - urbanicity
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+recode_urbanicity(urbanicity)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{urbanicity}] descr
+\end{ldescription}
+\end{Arguments}
+%
+\begin{Value}
+re-coded urbanicity (binary variables)
+\end{Value}
+\HeaderA{save\_default\_params\_file}{Load default parameter list}{save.Rul.default.Rul.params.Rul.file}
+%
+\begin{Description}
+Load default parameter list
+\end{Description}
+%
+\begin{Usage}
+\begin{verbatim}
+save_default_params_file(dest_file = NULL)
+\end{verbatim}
+\end{Usage}
+%
+\begin{Arguments}
+\begin{ldescription}
+\item[\code{dest\_file}] location where downloaded YAML file should be saved
+\end{ldescription}
+\end{Arguments}
+\printindex{}
+\end{document}

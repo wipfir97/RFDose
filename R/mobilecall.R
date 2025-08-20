@@ -35,6 +35,7 @@
 #' * "body_call_dose" (body RF-EMF dose from mobile calls in mJ/kg/day)
 #'
 #' @seealso [get_mobilecall_phone_dose()], [get_mobilecall_bt_phone_dose()], [get_mobilecall_bt_headp_dose()]
+#' @export
 get_mobilecall_dose <- function(duration,
                                 ear_prop,
                                 headp_prop,
@@ -101,10 +102,12 @@ get_mobilecall_dose <- function(duration,
   ## Calculate dose from bluetooth headphones ---------------------------------
   ### scaled with headphone use proportion!
   headp_bt_dose_brain <- headp_prop*get_mobilecall_bt_headp_dose(duration      = duration,
+                                                                 headp_prop    = headp_prop,
                                                                  headp_ear_num = headp_ear_num,
                                                                  params        = call_params,
                                                                  tissue_params = brain_params)
   headp_bt_dose_body  <- headp_prop*get_mobilecall_bt_headp_dose(duration      = duration,
+                                                                 headp_prop    = headp_prop,
                                                                  headp_ear_num = headp_ear_num,
                                                                  params        = call_params,
                                                                  tissue_params = body_params)
@@ -136,7 +139,7 @@ get_mobilecall_dose <- function(duration,
 #'
 #' * \eqn{Duration} is the duration of mobile phone call in seconds per day
 #' * \eqn{SAR} is the specific absorption rate in W/kg/W
-#' * \eqn{Power} is the output power of the mobile phone during mobile calling mJ
+#' * \eqn{Power} is the output power of the mobile phone during mobile calling mW
 #'
 #' @param duration Duration of mobile phone call in seconds per day
 #' @param ear_prop Proportion of time mobile phone is held against ear during call
@@ -178,7 +181,7 @@ get_mobilecall_phone_dose <- function(duration,
 ## Power ----------------------------------------------------------------------
 #' Calculate output power from mobile phone during mobile call (no Bluetooth)
 #'
-#' Calculates the output power of the mobile phone during mobile calls in mJ (No Bluetooth)
+#' Calculates the output power of the mobile phone during mobile calls in mW (No Bluetooth)
 #'
 #' @details
 #' The mobile phone output power during mobile calling (no Bluetooth) is calculated as:
@@ -187,15 +190,15 @@ get_mobilecall_phone_dose <- function(duration,
 #' Where:
 #'
 #' * \eqn{Prop_{WiFi}}, \eqn{Prop_{Data}}, \eqn{Prop_{Native}} are the proportion of time mobile calls are done using WiFi, mobile data, or native network, respectively.
-#' * \eqn{Power_{WiFi}}, \eqn{Prop_{Data}}, \eqn{Prop_{Native}} are the output power (mJ) of the mobile phone using WiFi, mobile data, or native phone calls, respectively.
-
+#' * \eqn{Power_{WiFi}}, \eqn{Prop_{Data}}, \eqn{Prop_{Native}} are the output power (mW) of the mobile phone using WiFi, mobile data, or native phone calls, respectively.
+#'
 #'
 #' @param urbanicity Urbanicity of home / workplace
 #' @param use_5g TRUE if participant uses 5G services on mobile phone, FALSE if not
 #' @param travel_time Time spent commuting in seconds per day
 #' @param params Parameter list
 #'
-#' @returns Mobile phone output power during mobile calling (no Bluetooth) in mJ
+#' @returns Mobile phone output power during mobile calling (no Bluetooth) in mW
 #'
 #' @seealso [get_mobilecall_phone_wifi_pwr()], [get_mobilecall_phone_data_pwr()], [get_mobilecall_phone_native_pwr()]
 get_mobilecall_phone_pwr <- function(urbanicity,
@@ -232,7 +235,7 @@ get_mobilecall_phone_pwr <- function(urbanicity,
 ### Wifi ----
 #' Calculate mobile phone output power from WiFi mobile calling (no Bluetooth)
 #'
-#' Calculates the output power of the mobile phone during WiFi mobile calls in mJ (No Bluetooth)
+#' Calculates the output power of the mobile phone during WiFi mobile calls in mW (No Bluetooth)
 #'
 #' @details
 #' The mobile phone output power during WiFi mobile calling (no Bluetooth) is calculated as:
@@ -251,7 +254,7 @@ get_mobilecall_phone_pwr <- function(urbanicity,
 #' @param wifi_2_duty_cycle 2.4GHz WiFi Duty Cycle
 #' @param wifi_5_duty_cycle 5.0GHz WiFi Duty Cycle
 #'
-#' @returns Mobile phone output power during WiFi mobile calling (no Bluetooth) in mJ
+#' @returns Mobile phone output power during WiFi mobile calling (no Bluetooth) in mW
 get_mobilecall_phone_wifi_pwr <- function(wifi_2_prop,
                                           wifi_5_prop,
                                           wifi_2_pwr,
@@ -272,7 +275,7 @@ get_mobilecall_phone_wifi_pwr <- function(wifi_2_prop,
 # TODO add explanation about urbanicity and loc_props in documentation
 #' Calculate mobile phone output power from data mobile calling (no Bluetooth)
 #'
-#' Calculates the output power of the mobile phone during data (3G, 4G, 5G) mobile calls in mJ (No Bluetooth)
+#' Calculates the output power of the mobile phone during data (3G, 4G, 5G) mobile calls in mW (No Bluetooth)
 #'
 #' @details
 #' The mobile phone output power during data mobile calling (no Bluetooth) is calculated as:
@@ -289,7 +292,7 @@ get_mobilecall_phone_wifi_pwr <- function(wifi_2_prop,
 #' @param travel_time Time spent commuting in seconds per day
 #' @param params Parameter list
 #'
-#' @returns Mobile phone output power during data (3G, 4G, 5G) mobile calling (no Bluetooth) in mJ
+#' @returns Mobile phone output power during data (3G, 4G, 5G) mobile calling (no Bluetooth) in mW
 get_mobilecall_phone_data_pwr <- function(urbanicity,
                                           use_5g,
                                           travel_time,
@@ -383,7 +386,7 @@ get_mobilecall_phone_data_pwr <- function(urbanicity,
 # TODO add explanation about urbanicity and loc_props in documentation
 #' Calculate mobile phone output power from native mobile calling (no Bluetooth)
 #'
-#' Calculates the output power of the mobile phone during native mobile calls in mJ (No Bluetooth)
+#' Calculates the output power of the mobile phone during native mobile calls in mW (No Bluetooth)
 #'
 #' @details
 #' The mobile phone output power during native mobile calling (no Bluetooth) is calculated as:
@@ -398,7 +401,7 @@ get_mobilecall_phone_data_pwr <- function(urbanicity,
 #' @param travel_time Time spent commuting in seconds per day
 #' @param params Parameter list
 #'
-#' @returns Mobile phone output power during native mobile calling (no Bluetooth) in mJ
+#' @returns Mobile phone output power during native mobile calling (no Bluetooth) in mW
 get_mobilecall_phone_native_pwr <- function(urbanicity,
                                             travel_time,
                                             params) {
@@ -415,12 +418,12 @@ get_mobilecall_phone_native_pwr <- function(urbanicity,
   ## Indoors (=work+home)
   pwr_2g_ind <- sum(params$native_2g_sub_indo_pwr*urb_list$home_suburb, # if suburban
                     params$native_2g_urb_indo_pwr*urb_list$home_urban, # if urban
-                    params$native_2g_urb_indo_pwr*urb_list$home_urban # if urban
+                    params$native_2g_rur_indo_pwr*urb_list$home_rural # if rural
   )
   ## Outdoors
   pwr_2g_out <- sum(params$native_2g_sub_outd_pwr*urb_list$home_suburb, # if suburban
                     params$native_2g_urb_outd_pwr*urb_list$home_urban, # if urban
-                    params$native_2g_urb_outd_pwr*urb_list$home_urban # if urban
+                    params$native_2g_rur_outd_pwr*urb_list$home_rural # if rural
   )
   ## Travel
   pwr_2g_tra <- params$native_2g_travel_pwr
@@ -433,12 +436,12 @@ get_mobilecall_phone_native_pwr <- function(urbanicity,
   ## Indoors (=work+home)
   pwr_3g_ind <- sum(params$native_3g_sub_indo_pwr*urb_list$home_suburb, # if suburban
                     params$native_3g_urb_indo_pwr*urb_list$home_urban, # if urban
-                    params$native_3g_urb_indo_pwr*urb_list$home_urban # if urban
+                    params$native_3g_rur_indo_pwr*urb_list$home_rural # if rural
   )
   ## Outdoors
   pwr_3g_out <- sum(params$native_3g_sub_outd_pwr*urb_list$home_suburb, # if suburban
                     params$native_3g_urb_outd_pwr*urb_list$home_urban, # if urban
-                    params$native_3g_urb_outd_pwr*urb_list$home_urban # if urban
+                    params$native_3g_rur_outd_pwr*urb_list$home_rural # if rural
   )
   ## Travel
   pwr_3g_tra <- params$native_3g_travel_pwr
@@ -451,12 +454,12 @@ get_mobilecall_phone_native_pwr <- function(urbanicity,
   ## Indoors (=work+home)
   pwr_4g_ind <- sum(params$native_4g_sub_indo_pwr*urb_list$home_suburb, # if suburban
                     params$native_4g_urb_indo_pwr*urb_list$home_urban, # if urban
-                    params$native_4g_urb_indo_pwr*urb_list$home_urban # if urban
+                    params$native_4g_rur_indo_pwr*urb_list$home_rural # if rural
   )
   ## Outdoors
   pwr_4g_out <- sum(params$native_4g_sub_outd_pwr*urb_list$home_suburb, # if suburban
                     params$native_4g_urb_outd_pwr*urb_list$home_urban, # if urban
-                    params$native_4g_urb_outd_pwr*urb_list$home_urban # if urban
+                    params$native_4g_rur_outd_pwr*urb_list$home_rural # if rural
   )
   ## Travel
   pwr_4g_tra <- params$native_4g_travel_pwr
@@ -469,12 +472,12 @@ get_mobilecall_phone_native_pwr <- function(urbanicity,
   ## Indoors (=work+home)
   pwr_5g_ind <- sum(params$native_5g_sub_indo_pwr*urb_list$home_suburb, # if suburban
                     params$native_5g_urb_indo_pwr*urb_list$home_urban, # if urban
-                    params$native_5g_urb_indo_pwr*urb_list$home_urban # if urban
+                    params$native_5g_rur_indo_pwr*urb_list$home_rural # if rural
   )
   ## Outdoors
   pwr_5g_out <- sum(params$native_5g_sub_outd_pwr*urb_list$home_suburb, # if suburban
                     params$native_5g_urb_outd_pwr*urb_list$home_urban, # if urban
-                    params$native_5g_urb_outd_pwr*urb_list$home_urban # if urban
+                    params$native_5g_rur_outd_pwr*urb_list$home_rural # if urban
   )
   ## Travel
   pwr_5g_tra <- params$native_5g_travel_pwr
@@ -489,7 +492,6 @@ get_mobilecall_phone_native_pwr <- function(urbanicity,
              pwr_4g*params$native_4g_prop,
              pwr_5g*params$native_5g_prop)
 
-  print(pwr)
   return(pwr)
 }
 
@@ -731,7 +733,7 @@ get_mobilecall_phone_native_sar <- function(ear_prop,
 #'
 #' * \eqn{Duration} is the duration of mobile phone call in seconds per day
 #' * \eqn{SAR} is the specific absorption rate from Bluetooth in W/kg/W
-#' * \eqn{Power} is the Bluetooth output power of the mobile phone during mobile calling mJ
+#' * \eqn{Power} is the Bluetooth output power of the mobile phone during mobile calling mW
 #'
 #' @param duration Duration of mobile phone call in seconds per day
 #' @param headp_prop Proportion of time Bluetooth headphones are used during mobile call
@@ -766,7 +768,7 @@ get_mobilecall_bt_phone_dose <- function(duration,
 #'
 #' @param params Parameter list
 #'
-#' @returns Output power from mobile phone (Bluetooth contribution) during mobile phone call in mJ
+#' @returns Output power from mobile phone (Bluetooth contribution) during mobile phone call in mW
 get_mobilecall_bt_phone_pwr <- function(params) {
   pwr <- params$headp_phone_bt_pwr
   return(pwr)
@@ -811,7 +813,7 @@ get_mobilecall_bt_phone_sar <- function(params,
 #'
 #' * \eqn{Duration} is the duration of mobile phone call in seconds per day
 #' * \eqn{SAR} is the specific absorption rate from Bluetooth in W/kg/W
-#' * \eqn{Power} is the Bluetooth output power of the mobile phone during mobile calling mJ
+#' * \eqn{Power} is the Bluetooth output power of the mobile phone during mobile calling mW
 #' * \eqn{headp_prop} is the proportion of time Bluetooth headphones are used during mobile calls
 #' * \eqn{headp_ear_num} is the number of Bluetooth headphones (1 or 2) used during mobile calls
 #'
@@ -848,7 +850,7 @@ get_mobilecall_bt_headp_dose <- function(duration,
 #'
 #' @param params Parameter list
 #'
-#' @returns Output power from mobile phone (Bluetooth contribution) during mobile phone call in mJ
+#' @returns Output power from mobile phone (Bluetooth contribution) during mobile phone call in mW
 get_mobilecall_bt_headp_pwr <- function(params) {
   pwr <- params$headp_phone_bt_pwr
   return(pwr)
@@ -864,7 +866,7 @@ get_mobilecall_bt_headp_pwr <- function(params) {
 #' @param params Parameter list
 #' @param tissue_params Tissue parameter list
 #'
-#' @returns Output power from mobile phone (Bluetooth contribution) during mobile phone call in mJ
+#' @returns Output power from mobile phone (Bluetooth contribution) during mobile phone call in mW
 get_mobilecall_bt_headp_sar <- function(params,
                                         tissue_params) {
   sar <- tissue_params$bt_headp_sar

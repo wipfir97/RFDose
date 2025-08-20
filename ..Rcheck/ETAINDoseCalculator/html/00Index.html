@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+<head><title>R: Functions for RF-EMF Dose Calculations</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+<link rel="stylesheet" type="text/css" href="R.css" />
+</head><body><div class="container">
+<h1> Functions for RF-EMF Dose Calculations
+<img class="toplogo" src="../../../doc/html/Rlogo.svg" alt="[R logo]" />
+</h1>
+<hr/>
+<div style="text-align: center;">
+<a href="../../../doc/html/packages.html"><img class="arrow" src="../../../doc/html/left.jpg" alt="[Up]" /></a>
+<a href="../../../doc/html/index.html"><img class="arrow" src="../../../doc/html/up.jpg" alt="[Top]" /></a>
+</div><h2>Documentation for package &lsquo;ETAINDoseCalculator&rsquo; version 0.2.0</h2>
+
+<ul><li><a href="../DESCRIPTION" type="text/plain; charset=utf-8">DESCRIPTION file</a>.</li>
+<li><a href="../NEWS.md">Package NEWS</a>.</li>
+</ul>
+
+<h2>Help Pages</h2>
+
+
+<table style="width: 100%;">
+<tr><td style="width: 25%;"><a href="calculate_data_tech_proportions.html">calculate_data_tech_proportions</a></td>
+<td>Get mobile data technology use proportions</td></tr>
+<tr><td style="width: 25%;"><a href="calculate_emf_doses.html">calculate_emf_doses</a></td>
+<td>Calculate Total RF-EMF Doses for ALL samples</td></tr>
+<tr><td style="width: 25%;"><a href="calculate_location_proportions.html">calculate_location_proportions</a></td>
+<td>Calculate proportion of time spent at home vs work vs outdoors vs travelling</td></tr>
+<tr><td style="width: 25%;"><a href="check_duration.html">check_duration</a></td>
+<td>Check input values - duration</td></tr>
+<tr><td style="width: 25%;"><a href="check_input_param_list.html">check_input_param_list</a></td>
+<td>Check input parameter list</td></tr>
+<tr><td style="width: 25%;"><a href="check_proportions.html">check_proportions</a></td>
+<td>Check input values - proportions</td></tr>
+<tr><td style="width: 25%;"><a href="example_data.html">example_data</a></td>
+<td>Example data for testing</td></tr>
+<tr><td style="width: 25%;"><a href="fill_missing_variables.html">fill_missing_variables</a></td>
+<td>Fill missing variables</td></tr>
+<tr><td style="width: 25%;"><a href="flat_params_to_nested.html">flat_params_to_nested</a></td>
+<td>Convert flat parameter table to nested parameter YAML</td></tr>
+<tr><td style="width: 25%;"><a href="get_act_pwr_props.html">get_act_pwr_props</a></td>
+<td>Get low/lowmed/medhigh/high activity power proportions</td></tr>
+<tr><td style="width: 25%;"><a href="get_cordless_dose.html">get_cordless_dose</a></td>
+<td>Calculate Dose from Cordless Calling</td></tr>
+<tr><td style="width: 25%;"><a href="get_cordless_pwr.html">get_cordless_pwr</a></td>
+<td>Calculate Aggregated Power of Cordless Phone</td></tr>
+<tr><td style="width: 25%;"><a href="get_cordless_sar.html">get_cordless_sar</a></td>
+<td>Calculate Aggregated SAR during cordless call (tissue-specific)</td></tr>
+<tr><td style="width: 25%;"><a href="get_farfield_dose.html">get_farfield_dose</a></td>
+<td>Calculate Dose from far-field exposure</td></tr>
+<tr><td style="width: 25%;"><a href="get_farfield_pwr.html">get_farfield_pwr</a></td>
+<td>Calculate far-field exposure aggregated power</td></tr>
+<tr><td style="width: 25%;"><a href="get_farfield_sar.html">get_farfield_sar</a></td>
+<td>Calculate far-field exposure SAR</td></tr>
+<tr><td style="width: 25%;"><a href="get_gaming_dose.html">get_gaming_dose</a></td>
+<td>Calculate brain and body dose from gaming with a portable console</td></tr>
+<tr><td style="width: 25%;"><a href="get_headphone_dose.html">get_headphone_dose</a></td>
+<td>Calculate brain and body dose from using bluetooth headphones</td></tr>
+<tr><td style="width: 25%;"><a href="get_headp_headp_dose.html">get_headp_headp_dose</a></td>
+<td>Calculate contribution from headp</td></tr>
+<tr><td style="width: 25%;"><a href="get_headp_phone_dose.html">get_headp_phone_dose</a></td>
+<td>Calculate contribution from mobile phone while using headp</td></tr>
+<tr><td style="width: 25%;"><a href="get_headp_phone_pwr.html">get_headp_phone_pwr</a></td>
+<td>Calculate power from bluetooth headphones (phone contribution only)</td></tr>
+<tr><td style="width: 25%;"><a href="get_headp_phone_sar.html">get_headp_phone_sar</a></td>
+<td>Calculate SAR from bluetooth headphones (phone contribution only)</td></tr>
+<tr><td style="width: 25%;"><a href="get_headp_pwr.html">get_headp_pwr</a></td>
+<td>Calculate power from bluetooth headphones (headphone contribution only)</td></tr>
+<tr><td style="width: 25%;"><a href="get_headp_sar.html">get_headp_sar</a></td>
+<td>Calculate SAR from bluetooth headphones (watch contribution only)</td></tr>
+<tr><td style="width: 25%;"><a href="get_hotspot_dose.html">get_hotspot_dose</a></td>
+<td>Calculate brain and body dose from using mobile phone as hotspot</td></tr>
+<tr><td style="width: 25%;"><a href="get_hotspot_pwr.html">get_hotspot_pwr</a></td>
+<td>Calculate output power from using mobile phone as hotspot</td></tr>
+<tr><td style="width: 25%;"><a href="get_hotspot_sar.html">get_hotspot_sar</a></td>
+<td>Calculate SAR from hotspot</td></tr>
+<tr><td style="width: 25%;"><a href="get_laptop_dose.html">get_laptop_dose</a></td>
+<td>Calculate Dose from Laptop Use</td></tr>
+<tr><td style="width: 25%;"><a href="get_laptop_pwr.html">get_laptop_pwr</a></td>
+<td>Calculate Laptop Aggregated Power</td></tr>
+<tr><td style="width: 25%;"><a href="get_laptop_sar.html">get_laptop_sar</a></td>
+<td>Calculate Laptop Aggregated SAR</td></tr>
+<tr><td style="width: 25%;"><a href="get_mobilecall_bt_headp_dose.html">get_mobilecall_bt_headp_dose</a></td>
+<td>Calculate RF-EMF dose from mobile calling using Bluetooth headphones (headphone contribution)</td></tr>
+<tr><td style="width: 25%;"><a href="get_mobilecall_bt_headp_pwr.html">get_mobilecall_bt_headp_pwr</a></td>
+<td>Calculate output power from mobile calling using Bluetooth headphones (headphone contribution)</td></tr>
+<tr><td style="width: 25%;"><a href="get_mobilecall_bt_headp_sar.html">get_mobilecall_bt_headp_sar</a></td>
+<td>Calculate SAR from mobile calling using Bluetooth headphones (headphone contribution)</td></tr>
+<tr><td style="width: 25%;"><a href="get_mobilecall_bt_phone_dose.html">get_mobilecall_bt_phone_dose</a></td>
+<td>Calculate RF-EMF dose from mobile calling using Bluetooth headphones (phone contribution)</td></tr>
+<tr><td style="width: 25%;"><a href="get_mobilecall_bt_phone_pwr.html">get_mobilecall_bt_phone_pwr</a></td>
+<td>Calculate output power from mobile calling using Bluetooth headphones (phone contribution)</td></tr>
+<tr><td style="width: 25%;"><a href="get_mobilecall_bt_phone_sar.html">get_mobilecall_bt_phone_sar</a></td>
+<td>Calculate SAR from mobile calling using Bluetooth headphones (phone contribution)</td></tr>
+<tr><td style="width: 25%;"><a href="get_mobilecall_dose.html">get_mobilecall_dose</a></td>
+<td>Calculate RF-EMF dose from mobile calling (mobile phone and Bluethooth)</td></tr>
+<tr><td style="width: 25%;"><a href="get_mobilecall_phone_data_pwr.html">get_mobilecall_phone_data_pwr</a></td>
+<td>Calculate mobile phone output power from data mobile calling (no Bluetooth)</td></tr>
+<tr><td style="width: 25%;"><a href="get_mobilecall_phone_data_sar.html">get_mobilecall_phone_data_sar</a></td>
+<td>Calculate SAR from data mobile calling (no Bluetooth)</td></tr>
+<tr><td style="width: 25%;"><a href="get_mobilecall_phone_dose.html">get_mobilecall_phone_dose</a></td>
+<td>Calculate RF-EMF dose from mobile phone (no Bluetooth)</td></tr>
+<tr><td style="width: 25%;"><a href="get_mobilecall_phone_native_pwr.html">get_mobilecall_phone_native_pwr</a></td>
+<td>Calculate mobile phone output power from native mobile calling (no Bluetooth)</td></tr>
+<tr><td style="width: 25%;"><a href="get_mobilecall_phone_native_sar.html">get_mobilecall_phone_native_sar</a></td>
+<td>Calculate SAR from native mobile calling (no Bluetooth)</td></tr>
+<tr><td style="width: 25%;"><a href="get_mobilecall_phone_pwr.html">get_mobilecall_phone_pwr</a></td>
+<td>Calculate output power from mobile phone during mobile call (no Bluetooth)</td></tr>
+<tr><td style="width: 25%;"><a href="get_mobilecall_phone_sar.html">get_mobilecall_phone_sar</a></td>
+<td>Calculate SAR from mobile calling (no Bluetooth)</td></tr>
+<tr><td style="width: 25%;"><a href="get_mobilecall_phone_wifi_pwr.html">get_mobilecall_phone_wifi_pwr</a></td>
+<td>Calculate mobile phone output power from WiFi mobile calling (no Bluetooth)</td></tr>
+<tr><td style="width: 25%;"><a href="get_mobilecall_phone_wifi_sar.html">get_mobilecall_phone_wifi_sar</a></td>
+<td>Calculate SAR from WiFi mobile calling (no Bluetooth)</td></tr>
+<tr><td style="width: 25%;"><a href="get_mobiledata_dose.html">get_mobiledata_dose</a></td>
+<td>Calculate dose from using data on mobile phone (mobile data and WiFi)</td></tr>
+<tr><td style="width: 25%;"><a href="get_mobiledata_pwr.html">get_mobiledata_pwr</a></td>
+<td>Calculate mobile data aggregated output power</td></tr>
+<tr><td style="width: 25%;"><a href="get_mobiledata_sar.html">get_mobiledata_sar</a></td>
+<td>Calculate SAR from data use on mobile phone (mobile data and WiFi)</td></tr>
+<tr><td style="width: 25%;"><a href="get_mpd_data_pwr.html">get_mpd_data_pwr</a></td>
+<td>Calculate mobile phone aggregated output power from mobile data (3G, 4G, 5G) use</td></tr>
+<tr><td style="width: 25%;"><a href="get_mpd_wifi_pwr.html">get_mpd_wifi_pwr</a></td>
+<td>Calculate mobile phone aggregated output power from WiFi use</td></tr>
+<tr><td style="width: 25%;"><a href="get_other_dose.html">get_other_dose</a></td>
+<td>Calculate Dose from other exposure sources</td></tr>
+<tr><td style="width: 25%;"><a href="get_smarthome_dose.html">get_smarthome_dose</a></td>
+<td>Calculate brain and body dose from smart home</td></tr>
+<tr><td style="width: 25%;"><a href="get_smarthome_pwr.html">get_smarthome_pwr</a></td>
+<td>Calculate output power from smart home</td></tr>
+<tr><td style="width: 25%;"><a href="get_smarthome_sar.html">get_smarthome_sar</a></td>
+<td>Calculate SAR from smart home</td></tr>
+<tr><td style="width: 25%;"><a href="get_smartwatch_dose.html">get_smartwatch_dose</a></td>
+<td>Calculate brain and body dose from using smart watch connected to mobile phone</td></tr>
+<tr><td style="width: 25%;"><a href="get_smartwatch_phone_dose.html">get_smartwatch_phone_dose</a></td>
+<td>Calculate contribution from mobile phone while using smart watch</td></tr>
+<tr><td style="width: 25%;"><a href="get_smartwatch_phone_pwr.html">get_smartwatch_phone_pwr</a></td>
+<td>Calculate power from smart watch (phone contribution only)</td></tr>
+<tr><td style="width: 25%;"><a href="get_smartwatch_phone_sar.html">get_smartwatch_phone_sar</a></td>
+<td>Calculate SAR from smart watch (phone contribution only)</td></tr>
+<tr><td style="width: 25%;"><a href="get_smartwatch_pwr.html">get_smartwatch_pwr</a></td>
+<td>Calculate power from smart watch (watch contribution only)</td></tr>
+<tr><td style="width: 25%;"><a href="get_smartwatch_sar.html">get_smartwatch_sar</a></td>
+<td>Calculate SAR from smart watch (watch contribution only)</td></tr>
+<tr><td style="width: 25%;"><a href="get_smartwatch_watch_dose.html">get_smartwatch_watch_dose</a></td>
+<td>Calculate contribution from smart watch</td></tr>
+<tr><td style="width: 25%;"><a href="get_tablet_dose.html">get_tablet_dose</a></td>
+<td>Calculate Dose from Tablet Use</td></tr>
+<tr><td style="width: 25%;"><a href="get_tablet_pwr.html">get_tablet_pwr</a></td>
+<td>Calculate Tablet Aggregated Power</td></tr>
+<tr><td style="width: 25%;"><a href="get_tablet_sar.html">get_tablet_sar</a></td>
+<td>Calculate Tablet Aggregated SAR</td></tr>
+<tr><td style="width: 25%;"><a href="get_total_dose.html">get_total_dose</a></td>
+<td>Calculate Total RF-EMF Dose for Brain and Body from All Sources For a SINGLE SAMPLE!</td></tr>
+<tr><td style="width: 25%;"><a href="get_tracker_dose.html">get_tracker_dose</a></td>
+<td>Calculate brain and body dose from using personal tracker connected to mobile phone</td></tr>
+<tr><td style="width: 25%;"><a href="get_tracker_phone_dose.html">get_tracker_phone_dose</a></td>
+<td>Calculate contribution from mobile phone while using tracker</td></tr>
+<tr><td style="width: 25%;"><a href="get_tracker_phone_pwr.html">get_tracker_phone_pwr</a></td>
+<td>Calculate power from tracker (phone contribution only)</td></tr>
+<tr><td style="width: 25%;"><a href="get_tracker_phone_sar.html">get_tracker_phone_sar</a></td>
+<td>Calculate SAR from tracker (phone contribution only)</td></tr>
+<tr><td style="width: 25%;"><a href="get_tracker_pwr.html">get_tracker_pwr</a></td>
+<td>Calculate power from tracker (tracker contribution only)</td></tr>
+<tr><td style="width: 25%;"><a href="get_tracker_sar.html">get_tracker_sar</a></td>
+<td>Calculate SAR from tracker (watch contribution only)</td></tr>
+<tr><td style="width: 25%;"><a href="get_tracker_tracker_dose.html">get_tracker_tracker_dose</a></td>
+<td>Calculate contribution from tracker</td></tr>
+<tr><td style="width: 25%;"><a href="get_vr_dose.html">get_vr_dose</a></td>
+<td>Calculate brain and body dose from using VR headset</td></tr>
+<tr><td style="width: 25%;"><a href="get_vr_pwr.html">get_vr_pwr</a></td>
+<td>Calculate output power from virtual reality headset</td></tr>
+<tr><td style="width: 25%;"><a href="get_vr_sar.html">get_vr_sar</a></td>
+<td>Calculate SAR from VR headset</td></tr>
+<tr><td style="width: 25%;"><a href="get_wifi_dose.html">get_wifi_dose</a></td>
+<td>Calculate Dose from wifi Use</td></tr>
+<tr><td style="width: 25%;"><a href="get_wifi_pwr.html">get_wifi_pwr</a></td>
+<td>Calculate WiFi Aggregated Power</td></tr>
+<tr><td style="width: 25%;"><a href="get_wifi_sar.html">get_wifi_sar</a></td>
+<td>Calculate WiFi Aggregated SAR</td></tr>
+<tr><td style="width: 25%;"><a href="load_device_params.html">load_device_params</a></td>
+<td>Load device-specific parameters</td></tr>
+<tr><td style="width: 25%;"><a href="load_params.html">load_params</a></td>
+<td>Loading parameters</td></tr>
+<tr><td style="width: 25%;"><a href="load_tissue_params.html">load_tissue_params</a></td>
+<td>Load tissue-specific parameters</td></tr>
+<tr><td style="width: 25%;"><a href="recode_urbanicity.html">recode_urbanicity</a></td>
+<td>Check and re-code input values - urbanicity</td></tr>
+<tr><td style="width: 25%;"><a href="save_default_params_file.html">save_default_params_file</a></td>
+<td>Load default parameter list</td></tr>
+</table>
+</div></body></html>

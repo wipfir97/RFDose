@@ -2,7 +2,7 @@
 % Please edit documentation in R/mobiledata.R
 \name{get_mobiledata_dose}
 \alias{get_mobiledata_dose}
-\title{Calculate Dose from mobile data}
+\title{Calculate dose from using data on mobile phone (mobile data and WiFi)}
 \usage{
 get_mobiledata_dose(
   duration,
@@ -11,31 +11,47 @@ get_mobiledata_dose(
   urbanicity,
   act_pwr_props,
   travel_time,
-  high_pwr_prop,
   params
 )
 }
 \arguments{
-\item{duration}{Duration of mobile data transfer in seconds}
+\item{duration}{Duration of mobile data use in seconds per day}
 
-\item{use_5g}{If participant uses 5G or not}
+\item{use_5g}{TRUE if participant uses 5G services on mobile phone, FALSE if not}
 
-\item{wifi_prop}{Proportion of time WiFi connection is used for data
-transfer (vs mobile data)}
+\item{wifi_prop}{Proportion of time WiFi connection is used for data transfer (vs mobile data)}
 
-\item{urbanicity}{urbanicity}
+\item{urbanicity}{Urbanicity of home / workplace}
 
-\item{act_pwr_props}{activity power proportions}
+\item{act_pwr_props}{List with proportion of time spent in low vs low-mid vs mid-high vs high output power activities}
 
-\item{travel_time}{travel time}
-
-\item{high_pwr_prop}{Proportion of time spent on high data transfer activities}
+\item{travel_time}{Time spent commuting in seconds per day}
 
 \item{params}{Parameter list}
 }
 \value{
-List with brain dose and body dose in mJ/kg/day
+List with two values:
+\itemize{
+\item "brain_data_dose" (brain RF-EMF dose from mobile data use in mJ/kg/day)
+\item "body_data_dose" (body RF-EMF dose from mobile data use in mJ/kg/day)
+}
 }
 \description{
-Calculate Dose from mobile data
+Calculates the total RF-EMF dose from data transfer using a mobile phone.
+This includes mobile data (3G, 4G, 5G) and WiFi use.
+It does NOT include RF-EMF exposure from voice calling, which is calculated separately.
+}
+\details{
+The mobile data RF-EMF dose is calculated as:
+\deqn{Dose_{mobiledata} = Duration_{mobiledata} \times Power_{mobiledata} \times SAR_{mobiledata}}
+
+Where:
+\itemize{
+\item \eqn{Duration_{mobiledata}} is the duration of mobile data use in seconds per day
+\item \eqn{Power_{mobiledata}} is the output power of the mobile phone during mobile data use in mW
+\item \eqn{SAR_{mobiledata}} is the specific absorption rate in W/kg/W
+}
+}
+\seealso{
+\code{\link[=get_mobiledata_pwr]{get_mobiledata_pwr()}}, \code{\link[=get_mobiledata_sar]{get_mobiledata_sar()}}, \code{\link[=get_mobilecall_dose]{get_mobilecall_dose()}}
 }

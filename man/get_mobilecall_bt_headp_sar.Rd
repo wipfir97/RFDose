@@ -12,7 +12,7 @@ get_mobilecall_bt_headp_sar(params, tissue_params)
 \item{tissue_params}{Tissue parameter list}
 }
 \value{
-Output power from mobile phone (Bluetooth contribution) during mobile phone call in mJ
+Output power from mobile phone (Bluetooth contribution) during mobile phone call in mW
 }
 \description{
 Calculates SAR from mobile calling using Bluetooth headphones (headphone Bluetooth contribution).

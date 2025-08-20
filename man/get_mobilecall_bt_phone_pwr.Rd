@@ -10,7 +10,7 @@ get_mobilecall_bt_phone_pwr(params)
 \item{params}{Parameter list}
 }
 \value{
-Output power from mobile phone (Bluetooth contribution) during mobile phone call in mJ
+Output power from mobile phone (Bluetooth contribution) during mobile phone call in mW
 }
 \description{
 Calculates the output power from mobile calling using Bluetooth headphones (phone Bluetooth contribution).

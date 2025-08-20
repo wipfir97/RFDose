@@ -16,10 +16,10 @@ get_mobilecall_phone_pwr(urbanicity, use_5g, travel_time, params)
 \item{params}{Parameter list}
 }
 \value{
-Mobile phone output power during mobile calling (no Bluetooth) in mJ
+Mobile phone output power during mobile calling (no Bluetooth) in mW
 }
 \description{
-Calculates the output power of the mobile phone during mobile calls in mJ (No Bluetooth)
+Calculates the output power of the mobile phone during mobile calls in mW (No Bluetooth)
 }
 \details{
 The mobile phone output power during mobile calling (no Bluetooth) is calculated as:
@@ -28,7 +28,7 @@ The mobile phone output power during mobile calling (no Bluetooth) is calculated
 Where:
 \itemize{
 \item \eqn{Prop_{WiFi}}, \eqn{Prop_{Data}}, \eqn{Prop_{Native}} are the proportion of time mobile calls are done using WiFi, mobile data, or native network, respectively.
-\item \eqn{Power_{WiFi}}, \eqn{Prop_{Data}}, \eqn{Prop_{Native}} are the output power (mJ) of the mobile phone using WiFi, mobile data, or native phone calls, respectively.
+\item \eqn{Power_{WiFi}}, \eqn{Prop_{Data}}, \eqn{Prop_{Native}} are the output power (mW) of the mobile phone using WiFi, mobile data, or native phone calls, respectively.
 }
 }
 \seealso{

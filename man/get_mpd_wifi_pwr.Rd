@@ -2,16 +2,27 @@
 % Please edit documentation in R/mobiledata.R
 \name{get_mpd_wifi_pwr}
 \alias{get_mpd_wifi_pwr}
-\title{Calculate mpd power from wifi}
+\title{Calculate mobile phone aggregated output power from WiFi use}
 \usage{
-get_mpd_wifi_pwr(params)
+get_mpd_wifi_pwr(act_pwr_props, params)
 }
 \arguments{
+\item{act_pwr_props}{List with proportion of time spent in low vs low-mid vs mid-high vs high output power activities}
+
 \item{params}{device-specific parameters}
 }
 \value{
-pwr
+Output power from WiFi use on mobile phone in mW
 }
 \description{
-Calculate mpd power from wifi
+Calculates mobile phone aggregated output power from WiFi use (2.4GHz, 5.0GHz)
+}
+\details{
+The output power is calculated as:
+
+\deqn{Power_{WiFi} = Prop_{2.4GHz}\times Power_{2.4GHz} + Prop_{5.0GHz}\times Power_{5.0GHz}}
+
+Where:
+\eqn{Prop_{2.4GHz}}, \eqn{Prop_{5.0GHz}} are the proportions of 2.4GHz vs 5.0GHz WiFi
+\eqn{Power_{2.4GHz}}, \eqn{Power_{5.0GHz}} are the output power from 2.4GHz and 5.0GHz WiFi in mW, respectively
 }

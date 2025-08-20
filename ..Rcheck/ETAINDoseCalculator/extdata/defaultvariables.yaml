@@ -1,0 +1,29 @@
+use_5g: TRUE
+travel_time: 1800
+urbanicity: "suburban"
+headp_ear_num: 2
+mpc_duration: 424.5
+mpc_ear_prop: 0.66
+mpc_headp_prop: 0.5
+mpd_duration: 10800
+mpd_wifi_prop: 0.5
+mpd_high_dt_prop: 0.5
+mpd_low_dt_dur: 0
+mpd_lowmed_dt_dur: 0
+mpd_medhigh_dt_dur: 0
+mpd_high_dt_dur: 0
+dect_duration: 204
+dect_ear_prop: 0.9
+lptp_duration: 4371
+tblt_duration: 1617
+wifi_duration: 59400
+hotspot_duration: 0
+smartwatch_duration: 0
+tracker_duration: 0
+vr_duration: 0
+headphone_duration: 0
+smarthome_duration: 0
+gaming_duration: 600
+
+
+

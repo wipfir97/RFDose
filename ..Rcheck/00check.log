@@ -1,0 +1,163 @@
+* using log directory 'U:/Projects/05_DoseCalculator/ETAINDoseCalculatoR/etaindosecalculator/..Rcheck'
+* using R version 4.5.1 (2025-06-13 ucrt)
+* using platform: x86_64-w64-mingw32
+* R was compiled by
+    gcc.exe (GCC) 14.2.0
+    GNU Fortran (GCC) 14.2.0
+* running under: Windows 11 x64 (build 26100)
+* using session charset: UTF-8
+* checking for file './DESCRIPTION' ... OK
+* checking extension type ... Package
+* this is package 'ETAINDoseCalculator' version '0.2.0'
+* package encoding: UTF-8
+* checking package namespace information ... OK
+* checking package dependencies ... OK
+* checking if this is a source package ... OK
+* checking if there is a namespace ... OK
+* checking for executable files ... OK
+* checking for hidden files and directories ... NOTE
+Found the following hidden files and directories:
+  .RData
+  .Rhistory
+  .gitignore
+  vignettes/.gitignore
+  ..Rcheck
+  .Rproj.user
+  .git
+These were most likely included in error. See section 'Package
+structure' in the 'Writing R Extensions' manual.
+* checking for portable file names ... NOTE
+Found the following non-portable file paths:
+  ETAINDoseCalculator/.Rproj.user/shared/notebooks/0D5B3F17-03_derive_additional_variables/1/s/c0zt02jrv2g2b/00000f.csv
+  ETAINDoseCalculator/.Rproj.user/shared/notebooks/0D5B3F17-03_derive_additional_variables/1/s/c0zt02jrv2g2b/000010.metadata
+  ETAINDoseCalculator/.Rproj.user/shared/notebooks/0D5B3F17-03_derive_additional_variables/1/s/c0zt02jrv2g2b/000010.rdf
+  ETAINDoseCalculator/.Rproj.user/shared/notebooks/0D5B3F17-03_derive_additional_variables/1/s/c0zt02jrv2g2b/000011.csv
+  ETAINDoseCalculator/.Rproj.user/shared/notebooks/0D5B3F17-03_derive_additional_variables/1/s/c3gz6h4r9157u/00000f.csv
+  ETAINDoseCalculator/.Rproj.user/shared/notebooks/0D5B3F17-03_derive_additional_variables/1/s/c639oxoc80s5n/00000f.csv
+  ETAINDoseCalculator/.Rproj.user/shared/notebooks/0D5B3F17-03_derive_additional_variables/1/s/c639oxoc80s5n/000010.metadata
+  ETAINDoseCalculator/.Rproj.user/shared/notebooks/0D5B3F17-03_derive_additional_variables/1/s/c639oxoc80s5n/000010.rdf
+  ETAINDoseCalculator/.Rproj.user/shared/notebooks/0D5B3F17-03_derive_additional_variables/1/s/c639oxoc80s5n/000011.csv
+  ETAINDoseCalculator/.Rproj.user/shared/notebooks/0D5B3F17-03_derive_additional_variables/1/s/c639oxoc80s5n/000012.metadata
+  ETAINDoseCalculator/.Rproj.user/shared/notebooks/0D5B3F17-03_derive_additional_variables/1/s/c639oxoc80s5n/000012.rdf
+  ETAINDoseCalculator/.Rproj.user/shared/notebooks/0D5B3F17-03_derive_additional_variables/1/s/c639oxoc80s5n/000013.csv
+  ETAINDoseCalculator/.Rproj.user/shared/notebooks/0D5B3F17-03_derive_additional_variables/1/s/c69lomrx5hpqa/00000f.csv
+  ETAINDoseCalculator/.Rproj.user/shared/notebooks/0D5B3F17-03_derive_additional_variables/1/s/c9m9lgal80l4r/00000f.csv
+  ETAINDoseCalculator/.Rproj.user/shared/notebooks/0D5B3F17-03_derive_additional_variables/1/s/cbusy35ej75yc/00000f.csv
+  ETAINDoseCalculator/.Rproj.user/shared/notebooks/0D5B3F17-03_derive_additional_variables/1/s/chunks.json
+  ETAINDoseCalculator/.Rproj.user/shared/notebooks/0D5B3F17-03_derive_additional_variables/1/s/co4319q58i4np/00000f.csv
+  ETAINDoseCalculator/.Rproj.user/shared/notebooks/0D5B3F17-03_derive_additional_variables/1/s/csavkbqfvoeoi/000011.csv
+  ETAINDoseCalculator/.Rproj.user/shared/notebooks/0D5B3F17-03_derive_additional_variables/1/s/c0zt02jrv2g2b
+  ETAINDoseCalculator/.Rproj.user/shared/notebooks/0D5B3F17-03_derive_additional_variables/1/s/c3gz6h4r9157u
+  ETAINDoseCalculator/.Rproj.user/shared/notebooks/0D5B3F17-03_derive_additional_variables/1/s/c639oxoc80s5n
+  ETAINDoseCalculator/.Rproj.user/shared/notebooks/0D5B3F17-03_derive_additional_variables/1/s/c69lomrx5hpqa
+  ETAINDoseCalculator/.Rproj.user/shared/notebooks/0D5B3F17-03_derive_additional_variables/1/s/c9m9lgal80l4r
+  ETAINDoseCalculator/.Rproj.user/shared/notebooks/0D5B3F17-03_derive_additional_variables/1/s/cbusy35ej75yc
+  ETAINDoseCalculator/.Rproj.user/shared/notebooks/0D5B3F17-03_derive_additional_variables/1/s/co4319q58i4np
+  ETAINDoseCalculator/.Rproj.user/shared/notebooks/0D5B3F17-03_derive_additional_variables/1/s/csavkbqfvoeoi
+
+Tarballs are only required to store paths of up to 100 bytes and cannot
+store those of more than 256 bytes, with restrictions including to 100
+bytes for the final component.
+See section 'Package structure' in the 'Writing R Extensions' manual.
+* checking whether package 'ETAINDoseCalculator' can be installed ... OK
+* checking installed package size ... INFO
+  installed size is 29.0Mb
+  sub-directories of 1Mb or more:
+    Meta      7.0Mb
+    R         3.0Mb
+    data      3.0Mb
+    extdata   5.0Mb
+    help      5.0Mb
+    html      2.0Mb
+* checking package directory ... OK
+* checking DESCRIPTION meta-information ... NOTE
+Checking should be performed on sources prepared by 'R CMD build'.
+* checking top-level files ... OK
+* checking for left-over files ... OK
+* checking index information ... OK
+* checking package subdirectories ... WARNING
+Found the following directory with the name of a check directory:
+  ./..Rcheck
+Most likely, these were included erroneously.
+* checking code files for non-ASCII characters ... OK
+* checking R files for syntax errors ... OK
+* checking whether the package can be loaded ... OK
+* checking whether the package can be loaded with stated dependencies ... OK
+* checking whether the package can be unloaded cleanly ... OK
+* checking whether the namespace can be loaded with stated dependencies ... OK
+* checking whether the namespace can be unloaded cleanly ... OK
+* checking loading without being on the library search path ... OK
+* checking dependencies in R code ... OK
+* checking S3 generic/method consistency ... OK
+* checking replacement functions ... OK
+* checking foreign function calls ... OK
+* checking R code for possible problems ... NOTE
+calculate_emf_doses: no visible binding for global variable 'outcome'
+flat_params_to_nested: no visible global function definition for
+  'add_path'
+load_device_params: no visible global function definition for
+  'modifyList'
+save_default_params_file: no visible binding for global variable
+  'params'
+Undefined global functions or variables:
+  add_path modifyList outcome params
+Consider adding
+  importFrom("utils", "modifyList")
+to your NAMESPACE file.
+* checking Rd files ... OK
+* checking Rd metadata ... OK
+* checking Rd cross-references ... OK
+* checking for missing documentation entries ... OK
+* checking for code/documentation mismatches ... WARNING
+Data codoc mismatches from Rd file 'example_data.Rd':
+Variables in data frame 'example_data'
+  Code: dect_duration dect_ear_prop gaming_duration headp_ear_num
+        headphone_duration hotspot_duration lptp_duration mpc_duration
+        mpc_ear_prop mpc_headp_prop mpd_high_dt_dur mpd_low_dt_dur
+        mpd_lowmed_dt_dur mpd_medhigh_dt_dur mpd_wifi_prop sample_id
+        smarthome_duration smartwatch_duration tblt_duration
+        tracker_duration travel_time urbanicity use_5g vr_duration
+        wifi_duration
+  Docs: dect_duration dect_ear_prop gaming_duration headp_ear_num
+        headphone_duration hotspot_duration lptp_duration mpc_duration
+        mpc_ear_prop mpc_headp_prop mpd_duration mpd_high_dt_dur
+        mpd_high_dt_prop mpd_low_dt_dur mpd_lowmed_dt_dur
+        mpd_medhigh_dt_dur mpd_wifi_prop sample_id smarthome_duration
+        smartwatch_duration tblt_duration tracker_duration travel_time
+        urbanicity use_5g vr_duration wifi_duration
+
+* checking Rd \usage sections ... WARNING
+Undocumented arguments in Rd file 'get_farfield_pwr.Rd'
+  'travel_time'
+
+Functions with \usage entries need to have the appropriate \alias
+entries, and all their arguments documented.
+The \usage entries must correspond to syntactically valid R code.
+See chapter 'Writing R documentation files' in the 'Writing R
+Extensions' manual.
+* checking Rd contents ... OK
+* checking for unstated dependencies in examples ... OK
+* checking contents of 'data' directory ... OK
+* checking data for non-ASCII characters ... OK
+* checking LazyData ... OK
+* checking data for ASCII and uncompressed saves ... OK
+* checking files in 'vignettes' ... WARNING
+Files in the 'vignettes' directory but no files in 'inst/doc':
+  'introduction.Rmd'
+* checking examples ... NONE
+* checking for unstated dependencies in 'tests' ... OK
+* checking tests ... OK
+  Running 'testthat.R'
+* checking for unstated dependencies in vignettes ... OK
+* checking package vignettes ... WARNING
+Directory 'inst/doc' does not exist.
+Package vignette without corresponding single PDF/HTML:
+  'introduction.Rmd'
+* checking re-building of vignette outputs ... OK
+* checking PDF version of manual ... WARNING
+LaTeX errors when creating PDF version.
+This typically indicates Rd problems.
+* checking PDF version of manual without index ... ERROR
+Re-running with no redirection of stdout/stderr.
+* DONE
+Status: 1 ERROR, 6 WARNINGs, 4 NOTEs

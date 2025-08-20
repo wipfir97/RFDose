@@ -2,39 +2,46 @@
 % Please edit documentation in R/mobiledata.R
 \name{get_mobiledata_pwr}
 \alias{get_mobiledata_pwr}
-\title{Calculate mobile data aggregated power}
+\title{Calculate mobile data aggregated output power}
 \usage{
 get_mobiledata_pwr(
   wifi_prop,
   use_5g,
   act_pwr_props,
-  loc_props,
-  data_prop,
-  high_pwr_prop,
+  travel_time,
   urbanicity,
   params
 )
 }
 \arguments{
-\item{wifi_prop}{wifi proportion}
+\item{wifi_prop}{Proportion of time WiFi connection is used for data transfer (vs mobile data)}
 
-\item{use_5g}{...}
+\item{use_5g}{TRUE if participant uses 5G services on mobile phone, FALSE if not}
 
-\item{act_pwr_props}{....}
+\item{act_pwr_props}{List with proportion of time spent in low vs low-mid vs mid-high vs high output power activities}
 
-\item{loc_props}{....}
+\item{travel_time}{Time spent commuting in seconds per day}
 
-\item{data_prop}{data proportion}
-
-\item{high_pwr_prop}{Proportion of time spent on high data transfer activities}
-
-\item{urbanicity}{...}
+\item{urbanicity}{Urbanicity of home / workplace}
 
 \item{params}{parameter list}
 }
 \value{
-aggregated power
+Mobile phone output power during mobile data use in mW
 }
 \description{
-Calculate mobile data aggregated power
+Calculates the output power of the mobile phone during mobile data use in mW
+}
+\details{
+The mobile phone output power during mobile data use is calculated as:
+\deqn{Power = Prop_{WiFi} \times Power_{WiFi} + Prop_{Data} \times Power_{Data}}
+
+Where:
+\itemize{
+\item \eqn{Prop_{WiFi}}, \eqn{Prop_{Data}} are the proportion of time mobile calls are done using WiFi and mobile data, respectively.
+\item \eqn{Power_{WiFi}}, \eqn{Prop_{Data}} are the output power (mW) of the mobile phone using WiFi and mobile data respectively.
+}
+}
+\seealso{
+\code{\link[=get_mpd_wifi_pwr]{get_mpd_wifi_pwr()}}, \code{\link[=get_mpd_data_pwr]{get_mpd_data_pwr()}}
 }

@@ -37,7 +37,7 @@ Where:
 \itemize{
 \item \eqn{Duration} is the duration of mobile phone call in seconds per day
 \item \eqn{SAR} is the specific absorption rate from Bluetooth in W/kg/W
-\item \eqn{Power} is the Bluetooth output power of the mobile phone during mobile calling mJ
+\item \eqn{Power} is the Bluetooth output power of the mobile phone during mobile calling mW
 \item \eqn{headp_prop} is the proportion of time Bluetooth headphones are used during mobile calls
 \item \eqn{headp_ear_num} is the number of Bluetooth headphones (1 or 2) used during mobile calls
 }

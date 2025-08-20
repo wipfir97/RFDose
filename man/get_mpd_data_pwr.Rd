@@ -2,24 +2,34 @@
 % Please edit documentation in R/mobiledata.R
 \name{get_mpd_data_pwr}
 \alias{get_mpd_data_pwr}
-\title{Calculate mpd power from data}
+\title{Calculate mobile phone aggregated output power from mobile data (3G, 4G, 5G) use}
 \usage{
-get_mpd_data_pwr(use_5g, urbanicity, act_pwr_props, loc_props, params)
+get_mpd_data_pwr(use_5g, urbanicity, act_pwr_props, travel_time, params)
 }
 \arguments{
 \item{use_5g}{TRUE if participant uses 5G, FALSE otherwise}
 
-\item{urbanicity}{urbanicity of home/work environment}
+\item{urbanicity}{Urbanicity of home/work environment}
 
-\item{act_pwr_props}{...}
+\item{act_pwr_props}{List with proportion of time spent in low vs low-mid vs mid-high vs high output power activities}
 
-\item{loc_props}{location proportions}
+\item{travel_time}{Time spent commuting in seconds per day}
 
-\item{params}{device-specific parameters}
+\item{params}{Device-specific parameter list}
 }
 \value{
-pwr
+Output power from mobile data (3G, 4G, 5G) use on mobile phone in mW
 }
 \description{
-Calculate mpd power from data
+Calculates mobile phone aggregated output power from mobile data (3G, 4G, 5G) use
+}
+\details{
+The mobile phone output power from mobile data use is calculated as:
+\deqn{Power = Prop_{3G} \times Power_{3G} + Prop_{4G} \times Power_{4G} + Prop_{5G} \times Power_{5G}}
+
+Where:
+\itemize{
+\item \eqn{Prop_{3G}}, \eqn{Prop_{4G}}, \eqn{Prop_{5G}} are the proportions of 3G, 4G and 5G
+\item \eqn{Power_{3G}}, \eqn{Power_{4G}}, \eqn{Power_{5G}} are the output powers of 3G, 4G and 5G (to be refined further)
+}
 }

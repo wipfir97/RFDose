@@ -1,0 +1,159 @@
+calculate_data_tech_proportions
+                        Get mobile data technology use proportions
+calculate_emf_doses     Calculate Total RF-EMF Doses for ALL samples
+calculate_location_proportions
+                        Calculate proportion of time spent at home vs
+                        work vs outdoors vs travelling
+check_duration          Check input values - duration
+check_input_param_list
+                        Check input parameter list
+check_proportions       Check input values - proportions
+example_data            Example data for testing
+fill_missing_variables
+                        Fill missing variables
+flat_params_to_nested   Convert flat parameter table to nested
+                        parameter YAML
+get_act_pwr_props       Get low/lowmed/medhigh/high activity power
+                        proportions
+get_cordless_dose       Calculate Dose from Cordless Calling
+get_cordless_pwr        Calculate Aggregated Power of Cordless Phone
+get_cordless_sar        Calculate Aggregated SAR during cordless call
+                        (tissue-specific)
+get_farfield_dose       Calculate Dose from far-field exposure
+get_farfield_pwr        Calculate far-field exposure aggregated power
+get_farfield_sar        Calculate far-field exposure SAR
+get_gaming_dose         Calculate brain and body dose from gaming with
+                        a portable console
+get_headp_headp_dose    Calculate contribution from headp
+get_headp_phone_dose    Calculate contribution from mobile phone while
+                        using headp
+get_headp_phone_pwr     Calculate power from bluetooth headphones
+                        (phone contribution only)
+get_headp_phone_sar     Calculate SAR from bluetooth headphones (phone
+                        contribution only)
+get_headp_pwr           Calculate power from bluetooth headphones
+                        (headphone contribution only)
+get_headp_sar           Calculate SAR from bluetooth headphones (watch
+                        contribution only)
+get_headphone_dose      Calculate brain and body dose from using
+                        bluetooth headphones
+get_hotspot_dose        Calculate brain and body dose from using mobile
+                        phone as hotspot
+get_hotspot_pwr         Calculate output power from using mobile phone
+                        as hotspot
+get_hotspot_sar         Calculate SAR from hotspot
+get_laptop_dose         Calculate Dose from Laptop Use
+get_laptop_pwr          Calculate Laptop Aggregated Power
+get_laptop_sar          Calculate Laptop Aggregated SAR
+get_mobilecall_bt_headp_dose
+                        Calculate RF-EMF dose from mobile calling using
+                        Bluetooth headphones (headphone contribution)
+get_mobilecall_bt_headp_pwr
+                        Calculate output power from mobile calling
+                        using Bluetooth headphones (headphone
+                        contribution)
+get_mobilecall_bt_headp_sar
+                        Calculate SAR from mobile calling using
+                        Bluetooth headphones (headphone contribution)
+get_mobilecall_bt_phone_dose
+                        Calculate RF-EMF dose from mobile calling using
+                        Bluetooth headphones (phone contribution)
+get_mobilecall_bt_phone_pwr
+                        Calculate output power from mobile calling
+                        using Bluetooth headphones (phone contribution)
+get_mobilecall_bt_phone_sar
+                        Calculate SAR from mobile calling using
+                        Bluetooth headphones (phone contribution)
+get_mobilecall_dose     Calculate RF-EMF dose from mobile calling
+                        (mobile phone and Bluethooth)
+get_mobilecall_phone_data_pwr
+                        Calculate mobile phone output power from data
+                        mobile calling (no Bluetooth)
+get_mobilecall_phone_data_sar
+                        Calculate SAR from data mobile calling (no
+                        Bluetooth)
+get_mobilecall_phone_dose
+                        Calculate RF-EMF dose from mobile phone (no
+                        Bluetooth)
+get_mobilecall_phone_native_pwr
+                        Calculate mobile phone output power from native
+                        mobile calling (no Bluetooth)
+get_mobilecall_phone_native_sar
+                        Calculate SAR from native mobile calling (no
+                        Bluetooth)
+get_mobilecall_phone_pwr
+                        Calculate output power from mobile phone during
+                        mobile call (no Bluetooth)
+get_mobilecall_phone_sar
+                        Calculate SAR from mobile calling (no
+                        Bluetooth)
+get_mobilecall_phone_wifi_pwr
+                        Calculate mobile phone output power from WiFi
+                        mobile calling (no Bluetooth)
+get_mobilecall_phone_wifi_sar
+                        Calculate SAR from WiFi mobile calling (no
+                        Bluetooth)
+get_mobiledata_dose     Calculate dose from using data on mobile phone
+                        (mobile data and WiFi)
+get_mobiledata_pwr      Calculate mobile data aggregated output power
+get_mobiledata_sar      Calculate SAR from data use on mobile phone
+                        (mobile data and WiFi)
+get_mpd_data_pwr        Calculate mobile phone aggregated output power
+                        from mobile data (3G, 4G, 5G) use
+get_mpd_wifi_pwr        Calculate mobile phone aggregated output power
+                        from WiFi use
+get_other_dose          Calculate Dose from other exposure sources
+get_smarthome_dose      Calculate brain and body dose from smart home
+get_smarthome_pwr       Calculate output power from smart home
+get_smarthome_sar       Calculate SAR from smart home
+get_smartwatch_dose     Calculate brain and body dose from using smart
+                        watch connected to mobile phone
+get_smartwatch_phone_dose
+                        Calculate contribution from mobile phone while
+                        using smart watch
+get_smartwatch_phone_pwr
+                        Calculate power from smart watch (phone
+                        contribution only)
+get_smartwatch_phone_sar
+                        Calculate SAR from smart watch (phone
+                        contribution only)
+get_smartwatch_pwr      Calculate power from smart watch (watch
+                        contribution only)
+get_smartwatch_sar      Calculate SAR from smart watch (watch
+                        contribution only)
+get_smartwatch_watch_dose
+                        Calculate contribution from smart watch
+get_tablet_dose         Calculate Dose from Tablet Use
+get_tablet_pwr          Calculate Tablet Aggregated Power
+get_tablet_sar          Calculate Tablet Aggregated SAR
+get_total_dose          Calculate Total RF-EMF Dose for Brain and Body
+                        from All Sources For a SINGLE SAMPLE!
+get_tracker_dose        Calculate brain and body dose from using
+                        personal tracker connected to mobile phone
+get_tracker_phone_dose
+                        Calculate contribution from mobile phone while
+                        using tracker
+get_tracker_phone_pwr   Calculate power from tracker (phone
+                        contribution only)
+get_tracker_phone_sar   Calculate SAR from tracker (phone contribution
+                        only)
+get_tracker_pwr         Calculate power from tracker (tracker
+                        contribution only)
+get_tracker_sar         Calculate SAR from tracker (watch contribution
+                        only)
+get_tracker_tracker_dose
+                        Calculate contribution from tracker
+get_vr_dose             Calculate brain and body dose from using VR
+                        headset
+get_vr_pwr              Calculate output power from virtual reality
+                        headset
+get_vr_sar              Calculate SAR from VR headset
+get_wifi_dose           Calculate Dose from wifi Use
+get_wifi_pwr            Calculate WiFi Aggregated Power
+get_wifi_sar            Calculate WiFi Aggregated SAR
+load_device_params      Load device-specific parameters
+load_params             Loading parameters
+load_tissue_params      Load tissue-specific parameters
+recode_urbanicity       Check and re-code input values - urbanicity
+save_default_params_file
+                        Load default parameter list

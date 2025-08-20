@@ -2,19 +2,25 @@
 % Please edit documentation in R/mobiledata.R
 \name{get_mobiledata_sar}
 \alias{get_mobiledata_sar}
-\title{Calculate mobile data SAR}
+\title{Calculate SAR from data use on mobile phone (mobile data and WiFi)}
 \usage{
-get_mobiledata_sar(wifi_prop, data_prop, params, tissue_params)
+get_mobiledata_sar(wifi_prop, params, tissue_params)
 }
 \arguments{
-\item{wifi_prop}{wifi proportion}
+\item{wifi_prop}{Proportion of time WiFi connection is used for data transfer (vs mobile data)}
 
-\item{data_prop}{data_proportion}
+\item{params}{Parameter list}
 
-\item{params}{parameter list}
-
-\item{tissue_params}{tissue-specific parameters (SAR-values)}
+\item{tissue_params}{Tissue-specific parameters (SAR-values)}
 }
 \description{
-Calculate mobile data SAR
+Calculates specific absorption rate (SAR) from data use on mobile phone (mobile data and WiFi)
+}
+\details{
+The SAR is calculated as follows:
+\deqn{SAR = Prop_{WiFi}\times SAR_{WiFi} + Prop_{Data}\times SAR_{data}}
+
+Where:
+\eqn{Prop_{WiFi}}, \eqn{Prop_{Data}} are the WiFi and data use proportions
+\eqn{SAR_{WiFi}}, \eqn{SAR_{Data}} are the SAR values from WiFi and from data
 }
