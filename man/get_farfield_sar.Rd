@@ -7,12 +7,12 @@
 get_farfield_sar(params, tissue_params)
 }
 \arguments{
-\item{params}{descr}
+\item{params}{Parameter list}
 
-\item{tissue_params}{descr}
+\item{tissue_params}{Tissue-specific parameter list (SAR values)}
 }
 \value{
-aggregated sar
+aggregated sar in W/kg/W/m**2
 }
 \description{
 This function will be expanded in the future to provide a more fine-tuned

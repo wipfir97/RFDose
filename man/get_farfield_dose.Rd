@@ -17,5 +17,18 @@ get_farfield_dose(urbanicity, travel_time, params)
 List with brain dose and body dose in mJ/kg/day
 }
 \description{
-Calculate Dose from far-field exposure
+Calculates RF-EMF dose from far-field exposure
+}
+\details{
+The far-field RF-EMF dose is calculated as:
+\deqn{Dose_{farfield} = 86400s \times Power_{farfield} \times SAR_{farfield}}
+
+Where:
+\itemize{
+\item \eqn{Power_{farfield}} is the output power of farfield sources
+\item \eqn{SAR_{mobiledata}} is the specific absorption rate in W/kg/W
+}
+}
+\seealso{
+\code{\link[=get_farfield_pwr]{get_farfield_pwr()}},\code{\link[=get_farfield_sar]{get_farfield_sar()}}
 }

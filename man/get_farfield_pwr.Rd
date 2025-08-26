@@ -4,17 +4,18 @@
 \alias{get_farfield_pwr}
 \title{Calculate far-field exposure aggregated power}
 \usage{
-get_farfield_pwr(urb_list, travel_time, params)
+get_farfield_pwr(urbanicity, travel_time, params)
 }
 \arguments{
-\item{urb_list}{list of binary urbanicitiy values created with recode_urbanicity
-function}
+\item{urbanicity}{Urbanicity of home environment}
 
-\item{params}{description}
+\item{travel_time}{Time per day spent commuting (s)}
+
+\item{params}{Parameter list}
 }
 \value{
-far-field power
+far-field power in mw/m**2
 }
 \description{
-Calculate far-field exposure aggregated power
+Calculates far-field source output power
 }

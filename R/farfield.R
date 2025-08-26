@@ -3,10 +3,24 @@
 # =============================================================================
 #' Calculate Dose from far-field exposure
 #'
+#' Calculates RF-EMF dose from far-field exposure
+#'
+#' @details
+#' The far-field RF-EMF dose is calculated as:
+#' \deqn{Dose_{farfield} = 86400s \times Power_{farfield} \times SAR_{farfield}}
+#'
+#' Where:
+#'
+#' * \eqn{Power_{farfield}} is the output power of farfield sources
+#' * \eqn{SAR_{mobiledata}} is the specific absorption rate in W/kg/W
+#'
 #' @param urbanicity Urbanicity of home environment
 #' @param travel_time Time per day spent commuting (s)
 #' @param params Parameter list
+#'
 #' @returns List with brain dose and body dose in mJ/kg/day
+#'
+#' @seealso [get_farfield_pwr()],[get_farfield_sar()]
 #' @export
 get_farfield_dose <- function(urbanicity,
                               travel_time,
@@ -22,11 +36,8 @@ get_farfield_dose <- function(urbanicity,
   ## Extract body-specific parameters (SAR values) for mobile calling ---------
   body_params  <- load_tissue_params(params, "farf", "body")
 
-  # Recode urbanicity to binary format ========================================
-  urb_list     <- recode_urbanicity(urbanicity  = urbanicity)
-
   # Calculate aggregated power ================================================
-  aggr_pwr     <- get_farfield_pwr(urb_list = urb_list,
+  aggr_pwr     <- get_farfield_pwr(urbanicity = urbanicity,
                                    travel_time = travel_time,
                                    params   = farf_params)
 
@@ -56,13 +67,19 @@ get_farfield_dose <- function(urbanicity,
 # =============================================================================
 #' Calculate far-field exposure aggregated power
 #'
-#' @param urb_list list of binary urbanicitiy values created with recode_urbanicity
-#' function
-#' @param params description
-#' @returns far-field power
-get_farfield_pwr <- function(urb_list,
+#' Calculates far-field source output power
+#'
+#' @param urbanicity Urbanicity of home environment
+#' @param travel_time Time per day spent commuting (s)
+#' @param params Parameter list
+#'
+#' @returns far-field power in mw/m**2
+get_farfield_pwr <- function(urbanicity,
                              travel_time,
                              params) {
+  # Recode urbanicity to binary format ========================================
+  urb_list     <- recode_urbanicity(urbanicity  = urbanicity)
+
 
   # Calculate proportion of time spent at home vs work vs outdoors based on travel time
   loc_props <- calculate_location_proportions(travel_time = travel_time,
@@ -118,6 +135,8 @@ get_farfield_pwr <- function(urb_list,
                        work_contr,
                        tran_contr)
 
+  print(aggr_pwr)
+
   return(aggr_pwr)
 }
 
@@ -126,9 +145,9 @@ get_farfield_pwr <- function(urb_list,
 #'
 #' This function will be expanded in the future to provide a more fine-tuned
 #' calculation of the far-field SAR values.
-#' @param params descr
-#' @param tissue_params descr
-#' @returns aggregated sar
+#' @param params Parameter list
+#' @param tissue_params Tissue-specific parameter list (SAR values)
+#' @returns aggregated sar in W/kg/W/m**2
 get_farfield_sar <- function(params, tissue_params) {
   aggr_sar <- tissue_params$sar
   return(aggr_sar)

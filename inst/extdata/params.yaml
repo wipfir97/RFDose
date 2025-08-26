@@ -4,8 +4,8 @@ global:
   home_prop: 0.7
   outdoor_prop: 0.08
   work_prop: 0.22
-  tech_3g_prop_5gno: 0.12
-  tech_4g_prop_5gno: 0.88
+  tech_3g_prop_5gno: 0.1
+  tech_4g_prop_5gno: 0.9
   tech_5g_prop_5gno: 0
   tech_3g_prop: 0.1
   tech_4g_prop: 0.75
