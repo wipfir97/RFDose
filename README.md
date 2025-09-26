@@ -1,12 +1,61 @@
 # ETAIN Dose Calculator - R Version
 
+## 📦 About
+
 ⚡ An R package for RF-EMF dose calculations
 
 ---
 
-## 📦 About
+## 🧪 Development Status
+
+### Version overview
+
+| Version | Name | Status |
+| --- | --- | --- |
+| 0.0.1 | Basic test version (not on Github) | Completed |
+| 0.1.0 | Initial draft version for internal use | Completed |
+| 0.2.0 | Revised draft version with updated calculations and variables | In development |
+
+### Version 0.2.0
+
+#### What is currently happening
+
+* ✅Added new variables and removed unneeded variables (see changes below)
+* ✅Added detailed function documentation
+* ⌛Adapted most calculations; still need to update laptop/tablet and mobile data calculations
+* ⏳Next step: verification of calculations and unit testing and fixing possible bugs
+
+#### New variables in version 0.2.0
+
+| Name  | Unit | Type | Description |
+| --- | --- | --- | --- | 
+| use_5g | - | binary | Use of 5G | 
+| travel_time | s | numeric | Time spent commuting per day | 
+| headp_ear_num | - | numeric | Number of earphones worn during call (1 or 2) | 
+| mpd_wifi_prop_home | --- | --- | Proportion of WiFi vs mobile data (3G, 4G, 5G) while using mobile phone AT HOME | 
+| mpd_wifi_prop_work | --- | --- | Proportion of WiFi vs mobile data (3G, 4G, 5G) while using mobile phone AT WORK/SCHOOL |  | 
+| mpd_wifi_prop_travel | --- | --- | Proportion of WiFi vs mobile data (3G, 4G, 5G) while using mobile phone WHILE COMMUTING |  | 
+| mpd_dur_low | s | numeric| Daily duration of low output power activities on mobile phone | 
+| mpd_dur_lowtomed | s | numeric | Daily duration of low-medium output power activities on mobile phone | 
+| mpd_dur_medtohigh | s | numeric | Daily duration of medium-high output power activities on mobile phone | 
+| mpd_dur_high | s | numeric | Daily duration of high output power activities on mobile phone | 
+| lttb_dur_low | s | numeric | Daily duration of low output power activities on laptop/tablet | 
+| lttb_dur_lowtomed | s | numeric | Daily duration of low-medium output power activities on laptop/tablet |
+| lttb_dur_medtohigh | s | numeric | Daily duration of medium-high output power activities on laptop/tablet |
+| lttb_dur_high | s | numeric | Daily duration of high output power activities on laptop/tablet | 
+
+
+#### Variables that were removed in version 0.2.0
+
+- smarthome_duration: removed
+- wifi_duration: removed, replaced by information about commuting time to infer WiFi router exposure time
+- mpd_high_dt_prop: removed, replaced by durations of low/lowmed/medhigh/high activities
+- mpd_wifi_prop: to be removed
+- lptp_duration: to be removed
+- tblt_duration: to be removed
 
 ---
+
 
 ## 🛠️ Installation
 
@@ -41,13 +90,26 @@ library(remotes)
 
 ### Install ETAIN dose calculator
 
-To install the R package, please follow the steps below.
+To install the R package, first set your PAT with this command:
 
 ```{r}
 # Set your personal access token (replace YOUR_PAT with the token you generated and copied)
 Sys.setenv(GITHUB_PAT = "YOUR_PAT")
+```
+To install the **most current development version (v.0.2.0)**, use this command:
+
+```{r}
 # Install the ETAIN dose calculator using your PAT
-remotes::install_github("wipfir97/ETAINDoseCalculator")
+remotes::install_github("wipfir97/ETAINDoseCalculator@dev/0.2.0")
+```
+
+**Note that version 0.2.0 is not stable yet, i.e. there may be errors and bugs and some calculations may not work yet!**
+
+If you want to use the older, stable version v.0.1.0 instead, use this command instead:
+
+```{r}
+# Install the ETAIN dose calculator using your PAT
+remotes::install_github("wipfir97/ETAINDoseCalculator@v0.1.0")
 ```
 
 ---
@@ -73,41 +135,6 @@ calculate_emf_doses(example_data)
 
 ---
 
-## 🧪 Development Status
-
-### Version overview
-
-| Version | Name | Statcus |
-| --- | --- | --- |
-| 0.0.1 | Basic test version (not on Github) | Completed |
-| 0.1.0 | Initial draft version for internal use | Completed |
-| 0.2.0 | Revised draft version with updated calculations and variables | In development |
-
-
-### Upcoming new variables in version 0.2.0
-
-| Name  | Unit | Type | Exposure | Description | Assumptions | Constraints | Default value | Status | Required? |
-| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| comp_5g | - | binary | --- | Ownership of 5G compatible phone | --- | --- | --- | --- | --- |
-| bt_headp_pref | - | binary | --- | Using 1 or both headphones | --- | --- | --- | --- | --- |
-| mpd_dur_low | s | numeric | --- | --- | --- | --- | --- | --- | --- |
-| mpd_dur_lowtomed | s | numeric | --- | --- | --- | --- | --- | --- | --- |
-| mpd_dur_medtohigh | s | numeric | --- | --- | --- | --- | --- | --- | --- |
-| mpd_dur_high | s | numeric | --- | --- | --- | --- | --- | --- | --- |
-| wifi_dur (will have different name) | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-
-### Variables that were removed in version 0.2.0
-
-- smarthome_duration: removed
-- wifi_duration: removed, replaced by information about commuting time to infer WiFi router exposure time
-- mpd_high_dt_prop: removed, replaced by durations of low/lowmed/medhigh/high activities
-- mpd_wifi_prop:
-- lptp_duration:
-- tblt_duration:
-
-
----
-
 ## 🔍 Documentation
 
 ### Exposure sources
@@ -125,55 +152,13 @@ We consider the following exposure sources in the dose calculations:
 | Far-field | farf | Far-field exposure |
 | Other | othe | Other devices: smart watch, tracker, VR headset, hotspot, bluetooth headphones, smart home |
 
-### Input variables
-
-At the moment (version 0.1.0), **all input variables are optional**. 
-
-| Name  | Unit | Type | Exposure | Description | Assumptions | Constraints | Default value | Status | Required? |
-| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| mpc_duration | s | numeric | Mobile calling | Daily duration of mobile phone calls (with or without app) | ... | >= 0 and <= 86400 | 425 | implemented | no |
-| mpc_ear_prop | - | numeric | Mobile calling | Proportion of time the mobile phone is held against head during mobile calls | Mobile phone used with headphones or in speaker mode in remaining time | >= 0 and <= 1 | 0.66 | implemented | no |
-| mpc_headp_prop | - | numeric | Mobile calling | Proportion of time headphones are used during mobile phone calls when mobile phone is NOT held against the ear. | 0.5 | >= 0 and <= 1 | Mobile phone used in speaker mode in remaining time while NOT held against head | implemented | no |
-| urbanicity | - | character | Far-field, mobile data | Urbanicity of participant's home | Home urbanicity and work urbanicity is the same | urban, suburban, or rural | suburban | implemented | no |
-| mpd_duration | s | numeric | Mobile data | Daily duration of data use on mobile phone | ... | >= 0 and <= 86400 | 10800 | implemented | no |
-| mpd_wifi_prop | - | numeric | Mobile data | Proportion of time mobile phone is connected to wifi during data use | Mobile data (3G/4G/5G) used in the remaining time | >= 0 and <= 1 | 0.5 | implemented | no |
-| mpd_high_dt_prop | - | numeric | Mobile data | Proportion of time spend with high data transfer activities during data use on mobile phone | Low data transfer activities done during remaining time | >= 0 and <= 1 | 0.5 | implemented | yes |
-| dect_duration | s | numeric | Cordless phone | Daily call duration of DECT/cordless phone calls | ... | >= 0 and <= 86400 | 204 | implemented | no |
-| dect_ear_prop | - | numeric | Cordless phone | Proportion of time DECT/cordless phone is held against ear during call | Cordless phone used in speaker mode in the remaining time | >= 0 and <= 1 | 0.9 | implemented | no |
-| lptp_duration | s | numeric | Laptop | Daily duration of laptop use | ... | >= 0 and <= 86400 | 4371 | implemented | no |
-| tblt_duration | s | numeric | Tablet | Daily duration of tablet use | ... | >= 0 and <= 86400 | 1617 | implemented | no |
-| wifi_duration | s | numeric | WiFi router | Daily duration of being in proximity to WiFi router | ... | >= 0 and <= 86400 | 59400 | implemented | no |
-| hotspot_duration | s | numeric | Other (Mobile hotspot) | Daily duration of using mobile phone as hotspot | ... | >= 0 and <= 86400 | 0 | implemented | no |
-| smartwatch_duration | s | numeric | Other (Smartwatch) | Daily duration of wearing smartwatch on wrist | ... | >= 0 and <= 86400 | 0 | implemented | no |
-| tracker_duration | s | numeric | Other (Activity tracker) | Daily duration of wearing tracker on arm | ... | >= 0 and <= 86400 | 0 | implemented | no |
-| smarthome_duration | s | numeric | Other (Smarthome) | Daily duration spent in a smarthome | ... | >= 0 and <= 86400 | 0 | implemented | no |
-| vr_duration | s | numeric | Other (Virtual reality headset) | Daily durarion of virtual reality headset use | ... | >= 0 and <= 86400 | 0 | implemented | no |
-| headphone_duration | s | numeric | Other (Bluetooth headphones) | Daily duration of using bluetooth headphones (all types of usage except for mobile phone call) | ... | >= 0 and <= 86400 | 8280 | implemented | no |
+### Input/user variables
 
 For detailed information about the required input variables, please refer to the [input variable overview file](doc/user_variables.xlsx).
 
 ### Generated output variables
 
-| Name  | Unit | Type | Exposure | Tissue | Description | 
-| --- | --- | --- | --- | --- | --- |
-| **brain_total_dose** | mJ/kg/day | numeric | All exposures | ... | ... |
-| **body_total_dose** | mJ/kg/day | numeric | All exposures | ... | ... |
-| brain_call_dose | mJ/kg/day | numeric | Mobile calling | ... | ... | 
-| body_call_dose | mJ/kg/day | numeric | Mobile calling | ... | ... | 
-| brain_data_dose | mJ/kg/day | numeric | Mobile data | ... | ... | 
-| body_data_dose | mJ/kg/day | numeric | Mobile data | ... | ... |
-| brain_dect_dose | mJ/kg/day | numeric | Cordless phone | ... | ... |
-| body_dect_dose | mJ/kg/day | numeric | Cordless phone | ... | ... |
-| brain_farf_dose | mJ/kg/day | numeric | Farfield | ... | ... | 
-| body_farf_dose | mJ/kg/day | numeric | Farfield | ... | ... |
-| brain_wifi_dose | mJ/kg/day | numeric | WiFi router | ... | ... | 
-| body_wifi_dose | mJ/kg/day | numeric | Wifi router | ... | ... |
-| brain_lptp_dose | mJ/kg/day | numeric | Laptop | ... | ... | 
-| body_lptp_dose | mJ/kg/day | numeric | Laptop | ... | ... |
-| brain_tblt_dose | mJ/kg/day | numeric | Tablet | ... | ... | 
-| body_tblt_dose | mJ/kg/day | numeric | Tablet | ... | ... |
-| brain_othe_dose | mJ/kg/day | numeric | Other | ... | ... | 
-| body_othe_dose | mJ/kg/day | numeric | Other | ... | ... |
+Detailed info to be added here.
 
 ### Parameters
 
