@@ -6,9 +6,6 @@
 
 ## 📦 About
 
-📶 The Dose Calculator ... 
-
-
 ---
 
 ## 🛠️ Installation
@@ -80,7 +77,7 @@ calculate_emf_doses(example_data)
 
 ### Version overview
 
-| Version | Name | Status |
+| Version | Name | Statcus |
 | --- | --- | --- |
 | 0.0.1 | Basic test version (not on Github) | Completed |
 | 0.1.0 | Initial draft version for internal use | Completed |
@@ -99,11 +96,15 @@ calculate_emf_doses(example_data)
 | mpd_dur_high | s | numeric | --- | --- | --- | --- | --- | --- | --- |
 | wifi_dur (will have different name) | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 
-### Variables to be removed in version 0.2.0
+### Variables that were removed in version 0.2.0
 
-- smarthome_duration: to be removed
-- wifi_duration: to be replaced
-- mpd_high_dt_prop: to be replaced
+- smarthome_duration: removed
+- wifi_duration: removed, replaced by information about commuting time to infer WiFi router exposure time
+- mpd_high_dt_prop: removed, replaced by durations of low/lowmed/medhigh/high activities
+- mpd_wifi_prop:
+- lptp_duration:
+- tblt_duration:
+
 
 ---
 

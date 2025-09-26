@@ -1,7 +1,8 @@
-# Calculate total RF-EMF dose (for brain and body) from mobile call
-# TODO: some functions in here are really ugly -> refactor code for simplicity
+###############################################################################
+# Calculate total RF-EMF dose (for brain and body) from mobile calling
 
 
+###############################################################################
 # Total mobile call dose ======================================================
 #' Calculate RF-EMF dose from mobile calling (mobile phone and Bluethooth)
 #'

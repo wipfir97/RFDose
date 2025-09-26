@@ -1,17 +1,7 @@
+###############################################################################
 #' Calculate Total RF-EMF Doses for ALL samples
 #'
-#' @param data A data frame. Must have the following columns:
-#' sample_id: unique participant identifier
-#' mpc_duration: daily duration of mobile phone call in seconds
-#' mpc_ear_prop: proportion of time phone is held against ear during call
-#' urbanicity: urban, suburban, or rural
-#' mpd_duration: daily duration of mobile data traffic in seconds
-#' mpd_wifi_prop: proportion of time WiFi is used (vs data) for mobile data traffic
-#' dect_duration: daily duration of DECT/cordless phone call in seconds
-#' dect_ear_prop:
-#' lptp_duration:
-#' tblt_duration:
-#' wifi_duration:
+#' @param data A data frame. Must have the following columns: DOC TO BE ADDED SOON
 #' @param param_file optional path to YAML parameter configuration file
 #' @param default_value_file optional path to YAML default value file in case of missing data
 #' @returns A data frame. Columns named SOURCE_dose_TISSUE contain RF-EMF dose
@@ -35,11 +25,13 @@ calculate_emf_doses <- function(data,
   ## Check parameter file for validity if supplied ----------------------------
   # TODO: add validity check
 
+
   # Default values ============================================================
   ## Load internal default value file if no default_value_file is supplied ----
   defaultvars <- if (is.null(default_value_file)) {
-    yaml::read_yaml(system.file("extdata", "defaultvariables.yaml",
-                                package = "ETAINDoseCalculator"))  # from inst/extdata
+    yaml::read_yaml(system.file("extdata",
+                                "defaultvariables.yaml",
+                                package = "ETAINDoseCalculator"))
   } else {
     yaml::read_yaml(default_value_file)
   }
@@ -54,11 +46,8 @@ calculate_emf_doses <- function(data,
   data <- results$data
   replaced <-results$replaced
 
-  ## Save default value documentation -----------------------------------------
-  # TODO: document how many values were replaced for each sample
 
-
-  # Calculate RF-EMF Dose for all entries in dataset ==========================
+  # Calculate RF-EMF Dose for all entries in data set =========================
   ## Go through each row, calculate doses, append results as column
   results <- data %>%
     rowwise() %>%
@@ -71,8 +60,8 @@ calculate_emf_doses <- function(data,
 }
 
 
+###############################################################################
 #' Calculate Total RF-EMF Dose for Brain and Body from All Sources
-#' For a SINGLE SAMPLE!
 #'
 #' @param sample A list with input values for a single sample
 #' @param params A parameter list
@@ -80,7 +69,6 @@ calculate_emf_doses <- function(data,
 #' @export
 get_total_dose <- function(sample,
                            params) {
-
   # Calculate contribution of each exposure source ============================
   ## Calculate mobile call contribution ---------------------------------------
   call_dose <- get_mobilecall_dose(duration      = sample$mpc_duration,
@@ -103,12 +91,15 @@ get_total_dose <- function(sample,
                        sample$mpd_medhigh_dt_dur,
                        sample$mpd_high_dt_dur)
   ### Calculate dose
-  data_dose <- get_mobiledata_dose(duration      = mpd_duration,
-                                   use_5g        = sample$use_5g,
-                                   urbanicity    = sample$urbanicity,
-                                   travel_time   = sample$travel_time,
-                                   act_pwr_props = act_pwr_props,
-                                   wifi_prop     = sample$mpd_wifi_prop,
+  data_dose <- get_mobiledata_dose(duration         = mpd_duration,
+                                   use_5g           = sample$use_5g,
+                                   urbanicity       = sample$urbanicity,
+                                   travel_time      = sample$travel_time,
+                                   act_pwr_props    = act_pwr_props,
+                                   wifi_prop        = sample$mpd_wifi_prop, #deprecated
+                                   wifi_prop_home   = sample$mpd_wifi_prop_home, #new
+                                   wifi_prop_work   = sample$mpd_wifi_prop_work, #new
+                                   wifi_prop_travel = sample$mpd_wifi_prop_travel, #new
                                    params)
 
   ## Calculate far-field contribution -----------------------------------------
@@ -139,7 +130,6 @@ get_total_dose <- function(sample,
                               duration_tracker    = sample$tracker_duration,
                               duration_vr         = sample$vr_duration,
                               duration_headphones = sample$headphone_duration,
-                              duration_smarthome  = sample$smarthome_duration,
                               duration_gaming     = sample$gaming_duration,
                               params              = params)
 

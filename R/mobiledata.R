@@ -19,7 +19,10 @@
 #'
 #' @param duration Duration of mobile data use in seconds per day
 #' @param use_5g TRUE if participant uses 5G services on mobile phone, FALSE if not
-#' @param wifi_prop Proportion of time WiFi connection is used for data transfer (vs mobile data)
+#' @param wifi_prop DEPRECATED Proportion of time WiFi connection is used for data transfer (vs mobile data)
+#' @param wifi_prop_home Proportion of time WiFi connection is used for data transfer AT HOME (vs mobile data)
+#' @param wifi_prop_work Proportion of time WiFi connection is used for data transfer AT WORK/SCHOOL (vs mobile data)
+#' @param wifi_prop_travel Proportion of time WiFi connection is used for data transfer WHILE COMMUTING (vs mobile data)
 #' @param urbanicity Urbanicity of home / workplace
 #' @param act_pwr_props List with proportion of time spent in low vs low-mid vs mid-high vs high output power activities
 #' @param travel_time Time spent commuting in seconds per day
@@ -35,6 +38,9 @@
 get_mobiledata_dose <- function(duration,
                                 use_5g,
                                 wifi_prop,
+                                wifi_prop_home,
+                                wifi_prop_work,
+                                wifi_prop_travel,
                                 urbanicity,
                                 act_pwr_props,
                                 travel_time,

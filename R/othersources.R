@@ -8,7 +8,6 @@
 #' @param duration_tracker daily tracker use duration (s)
 #' @param duration_vr daily vr use duration (s)
 #' @param duration_headphones daily bluetooth headphone use duration (s)
-#' @param duration_smarthome daily time spend in smarthome (s)
 #' @param duration_gaming daily portable gaming console use duration (s)
 #' @param params Parameter list
 #' @returns List with brain dose and body dose in mJ/kg/day
@@ -18,7 +17,6 @@ get_other_dose <- function(duration_hotspot,
                            duration_tracker,
                            duration_vr,
                            duration_headphones,
-                           duration_smarthome,
                            duration_gaming,
                            params) {
   # Calculate doses from individual devices ===================================
@@ -42,10 +40,6 @@ get_other_dose <- function(duration_hotspot,
   head_dose <- get_headphone_dose(duration_headphones,
                                   params)
 
-  ## From smart home ----------------------------------------------------------
-  smah_dose <- get_smarthome_dose(duration_smarthome,
-                                  params)
-
   ## From portaple gaming device ----------------------------------------------
   game_dose <- get_gaming_dose(duration_gaming,
                                params)
@@ -58,7 +52,6 @@ get_other_dose <- function(duration_hotspot,
                           trac_dose$tracker_brain_dose,
                           virt_dose$vr_brain_dose,
                           head_dose$headphone_brain_dose,
-                          smah_dose$smah_brain_dose,
                           game_dose$game_brain_dose)
   ## Body
   total_body_dose  <- sum(hots_dose$hots_body_dose,
@@ -66,7 +59,6 @@ get_other_dose <- function(duration_hotspot,
                           trac_dose$tracker_body_dose,
                           virt_dose$vr_body_dose,
                           head_dose$headphone_body_dose,
-                          smah_dose$smah_body_dose,
                           game_dose$game_body_dose)
   ## Save output
   output <- list("brain_othe_dose" = total_brain_dose,
