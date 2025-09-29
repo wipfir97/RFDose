@@ -25,34 +25,49 @@
 * ⌛Adapted most calculations; still need to update laptop/tablet and mobile data calculations
 * ⏳Next step: verification of calculations and unit testing and fixing possible bugs
 
-#### New variables in version 0.2.0
+#### Variable overview in version 0.2.0
 
-| Name  | Unit | Type | Description |
-| --- | --- | --- | --- | 
-| use_5g | - | binary | Use of 5G | 
-| travel_time | s | numeric | Time spent commuting per day | 
-| headp_ear_num | - | numeric | Number of earphones worn during call (1 or 2) | 
-| mpd_wifi_prop_home | --- | --- | Proportion of WiFi vs mobile data (3G, 4G, 5G) while using mobile phone AT HOME | 
-| mpd_wifi_prop_work | --- | --- | Proportion of WiFi vs mobile data (3G, 4G, 5G) while using mobile phone AT WORK/SCHOOL |  | 
-| mpd_wifi_prop_travel | --- | --- | Proportion of WiFi vs mobile data (3G, 4G, 5G) while using mobile phone WHILE COMMUTING |  | 
-| mpd_dur_low | s | numeric| Daily duration of low output power activities on mobile phone | 
-| mpd_dur_lowtomed | s | numeric | Daily duration of low-medium output power activities on mobile phone | 
-| mpd_dur_medtohigh | s | numeric | Daily duration of medium-high output power activities on mobile phone | 
-| mpd_dur_high | s | numeric | Daily duration of high output power activities on mobile phone | 
-| lttb_dur_low | s | numeric | Daily duration of low output power activities on laptop/tablet | 
-| lttb_dur_lowtomed | s | numeric | Daily duration of low-medium output power activities on laptop/tablet |
-| lttb_dur_medtohigh | s | numeric | Daily duration of medium-high output power activities on laptop/tablet |
-| lttb_dur_high | s | numeric | Daily duration of high output power activities on laptop/tablet | 
-
+| Name  | Unit | Type | Description | Notes |
+| --- | --- | --- | --- | --- |
+| use_5g | - | binary | Use of 5G | 🆕 |
+| travel_time | s | numeric | Time spent commuting (public transport or car) per day | 🆕 |
+| urbanicity | - | categorical | Urbanicity |  |
+| headp_ear_num | - | numeric | Number of earphones worn during call (1 or 2) | 🆕 |
+| mpc_duration | s | numeric | Duration of daily mobile phone call |  |
+| mpc_ear_prop | - | proportion | ... |  |
+| mpc_headp_prop | - | proportion | ... |  |
+| dect_duration | s | numeric | ... |  |
+| dect_ear_prop | - | proportion | ... |  |
+| mpd_wifi_prop_home | --- | --- | Proportion of WiFi vs mobile data (3G, 4G, 5G) while using mobile phone AT HOME | 🆕 |
+| mpd_wifi_prop_work | --- | --- | Proportion of WiFi vs mobile data (3G, 4G, 5G) while using mobile phone AT WORK/SCHOOL | 🆕 |
+| mpd_wifi_prop_travel | --- | --- | Proportion of WiFi vs mobile data (3G, 4G, 5G) while using mobile phone WHILE COMMUTING | 🆕 |
+| mpd_dur_low | s | numeric| Daily duration of low output power activities on mobile phone | 🆕 |
+| mpd_dur_lowtomed | s | numeric | Daily duration of low-medium output power activities on mobile phone | 🆕 |
+| mpd_dur_medtohigh | s | numeric | Daily duration of medium-high output power activities on mobile phone | 🆕 |
+| mpd_dur_high | s | numeric | Daily duration of high output power activities on mobile phone | 🆕 |
+| lptp_dur_low | s | numeric | Daily duration of low output power activities on laptop | 🆕 |
+| lptp_dur_lowtomed | s | numeric | Daily duration of low-medium output power activities on laptop |🆕 |
+| lptp_dur_medtohigh | s | numeric | Daily duration of medium-high output power activities on laptop |🆕 |
+| lptp_dur_high | s | numeric | Daily duration of high output power activities on laptop | 🆕 |
+| tblt_dur_low | s | numeric | Daily duration of low output power activities on tablet | 🆕 |
+| tblt_dur_lowtomed | s | numeric | Daily duration of low-medium output power activities on tablet |🆕 |
+| tblt_dur_medtohigh | s | numeric | Daily duration of medium-high output power activities on tablet |🆕 |
+| tblt_dur_high | s | numeric | Daily duration of high output power activities on tablet | 🆕 |
+| hotspot_duration | s |  |  |  |
+| smartwatch_duration | s |  |  |  |
+| tracker_duration | s |  |  |  |
+| vr_duration | s |  |  |  |
+| headphone_duration | s |  |  |  |
+| gaming_duration | s |  |  |  |
 
 #### Variables that were removed in version 0.2.0
 
 - smarthome_duration: removed
-- wifi_duration: removed, replaced by information about commuting time to infer WiFi router exposure time
-- mpd_high_dt_prop: removed, replaced by durations of low/lowmed/medhigh/high activities
-- mpd_wifi_prop: to be removed
-- lptp_duration: to be removed
-- tblt_duration: to be removed
+- wifi_duration: removed
+- mpd_high_dt_prop: removed
+- mpd_wifi_prop: removed
+- lptp_duration: removed
+- tblt_duration: removed
 
 ---
 
