@@ -66,7 +66,7 @@ get_mobiledata_dose <- function(duration,
   wifi_prop    <- sum(loc_props$home*wifi_prop_home,
                       loc_props$work*wifi_prop_work,
                       loc_props$travel*wifi_prop_travel)
-  print(paste("wifi_prop", wifi_prop))
+
   data_prop    <- 1 - wifi_prop
 
   # Check input values for validity ===========================================
@@ -100,10 +100,6 @@ get_mobiledata_dose <- function(duration,
 
   ## Calculate body dose ------------------------------------------------------
   body_dose    <- duration*aggr_pwr*body_sar
-
-  print(paste("dur", duration))
-  print(paste("pwr", aggr_pwr))
-  print(paste("brain_sar", brain_sar))
 
   # Return output =============================================================
   output_list <- list("brain_data_dose" = brain_dose,
