@@ -3,13 +3,26 @@
 # =============================================================================
 #' Calculate Dose from Tablet Use
 #'
-#' @param duration Duration of tablet use in seconds
+#' @param dur_low tba
+#' @param dur_lowtomed tba
+#' @param dur_medtohigh tba
+#' @param dur_high tba
 #' @param params Parameter list
 #' @returns List with brain dose and body dose in mJ/kg/day
 #' @export
-get_tablet_dose <- function(duration,
+#'
+get_tablet_dose <- function(dur_low,
+                            dur_lowtomed,
+                            dur_medtohigh,
+                            dur_high,
                             params) {
-
+  #'   # Calculate total duration ==================================================
+  ## TODO this will soon be replaced with more sophisticated calculations taking
+  ## the output power into account
+  duration <- sum(dur_low,
+                  dur_lowtomed,
+                  dur_medtohigh,
+                  dur_high)
   # Extract parameters ========================================================
   ## Extract shared (non-tissue specific) parameters for laptop ---------------
   tblt_params  <- load_device_params(params, "tblt")

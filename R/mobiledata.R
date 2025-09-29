@@ -19,7 +19,6 @@
 #'
 #' @param duration Duration of mobile data use in seconds per day
 #' @param use_5g TRUE if participant uses 5G services on mobile phone, FALSE if not
-#' @param wifi_prop DEPRECATED Proportion of time WiFi connection is used for data transfer (vs mobile data)
 #' @param wifi_prop_home Proportion of time WiFi connection is used for data transfer AT HOME (vs mobile data)
 #' @param wifi_prop_work Proportion of time WiFi connection is used for data transfer AT WORK/SCHOOL (vs mobile data)
 #' @param wifi_prop_travel Proportion of time WiFi connection is used for data transfer WHILE COMMUTING (vs mobile data)
@@ -37,7 +36,6 @@
 #' @export
 get_mobiledata_dose <- function(duration,
                                 use_5g,
-                                wifi_prop,
                                 wifi_prop_home,
                                 wifi_prop_work,
                                 wifi_prop_travel,
@@ -45,6 +43,7 @@ get_mobiledata_dose <- function(duration,
                                 act_pwr_props,
                                 travel_time,
                                 params) {
+
   # Extract parameters ========================================================
   ## Extract shared (non-tissue specific) parameters for mobile data ----------
   data_params  <- load_device_params(params, "data")
@@ -55,14 +54,20 @@ get_mobiledata_dose <- function(duration,
   ## Extract body-specific parameters (SAR values) for mobile data ------------
   body_params  <- load_tissue_params(params, "data", "body")
 
-  ## Derive phone wifi/data proportions ---------------------------------------
-  data_prop    <- 1 - wifi_prop
-
   ## Derive proportion spent at home vs work vs outdoors vs travelling --------
   loc_props <- calculate_location_proportions(travel_time = travel_time,
-                                              home_prop   = params$home_prop,
-                                              work_prop   = params$work_prop,
-                                              outd_prop   = params$outd_prop)
+                                              home_prop   = data_params$home_prop,
+                                              work_prop   = data_params$work_prop,
+                                              outd_prop   = data_params$outd_prop)
+
+  ## Derive phone wifi/data proportions ---------------------------------------
+  ### TODO this calculation could be more detailed by moving it closer to leaf
+  ### functions
+  wifi_prop    <- sum(loc_props$home*wifi_prop_home,
+                      loc_props$work*wifi_prop_work,
+                      loc_props$travel*wifi_prop_travel)
+  print(paste("wifi_prop", wifi_prop))
+  data_prop    <- 1 - wifi_prop
 
   # Check input values for validity ===========================================
   check_proportions(proportions = c(wifi_prop, data_prop))
@@ -80,13 +85,13 @@ get_mobiledata_dose <- function(duration,
 
   # Calculate tissue-specific SAR =============================================
   ## Calculate aggregated brain SAR -------------------------------------------
-  brain_sar    <- get_mobiledata_sar(wifi_prop = wifi_prop,
-                                     params    = data_params,
+  brain_sar    <- get_mobiledata_sar(wifi_prop     = wifi_prop,
+                                     params        = data_params,
                                      tissue_params = brain_params)
 
   ## Calculate aggregated body SAR --------------------------------------------
-  body_sar     <- get_mobiledata_sar(wifi_prop = wifi_prop,
-                                     params    = data_params,
+  body_sar     <- get_mobiledata_sar(wifi_prop     = wifi_prop,
+                                     params        = data_params,
                                      tissue_params = body_params)
 
   # Calculate tissue-specific dose ============================================
@@ -95,6 +100,10 @@ get_mobiledata_dose <- function(duration,
 
   ## Calculate body dose ------------------------------------------------------
   body_dose    <- duration*aggr_pwr*body_sar
+
+  print(paste("dur", duration))
+  print(paste("pwr", aggr_pwr))
+  print(paste("brain_sar", brain_sar))
 
   # Return output =============================================================
   output_list <- list("brain_data_dose" = brain_dose,

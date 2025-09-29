@@ -2,7 +2,7 @@ global:
   wifi_2_prop: 0.58
   wifi_5_prop: 0.42
   home_prop: 0.7
-  outdoor_prop: 0.08
+  outd_prop: 0.08
   work_prop: 0.22
   tech_3g_prop_5gno: 0.1
   tech_4g_prop_5gno: 0.9

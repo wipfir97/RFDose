@@ -43,11 +43,11 @@ get_farfield_dose <- function(urbanicity,
 
   # Calculate tissue-specific SAR =============================================
   ## Calculate aggregated brain SAR -------------------------------------------
-  brain_sar    <- get_farfield_sar(params        = params,
+  brain_sar    <- get_farfield_sar(params        = farf_params,
                                    tissue_params = brain_params)
 
   ## Calculate aggregated body SAR --------------------------------------------
-  body_sar     <- get_farfield_sar(params        = params,
+  body_sar     <- get_farfield_sar(params        = farf_params,
                                    tissue_params = body_params)
 
   # Calculate tissue-specific dose ============================================
@@ -134,8 +134,6 @@ get_farfield_pwr <- function(urbanicity,
                        outd_contr,
                        work_contr,
                        tran_contr)
-
-  print(aggr_pwr)
 
   return(aggr_pwr)
 }

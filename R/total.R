@@ -82,21 +82,20 @@ get_total_dose <- function(sample,
 
   ## Calculate mobile data contribution ---------------------------------------
   ### Calculate proportions of mobile data activities
-  act_pwr_props <- get_act_pwr_props(low_dur     = sample$mpd_low_dt_dur,
-                                     lowmed_dur  = sample$mpd_lowmed_dt_dur,
-                                     medhigh_dur = sample$mpd_medhigh_dt_dur,
-                                     high_dur    = sample$mpd_high_dt_dur)
-  mpd_duration  <- sum(sample$mpd_low_dt_dur,
-                       sample$mpd_lowmed_dt_dur,
-                       sample$mpd_medhigh_dt_dur,
-                       sample$mpd_high_dt_dur)
+  act_pwr_props <- get_act_pwr_props(low_dur     = sample$mpd_dur_low,
+                                     lowmed_dur  = sample$mpd_dur_lowtomed,
+                                     medhigh_dur = sample$mpd_dur_medtohigh,
+                                     high_dur    = sample$mpd_dur_high)
+  mpd_duration  <- sum(sample$mpd_dur_low,
+                       sample$mpd_dur_lowtomed,
+                       sample$mpd_dur_medtohigh,
+                       sample$mpd_dur_high)
   ### Calculate dose
   data_dose <- get_mobiledata_dose(duration         = mpd_duration,
                                    use_5g           = sample$use_5g,
                                    urbanicity       = sample$urbanicity,
                                    travel_time      = sample$travel_time,
                                    act_pwr_props    = act_pwr_props,
-                                   wifi_prop        = sample$mpd_wifi_prop, #deprecated
                                    wifi_prop_home   = sample$mpd_wifi_prop_home, #new
                                    wifi_prop_work   = sample$mpd_wifi_prop_work, #new
                                    wifi_prop_travel = sample$mpd_wifi_prop_travel, #new
@@ -112,12 +111,18 @@ get_total_dose <- function(sample,
                              params   = params)
 
   ## Calculate laptop contribution --------------------------------------------
-  lptp_dose <- get_laptop_dose(duration = sample$lptp_duration,
-                               params   = params)
+  lptp_dose <- get_laptop_dose(dur_low       = sample$lptp_dur_low,
+                               dur_lowtomed  = sample$lptp_dur_lowtomed,
+                               dur_medtohigh = sample$lptp_dur_medtohigh,
+                               dur_high      = sample$lptp_dur_high,
+                               params        = params)
 
   ## Calculate tablet contribution --------------------------------------------
-  tblt_dose <- get_tablet_dose(duration = sample$tblt_duration,
-                               params   = params)
+  tblt_dose <- get_tablet_dose(dur_low       = sample$tblt_dur_low,
+                               dur_lowtomed  = sample$tblt_dur_lowtomed,
+                               dur_medtohigh = sample$tblt_dur_medtohigh,
+                               dur_high      = sample$tblt_dur_high,
+                               params        = params)
 
   ## Calculate cordless contribution ------------------------------------------
   dect_dose <- get_cordless_dose(duration       = sample$dect_duration,
