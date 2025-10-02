@@ -69,6 +69,20 @@ calculate_emf_doses <- function(data,
 #' @export
 get_total_dose <- function(sample,
                            params) {
+  # Preparation ===============================================================
+  ## Calculate location proportions -------------------------------------------
+
+  ## Calculate output power activity proportions ------------------------------
+
+  ## Calculate total device use durations -------------------------------------
+  ### Mobile phone data (mpd)
+
+  ### Laptop (lptp) -----------------------------------------------------------
+
+  ### Tablet (tblt) -----------------------------------------------------------
+
+  ### WiFi exposure -----------------------------------------------------------
+
   # Calculate contribution of each exposure source ============================
   ## Calculate mobile call contribution ---------------------------------------
   call_dose <- get_mobilecall_dose(duration      = sample$mpc_duration,
@@ -107,8 +121,9 @@ get_total_dose <- function(sample,
                                  params       = params)
 
   ## Calculate WiFi contribution ----------------------------------------------
-  wifi_dose <- get_wifi_dose(travel_time = sample$travel_time,
-                             params   = params)
+  wifi_dose <- get_wifi_dose(travel_time      = sample$travel_time,
+                             wifi_prop_travel = sample$mpd_wifi_prop_travel,
+                             params           = params)
 
   ## Calculate laptop contribution --------------------------------------------
   lptp_dose <- get_laptop_dose(dur_low       = sample$lptp_dur_low,

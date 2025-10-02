@@ -187,7 +187,7 @@ get_mpd_data_pwr <- function(use_5g,
   # Recode location proportions ===============================================
   loc_props <- calculate_location_proportions(travel_time = travel_time,
                                               home_prop   = params$home_prop,
-                                              outd_prop   = params$outdoor_prop,
+                                              outd_prop   = params$outd_prop,
                                               work_prop   = params$work_prop)
 
   # 3G ========================================================================

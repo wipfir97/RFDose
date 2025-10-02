@@ -37,9 +37,9 @@ get_farfield_dose <- function(urbanicity,
   body_params  <- load_tissue_params(params, "farf", "body")
 
   # Calculate aggregated power ================================================
-  aggr_pwr     <- get_farfield_pwr(urbanicity = urbanicity,
+  aggr_pwr     <- get_farfield_pwr(urbanicity  = urbanicity,
                                    travel_time = travel_time,
-                                   params   = farf_params)
+                                   params      = farf_params)
 
   # Calculate tissue-specific SAR =============================================
   ## Calculate aggregated brain SAR -------------------------------------------
@@ -84,7 +84,7 @@ get_farfield_pwr <- function(urbanicity,
   # Calculate proportion of time spent at home vs work vs outdoors based on travel time
   loc_props <- calculate_location_proportions(travel_time = travel_time,
                                               home_prop   = params$home_prop,
-                                              outd_prop   = params$outdoor_prop,
+                                              outd_prop   = params$outd_prop,
                                               work_prop   = params$work_prop)
 
   # Calculate far-field power at home =========================================

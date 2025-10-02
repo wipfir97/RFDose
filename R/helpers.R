@@ -85,7 +85,7 @@ check_proportions <- function(proportions) {
 
   # Check if proportions are each below 0
   for (proportion in proportions) {
-    if (proportion > 1 | proportion < 0) {
+    if (proportion > 1 | proportion < 0 | is.na(proportion)) {
       warning("Input proportions must be between 0 and 1. Check your input values.")
       return(FALSE)
     }
@@ -220,17 +220,21 @@ calculate_location_proportions <- function(travel_time,
                                            home_prop,
                                            work_prop,
                                            outd_prop) {
-  # Check if input proportions add up to 1
-  check_proportions(c(home_prop, work_prop, outd_prop))
-  # Calculate proportion of time travelling, home, at work and outdoors
+  # Calculate proportion of time spent at home
   travel_prop_scaled <- travel_time/86400
-  home_prop_scaled   <- (1-travel_prop_scaled)*home_prop
-  work_prop_scaled   <- (1-travel_prop_scaled)*work_prop
-  outd_prop_scaled   <- (1-travel_prop_scaled)*outd_prop
+  work_prop_scaled   <- work_prop
+  outd_prop_scaled   <- outd_prop
+  home_prop_scaled   <- home_prop - travel_prop_scaled
+  check_proportions(c(travel_prop_scaled,
+                      work_prop_scaled,
+                      outd_prop_scaled,
+                      home_prop_scaled))
   scaled_props <- list("travel" = travel_prop_scaled,
                        "home"   = home_prop_scaled,
                        "work"   = work_prop_scaled,
                        "outd"   = outd_prop_scaled)
+  print(scaled_props)
+
   return(scaled_props)
 }
 
@@ -287,4 +291,28 @@ get_act_pwr_props <- function(low_dur,
                 "medhigh_prop" = medhigh_prop,
                 "high_prop"    = high_prop))
   }
+}
+
+# =============================================================================
+#' Calculate WiFi exposure duration
+#'
+#' @param travel_time time spent commutng in car/train/bus per day in s
+#' @param wifi_prop_travel proportion of time connected to WiFi (vs mobile data) during commute
+#' @param home_prop proportion of time per day spent at home
+#' @param work_prop proportion of time per day spent at school/work
+#' @returns exposure duration in s
+calculate_wifi_exposure_duration <- function(travel_time,
+                                             wifi_prop_travel,
+                                             home_prop,
+                                             work_prop) {
+  # Assumption: always exposure at home and at work
+  # Exposure as indicated in questionnaire during travel time
+  wifi_travel_dur <- travel_time*wifi_prop_travel
+  wifi_home_dur   <- home_prop*86400
+  wifi_work_dur   <- work_prop*86400
+  wifi_dur <- sum(wifi_travel_dur,
+                  wifi_home_dur,
+                  wifi_work_dur)
+  check_duration(wifi_dur)
+  return(wifi_dur)
 }

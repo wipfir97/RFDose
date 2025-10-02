@@ -305,7 +305,7 @@ get_mobilecall_phone_data_pwr <- function(urbanicity,
   # Get prop of time spent at home vs work vs outdoors based on travel time ===
   loc_props <- calculate_location_proportions(travel_time = travel_time,
                                               home_prop   = params$home_prop,
-                                              outd_prop   = params$outdoor_prop,
+                                              outd_prop   = params$outd_prop,
                                               work_prop   = params$work_prop)
 
   # Calculate power from 3G ===================================================
@@ -412,7 +412,7 @@ get_mobilecall_phone_native_pwr <- function(urbanicity,
   # Get prop of time spent at home vs work vs outdoors based on travel time ===
   loc_props <- calculate_location_proportions(travel_time = travel_time,
                                               home_prop   = params$home_prop,
-                                              outd_prop   = params$outdoor_prop,
+                                              outd_prop   = params$outd_prop,
                                               work_prop   = params$work_prop)
 
   # Calculate power from 2G ===================================================
