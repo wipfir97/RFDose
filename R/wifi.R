@@ -32,7 +32,6 @@ get_wifi_dose <- function(travel_time,
                                                    wifi_prop_travel = wifi_prop_travel,
                                                    home_prop        = loc_props$home,
                                                    work_prop        = loc_props$work)
-  print(duration)
 
   # Calculate aggregated power ================================================
   aggr_pwr     <- get_wifi_pwr(params = wifi_params)

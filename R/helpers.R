@@ -233,7 +233,6 @@ calculate_location_proportions <- function(travel_time,
                        "home"   = home_prop_scaled,
                        "work"   = work_prop_scaled,
                        "outd"   = outd_prop_scaled)
-  print(scaled_props)
 
   return(scaled_props)
 }
