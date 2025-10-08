@@ -24,6 +24,11 @@ get_laptop_dose <- function(dur_low,
                   dur_medtohigh,
                   dur_high)
 
+  act_pwr_props <- get_act_pwr_props(low_dur     = dur_low,
+                                     lowmed_dur  = dur_lowtomed,
+                                     medhigh_dur = dur_medtohigh,
+                                     high_dur    = dur_high)
+
   # Extract parameters ========================================================
   ## Extract shared (non-tissue specific) parameters for laptop ---------------
   lptp_params  <- load_device_params(params, "lptp")
@@ -36,7 +41,8 @@ get_laptop_dose <- function(dur_low,
 
 
   # Calculate aggregated power ================================================
-  aggr_pwr     <- get_laptop_pwr(lptp_params)
+  aggr_pwr     <- get_laptop_pwr(act_pwr_props,
+                                 lptp_params)
 
   # Calculate tissue-specific SAR =============================================
   ## Brain SAR ----------------------------------------------------------------
@@ -61,17 +67,44 @@ get_laptop_dose <- function(dur_low,
 # =============================================================================
 #' Calculate Laptop Aggregated Power
 #'
+#' @param act_pwr_props text
 #' @param params text
 #' @returns text
-get_laptop_pwr <- function(params) {
-  # Calculate power for 2.4 GHz
-  lptp_2_contr  <- params$wifi_2_prop * params$wifi_2_pwr
+get_laptop_pwr <- function(act_pwr_props,
+                           params) {
+  # Calculate power for 2.4 GHz ===============================================
+  ## Weighted duty cycles -----------------------------------------------------
+  lptp_2_low_dutycycle   <- sum(act_pwr_props$low_prop*params$wifi_2_low_dutycycle,
+                                act_pwr_props$lowmed_prop*params$wifi_2_lowmed_dutycycle)
 
-  # Calculate power for 5.0 GHz
-  lptp_5_contr  <- params$wifi_5_prop * params$wifi_5_pwr
+  lptp_2_high_dutycycle  <- sum(act_pwr_props$medhigh_prop*params$wifi_2_medhigh_dutycycle,
+                                act_pwr_props$high_prop*params$wifi_2_high_dutycycle)
+
+  ## Output power -------------------------------------------------------------
+  lptp_2_pwr_low    <- lptp_2_low_dutycycle * params$wifi_2_pwr
+  lptp_2_pwr_high   <- lptp_2_high_dutycycle * params$wifi_2_pwr
+  print(paste("l", lptp_2_pwr_low, "h", lptp_2_pwr_high))
+
+  lptp_2_pwr <- sum(lptp_2_pwr_low, lptp_2_pwr_high)
+
+  lptp_2_contr  <- params$wifi_2_prop * lptp_2_pwr
+
+  # Calculate power for 5.0 GHz ===============================================
+  ## Weighted duty cycles -----------------------------------------------------
+  lptp_5_low_dutycycle     <- act_pwr_props$low_prop*params$wifi_5_low_dutycycle
+  lptp_5_lowmed_dutycycle  <- act_pwr_props$lowmed_prop*params$wifi_5_lowmed_dutycycle
+  lptp_5_medhigh_dutycycle <- act_pwr_props$medhigh_prop*params$wifi_5_medhigh_dutycycle
+  lptp_5_high_dutycycle    <- act_pwr_props$high_prop*params$wifi_5_high_dutycycle
+  ## Output power -------------------------------------------------------------
+  lptp_5_pwr    <- params$wifi_5_pwr * sum(lptp_5_low_dutycycle,
+                                           lptp_5_lowmed_dutycycle,
+                                           lptp_5_medhigh_dutycycle,
+                                           lptp_5_high_dutycycle)
+  lptp_5_contr  <- params$wifi_5_prop * lptp_5_pwr
 
   # Combine 2.4 and 5.0 GHz
   aggr_pwr      <- sum(lptp_2_contr, lptp_5_contr)
+
 
   # Return output
   return(aggr_pwr)

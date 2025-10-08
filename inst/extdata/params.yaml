@@ -35,8 +35,16 @@ devices:
       tblt_5_sar: 0.000586175
   lptp:
     shared:
-      wifi_2_pwr: 7.7252
-      wifi_5_pwr: 10.48375
+      wifi_2_low_dutycycle: 0.009
+      wifi_2_lowmed_dutycycle: 0.025
+      wifi_2_medhigh_dutycycle: 0.176
+      wifi_2_high_dutycycle: 0.669
+      wifi_5_low_dutycycle: 0.03055
+      wifi_5_lowmed_dutycycle: 0.052275
+      wifi_5_medhigh_dutycycle: 0.064
+      wifi_5_high_dutycycle: 0.14515
+      wifi_2_pwr: 100
+      wifi_5_pwr: 200
       legs_prop: 0.2
       tabl_prop: 0.8
     brain:
