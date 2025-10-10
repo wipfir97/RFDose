@@ -16,13 +16,19 @@ get_tablet_dose <- function(dur_low,
                             dur_medtohigh,
                             dur_high,
                             params) {
-  #'   # Calculate total duration ==================================================
-  ## TODO this will soon be replaced with more sophisticated calculations taking
-  ## the output power into account
+  # Calculate total duration ==================================================
   duration <- sum(dur_low,
                   dur_lowtomed,
                   dur_medtohigh,
                   dur_high)
+
+  # Calculate time proportions of each activity ===============================
+  act_pwr_props <- get_act_pwr_props(low_dur     = dur_low,
+                                     lowmed_dur  = dur_lowtomed,
+                                     medhigh_dur = dur_medtohigh,
+                                     high_dur    = dur_high)
+
+
   # Extract parameters ========================================================
   ## Extract shared (non-tissue specific) parameters for laptop ---------------
   tblt_params  <- load_device_params(params, "tblt")
@@ -35,8 +41,8 @@ get_tablet_dose <- function(dur_low,
 
 
   # Calculate aggregated power ================================================
-  aggr_pwr     <- get_tablet_pwr(tblt_params)
-
+  aggr_pwr     <- get_tablet_pwr(act_pwr_props,
+                                 tblt_params)
 
   # Calculate tissue SAR ======================================================
   ## Brain SAR ----------------------------------------------------------------
@@ -61,19 +67,51 @@ get_tablet_dose <- function(dur_low,
 # =============================================================================
 #' Calculate Tablet Aggregated Power
 #'
+#' @param act_pwr_props descr
 #' @param params descr
 #' @returns Aggregated tablet power
-get_tablet_pwr <- function(params) {
+get_tablet_pwr <- function(act_pwr_props,
+                           params) {
+  # Calculate power for 2.4 GHz ===============================================
+  ## Weighted duty cycles -----------------------------------------------------
+  ### Low output power activities
+  tblt_2_low_dutycycle   <- sum(act_pwr_props$low_prop*params$wifi_2_low_dutycycle,
+                                act_pwr_props$lowmed_prop*params$wifi_2_lowmed_dutycycle)
+  ### High output power activities
+  tblt_2_high_dutycycle  <- sum(act_pwr_props$medhigh_prop*params$wifi_2_medhigh_dutycycle,
+                                act_pwr_props$high_prop*params$wifi_2_high_dutycycle)
 
-  # Calculate power for 2.4 GHz
-  tblt_2_contr <- params$wifi_2_prop * params$wifi_2_pwr
+  ## Output power -------------------------------------------------------------
+  ### Calculate low and high output power, respectively
+  tblt_2_pwr_low    <- tblt_2_low_dutycycle * params$wifi_2_pwr
+  tblt_2_pwr_high   <- tblt_2_high_dutycycle * params$wifi_2_pwr
+  ### Sum up low and high output power
+  tblt_2_pwr <- sum(tblt_2_pwr_low, tblt_2_pwr_high)
+  ### Scale output by total proportion of 2.4GHz WiFi
+  tblt_2_contr  <- params$wifi_2_prop * tblt_2_pwr
 
-  # Calculate power for 5.0 GHz
-  tblt_5_contr <- params$wifi_5_prop * params$wifi_5_pwr
+  # Calculate power for 5.0 GHz ===============================================
+  ## Weighted duty cycles -----------------------------------------------------
+  ### Low output power activities
+  tblt_5_low_dutycycle   <- sum(act_pwr_props$low_prop*params$wifi_5_low_dutycycle,
+                                act_pwr_props$lowmed_prop*params$wifi_5_lowmed_dutycycle)
+  ### High output power activities
+  tblt_5_high_dutycycle  <- sum(act_pwr_props$medhigh_prop*params$wifi_5_medhigh_dutycycle,
+                                act_pwr_props$high_prop*params$wifi_5_high_dutycycle)
 
-  # Combine 2.4 and 5.0 GHz
+  ## Output power -------------------------------------------------------------
+  ### Calculate low and high output power, respectively
+  tblt_5_pwr_low    <- tblt_5_low_dutycycle * params$wifi_5_pwr
+  tblt_5_pwr_high   <- tblt_5_high_dutycycle * params$wifi_5_pwr
+  ### Sum up low and high output power
+  tblt_5_pwr <- sum(tblt_5_pwr_low, tblt_5_pwr_high)
+  ### Scale output by total proportion of 5.0GHz WiFi
+  tblt_5_contr  <- params$wifi_5_prop * tblt_5_pwr
+
+
+  # Combine output power from 2.4 and 5.0 GHz =================================
+
   aggr_pwr     <- sum(tblt_2_contr, tblt_5_contr)
-
   # Return output
   return(aggr_pwr)
 }

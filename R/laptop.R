@@ -17,13 +17,12 @@ get_laptop_dose <- function(dur_low,
                             params) {
 
   # Calculate total duration ==================================================
-  ## TODO this will soon be replaced with more sophisticated calculations taking
-  ## the output power into account
   duration <- sum(dur_low,
                   dur_lowtomed,
                   dur_medtohigh,
                   dur_high)
 
+  # Calculate time proportions of each activity ===============================
   act_pwr_props <- get_act_pwr_props(low_dur     = dur_low,
                                      lowmed_dur  = dur_lowtomed,
                                      medhigh_dur = dur_medtohigh,
@@ -83,7 +82,6 @@ get_laptop_pwr <- function(act_pwr_props,
   ## Output power -------------------------------------------------------------
   lptp_2_pwr_low    <- lptp_2_low_dutycycle * params$wifi_2_pwr
   lptp_2_pwr_high   <- lptp_2_high_dutycycle * params$wifi_2_pwr
-  print(paste("l", lptp_2_pwr_low, "h", lptp_2_pwr_high))
 
   lptp_2_pwr <- sum(lptp_2_pwr_low, lptp_2_pwr_high)
 
