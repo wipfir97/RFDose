@@ -7,7 +7,6 @@
 get_mobiledata_dose(
   duration,
   use_5g,
-  wifi_prop,
   wifi_prop_home,
   wifi_prop_work,
   wifi_prop_travel,
@@ -21,8 +20,6 @@ get_mobiledata_dose(
 \item{duration}{Duration of mobile data use in seconds per day}
 
 \item{use_5g}{TRUE if participant uses 5G services on mobile phone, FALSE if not}
-
-\item{wifi_prop}{DEPRECATED Proportion of time WiFi connection is used for data transfer (vs mobile data)}
 
 \item{wifi_prop_home}{Proportion of time WiFi connection is used for data transfer AT HOME (vs mobile data)}
 

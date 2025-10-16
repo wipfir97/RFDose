@@ -4,7 +4,7 @@
 \alias{get_hotspot_dose}
 \title{Calculate brain and body dose from using mobile phone as hotspot}
 \usage{
-get_hotspot_dose(duration_hotspot, params)
+get_hotspot_dose(duration_hotspot, params = NULL)
 }
 \arguments{
 \item{duration_hotspot}{Daily duration of using phone as hotspot in seconds}

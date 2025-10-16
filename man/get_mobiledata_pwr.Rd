@@ -5,7 +5,9 @@
 \title{Calculate mobile data aggregated output power}
 \usage{
 get_mobiledata_pwr(
-  wifi_prop,
+  wifi_prop_home,
+  wifi_prop_work,
+  wifi_prop_travel,
   use_5g,
   act_pwr_props,
   travel_time,
@@ -14,7 +16,11 @@ get_mobiledata_pwr(
 )
 }
 \arguments{
-\item{wifi_prop}{Proportion of time WiFi connection is used for data transfer (vs mobile data)}
+\item{wifi_prop_home}{...}
+
+\item{wifi_prop_work}{...}
+
+\item{wifi_prop_travel}{...}
 
 \item{use_5g}{TRUE if participant uses 5G services on mobile phone, FALSE if not}
 

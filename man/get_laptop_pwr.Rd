@@ -4,9 +4,11 @@
 \alias{get_laptop_pwr}
 \title{Calculate Laptop Aggregated Power}
 \usage{
-get_laptop_pwr(params)
+get_laptop_pwr(act_pwr_props, params)
 }
 \arguments{
+\item{act_pwr_props}{text}
+
 \item{params}{text}
 }
 \value{

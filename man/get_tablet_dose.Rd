@@ -4,10 +4,16 @@
 \alias{get_tablet_dose}
 \title{Calculate Dose from Tablet Use}
 \usage{
-get_tablet_dose(duration, params)
+get_tablet_dose(dur_low, dur_lowtomed, dur_medtohigh, dur_high, params = NULL)
 }
 \arguments{
-\item{duration}{Duration of tablet use in seconds}
+\item{dur_low}{tba}
+
+\item{dur_lowtomed}{tba}
+
+\item{dur_medtohigh}{tba}
+
+\item{dur_high}{tba}
 
 \item{params}{Parameter list}
 }

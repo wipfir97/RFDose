@@ -4,7 +4,7 @@
 \alias{get_vr_dose}
 \title{Calculate brain and body dose from using VR headset}
 \usage{
-get_vr_dose(duration_vr, params)
+get_vr_dose(duration_vr, params = NULL)
 }
 \arguments{
 \item{duration_vr}{Daily duration of using VR headset in seconds}

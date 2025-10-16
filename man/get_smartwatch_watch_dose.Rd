@@ -9,9 +9,7 @@ get_smartwatch_watch_dose(duration_smartwatch, params, tissue_params)
 \arguments{
 \item{duration_smartwatch}{Daily duration of smartwatch use in seconds}
 
-\item{params}{Parameter list}
-
-\item{tissue_params}{tissue-specific parameter list}
+\item{params}{Tissue parameter list}
 }
 \description{
 Calculate contribution from smart watch

@@ -4,10 +4,12 @@
 \alias{get_mpd_wifi_pwr}
 \title{Calculate mobile phone aggregated output power from WiFi use}
 \usage{
-get_mpd_wifi_pwr(act_pwr_props, params)
+get_mpd_wifi_pwr(act_pwr_props, travel_time, params)
 }
 \arguments{
 \item{act_pwr_props}{List with proportion of time spent in low vs low-mid vs mid-high vs high output power activities}
+
+\item{travel_time}{Time spent commuting in seconds per day}
 
 \item{params}{device-specific parameters}
 }

@@ -4,7 +4,7 @@
 \alias{get_smartwatch_dose}
 \title{Calculate brain and body dose from using smart watch connected to mobile phone}
 \usage{
-get_smartwatch_dose(duration_smartwatch, params)
+get_smartwatch_dose(duration_smartwatch, params = NULL)
 }
 \arguments{
 \item{duration_smartwatch}{Daily duration of using smart watch in seconds}

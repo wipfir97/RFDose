@@ -10,6 +10,7 @@
 #' @param params Parameter list
 #' @returns List with brain dose and body dose in mJ/kg/day
 #' @export
+#' @import yaml
 get_laptop_dose <- function(dur_low,
                             dur_lowtomed,
                             dur_medtohigh,

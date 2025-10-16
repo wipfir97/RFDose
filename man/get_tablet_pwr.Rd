@@ -4,9 +4,11 @@
 \alias{get_tablet_pwr}
 \title{Calculate Tablet Aggregated Power}
 \usage{
-get_tablet_pwr(params)
+get_tablet_pwr(act_pwr_props, params)
 }
 \arguments{
+\item{act_pwr_props}{descr}
+
 \item{params}{descr}
 }
 \value{

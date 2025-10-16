@@ -1,0 +1,3 @@
+sample_id,dur_low,dur_lowtomed,dur_medtohigh,dur_high,brain_dose,body_dose
+TEST1,800,50,800,50,,
+TEST2,0,0,0,0,,

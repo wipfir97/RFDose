@@ -4,7 +4,7 @@
 \alias{get_tracker_dose}
 \title{Calculate brain and body dose from using personal tracker connected to mobile phone}
 \usage{
-get_tracker_dose(duration_tracker, params)
+get_tracker_dose(duration_tracker, params = NULL)
 }
 \arguments{
 \item{duration_tracker}{Daily duration of using tracker in seconds}

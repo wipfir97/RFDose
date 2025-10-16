@@ -20,10 +20,18 @@
 
 #### What is currently happening
 
-* ✅Added new variables and removed unneeded variables (see changes below)
-* ✅Added detailed function documentation
-* ⌛Adapted most calculations; still need to update laptop/tablet and mobile data calculations
-* ⏳Next step: verification of calculations and unit testing and fixing possible bugs
+| Source | Updated to 7.2? | Validation status |
+| --- | --- | --- |
+| Cordless | yes | in progress |
+| WiFi | yes | not started |
+| Laptop | yes | not started |
+| Tablet | yes | not started |
+| Other | yes | not started |
+| Far-field | no | not started |
+| Mobile data | no | not started |
+| Mobile calling | no | not started |
+
+Version 7.2 is the most recent version of the deterministic dose calculator (September 2025).
 
 #### Variable overview in version 0.2.0
 
@@ -217,14 +225,4 @@ License will be added here.
 
 ---
 
-## 🙏 Contributors and Acknowledgements
-
-Contributors will be listed here.
-
----
-
-## 📚 References and Further Resources
-
-Additional resources and references will be added here.
-
----
+## 🙏 Contributors and Ack

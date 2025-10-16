@@ -4,7 +4,7 @@
 \alias{get_headphone_dose}
 \title{Calculate brain and body dose from using bluetooth headphones}
 \usage{
-get_headphone_dose(duration_headphones, params)
+get_headphone_dose(duration_headphones, params = NULL)
 }
 \arguments{
 \item{duration_headphones}{Daily duration of using bt headphones connected to phone}

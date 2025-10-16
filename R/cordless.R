@@ -8,6 +8,7 @@
 #' @param params Parameter list
 #' @returns List with brain dose and body dose in mJ/kg/day
 #' @export
+#' @import yaml
 get_cordless_dose <- function(duration,
                               ear_proportion,
                               params = NULL) {

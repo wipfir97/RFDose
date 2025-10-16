@@ -4,7 +4,7 @@
 \alias{get_gaming_dose}
 \title{Calculate brain and body dose from gaming with a portable console}
 \usage{
-get_gaming_dose(duration_gaming, params)
+get_gaming_dose(duration_gaming, params = NULL)
 }
 \arguments{
 \item{duration_gaming}{Daily gaming duration with portable console in seconds}

@@ -8,6 +8,7 @@
 #' @param params Parameter list
 #' @returns List with brain dose and body dose in mJ/kg/day
 #' @export
+#' @import yaml
 get_wifi_dose <- function(travel_time,
                           wifi_prop_travel,
                           params = NULL) {

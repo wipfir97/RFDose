@@ -10,9 +10,8 @@ get_other_dose(
   duration_tracker,
   duration_vr,
   duration_headphones,
-  duration_smarthome,
   duration_gaming,
-  params
+  params = NULL
 )
 }
 \arguments{
@@ -25,8 +24,6 @@ get_other_dose(
 \item{duration_vr}{daily vr use duration (s)}
 
 \item{duration_headphones}{daily bluetooth headphone use duration (s)}
-
-\item{duration_smarthome}{daily time spend in smarthome (s)}
 
 \item{duration_gaming}{daily portable gaming console use duration (s)}
 

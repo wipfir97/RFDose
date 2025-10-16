@@ -2,8 +2,7 @@
 % Please edit documentation in R/total.R
 \name{get_total_dose}
 \alias{get_total_dose}
-\title{Calculate Total RF-EMF Dose for Brain and Body from All Sources
-For a SINGLE SAMPLE!}
+\title{Calculate Total RF-EMF Dose for Brain and Body from All Sources}
 \usage{
 get_total_dose(sample, params)
 }
@@ -17,5 +16,4 @@ A list with results for brain and body dose for a single sample
 }
 \description{
 Calculate Total RF-EMF Dose for Brain and Body from All Sources
-For a SINGLE SAMPLE!
 }

@@ -18,7 +18,12 @@ get_other_dose <- function(duration_hotspot,
                            duration_vr,
                            duration_headphones,
                            duration_gaming,
-                           params) {
+                           params = NULL) {
+  # Load parameters if not provided ===========================================
+  params <- if (is.null(params)) {
+    load_params("params.yaml")  # from inst/extdata
+  }
+
   # Calculate doses from individual devices ===================================
   ## From hotspot -------------------------------------------------------------
   hots_dose <- get_hotspot_dose(duration_hotspot,
@@ -74,8 +79,13 @@ get_other_dose <- function(duration_hotspot,
 #' @param duration_hotspot Daily duration of using phone as hotspot in seconds
 #' @param params Parameter list
 #' @returns list with daily brain and body dose from hotspot use
+#' @export
 get_hotspot_dose <- function(duration_hotspot,
-                             params) {
+                             params = NULL) {
+  # Load parameters if not provided ===========================================
+  params <- if (is.null(params)) {
+    load_params("params.yaml")  # from inst/extdata
+  }
   # Get hotspot parameters from parameter list --------------------------------
   ## Device-specific
   hots_params        <- load_device_params(params, "hots")
@@ -113,8 +123,13 @@ get_hotspot_dose <- function(duration_hotspot,
 #' @param duration_smartwatch Daily duration of using smart watch in seconds
 #' @param params Parameter list
 #' @returns list with daily brain and body dose from smart watch use
+#' @export
 get_smartwatch_dose <- function(duration_smartwatch,
-                                params) {
+                                params = NULL) {
+  # Load parameters if not provided ===========================================
+  params <- if (is.null(params)) {
+    load_params("params.yaml")  # from inst/extdata
+  }
   # Get watch parameters from parameter list ----------------------------------
   ## Device-specific
   watch_params        <- load_device_params(params, "watch")
@@ -141,7 +156,6 @@ get_smartwatch_dose <- function(duration_smartwatch,
   watch_body_dose  <- get_smartwatch_watch_dose(duration_smartwatch = duration_smartwatch,
                                                 params              = watch_params,
                                                 tissue_params       = watch_body_params)
-
   # Add doses and return output -----------------------------------------------
   ## Brain
   watch_total_brain_dose <- watch_phone_brain_dose + watch_brain_dose
@@ -151,7 +165,6 @@ get_smartwatch_dose <- function(duration_smartwatch,
   ## Return output
   output <- list("watch_brain_dose" = watch_total_brain_dose,
                  "watch_body_dose"  = watch_total_body_dose)
-
 
   return(output)
 }
@@ -185,7 +198,7 @@ get_smartwatch_phone_dose <- function(duration_smartwatch,
 #'
 #' @param duration_smartwatch Daily duration of smartwatch use in seconds
 #' @param params Parameter list
-#' @param tissue_params tissue-specific parameter list
+#' @param params Tissue parameter list
 get_smartwatch_watch_dose <- function(duration_smartwatch,
                                       params,
                                       tissue_params) {
@@ -210,9 +223,13 @@ get_smartwatch_watch_dose <- function(duration_smartwatch,
 #' @param duration_tracker Daily duration of using tracker in seconds
 #' @param params Parameter list
 #' @returns list with daily brain and body dose from tracker use
+#' @export
 get_tracker_dose <- function(duration_tracker,
-                             params) {
-
+                             params = NULL) {
+  # Load parameters if not provided ===========================================
+  params <- if (is.null(params)) {
+    load_params("params.yaml")  # from inst/extdata
+  }
   # Get tracker parameters from parameter list --------------------------------
   ## Device-specific
   tracker_params        <- load_device_params(params, "tracker")
@@ -307,8 +324,13 @@ get_tracker_tracker_dose <- function(duration_tracker,
 #' @param duration_vr Daily duration of using VR headset in seconds
 #' @param params Parameter list
 #' @returns list with daily brain and body dose from VR headset
+#' @export
 get_vr_dose <- function(duration_vr,
-                        params) {
+                        params = NULL) {
+  # Load parameters if not provided ===========================================
+  params <- if (is.null(params)) {
+    load_params("params.yaml")  # from inst/extdata
+  }
   # Get vr parameters from parameter list -------------------------------------
   ## Device-specific
   vr_params        <- load_device_params(params, "vr")
@@ -346,8 +368,13 @@ get_vr_dose <- function(duration_vr,
 #' @param duration_headphones Daily duration of using bt headphones connected to phone
 #' @param params Parameter list
 #' @returns list with daily brain and body dose from bt headphones connected to phone
+#' @export
 get_headphone_dose <- function(duration_headphones,
-                               params) {
+                               params = NULL) {
+  # Load parameters if not provided ===========================================
+  params <- if (is.null(params)) {
+    load_params("params.yaml")  # from inst/extdata
+  }
   # Get bluetooth headphones parameters from parameter list -------------------
   ## Device-specific
   headp_params        <- load_device_params(params, "headp")
@@ -442,8 +469,13 @@ get_headp_headp_dose <- function(duration_headphones,
 #' @param duration_smarthome Daily duration of being in smart home
 #' @param params Parameter list
 #' @returns list with daily brain and body dose from smart home
+#' @export
 get_smarthome_dose <- function(duration_smarthome,
-                               params) {
+                               params = NULL) {
+  # Load parameters if not provided ===========================================
+  params <- if (is.null(params)) {
+    load_params("params.yaml")  # from inst/extdata
+  }
   # Get smart home parameters from parameter list -----------------------------
   ## Device-specific
   smah_params        <- load_device_params(params, "smah")
@@ -480,8 +512,13 @@ get_smarthome_dose <- function(duration_smarthome,
 #' @param duration_gaming Daily gaming duration with portable console in seconds
 #' @param params Parameter list
 #' @returns list with daily brain and body dose from smart home
+#' @export
 get_gaming_dose <- function(duration_gaming,
-                               params) {
+                               params = NULL) {
+  # Load parameters if not provided ===========================================
+  params <- if (is.null(params)) {
+    load_params("params.yaml")  # from inst/extdata
+  }
   # Get smart home parameters from parameter list -----------------------------
   ## Device-specific
   game_params        <- load_device_params(params, "game")
