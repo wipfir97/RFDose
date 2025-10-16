@@ -20,11 +20,12 @@ get_laptop_dose <- function(dur_low,
     load_params("params.yaml")  # from inst/extdata
   }
 
-  # Calculate total duration ==================================================
+  # Calculate total use duration ==============================================
   duration <- sum(dur_low,
                   dur_lowtomed,
                   dur_medtohigh,
                   dur_high)
+  check_duration(duration)
 
   # Calculate time proportions of each activity ===============================
   act_pwr_props <- get_act_pwr_props(low_dur     = dur_low,
@@ -46,6 +47,7 @@ get_laptop_dose <- function(dur_low,
   # Calculate aggregated power ================================================
   aggr_pwr     <- get_laptop_pwr(act_pwr_props,
                                  lptp_params)
+  print(aggr_pwr)
 
   # Calculate tissue-specific SAR =============================================
   ## Brain SAR ----------------------------------------------------------------

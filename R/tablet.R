@@ -26,6 +26,7 @@ get_tablet_dose <- function(dur_low,
                   dur_lowtomed,
                   dur_medtohigh,
                   dur_high)
+  check_duration(duration)
 
   # Calculate time proportions of each activity ===============================
   act_pwr_props <- get_act_pwr_props(low_dur     = dur_low,
