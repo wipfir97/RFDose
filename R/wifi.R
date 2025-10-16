@@ -10,7 +10,12 @@
 #' @export
 get_wifi_dose <- function(travel_time,
                           wifi_prop_travel,
-                          params) {
+                          params = NULL) {
+  # Load parameters if not provided ===========================================
+  params <- if (is.null(params)) {
+    load_params("params.yaml")  # from inst/extdata
+  }
+
   # Extract parameters ========================================================
   ## Extract shared (non-tissue specific) parameters for wifi -----------------
   wifi_params  <- load_device_params(params, "wifi")
@@ -21,6 +26,8 @@ get_wifi_dose <- function(travel_time,
   ## Extract body-specific parameters (SAR values) for wifi -------------------
   body_params  <- load_tissue_params(params, "wifi", "body")
 
+
+  # Derive WiFi router exposure time ==========================================
   ## Derive proportion spent at home vs work vs outdoors vs travelling --------
   loc_props <- calculate_location_proportions(travel_time = travel_time,
                                               home_prop   = wifi_params$home_prop,
@@ -32,6 +39,7 @@ get_wifi_dose <- function(travel_time,
                                                    wifi_prop_travel = wifi_prop_travel,
                                                    home_prop        = loc_props$home,
                                                    work_prop        = loc_props$work)
+
 
   # Calculate aggregated power ================================================
   aggr_pwr     <- get_wifi_pwr(params = wifi_params)

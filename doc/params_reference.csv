@@ -1,18 +1,24 @@
 path,value v0.1.0,value v0.2.0,unit,description,notes
-global.wifi_2_prop,0.5,,none,Wifi 2.4 GHz proportion,global.wifi_2_prop and global.wifi_5_prop must sum to 1
-global.wifi_5_prop,0.5,,none,Wifi 5.0 GHz proportion,global.wifi_2_prop and global.wifi_5_prop must sum to 1
-global.home_prop,0.69,,none,Proportion of time spent at home,"globL.home_prop, global.outdoor_prop, global.work_prop and global.travel_prop must sum to 1"
-global.outdoor_prop,0.08,,none,Proportion of time spent outdoors,"globL.home_prop, global.outdoor_prop, global.work_prop and global.travel_prop must sum to 1"
-global.work_prop,0.21,,none,Proportion of time spent at work,"globL.home_prop, global.outdoor_prop, global.work_prop and global.travel_prop must sum to 1"
-global.travel_prop,0.02,,none,Proportion of time spent in transport,"globL.home_prop, global.outdoor_prop, global.work_prop and global.travel_prop must sum to 1"
-devices.dect.shared.dect_pwr,250,,mW,Maximum output power of cordless phone,
-devices.dect.shared.dect_duty_factor,0.04,,none,Cordless phone duty cycle,
-devices.dect.shared.dect_ear_prop,0.9,,none,Proportion of time DECT phone is held against ear during call,devices.dect.shared.dect_ear_prop and devices.dect.shared.dect_speaker_prop must sum to 1
-devices.dect.shared.dect_speaker_prop,0.1,,none,Proportion of time DECT phone is used in speaker mode during call,devices.dect.shared.dect_ear_prop and devices.dect.shared.dect_speaker_prop must sum to 1
-devices.dect.brain.dect_ear_sar,0.034926,,W/kg/W,Brain SAR from DECT phone held against ear,
-devices.dect.brain.dect_speaker_sar,0.002603877,,W/kg/W,Brain SAR from DECT phone in speaker mode,
-devices.dect.body.dect_ear_sar,0.007,,W/kg/W,Whole body SAR from DECT phone held against ear,
-devices.dect.body.dect_speaker_sar,0.0021,,W/kg/W,Whole body SAR from DECT phone in speaker mode,
+global.wifi_2_prop,0.5,0.58,none,Wifi 2.4 GHz proportion,global.wifi_2_prop and global.wifi_5_prop must sum to 1
+global.wifi_5_prop,0.5,0.42,none,Wifi 5.0 GHz proportion,global.wifi_2_prop and global.wifi_5_prop must sum to 1
+global.home_prop,0.69,0.7,none,Proportion of time spent at home,"globL.home_prop, global.outdoor_prop, global.work_prop and global.travel_prop must sum to 1"
+global.outdoor_prop,0.08,0.08,none,Proportion of time spent outdoors,"globL.home_prop, global.outdoor_prop, global.work_prop and global.travel_prop must sum to 1"
+global.work_prop,0.21,0.22,none,Proportion of time spent at work,"globL.home_prop, global.outdoor_prop, global.work_prop and global.travel_prop must sum to 1"
+global.travel_prop,0.02,removed,none,Proportion of time spent in transport,"globL.home_prop, global.outdoor_prop, global.work_prop and global.travel_prop must sum to 1"
+global.tech_3g_prop_5gno: 0.1,,0.1,,,
+global.tech_4g_prop_5gno: 0.9,,0.9,,,
+global.tech_5g_prop_5gno: 0,,0,,,
+global.tech_3g_prop: 0.1,,0.1,,,
+global.tech_4g_prop: 0.75,,0.75,,,
+global.tech_5g_prop: 0.15,,0.15,,,
+devices.dect.shared.dect_pwr,250,250,mW,Maximum output power of cordless phone,
+devices.dect.shared.dect_duty_factor,0.04,0.04,none,Cordless phone duty cycle,
+devices.dect.shared.dect_ear_prop,0.9,removed,none,Proportion of time DECT phone is held against ear during call,devices.dect.shared.dect_ear_prop and devices.dect.shared.dect_speaker_prop must sum to 1
+devices.dect.shared.dect_speaker_prop,0.1,removed,none,Proportion of time DECT phone is used in speaker mode during call,devices.dect.shared.dect_ear_prop and devices.dect.shared.dect_speaker_prop must sum to 1
+devices.dect.brain.dect_ear_sar,0.034926,0.034926,W/kg/W,Brain SAR from DECT phone held against ear,
+devices.dect.brain.dect_speaker_sar,0.002603877,0.002603877,W/kg/W,Brain SAR from DECT phone in speaker mode,
+devices.dect.body.dect_ear_sar,0.007,0.007025455,W/kg/W,Whole body SAR from DECT phone held against ear,
+devices.dect.body.dect_speaker_sar,0.0021,0.002116649,W/kg/W,Whole body SAR from DECT phone in speaker mode,
 devices.tblt.shared.wifi_2_pwr,11.7588,4.11945,mW,,
 devices.tblt.shared.wifi_5_pwr,11.7588,10.48375,mW,,
 devices.tblt.brain.tblt_2_sar,0.000999468,,W/kg/W,,
@@ -31,12 +37,12 @@ devices.lptp.body.wifi_2_legs_sar,0.005,0.005001918,W/kg/W,,
 devices.lptp.body.wifi_2_tabl_sar,0.00125,0.001261547,W/kg/W,,
 devices.lptp.body.wifi_5_legs_sar,0.005,0.003303364,W/kg/W,,
 devices.lptp.body.wifi_5_tabl_sar,0.00125,0.000883944,W/kg/W,,
-devices.wifi.shared.wifi_2_pwr,0.017,,mW,,
-devices.wifi.shared.wifi_5_pwr,0.016,,mW,,
-devices.wifi.brain.wifi_2_sar,0.00133,,W/kg/W,,
-devices.wifi.brain.wifi_5_sar,0.00133,,W/kg/W,,
-devices.wifi.body.wifi_2_sar,0.005295,,W/kg/W,,
-devices.wifi.body.wifi_5_sar,0.005295,,W/kg/W,,
+devices.wifi.shared.wifi_2_pwr,0.017,0.017,mW,,
+devices.wifi.shared.wifi_5_pwr,0.016,0.016,mW,,
+devices.wifi.brain.wifi_2_sar,0.00133,0.00133,W/kg/W,,
+devices.wifi.brain.wifi_5_sar,0.00133,0.00133,W/kg/W,,
+devices.wifi.body.wifi_2_sar,0.005295,0.005295,W/kg/W,,
+devices.wifi.body.wifi_5_sar,0.005295,0.005295,W/kg/W,,
 devices.call.shared.native_prop,0.7,,none,,
 devices.call.shared.data_prop,0.2,,none,,
 devices.call.shared.wifi_prop,0.1,,none,,

@@ -15,7 +15,12 @@ get_tablet_dose <- function(dur_low,
                             dur_lowtomed,
                             dur_medtohigh,
                             dur_high,
-                            params) {
+                            params = NULL) {
+  # Load parameters if not provided ===========================================
+  params <- if (is.null(params)) {
+    load_params("params.yaml")  # from inst/extdata
+  }
+
   # Calculate total duration ==================================================
   duration <- sum(dur_low,
                   dur_lowtomed,
@@ -43,6 +48,7 @@ get_tablet_dose <- function(dur_low,
   # Calculate aggregated power ================================================
   aggr_pwr     <- get_tablet_pwr(act_pwr_props,
                                  tblt_params)
+
 
   # Calculate tissue SAR ======================================================
   ## Brain SAR ----------------------------------------------------------------
@@ -107,7 +113,6 @@ get_tablet_pwr <- function(act_pwr_props,
   tblt_5_pwr <- sum(tblt_5_pwr_low, tblt_5_pwr_high)
   ### Scale output by total proportion of 5.0GHz WiFi
   tblt_5_contr  <- params$wifi_5_prop * tblt_5_pwr
-
 
   # Combine output power from 2.4 and 5.0 GHz =================================
 

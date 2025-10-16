@@ -10,7 +10,11 @@
 #' @export
 get_cordless_dose <- function(duration,
                               ear_proportion,
-                              params) {
+                              params = NULL) {
+  # Load parameters if not provided ===========================================
+  params <- if (is.null(params)) {
+    load_params("params.yaml")  # from inst/extdata
+  }
 
   # Check input values ========================================================
   ## Duration
@@ -75,6 +79,7 @@ get_cordless_pwr  <- function(params) {
 #' @param params descr
 #' @param tissue_params descr
 #' @returns sar
+#' @import yaml
 get_cordless_sar  <- function(ear_proportion,
                               params,
                               tissue_params) {

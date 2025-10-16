@@ -15,14 +15,12 @@ devices:
     shared:
       dect_pwr: 250
       dect_duty_factor: 0.04
-      dect_ear_prop: 0.9
-      dect_speaker_prop: 0.1
     brain:
       dect_ear_sar: 0.034926
       dect_speaker_sar: 0.002603877
     body:
-      dect_ear_sar: 0.007
-      dect_speaker_sar: 0.0021
+      dect_ear_sar: 0.007025455
+      dect_speaker_sar: 0.002116649
   tblt:
     shared:
       wifi_2_low_dutycycle: 0.009
