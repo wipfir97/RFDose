@@ -1,9 +1,9 @@
 global:
   wifi_2_prop: 0.58
   wifi_5_prop: 0.42
-  home_prop: 0.7
+  home_prop: 0.71
   outd_prop: 0.08
-  work_prop: 0.22
+  work_prop: 0.21
   tech_3g_prop_5gno: 0.1
   tech_4g_prop_5gno: 0.9
   tech_5g_prop_5gno: 0
@@ -251,20 +251,20 @@ devices:
       wifi_5_face_sar: 0.000586175
   farf:
     shared:
-      home_urban_pwr: 0.05198939
-      outdoor_urban_pwr: 1.375066313
-      work_urban_pwr: 0.214854111
-      home_suburb_pwr: 0.021485411
-      outdoor_suburb_pwr: 0.513527851
-      work_suburb_pwr: 0.131083287
-      home_rural_pwr: 0.004244032
-      outdoor_rural_pwr: 0.067904509
-      work_rural_pwr: 0.067904509
-      travel_pwr: 1.120689655
+      home_urban_pwr: 0.490
+      outdoor_urban_pwr: 0.930
+      work_urban_pwr: 0.870
+      home_suburb_pwr: 0.268
+      outdoor_suburb_pwr: 0.613
+      work_suburb_pwr: 0.538
+      home_rural_pwr: 0.045
+      outdoor_rural_pwr: 0.295
+      work_rural_pwr: 0.205
+      travel_pwr: 0.640
     brain:
-      sar: 0.0103057
+      sar: 0.0083632
     body:
-      sar: 0.010032036
+      sar: 0.007579411
   watch:
     shared:
       watch_pwr: 0.00008

@@ -24,7 +24,11 @@
 #' @export
 get_farfield_dose <- function(urbanicity,
                               travel_time,
-                              params) {
+                              params = NULL) {
+  # Load parameters if not provided ===========================================
+  params <- if (is.null(params)) {
+    load_params("params.yaml")  # from inst/extdata
+  }
 
   # Extract parameters ========================================================
   ## Extract shared (non-tissue specific) parameters for mobile calling -------
@@ -40,6 +44,7 @@ get_farfield_dose <- function(urbanicity,
   aggr_pwr     <- get_farfield_pwr(urbanicity  = urbanicity,
                                    travel_time = travel_time,
                                    params      = farf_params)
+  print(paste("aggr_pwr ", aggr_pwr))
 
   # Calculate tissue-specific SAR =============================================
   ## Calculate aggregated brain SAR -------------------------------------------
@@ -50,6 +55,7 @@ get_farfield_dose <- function(urbanicity,
   body_sar     <- get_farfield_sar(params        = farf_params,
                                    tissue_params = body_params)
 
+  print(paste("brain sar ", brain_sar, " body sar", body_sar))
   # Calculate tissue-specific dose ============================================
   ## Calculate brain dose -----------------------------------------------------
   brain_dose   <- 86400*aggr_pwr*brain_sar
@@ -86,6 +92,8 @@ get_farfield_pwr <- function(urbanicity,
                                               home_prop   = params$home_prop,
                                               outd_prop   = params$outd_prop,
                                               work_prop   = params$work_prop)
+
+  print(loc_props)
 
   # Calculate far-field power at home =========================================
   ## Urban home

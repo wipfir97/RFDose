@@ -48,7 +48,6 @@ get_laptop_dose <- function(dur_low,
   # Calculate aggregated power ================================================
   aggr_pwr     <- get_laptop_pwr(act_pwr_props,
                                  lptp_params)
-  print(aggr_pwr)
 
   # Calculate tissue-specific SAR =============================================
   ## Brain SAR ----------------------------------------------------------------

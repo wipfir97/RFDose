@@ -1,0 +1,3 @@
+sample_id,duration_hotspot,duration_smartwatch,duration_tracker,duration_vr,duration_headphones,duration_gaming,brain_dose,body_dose
+TEST1,0,0,0,0,0,3600,,
+TEST2,600,600,600,600,600,600,,
