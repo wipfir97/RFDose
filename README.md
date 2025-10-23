@@ -22,12 +22,12 @@
 
 | Source | Updated to 7.2? | Validation status |
 | --- | --- | --- |
-| Cordless | yes | in progress |
-| WiFi | yes | not started |
-| Laptop | yes | not started |
-| Tablet | yes | not started |
-| Other | yes | not started |
-| Far-field | no | not started |
+| Cordless | yes | completed |
+| WiFi | yes | in progress |
+| Laptop | yes | completed |
+| Tablet | yes | completed |
+| Other | yes | in progress |
+| Far-field | yes | not started |
 | Mobile data | no | not started |
 | Mobile calling | no | not started |
 
@@ -225,4 +225,14 @@ License will be added here.
 
 ---
 
-## 🙏 Contributors and Ack
+## 🙏 Contributors and Acknowledgements
+
+Contributors will be listed here.
+
+---
+
+## 📚 References and Further Resources
+
+Additional resources and references will be added here.
+
+---
