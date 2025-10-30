@@ -312,6 +312,7 @@ devices:
   smah:
     shared:
       smah_pwr: 1.64109
+      smah_active_prop: 0.01
     brain: 
       smah_sar: 0.00133
     body:

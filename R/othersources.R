@@ -466,11 +466,13 @@ get_headp_headp_dose <- function(duration_headphones,
 # Smart home ------------------------------------------------------------------
 #' Calculate brain and body dose from smart home
 #'
-#' @param duration_smarthome Daily duration of being in smart home
+#' @param smarthome TRUE if participant lives in smarthome, FALSE if not
+#' @param travel_time Time spent commuting in s/day
 #' @param params Parameter list
 #' @returns list with daily brain and body dose from smart home
 #' @export
-get_smarthome_dose <- function(duration_smarthome,
+get_smarthome_dose <- function(smarthome,
+                               travel_time,
                                params = NULL) {
   # Load parameters if not provided ===========================================
   params <- if (is.null(params)) {
@@ -494,6 +496,23 @@ get_smarthome_dose <- function(duration_smarthome,
   # Calculate body SAR from smart home ----------------------------------------
   smah_body_sar  <- get_smarthome_sar(params        = smah_params,
                                       tissue_params = smah_body_params)
+
+  # Calculate smarthome active duration ---------------------------------------
+  ## Time spent at home
+  locs <- calculate_location_proportions(travel_time = travel_time,
+                                         home_prop   = smah_params$home_prop,
+                                         work_prop   = smah_params$work_prop,
+                                         outd_prop   = smah_params$outd_prop)
+  home_dur <- locs$home*86400
+  home_dur <- 60000
+  print(home_dur)
+  ## If smarthome == TRUE: Multiply with proportion of time smart home is active
+  ## Else: set duration to 0
+  if (smarthome) {
+    duration_smarthome <- home_dur*smah_params$smah_active_prop
+  } else {
+    duration_smarthome <- 0
+  }
 
   # Calculate brain and body dose from smart home -----------------------------
   smah_brain_dose <- duration_smarthome * smah_pwr * smah_brain_sar
