@@ -242,11 +242,11 @@ devices:
       wifi_5_high_dutycycle: 0.14515
       wifi_5_pwr: 200.00
     brain:
-      data_face_sar: 0.002870465
+      data_face_sar: 0.002917897
       wifi_2_face_sar: 0.000999468
       wifi_5_face_sar: 0.000163091
     body:
-      data_face_sar: 0.000988818
+      data_face_sar: 0.000994539
       wifi_2_face_sar: 0.000861
       wifi_5_face_sar: 0.000586175
   farf:

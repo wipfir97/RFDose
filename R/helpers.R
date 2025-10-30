@@ -78,9 +78,11 @@ flat_params_to_nested <- function(flat) {
 #' @returns TRUE if proportions are valid, FALSE if invalid
 check_proportions <- function(proportions) {
   # Ensure input is numeric
-  if (!is.numeric(proportions)) {
-    warning("Input proportions must be numeric. Check your input values.")
-    return(FALSE)
+  for (proportion in proportions) {
+    if (!is.numeric(proportion)) {
+      warning("Input proportions must be numeric. Check your input values.")
+      return(FALSE)
+    }
   }
 
   # Check if proportions are each below 0
@@ -93,7 +95,7 @@ check_proportions <- function(proportions) {
 
   # For vector of proportions, check if they add up to 1
   if (length(proportions) > 1) {
-    if (!isTRUE(all.equal(sum(proportions), 1, tolerance = 1e-6))) {
+    if (!isTRUE(all.equal(sum(unlist(proportions)), 1, tolerance = 1e-6))) {
       warning("Proportions do not sum to 1. Check your input values.")
       return(FALSE)
     }
@@ -220,19 +222,29 @@ calculate_location_proportions <- function(travel_time,
                                            home_prop,
                                            work_prop,
                                            outd_prop) {
-  # Calculate proportion of time spent at home
+  # Calculate travel proportion -----------------------------------------------
+  check_duration(travel_time)
   travel_prop_scaled <- travel_time/86400
+
+  # Calculate home proportion --------------------------------------------------
+  ## Assumption: we subtract the travel/commute time from the time spent at home,
+  ## but not from time outdoors or time at work
+  home_prop_scaled   <- home_prop - travel_prop_scaled
+  ## ensure travel time is not higher than time spent at home
+  if (home_prop_scaled < 0) {
+    warning("Time spent travelling/commuting must be lower that time spent at home.")
+  }
+
+  # Calculate work and outdoor proportion -------------------------------------
   work_prop_scaled   <- work_prop
   outd_prop_scaled   <- outd_prop
-  home_prop_scaled   <- home_prop - travel_prop_scaled
-  check_proportions(c(travel_prop_scaled,
-                      work_prop_scaled,
-                      outd_prop_scaled,
-                      home_prop_scaled))
+
+  # Collect results and check if proportions are valid ------------------------
   scaled_props <- list("travel" = travel_prop_scaled,
                        "home"   = home_prop_scaled,
                        "work"   = work_prop_scaled,
                        "outd"   = outd_prop_scaled)
+  check_proportions(unlist(scaled_props))
 
   return(scaled_props)
 }
@@ -305,8 +317,13 @@ calculate_wifi_exposure_duration <- function(travel_time,
                                              home_prop,
                                              work_prop) {
   # Assumption: always exposure at home and at work
-  # Exposure as indicated in questionnaire during travel time
-  wifi_travel_dur <- travel_time*wifi_prop_travel
+  # If participant uses WiFi during commute at all, we assume WiFi exposure
+  # during whole commute
+  if (wifi_prop_travel > 0) {
+    wifi_travel_dur <- travel_time
+  } else {
+    wifi_travel_dur <- 0
+  }
   wifi_home_dur   <- home_prop*86400
   wifi_work_dur   <- work_prop*86400
   wifi_dur <- sum(wifi_travel_dur,

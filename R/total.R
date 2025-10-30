@@ -70,19 +70,6 @@ calculate_emf_doses <- function(data,
 get_total_dose <- function(sample,
                            params) {
   # Preparation ===============================================================
-  ## Calculate location proportions -------------------------------------------
-
-  ## Calculate output power activity proportions ------------------------------
-
-  ## Calculate total device use durations -------------------------------------
-  ### Mobile phone data (mpd)
-
-  ### Laptop (lptp) -----------------------------------------------------------
-
-  ### Tablet (tblt) -----------------------------------------------------------
-
-  ### WiFi exposure -----------------------------------------------------------
-
   # Calculate contribution of each exposure source ============================
   ## Calculate mobile call contribution ---------------------------------------
   call_dose <- get_mobilecall_dose(duration      = sample$mpc_duration,
@@ -95,24 +82,18 @@ get_total_dose <- function(sample,
                                    params        = params)
 
   ## Calculate mobile data contribution ---------------------------------------
-  ### Calculate proportions of mobile data activities
-  act_pwr_props <- get_act_pwr_props(low_dur     = sample$mpd_dur_low,
-                                     lowmed_dur  = sample$mpd_dur_lowtomed,
-                                     medhigh_dur = sample$mpd_dur_medtohigh,
-                                     high_dur    = sample$mpd_dur_high)
-  mpd_duration  <- sum(sample$mpd_dur_low,
-                       sample$mpd_dur_lowtomed,
-                       sample$mpd_dur_medtohigh,
-                       sample$mpd_dur_high)
   ### Calculate dose
-  data_dose <- get_mobiledata_dose(duration         = mpd_duration,
+  data_dose <- get_mobiledata_dose(duration_low     = sample$mpd_dur_low,
+                                   duration_lowmed  = sample$mpd_dur_lowtomed,
+                                   duration_medhigh = sample$mpd_dur_medtohigh,
+                                   duration_high    = sample$mpd_dur_high,
                                    use_5g           = sample$use_5g,
                                    urbanicity       = sample$urbanicity,
                                    travel_time      = sample$travel_time,
                                    act_pwr_props    = act_pwr_props,
-                                   wifi_prop_home   = sample$mpd_wifi_prop_home, #new
-                                   wifi_prop_work   = sample$mpd_wifi_prop_work, #new
-                                   wifi_prop_travel = sample$mpd_wifi_prop_travel, #new
+                                   wifi_prop_home   = sample$mpd_wifi_prop_home,
+                                   wifi_prop_work   = sample$mpd_wifi_prop_work,
+                                   wifi_prop_travel = sample$mpd_wifi_prop_travel,
                                    params)
 
   ## Calculate far-field contribution -----------------------------------------

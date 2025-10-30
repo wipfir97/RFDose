@@ -28,7 +28,7 @@
 | Tablet | yes | completed |
 | Other | yes | in progress |
 | Far-field | yes | not started |
-| Mobile data | no | not started |
+| Mobile data | in progress | not started |
 | Mobile calling | no | not started |
 
 Version 7.2 is the most recent version of the deterministic dose calculator (September 2025).
