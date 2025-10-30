@@ -86,7 +86,6 @@ get_mobiledata_dose <- function(duration_low,
                    loc_props$home*wifi_prop_home,
                    loc_props$work*wifi_prop_work)
 
-  print(wifi_prop)
 
   # Calculate aggregated power ================================================
   aggr_pwr     <- get_mobiledata_pwr(wifi_prop_home   = wifi_prop_home,
@@ -157,7 +156,6 @@ get_mobiledata_pwr <- function(wifi_prop_home,
                                travel_time, #new
                                urbanicity, #new
                                params) {
-  # NEW CODE IN DEVELOPMENT ===================================================
   # Get power from data
   data_pwr <- get_mpd_data_pwr(use_5g        = use_5g,
                                urbanicity    = urbanicity,
@@ -224,194 +222,117 @@ get_mpd_data_pwr <- function(use_5g,
                                               outd_prop   = params$outd_prop,
                                               work_prop   = params$work_prop)
 
-  # 3G ========================================================================
-  ## 3G Weighted duty cycle ---------------------------------------------------
-  ### Low and low-med output power ----
-  data_3g_low_dutycycle = sum(act_pwr_props$low_prop*params$data_3g_low_ind_dutycycle, # low output pwr
-                              act_pwr_props$lowmed_prop*params$data_3g_lowmed_ind_dutycycle) # low-mid output pwr
-  ### High-med and high output power ----
-  data_3g_high_dutycycle = sum(act_pwr_props$medhigh_prop*params$data_3g_medhigh_ind_dutycycle, # mid-high output pwr
-                               act_pwr_props$high_prop*params$data_3g_high_ind_dutycycle) # high output pwr
-  ## Indoor -------------------------------------------------------------------
-  ### Low output power
-  data_3g_low_ind_pwr <- data_3g_low_dutycycle*sum(params$data_3g_suburb_ind_pwr*urb_list$home_suburb, # if suburban
-                                                   params$data_3g_urb_ind_pwr*urb_list$home_urban, # if urban
-                                                   params$data_3g_rural_ind_pwr*urb_list$home_rural # if rural
+  # Calculate output power from different technologies ========================
+  pwr_3g <- calculate_total_power_for_tech("3g", act_pwr_props, urb_list,
+                                           loc_props, params)
+  pwr_4g <- calculate_total_power_for_tech("4g", act_pwr_props, urb_list,
+                                           loc_props, params)
+  pwr_5g <- calculate_total_power_for_tech("5g", act_pwr_props, urb_list,
+                                           loc_props, params)
+
+  # Calculate technology use proportions ======================================
+  props <- calculate_data_tech_proportions(use_5g = use_5g, params = params)
+
+  # Scale by tech props and sum for each environment ==========================
+  result <- list(
+    home    = sum(props$prop_3g * pwr_3g$home, props$prop_4g * pwr_4g$home, props$prop_5g * pwr_5g$home),
+    work    = sum(props$prop_3g * pwr_3g$work, props$prop_4g * pwr_4g$work, props$prop_5g * pwr_5g$work),
+    outdoor = sum(props$prop_3g * pwr_3g$outdoor, props$prop_4g * pwr_4g$outdoor, props$prop_5g * pwr_5g$outdoor),
+    travel  = sum(props$prop_3g * pwr_3g$travel, props$prop_4g * pwr_4g$travel, props$prop_5g * pwr_5g$travel)
   )
 
-  ### High output power
-  data_3g_high_ind_pwr <- data_3g_high_dutycycle*sum(params$data_3g_suburb_ind_pwr*urb_list$home_suburb, # if suburban
-                                                     params$data_3g_urb_ind_pwr*urb_list$home_urban, # if urban
-                                                     params$data_3g_rural_ind_pwr*urb_list$home_rural # if rural
-  )
-  ### Add low and high output power, scale by time prop at home ----
-  data_3g_home_pwr <- sum(data_3g_low_ind_pwr, data_3g_high_ind_pwr)*loc_props$home
-  ### Add low and high output power, scale by time prop at work/school ----
-  data_3g_work_pwr <- sum(data_3g_low_ind_pwr, data_3g_high_ind_pwr)*loc_props$work
-
-  ## Outdoors -----------------------------------------------------------------
-  ### Low output power
-  data_3g_low_out_pwr <- data_3g_low_dutycycle*sum(params$data_3g_suburb_out_pwr*urb_list$home_suburb, # if suburban
-                                                   params$data_3g_urb_out_pwr*urb_list$home_urban, # if urban
-                                                   params$data_3g_rural_out_pwr*urb_list$home_rural # if rural
-  )
-
-  ### High output power
-  data_3g_high_out_pwr <- data_3g_high_dutycycle*sum(params$data_3g_suburb_out_pwr*urb_list$home_suburb, # if suburban
-                                                     params$data_3g_urb_out_pwr*urb_list$home_urban, # if urban
-                                                     params$data_3g_rural_out_pwr*urb_list$home_rural # if rural
-  )
-  ### Add low and high output power, scale by time prop outdoors ----
-  data_3g_out_pwr <- sum(data_3g_low_out_pwr, data_3g_high_out_pwr)*loc_props$outd
-
-  ## Travel -------------------------------------------------------------------
-  ### Low output power
-  data_3g_low_tra_pwr <- data_3g_low_dutycycle*params$data_3g_travel_pwr
-  ### High output power
-  data_3g_high_tra_pwr <- data_3g_high_dutycycle*params$data_3g_travel_pwr
-  ### Add low and high output power, scale by travel prop
-  data_3g_tra_pwr <- sum(data_3g_low_tra_pwr, data_3g_high_tra_pwr)*loc_props$travel
-
-
-
-  ## Total 3G power -----------------------------------------------------------
-  data_3g_pwr <- list("home"    = data_3g_home_pwr,
-                      "work"    = data_3g_work_pwr,
-                      "outdoor" = data_3g_out_pwr,
-                      "travel"  = data_3g_tra_pwr)
-
-  # 4G ========================================================================
-  ## 4g Weighted duty cycle ---------------------------------------------------
-  ### Low and low-med output power ----
-  data_4g_low_dutycycle = sum(act_pwr_props$low_prop*params$data_4g_low_ind_dutycycle, # low output pwr
-                              act_pwr_props$lowmed_prop*params$data_4g_lowmed_ind_dutycycle) # low-mid output pwr
-  ### High-med and high output power ----
-  data_4g_high_dutycycle = sum(act_pwr_props$medhigh_prop*params$data_4g_medhigh_ind_dutycycle, # mid-high output pwr
-                               act_pwr_props$high_prop*params$data_4g_high_ind_dutycycle) # high output pwr
-  ## Indoor -------------------------------------------------------------------
-  ### Low output power
-  data_4g_low_ind_pwr <- data_4g_low_dutycycle*sum(params$data_4g_suburb_ind_pwr*urb_list$home_suburb, # if suburban
-                                                   params$data_4g_urb_ind_pwr*urb_list$home_urban, # if urban
-                                                   params$data_4g_rural_ind_pwr*urb_list$home_rural # if rural
+  return(result)
+}
+# -----------------------------------------------------------------------------
+#' Calculate weighted duty cycle
+#'
+#' @param act_pwr_props ...
+#' @param tech "3g", "4g", or "5g"
+#' @param params ...
+#' @returns weighted duty cycle
+calculate_weighted_duty_cycle <- function(act_pwr_props,
+                                          tech,
+                                          params) {
+  low <- sum(
+    act_pwr_props$low_prop * params[[paste0("data_", tech, "_low_ind_dutycycle")]],
+    act_pwr_props$lowmed_prop * params[[paste0("data_", tech, "_lowmed_ind_dutycycle")]]
   )
 
-  ### High output power
-  data_4g_high_ind_pwr <- data_4g_high_dutycycle*sum(params$data_4g_suburb_ind_pwr*urb_list$home_suburb, # if suburban
-                                                     params$data_4g_urb_ind_pwr*urb_list$home_urban, # if urban
-                                                     params$data_4g_rural_ind_pwr*urb_list$home_rural # if rural
-  )
-  ### Add low and high output power, scale by time prop at home ----
-  data_4g_home_pwr <- sum(data_4g_low_ind_pwr, data_4g_high_ind_pwr)*loc_props$home
-  ### Add low and high output power, scale by time prop at work/school ----
-  data_4g_work_pwr <- sum(data_4g_low_ind_pwr, data_4g_high_ind_pwr)*loc_props$work
-
-  ## Outdoors -----------------------------------------------------------------
-  ### Low output power
-  data_4g_low_out_pwr <- data_4g_low_dutycycle*sum(params$data_4g_suburb_out_pwr*urb_list$home_suburb, # if suburban
-                                                   params$data_4g_urb_out_pwr*urb_list$home_urban, # if urban
-                                                   params$data_4g_rural_out_pwr*urb_list$home_rural # if rural
+  high <- sum(
+    act_pwr_props$medhigh_prop * params[[paste0("data_", tech, "_medhigh_ind_dutycycle")]],
+    act_pwr_props$high_prop    * params[[paste0("data_", tech, "_high_ind_dutycycle")]]
   )
 
-  ### High output power
-  data_4g_high_out_pwr <- data_4g_high_dutycycle*sum(params$data_4g_suburb_out_pwr*urb_list$home_suburb, # if suburban
-                                                     params$data_4g_urb_out_pwr*urb_list$home_urban, # if urban
-                                                     params$data_4g_rural_out_pwr*urb_list$home_rural # if rural
-  )
-  ### Add low and high output power, scale by time prop outdoors ----
-  data_4g_out_pwr <- sum(data_4g_low_out_pwr, data_4g_high_out_pwr)*loc_props$outd
+  return(list(low = low, high = high))
+}
 
-  ## Travel -------------------------------------------------------------------
-  ### Low output power
-  data_4g_low_tra_pwr  <- data_4g_low_dutycycle*params$data_4g_travel_pwr
-  ### High output power
-  data_4g_high_tra_pwr <- data_4g_high_dutycycle*params$data_4g_travel_pwr
-  ### Add low and high output power, scale by travel prop
-  data_4g_tra_pwr      <- sum(data_4g_low_tra_pwr, data_4g_high_tra_pwr)*loc_props$travel
-
-  ## Total 4g power -----------------------------------------------------------
-  data_4g_pwr <- list("home"    = data_4g_home_pwr,
-                      "work"    = data_4g_work_pwr,
-                      "outdoor" = data_4g_out_pwr,
-                      "travel"  = data_4g_tra_pwr)
-
-
-  # 5G ========================================================================
-  ## 5g Weighted duty cycle ---------------------------------------------------
-  ### Low and low-med output power ----
-  data_5g_low_dutycycle = sum(act_pwr_props$low_prop*params$data_5g_low_ind_dutycycle, # low output pwr
-                              act_pwr_props$lowmed_prop*params$data_5g_lowmed_ind_dutycycle) # low-mid output pwr
-  ### High-med and high output power ----
-  data_5g_high_dutycycle = sum(act_pwr_props$medhigh_prop*params$data_5g_medhigh_ind_dutycycle, # mid-high output pwr
-                               act_pwr_props$high_prop*params$data_5g_high_ind_dutycycle) # high output pwr
-  ## Indoor -------------------------------------------------------------------
-  ### Low output power
-  data_5g_low_ind_pwr <- data_5g_low_dutycycle*sum(params$data_5g_suburb_ind_pwr*urb_list$home_suburb, # if suburban
-                                                   params$data_5g_urb_ind_pwr*urb_list$home_urban, # if urban
-                                                   params$data_5g_rural_ind_pwr*urb_list$home_rural # if rural
+# -----------------------------------------------------------------------------
+#' Calculate power by environment
+#'
+#' @param duty_cycle ...
+#' @param urb_list ...
+#' @param loc_props ...
+#' @param tech ...
+#' @param env ...
+#' @param params ...
+#' @returns weighted duty cycle
+calculate_power_by_env <- function(duty_cycle,
+                                   urb_list,
+                                   loc_props,
+                                   tech,
+                                   env,
+                                   params) {
+  suffix <- switch(env,
+                   home    = "ind_pwr",
+                   work    = "ind_pwr",
+                   outdoor = "out_pwr",
+                   travel  = "travel_pwr"
   )
 
-  ### High output power
-  data_5g_high_ind_pwr <- data_5g_high_dutycycle*sum(params$data_5g_suburb_ind_pwr*urb_list$home_suburb, # if suburban
-                                                     params$data_5g_urb_ind_pwr*urb_list$home_urban, # if urban
-                                                     params$data_5g_rural_ind_pwr*urb_list$home_rural # if rural
+  # For indoor/outdoor
+  if (env != "travel") {
+    low <- duty_cycle$low  * sum(
+      params[[paste0("data_", tech, "_suburb_", suffix)]] * urb_list$home_suburb,
+      params[[paste0("data_", tech, "_urb_", suffix)]]    * urb_list$home_urban,
+      params[[paste0("data_", tech, "_rural_", suffix)]]  * urb_list$home_rural
+    )
+    high <- duty_cycle$high * sum(
+      params[[paste0("data_", tech, "_suburb_", suffix)]] * urb_list$home_suburb,
+      params[[paste0("data_", tech, "_urb_", suffix)]]    * urb_list$home_urban,
+      params[[paste0("data_", tech, "_rural_", suffix)]]  * urb_list$home_rural
+    )
+  } else {
+    low  <- duty_cycle$low  * params[[paste0("data_", tech, "_travel_pwr")]]
+    high <- duty_cycle$high * params[[paste0("data_", tech, "_travel_pwr")]]
+  }
+
+  prop <- loc_props[[ifelse(env == "outdoor", "outd", env)]]
+  return(sum(low, high) * prop)
+}
+
+# -----------------------------------------------------------------------------
+#' Calculate total power by data technology
+#'
+#' @param tech ...
+#' @param act_pwr_props ...
+#' @param urb_list ...
+#' @param loc_props ...
+#' @param params ...
+calculate_total_power_for_tech <- function(tech,
+                                           act_pwr_props,
+                                           urb_list,
+                                           loc_props,
+                                           params) {
+
+  duty <- calculate_weighted_duty_cycle(act_pwr_props, tech, params)
+
+  return(list(
+    home    = calculate_power_by_env(duty, urb_list, loc_props, tech, "home", params),
+    work    = calculate_power_by_env(duty, urb_list, loc_props, tech, "work", params),
+    outdoor = calculate_power_by_env(duty, urb_list, loc_props, tech, "outdoor", params),
+    travel  = calculate_power_by_env(duty, urb_list, loc_props, tech, "travel", params)
+    )
   )
-  ### Add low and high output power, scale by time prop at home ----
-  data_5g_home_pwr <- sum(data_5g_low_ind_pwr, data_5g_high_ind_pwr)*loc_props$home
-  ### Add low and high output power, scale by time prop at work/school ----
-  data_5g_work_pwr <- sum(data_5g_low_ind_pwr, data_5g_high_ind_pwr)*loc_props$work
-
-  ## Outdoors -----------------------------------------------------------------
-  ### Low output power
-  data_5g_low_out_pwr <- data_5g_low_dutycycle*sum(params$data_5g_suburb_out_pwr*urb_list$home_suburb, # if suburban
-                                                   params$data_5g_urb_out_pwr*urb_list$home_urban, # if urban
-                                                   params$data_5g_rural_out_pwr*urb_list$home_rural # if rural
-  )
-
-  ### High output power
-  data_5g_high_out_pwr <- data_5g_high_dutycycle*sum(params$data_5g_suburb_out_pwr*urb_list$home_suburb, # if suburban
-                                                     params$data_5g_urb_out_pwr*urb_list$home_urban, # if urban
-                                                     params$data_5g_rural_out_pwr*urb_list$home_rural # if rural
-  )
-  ### Add low and high output power, scale by time prop outdoors ----
-  data_5g_out_pwr <- sum(data_5g_low_out_pwr, data_5g_high_out_pwr)*loc_props$outd
-
-  ## Travel -------------------------------------------------------------------
-  ### Low output power
-  data_5g_low_tra_pwr <- data_5g_low_dutycycle*params$data_5g_travel_pwr
-  ### High output power
-  data_5g_high_tra_pwr <- data_5g_high_dutycycle*params$data_5g_travel_pwr
-  ### Add low and high output power, scale by travel prop
-  data_5g_tra_pwr <- sum(data_5g_low_tra_pwr, data_5g_high_tra_pwr)*loc_props$travel
-
-  ## Total 5g power -----------------------------------------------------------
-  data_5g_pwr <- list("home"    = data_5g_home_pwr,
-                      "work"    = data_5g_work_pwr,
-                      "outdoor" = data_5g_out_pwr,
-                      "travel"  = data_5g_tra_pwr)
-
-  # Scale by use proportions depending on 5G use variable =====================
-  props <- calculate_data_tech_proportions(use_5g = use_5g,
-                                           params = params)
-
-  data_home_pwr <- sum(props$prop_3g*data_3g_pwr$home,
-                       props$prop_4g*data_4g_pwr$home,
-                       props$prop_5g*data_5g_pwr$home)
-  data_work_pwr <- sum(props$prop_3g*data_3g_pwr$work,
-                       props$prop_4g*data_4g_pwr$work,
-                       props$prop_5g*data_5g_pwr$work)
-  data_outd_pwr <- sum(props$prop_3g*data_3g_pwr$outdoor,
-                       props$prop_4g*data_4g_pwr$outdoor,
-                       props$prop_5g*data_5g_pwr$outdoor)
-  data_trav_pwr <- sum(props$prop_3g*data_3g_pwr$travel,
-                       props$prop_4g*data_4g_pwr$travel,
-                       props$prop_5g*data_5g_pwr$travel)
-
-  data_pwr <- list("home"    = data_home_pwr,
-                   "work"    = data_work_pwr,
-                   "outdoor" = data_outd_pwr,
-                   "trav"    = data_trav_pwr)
-
-  return(data_pwr)
 }
 
 # -----------------------------------------------------------------------------
