@@ -20,18 +20,18 @@
 
 #### What is currently happening
 
-| Source | Updated to 7.2? | Validation status |
+| Source | Updated to 7.3? | Validation status |
 | --- | --- | --- |
-| Cordless | yes | completed |
-| WiFi | yes | in progress |
-| Laptop | yes | completed |
-| Tablet | yes | completed |
-| Other | yes | in progress |
-| Far-field | yes | not started |
-| Mobile data | in progress | not started |
-| Mobile calling | no | not started |
+| Cordless | ✅ | ✅|
+| WiFi | ✅| ✅|
+| Laptop | ✅| ✅|
+| Tablet | ✅| ✅|
+| Other |  ✅| ⌛|
+| Far-field |  ✅| not started |
+| Mobile data |  ✅| not started|
+| Mobile calling | ⌛|not started|
 
-Version 7.2 is the most recent version of the deterministic dose calculator (September 2025).
+Version 7.3 is the most recent version of the deterministic dose calculator (October 2025).
 
 #### Variable overview in version 0.2.0
 

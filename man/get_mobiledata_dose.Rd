@@ -5,19 +5,27 @@
 \title{Calculate dose from using data on mobile phone (mobile data and WiFi)}
 \usage{
 get_mobiledata_dose(
-  duration,
+  duration_low,
+  duration_lowmed,
+  duration_medhigh,
+  duration_high,
   use_5g,
   wifi_prop_home,
   wifi_prop_work,
   wifi_prop_travel,
   urbanicity,
-  act_pwr_props,
   travel_time,
-  params
+  params = NULL
 )
 }
 \arguments{
-\item{duration}{Duration of mobile data use in seconds per day}
+\item{duration_low}{...}
+
+\item{duration_lowmed}{...}
+
+\item{duration_medhigh}{...}
+
+\item{duration_high}{...}
 
 \item{use_5g}{TRUE if participant uses 5G services on mobile phone, FALSE if not}
 
@@ -28,8 +36,6 @@ get_mobiledata_dose(
 \item{wifi_prop_travel}{Proportion of time WiFi connection is used for data transfer WHILE COMMUTING (vs mobile data)}
 
 \item{urbanicity}{Urbanicity of home / workplace}
-
-\item{act_pwr_props}{List with proportion of time spent in low vs low-mid vs mid-high vs high output power activities}
 
 \item{travel_time}{Time spent commuting in seconds per day}
 

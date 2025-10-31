@@ -151,40 +151,46 @@ get_mobiledata_dose <- function(duration_low,
 get_mobiledata_pwr <- function(wifi_prop_home,
                                wifi_prop_work,
                                wifi_prop_travel,
-                               use_5g, #new
-                               act_pwr_props, #new
-                               travel_time, #new
-                               urbanicity, #new
+                               use_5g,
+                               act_pwr_props,
+                               travel_time,
+                               urbanicity,
                                params) {
-  # Get power from data
+  # Get power from data =======================================================
   data_pwr <- get_mpd_data_pwr(use_5g        = use_5g,
                                urbanicity    = urbanicity,
                                travel_time   = travel_time,
                                act_pwr_props = act_pwr_props,
                                params = params)
 
-  # Get power from wifi
+  # Get power from wifi =======================================================
   wifi_pwr <- get_mpd_wifi_pwr(act_pwr_props = act_pwr_props,
                                travel_time   = travel_time,
                                params        = params)
 
-  pwr_home <- sum(wifi_prop_home*wifi_pwr$home,
-                  (1-wifi_prop_home)*data_pwr$home)
+  # Combine power from data and wifi by location ==============================
+  pwr_home <- combine_mpd_source_power(wifi_prop_home, wifi_pwr$home, data_pwr$home)
+  pwr_work <- combine_mpd_source_power(wifi_prop_work, wifi_pwr$work, data_pwr$work)
+  pwr_outd <- data_pwr$outdoor # assume WiFi exposure is negligible outdoors
+  pwr_trav <- combine_mpd_source_power(wifi_prop_travel, wifi_pwr$travel, data_pwr$travel)
 
-  pwr_work <- sum(wifi_prop_work*wifi_pwr$work,
-                  (1-wifi_prop_work)*data_pwr$work)
-
-  pwr_outd <- data_pwr$outdoor
-
-  pwr_trav <- sum(wifi_prop_travel*wifi_pwr$travel,
-                  (1-wifi_prop_travel)*data_pwr$travel)
-
-  aggr_pwr <- sum(pwr_home,
-                  pwr_work,
-                  pwr_outd,
-                  pwr_trav)
+  # Calculate aggregated power
+  aggr_pwr <- sum(pwr_home, pwr_work, pwr_outd, pwr_trav)
 
   return(aggr_pwr)
+}
+
+# -----------------------------------------------------------------------------
+#' Combine source power
+#'
+#' @param wifi_prop ...
+#' @param wifi_pwr ...
+#' @param data_pwr ...
+combine_mpd_source_power<- function(wifi_prop,
+                                           wifi_pwr,
+                                           data_pwr) {
+  combined_pwr <- wifi_prop*wifi_pwr + (1-wifi_prop)*data_pwr
+  return(combined_pwr)
 }
 
 # -----------------------------------------------------------------------------
@@ -223,11 +229,11 @@ get_mpd_data_pwr <- function(use_5g,
                                               work_prop   = params$work_prop)
 
   # Calculate output power from different technologies ========================
-  pwr_3g <- calculate_total_power_for_tech("3g", act_pwr_props, urb_list,
+  pwr_3g <- calculate_data_power_for_tech("3g", act_pwr_props, urb_list,
                                            loc_props, params)
-  pwr_4g <- calculate_total_power_for_tech("4g", act_pwr_props, urb_list,
+  pwr_4g <- calculate_data_power_for_tech("4g", act_pwr_props, urb_list,
                                            loc_props, params)
-  pwr_5g <- calculate_total_power_for_tech("5g", act_pwr_props, urb_list,
+  pwr_5g <- calculate_data_power_for_tech("5g", act_pwr_props, urb_list,
                                            loc_props, params)
 
   # Calculate technology use proportions ======================================
@@ -250,7 +256,7 @@ get_mpd_data_pwr <- function(use_5g,
 #' @param tech "3g", "4g", or "5g"
 #' @param params ...
 #' @returns weighted duty cycle
-calculate_weighted_duty_cycle <- function(act_pwr_props,
+calculate_data_duty_cycle <- function(act_pwr_props,
                                           tech,
                                           params) {
   low <- sum(
@@ -276,7 +282,7 @@ calculate_weighted_duty_cycle <- function(act_pwr_props,
 #' @param env ...
 #' @param params ...
 #' @returns weighted duty cycle
-calculate_power_by_env <- function(duty_cycle,
+calculate_data_power_by_env <- function(duty_cycle,
                                    urb_list,
                                    loc_props,
                                    tech,
@@ -318,19 +324,19 @@ calculate_power_by_env <- function(duty_cycle,
 #' @param urb_list ...
 #' @param loc_props ...
 #' @param params ...
-calculate_total_power_for_tech <- function(tech,
+calculate_data_power_for_tech <- function(tech,
                                            act_pwr_props,
                                            urb_list,
                                            loc_props,
                                            params) {
 
-  duty <- calculate_weighted_duty_cycle(act_pwr_props, tech, params)
+  duty <- calculate_data_duty_cycle(act_pwr_props, tech, params)
 
   return(list(
-    home    = calculate_power_by_env(duty, urb_list, loc_props, tech, "home", params),
-    work    = calculate_power_by_env(duty, urb_list, loc_props, tech, "work", params),
-    outdoor = calculate_power_by_env(duty, urb_list, loc_props, tech, "outdoor", params),
-    travel  = calculate_power_by_env(duty, urb_list, loc_props, tech, "travel", params)
+    home    = calculate_data_power_by_env(duty, urb_list, loc_props, tech, "home", params),
+    work    = calculate_data_power_by_env(duty, urb_list, loc_props, tech, "work", params),
+    outdoor = calculate_data_power_by_env(duty, urb_list, loc_props, tech, "outdoor", params),
+    travel  = calculate_data_power_by_env(duty, urb_list, loc_props, tech, "travel", params)
     )
   )
 }
@@ -364,47 +370,10 @@ get_mpd_wifi_pwr <- function(act_pwr_props,
                                               outd_prop   = params$outd_prop,
                                               work_prop   = params$work_prop)
 
-  # 2.4 GHz ===================================================================
-  ## Low output power ---------------------------------------------------------
-  ### Weighted duty cycle
-  wifi_2_low_dutycycle <- sum(act_pwr_props$low_prop*params$wifi_2_low_dutycycle,
-                              act_pwr_props$lowmed_prop*params$wifi_2_lowmed_dutycycle)
-  ### Output power
-  wifi_2_low_pwr <- wifi_2_low_dutycycle * params$wifi_2_pwr
+  # Calculate WiFi output power ===============================================
+  wifi_pwr <- calculate_total_wifi_power(act_pwr_props, params)
 
-  ## High output power --------------------------------------------------------
-  ### Weighted duty cycle
-  wifi_2_high_dutycycle <- sum(act_pwr_props$medhigh_prop*params$wifi_2_medhigh_dutycycle,
-                               act_pwr_props$high_prop*params$wifi_2_high_dutycycle)
-  ### Output power
-  wifi_2_high_pwr <- wifi_2_high_dutycycle * params$wifi_2_pwr
-
-  ## High and low output power combined ---------------------------------------
-  wifi_2_pwr <- wifi_2_low_pwr + wifi_2_high_pwr
-
-
-  # 5.0 GHz ===================================================================
-  ## Low output power ---------------------------------------------------------
-  ### Weighted duty cycle
-  wifi_5_low_dutycycle <- sum(act_pwr_props$low_prop*params$wifi_5_low_dutycycle,
-                              act_pwr_props$lowmed_prop*params$wifi_5_lowmed_dutycycle)
-  ### Output power
-  wifi_5_low_pwr <- wifi_5_low_dutycycle * params$wifi_5_pwr
-
-  ## High output power --------------------------------------------------------
-  ### Weighted duty cycle
-  wifi_5_high_dutycycle <- sum(act_pwr_props$medhigh_prop*params$wifi_5_medhigh_dutycycle,
-                               act_pwr_props$high_prop*params$wifi_5_high_dutycycle)
-  ### Output power
-  wifi_5_high_pwr <- wifi_5_high_dutycycle * params$wifi_5_pwr
-
-  ## High and low output power combined ---------------------------------------
-  wifi_5_pwr <- wifi_5_low_pwr + wifi_5_high_pwr
-
-  # 2.4 GHz and 5.0 GHz combined ==============================================
-  ## Scale by 2.4GHz va 5.0 GHz proportion ------------------------------------
-  wifi_pwr <- sum(params$wifi_2_prop*wifi_2_pwr,
-                  params$wifi_5_prop*wifi_5_pwr)
+  # Scale by proportion of time spent in each location ========================
 
   wifi_pwr_loc <- list("home" = wifi_pwr*loc_props$home,
                        "work" = wifi_pwr*loc_props$work,
@@ -414,6 +383,63 @@ get_mpd_wifi_pwr <- function(act_pwr_props,
   ## Return result ------------------------------------------------------------
   return(wifi_pwr_loc)
 }
+
+# -----------------------------------------------------------------------------
+#' Calculate WiFi duty cycle
+#'
+#' @param act_pwr_props ...
+#' @param band ...
+#' @param params ...
+calculate_wifi_duty_cycle <- function(act_pwr_props,
+                                      band,
+                                      params) {
+  low <- sum(
+    act_pwr_props$low_prop * params[[paste0("wifi_", band, "_low_dutycycle")]],
+    act_pwr_props$lowmed_prop * params[[paste0("wifi_", band, "_lowmed_dutycycle")]]
+  )
+
+  high <- sum(
+    act_pwr_props$medhigh_prop * params[[paste0("wifi_", band, "_medhigh_dutycycle")]],
+    act_pwr_props$high_prop * params[[paste0("wifi_", band, "_high_dutycycle")]]
+  )
+  return(list(low = low, high = high))
+}
+
+# -----------------------------------------------------------------------------
+#' Calculate WiFi output power by frequency band
+#'
+#' @param act_pwr_props ...
+#' @param band ...
+#' @param params ...
+calculate_wifi_band_power <- function(act_pwr_props,
+                                      band,
+                                      params) {
+  duty <- calculate_wifi_duty_cycle(act_pwr_props, band, params)
+
+  low_pwr  <- duty$low  * params[[paste0("wifi_", band, "_pwr")]]
+  high_pwr <- duty$high * params[[paste0("wifi_", band, "_pwr")]]
+
+  return(sum(low_pwr, high_pwr))
+}
+
+# -----------------------------------------------------------------------------
+#' Calculate total wifi output power
+#'
+#' @param act_pwr_props ...
+#' @param params ...
+calculate_total_wifi_power <- function(act_pwr_props, params) {
+  # 2.4 GHz
+  wifi_2_pwr <- calculate_wifi_band_power(act_pwr_props, "2", params)
+  # 5.0 GHz
+  wifi_5_pwr <- calculate_wifi_band_power(act_pwr_props, "5", params)
+
+  # Weigh by 2.4GHz vs 5GHz proportions
+  wifi_pwr <- sum(params$wifi_2_prop * wifi_2_pwr,
+                  params$wifi_5_prop * wifi_5_pwr)
+
+  return(wifi_pwr)
+}
+
 
 
 # =============================================================================

@@ -4,10 +4,12 @@
 \alias{get_smarthome_dose}
 \title{Calculate brain and body dose from smart home}
 \usage{
-get_smarthome_dose(duration_smarthome, params = NULL)
+get_smarthome_dose(smarthome, travel_time, params = NULL)
 }
 \arguments{
-\item{duration_smarthome}{Daily duration of being in smart home}
+\item{smarthome}{TRUE if participant lives in smarthome, FALSE if not}
+
+\item{travel_time}{Time spent commuting in s/day}
 
 \item{params}{Parameter list}
 }

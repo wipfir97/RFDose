@@ -4,7 +4,7 @@
 \alias{get_farfield_dose}
 \title{Calculate Dose from far-field exposure}
 \usage{
-get_farfield_dose(urbanicity, travel_time, params)
+get_farfield_dose(urbanicity, travel_time, params = NULL)
 }
 \arguments{
 \item{urbanicity}{Urbanicity of home environment}
