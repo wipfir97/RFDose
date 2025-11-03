@@ -12,7 +12,10 @@ get_mobilecall_dose(
   use_5g,
   travel_time,
   headp_ear_num,
-  params
+  wifi_prop_home,
+  wifi_prop_work,
+  wifi_prop_travel,
+  params = NULL
 )
 }
 \arguments{
@@ -29,6 +32,12 @@ get_mobilecall_dose(
 \item{travel_time}{Time spent commuting in seconds per day}
 
 \item{headp_ear_num}{If particpant uses 1 or 2 Bluetooth headphones during mobile call}
+
+\item{wifi_prop_home}{...}
+
+\item{wifi_prop_work}{...}
+
+\item{wifi_prop_travel}{...}
 
 \item{params}{Parameter list}
 }

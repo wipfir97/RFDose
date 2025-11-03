@@ -16,11 +16,11 @@ get_mobiledata_pwr(
 )
 }
 \arguments{
-\item{wifi_prop_home}{...}
+\item{wifi_prop_home}{Proportion of time WiFi connection is used AT HOME (vs mobile data)}
 
-\item{wifi_prop_work}{...}
+\item{wifi_prop_work}{Proportion of time WiFi connection is used AT WORK (vs mobile data)}
 
-\item{wifi_prop_travel}{...}
+\item{wifi_prop_travel}{Proportion of time WiFi connection is used WHILE TRAVELLING/COMMUTING (vs mobile data)}
 
 \item{use_5g}{TRUE if participant uses 5G services on mobile phone, FALSE if not}
 

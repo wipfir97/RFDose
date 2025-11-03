@@ -12,6 +12,9 @@ get_mobilecall_phone_dose(
   urbanicity,
   use_5g,
   travel_time,
+  wifi_prop_home,
+  wifi_prop_work,
+  wifi_prop_travel,
   params,
   tissue_params
 )

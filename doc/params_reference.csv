@@ -96,26 +96,26 @@ devices.call.shared.headp_face_prop,0.333,,none,,
 devices.call.shared.headp_pock_prop,0.333,,none,,
 devices.call.shared.headp_else_prop,0.333,,none,,
 devices.call.shared.headp_phone_bt_pwr,0.15,,mW,,
-devices.call.brain.native_ear_sar,0.061597475,0.055090544,W/kg/W,,aggregated value
-devices.call.brain.native_headp_face_sar,0.003007437,0.002870465,W/kg/W,,aggregated value
-devices.call.brain.native_headp_pock_sar,1.10E-05,8.00E-06,W/kg/W,,aggregated value
-devices.call.brain.native_headp_else_sar,0,,W/kg/W,,
-devices.call.brain.native_speaker_sar,0.005168032,0.004711923,W/kg/W,,aggregated value
-devices.call.brain.data_ear_sar,0.061597475,0.055090544,W/kg/W,,aggregated value
-devices.call.brain.data_headp_face_sar,0.003007437,0.002870465,W/kg/W,,aggregated value
-devices.call.brain.data_headp_pock_sar,1.11E-05,8.21E-06,W/kg/W,,aggregated value
-devices.call.brain.data_headp_else_sar,0,,W/kg/W,,
-devices.call.brain.data_speaker_sar,0.00516803,0.004711923,W/kg/W,,aggregated value
-devices.call.brain.wifi_2_ear_sar,0.016377585,,W/kg/W,,
-devices.call.brain.wifi_2_headp_face_sar,0.000999468,,W/kg/W,,
-devices.call.brain.wifi_2_headp_pock_sar,4.75E-07,,W/kg/W,,
-devices.call.brain.wifi_2_headp_else_sar,0,,W/kg/W,,
-devices.call.brain.wifi_2_speaker_sar,0.001272228,,W/kg/W,,
-devices.call.brain.wifi_5_ear_sar,0.000606727,,W/kg/W,,
-devices.call.brain.wifi_5_headp_face_sar,0.000163091,,W/kg/W,,
+devices.call.brain.native_ear_sar,0.061597475,0.056245281,W/kg/W,,aggregated value
+devices.call.brain.native_headp_face_sar,0.003007437,0.002917897,W/kg/W,,aggregated value
+devices.call.brain.native_headp_pock_sar,1.10E-05,9.00E-06,W/kg/W,,aggregated value
+devices.call.brain.native_headp_else_sar,0,0,W/kg/W,,
+devices.call.brain.native_speaker_sar,0.005168032,0.004814895,W/kg/W,,aggregated value
+devices.call.brain.data_ear_sar,0.061597475,0.056245281,W/kg/W,,aggregated value
+devices.call.brain.data_headp_face_sar,0.003007437,0.002917897,W/kg/W,,aggregated value
+devices.call.brain.data_headp_pock_sar,1.11E-05,9.00E-06,W/kg/W,,aggregated value
+devices.call.brain.data_headp_else_sar,0,0,W/kg/W,,
+devices.call.brain.data_speaker_sar,0.00516803,0.004814895,W/kg/W,,aggregated value
+devices.call.brain.wifi_2_ear_sar,0.016377585,0.016377585,W/kg/W,,
+devices.call.brain.wifi_2_headp_face_sar,0.000999468,0.000999468,W/kg/W,,
+devices.call.brain.wifi_2_headp_pock_sar,4.75E-07,0.000000475,W/kg/W,,
+devices.call.brain.wifi_2_headp_else_sar,0,0,W/kg/W,,
+devices.call.brain.wifi_2_speaker_sar,0.001272228,0.001272228,W/kg/W,,
+devices.call.brain.wifi_5_ear_sar,0.000606727,0.000606727,W/kg/W,,
+devices.call.brain.wifi_5_headp_face_sar,0.000163091,0.000163091,W/kg/W,,
 devices.call.brain.wifi_5_headp_pock_sar,2.14E-08,2.10E-08,W/kg/W,,
-devices.call.brain.wifi_5_headp_else_sar,0,,W/kg/W,,
-devices.call.brain.wifi_5_speaker_sar,0.000169973,,W/kg/W,,
+devices.call.brain.wifi_5_headp_else_sar,0,0,W/kg/W,,
+devices.call.brain.wifi_5_speaker_sar,0.000169973,0.000169973,W/kg/W,,
 devices.call.brain.bt_phone_face_sar,0.000999468,,W/kg/W,,
 devices.call.brain.bt_phone_pock_sar,4.75E-07,,W/kg/W,,
 devices.call.brain.bt_phone_else_sar,0,,W/kg/W,,

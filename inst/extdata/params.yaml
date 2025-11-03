@@ -76,8 +76,8 @@ devices:
   call:
     shared:
       native_prop: 0.7
-      data_prop: 0.2
-      wifi_prop: 0.1
+      data_prop: 0.16
+      wifi_prop: 0.14
       native_2g_prop: 0.03
       native_3g_prop: 0.09
       native_4g_prop: 0.735
@@ -147,16 +147,16 @@ devices:
       headp_else_prop: 0.333
       headp_phone_bt_pwr: 0.15
     brain:
-      native_ear_sar: 0.055090544
-      native_headp_face_sar: 0.002870465
-      native_headp_pock_sar: 0.000008
+      native_ear_sar: 0.056245281
+      native_headp_face_sar: 0.002917897
+      native_headp_pock_sar: 0.000009
       native_headp_else_sar: 0
-      native_speaker_sar: 0.004711923
-      data_ear_sar: 0.055090544
-      data_headp_face_sar: 0.002870465
-      data_headp_pock_sar: 0.000008206
+      native_speaker_sar: 0.004814895
+      data_ear_sar: 0.056245281
+      data_headp_face_sar: 0.002917897
+      data_headp_pock_sar: 0.000009
       data_headp_else_sar: 0
-      data_speaker_sar: 0.004711923
+      data_speaker_sar: 0.004814895
       wifi_2_ear_sar: 0.016377585
       wifi_2_headp_face_sar: 0.000999468
       wifi_2_headp_pock_sar: 4.75109794184096E-07
@@ -172,16 +172,16 @@ devices:
       bt_phone_else_sar: 0
       bt_headp_sar: 0.01699017
     body:
-      native_ear_sar: 0.007224854
-      native_headp_face_sar: 0.000988818
-      native_headp_pock_sar: 0.010470367
+      native_ear_sar: 0.0072926
+      native_headp_face_sar: 0.000994539
+      native_headp_pock_sar: 0.010499677
       native_headp_else_sar: 0
-      native_speaker_sar: 0.002111751
-      data_ear_sar: 0.007224854
-      data_headp_face_sar: 0.000988818
-      data_headp_pock_sar: 0.010470367
+      native_speaker_sar: 0.002126318
+      data_ear_sar: 0.0072926
+      data_headp_face_sar: 0.000994539
+      data_headp_pock_sar: 0.010499677
       data_headp_else_sar: 0
-      data_speaker_sar: 0.002111751
+      data_speaker_sar: 0.002126318
       wifi_2_ear_sar: 0.005180701
       wifi_2_headp_face_sar: 0.000860849
       wifi_2_headp_pock_sar: 0.010153247
@@ -195,7 +195,7 @@ devices:
       bt_phone_face_sar: 0.0009
       bt_phone_pock_sar: 0.01015
       bt_phone_else_sar: 0
-      bt_headp_sar: 0.00985
+      bt_headp_sar: 0.009862
   data:
     shared:
       data_3g_low_ind_dutycycle: 0.438

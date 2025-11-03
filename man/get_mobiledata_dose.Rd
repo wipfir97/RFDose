@@ -19,13 +19,13 @@ get_mobiledata_dose(
 )
 }
 \arguments{
-\item{duration_low}{...}
+\item{duration_low}{duration of low output power activities on mobile phone in s/day}
 
-\item{duration_lowmed}{...}
+\item{duration_lowmed}{duration of low-medium output power activities on mobile phone in s/day}
 
-\item{duration_medhigh}{...}
+\item{duration_medhigh}{duration of medium-high output power activities on mobile phone in s/day}
 
-\item{duration_high}{...}
+\item{duration_high}{duration of high output power activities on mobile phone in s/day}
 
 \item{use_5g}{TRUE if participant uses 5G services on mobile phone, FALSE if not}
 

@@ -8,6 +8,10 @@ get_mobilecall_phone_sar(
   ear_prop,
   headp_prop,
   speaker_prop,
+  wifi_prop_home,
+  wifi_prop_work,
+  wifi_prop_travel,
+  travel_time,
   params,
   tissue_params
 )
@@ -18,6 +22,14 @@ get_mobilecall_phone_sar(
 \item{headp_prop}{Proportion of time Bluetooth headphones are used during mobile call while phone is NOT held against ear}
 
 \item{speaker_prop}{Proportion of time speaker mode is used during mobile call while phone is NOT held against ear}
+
+\item{wifi_prop_home}{...}
+
+\item{wifi_prop_work}{...}
+
+\item{wifi_prop_travel}{...}
+
+\item{travel_time}{...}
 
 \item{params}{Parameter list}
 

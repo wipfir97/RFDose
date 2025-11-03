@@ -17,10 +17,10 @@
 #' * \eqn{Power_{mobiledata}} is the output power of the mobile phone during mobile data use in mW
 #' * \eqn{SAR_{mobiledata}} is the specific absorption rate in W/kg/W
 #'
-#' @param duration_low ...
-#' @param duration_lowmed ...
-#' @param duration_medhigh ...
-#' @param duration_high ...
+#' @param duration_low duration of low output power activities on mobile phone in s/day
+#' @param duration_lowmed duration of low-medium output power activities on mobile phone in s/day
+#' @param duration_medhigh duration of medium-high output power activities on mobile phone in s/day
+#' @param duration_high duration of high output power activities on mobile phone in s/day
 #' @param use_5g TRUE if participant uses 5G services on mobile phone, FALSE if not
 #' @param wifi_prop_home Proportion of time WiFi connection is used for data transfer AT HOME (vs mobile data)
 #' @param wifi_prop_work Proportion of time WiFi connection is used for data transfer AT WORK/SCHOOL (vs mobile data)
@@ -136,9 +136,9 @@ get_mobiledata_dose <- function(duration_low,
 #' * \eqn{Prop_{WiFi}}, \eqn{Prop_{Data}} are the proportion of time mobile calls are done using WiFi and mobile data, respectively.
 #' * \eqn{Power_{WiFi}}, \eqn{Prop_{Data}} are the output power (mW) of the mobile phone using WiFi and mobile data respectively.
 #'
-#' @param wifi_prop_home ...
-#' @param wifi_prop_work ...
-#' @param wifi_prop_travel ...
+#' @param wifi_prop_home Proportion of time WiFi connection is used AT HOME (vs mobile data)
+#' @param wifi_prop_work Proportion of time WiFi connection is used AT WORK (vs mobile data)
+#' @param wifi_prop_travel Proportion of time WiFi connection is used WHILE TRAVELLING/COMMUTING (vs mobile data)
 #' @param use_5g TRUE if participant uses 5G services on mobile phone, FALSE if not
 #' @param urbanicity Urbanicity of home / workplace
 #' @param travel_time Time spent commuting in seconds per day
@@ -183,12 +183,16 @@ get_mobiledata_pwr <- function(wifi_prop_home,
 # -----------------------------------------------------------------------------
 #' Combine source power
 #'
-#' @param wifi_prop ...
-#' @param wifi_pwr ...
-#' @param data_pwr ...
+#' Combines the output power from WiFi and Data by scaling it with their use
+#' proportions.
+#'
+#' @param wifi_prop Proportion of time connected to WiFi (vs data)
+#' @param wifi_pwr Output power from WiFi in mW
+#' @param data_pwr Output power from data in mW
+#' @returns combined power from WiFi and data in mW
 combine_mpd_source_power<- function(wifi_prop,
-                                           wifi_pwr,
-                                           data_pwr) {
+                                    wifi_pwr,
+                                    data_pwr) {
   combined_pwr <- wifi_prop*wifi_pwr + (1-wifi_prop)*data_pwr
   return(combined_pwr)
 }
@@ -252,9 +256,9 @@ get_mpd_data_pwr <- function(use_5g,
 # -----------------------------------------------------------------------------
 #' Calculate weighted duty cycle
 #'
-#' @param act_pwr_props ...
-#' @param tech "3g", "4g", or "5g"
-#' @param params ...
+#' @param act_pwr_props List with proportion of time spent in low vs low-mid vs mid-high vs high output power activities
+#' @param tech Type of technology used ("3g", "4g", or "5g")
+#' @param params Device-specific parameter list
 #' @returns weighted duty cycle
 calculate_data_duty_cycle <- function(act_pwr_props,
                                           tech,
@@ -275,19 +279,19 @@ calculate_data_duty_cycle <- function(act_pwr_props,
 # -----------------------------------------------------------------------------
 #' Calculate power by environment
 #'
-#' @param duty_cycle ...
-#' @param urb_list ...
-#' @param loc_props ...
-#' @param tech ...
-#' @param env ...
-#' @param params ...
+#' @param duty_cycle List of two elements (low and high) with corresponding duty cycle
+#' @param urb_list Urbanicity list
+#' @param loc_props Lost of location proportions
+#' @param tech Type of technology used ("3g", "4g", or "5g")
+#' @param env Environment ("home", "work", "outdoor", or "travel")
+#' @param params Device-specific parameter list
 #' @returns weighted duty cycle
 calculate_data_power_by_env <- function(duty_cycle,
-                                   urb_list,
-                                   loc_props,
-                                   tech,
-                                   env,
-                                   params) {
+                                        urb_list,
+                                        loc_props,
+                                        tech,
+                                        env,
+                                        params) {
   suffix <- switch(env,
                    home    = "ind_pwr",
                    work    = "ind_pwr",
@@ -319,11 +323,11 @@ calculate_data_power_by_env <- function(duty_cycle,
 # -----------------------------------------------------------------------------
 #' Calculate total power by data technology
 #'
-#' @param tech ...
-#' @param act_pwr_props ...
-#' @param urb_list ...
-#' @param loc_props ...
-#' @param params ...
+#' @param tech Type of technology used ("3g", "4g", or "5g")
+#' @param act_pwr_props List with proportion of time spent in low vs low-mid vs mid-high vs high output power activities
+#' @param urb_list Urbanicity list
+#' @param loc_props List of location proportions
+#' @param params Device-specific parameter list
 calculate_data_power_for_tech <- function(tech,
                                            act_pwr_props,
                                            urb_list,
@@ -387,9 +391,9 @@ get_mpd_wifi_pwr <- function(act_pwr_props,
 # -----------------------------------------------------------------------------
 #' Calculate WiFi duty cycle
 #'
-#' @param act_pwr_props ...
-#' @param band ...
-#' @param params ...
+#' @param act_pwr_props List with proportion of time spent in low vs low-mid vs mid-high vs high output power activities
+#' @param band Frequency band ("2" for 2.4 GHz, "5" for 5.0 GHz)
+#' @param params device-specific parameters
 calculate_wifi_duty_cycle <- function(act_pwr_props,
                                       band,
                                       params) {
@@ -408,9 +412,9 @@ calculate_wifi_duty_cycle <- function(act_pwr_props,
 # -----------------------------------------------------------------------------
 #' Calculate WiFi output power by frequency band
 #'
-#' @param act_pwr_props ...
-#' @param band ...
-#' @param params ...
+#' @param act_pwr_props List with proportion of time spent in low vs low-mid vs mid-high vs high output power activities
+#' @param band Frequency band ("2" for 2.4 GHz, "5" for 5.0 GHz)
+#' @param params device-specific parameters
 calculate_wifi_band_power <- function(act_pwr_props,
                                       band,
                                       params) {
@@ -425,8 +429,8 @@ calculate_wifi_band_power <- function(act_pwr_props,
 # -----------------------------------------------------------------------------
 #' Calculate total wifi output power
 #'
-#' @param act_pwr_props ...
-#' @param params ...
+#' @param act_pwr_props List with proportion of time spent in low vs low-mid vs mid-high vs high output power activities
+#' @param params device-specific parameters
 calculate_total_wifi_power <- function(act_pwr_props, params) {
   # 2.4 GHz
   wifi_2_pwr <- calculate_wifi_band_power(act_pwr_props, "2", params)

@@ -79,6 +79,9 @@ get_total_dose <- function(sample,
                                    use_5g        = sample$use_5g,
                                    travel_time   = sample$travel_time,
                                    headp_ear_num = sample$headp_ear_num,
+                                   wifi_prop_home   = sample$mpd_wifi_prop_home,
+                                   wifi_prop_work   = sample$mpd_wifi_prop_work,
+                                   wifi_prop_travel = sample$mpd_wifi_prop_travel,
                                    params        = params)
 
   ## Calculate mobile data contribution ---------------------------------------
