@@ -504,8 +504,7 @@ get_smarthome_dose <- function(smarthome,
                                          work_prop   = smah_params$work_prop,
                                          outd_prop   = smah_params$outd_prop)
   home_dur <- locs$home*86400
-  home_dur <- 60000
-  print(home_dur)
+
   ## If smarthome == TRUE: Multiply with proportion of time smart home is active
   ## Else: set duration to 0
   if (smarthome) {
