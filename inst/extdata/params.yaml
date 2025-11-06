@@ -188,7 +188,7 @@ devices:
       wifi_2_headp_else_sar: 0
       wifi_2_speaker_sar: 0.001750505
       wifi_5_ear_sar: 0.003516185
-      wifi_5_headp_face_sar: 0.000586175 
+      wifi_5_headp_face_sar: 0.000586175
       wifi_5_headp_pock_sar: 0.002646374
       wifi_5_headp_else_sar: 0
       wifi_5_speaker_sar: 0.001182344
@@ -271,10 +271,10 @@ devices:
       watch_phone_pwr: 0.00008
     brain:
       watch_sar: 0.0000017
-      watch_phone_sar: 0.000329981    
+      watch_phone_sar: 0.000329981
     body:
       watch_sar: 0.01365
-      watch_phone_sar: 0.0036465
+      watch_phone_sar: 0.003634651
   tracker:
     shared:
       tracker_pwr: 0.00008
@@ -282,9 +282,9 @@ devices:
     brain:
       tracker_sar: 0.000031
       tracker_phone_sar: 0.000329981
-    body:      
+    body:
       tracker_sar: 0.0118
-      tracker_phone_sar: 0.0036465
+      tracker_phone_sar: 0.003634651
   headp:
     shared:
       headp_pwr: 0.00008
@@ -292,16 +292,16 @@ devices:
     brain:
       headp_sar: 0.016990171
       headp_phone_sar: 0.000329981
-    body:      
+    body:
       headp_sar: 0.009862
-      headp_phone_sar: 0.0036465     
+      headp_phone_sar: 0.003634651
   hots:
     shared:
       hots_pwr: 5.595
     brain:
       hots_sar: 0.000329981
     body:
-      hots_sar: 0.0036465
+      hots_sar: 0.003634651
   vr:
     shared:
       vr_pwr: 10
@@ -313,7 +313,7 @@ devices:
     shared:
       smah_pwr: 1.64109
       smah_active_prop: 0.01
-    brain: 
+    brain:
       smah_sar: 0.00133
     body:
       smah_sar: 0.009862
