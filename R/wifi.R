@@ -13,9 +13,8 @@ get_wifi_dose <- function(travel_time,
                           wifi_prop_travel,
                           params = NULL) {
   # Load parameters if not provided ===========================================
-  params <- if (is.null(params)) {
-    load_params("params.yaml")  # from inst/extdata
-  }
+  if (is.null(params)) {
+    params <- load_params("params.yaml")}
 
   # Extract parameters ========================================================
   ## Extract shared (non-tissue specific) parameters for wifi -----------------

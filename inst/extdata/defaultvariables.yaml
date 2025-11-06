@@ -1,4 +1,4 @@
-use_5g: TRUE
+use_5g: FALSE
 travel_time: 1800
 urbanicity: "suburban"
 headp_ear_num: 2

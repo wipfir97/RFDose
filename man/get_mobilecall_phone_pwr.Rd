@@ -4,7 +4,15 @@
 \alias{get_mobilecall_phone_pwr}
 \title{Calculate output power from mobile phone during mobile call (no Bluetooth)}
 \usage{
-get_mobilecall_phone_pwr(urbanicity, use_5g, travel_time, params)
+get_mobilecall_phone_pwr(
+  urbanicity,
+  use_5g,
+  travel_time,
+  wifi_prop_home,
+  wifi_prop_work,
+  wifi_prop_travel,
+  params
+)
 }
 \arguments{
 \item{urbanicity}{Urbanicity of home / workplace}
@@ -12,6 +20,12 @@ get_mobilecall_phone_pwr(urbanicity, use_5g, travel_time, params)
 \item{use_5g}{TRUE if participant uses 5G services on mobile phone, FALSE if not}
 
 \item{travel_time}{Time spent commuting in seconds per day}
+
+\item{wifi_prop_home}{...}
+
+\item{wifi_prop_work}{...}
+
+\item{wifi_prop_travel}{...}
 
 \item{params}{Parameter list}
 }

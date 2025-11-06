@@ -17,9 +17,8 @@ get_laptop_dose <- function(dur_low,
                             dur_high,
                             params = NULL) {
   # Load parameters if not provided ===========================================
-  params <- if (is.null(params)) {
-    load_params("params.yaml")  # from inst/extdata
-  }
+  if (is.null(params)) {
+    params <- load_params("params.yaml")}
 
   # Calculate total use duration ==============================================
   duration <- sum(dur_low,

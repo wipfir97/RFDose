@@ -13,17 +13,14 @@ get_cordless_dose <- function(duration,
                               ear_proportion,
                               params = NULL) {
   # Load parameters if not provided ===========================================
-  params <- if (is.null(params)) {
-    load_params("params.yaml")  # from inst/extdata
-  }
+  if (is.null(params)) {
+    params <- load_params("params.yaml")}
 
   # Check input values ========================================================
   ## Duration
   check_duration(duration = duration)
   ## Proportion
   check_proportions(proportions = ear_proportion)
-  ## Parameters
-  check_input_param_list(params = params)
 
   # Extract parameters ========================================================
   ## Extract shared (non-tissue specific) parameters for wifi -----------------

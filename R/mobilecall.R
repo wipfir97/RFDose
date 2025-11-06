@@ -40,21 +40,21 @@
 #'
 #' @seealso [get_mobilecall_phone_dose()], [get_mobilecall_bt_phone_dose()], [get_mobilecall_bt_headp_dose()]
 #' @export
-get_mobilecall_dose <- function(duration,
-                                ear_prop,
-                                headp_prop,
-                                urbanicity,
-                                use_5g,
-                                travel_time,
-                                headp_ear_num,
-                                wifi_prop_home,
-                                wifi_prop_work,
-                                wifi_prop_travel,
-                                params = NULL) {
+get_mobilecall_dose <- function(
+    duration,
+    ear_prop,
+    headp_prop,
+    urbanicity,
+    use_5g,
+    travel_time,
+    headp_ear_num,
+    wifi_prop_home,
+    wifi_prop_work,
+    wifi_prop_travel,
+    params = NULL) {
   # Load parameters if not provided ===========================================
-  params <- if (is.null(params)) {
-    load_params("params.yaml")  # from inst/extdata
-  }
+  if (is.null(params)) {
+    params <- load_params("params.yaml")}
 
   # Extract parameters ========================================================
   ## Extract shared (non-tissue specific) parameters for mobile calling -------
@@ -166,39 +166,49 @@ get_mobilecall_dose <- function(duration,
 #' @param urbanicity Urbanicity of home / workplace
 #' @param use_5g TRUE if participant uses 5G services on mobile phone, FALSE if not
 #' @param travel_time Time spent commuting in seconds per day
+#' @param wifi_prop_home ...
+#' @param wifi_prop_work ...
+#' @param wifi_prop_travel ...
 #' @param params Parameter list
 #' @param tissue_params Tissue-specific parameter list
 #'
 #' @returns RF-EMF dose in mJ/kg/day
 #'
 #' @seealso [get_mobilecall_phone_pwr()], [get_mobilecall_phone_sar()]
-get_mobilecall_phone_dose <- function(duration,
-                                      ear_prop,
-                                      speaker_prop,
-                                      headp_prop,
-                                      urbanicity,
-                                      use_5g,
-                                      travel_time,
-                                      wifi_prop_home,
-                                      wifi_prop_work,
-                                      wifi_prop_travel,
-                                      params,
-                                      tissue_params) {
+get_mobilecall_phone_dose <- function(
+    duration,
+    ear_prop,
+    speaker_prop,
+    headp_prop,
+    urbanicity,
+    use_5g,
+    travel_time,
+    wifi_prop_home,
+    wifi_prop_work,
+    wifi_prop_travel,
+    params,
+    tissue_params) {
+
   # Calculate power ===========================================================
-  pwr <- get_mobilecall_phone_pwr(urbanicity  = urbanicity,
-                                  use_5g      = use_5g,
-                                  travel_time = travel_time,
-                                  params      = params)
+  pwr <- get_mobilecall_phone_pwr(
+    urbanicity       = urbanicity,
+    use_5g           = use_5g,
+    travel_time      = travel_time,
+    wifi_prop_home   = wifi_prop_home,
+    wifi_prop_work   = wifi_prop_work,
+    wifi_prop_travel = wifi_prop_travel,
+    params           = params)
   # Calculate SAR =============================================================
-  sar <- get_mobilecall_phone_sar(ear_prop         = ear_prop,
-                                  speaker_prop     = speaker_prop,
-                                  headp_prop       = headp_prop,
-                                  travel_time      = travel_time,
-                                  wifi_prop_home   = wifi_prop_home,
-                                  wifi_prop_work   = wifi_prop_work,
-                                  wifi_prop_travel = wifi_prop_travel,
-                                  params           = params,
-                                  tissue_params    = tissue_params)
+  sar <- get_mobilecall_phone_sar(
+    ear_prop         = ear_prop,
+    speaker_prop     = speaker_prop,
+    headp_prop       = headp_prop,
+    travel_time      = travel_time,
+    wifi_prop_home   = wifi_prop_home,
+    wifi_prop_work   = wifi_prop_work,
+    wifi_prop_travel = wifi_prop_travel,
+    params           = params,
+    tissue_params    = tissue_params)
 
   # Calculate dose and return results =========================================
   dose <- duration*sar*pwr
@@ -222,6 +232,9 @@ get_mobilecall_phone_dose <- function(duration,
 #' @param urbanicity Urbanicity of home / workplace
 #' @param use_5g TRUE if participant uses 5G services on mobile phone, FALSE if not
 #' @param travel_time Time spent commuting in seconds per day
+#' @param wifi_prop_home ...
+#' @param wifi_prop_work ...
+#' @param wifi_prop_travel ...
 #' @param params Parameter list
 #'
 #' @returns Mobile phone output power during mobile calling (no Bluetooth) in mW
@@ -230,7 +243,16 @@ get_mobilecall_phone_dose <- function(duration,
 get_mobilecall_phone_pwr <- function(urbanicity,
                                      use_5g,
                                      travel_time,
+                                     wifi_prop_home,
+                                     wifi_prop_work,
+                                     wifi_prop_travel,
                                      params) {
+  # Calculate location proportions ============================================
+  loc_props <- calculate_location_proportions(travel_time = travel_time,
+                                              home_prop   = params$home_prop,
+                                              outd_prop   = params$outd_prop,
+                                              work_prop   = params$work_prop)
+
   # Calculate output power from WiFi ==========================================
   wifi_pwr <- get_mobilecall_phone_wifi_pwr(wifi_2_prop = params$wifi_2_prop,
                                             wifi_5_prop = params$wifi_5_prop,
@@ -250,9 +272,18 @@ get_mobilecall_phone_pwr <- function(urbanicity,
                                                 travel_time = travel_time,
                                                 params      = params)
 
-  # Scale by technology use proportion and return total output power ==========
-  pwr <- sum(params$wifi_prop*wifi_pwr,
-             params$data_prop*data_pwr,
+  # Calculate technology use proportion =======================================
+  ## Assume that proportion of native calls is fixed and NO WiFi outdoors
+  ## Data vs WiFi proportion depends on wifi_prop input variables
+  wifi_prop <- (1-params$native_prop)*sum(loc_props$home*wifi_prop_home,
+                                          loc_props$work*wifi_prop_work,
+                                          loc_props$travel*wifi_prop_travel)
+  data_prop <- 1-params$native_prop-wifi_prop
+
+
+  ## Scale by technology use proportion and return output
+  pwr <- sum(wifi_prop*wifi_pwr,
+             data_prop*data_pwr,
              params$native_prop*native_pwr)
 
   return(pwr)
@@ -333,83 +364,103 @@ get_mobilecall_phone_data_pwr <- function(urbanicity,
                                               outd_prop   = params$outd_prop,
                                               work_prop   = params$work_prop)
 
-  # Calculate power from 3G ===================================================
-  ## Indoors (=work+home)
-  pwr_3g_ind <- sum(params$data_3g_sub_indo_pwr*urb_list$home_suburb, # if suburban
-                    params$data_3g_urb_indo_pwr*urb_list$home_urban, # if urban
-                    params$data_3g_urb_indo_pwr*urb_list$home_urban # if urban
-                    )
-  ## Outdoors
-  pwr_3g_out <- sum(params$data_3g_sub_outd_pwr*urb_list$home_suburb, # if suburban
-                    params$data_3g_urb_outd_pwr*urb_list$home_urban, # if urban
-                    params$data_3g_urb_outd_pwr*urb_list$home_urban # if urban
-  )
-  ## Travel
-  pwr_3g_tra <- params$data_3g_travel_pwr
-  ## Scale by proportion of time spent at each location and duty cycle
-  pwr_3g <- sum((loc_props$work+loc_props$home)*pwr_3g_ind,
-                 loc_props$outd*pwr_3g_out,
-                 loc_props$travel*pwr_3g_tra)*params$data_3g_dutycycle
+  # Calculate output power for each frequency band ============================
+  pwr_3g <- calculate_mpc_data_power_by_band("3g", loc_props, urb_list, params)
+  pwr_4g <- calculate_mpc_data_power_by_band("4g", loc_props, urb_list, params)
+  pwr_5g <- calculate_mpc_data_power_by_band("5g", loc_props, urb_list, params)
 
-  # Calculate power from 4G ===================================================
-  ## Indoors (=work+home)
-  pwr_4g_ind <- sum(params$data_4g_sub_indo_pwr*urb_list$home_suburb, # if suburban
-                    params$data_4g_urb_indo_pwr*urb_list$home_urban, # if urban
-                    params$data_4g_urb_indo_pwr*urb_list$home_urban # if urban
-  )
-  ## Outdoors
-  pwr_4g_out <- sum(params$data_4g_sub_outd_pwr*urb_list$home_suburb, # if suburban
-                    params$data_4g_urb_outd_pwr*urb_list$home_urban, # if urban
-                    params$data_4g_urb_outd_pwr*urb_list$home_urban # if urban
-  )
-
-  ## Travel
-  pwr_4g_tra <- params$data_4g_travel_pwr
-
-  ## Scale by proportion of time spent at each location  and duty cycle
-  pwr_4g <- sum((loc_props$work+loc_props$home)*pwr_4g_ind,
-                 loc_props$outd*pwr_4g_out,
-                 loc_props$travel*pwr_4g_tra)*params$data_4g_dutycycle
-
-  # Calculate power from 5G ===================================================
-  ## Indoors (=work+home)
-  pwr_5g_ind <- sum(params$data_5g_sub_indo_pwr*urb_list$home_suburb, # if suburban
-                    params$data_5g_urb_indo_pwr*urb_list$home_urban, # if urban
-                    params$data_5g_urb_indo_pwr*urb_list$home_urban # if urban
-  )
-  ## Outdoors
-  pwr_5g_out <- sum(params$data_5g_sub_outd_pwr*urb_list$home_suburb, # if suburban
-                    params$data_5g_urb_outd_pwr*urb_list$home_urban, # if urban
-                    params$data_5g_urb_outd_pwr*urb_list$home_urban # if urban
-  )
-
-  ## Travel
-  pwr_5g_tra <- params$data_5g_travel_pwr
-
-  ## Scale by proportion of time spent at each location and duty cycle
-  pwr_5g <- sum((loc_props$work+loc_props$home)*pwr_5g_ind,
-                 loc_props$outd*pwr_5g_out,
-                 loc_props$travel*pwr_5g_tra)*params$data_5g_dutycycle
-
-  # Scale by technology proportion and return output ==========================
-  ## Scale by 3G/4G/5G proportions for 5G users or 5G non-users
-  if (use_5g) {
-    pwr_3g_scaled <- pwr_3g*params$tech_3g_prop
-    pwr_4g_scaled <- pwr_4g*params$tech_4g_prop
-    pwr_5g_scaled <- pwr_5g*params$tech_5g_prop
-  } else {
-    pwr_3g_scaled <- pwr_3g*params$tech_3g_prop_5gno
-    pwr_4g_scaled <- pwr_4g*params$tech_4g_prop_5gno
-    pwr_5g_scaled <- pwr_5g*params$tech_5g_prop_5gno
-  }
-
-  pwr <- sum(pwr_3g_scaled, pwr_4g_scaled, pwr_5g_scaled)
-
-  return(pwr)
+  # Scale by frequency band use proportion and return result ==================
+  total_pwr <- scale_power_by_use5g(use_5g, pwr_3g, pwr_4g, pwr_5g, params)
+  return(total_pwr)
 }
+
+#' Calculate data call power by environment and tech ---------------------------
+#'
+#' @param band ...
+#' @param urb_list ...
+#' @param params ...
+calculate_mpc_data_power_by_env <- function(band,
+                                            urb_list,
+                                            params) {
+  prefix <- paste0("data_", band, "_")
+  # Indoors (home + work) =====================================================
+  indoor <- sum(
+    params[[paste0(prefix, "sub_indo_pwr")]] * urb_list$home_suburb,
+    params[[paste0(prefix, "urb_indo_pwr")]] * urb_list$home_urban,
+    params[[paste0(prefix, "rur_indo_pwr")]] * urb_list$home_rural
+  )
+
+  # Outdoors ==================================================================
+  outdoor <- sum(
+    params[[paste0(prefix, "sub_outd_pwr")]] * urb_list$home_suburb,
+    params[[paste0(prefix, "urb_outd_pwr")]] * urb_list$home_urban,
+    params[[paste0(prefix, "rur_outd_pwr")]] * urb_list$home_rural
+  )
+
+  # Traveling =================================================================
+  travel <- params[[paste0(prefix, "travel_pwr")]]
+
+  # Output list ===============================================================
+  result <- list(indoor = indoor, outdoor = outdoor, travel = travel)
+  return(result)
+}
+
+#' Calculate data call power by band -------------------------------------------
+#'
+#' @param band ...
+#' @param loc_props ...
+#' @param urb_list ...
+#' @param params ...
+calculate_mpc_data_power_by_band <- function(band,
+                                             loc_props,
+                                             urb_list,
+                                             params) {
+  # Calculate power for different environments ================================
+  pwr_by_env <- calculate_mpc_data_power_by_env(band, urb_list, params)
+
+  # Get duty cycle from parameter list ========================================
+  dutycycle <- params[[paste0("data_", band, "_dutycycle")]]
+
+  # Scale power by location proportions and duty cycle ========================
+  total <- sum(
+    (loc_props$home + loc_props$work) * pwr_by_env$indoor,
+    loc_props$outd * pwr_by_env$outdoor,
+    loc_props$travel * pwr_by_env$travel
+  ) * dutycycle
+
+  return(total)
+}
+
+#' Scale band power by 5G use TRUE/FALSE ---------------------------------------
+#'
+#' @param use_5g ...
+#' @param pwr_3g ...
+#' @param pwr_4g ...
+#' @param pwr_5g ...
+#' @param params ...
+scale_power_by_use5g <- function(use_5g,
+                                 pwr_3g,
+                                 pwr_4g,
+                                 pwr_5g,
+                                 params) {
+  if (use_5g) {
+    scaled_pwr <- c(
+      pwr_3g * params$tech_3g_prop,
+      pwr_4g * params$tech_4g_prop,
+      pwr_5g * params$tech_5g_prop
+    )
+  } else {
+    scaled_pwr <- c(
+      pwr_3g * params$tech_3g_prop_5gno,
+      pwr_4g * params$tech_4g_prop_5gno,
+      pwr_5g * params$tech_5g_prop_5gno
+    )
+  }
+  return(scaled_pwr)
+}
+
+###############################################################################
 ### Native ----
-# TODO split this function for easier readability and maintenance
-# TODO add explanation about urbanicity and loc_props in documentation
 #' Calculate mobile phone output power from native mobile calling (no Bluetooth)
 #'
 #' Calculates the output power of the mobile phone during native mobile calls in mW (No Bluetooth)
@@ -440,78 +491,10 @@ get_mobilecall_phone_native_pwr <- function(urbanicity,
                                               outd_prop   = params$outd_prop,
                                               work_prop   = params$work_prop)
 
-  # Calculate power from 2G ===================================================
-  ## Indoors (=work+home)
-  pwr_2g_ind <- sum(params$native_2g_sub_indo_pwr*urb_list$home_suburb, # if suburban
-                    params$native_2g_urb_indo_pwr*urb_list$home_urban, # if urban
-                    params$native_2g_rur_indo_pwr*urb_list$home_rural # if rural
-  )
-  ## Outdoors
-  pwr_2g_out <- sum(params$native_2g_sub_outd_pwr*urb_list$home_suburb, # if suburban
-                    params$native_2g_urb_outd_pwr*urb_list$home_urban, # if urban
-                    params$native_2g_rur_outd_pwr*urb_list$home_rural # if rural
-  )
-  ## Travel
-  pwr_2g_tra <- params$native_2g_travel_pwr
-  ## Scale by proportion of time spent at each location and duty cycle
-  pwr_2g <- sum((loc_props$work+loc_props$home)*pwr_2g_ind,
-                loc_props$outd*pwr_2g_out,
-                loc_props$travel*pwr_2g_tra)*params$native_2g_dutycycle
-
-  # Calculate power from 3G ===================================================
-  ## Indoors (=work+home)
-  pwr_3g_ind <- sum(params$native_3g_sub_indo_pwr*urb_list$home_suburb, # if suburban
-                    params$native_3g_urb_indo_pwr*urb_list$home_urban, # if urban
-                    params$native_3g_rur_indo_pwr*urb_list$home_rural # if rural
-  )
-  ## Outdoors
-  pwr_3g_out <- sum(params$native_3g_sub_outd_pwr*urb_list$home_suburb, # if suburban
-                    params$native_3g_urb_outd_pwr*urb_list$home_urban, # if urban
-                    params$native_3g_rur_outd_pwr*urb_list$home_rural # if rural
-  )
-  ## Travel
-  pwr_3g_tra <- params$native_3g_travel_pwr
-  ## Scale by proportion of time spent at each location and duty cycle
-  pwr_3g <- sum((loc_props$work+loc_props$home)*pwr_3g_ind,
-                loc_props$outd*pwr_3g_out,
-                loc_props$travel*pwr_3g_tra)*params$native_3g_dutycycle
-
-  # Calculate power from 4G ===================================================
-  ## Indoors (=work+home)
-  pwr_4g_ind <- sum(params$native_4g_sub_indo_pwr*urb_list$home_suburb, # if suburban
-                    params$native_4g_urb_indo_pwr*urb_list$home_urban, # if urban
-                    params$native_4g_rur_indo_pwr*urb_list$home_rural # if rural
-  )
-  ## Outdoors
-  pwr_4g_out <- sum(params$native_4g_sub_outd_pwr*urb_list$home_suburb, # if suburban
-                    params$native_4g_urb_outd_pwr*urb_list$home_urban, # if urban
-                    params$native_4g_rur_outd_pwr*urb_list$home_rural # if rural
-  )
-  ## Travel
-  pwr_4g_tra <- params$native_4g_travel_pwr
-  ## Scale by proportion of time spent at each location and duty cycle
-  pwr_4g <- sum((loc_props$work+loc_props$home)*pwr_4g_ind,
-                loc_props$outd*pwr_4g_out,
-                loc_props$travel*pwr_4g_tra)*params$native_4g_dutycycle
-
-  # Calculate power from 5g ===================================================
-  ## Indoors (=work+home)
-  pwr_5g_ind <- sum(params$native_5g_sub_indo_pwr*urb_list$home_suburb, # if suburban
-                    params$native_5g_urb_indo_pwr*urb_list$home_urban, # if urban
-                    params$native_5g_rur_indo_pwr*urb_list$home_rural # if rural
-  )
-  ## Outdoors
-  pwr_5g_out <- sum(params$native_5g_sub_outd_pwr*urb_list$home_suburb, # if suburban
-                    params$native_5g_urb_outd_pwr*urb_list$home_urban, # if urban
-                    params$native_5g_rur_outd_pwr*urb_list$home_rural # if urban
-  )
-  ## Travel
-  pwr_5g_tra <- params$native_5g_travel_pwr
-  ## Scale by proportion of time spent at each location and duty cycle
-  pwr_5g <- sum((loc_props$work+loc_props$home)*pwr_5g_ind,
-                loc_props$outd*pwr_5g_out,
-                loc_props$travel*pwr_5g_tra)*params$native_5g_dutycycle
-
+  pwr_2g <- calculate_mpc_native_power_by_band("2g", loc_props, urb_list, params)
+  pwr_3g <- calculate_mpc_native_power_by_band("3g", loc_props, urb_list, params)
+  pwr_4g <- calculate_mpc_native_power_by_band("4g", loc_props, urb_list, params)
+  pwr_5g <- calculate_mpc_native_power_by_band("5g", loc_props, urb_list, params)
 
   pwr <- sum(pwr_2g*params$native_2g_prop,
              pwr_3g*params$native_3g_prop,
@@ -519,6 +502,64 @@ get_mobilecall_phone_native_pwr <- function(urbanicity,
              pwr_5g*params$native_5g_prop)
 
   return(pwr)
+}
+
+#' Calculate native power by environment and band ------------------------------
+#'
+#' @param band ...
+#' @param urb_list ...
+#' @param params ...
+calculate_mpc_native_power_by_env <- function(band,
+                                              urb_list,
+                                              params) {
+  prefix <- paste0("native_", band, "_")
+
+  # Indoors (home + work) =====================================================
+  indoor <- sum(
+    params[[paste0(prefix, "sub_indo_pwr")]] * urb_list$home_suburb,
+    params[[paste0(prefix, "urb_indo_pwr")]] * urb_list$home_urban,
+    params[[paste0(prefix, "rur_indo_pwr")]] * urb_list$home_rural
+  )
+
+  # Outdoors ==================================================================
+  outdoor <- sum(
+    params[[paste0(prefix, "sub_outd_pwr")]] * urb_list$home_suburb,
+    params[[paste0(prefix, "urb_outd_pwr")]] * urb_list$home_urban,
+    params[[paste0(prefix, "rur_outd_pwr")]] * urb_list$home_rural
+  )
+
+  # Traveling =================================================================
+  travel <- params[[paste0(prefix, "travel_pwr")]]
+
+  # Output list ===============================================================
+  result <- list(indoor = indoor, outdoor = outdoor, travel = travel)
+  return(result)
+}
+
+#' Calculate native power by band ----------------------------------------------
+#'
+#' @param band ...
+#' @param loc_props ...
+#' @param urb_list ...
+#' @param params ...
+calculate_mpc_native_power_by_band <- function(band,
+                                               loc_props,
+                                               urb_list,
+                                               params) {
+  # Calculate power for different environments ================================
+  pwr_by_env <- calculate_mpc_native_power_by_env(band, urb_list, params)
+
+  # Get duty cycle from parameter list ========================================
+  dutycycle <- params[[paste0("native_", band, "_dutycycle")]]
+
+  # Scale power by location proportions and duty cycle ========================
+  total <- sum(
+    (loc_props$home + loc_props$work) * pwr_by_env$indoor,
+    loc_props$outd * pwr_by_env$outdoor,
+    loc_props$travel * pwr_by_env$travel
+  ) * dutycycle
+
+  return(total)
 }
 
 ## SAR ------------------------------------------------------------------------

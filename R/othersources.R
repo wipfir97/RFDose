@@ -20,9 +20,8 @@ get_other_dose <- function(duration_hotspot,
                            duration_gaming,
                            params = NULL) {
   # Load parameters if not provided ===========================================
-  params <- if (is.null(params)) {
-    load_params("params.yaml")  # from inst/extdata
-  }
+  if (is.null(params)) {
+    params <- load_params("params.yaml")}
 
   # Calculate doses from individual devices ===================================
   ## From hotspot -------------------------------------------------------------
@@ -83,9 +82,8 @@ get_other_dose <- function(duration_hotspot,
 get_hotspot_dose <- function(duration_hotspot,
                              params = NULL) {
   # Load parameters if not provided ===========================================
-  params <- if (is.null(params)) {
-    load_params("params.yaml")  # from inst/extdata
-  }
+  if (is.null(params)) {
+    params <- load_params("params.yaml")}
   # Get hotspot parameters from parameter list --------------------------------
   ## Device-specific
   hots_params        <- load_device_params(params, "hots")
@@ -127,9 +125,8 @@ get_hotspot_dose <- function(duration_hotspot,
 get_smartwatch_dose <- function(duration_smartwatch,
                                 params = NULL) {
   # Load parameters if not provided ===========================================
-  params <- if (is.null(params)) {
-    load_params("params.yaml")  # from inst/extdata
-  }
+  if (is.null(params)) {
+    params <- load_params("params.yaml")}
   # Get watch parameters from parameter list ----------------------------------
   ## Device-specific
   watch_params        <- load_device_params(params, "watch")
@@ -227,9 +224,8 @@ get_smartwatch_watch_dose <- function(duration_smartwatch,
 get_tracker_dose <- function(duration_tracker,
                              params = NULL) {
   # Load parameters if not provided ===========================================
-  params <- if (is.null(params)) {
-    load_params("params.yaml")  # from inst/extdata
-  }
+  if (is.null(params)) {
+    params <- load_params("params.yaml")}
   # Get tracker parameters from parameter list --------------------------------
   ## Device-specific
   tracker_params        <- load_device_params(params, "tracker")
@@ -328,9 +324,8 @@ get_tracker_tracker_dose <- function(duration_tracker,
 get_vr_dose <- function(duration_vr,
                         params = NULL) {
   # Load parameters if not provided ===========================================
-  params <- if (is.null(params)) {
-    load_params("params.yaml")  # from inst/extdata
-  }
+  if (is.null(params)) {
+    params <- load_params("params.yaml")}
   # Get vr parameters from parameter list -------------------------------------
   ## Device-specific
   vr_params        <- load_device_params(params, "vr")
@@ -372,9 +367,8 @@ get_vr_dose <- function(duration_vr,
 get_headphone_dose <- function(duration_headphones,
                                params = NULL) {
   # Load parameters if not provided ===========================================
-  params <- if (is.null(params)) {
-    load_params("params.yaml")  # from inst/extdata
-  }
+  if (is.null(params)) {
+    params <- load_params("params.yaml")}
   # Get bluetooth headphones parameters from parameter list -------------------
   ## Device-specific
   headp_params        <- load_device_params(params, "headp")
@@ -475,9 +469,8 @@ get_smarthome_dose <- function(smarthome,
                                travel_time,
                                params = NULL) {
   # Load parameters if not provided ===========================================
-  params <- if (is.null(params)) {
-    load_params("params.yaml")  # from inst/extdata
-  }
+  if (is.null(params)) {
+    params <- load_params("params.yaml")}
   # Get smart home parameters from parameter list -----------------------------
   ## Device-specific
   smah_params        <- load_device_params(params, "smah")
@@ -535,9 +528,8 @@ get_smarthome_dose <- function(smarthome,
 get_gaming_dose <- function(duration_gaming,
                                params = NULL) {
   # Load parameters if not provided ===========================================
-  params <- if (is.null(params)) {
-    load_params("params.yaml")  # from inst/extdata
-  }
+  if (is.null(params)) {
+    params <- load_params("params.yaml")}
   # Get smart home parameters from parameter list -----------------------------
   ## Device-specific
   game_params        <- load_device_params(params, "game")

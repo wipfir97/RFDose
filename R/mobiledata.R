@@ -48,10 +48,8 @@ get_mobiledata_dose <- function(duration_low,
                                 travel_time,
                                 params = NULL) {
   # Load parameters if not provided ===========================================
-  params <- if (is.null(params)) {
-    load_params("params.yaml")  # from inst/extdata
-  }
-
+  if (is.null(params)) {
+    params <- load_params("params.yaml")}
   # Convert activity durations to proportions =================================
   act_pwr_props <- get_act_pwr_props(low_dur     = duration_low,
                                      lowmed_dur  = duration_lowmed,

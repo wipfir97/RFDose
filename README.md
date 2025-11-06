@@ -14,7 +14,7 @@
 | --- | --- | --- |
 | 0.0.1 | Basic test version (not on Github) | Completed |
 | 0.1.0 | Initial draft version for internal use | Completed |
-| 0.2.0 | Revised draft version with updated calculations and variables | In development |
+| 0.2.0 | Revised draft version with updated calculations and variables | In development, almost completed |
 
 ### Version 0.2.0
 
@@ -27,9 +27,9 @@
 | Laptop | ✅| ✅|
 | Tablet | ✅| ✅|
 | Other |  ✅| ⌛|
-| Far-field |  ✅| not started |
+| Far-field |  ✅| ⌛|
 | Mobile data |  ✅| not started|
-| Mobile calling | ⌛|not started|
+| Mobile calling | ✅| not started|
 
 Version 7.3 is the most recent version of the deterministic dose calculator (October 2025).
 

@@ -26,9 +26,8 @@ get_farfield_dose <- function(urbanicity,
                               travel_time,
                               params = NULL) {
   # Load parameters if not provided ===========================================
-  params <- if (is.null(params)) {
-    load_params("params.yaml")  # from inst/extdata
-  }
+  if (is.null(params)) {
+    params <- load_params("params.yaml")}
 
   # Extract parameters ========================================================
   ## Extract shared (non-tissue specific) parameters for mobile calling -------

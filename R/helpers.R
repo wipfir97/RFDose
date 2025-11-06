@@ -57,20 +57,6 @@ load_tissue_params <- function(params, device_type, tissue_name) {
 
 
 
-#' Convert flat parameter table to nested parameter YAML
-#'
-#' @param flat Flat parameter data frame with "path" and "value" columns
-#' @returns nested parameter list
-flat_params_to_nested <- function(flat) {
-  nested_list <- list()
-
-  for (i in seq_len(nrow(flat))) {
-    keys <- strsplit(flat$path[i], "\\.")[[1]]
-    nested_list <- add_path(nested_list, keys, flat$value[i])
-  }
-  return(nested_list)
-}
-
 # =============================================================================
 #' Check input values - proportions
 #'
@@ -93,11 +79,13 @@ check_proportions <- function(proportions) {
     }
   }
 
-  # For vector of proportions, check if they add up to 1
+  # For vector of proportions, check if they add up to 1 or are all 0
   if (length(proportions) > 1) {
     if (!isTRUE(all.equal(sum(unlist(proportions)), 1, tolerance = 1e-6))) {
-      warning("Proportions do not sum to 1. Check your input values.")
-      return(FALSE)
+      if(!(sum(unlist(proportions)) == 0)) {
+        warning("Proportions do not sum to 1. Check your input values:")
+        return(FALSE)
+      }
     }
   }
   return(TRUE)  # Valid proportions
@@ -148,14 +136,6 @@ recode_urbanicity <- function(urbanicity) {
   return(out)
 }
 
-# =============================================================================
-#' Check input parameter list
-#'
-#' @param params parameter list in YAML format
-#' @returns TRUE if parameter list is valid, FALSE if parameter list is invalid
-check_input_param_list <- function(params) {
-  return(FALSE)
-}
 
 # =============================================================================
 #' Load default parameter list

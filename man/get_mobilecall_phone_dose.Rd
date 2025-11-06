@@ -34,6 +34,12 @@ get_mobilecall_phone_dose(
 
 \item{travel_time}{Time spent commuting in seconds per day}
 
+\item{wifi_prop_home}{...}
+
+\item{wifi_prop_work}{...}
+
+\item{wifi_prop_travel}{...}
+
 \item{params}{Parameter list}
 
 \item{tissue_params}{Tissue-specific parameter list}
