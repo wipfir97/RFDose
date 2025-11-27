@@ -136,6 +136,20 @@ recode_urbanicity <- function(urbanicity) {
   return(out)
 }
 
+# =============================================================================
+#' Check input values - country
+#'
+#' @param country Country
+#' @returns re-coded urbanicity (binary variables)
+check_country <- function(country) {
+  # Ensure input contains only valid urbanicity values
+  valid_countries <- c("AT", "BE", "FR", "HU", "IT", "NL", "PL", "ES", "CH", "UK", "Other")
+
+  if (!country %in% valid_countries) {
+    stop("Invalid country input value found.")
+  }
+}
+
 
 # =============================================================================
 #' Load default parameter list

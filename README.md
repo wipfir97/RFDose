@@ -20,18 +20,18 @@
 
 #### What is currently happening
 
-| Source | Updated to 7.3? | Validation status |
+| Source | Updated to 7.4? | Validation status |
 | --- | --- | --- |
 | Cordless | ✅ | ✅|
 | WiFi | ✅| ✅|
 | Laptop | ✅| ✅|
 | Tablet | ✅| ✅|
-| Other |  ✅| ⌛|
-| Far-field |  ✅| ⌛|
-| Mobile data |  ✅| not started|
-| Mobile calling | ✅| not started|
+| Other |  ✅| ✅|
+| Far-field |  ✅| in progress|
+| Mobile data |  ✅| in progress|
+| Mobile calling | ✅| in progress|
 
-Version 7.3 is the most recent version of the deterministic dose calculator (October 2025).
+Version 7.4 is the most recent version of the deterministic dose calculator (October 2025).
 
 #### Variable overview in version 0.2.0
 
@@ -39,6 +39,7 @@ Version 7.3 is the most recent version of the deterministic dose calculator (Oct
 | --- | --- | --- | --- | --- |
 | use_5g | - | binary | Use of 5G | 🆕 |
 | travel_time | s | numeric | Time spent commuting (public transport or car) per day | 🆕 |
+| country | - | categorical | Austria:"AT", Belgium:"BE", France:"FR", Hungary:"HU", Italy:"IT", Netherlands:"NL", Poland:"PL", Spain:"ES", Switzerland:"CH", United Kingdom:"UK", unknown/other: "Other" | 🆕 |
 | urbanicity | - | categorical | Urbanicity |  |
 | headp_ear_num | - | numeric | Number of earphones worn during call (1 or 2) | 🆕 |
 | mpc_duration | s | numeric | Duration of daily mobile phone call |  |

@@ -4,9 +4,11 @@
 \alias{get_farfield_pwr}
 \title{Calculate far-field exposure aggregated power}
 \usage{
-get_farfield_pwr(urbanicity, travel_time, params)
+get_farfield_pwr(country, urbanicity, travel_time, params)
 }
 \arguments{
+\item{country}{Country}
+
 \item{urbanicity}{Urbanicity of home environment}
 
 \item{travel_time}{Time per day spent commuting (s)}

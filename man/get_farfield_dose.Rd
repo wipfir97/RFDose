@@ -4,9 +4,13 @@
 \alias{get_farfield_dose}
 \title{Calculate Dose from far-field exposure}
 \usage{
-get_farfield_dose(urbanicity, travel_time, params = NULL)
+get_farfield_dose(country, urbanicity, travel_time, params = NULL)
 }
 \arguments{
+\item{country}{Country (Austria="AT", Belgium="BE", France="FR", Hungary="HU",
+Italy="IT", Netherlands="NL", Poland="PL", Spain="ES", Switzerland="CH", United Kingdom="UK",
+other country/unknown="Other")}
+
 \item{urbanicity}{Urbanicity of home environment}
 
 \item{travel_time}{Time per day spent commuting (s)}

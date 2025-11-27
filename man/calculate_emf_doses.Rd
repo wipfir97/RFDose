@@ -18,5 +18,5 @@ A data frame. Columns named SOURCE_dose_TISSUE contain RF-EMF dose
 of each participant in mJ/kg/day
 }
 \description{
-Calculate Total RF-EMF Doses for ALL samples
+Wrapper function that calculates doses for each row of a data frame.
 }

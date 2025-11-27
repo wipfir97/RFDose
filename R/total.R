@@ -106,6 +106,7 @@ get_total_dose <- function(sample,
 
   ## Calculate far-field contribution -----------------------------------------
   farf_dose <- get_farfield_dose(
+    country      = sample$country,
     urbanicity   = sample$urbanicity,
     travel_time  = sample$travel_time,
     params       = params
