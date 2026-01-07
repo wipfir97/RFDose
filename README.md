@@ -1,4 +1,4 @@
-# ETAIN Dose Calculator - R Version
+# Deterministic Dose Calculator - R Version
 
 ## 📦 About
 

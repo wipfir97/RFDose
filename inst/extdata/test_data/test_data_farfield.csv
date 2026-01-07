@@ -1,3 +1,3 @@
-sample_id,travel_time,urbanicity,brain_dose,body_dose
-TEST1,1800,suburban,,
-TEST2,900,rural,,
+sample_id,country,travel_time,urbanicity,brain_dose,body_dose
+TEST1,Other,1800,suburban,,
+TEST2,CH,900,rural,,
