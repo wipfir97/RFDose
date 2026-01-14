@@ -362,9 +362,9 @@ devices:
       work_rural_pwr_UK: 0.05
       travel_pwr_UK: 0.75
     brain:
-      sar: 0.0083632
+      sar: 0.005439141
     body:
-      sar: 0.007579411
+      sar: 0.004655352
   watch:
     shared:
       watch_pwr: 0.00008
