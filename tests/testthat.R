@@ -7,6 +7,6 @@
 # * https://testthat.r-lib.org/articles/special-files.html
 
 library(testthat)
-library(ETAINDoseCalculator)
+library(RFDose)
 
-test_check("ETAINDoseCalculator")
+test_check("RFDose")

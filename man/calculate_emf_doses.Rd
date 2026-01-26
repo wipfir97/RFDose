@@ -7,16 +7,16 @@
 calculate_emf_doses(data, param_file = NULL, default_value_file = NULL)
 }
 \arguments{
-\item{data}{A data frame. Must have the following columns: DOC TO BE ADDED SOON}
+\item{data}{A data frame with required columns.}
 
-\item{param_file}{optional path to YAML parameter configuration file}
+\item{param_file}{Optional path to an external YAML parameter file. Must follow same structure as internal YAML parameter file.}
 
-\item{default_value_file}{optional path to YAML default value file in case of missing data}
+\item{default_value_file}{Optional path to external YAML default value file. Must follow same structure as internal YAML default value file.}
 }
 \value{
-A data frame. Columns named SOURCE_dose_TISSUE contain RF-EMF dose
-of each participant in mJ/kg/day
+A data frame. Columns named SOURCE_dose_TISSUE contain the calculated RF-EMF dose
+of each row in mJ/kg/day, for each exposure source and each tissue.
 }
 \description{
-Wrapper function that calculates doses for each row of a data frame.
+Wrapper function that calculates RF-EMF doses for a full data frame.
 }

@@ -70,15 +70,6 @@ To install the **most current development version (v.0.2.0)**, use this command:
 remotes::install_github("wipfir97/RFDose@dev/0.2.0")
 ```
 
-**Note that version 0.2.0 is not stable yet, i.e. there may be errors and bugs and some calculations may not work yet!**
-
-If you want to use the older, stable version v.0.1.0 instead, use this command instead:
-
-```{r}
-# Install RFDose using your PAT
-remotes::install_github("wipfir97/RFDose@v0.1.0")
-```
-
 ---
 
 

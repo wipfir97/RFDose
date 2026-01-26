@@ -1,13 +1,13 @@
 ###############################################################################
 #' Calculate Total RF-EMF Doses for ALL samples
 #'
-#' Wrapper function that calculates doses for each row of a data frame.
+#' Wrapper function that calculates RF-EMF doses for a full data frame.
 #'
-#' @param data A data frame. Must have the following columns: DOC TO BE ADDED SOON
-#' @param param_file optional path to YAML parameter configuration file
-#' @param default_value_file optional path to YAML default value file in case of missing data
-#' @returns A data frame. Columns named SOURCE_dose_TISSUE contain RF-EMF dose
-#' of each participant in mJ/kg/day
+#' @param data A data frame with required columns.
+#' @param param_file Optional path to an external YAML parameter file. Must follow same structure as internal YAML parameter file.
+#' @param default_value_file Optional path to external YAML default value file. Must follow same structure as internal YAML default value file.
+#' @returns A data frame. Columns named SOURCE_dose_TISSUE contain the calculated RF-EMF dose
+#' of each row in mJ/kg/day, for each exposure source and each tissue.
 #' @import dplyr
 #' @importFrom tidyr unnest
 #' @importFrom tidyr unnest_wider
@@ -45,19 +45,25 @@ calculate_emf_doses <- function(data,
   results <- fill_missing_variables(
     data           = data,
     defaults       = defaultvars,
-    warn_threshold = 0.1)
+    warn_threshold = 0.1) # show warning if column has more than 10% missing data
 
   data     <- results$data
   replaced <- results$replaced
 
-
   # Calculate RF-EMF Dose for all entries in data set =========================
   ## Go through each row, calculate doses, append results as column
-  results <- data %>%
-    rowwise() %>%
-    mutate(outcome = list(get_total_dose(as.list(cur_data()), params))) %>%
-    unnest_wider(outcome) %>%
-    ungroup()
+  results <- data |>
+    dplyr::rowwise() |>
+    dplyr::mutate(
+      outcome = list(
+        get_total_dose(
+          as.list(dplyr::pick(dplyr::everything())),
+          params
+        )
+      )
+    ) |>
+    tidyr::unnest_wider(outcome) |>
+    dplyr::ungroup()
 
   ## Return output as data frame
   return(as.data.frame(results))
@@ -67,12 +73,18 @@ calculate_emf_doses <- function(data,
 ###############################################################################
 #' Calculate Total RF-EMF Dose for Brain and Body from All Sources
 #'
+#'
+#'
 #' @param sample A list with input values for a single sample
 #' @param params A parameter list
 #' @returns A list with results for brain and body dose for a single sample
 #' @export
 get_total_dose <- function(sample,
-                           params) {
+                           params = NULL) {
+  ## Load internal parameter file if no param_file is supplied ----------------
+  params <- if (is.null(params)) {
+    load_params("params.yaml")  # from inst/extdata
+  }
   # Calculate contribution of each exposure source ============================
   ## Calculate mobile call contribution ---------------------------------------
   call_dose <- get_mobilecall_dose(

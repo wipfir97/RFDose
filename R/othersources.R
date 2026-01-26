@@ -195,7 +195,7 @@ get_smartwatch_phone_dose <- function(duration_smartwatch,
 #'
 #' @param duration_smartwatch Daily duration of smartwatch use in seconds
 #' @param params Parameter list
-#' @param params Tissue parameter list
+#' @param tissue_params Tissue parameter list
 get_smartwatch_watch_dose <- function(duration_smartwatch,
                                       params,
                                       tissue_params) {

@@ -1,8 +1,8 @@
 ---
-title: "ETAIN Dose Calculator R version"
+title: "RFDose"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Introduction to ETAINDoseCalculatoR}
+  %\VignetteIndexEntry{Introduction to RFDose}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -15,12 +15,12 @@ knitr::opts_chunk$set(
 ```
 
 ```{r}
-library(ETAINDoseCalculator)
+library(RFDose)
 ```
 
 ## Overview
 
-ETAINDoseCalculatoR is an R package designed to estimate personal radio-frequency electromagnetic field (RF-EMF) doses. It takes into account different device types and tissues, as well as exposure from far-field sources.
+RFDose is an R package designed to estimate personal radio-frequency electromagnetic field (RF-EMF) doses. It takes into account different device types and tissues, as well as exposure from far-field sources.
 
 ## Goals
 
@@ -44,7 +44,7 @@ print("Insert use example here!")
 
 ### Customizing Parameters
 
-By default, the ETAINDoseCalculatoR uses a pre-defined parameter list. However, it is possible to override these parameters. If you would like to do so, please follow these steps:
+By default, RFDose uses a pre-defined parameter list. However, it is possible to override these parameters. If you would like to do so, please follow these steps:
 
 ```{r}
 # Example use
