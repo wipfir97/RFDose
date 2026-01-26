@@ -1,8 +1,12 @@
-# Deterministic Dose Calculator - R Version
+# RFDose - Deterministic RF-EMF Dose Calculator
 
 ## 📦 About
 
-⚡ An R package for RF-EMF dose calculations
+RFDose implements the deterministic RF-EMF dose calculations developed in 
+Jalilian et al. (publication in writing stage).
+
+IMPORTANT for test users: with the update to 0.2.0, the R package is renamed to RFDose.
+I will update this in the installation instructions as soon as possible. 
 
 ---
 
@@ -14,71 +18,10 @@
 | --- | --- | --- |
 | 0.0.1 | Basic test version (not on Github) | Completed |
 | 0.1.0 | Initial draft version for internal use | Completed |
-| 0.2.0 | Revised draft version with updated calculations and variables | In development, almost completed |
+| 0.2.0 | Revised draft version with updated calculations and variables | Completed |
+| 0.2.1 | Revised draft verison with unit tests | In progress |
+| 0.3.0 | Updated draft version with age- and sex-specific input | In planning |
 
-### Version 0.2.0
-
-#### What is currently happening
-
-| Source | Updated to 7.4? | Validation status |
-| --- | --- | --- |
-| Cordless | ✅ | ✅|
-| WiFi | ✅| ✅|
-| Laptop | ✅| ✅|
-| Tablet | ✅| ✅|
-| Other |  ✅| ✅|
-| Far-field |  ✅| in progress|
-| Mobile data |  ✅| in progress|
-| Mobile calling | ✅| in progress|
-
-Version 7.4 is the most recent version of the deterministic dose calculator (October 2025).
-
-#### Variable overview in version 0.2.0
-
-| Name  | Unit | Type | Description | Notes |
-| --- | --- | --- | --- | --- |
-| use_5g | - | binary | Use of 5G | 🆕 |
-| travel_time | s | numeric | Time spent commuting (public transport or car) per day | 🆕 |
-| country | - | categorical | Austria:"AT", Belgium:"BE", France:"FR", Hungary:"HU", Italy:"IT", Netherlands:"NL", Poland:"PL", Spain:"ES", Switzerland:"CH", United Kingdom:"UK", unknown/other: "Other" | 🆕 |
-| urbanicity | - | categorical | Urbanicity |  |
-| headp_ear_num | - | numeric | Number of earphones worn during call (1 or 2) | 🆕 |
-| mpc_duration | s | numeric | Duration of daily mobile phone call |  |
-| mpc_ear_prop | - | proportion | ... |  |
-| mpc_headp_prop | - | proportion | ... |  |
-| dect_duration | s | numeric | ... |  |
-| dect_ear_prop | - | proportion | ... |  |
-| mpd_wifi_prop_home | --- | --- | Proportion of WiFi vs mobile data (3G, 4G, 5G) while using mobile phone AT HOME | 🆕 |
-| mpd_wifi_prop_work | --- | --- | Proportion of WiFi vs mobile data (3G, 4G, 5G) while using mobile phone AT WORK/SCHOOL | 🆕 |
-| mpd_wifi_prop_travel | --- | --- | Proportion of WiFi vs mobile data (3G, 4G, 5G) while using mobile phone WHILE COMMUTING | 🆕 |
-| mpd_dur_low | s | numeric| Daily duration of low output power activities on mobile phone | 🆕 |
-| mpd_dur_lowtomed | s | numeric | Daily duration of low-medium output power activities on mobile phone | 🆕 |
-| mpd_dur_medtohigh | s | numeric | Daily duration of medium-high output power activities on mobile phone | 🆕 |
-| mpd_dur_high | s | numeric | Daily duration of high output power activities on mobile phone | 🆕 |
-| lptp_dur_low | s | numeric | Daily duration of low output power activities on laptop | 🆕 |
-| lptp_dur_lowtomed | s | numeric | Daily duration of low-medium output power activities on laptop |🆕 |
-| lptp_dur_medtohigh | s | numeric | Daily duration of medium-high output power activities on laptop |🆕 |
-| lptp_dur_high | s | numeric | Daily duration of high output power activities on laptop | 🆕 |
-| tblt_dur_low | s | numeric | Daily duration of low output power activities on tablet | 🆕 |
-| tblt_dur_lowtomed | s | numeric | Daily duration of low-medium output power activities on tablet |🆕 |
-| tblt_dur_medtohigh | s | numeric | Daily duration of medium-high output power activities on tablet |🆕 |
-| tblt_dur_high | s | numeric | Daily duration of high output power activities on tablet | 🆕 |
-| hotspot_duration | s |  |  |  |
-| smartwatch_duration | s |  |  |  |
-| tracker_duration | s |  |  |  |
-| vr_duration | s |  |  |  |
-| headphone_duration | s |  |  |  |
-| gaming_duration | s |  |  |  |
-
-#### Variables that were removed in version 0.2.0
-
-- smarthome_duration: removed
-- wifi_duration: removed
-- mpd_high_dt_prop: removed
-- mpd_wifi_prop: removed
-- lptp_duration: removed
-- tblt_duration: removed
-
----
 
 
 ## 🛠️ Installation
@@ -138,6 +81,7 @@ remotes::install_github("wipfir97/ETAINDoseCalculator@v0.1.0")
 
 ---
 
+
 ## 🚀 Quick Start
 
 For a quick start, you can load the in-build example data set:
@@ -159,6 +103,7 @@ calculate_emf_doses(example_data)
 
 ---
 
+
 ## 🔍 Documentation
 
 ### Exposure sources
@@ -175,6 +120,45 @@ We consider the following exposure sources in the dose calculations:
 | Tablet | tblt | Tablet use |
 | Far-field | farf | Far-field exposure |
 | Other | othe | Other devices: smart watch, tracker, VR headset, hotspot, bluetooth headphones, smart home |
+
+#### Variable overview (version 0.2.0)
+
+| Name  | Unit | Type | Description | Notes |
+| --- | --- | --- | --- | --- |
+| use_5g | - | binary | Use of 5G | 🆕 |
+| travel_time | s | numeric | Time spent commuting (public transport or car) per day | 🆕 |
+| country | - | categorical | Austria:"AT", Belgium:"BE", France:"FR", Hungary:"HU", Italy:"IT", Netherlands:"NL", Poland:"PL", Spain:"ES", Switzerland:"CH", United Kingdom:"UK", unknown/other: "Other" | 🆕 |
+| urbanicity | - | categorical | Urbanicity |  |
+| headp_ear_num | - | numeric | Number of earphones worn during call (1 or 2) | 🆕 |
+| mpc_duration | s | numeric | Duration of daily mobile phone call |  |
+| mpc_ear_prop | - | proportion | ... |  |
+| mpc_headp_prop | - | proportion | ... |  |
+| dect_duration | s | numeric | ... |  |
+| dect_ear_prop | - | proportion | ... |  |
+| mpd_wifi_prop_home | --- | --- | Proportion of WiFi vs mobile data (3G, 4G, 5G) while using mobile phone AT HOME | 🆕 |
+| mpd_wifi_prop_work | --- | --- | Proportion of WiFi vs mobile data (3G, 4G, 5G) while using mobile phone AT WORK/SCHOOL | 🆕 |
+| mpd_wifi_prop_travel | --- | --- | Proportion of WiFi vs mobile data (3G, 4G, 5G) while using mobile phone WHILE COMMUTING | 🆕 |
+| mpd_dur_low | s | numeric| Daily duration of low output power activities on mobile phone | 🆕 |
+| mpd_dur_lowtomed | s | numeric | Daily duration of low-medium output power activities on mobile phone | 🆕 |
+| mpd_dur_medtohigh | s | numeric | Daily duration of medium-high output power activities on mobile phone | 🆕 |
+| mpd_dur_high | s | numeric | Daily duration of high output power activities on mobile phone | 🆕 |
+| lptp_dur_low | s | numeric | Daily duration of low output power activities on laptop | 🆕 |
+| lptp_dur_lowtomed | s | numeric | Daily duration of low-medium output power activities on laptop |🆕 |
+| lptp_dur_medtohigh | s | numeric | Daily duration of medium-high output power activities on laptop |🆕 |
+| lptp_dur_high | s | numeric | Daily duration of high output power activities on laptop | 🆕 |
+| tblt_dur_low | s | numeric | Daily duration of low output power activities on tablet | 🆕 |
+| tblt_dur_lowtomed | s | numeric | Daily duration of low-medium output power activities on tablet |🆕 |
+| tblt_dur_medtohigh | s | numeric | Daily duration of medium-high output power activities on tablet |🆕 |
+| tblt_dur_high | s | numeric | Daily duration of high output power activities on tablet | 🆕 |
+| hotspot_duration | s |  |  |  |
+| smartwatch_duration | s |  |  |  |
+| tracker_duration | s |  |  |  |
+| vr_duration | s |  |  |  |
+| headphone_duration | s |  |  |  |
+| gaming_duration | s |  |  |  |
+
+---
+
 
 ### Input/user variables
 
@@ -211,13 +195,6 @@ Users may supply their own default values. The custom file must follow the same 
 # Supply own default values
 print("Instructions on how to supply own default values will be added here")
 ```
-
----
-
-## 💬 Feedback
-
-Please submit feedback to ...
-
 ---
 
 ## 📃 License
