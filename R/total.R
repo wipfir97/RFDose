@@ -81,9 +81,15 @@ calculate_emf_doses <- function(data,
 #' @export
 get_total_dose <- function(sample,
                            params = NULL) {
+  # Check input ===============================================================
   ## Load internal parameter file if no param_file is supplied ----------------
   params <- if (is.null(params)) {
     load_params("params.yaml")  # from inst/extdata
+  }
+  ## Check if any input values in sample are missing, return error ------------
+  missing_vars <- anyNA(sample)
+  if (missing_vars) {
+    stop("Your sample is missing required input values. Please check your data.")
   }
   # Calculate contribution of each exposure source ============================
   ## Calculate mobile call contribution ---------------------------------------
