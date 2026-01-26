@@ -5,7 +5,7 @@
 #'@returns List of parameters loaded from yaml input file
 load_params <- function(filename) {
   params_file     <- system.file("extdata", filename,
-                                 package = "ETAINDoseCalculator")
+                                 package = "RFDose")
   params          <- read_yaml(params_file)
   return(params)
 }

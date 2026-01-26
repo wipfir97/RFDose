@@ -1,4 +1,4 @@
-Package: ETAINDoseCalculator
+Package: RFDose
 Type: Package
 Title: Functions for RF-EMF Dose Calculations
 Version: 0.2.0

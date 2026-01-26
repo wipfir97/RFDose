@@ -55,7 +55,7 @@ install.packages("remotes")
 library(remotes)
 ```
 
-### Install ETAIN dose calculator
+### Install RFDose
 
 To install the R package, first set your PAT with this command:
 
@@ -66,8 +66,8 @@ Sys.setenv(GITHUB_PAT = "YOUR_PAT")
 To install the **most current development version (v.0.2.0)**, use this command:
 
 ```{r}
-# Install the ETAIN dose calculator using your PAT
-remotes::install_github("wipfir97/ETAINDoseCalculator@dev/0.2.0")
+# Install RFDose using your PAT
+remotes::install_github("wipfir97/RFDose@dev/0.2.0")
 ```
 
 **Note that version 0.2.0 is not stable yet, i.e. there may be errors and bugs and some calculations may not work yet!**
@@ -75,8 +75,8 @@ remotes::install_github("wipfir97/ETAINDoseCalculator@dev/0.2.0")
 If you want to use the older, stable version v.0.1.0 instead, use this command instead:
 
 ```{r}
-# Install the ETAIN dose calculator using your PAT
-remotes::install_github("wipfir97/ETAINDoseCalculator@v0.1.0")
+# Install RFDose using your PAT
+remotes::install_github("wipfir97/RFDose@v0.1.0")
 ```
 
 ---
@@ -88,7 +88,7 @@ For a quick start, you can load the in-build example data set:
 
 ```{r}
 # Load package
-library(ETAINDoseCalculator)
+library(RFDose)
 # Load example data
 data(example_data)
 # View example data

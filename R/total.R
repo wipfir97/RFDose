@@ -33,7 +33,7 @@ calculate_emf_doses <- function(data,
   defaultvars <- if (is.null(default_value_file)) {
     yaml::read_yaml(system.file("extdata",
                                 "defaultvariables.yaml",
-                                package = "ETAINDoseCalculator"))
+                                package = "RFDose"))
   } else {
     yaml::read_yaml(default_value_file)
   }
