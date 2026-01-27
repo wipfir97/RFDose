@@ -6,7 +6,6 @@ RFDose implements the deterministic RF-EMF dose calculations developed in
 Jalilian et al. (publication in writing stage).
 
 IMPORTANT for test users: with the update to 0.2.0, the R package is renamed to RFDose.
-I will update this in the installation instructions as soon as possible. 
 
 ---
 
@@ -18,8 +17,8 @@ I will update this in the installation instructions as soon as possible.
 | --- | --- | --- |
 | 0.0.1 | Basic test version (not on Github) | Completed |
 | 0.1.0 | Initial draft version for internal use | Completed |
-| 0.2.0 | Revised draft version with updated calculations and variables | Completed |
-| 0.2.1 | Revised draft verison with unit tests | In progress |
+| 0.2.0 | Revised draft version with updated calculations, variables, and unit tests | Almost completed |
+| 0.2.1 | Revised draft version with improved parameter handling | In progress |
 | 0.3.0 | Updated draft version with age- and sex-specific input | In planning |
 
 

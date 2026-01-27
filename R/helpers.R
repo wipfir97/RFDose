@@ -66,8 +66,7 @@ check_proportions <- function(proportions) {
   # Ensure input is numeric
   for (proportion in proportions) {
     if (!is.numeric(proportion)) {
-      warning("Input proportions must be numeric. Check your input values.")
-      return(FALSE)
+      stop("Input proportions must be numeric. Check your input values.")
     }
   }
 
@@ -75,7 +74,6 @@ check_proportions <- function(proportions) {
   for (proportion in proportions) {
     if (proportion > 1 | proportion < 0 | is.na(proportion)) {
       warning("Input proportions must be between 0 and 1. Check your input values.")
-      return(FALSE)
     }
   }
 
@@ -84,11 +82,9 @@ check_proportions <- function(proportions) {
     if (!isTRUE(all.equal(sum(unlist(proportions)), 1, tolerance = 1e-6))) {
       if(!(sum(unlist(proportions)) == 0)) {
         warning("Proportions do not sum to 1. Check your input values:")
-        return(FALSE)
       }
     }
   }
-  return(TRUE)  # Valid proportions
 }
 
 # =============================================================================
@@ -99,15 +95,12 @@ check_proportions <- function(proportions) {
 check_duration <- function(duration) {
   # Ensure input is numeric
   if (!is.numeric(duration)) {
-    warning("Duration must be numeric. Check your input values.")
-    return(FALSE)
+    stop("Duration must be numeric. Check your input values.")
   }
 
   if (duration < 0 | duration > 86400) {
     warning("Duration must be between 0 and 86400 seconds. Check your input values.")
-    return(FALSE)
   }
-  return(TRUE)
 }
 
 # =============================================================================
@@ -217,7 +210,7 @@ calculate_location_proportions <- function(travel_time,
                                            work_prop,
                                            outd_prop) {
   # Calculate travel proportion -----------------------------------------------
-  check_duration(travel_time)
+  #check_duration(travel_time)
   travel_prop_scaled <- travel_time/86400
 
   # Calculate home proportion --------------------------------------------------
@@ -238,7 +231,7 @@ calculate_location_proportions <- function(travel_time,
                        "home"   = home_prop_scaled,
                        "work"   = work_prop_scaled,
                        "outd"   = outd_prop_scaled)
-  check_proportions(unlist(scaled_props))
+  #check_proportions(unlist(scaled_props))
 
   return(scaled_props)
 }

@@ -16,6 +16,10 @@ get_wifi_dose <- function(travel_time,
   if (is.null(params)) {
     params <- load_params("params.yaml")}
 
+  # Check input values ========================================================
+  check_duration(travel_time)
+  check_proportions(wifi_prop_travel)
+
   # Extract parameters ========================================================
   ## Extract shared (non-tissue specific) parameters for wifi -----------------
   wifi_params  <- load_device_params(params, "wifi")

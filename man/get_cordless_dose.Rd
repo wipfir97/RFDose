@@ -7,11 +7,11 @@
 get_cordless_dose(duration, ear_proportion, params = NULL)
 }
 \arguments{
-\item{duration}{Duration of cordless calls in seconds}
+\item{duration}{Duration of cordless calls in seconds. >= 0 and <= 86400}
 
-\item{ear_proportion}{Proportion of holding cordless phone against ear}
+\item{ear_proportion}{Proportion of time cordless phone is held against ear during calls. >=0 and <=1.}
 
-\item{params}{Parameter list}
+\item{params}{Parameter list.}
 }
 \value{
 List with brain dose and body dose in mJ/kg/day

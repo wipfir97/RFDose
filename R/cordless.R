@@ -3,15 +3,17 @@
 # =============================================================================
 #' Calculate Dose from Cordless Calling
 #'
-#' @param duration Duration of cordless calls in seconds
-#' @param ear_proportion Proportion of holding cordless phone against ear
-#' @param params Parameter list
+#' @param duration Duration of cordless calls in seconds. >= 0 and <= 86400
+#' @param ear_proportion Proportion of time cordless phone is held against ear during calls. >=0 and <=1.
+#' @param params Parameter list.
 #' @returns List with brain dose and body dose in mJ/kg/day
 #' @export
 #' @import yaml
 get_cordless_dose <- function(duration,
                               ear_proportion,
                               params = NULL) {
+
+
   # Load parameters if not provided ===========================================
   if (is.null(params)) {
     params <- load_params("params.yaml")}

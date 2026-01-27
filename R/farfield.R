@@ -35,6 +35,7 @@ get_farfield_dose <- function(country,
 
   # Check input arguments =====================================================
   check_country(country)
+  check_duration(travel_time)
 
   # Extract parameters ========================================================
   ## Extract shared (non-tissue specific) parameters for mobile calling -------
@@ -47,7 +48,7 @@ get_farfield_dose <- function(country,
   body_params  <- load_tissue_params(params, "farf", "body")
 
   # Calculate aggregated power ================================================
-  aggr_pwr     <- get_farfield_pwr(country = country,
+  aggr_pwr     <- get_farfield_pwr(country     = country,
                                    urbanicity  = urbanicity,
                                    travel_time = travel_time,
                                    params      = farf_params)
@@ -97,29 +98,41 @@ get_farfield_pwr <- function(country,
 
 
   # Calculate proportion of time spent at home vs work vs outdoors based on travel time
-  loc_props <- calculate_location_proportions(travel_time = travel_time,
-                                              home_prop   = params$home_prop,
-                                              outd_prop   = params$outd_prop,
-                                              work_prop   = params$work_prop)
+  loc_props <- calculate_location_proportions(
+    travel_time = travel_time,
+    home_prop   = params$home_prop,
+    outd_prop   = params$outd_prop,
+    work_prop   = params$work_prop)
 
   # Calculate far-field power at home =========================================
-  ## Urban home
-  home_urban    <- urb_list$home_urban*get_farfield_pwr_by_country(country,
-                                                                   "home_urban_pwr",
-                                                                   params)
-  ## Suburban home
-  home_subur    <- urb_list$home_suburb*get_farfield_pwr_by_country(country,
-                                                                    "home_suburb_pwr",
-                                                                    params)
-  ## Rural home
-  home_rural    <- urb_list$home_rural*get_farfield_pwr_by_country(country,
-                                                                   "home_rural_pwr",
-                                                                   params)
-  ## Total
+  ## Urban home ---------------------------------------------------------------
+  home_urban <- prod(urb_list$home_urban,
+                     get_farfield_pwr_by_country(
+                       country,
+                       "home_urban_pwr",
+                       params
+                       )
+                     )
+  ## Suburban home ------------------------------------------------------------
+  home_subur <- prod(urb_list$home_suburb,
+                     get_farfield_pwr_by_country(
+                       country,
+                       "home_suburb_pwr",
+                       params
+                       )
+                     )
+  ## Rural home ---------------------------------------------------------------
+  home_rural <- prod(urb_list$home_rural,
+                     get_farfield_pwr_by_country(
+                       country,
+                       "home_rural_pwr",
+                       params
+                       )
+                     )
+  ## Total --------------------------------------------------------------------
   home_contr    <- loc_props$home * sum(home_urban,
                                         home_subur,
                                         home_rural)
-
 
   # Calculate far-field power outdoors ========================================
   ## Urban outdoors
@@ -147,7 +160,7 @@ get_farfield_pwr <- function(country,
                                                                      params)
   ## Suburban work
   work_subur    <- urb_list$work_suburb *  get_farfield_pwr_by_country(country,
-                                                                       "work_suburban_pwr",
+                                                                       "work_suburb_pwr",
                                                                        params)
   ## Rural work
   work_rural    <- urb_list$work_rural *  get_farfield_pwr_by_country(country,
@@ -160,9 +173,9 @@ get_farfield_pwr <- function(country,
 
 
   # Calculate far-field power during commute/transport ========================
-  tran_contr    <- loc_props$travel *  get_farfield_pwr_by_country(country,
-                                                                   "travel_pwr",
-                                                                   params)
+  tran_contr    <- loc_props$travel * get_farfield_pwr_by_country(country,
+                                                                  "travel_pwr",
+                                                                  params)
 
   # Calculate total far-field power and return result =========================
   aggr_pwr      <- sum(home_contr,
@@ -180,12 +193,19 @@ get_farfield_pwr <- function(country,
 #' @param base Base name
 #' @param params Parameter list
 get_farfield_pwr_by_country <- function(country, base, params) {
-  suffix <- ifelse(country == "Other", "other", country)
+
+  suffix <- ifelse(
+    country == "Other", "other", country)
+
   param_name <- paste0(base, "_", suffix)
+
+  value <- params[[param_name]]
+  if (is.na(value)) {
+    stop("Parameter value not found in parameter list.")
+  }
+
   return(params[[param_name]])
 }
-
-
 
 # =============================================================================
 #' Calculate far-field exposure SAR
