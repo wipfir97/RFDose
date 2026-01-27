@@ -20,6 +20,11 @@ get_tablet_dose <- function(dur_low,
   if (is.null(params)) {
     params <- load_params("params.yaml")}
 
+  check_duration(dur_low)
+  check_duration(dur_lowtomed)
+  check_duration(dur_medtohigh)
+  check_duration(dur_high)
+
   # Calculate total duration ==================================================
   duration <- sum(dur_low,
                   dur_lowtomed,

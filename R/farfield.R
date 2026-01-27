@@ -134,6 +134,7 @@ get_farfield_pwr <- function(country,
                                         home_subur,
                                         home_rural)
 
+
   # Calculate far-field power outdoors ========================================
   ## Urban outdoors
   outd_urban    <- urb_list$home_urban * get_farfield_pwr_by_country(country,

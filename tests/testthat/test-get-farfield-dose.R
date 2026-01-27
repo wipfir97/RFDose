@@ -80,6 +80,34 @@ reference_cases <- list(
   list(
     input = list(country = "CH", urbanicity = "suburban", travel_time = 1800),
     output = list(brain_farf_dose = 55.20, body_farf_dose = 47.24)
+  ),
+  list(
+    input = list(country = "CH", urbanicity = "urban", travel_time = 60000),
+    output = list(brain_farf_dose = 233.43, body_farf_dose = 199.79)
+  ),
+  list(
+    input = list(country = "CH", urbanicity = "rural", travel_time = 1800),
+    output = list(brain_farf_dose = 38.09, body_farf_dose = 32.60)
+  ),
+  list(
+    input = list(country = "IT", urbanicity = "suburban", travel_time = 1800),
+    output = list(brain_farf_dose = 109.54, body_farf_dose = 93.76)
+  ),
+  list(
+    input = list(country = "IT", urbanicity = "suburban", travel_time = 900),
+    output = list(brain_farf_dose = 109.11, body_farf_dose = 93.39)
+  ),
+  list(
+    input = list(country = "FR", urbanicity = "suburban", travel_time = 900),
+    output = list(brain_farf_dose = 377.94, body_farf_dose = 323.48)
+  ),
+  list(
+    input = list(country = "FR", urbanicity = "urban", travel_time = 60000),
+    output = list(brain_farf_dose = 693.28, body_farf_dose = 593.37)
+  ),
+  list(
+    input = list(country = "FR", urbanicity = "urban", travel_time = 0),
+    output = list(brain_farf_dose = 720.64, body_farf_dose = 616.79)
   )
 )
 
