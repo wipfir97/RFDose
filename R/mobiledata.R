@@ -50,6 +50,30 @@ get_mobiledata_dose <- function(duration_low,
   # Load parameters if not provided ===========================================
   if (is.null(params)) {
     params <- load_params("params.yaml")}
+
+  # Check if input arguments are correct type =================================
+  check_numeric_not_na(duration_low)
+  check_numeric_not_na(duration_lowmed)
+  check_numeric_not_na(duration_medhigh)
+  check_numeric_not_na(duration_high)
+  check_boolean_not_na(use_5g)
+  check_numeric_not_na(wifi_prop_home)
+  check_numeric_not_na(wifi_prop_work)
+  check_numeric_not_na(wifi_prop_travel)
+  check_character_not_na(urbanicity)
+  check_numeric_not_na(travel_time)
+
+  # Check if input parameters are within allowed bounds =======================
+  check_duration(duration_low)
+  check_duration(duration_lowmed)
+  check_duration(duration_medhigh)
+  check_duration(duration_high)
+  check_proportions(wifi_prop_home)
+  check_proportions(wifi_prop_work)
+  check_proportions(wifi_prop_travel)
+  check_urbanicity(urbanicity)
+  check_duration(travel_time)
+
   # Convert activity durations to proportions =================================
   act_pwr_props <- get_act_pwr_props(low_dur     = duration_low,
                                      lowmed_dur  = duration_lowmed,

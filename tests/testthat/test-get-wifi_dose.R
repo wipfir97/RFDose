@@ -20,14 +20,14 @@ test_that("get_wifi_dose errors if travel_time and wifi_prop_travel are not nume
   )
 })
 
-test_that("get_wifi_dose warns in case of nonsense input values", {
-  expect_warning(
+test_that("get_wifi_dose errors in case of nonsense input values", {
+  expect_error(
     get_wifi_dose(
       travel_time = -1800,
       wifi_prop_travel = 0.5),
     "input"
   )
-  expect_warning(
+  expect_error(
     get_wifi_dose(
       travel_time = 1800,
       wifi_prop_travel = 1.5),

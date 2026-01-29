@@ -56,6 +56,32 @@ get_mobilecall_dose <- function(
   if (is.null(params)) {
     params <- load_params("params.yaml")}
 
+
+  # Check if input arguments are correct type =================================
+  check_numeric_not_na(duration)
+  check_numeric_not_na(ear_prop)
+  check_numeric_not_na(headp_prop)
+  check_character_not_na(urbanicity)
+  check_boolean_not_na(use_5g)
+  check_numeric_not_na(travel_time)
+  check_numeric_not_na(headp_ear_num)
+  check_numeric_not_na(wifi_prop_home)
+  check_numeric_not_na(wifi_prop_work)
+  check_numeric_not_na(wifi_prop_travel)
+
+  # Check if input parameters are within allowed bounds =======================
+  check_duration(duration)
+  check_proportions(ear_prop)
+  check_proportions(headp_prop)
+  check_urbanicity(urbanicity)
+  check_duration(travel_time)
+  check_headp_num(headp_ear_num)
+  check_proportions(wifi_prop_home)
+  check_proportions(wifi_prop_work)
+  check_proportions(wifi_prop_travel)
+
+
+
   # Extract parameters ========================================================
   ## Extract shared (non-tissue specific) parameters for mobile calling -------
   call_params  <- load_device_params(params, "call")

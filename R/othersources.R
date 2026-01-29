@@ -23,6 +23,14 @@ get_other_dose <- function(duration_hotspot,
   if (is.null(params)) {
     params <- load_params("params.yaml")}
 
+  # Check input data ==========================================================
+  check_duration(duration_hotspot)
+  check_duration(duration_smartwatch)
+  check_duration(duration_tracker)
+  check_duration(duration_vr)
+  check_duration(duration_headphones)
+  check_duration(duration_gaming)
+
   # Calculate doses from individual devices ===================================
   ## From hotspot -------------------------------------------------------------
   hots_dose <- get_hotspot_dose(duration_hotspot,

@@ -9,9 +9,6 @@ check_country(country)
 \arguments{
 \item{country}{Country}
 }
-\value{
-re-coded urbanicity (binary variables)
-}
 \description{
 Check input values - country
 }

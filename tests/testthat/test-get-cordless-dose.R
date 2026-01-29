@@ -18,12 +18,12 @@ test_that("get_cordless_dose errors if duration and ear_proportion are not numer
   )
 })
 
-test_that("get_cordless_dose warns in case of nonsense input values", {
-  expect_warning(
+test_that("get_cordless_dose errors in case of nonsense input values", {
+  expect_error(
     get_cordless_dose(duration = -204,
                       ear_proportion = 0.9)
   )
-  expect_warning(
+  expect_error(
     get_cordless_dose(duration = 204,
                       ear_proportion = 1.5)
   )

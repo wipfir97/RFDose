@@ -47,8 +47,8 @@ test_that("get_farfield_dose errors if invalid urbanicity input is used", {
   )
 })
 
-test_that("get_farfield_dose warns if nonsensical travel_time is used", {
-  expect_warning(
+test_that("get_farfield_dose errors if nonsensical travel_time is used", {
+  expect_error(
     get_farfield_dose(
       country = "CH",
       urbanicity = "rural",

@@ -19,15 +19,15 @@ test_that("get_laptop_dose errors if input values are incorrect type", {
 })
 
 
-test_that("get_laptop_dose warns if nonsense input durations are used", {
-  expect_warning(
+test_that("get_laptop_dose errors if nonsense input durations are used", {
+  expect_error(
     get_laptop_dose(
       dur_low = 1967,
       dur_lowtomed = -219,
       dur_medtohigh = 1967,
       dur_high = 219)
   )
-  expect_warning(
+  expect_error(
     get_laptop_dose(
       dur_low = 90000,
       dur_lowtomed = 219,

@@ -73,7 +73,7 @@ check_proportions <- function(proportions) {
   # Check if proportions are each below 0
   for (proportion in proportions) {
     if (proportion > 1 | proportion < 0 | is.na(proportion)) {
-      warning("Input proportions must be between 0 and 1. Check your input values.")
+      stop("Input proportions must be between 0 and 1. Check your input values.")
     }
   }
 
@@ -81,7 +81,7 @@ check_proportions <- function(proportions) {
   if (length(proportions) > 1) {
     if (!isTRUE(all.equal(sum(unlist(proportions)), 1, tolerance = 1e-6))) {
       if(!(sum(unlist(proportions)) == 0)) {
-        warning("Proportions do not sum to 1. Check your input values:")
+        stop("Proportions do not sum to 1. Check your input values:")
       }
     }
   }
@@ -99,7 +99,34 @@ check_duration <- function(duration) {
   }
 
   if (duration < 0 | duration > 86400) {
-    warning("Duration must be between 0 and 86400 seconds. Check your input values.")
+    stop("Duration must be between 0 and 86400 seconds. Check your input values.")
+  }
+}
+
+# =============================================================================
+#' Check if value is numeric and non-NA
+#'
+check_numeric_not_na <- function(x, name) {
+  if (length(x) != 1L || !is.numeric(x) || is.na(x)) {
+    stop("{name} must be numeric and non-NA")
+  }
+}
+
+# =============================================================================
+#' Check if value is character and non-NA
+#'
+check_character_not_na <- function(x, name) {
+  if (length(x) != 1L || !is.character(x) || is.na(x)) {
+    stop("{name} must be type character and non-NA")
+  }
+}
+
+# =============================================================================
+#' Check if value is boolean and non-NA
+#'
+check_boolean_not_na <- function(x, name) {
+  if (length(x) != 1L || !is.logical(x) || is.na(x)) {
+    stop("{name} must be type Boolean and non-NA")
   }
 }
 
@@ -130,10 +157,21 @@ recode_urbanicity <- function(urbanicity) {
 }
 
 # =============================================================================
+#' Check input value s- urbanicity
+#'
+check_urbanicity <- function(urbanicity) {
+  # Ensure input contains only valid urbanicity values
+  valid_urbanicity <- c("rural", "suburban", "urban")
+
+  if (!urbanicity %in% valid_urbanicity) {
+    stop("{urbanicity} is an invalid urbanicity input value. Please enter rural, suburban, or urban.")
+  }
+}
+
+# =============================================================================
 #' Check input values - country
 #'
 #' @param country Country
-#' @returns re-coded urbanicity (binary variables)
 check_country <- function(country) {
   # Ensure input contains only valid urbanicity values
   valid_countries <- c("AT", "BE", "FR", "HU", "IT", "NL", "PL", "ES", "CH", "UK", "Other")
@@ -143,6 +181,15 @@ check_country <- function(country) {
   }
 }
 
+# =============================================================================
+#' Check input values - number of headphones
+#'
+#' @param headp_num Number of headphones
+check_headp_num <- function(headp_num) {
+  if (!headp_num %in% c(0, 1, 2)) {
+    stop("Invalid number of headphones. Must be 0, 1 or 2.")
+  }
+}
 
 # =============================================================================
 #' Load default parameter list
