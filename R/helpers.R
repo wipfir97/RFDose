@@ -98,8 +98,12 @@ check_duration <- function(duration) {
     stop("Duration must be numeric. Check your input values.")
   }
 
-  if (duration < 0 | duration > 86400) {
-    stop("Duration must be between 0 and 86400 seconds. Check your input values.")
+  if (duration < 0) {
+    stop("Duration cannot be a negative value. Check your input values.")
+  }
+
+  if (duration > 86400) {
+    warning("Duration exceeds 86400 seconds per day.")
   }
 }
 
