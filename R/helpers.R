@@ -16,6 +16,7 @@ load_params <- function(filename) {
 #' @param params Parameter list
 #' @param device_type Device type
 #' @returns Parameter list specific to selected device
+#' @importFrom utils modifyList
 load_device_params <- function(params, device_type) {
   # Check if device name exists in parameter file
   if (!(device_type %in% names(params$devices))) {
@@ -90,26 +91,37 @@ check_proportions <- function(proportions) {
 # =============================================================================
 #' Check input values - duration
 #'
-#' @param duration duration
+#' @param duration single duration value or vector
 #' @returns TRUE if duration is valid, FALSE if duration is not valid
 check_duration <- function(duration) {
   # Ensure input is numeric
-  if (!is.numeric(duration)) {
+  problems <- c()
+  if (any(!is.numeric(duration))) {
     stop("Duration must be numeric. Check your input values.")
   }
 
-  if (duration < 0) {
+  if (any(duration < 0)) {
     stop("Duration cannot be a negative value. Check your input values.")
   }
 
-  if (duration > 86400) {
-    warning("Duration exceeds 86400 seconds per day.")
+  if (any(duration > 86400)) {
+    problems <- c(problems, "Some durations exceed 86400 seconds per day.")
+  }
+
+  if (sum(duration > 86400)) {
+    problems <- c(problems, "The sum of durations exceeds 86400 seconds per day.")
+  }
+
+  if (length(problems) > 0) {
+    warning(paste(problems, collapes = " "))
   }
 }
 
 # =============================================================================
 #' Check if value is numeric and non-NA
 #'
+#' @param x number
+#' @param name name of value
 check_numeric_not_na <- function(x, name) {
   if (length(x) != 1L || !is.numeric(x) || is.na(x)) {
     stop("{name} must be numeric and non-NA")
@@ -119,6 +131,8 @@ check_numeric_not_na <- function(x, name) {
 # =============================================================================
 #' Check if value is character and non-NA
 #'
+#' @param x number
+#' @param name name of value
 check_character_not_na <- function(x, name) {
   if (length(x) != 1L || !is.character(x) || is.na(x)) {
     stop("{name} must be type character and non-NA")
@@ -128,6 +142,8 @@ check_character_not_na <- function(x, name) {
 # =============================================================================
 #' Check if value is boolean and non-NA
 #'
+#' @param x number
+#' @param name name of value
 check_boolean_not_na <- function(x, name) {
   if (length(x) != 1L || !is.logical(x) || is.na(x)) {
     stop("{name} must be type Boolean and non-NA")
@@ -163,6 +179,7 @@ recode_urbanicity <- function(urbanicity) {
 # =============================================================================
 #' Check input value s- urbanicity
 #'
+#' @param urbanicity urbanicity
 check_urbanicity <- function(urbanicity) {
   # Ensure input contains only valid urbanicity values
   valid_urbanicity <- c("rural", "suburban", "urban")
@@ -195,16 +212,6 @@ check_headp_num <- function(headp_num) {
   }
 }
 
-# =============================================================================
-#' Load default parameter list
-#'
-#' @param dest_file location where downloaded YAML file should be saved
-save_default_params_file <- function(dest_file = NULL) {
-  if (is.null(dest_file)) {dest_file <- "default_parameters.yaml"}
-
-  yaml::write_yaml(params, file = dest_file)
-  return(FALSE)
-}
 
 # =============================================================================
 #' Fill missing variables
@@ -269,9 +276,9 @@ calculate_location_proportions <- function(travel_time,
   ## but not from time outdoors or time at work
   home_prop_scaled   <- home_prop - travel_prop_scaled
   ## ensure travel time is not higher than time spent at home
-  if (home_prop_scaled < 0) {
-    warning("Time spent travelling/commuting must be lower that time spent at home.")
-  }
+  #if (home_prop_scaled < 0) {
+  #  warning("Time spent travelling/commuting must be lower that time spent at home.")
+  #}
 
   # Calculate work and outdoor proportion -------------------------------------
   work_prop_scaled   <- work_prop

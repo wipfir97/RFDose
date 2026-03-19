@@ -27,7 +27,10 @@ test_that("get_laptop_dose errors if nonsense input durations are used", {
       dur_medtohigh = 1967,
       dur_high = 219)
   )
-  expect_error(
+})
+
+test_that("get_laptop_dose warns if use duration exceeds 86400s per day", {
+  expect_warning(
     get_laptop_dose(
       dur_low = 90000,
       dur_lowtomed = 219,

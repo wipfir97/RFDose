@@ -33,7 +33,10 @@ test_that("get_other_dose errors in case of nonsense input values", {
       duration_headphones = 0,
       duration_gaming = 600)
   )
-  expect_error(
+})
+
+test_that("get_other_dose warns if input duration exceeds 86400s/day", {
+  expect_warning(
     get_other_dose(
       duration_hotspot = 0,
       duration_smartwatch = 0,

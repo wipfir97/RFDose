@@ -7,7 +7,7 @@
 check_duration(duration)
 }
 \arguments{
-\item{duration}{duration}
+\item{duration}{single duration value or vector}
 }
 \value{
 TRUE if duration is valid, FALSE if duration is not valid

@@ -11,33 +11,31 @@
 #' @returns List with brain dose and body dose in mJ/kg/day
 #' @export
 #' @import yaml
-get_tablet_dose <- function(dur_low,
-                            dur_lowtomed,
-                            dur_medtohigh,
-                            dur_high,
-                            params = NULL) {
+get_tablet_dose <- function(
+    dur_low,
+    dur_lowtomed,
+    dur_medtohigh,
+    dur_high,
+    params = NULL) {
   # Load parameters if not provided ===========================================
   if (is.null(params)) {
     params <- load_params("params.yaml")}
 
-  check_duration(dur_low)
-  check_duration(dur_lowtomed)
-  check_duration(dur_medtohigh)
-  check_duration(dur_high)
+  check_duration(c(dur_low, dur_lowtomed, dur_medtohigh, dur_high))
 
   # Calculate total duration ==================================================
-  duration <- sum(dur_low,
-                  dur_lowtomed,
-                  dur_medtohigh,
-                  dur_high)
-  check_duration(duration)
+  duration <- sum(
+    dur_low,
+    dur_lowtomed,
+    dur_medtohigh,
+    dur_high)
 
   # Calculate time proportions of each activity ===============================
-  act_pwr_props <- get_act_pwr_props(low_dur     = dur_low,
-                                     lowmed_dur  = dur_lowtomed,
-                                     medhigh_dur = dur_medtohigh,
-                                     high_dur    = dur_high)
-
+  act_pwr_props <- get_act_pwr_props(
+    low_dur     = dur_low,
+    lowmed_dur  = dur_lowtomed,
+    medhigh_dur = dur_medtohigh,
+    high_dur    = dur_high)
 
   # Extract parameters ========================================================
   ## Extract shared (non-tissue specific) parameters for laptop ---------------
@@ -51,8 +49,7 @@ get_tablet_dose <- function(dur_low,
 
 
   # Calculate aggregated power ================================================
-  aggr_pwr     <- get_tablet_pwr(act_pwr_props,
-                                 tblt_params)
+  aggr_pwr     <- get_tablet_pwr(act_pwr_props, tblt_params)
 
 
   # Calculate tissue SAR ======================================================
@@ -72,6 +69,7 @@ get_tablet_dose <- function(dur_low,
   # Return output =============================================================
   tblt_output  <- list("brain_tblt_dose" = brain_dose,
                        "body_tblt_dose"  = body_dose)
+
   return(tblt_output)
 }
 
@@ -81,16 +79,19 @@ get_tablet_dose <- function(dur_low,
 #' @param act_pwr_props descr
 #' @param params descr
 #' @returns Aggregated tablet power
-get_tablet_pwr <- function(act_pwr_props,
-                           params) {
+get_tablet_pwr <- function(
+    act_pwr_props,
+    params) {
   # Calculate power for 2.4 GHz ===============================================
   ## Weighted duty cycles -----------------------------------------------------
   ### Low output power activities
-  tblt_2_low_dutycycle   <- sum(act_pwr_props$low_prop*params$wifi_2_low_dutycycle,
-                                act_pwr_props$lowmed_prop*params$wifi_2_lowmed_dutycycle)
+  tblt_2_low_dutycycle   <- sum(
+    act_pwr_props$low_prop*params$wifi_2_low_dutycycle,
+    act_pwr_props$lowmed_prop*params$wifi_2_lowmed_dutycycle)
   ### High output power activities
-  tblt_2_high_dutycycle  <- sum(act_pwr_props$medhigh_prop*params$wifi_2_medhigh_dutycycle,
-                                act_pwr_props$high_prop*params$wifi_2_high_dutycycle)
+  tblt_2_high_dutycycle  <- sum(
+    act_pwr_props$medhigh_prop*params$wifi_2_medhigh_dutycycle,
+    act_pwr_props$high_prop*params$wifi_2_high_dutycycle)
 
   ## Output power -------------------------------------------------------------
   ### Calculate low and high output power, respectively
@@ -104,11 +105,13 @@ get_tablet_pwr <- function(act_pwr_props,
   # Calculate power for 5.0 GHz ===============================================
   ## Weighted duty cycles -----------------------------------------------------
   ### Low output power activities
-  tblt_5_low_dutycycle   <- sum(act_pwr_props$low_prop*params$wifi_5_low_dutycycle,
-                                act_pwr_props$lowmed_prop*params$wifi_5_lowmed_dutycycle)
+  tblt_5_low_dutycycle   <- sum(
+    act_pwr_props$low_prop*params$wifi_5_low_dutycycle,
+    act_pwr_props$lowmed_prop*params$wifi_5_lowmed_dutycycle)
   ### High output power activities
-  tblt_5_high_dutycycle  <- sum(act_pwr_props$medhigh_prop*params$wifi_5_medhigh_dutycycle,
-                                act_pwr_props$high_prop*params$wifi_5_high_dutycycle)
+  tblt_5_high_dutycycle  <- sum(
+    act_pwr_props$medhigh_prop*params$wifi_5_medhigh_dutycycle,
+    act_pwr_props$high_prop*params$wifi_5_high_dutycycle)
 
   ## Output power -------------------------------------------------------------
   ### Calculate low and high output power, respectively
@@ -132,8 +135,9 @@ get_tablet_pwr <- function(act_pwr_props,
 #' @param params descr
 #' @param tissue_params descr
 #' @returns Aggregated tablet SAR
-get_tablet_sar <- function(params,
-                           tissue_params) {
+get_tablet_sar <- function(
+    params,
+    tissue_params) {
   # Calculate SAR from 2.4 GHz
   sar_2    <- params$wifi_2_prop * tissue_params$tblt_2_sar
 

@@ -6,6 +6,9 @@
 \usage{
 check_urbanicity(urbanicity)
 }
+\arguments{
+\item{urbanicity}{urbanicity}
+}
 \description{
 Check input value s- urbanicity
 }

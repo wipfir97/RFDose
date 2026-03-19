@@ -20,10 +20,7 @@ get_laptop_dose <- function(dur_low,
   if (is.null(params)) {
     params <- load_params("params.yaml")}
 
-  check_duration(dur_low)
-  check_duration(dur_lowtomed)
-  check_duration(dur_medtohigh)
-  check_duration(dur_high)
+  check_duration(c(dur_low, dur_lowtomed, dur_medtohigh, dur_high))
 
   # Calculate total use duration ==============================================
   duration <- sum(dur_low,
@@ -31,8 +28,6 @@ get_laptop_dose <- function(dur_low,
                   dur_medtohigh,
                   dur_high)
 
-  # Check input values ========================================================
-  check_duration(duration)
 
   # Calculate time proportions of each activity ===============================
   act_pwr_props <- get_act_pwr_props(low_dur     = dur_low,

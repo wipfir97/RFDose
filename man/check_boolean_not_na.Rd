@@ -6,6 +6,11 @@
 \usage{
 check_boolean_not_na(x, name)
 }
+\arguments{
+\item{x}{number}
+
+\item{name}{name of value}
+}
 \description{
 Check if value is boolean and non-NA
 }

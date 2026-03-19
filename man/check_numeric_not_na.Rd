@@ -6,6 +6,11 @@
 \usage{
 check_numeric_not_na(x, name)
 }
+\arguments{
+\item{x}{number}
+
+\item{name}{name of value}
+}
 \description{
 Check if value is numeric and non-NA
 }

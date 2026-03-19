@@ -13,9 +13,10 @@
 #' @importFrom tidyr unnest_wider
 #' @import yaml
 #' @export
-calculate_emf_doses <- function(data,
-                                param_file = NULL,
-                                default_value_file = NULL) {
+calculate_emf_doses <- function(
+    data,
+    param_file = NULL,
+    default_value_file = NULL) {
 
   # Parameters ================================================================
   ## Load internal parameter file if no param_file is supplied ----------------
@@ -62,7 +63,7 @@ calculate_emf_doses <- function(data,
         )
       )
     ) |>
-    tidyr::unnest_wider(outcome) |>
+    tidyr::unnest_wider(.data$outcome) |>
     dplyr::ungroup()
 
   ## Return output as data frame
