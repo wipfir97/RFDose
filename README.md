@@ -17,9 +17,8 @@ IMPORTANT for test users: with the update to 0.2.0, the R package is renamed to 
 | --- | --- | --- |
 | 0.0.1 | Basic test version (not on Github) | Completed |
 | 0.1.0 | Initial draft version for internal use | Completed |
-| 0.2.0 | Revised draft version with updated calculations, variables, and unit tests | Almost completed |
-| 0.2.1 | Revised draft version with improved parameter handling | In progress |
-| 0.3.0 | Updated draft version with age- and sex-specific input | In planning |
+| 0.2.0 | Revised draft version with updated calculations, variables, and unit tests. Based on dose calculator version 7.3 | Completed |
+| 0.3.0 | Updated draft version with age- and sex-specific input. Based on dose calculator version 7.5 | In progress |
 
 
 
@@ -62,11 +61,11 @@ To install the R package, first set your PAT with this command:
 # Set your personal access token (replace YOUR_PAT with the token you generated and copied)
 Sys.setenv(GITHUB_PAT = "YOUR_PAT")
 ```
-To install the **most current development version (v.0.2.0)**, use this command:
+To install the **previous version (v.0.1.0)**, use this command:
 
 ```{r}
 # Install RFDose using your PAT
-remotes::install_github("wipfir97/RFDose@dev/0.2.0")
+remotes::install_github("wipfir97/RFDose@v0.1.0")
 ```
 
 ---
