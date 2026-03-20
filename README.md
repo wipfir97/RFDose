@@ -18,7 +18,7 @@ IMPORTANT for test users: with the update to 0.2.0, the R package is renamed to 
 | 0.0.1 | Basic test version (not on Github) | Completed |
 | 0.1.0 | Initial draft version for internal use | Completed |
 | 0.2.0 | Revised draft version with updated calculations, variables, and unit tests. Based on dose calculator version 7.3 | Completed |
-| 0.3.0 | Updated draft version with age- and sex-specific input. Based on dose calculator version 7.5 | In progress |
+| 0.3.0 | Updated draft version with age- and sex-specific input. **Will allow custom parameter and default values.** Based on dose calculator version 7.5 | In progress |
 
 
 
@@ -163,12 +163,6 @@ Parameters are specified in [this YAML file](inst/extdata/params.yaml)
 
 More detailed descriptions of each parameter, including units, can be found in the [parameter reference file](doc/params_reference.csv). **Note: this parameter reference file is continuously updated and not yet completed.**
 
-Users may supply their own parameter file. It must be structured exactly like the in-built parameter file (containing same parameter names and hierarchy).
-
-```{r}
-# Supply own parameter file
-print("Instructions on how to supply own parameter file will be added here")
-```
 
 ### Missing data and default values
 
@@ -178,13 +172,6 @@ Missing values in the dataset supplied by the user will be replaced with the val
 
 At the moment, there is no limit to how much missing data is allowed. **However, variables with more than 10% missing data will raise a warning message.**
 
-Users may supply their own default values. The custom file must follow the same structure as the in-build default variable file (containing the same default value names).
-
-```{r}
-# Supply own default values
-print("Instructions on how to supply own default values will be added here")
-```
----
 
 ## 📃 License
 
