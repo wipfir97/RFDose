@@ -1,7 +1,7 @@
 Package: RFDose
 Type: Package
 Title: Functions for RF-EMF Dose Calculations
-Version: 0.2.0
+Version: 0.3.0
 Author: Irina Wipf
 Maintainer: <irina.wipf@swisstph.ch>
 Description: Package for calculating RF-EMF doses for cohorts.
