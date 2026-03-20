@@ -77,3 +77,4 @@ test_that("get_total_dose fails on missing numbers", {
     get_total_dose(vars),
     "missing")
 })
+

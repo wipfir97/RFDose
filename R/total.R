@@ -63,7 +63,7 @@ calculate_emf_doses <- function(
         )
       )
     ) |>
-    tidyr::unnest_wider(.data$outcome) |>
+    tidyr::unnest_wider(outcome) |>
     dplyr::ungroup()
 
   ## Return output as data frame
