@@ -18,7 +18,7 @@ IMPORTANT for test users: with the update to 0.2.0, the R package is renamed to 
 | 0.0.1 | Basic test version (not on Github) | Completed |
 | 0.1.0 | Initial draft version for internal use | Completed |
 | 0.2.0 | Revised draft version with updated calculations, variables, and unit tests. Based on dose calculator version 7.3 | Completed |
-| 0.3.0 | Updated draft version with age- and sex-specific input. **Will allow custom parameter and default values.** Based on dose calculator version 7.5 | In progress |
+| 0.3.0 | Updated, likely final version (based on dose calculator 7.6). **Will allow custom parameter and default values.** Based on dose calculator version 7.5 | In progress |
 
 
 

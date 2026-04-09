@@ -4,7 +4,8 @@
 #' Calculate Dose from Cordless Calling
 #'
 #' @param duration Duration of cordless calls in seconds. >= 0 and <= 86400
-#' @param ear_proportion Proportion of time cordless phone is held against ear during calls. >=0 and <=1.
+#' @param ear_proportion Proportion of time cordless phone is held against ear
+#' during calls. >=0 and <=1.
 #' @param params Parameter list.
 #' @returns List with brain dose and body dose in mJ/kg/day
 #' @export

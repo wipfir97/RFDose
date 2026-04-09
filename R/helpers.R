@@ -1,12 +1,13 @@
 # =============================================================================
 #' Loading parameters
 #'
-#'@param filename Name of parameter file to load (must be in yaml format)
+#'@param path Name of parameter file to load (must be in yaml format)
 #'@returns List of parameters loaded from yaml input file
-load_params <- function(filename) {
-  params_file     <- system.file("extdata", filename,
-                                 package = "RFDose")
-  params          <- read_yaml(params_file)
+load_params <- function(path = NULL) {
+  if (is.null(path)) {
+    path <- system.file("extdata", "params.yaml", package = "RFDose")
+  }
+  params          <- yaml::read_yaml(path)
   return(params)
 }
 

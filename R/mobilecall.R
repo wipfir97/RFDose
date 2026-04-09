@@ -1,6 +1,7 @@
 ###############################################################################
 # Calculate total RF-EMF dose (for brain and body) from mobile calling
 
+# TODO: change heap_prop/ear_prop to way hamed suggested
 
 ###############################################################################
 # Total mobile call dose ======================================================
@@ -11,23 +12,29 @@
 #'
 #' @details
 #' The mobile call RF-EMF dose is calculated as:
-#' \deqn{Dose_{mobilecall} = Dose_{phone} + Dose_{phoneBluetooth} + Dose_{headphonesBluetooth}}
+#' \deqn{Dose_{mobilecall} = Dose_{phone} + Dose_{phoneBluetooth} +
+#' Dose_{headphonesBluetooth}}
 #'
 #' Where:
 #'
 #' * \eqn{Dose_{mobilecall}} is the total dose from all mobile call activities
 #' * \eqn{Dose_{phone}} is the dose from the mobile phone (no Bluetooth)
 #' * \eqn{Dose_{phoneBluetooth}} is the dose from Bluetooth by the phone
-#' * \eqn{Dose_{headphonesBluetooth}} is the dose from Bluetooth by the Bluetooth headphones
+#' * \eqn{Dose_{headphonesBluetooth}} is the dose from Bluetooth by the
+#' Bluetooth headphones
 #'
 #'
 #' @param duration Duration of mobile phone call in seconds per day
-#' @param ear_prop Proportion of time mobile phone is held against ear during call
-#' @param headp_prop Proportion of time Bluetooth headphones are used during mobile call while phone is NOT held against ear
+#' @param ear_prop Proportion of time mobile phone is held against ear
+#' during call
+#' @param headp_prop Proportion of time Bluetooth headphones are used during
+#' mobile call while phone is NOT held against ear
 #' @param urbanicity Urbanicity of home / workplace
-#' @param use_5g TRUE if participant uses 5G services on mobile phone, FALSE if not
+#' @param use_5g TRUE if participant uses 5G services on mobile phone,
+#' FALSE if not
 #' @param travel_time Time spent commuting in seconds per day
-#' @param headp_ear_num If particpant uses 1 or 2 Bluetooth headphones during mobile call
+#' @param headp_ear_num If particpant uses 1 or 2 Bluetooth headphones
+#' during mobile call
 #' @param wifi_prop_home ...
 #' @param wifi_prop_work ...
 #' @param wifi_prop_travel ...
@@ -40,7 +47,7 @@
 #'
 #' @seealso [get_mobilecall_phone_dose()], [get_mobilecall_bt_phone_dose()], [get_mobilecall_bt_headp_dose()]
 #' @export
-get_mobilecall_dose <- function(
+mobilecall_dose <- function(
     duration,
     ear_prop,
     headp_prop,
@@ -80,98 +87,60 @@ get_mobilecall_dose <- function(
   check_proportions(wifi_prop_work)
   check_proportions(wifi_prop_travel)
 
-
-  # Extract parameters ========================================================
-  ## Extract shared (non-tissue specific) parameters for mobile calling -------
-  call_params  <- load_device_params(params, "call")
-  ## Extract brain-specific parameters (SAR values) for mobile calling --------
-  brain_params <- load_tissue_params(params, "call", "brain")
-  ## Extract body-specific parameters (SAR values) for mobile calling ---------
-  body_params  <- load_tissue_params(params, "call", "body")
-
   # Derive additional input values ============================================
   ## Derive speaker mode use proportion ---------------------------------------
   speaker_prop <- (1-ear_prop)*(1-headp_prop)
   ## Update headp prop to scale by total mobile call duration -----------------
   headp_prop   <-(1-ear_prop)*headp_prop
 
-  # Calculate doses from different sources ====================================
-  ## Calculate dose from phone (no bluetooth contribution) --------------------
-  ### Brain
-  phone_dose_brain <- get_mobilecall_phone_dose(
-    duration         = duration,
-    ear_prop         = ear_prop,
-    speaker_prop     = speaker_prop,
-    headp_prop       = headp_prop,
-    urbanicity       = urbanicity,
-    use_5g           = use_5g,
-    travel_time      = travel_time,
-    wifi_prop_home   = wifi_prop_home,
-    wifi_prop_work   = wifi_prop_work,
-    wifi_prop_travel = wifi_prop_travel,
-    params           = call_params,
-    tissue_params    = brain_params)
+  # Calculate dose for mobile phone (no bluetooth) ============================
+  ## Brain --------------------------------------------------------------------
+  msar_phone_brain <- mobilecall_msar(
+    tissue = "brain",
+    prop_native,
+    prop_data,
+    prop_wifi)
 
-  ### Body
-  phone_dose_body <- get_mobilecall_phone_dose(
-    duration         = duration,
-    ear_prop         = ear_prop,
-    speaker_prop     = speaker_prop,
-    headp_prop       = headp_prop,
-    urbanicity       = urbanicity,
-    use_5g           = use_5g,
-    travel_time      = travel_time,
-    wifi_prop_home   = wifi_prop_home,
-    wifi_prop_work   = wifi_prop_work,
-    wifi_prop_travel = wifi_prop_travel,
-    params           = call_params,
-    tissue_params    = body_params)
+  dose_phone_brain <- msar_phone_brain * duration
 
-  ## Calculate dose from phone (bluetooth contribution) -----------------------
-  ### scaled with headphone use proportion!
-  ### Brain
-  phone_bt_dose_brain <- get_mobilecall_bt_phone_dose(
-    duration      = duration,
-    headp_prop    = headp_prop,
-    params        = call_params,
-    tissue_params = brain_params)
+  ## Body ---------------------------------------------------------------------
+  msar_phone_body <- mobilecall_msar(
+    tissue = "body",
+    prop_native,
+    prop_data,
+    prop_wifi)
 
-  ### Body
-  phone_bt_dose_body <- get_mobilecall_bt_phone_dose(
-    duration      = duration,
-    headp_prop    = headp_prop,
-    params        = call_params,
-    tissue_params = body_params)
+  dose_phone_body <- msar_phone_body * duration
 
-  ## Calculate dose from bluetooth headphones ---------------------------------
-  ### scaled with headphone use proportion!
-  ### Brain
-  headp_bt_dose_brain <- headp_prop*get_mobilecall_bt_headp_dose(
-    duration      = duration,
-    headp_prop    = headp_prop,
-    headp_ear_num = headp_ear_num,
-    params        = call_params,
-    tissue_params = brain_params)
 
-  ### Body
-  headp_bt_dose_body  <- headp_prop*get_mobilecall_bt_headp_dose(
-    duration      = duration,
-    headp_prop    = headp_prop,
-    headp_ear_num = headp_ear_num,
-    params        = call_params,
-    tissue_params = body_params)
+  # Calculate dose for mobile phone (bluetooth only) ==========================
+  # TODO don't forget to scale with headphone use prop
+  ## Brain --------------------------------------------------------------------
+  dose_bt_phone_brain <- NA
+  ## Body ---------------------------------------------------------------------
+  dose_bt_phone_body  <- NA
+
+
+  # Calculate dose for bluetooth headphones ===================================
+  # TODO don't forget to scale with headphone use prop
+  ## Brain --------------------------------------------------------------------
+  dose_bt_headp_brain <- NA
+  ## Body ---------------------------------------------------------------------
+  dose_bt_headp_body  <- NA
+
 
   # Add doses from different sources and return result ========================
   ## Brain --------------------------------------------------------------------
   brain_dose <- sum(
-    phone_dose_brain,
-    phone_bt_dose_brain,
-    headp_bt_dose_brain)
+    dose_phone_brain,
+    dose_bt_phone_brain,
+    dose_bt_headp_brain)
   ## Body ---------------------------------------------------------------------
   body_dose  <- sum(
-    phone_dose_body,
-    phone_bt_dose_body,
-    headp_bt_dose_body)
+    dose_phone_body,
+    dose_bt_phone_body,
+    dose_bt_headp_body)
+
   ## Save as list and return --------------------------------------------------
   output_list <- list(
     brain_call_dose = brain_dose,
@@ -179,6 +148,221 @@ get_mobilecall_dose <- function(
 
   return(output_list)
 }
+
+###############################################################################
+# Mobilecall mSAR =============================================================
+#' Calculate momentary SAR (mSAR) from mobile calling -------------------------
+#'
+#'
+#' @export
+mobilecall_msar <- function(
+    tissue,
+    prop_native,
+    prop_data,
+    prop_wifi,
+    headp_prop,
+    ear_prop,
+    speaker_prop,
+    urbanicity,
+    travel_time,
+    params) {
+  # Native call
+  msar_native <- prop_native * mpc_msar_native()
+  # Data call
+  msar_data   <- prop_data * mpc_msar_data()
+  # Wifi call
+  msar_wifi   <- prop_wifi * mpc_msar_wifi()
+  # Combine and return result
+  total_msar <- sum(
+    msar_native,
+    msarn_data,
+    msar_wifi)
+
+  return(total_msar)
+}
+
+# Mobilecall mSAR for native calls ============================================
+# Mobilecall mSAR (native call) -----------------------------------------------
+mpc_msar_native <- function(
+    tissue,
+    headp_prop,
+    ear_prop,
+    speaker_prop,
+    urbanicity,
+    travel_time,
+    params) {
+
+  # 2G
+  msar_native_2g <- call_params$native_2g_prop * mpc_msar_native_bytech(
+    tissue        = tissue,
+    tech          = "2g",
+    headp_prop    = headp_prop,
+    ear_prop      = ear_prop,
+    speaker_prop  = speaker_prop,
+    urbanicity    = urbanicity,
+    travel_time   = travel_time,
+    device_params = device_params,
+    tissue_params = tissue_params)
+  # 3G
+  msar_native_3g <- call_params$native_3g_prop * mpc_msar_native_bytech(
+    tissue       = tissue,
+    tech         = "3g",
+    headp_prop   = headp_prop,
+    ear_prop     = ear_prop,
+    speaker_prop = speaker_prop,
+    urbanicity   = urbanicity,
+    travel_time  = travel_time,
+    device_params = device_params,
+    tissue_params = tissue_params)
+  # 4G
+  msar_native_4g <- call_params$native_4g_prop * mpc_msar_native_bytech(
+    tissue       = tissue,
+    tech         = "4g",
+    headp_prop   = headp_prop,
+    ear_prop     = ear_prop,
+    speaker_prop = speaker_prop,
+    urbanicity   = urbanicity,
+    travel_time  = travel_time,
+    device_params = device_params,
+    tissue_params = tissue_params)
+  # 5G
+  msar_native_5g <- call_params$native_5g_prop * mpc_msar_native_bytech(
+    tissue       = tissue,
+    tech         = "5g",
+    headp_prop   = headp_prop,
+    ear_prop     = ear_prop,
+    speaker_prop = speaker_prop,
+    urbanicity   = urbanicity,
+    travel_time  = travel_time,
+    device_params = device_params,
+    tissue_params = tissue_params)
+
+  # combine and return
+  total_msar_native <- sum(
+    msar_native_2g,
+    msar_native_3g,
+    msar_native_4g,
+    msar_native_5g
+  )
+  return(total_msar_native)
+}
+
+# Mobilecall mSAR (nativecall) by technology (2G, 3G, 4G, 5G) -----------------
+mpc_msar_native_bytech <- function(
+    tissue,
+    tech,
+    headp_prop,
+    ear_prop,
+    speaker_prop,
+    urbanicity,
+    travel_time,
+    params = load_params()) {
+  # output power
+  mpc_pwr_native <- mpc_pwr_native_bytech(
+    tech          = tech,
+    urbanicity    = urbanicity,
+    travel_time   = travel_time,
+    params        = params)
+  # sar
+  mpc_sar_native <- mpc_sar_native_bytech(
+    tissue        = tissue,
+    tech          = tech,
+    headp_prop    = headp_prop,
+    ear_prop      = ear_prop,
+    speaker_prop  = speaker_prop,
+    params        = params)
+
+  # calculate msar (output power * sar) and return result
+  msar_bytech <- mpc_pwr_native * mpc_sar_native
+
+  return(msar_bytech)
+}
+
+# Mobilecall output power (nativecall) by technology (2G, 3G, 4G, 5G) ---------
+mpc_pwr_native_bytech <- function(
+    tech,
+    urbanicity,
+    travel_time,
+    params = load_params()) {
+
+  # calculate location proportions
+  loc_props <- calculate_location_proportions(
+    travel_time = travel_time,
+    home_prop   = params$global$home_prop,
+    outd_prop   = params$global$outd_prop,
+    work_prop   = params$global$work_prop)
+
+  # define prefix for finding correct parameters
+  prefix <- paste("native", tech, substr(urbanicity, 0, 3), sep = "_")
+
+  # home/work
+  indoor_prop <- loc_props$home + loc_props$work
+  pwr_indoor  <- indoor_prop * params$devices$call[[paste0(prefix, "_indo_pwr")]]
+
+  # outdoors
+  pwr_outdoor   <- loc_props$outd * params$devices$call[[paste0(prefix, "_outd_pwr")]]
+
+  # commuting/traveling
+  pwr_travel <- loc_props$travel * params$devices$call[[paste0("native_",tech, "travel_pwr")]]
+
+  # combine, multiply with duty cycle, and return resul
+  dutycycle <- params$devices$call[[paste0("native_", tech, "_dutycycle")]]
+  pwr_total <- sum(pwr_indoor, pwr_outdoor, pwr_travel) * dutycycle
+
+  return(pwr_total)
+}
+
+
+# Mobilecall SAR by technology (nativecall) -----------------------------------
+mpc_sar_native_bytech <- function(
+    tissue,
+    tech,
+    headp_prop,
+    ear_prop,
+    speaker_prop,
+    params = load_params()) {
+  # define prefix for finding correct tissue parameter
+  prefix <- paste0("native_", tech)
+  # load tissue-specific parameters (SAR values)
+  tissue_params <- load_tissue_params(params, "call", tissue)
+  # phone on ear
+  mpc_sar_ear <- tissue_params[[paste0(prefix, "_ear_sar")]]
+  # phone with headphone
+  mpc_sar_headphones <- sum(
+    params$devices$call$headp_face_prop * tissue_params[[paste0(prefix, "_headp_face_sar")]],
+    params$devices$call$headp_pock_prop * tissue_params[[paste0(prefix, "_headp_pock_sar")]],
+    params$devices$call$headp_else_prop * tissue_params[[paste0(prefix, "_headp_else_sar")]]
+  )
+  # phone in speaker mode
+  mpc_sar_speaker <- tissue_params[[paste0(prefix, "_speaker_sar")]]
+
+  print(names(tissue_params))
+
+  mpc_sar <- sum(
+    ear_prop * mpc_sar_ear,
+    headp_prop * mpc_sar_headphones,
+    speaker_prop * mpc_sar_speaker
+  )
+
+  return(mpc_sar)
+}
+
+
+
+
+# Mobilecall mSAR (data call) =================================================
+mpc_msar_data <- function() {
+  return(NA)
+}
+
+# Mobilecall mSAR (wifi call) =================================================
+mpc_msar_wifi <- function() {
+  return(NA)
+}
+
+
+
+
 
 # Total mobile call dose from phone (no bluetooth) ============================
 ## Dose -----------------------------------------------------------------------

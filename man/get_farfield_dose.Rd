@@ -7,9 +7,9 @@
 get_farfield_dose(country, urbanicity, travel_time, params = NULL)
 }
 \arguments{
-\item{country}{Country (Austria="AT", Belgium="BE", France="FR", Hungary="HU",
-Italy="IT", Netherlands="NL", Poland="PL", Spain="ES", Switzerland="CH", United Kingdom="UK",
-other country/unknown="Other")}
+\item{country}{Country (Austria="AT", Belgium="BE", France="FR",
+Hungary="HU", Italy="IT", Netherlands="NL", Poland="PL", Spain="ES",
+Switzerland="CH", United Kingdom="UK", other country/unknown="Other")}
 
 \item{urbanicity}{Urbanicity of home environment}
 

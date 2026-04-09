@@ -1,6 +1,6 @@
-test_that("get_mobilecall_dose errors if required argument is missing", {
+test_that("mobilecall_dose errors if required argument is missing", {
   expect_error(
-    get_mobilecall_dose(
+    mobilecall_dose(
       duration = 425,
       ear_prop = 0.6,
       headp_prop = 0.5,
@@ -14,9 +14,9 @@ test_that("get_mobilecall_dose errors if required argument is missing", {
   )
 })
 
-test_that("get_mobilecall_dose warns if total daily use duration exceeds 86400 seconds", {
+test_that("mobilecall_dose warns if total daily use duration exceeds 86400 seconds", {
   expect_warning(
-      get_mobilecall_dose(
+      mobilecall_dose(
         duration = 425,
         ear_prop = 0.5,
         headp_prop = 0.5,
@@ -31,9 +31,9 @@ test_that("get_mobilecall_dose warns if total daily use duration exceeds 86400 s
   )
 })
 
-test_that("get_mobilecall_dose errors if required argument is NA", {
+test_that("mobilecall_dose errors if required argument is NA", {
   expect_error(
-    get_mobilecall_dose(
+    mobilecall_dose(
       duration = 425,
       ear_prop = NA,
       headp_prop = 0.5,
@@ -48,9 +48,9 @@ test_that("get_mobilecall_dose errors if required argument is NA", {
   )
 })
 
-test_that("get_mobilecall_dose errors if required argument is incorrect type", {
+test_that("mobilecall_dose errors if required argument is incorrect type", {
   expect_error(
-    get_mobilecall_dose(
+    mobilecall_dose(
       duration = 425,
       ear_prop = 0.5,
       headp_prop = 0.5,
@@ -64,7 +64,7 @@ test_that("get_mobilecall_dose errors if required argument is incorrect type", {
     )
   )
   expect_error(
-    get_mobilecall_dose(
+    mobilecall_dose(
       duration = 425,
       ear_prop = 0.5,
       headp_prop = 0.5,
@@ -78,7 +78,7 @@ test_that("get_mobilecall_dose errors if required argument is incorrect type", {
     )
   )
     expect_error(
-      get_mobilecall_dose(
+      mobilecall_dose(
         duration = 425,
         ear_prop = 0.5,
         headp_prop = 0.5,
@@ -92,7 +92,7 @@ test_that("get_mobilecall_dose errors if required argument is incorrect type", {
       )
     )
     expect_error(
-      get_mobilecall_dose(
+      mobilecall_dose(
         duration = 425,
         ear_prop = 0.5,
         headp_prop = 0.5,
@@ -107,9 +107,9 @@ test_that("get_mobilecall_dose errors if required argument is incorrect type", {
     )
 })
 
-test_that("get_mobilecall_dose errors if input argument makes no sense", {
+test_that("mobilecall_dose errors if input argument makes no sense", {
   expect_error(
-    get_mobilecall_dose(
+    mobilecall_dose(
       duration = 425,
       ear_prop = 1.5,
       headp_prop = 0.5,
@@ -123,7 +123,7 @@ test_that("get_mobilecall_dose errors if input argument makes no sense", {
       )
     )
   expect_error(
-    get_mobilecall_dose(
+    mobilecall_dose(
       duration = -425,
       ear_prop = 1.5,
       headp_prop = 0.5,
@@ -137,7 +137,7 @@ test_that("get_mobilecall_dose errors if input argument makes no sense", {
     )
   )
   expect_error(
-    get_mobilecall_dose(
+    mobilecall_dose(
       duration = 425,
       ear_prop = 0.5,
       headp_prop = 0.5,
@@ -220,9 +220,9 @@ reference_cases <- list(
   )
 )
 
-test_that("get_mobilecall_dose matches reference calculations", {
+test_that("mobilecall_dose matches reference calculations", {
   for (case in reference_cases) {
-    result <- do.call(get_mobilecall_dose, case$input)
+    result <- do.call(mobilecall_dose, case$input)
     expect_equal(result, case$output, tolerance = 1e-0) # tolerance due to rounding inconsistencies
   }
 })

@@ -32,9 +32,11 @@ calculate_emf_doses <- function(
   # Default values ============================================================
   ## Load internal default value file if no default_value_file is supplied ----
   defaultvars <- if (is.null(default_value_file)) {
-    yaml::read_yaml(system.file("extdata",
-                                "defaultvariables.yaml",
-                                package = "RFDose"))
+    yaml::read_yaml(
+      system.file(
+        "extdata",
+        "defaultvariables.yaml",
+        package = "RFDose"))
   } else {
     yaml::read_yaml(default_value_file)
   }
@@ -74,14 +76,12 @@ calculate_emf_doses <- function(
 ###############################################################################
 #' Calculate Total RF-EMF Dose for Brain and Body from All Sources
 #'
-#'
-#'
 #' @param sample A list with input values for a single sample
-#' @param params A parameter list
+#' @param param_file parameter file
 #' @returns A list with results for brain and body dose for a single sample
 #' @export
 get_total_dose <- function(sample,
-                           params = NULL) {
+                           params) {
   # Check input ===============================================================
   ## Load internal parameter file if no param_file is supplied ----------------
   params <- if (is.null(params)) {
@@ -94,7 +94,7 @@ get_total_dose <- function(sample,
   }
   # Calculate contribution of each exposure source ============================
   ## Calculate mobile call contribution ---------------------------------------
-  call_dose <- get_mobilecall_dose(
+  call_dose <- mobilecall_dose(
     duration         = sample$mpc_duration,
     ear_prop         = sample$mpc_ear_prop,
     headp_prop       = sample$mpc_headp_prop,
