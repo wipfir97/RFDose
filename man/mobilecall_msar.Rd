@@ -4,7 +4,18 @@
 \alias{mobilecall_msar}
 \title{Calculate momentary SAR (mSAR) from mobile calling -------------------------}
 \usage{
-mobilecall_msar(prop_native, prop_data, prop_wifi)
+mobilecall_msar(
+  tissue,
+  prop_native,
+  prop_data,
+  prop_wifi,
+  headp_prop,
+  ear_prop,
+  speaker_prop,
+  urbanicity,
+  travel_time,
+  params = load_params()
+)
 }
 \description{
 Calculate momentary SAR (mSAR) from mobile calling -------------------------

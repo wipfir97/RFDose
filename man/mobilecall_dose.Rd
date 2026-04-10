@@ -15,7 +15,7 @@ mobilecall_dose(
   wifi_prop_home,
   wifi_prop_work,
   wifi_prop_travel,
-  params = NULL
+  params = load_params()
 )
 }
 \arguments{

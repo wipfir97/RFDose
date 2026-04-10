@@ -4,10 +4,10 @@
 \alias{load_params}
 \title{Loading parameters}
 \usage{
-load_params(filename)
+load_params(path = NULL)
 }
 \arguments{
-\item{filename}{Name of parameter file to load (must be in yaml format)}
+\item{path}{Name of parameter file to load (must be in yaml format)}
 }
 \value{
 List of parameters loaded from yaml input file
