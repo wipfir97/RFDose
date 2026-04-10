@@ -137,7 +137,72 @@ test_that("mpc_pwr_native_bytech output power values match reference values", {
 
 # mpc_msar_native_bytech ======================================================
 # TODO: add more reference values
+reference_cases <- list(
+  list(
+    input = list(
+      tissue = "brain",
+      tech   = "2g",
+      headp_prop = 0.17,
+      ear_prop = 0.66,
+      speaker_prop = 0.17,
+      urbanicity = "suburban",
+      travel_time = 1800
+    ),
+    output = 6.900257
+  )
+)
 
-# mpc_msar_native =============================================================
+test_that("mpc_msar_native_bytech msar values match reference values", {
+  for (case in reference_cases) {
+    result <- do.call(mpc_msar_native_bytech, case$input)
+    expect_equal(result, case$output, tolerance = 1e-2)
+  }
+})
+
+# mpc_sar_data =============================================================
+## mpc_sar_data_bytech
+reference_cases <- list(
+  list(
+    input = list(
+      tissue = "brain",
+      tech   = "4g",
+      headp_prop = 0.17,
+      ear_prop = 0.66,
+      speaker_prop = 0.17
+    ),
+    output = 0.04840192
+  )
+)
+test_that("mpc_sar_data_bytech sar values match reference values", {
+  for (case in reference_cases) {
+    result <- do.call(mpc_sar_data_bytech, case$input)
+    expect_equal(result, case$output, tolerance = 1e-2)
+  }
+})
+
+# mpc_pwr_data =============================================================
+## mpc_pwr_data_bytech
+reference_cases <- list(
+  list(
+    input = list(
+      tech   = "4g",
+      urbanicity = "suburban",
+      travel_time = 1800
+    ),
+    output = 4.28
+  )
+)
+test_that("mpc_pwr_data_bytech sar values match reference values", {
+  for (case in reference_cases) {
+    result <- do.call(mpc_pwr_data_bytech, case$input)
+    expect_equal(result, case$output, tolerance = 1e-2)
+  }
+})
+
+
 
 # mobilecall_msar =============================================================
+
+# mpc_sar_wifi ================================================================
+
+# mpc_pwr_wifi ================================================================
