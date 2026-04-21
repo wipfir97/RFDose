@@ -4,12 +4,6 @@ global:
   home_prop: 0.71
   outd_prop: 0.08
   work_prop: 0.21
-  tech_3g_prop_5gno: 0.1
-  tech_4g_prop_5gno: 0.9
-  tech_5g_prop_5gno: 0
-  tech_3g_prop: 0.1
-  tech_4g_prop: 0.75
-  tech_5g_prop: 0.15
 devices:
   dect:
     shared:
@@ -85,6 +79,10 @@ devices:
     data_3g_prop: 0.02
     data_4g_prop: 0.66
     data_5g_prop: 0.315
+    data_2g_prop_no5g: 0
+    data_3g_prop_no5g: 0.02
+    data_4g_prop_no5g: 0.98
+    data_5g_prop_no5g: 0
     native_2g_dutycycle: 0.12
     native_3g_dutycycle: 0.98
     native_4g_dutycycle: 0.043
@@ -233,11 +231,26 @@ devices:
       native_5g_headp_pock_sar: 0.0047746
       native_5g_headp_else_sar: 0
       native_5g_speaker_sar: 0.004775
-      data_ear_sar: 0.0072926
-      data_headp_face_sar: 0.000994539
-      data_headp_pock_sar: 0.010499677
-      data_headp_else_sar: 0
-      data_speaker_sar: 0.002126318
+      data_2g_ear_sar: 0.008183
+      data_2g_headp_face_sar: 0.001082
+      data_2g_headp_pock_sar: 0.012277
+      data_2g_headp_else_sar: 0
+      data_2g_speaker_sar: 0.002316
+      data_3g_ear_sar: 0.007597
+      data_3g_headp_face_sar: 0.001066
+      data_3g_headp_pock_sar: 0.010754
+      data_3g_headp_else_sar: 0
+      data_3g_speaker_sar: 0.002208
+      data_4g_ear_sar: 0.007628
+      data_4g_headp_face_sar: 0.001031
+      data_4g_headp_pock_sar: 0.011222
+      data_4g_headp_else_sar: 0
+      data_4g_speaker_sar: 0.002207
+      data_5g_ear_sar: 0.004750
+      data_5g_headp_face_sar: 0.0007066
+      data_5g_headp_pock_sar: 0.0047746
+      data_5g_headp_else_sar: 0
+      data_5g_speaker_sar: 0.004775
       wifi_2_ear_sar: 0.005180701
       wifi_2_headp_face_sar: 0.000860849
       wifi_2_headp_pock_sar: 0.010153247

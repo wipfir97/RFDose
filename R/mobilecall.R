@@ -1,9 +1,6 @@
 ###############################################################################
 # Calculate total RF-EMF dose (for brain and body) from mobile calling
-
-# TODO: change heap_prop/ear_prop to way hamed suggested
 # TODO: once functions are checked, remove redundancy by combining similar functions
-# TODO: re-implement use_5g variable
 
 ###############################################################################
 # Total mobile call dose ======================================================
@@ -30,7 +27,7 @@
 #' @param ear_prop Proportion of time mobile phone is held against ear
 #' during call
 #' @param headp_prop Proportion of time Bluetooth headphones are used during
-#' mobile call while phone is NOT held against ear
+#' mobile call
 #' @param urbanicity Urbanicity of home / workplace
 #' @param use_5g TRUE if participant uses 5G services on mobile phone,
 #' FALSE if not
@@ -87,21 +84,37 @@ mobilecall_dose <- function(
 
   # Derive additional input values ============================================
   ## Derive speaker mode use proportion ---------------------------------------
-  speaker_prop <- (1-ear_prop)*(1-headp_prop)
-  ## Update headp prop to scale by total mobile call duration -----------------
-  headp_prop   <-(1-ear_prop)*headp_prop
+  speaker_prop <- 1-ear_prop-headp_prop
+
+  ## Derive data and wifi proportion ------------------------------------------
+  # TODO: double check this step and find more elegant solution
+  loc_props <- calculate_location_proportions(
+    travel_time = travel_time,
+    home_prop   = params$global$home_prop,
+    outd_prop   = params$global$outd_prop,
+    work_prop   = params$global$work_prop)
+
+  native_prop <- params$devices$call$native_prop
+
+  wifi_prop <- (1-native_prop)*sum(
+    loc_props$home*wifi_prop_home,
+    loc_props$work*wifi_prop_work,
+    loc_props$travel*wifi_prop_travel)
+
+  data_prop <- 1-native_prop-wifi_prop
 
   # Calculate dose for mobile phone (no bluetooth) ============================
   ## Brain --------------------------------------------------------------------
   msar_phone_brain <- mobilecall_msar(
     tissue       = "brain",
-    prop_native  = params$devices$call$native_prop,
-    prop_data    = params$devices$call$data_prop,
-    prop_wifi    = params$devices$call$wifi_prop,
+    prop_native  = native_prop,
+    prop_data    = data_prop,
+    prop_wifi    = wifi_prop,
     headp_prop   = headp_prop,
     ear_prop     = ear_prop,
     speaker_prop = speaker_prop,
     urbanicity   = urbanicity,
+    use_5g       = use_5g,
     travel_time  = travel_time,
     params       = params)
 
@@ -110,13 +123,14 @@ mobilecall_dose <- function(
   ## Body ---------------------------------------------------------------------
   msar_phone_body <- mobilecall_msar(
     tissue       = "body",
-    prop_native  = params$devices$call$native_prop,
-    prop_data    = params$devices$call$data_prop,
-    prop_wifi    = params$devices$call$wifi_prop,
+    prop_native  = native_prop,
+    prop_data    = data_prop,
+    prop_wifi    = wifi_prop,
     headp_prop   = headp_prop,
     ear_prop     = ear_prop,
     speaker_prop = speaker_prop,
     urbanicity   = urbanicity,
+    use_5g       = use_5g,
     travel_time  = travel_time,
     params       = params)
 
@@ -161,8 +175,10 @@ mobilecall_msar <- function(
     ear_prop,
     speaker_prop,
     urbanicity,
+    use_5g,
     travel_time,
     params = load_params()) {
+
   # Native call
   msar_native <- prop_native * mpc_msar_native(
     tissue       = tissue,
@@ -180,6 +196,7 @@ mobilecall_msar <- function(
     ear_prop     = ear_prop,
     speaker_prop = speaker_prop,
     urbanicity   = urbanicity,
+    use_5g       = use_5g,
     travel_time  = travel_time,
     params       = params
   )
@@ -202,7 +219,6 @@ mobilecall_msar <- function(
 
 # Mobilecall mSAR for native calls ============================================
 # Mobilecall mSAR (native call) -----------------------------------------------
-# TODO: make this code more elegant as for data and wifi
 mpc_msar_native <- function(
     tissue,
     headp_prop,
@@ -212,56 +228,42 @@ mpc_msar_native <- function(
     travel_time,
     params = load_params()) {
 
-  # 2G
-  msar_native_2g <- params$devices$call$native_2g_prop * mpc_msar_native_bytech(
-    tissue        = tissue,
-    tech          = "2g",
-    headp_prop    = headp_prop,
-    ear_prop      = ear_prop,
-    speaker_prop  = speaker_prop,
-    urbanicity    = urbanicity,
-    travel_time   = travel_time,
-    params        = params)
-  # 3G
-  msar_native_3g <- params$devices$call$native_3g_prop * mpc_msar_native_bytech(
-    tissue       = tissue,
-    tech         = "3g",
-    headp_prop   = headp_prop,
-    ear_prop     = ear_prop,
-    speaker_prop = speaker_prop,
-    urbanicity   = urbanicity,
-    travel_time  = travel_time,
-    params        = params)
-  # 4G
-  msar_native_4g <- params$devices$call$native_4g_prop * mpc_msar_native_bytech(
-    tissue       = tissue,
-    tech         = "4g",
-    headp_prop   = headp_prop,
-    ear_prop     = ear_prop,
-    speaker_prop = speaker_prop,
-    urbanicity   = urbanicity,
-    travel_time  = travel_time,
-    params        = params)
-  # 5G
-  msar_native_5g <- params$devices$call$native_5g_prop * mpc_msar_native_bytech(
-    tissue       = tissue,
-    tech         = "5g",
-    headp_prop   = headp_prop,
-    ear_prop     = ear_prop,
-    speaker_prop = speaker_prop,
-    urbanicity   = urbanicity,
-    travel_time  = travel_time,
-    params        = params)
+  # define technologies
+  techs <- c("2g", "3g", "4g", "5g")
 
-  # combine and return
-  total_msar_native <- sum(
-    msar_native_2g,
-    msar_native_3g,
-    msar_native_4g,
-    msar_native_5g
+  # define function to get correct proportion parameter
+  get_native_prop <- function(params, tech, use_5g) {
+    params$devices$call[[paste0("native_", tech, "_prop")]]
+  }
+
+  # apply to all tachnologies
+  msar_native <- setNames(
+    lapply(techs, function(tech) {
+
+
+      prop <- get_native_prop(params, tech)
+
+      prop * mpc_msar_native_bytech(
+        tissue       = tissue,
+        tech         = tech,
+        headp_prop   = headp_prop,
+        ear_prop     = ear_prop,
+        speaker_prop = speaker_prop,
+        urbanicity   = urbanicity,
+        travel_time  = travel_time,
+        params       = params
+      )
+    }),
+    techs
+  )
+
+
+  # sum and return
+  total_msar_native <- sum(unlist(msar_native)
   )
   return(total_msar_native)
 }
+
 
 # Mobilecall mSAR (nativecall) by technology (2G, 3G, 4G, 5G) -----------------
 mpc_msar_native_bytech <- function(
@@ -274,13 +276,13 @@ mpc_msar_native_bytech <- function(
     travel_time,
     params = load_params()) {
   # output power
-  mpc_pwr_native <- mpc_pwr_native_bytech(
+  mpc_pwr_native <- mpc_pwr_native(
     tech          = tech,
     urbanicity    = urbanicity,
     travel_time   = travel_time,
     params        = params)
   # sar
-  mpc_sar_native <- mpc_sar_native_bytech(
+  mpc_sar_native <- mpc_sar_native(
     tissue        = tissue,
     tech          = tech,
     headp_prop    = headp_prop,
@@ -295,7 +297,7 @@ mpc_msar_native_bytech <- function(
 }
 
 # Mobilecall output power (nativecall) by technology (2G, 3G, 4G, 5G) ---------
-mpc_pwr_native_bytech <- function(
+mpc_pwr_native <- function(
     tech,
     urbanicity,
     travel_time,
@@ -330,7 +332,7 @@ mpc_pwr_native_bytech <- function(
 
 
 # Mobilecall SAR by technology (nativecall) -----------------------------------
-mpc_sar_native_bytech <- function(
+mpc_sar_native <- function(
     tissue,
     tech,
     headp_prop,
@@ -352,7 +354,6 @@ mpc_sar_native_bytech <- function(
   # phone in speaker mode
   mpc_sar_speaker <- tissue_params[[paste0(prefix, "_speaker_sar")]]
 
-
   mpc_sar <- sum(
     ear_prop * mpc_sar_ear,
     headp_prop * mpc_sar_headphones,
@@ -370,6 +371,7 @@ mpc_msar_data <- function(
     ear_prop,
     speaker_prop,
     urbanicity,
+    use_5g,
     travel_time,
     params = load_params()) {
 
@@ -377,14 +379,18 @@ mpc_msar_data <- function(
   techs <- c("2g", "3g", "4g", "5g")
 
   # define function to get correct proportion parameter
-  get_data_prop <- function(params, tech) {
-    params$devices$call[[paste0("data_", tech, "_prop")]]
+  get_data_prop <- function(params, tech, use_5g) {
+    if (use_5g) {
+      params$devices$call[[paste0("data_", tech, "_prop")]]
+    } else {
+      params$devices$call[[paste0("data_", tech, "_prop_no5g")]]
+    }
   }
   # apply to all tachnologies
   msar_data <- setNames(
     lapply(techs, function(tech) {
 
-      prop <- get_data_prop(params, tech)
+      prop <- get_data_prop(params, tech, use_5g)
 
       prop * mpc_msar_data_bytech(
         tissue       = tissue,
@@ -417,13 +423,13 @@ mpc_msar_data_bytech <- function(
     travel_time,
     params = load_params()) {
   # output power
-  mpc_pwr_data <- mpc_pwr_data_bytech(
+  mpc_pwr_data <- mpc_pwr_data(
     tech          = tech,
     urbanicity    = urbanicity,
     travel_time   = travel_time,
     params        = params)
   # sar
-  mpc_sar_data <- mpc_sar_data_bytech(
+  mpc_sar_data <- mpc_sar_data(
     tissue        = tissue,
     tech          = tech,
     headp_prop    = headp_prop,
@@ -438,7 +444,7 @@ mpc_msar_data_bytech <- function(
 }
 
 # Mobilecall data output power by technology ----------------------------------
-mpc_pwr_data_bytech <- function(
+mpc_pwr_data <- function(
     tech,
     urbanicity,
     travel_time,
@@ -472,7 +478,7 @@ mpc_pwr_data_bytech <- function(
 }
 
 # Mobilecall data sar by technology -------------------------------------------
-mpc_sar_data_bytech <- function(
+mpc_sar_data <- function(
     tissue,
     tech,
     headp_prop,

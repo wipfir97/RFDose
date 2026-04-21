@@ -1,4 +1,4 @@
-test_that("mobilecall_dose errors if required argument is missing", {
+test_that("mobilecall errors if required argument is missing", {
   expect_error(
     mobilecall_dose(
       duration = 425,
@@ -156,7 +156,7 @@ test_that("mobilecall_dose errors if input argument makes no sense", {
 reference_cases <- list(
   list(
     input = list(
-      duration         = 425,
+      duration         = 30000,
       ear_prop         = 0.66,
       headp_prop       = 0.5,
       urbanicity       = "suburban",
@@ -167,14 +167,14 @@ reference_cases <- list(
       wifi_prop_work   = 0.5,
       wifi_prop_travel = 0.5),
     output = list(
-      brain_call_dose  = 121.55,
-      body_call_dose   = 20.08)
+      brain_call_dose  = 7693.22,
+      body_call_dose   = 1176.17)
   ),
   list(
     input = list(
-      duration         = 425,
-      ear_prop         = 0.7,
-      headp_prop       = 0.47,
+      duration         = 424.5,
+      ear_prop         = 0.5,
+      headp_prop       = 0.5,
       urbanicity       = "suburban",
       use_5g           = TRUE,
       travel_time      = 1800,
@@ -183,46 +183,46 @@ reference_cases <- list(
       wifi_prop_work   = 0.5,
       wifi_prop_travel = 0.5),
     output = list(
-      brain_call_dose  = 128.50,
-      body_call_dose   = 20.85)
+      brain_call_dose  = 84.75,
+      body_call_dose   = 14.86)
   ),
   list(
     input = list(
-      duration         = 425,
+      duration         = 424.5,
       ear_prop         = 0.66,
       headp_prop       = 0.5,
       urbanicity       = "suburban",
-      use_5g           = TRUE,
+      use_5g           = FALSE,
       travel_time      = 1800,
       headp_ear_num    = 2,
-      wifi_prop_home   = 1,
-      wifi_prop_work   = 1,
+      wifi_prop_home   = 0.5,
+      wifi_prop_work   = 0.5,
       wifi_prop_travel = 0.5),
     output = list(
-      brain_call_dose  = 98.83,
-      body_call_dose   = 18.61)
+      brain_call_dose  = 112.65,
+      body_call_dose   = 16.98)
   ),
   list(
     input = list(
-      duration         = 425,
+      duration         = 424.5,
       ear_prop         = 0.66,
       headp_prop       = 0.5,
       urbanicity       = "suburban",
       use_5g           = TRUE,
       travel_time      = 1800,
       headp_ear_num    = 2,
-      wifi_prop_home   = 0.8,
-      wifi_prop_work   = 0.5,
+      wifi_prop_home   = 0,
+      wifi_prop_work   = 0,
       wifi_prop_travel = 0),
     output = list(
-      brain_call_dose  = 106.77,
-      body_call_dose   = 19.23)
+      brain_call_dose  = 115.33,
+      body_call_dose   = 16.90)
   )
 )
 
 test_that("mobilecall_dose matches reference calculations", {
   for (case in reference_cases) {
     result <- do.call(mobilecall_dose, case$input)
-    expect_equal(result, case$output, tolerance = 1e-0) # tolerance due to rounding inconsistencies
+    expect_equal(result, case$output, tolerance = 1e-1) # tolerance due to rounding inconsistencies
   }
 })

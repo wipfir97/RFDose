@@ -5,6 +5,8 @@
 RFDose implements the deterministic RF-EMF dose calculations developed in 
 Jalilian et al. (publication in writing stage).
 
+IMPORTANT for users switching from 0.2.0 to 0.3.0: the definition of the headp_prop input variable changed. 
+
 IMPORTANT for test users: with the update to 0.2.0, the R package is renamed to RFDose.
 
 ---
@@ -120,8 +122,8 @@ We consider the following exposure sources in the dose calculations:
 | urbanicity | - | categorical | Urbanicity |  |
 | headp_ear_num | - | numeric | Number of earphones worn during call (1 or 2) | 🆕 |
 | mpc_duration | s | numeric | Duration of daily mobile phone call |  |
-| mpc_ear_prop | - | proportion | ... |  |
-| mpc_headp_prop | - | proportion | ... |  |
+| mpc_ear_prop | - | proportion | Proportion of time mobile phone is held against ear during call |  |
+| mpc_headp_prop | - | proportion | Proportion of time Bluetooth headphones are used during call|  |
 | dect_duration | s | numeric | ... |  |
 | dect_ear_prop | - | proportion | ... |  |
 | mpd_wifi_prop_home | --- | --- | Proportion of WiFi vs mobile data (3G, 4G, 5G) while using mobile phone AT HOME | 🆕 |
