@@ -236,7 +236,7 @@ mpc_msar_native <- function(
     params$devices$call[[paste0("native_", tech, "_prop")]]
   }
 
-  # apply to all tachnologies
+  # apply to all technologies
   msar_native <- setNames(
     lapply(techs, function(tech) {
 

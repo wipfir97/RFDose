@@ -264,10 +264,11 @@ fill_missing_variables <- function(data, defaults, warn_threshold = 0.1) {
 #' @param work_prop proportion of time spent at work WITHOUT considering commute
 #' @param outd_prop proportion of time spent outside WITHOUT considering commute
 #' @returns list with proportions
-calculate_location_proportions <- function(travel_time,
-                                           home_prop,
-                                           work_prop,
-                                           outd_prop) {
+calculate_location_proportions <- function(
+    travel_time,
+    home_prop,
+    work_prop,
+    outd_prop) {
   # Calculate travel proportion -----------------------------------------------
   #check_duration(travel_time)
   travel_prop_scaled <- travel_time/86400
@@ -289,7 +290,7 @@ calculate_location_proportions <- function(travel_time,
   scaled_props <- list("travel" = travel_prop_scaled,
                        "home"   = home_prop_scaled,
                        "work"   = work_prop_scaled,
-                       "outd"   = outd_prop_scaled)
+                       "out"   = outd_prop_scaled)
   #check_proportions(unlist(scaled_props))
 
   return(scaled_props)
@@ -328,10 +329,10 @@ calculate_data_tech_proportions <- function(use_5g,
 #' @param lowmed_dur ...
 #' @param medhigh_dur ...
 #' @param high_dur ...
-get_act_pwr_props <- function(low_dur,
-                              lowmed_dur,
-                              medhigh_dur,
-                              high_dur) {
+act_pwr_props <- function(low_dur,
+                          lowmed_dur,
+                          medhigh_dur,
+                          high_dur) {
   total_dur    <- sum(low_dur, lowmed_dur, medhigh_dur, high_dur)
   if (total_dur == 0) {
     return(list("low_prop"     = 0,
@@ -343,10 +344,10 @@ get_act_pwr_props <- function(low_dur,
     lowmed_prop  <- lowmed_dur/total_dur
     medhigh_prop <- medhigh_dur/total_dur
     high_prop    <- high_dur/total_dur
-    return(list("low_prop"     = low_prop,
-                "lowmed_prop"  = lowmed_prop,
-                "medhigh_prop" = medhigh_prop,
-                "high_prop"    = high_prop))
+    return(list("low"     = low_prop,
+                "lowmed"  = lowmed_prop,
+                "medhigh" = medhigh_prop,
+                "high"    = high_prop))
   }
 }
 
