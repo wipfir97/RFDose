@@ -59,28 +59,8 @@ mobilecall_dose <- function(
     wifi_prop_travel,
     params = load_params()) {
 
-  # Check if input arguments are correct type =================================
-  check_numeric_not_na(duration)
-  check_numeric_not_na(ear_prop)
-  check_numeric_not_na(headp_prop)
-  check_character_not_na(urbanicity)
-  check_boolean_not_na(use_5g)
-  check_numeric_not_na(travel_time)
-  check_numeric_not_na(headp_ear_num)
-  check_numeric_not_na(wifi_prop_home)
-  check_numeric_not_na(wifi_prop_work)
-  check_numeric_not_na(wifi_prop_travel)
-
-  # Check if input parameters are within allowed bounds =======================
-  check_duration(duration)
-  check_proportions(ear_prop)
-  check_proportions(headp_prop)
-  check_urbanicity(urbanicity)
-  check_duration(travel_time)
-  check_headp_num(headp_ear_num)
-  check_proportions(wifi_prop_home)
-  check_proportions(wifi_prop_work)
-  check_proportions(wifi_prop_travel)
+  # Input checks ==============================================================
+  ## TODO: add input checks
 
   # Derive additional input values ============================================
   ## Derive speaker mode use proportion ---------------------------------------
@@ -88,7 +68,7 @@ mobilecall_dose <- function(
 
   ## Derive data and wifi proportion ------------------------------------------
   # TODO: double check this step and find more elegant solution
-  loc_props <- calculate_location_proportions(
+  loc_props <- location_props(
     travel_time = travel_time,
     home_prop   = params$global$home_prop,
     outd_prop   = params$global$outd_prop,
@@ -144,8 +124,6 @@ mobilecall_dose <- function(
   msar_bt_body  <- mobilecall_bt_msar(tissue = "body", params = params)
   dose_bt_body  <- msar_bt_body * headp_prop * headp_ear_num
 
-
-
   # Add doses from different sources and return result ========================
   ## Brain --------------------------------------------------------------------
   brain_dose <- sum(dose_phone_brain, dose_bt_brain)
@@ -154,8 +132,8 @@ mobilecall_dose <- function(
 
   ## Save as list and return --------------------------------------------------
   output_list <- list(
-    brain_call_dose = brain_dose,
-    body_call_dose  = body_dose)
+    "brain_call_dose" = brain_dose,
+    "body_call_dose"  = body_dose)
 
   return(output_list)
 }
@@ -208,6 +186,8 @@ mobilecall_msar <- function(
     speaker_prop = speaker_prop,
     params       = params
   )
+  print(paste(prop_native, prop_data, prop_wifi))
+  print(paste(msar_native, msar_data, msar_wifi))
   # Combine and return result
   total_msar <- sum(
     msar_native,
@@ -231,17 +211,12 @@ mpc_msar_native <- function(
   # define technologies
   techs <- c("2g", "3g", "4g", "5g")
 
-  # define function to get correct proportion parameter
-  get_native_prop <- function(params, tech, use_5g) {
-    params$devices$call[[paste0("native_", tech, "_prop")]]
-  }
-
   # apply to all technologies
   msar_native <- setNames(
     lapply(techs, function(tech) {
 
 
-      prop <- get_native_prop(params, tech)
+      prop <- params$devices$call[[paste0("native_", tech, "_prop")]]
 
       prop * mpc_msar_native_bytech(
         tissue       = tissue,
@@ -259,8 +234,8 @@ mpc_msar_native <- function(
 
 
   # sum and return
-  total_msar_native <- sum(unlist(msar_native)
-  )
+  total_msar_native <- sum(unlist(msar_native))
+
   return(total_msar_native)
 }
 
@@ -304,7 +279,7 @@ mpc_pwr_native <- function(
     params = load_params()) {
 
   # calculate location proportions
-  loc_props <- calculate_location_proportions(
+  loc_props <- location_props(
     travel_time = travel_time,
     home_prop   = params$global$home_prop,
     outd_prop   = params$global$outd_prop,
@@ -315,10 +290,10 @@ mpc_pwr_native <- function(
 
   # home/work
   indoor_prop <- loc_props$home + loc_props$work
-  pwr_indoor  <- indoor_prop * params$devices$call[[paste0(prefix, "_indo_pwr")]]
+  pwr_indoor  <- indoor_prop * params$devices$call[[paste0(prefix, "_ind_pwr")]]
 
   # outdoors
-  pwr_outdoor   <- loc_props$outd * params$devices$call[[paste0(prefix, "_outd_pwr")]]
+  pwr_outdoor   <- loc_props$out * params$devices$call[[paste0(prefix, "_out_pwr")]]
 
   # commuting/traveling
   pwr_travel <- loc_props$travel * params$devices$call[[paste0("native_",tech, "travel_pwr")]]
@@ -451,7 +426,7 @@ mpc_pwr_data <- function(
     params = load_params()) {
 
   # calculate location proportions
-  loc_props <- calculate_location_proportions(
+  loc_props <- location_props(
     travel_time = travel_time,
     home_prop   = params$global$home_prop,
     outd_prop   = params$global$outd_prop,
@@ -462,16 +437,19 @@ mpc_pwr_data <- function(
 
   # home/work
   indoor_prop <- loc_props$home + loc_props$work
-  pwr_indoor  <- indoor_prop * params$devices$call[[paste0(prefix, "_indo_pwr")]]
+
+  pwr_indoor  <- indoor_prop * params$devices$call[[paste0(prefix, "_ind_pwr")]]
 
   # outdoors
-  pwr_outdoor   <- loc_props$outd * params$devices$call[[paste0(prefix, "_outd_pwr")]]
+  pwr_outdoor   <- loc_props$out * params$devices$call[[paste0(prefix, "_out_pwr")]]
+
 
   # commuting/traveling
   pwr_travel <- loc_props$travel * params$devices$call[[paste0("data_",tech, "travel_pwr")]]
 
   # combine, multiply with duty cycle, and return resul
   dutycycle <- params$devices$call[[paste0("data_", tech, "_dutycycle")]]
+
   pwr_total <- sum(pwr_indoor, pwr_outdoor, pwr_travel) * dutycycle
 
   return(pwr_total)

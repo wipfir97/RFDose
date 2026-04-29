@@ -64,7 +64,7 @@ mobiledata_dose <- function(
   dose_body  <- duration*msar_body
 
   # Return result =============================================================
-  return(list("data_brain_dose" = dose_brain, "data_body_dose" = dose_body))
+  return(list("brain_data_dose" = dose_brain, "body_data_dose" = dose_body))
 }
 
 

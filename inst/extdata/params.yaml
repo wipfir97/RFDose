@@ -6,9 +6,8 @@ global:
   work_prop: 0.21
 devices:
   dect:
-    shared:
-      dect_pwr: 250
-      dect_duty_factor: 0.04
+    dect_pwr: 250
+    dect_dutycycle: 0.04
     brain:
       dect_ear_sar: 0.034926
       dect_speaker_sar: 0.002603877
@@ -87,65 +86,65 @@ devices:
     native_3g_dutycycle: 0.98
     native_4g_dutycycle: 0.043
     native_5g_dutycycle: 0.000
-    native_2g_sub_indo_pwr: 1281.52
-    native_2g_urb_indo_pwr: 374.8682087
-    native_2g_rur_indo_pwr: 1371.23
-    native_2g_sub_outd_pwr: 383.90
-    native_2g_urb_outd_pwr: 173.81
-    native_2g_rur_outd_pwr: 433.90
+    native_2g_sub_ind_pwr: 1281.52
+    native_2g_urb_ind_pwr: 374.8682087
+    native_2g_rur_ind_pwr: 1371.23
+    native_2g_sub_out_pwr: 383.90
+    native_2g_urb_out_pwr: 173.81
+    native_2g_rur_out_pwr: 433.90
     native_2g_travel_pwr: 383.9
-    native_3g_sub_indo_pwr: 2.03
-    native_3g_urb_indo_pwr: 0.97
-    native_3g_rur_indo_pwr: 6.2
-    native_3g_sub_outd_pwr: 0.63
-    native_3g_urb_outd_pwr: 0.22
-    native_3g_rur_outd_pwr: 2.64
+    native_3g_sub_ind_pwr: 2.03
+    native_3g_urb_ind_pwr: 0.97
+    native_3g_rur_ind_pwr: 6.2
+    native_3g_sub_out_pwr: 0.63
+    native_3g_urb_out_pwr: 0.22
+    native_3g_rur_out_pwr: 2.64
     native_3g_travel_pwr: 0.63
-    native_4g_sub_indo_pwr: 159.3
-    native_4g_urb_indo_pwr: 140.5
-    native_4g_rur_indo_pwr: 178.1
-    native_4g_sub_outd_pwr: 109.75
-    native_4g_urb_outd_pwr: 94.3
-    native_4g_rur_outd_pwr: 125.2
+    native_4g_sub_ind_pwr: 159.3
+    native_4g_urb_ind_pwr: 140.5
+    native_4g_rur_ind_pwr: 178.1
+    native_4g_sub_out_pwr: 109.75
+    native_4g_urb_out_pwr: 94.3
+    native_4g_rur_out_pwr: 125.2
     native_4g_travel_pwr: 109.75
-    native_5g_sub_indo_pwr: 159.3
-    native_5g_urb_indo_pwr: 140.5
-    native_5g_rur_indo_pwr: 178.1
-    native_5g_sub_outd_pwr: 109.75
-    native_5g_urb_outd_pwr: 94.3
-    native_5g_rur_outd_pwr: 125.2
+    native_5g_sub_ind_pwr: 159.3
+    native_5g_urb_ind_pwr: 140.5
+    native_5g_rur_ind_pwr: 178.1
+    native_5g_sub_out_pwr: 109.75
+    native_5g_urb_out_pwr: 94.3
+    native_5g_rur_out_pwr: 125.2
     native_5g_travel_pwr: 109.75
     data_2g_dutycycle: 0
     data_3g_dutycycle: 0.54
     data_4g_dutycycle: 0.056
     data_5g_dutycycle: 0.051
-    data_2g_sub_indo_pwr: 0
-    data_2g_urb_indo_pwr: 0
-    data_2g_rur_indo_pwr: 0
-    data_2g_sub_outd_pwr: 0
-    data_2g_urb_outd_pwr: 0
-    data_2g_rur_outd_pwr: 0
+    data_2g_sub_ind_pwr: 0
+    data_2g_urb_ind_pwr: 0
+    data_2g_rur_ind_pwr: 0
+    data_2g_sub_out_pwr: 0
+    data_2g_urb_out_pwr: 0
+    data_2g_rur_out_pwr: 0
     data_2g_travel_pwr: 0
-    data_3g_sub_indo_pwr: 2.04
-    data_3g_urb_indo_pwr: 0.605
-    data_3g_rur_indo_pwr: 6.28
-    data_3g_sub_outd_pwr: 0.87
-    data_3g_urb_outd_pwr: 0.01
-    data_3g_rur_outd_pwr: 2.68
+    data_3g_sub_ind_pwr: 2.04
+    data_3g_urb_ind_pwr: 0.605
+    data_3g_rur_ind_pwr: 6.28
+    data_3g_sub_out_pwr: 0.87
+    data_3g_urb_out_pwr: 0.01
+    data_3g_rur_out_pwr: 2.68
     data_3g_travel_pwr: 0.87
-    data_4g_sub_indo_pwr: 77.8985184
-    data_4g_urb_indo_pwr: 64.1056383
-    data_4g_rur_indo_pwr: 91.69139849
-    data_4g_sub_outd_pwr: 68.40566226
-    data_4g_urb_outd_pwr: 54.47906924
-    data_4g_rur_outd_pwr: 82.33225528
+    data_4g_sub_ind_pwr: 77.8985184
+    data_4g_urb_ind_pwr: 64.1056383
+    data_4g_rur_ind_pwr: 91.69139849
+    data_4g_sub_out_pwr: 68.40566226
+    data_4g_urb_out_pwr: 54.47906924
+    data_4g_rur_out_pwr: 82.33225528
     data_4g_travel_pwr: 74.3
-    data_5g_sub_indo_pwr: 49.13
-    data_5g_urb_indo_pwr: 46.35
-    data_5g_rur_indo_pwr: 51.91
-    data_5g_sub_outd_pwr: 40.045
-    data_5g_urb_outd_pwr: 36.92
-    data_5g_rur_outd_pwr: 43.17
+    data_5g_sub_ind_pwr: 49.13
+    data_5g_urb_ind_pwr: 46.35
+    data_5g_rur_ind_pwr: 51.91
+    data_5g_sub_out_pwr: 40.045
+    data_5g_urb_out_pwr: 36.92
+    data_5g_rur_out_pwr: 43.17
     data_5g_travel_pwr: 31.52
     wifi_2_pwr: 100
     wifi_5_pwr: 200
