@@ -266,6 +266,14 @@ devices:
       bt_phone_else_sar: 0
       bt_headp_sar: 0.009862
   data:
+    data_2g_prop: 0
+    data_3g_prop: 0.02
+    data_4g_prop: 0.66
+    data_5g_prop: 0.315
+    data_2g_prop_no5g: 0
+    data_3g_prop_no5g: 0.02
+    data_4g_prop_no5g: 0.98
+    data_5g_prop_no5g: 0
     data_3g_low_dutycycle: 0.438
     data_3g_lowmed_dutycycle: 0.544566667
     data_3g_medhigh_dutycycle: 0.592
@@ -310,13 +318,17 @@ devices:
     wifi_5_high_dutycycle: 0.14515
     wifi_5_pwr: 200.00
     brain:
-      data_face_sar: 0.002917897
-      wifi_2_face_sar: 0.000999468
-      wifi_5_face_sar: 0.000163091
+      data_3g_sar: 0.003629446
+      data_4g_sar: 0.003234564
+      data_5g_sar: 0.000505446
+      wifi_2_sar: 0.000999468
+      wifi_5_sar: 0.000163091
     body:
-      data_face_sar: 0.000994539
-      wifi_2_face_sar: 0.000861
-      wifi_5_face_sar: 0.000586175
+      data_3g_sar: 0.001066043
+      data_4g_sar: 0.001031137
+      data_5g_sar: 0.000706621
+      wifi_2_sar: 0.000860849
+      wifi_5_sar: 0.000586175
   farf:
     shared:
       home_urban_pwr_other: 0.45

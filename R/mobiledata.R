@@ -13,12 +13,13 @@ mobiledata_dose <- function(
     travel_time,
     params = load_params()) {
   # Check input ===============================================================
+  ## TODO: add input checks
 
   # Calculate mSAR ============================================================
   ## Brain --------------------------------------------------------------------
   msar_brain <- mpd_msar(
     tissue           = "brain",
-    duration_low     = duation_low,
+    duration_low     = duration_low,
     duration_lowmed  = duration_lowmed,
     duration_medhigh = duration_medhigh,
     duration_high    = duration_high,
@@ -33,7 +34,7 @@ mobiledata_dose <- function(
   ## Body ---------------------------------------------------------------------
   msar_body <- mpd_msar(
     tissue           = "body",
-    duration_low     = duation_low,
+    duration_low     = duration_low,
     duration_lowmed  = duration_lowmed,
     duration_medhigh = duration_medhigh,
     duration_high    = duration_high,
@@ -45,6 +46,8 @@ mobiledata_dose <- function(
     travel_time      = travel_time,
     params           = params
   )
+  print(msar_body)
+  print(msar_brain)
 
   # Calculate total use duration ==============================================
   duration <- sum(
@@ -61,8 +64,7 @@ mobiledata_dose <- function(
   dose_body  <- duration*msar_body
 
   # Return result =============================================================
-
-  return(NA)
+  return(list("data_brain_dose" = dose_brain, "data_body_dose" = dose_body))
 }
 
 
@@ -74,73 +76,47 @@ mpd_msar <- function(
     duration_lowmed,
     duration_medhigh,
     duration_high,
-    use_5g,
     wifi_prop_home,
     wifi_prop_work,
     wifi_prop_travel,
+    use_5g,
     urbanicity,
     travel_time,
     params = load_params()) {
 
   # Setup =====================================================================
-  ## Define frequency bands for each technology
+  ## Define frequency bands for each technology -------------------------------
   data_bands <- c("3g", "4g", "5g")
   wifi_bands <- c("2", "5") # 2.4 GHz and 5.0 GHz
 
-  ## Define functions to get correct params per technology
-  data_prop <- function(params, band, use_5g) {
-    if (use_5g) {
-      params$devices$data[[paste0("data_", band, "_prop")]]
-    } else {
-      params$devices$data[[paste0("data_", band, "_prop_no5g")]]
-    }
-  }
+  ## Calculate overall data vs wifi prop --------------------------------------
+  loc_props <- location_props(
+    travel_time = travel_time,
+    home_prop   = params$global$home_prop,
+    work_prop   = params$global$work_prop,
+    outd_prop   = params$global$outd_prop)
 
-  ## Define function to get correct wifi param
-  wifi_prop <- function(params, band) {
-    params$devices$data[[paste0("wifi_", tech, "_prop")]]
-  }
+  wifi_prop_overall <- sum(
+    loc_props$home * wifi_prop_home, # assumption of no WiFi outdoors
+    loc_props$work * wifi_prop_work,
+    loc_props$travel * wifi_prop_travel
+  )
+  data_prop_overall <- 1-wifi_prop_overall
 
   # Apply mSAR calculation to all data frequency bands ========================
-  msar_data <- setNames(
-    lapply(data_bands, function(band) {
+  msar_data <- sum(
+    vapply(
+      data_bands,
+      \(band) {
 
-      prop <- data_prop(params, band, use_5g)
+      if (use_5g) {
+        prop <- params$devices$data[[paste0("data_", band, "_prop")]]
+      } else {
+        prop <- params$devices$data[[paste0("data_", band, "_prop_no5g")]]
+      }
 
       pwr <- mpd_pwr_data(
         band         = band,
-        headp_prop   = headp_prop,
-        ear_prop     = ear_prop,
-        speaker_prop = speaker_prop,
-        urbanicity   = urbanicity,
-        travel_time  = travel_time,
-        params       = params
-      )
-
-      sar <- mpd_sar_data(
-        tissue       = tissue,
-        band         = band,
-        headp_prop   = headp_prop,
-        ear_prop     = ear_prop,
-        speaker_prop = speaker_prop,
-        urbanicity   = urbanicity,
-        travel_time  = travel_time,
-        params       = params
-      )
-
-      prop*sar*pwr
-    }),
-    data_bands
-  )
-
-  # apply mSAR calculation to all WiFi frequency bands =========================
-  msar_wifi <- setNames(
-    lapply(wifi_bands, function(band) {
-
-      prop <- wifi_prop(params, band, use_5g)
-
-      pwr <- mpd_pwr_wifi(
-        band             = band,
         duration_low     = duration_low,
         duration_lowmed  = duration_lowmed,
         duration_medhigh = duration_medhigh,
@@ -150,26 +126,49 @@ mpd_msar <- function(
         params       = params
       )
 
+      sar <- mpd_sar_data(
+        tissue       = tissue,
+        band         = band,
+        params       = params
+      )
+      return(prop*sar*pwr)
+      },
+      numeric(1)
+    )
+  )
+
+  # apply mSAR calculation to all WiFi frequency bands =========================
+  msar_wifi <- sum(
+    vapply(
+      wifi_bands,
+      \(band) {
+
+      prop <- params$global[[paste0("wifi_", band, "_prop")]]
+
+      pwr <- mpd_pwr_wifi(
+        band             = band,
+        duration_low     = duration_low,
+        duration_lowmed  = duration_lowmed,
+        duration_medhigh = duration_medhigh,
+        duration_high    = duration_high,
+        params           = params
+      )
+
       sar <- mpd_sar_wifi(
         tissue       = tissue,
         band         = band,
-        headp_prop   = headp_prop,
-        ear_prop     = ear_prop,
-        speaker_prop = speaker_prop,
-        urbanicity   = urbanicity,
-        travel_time  = travel_time,
         params       = params
       )
-
       prop*sar*pwr
-    }),
-    wifi_bands
+    },
+    numeric(1)
+    )
   )
 
   # Scale mSAR with WiFi vs data use proporion ================================
   msar <- sum(
-    prop_data*msar_data,
-    prop_wifi*msar_wifi)
+    data_prop_overall*msar_data,
+    wifi_prop_overall*msar_wifi)
 
   # Combine and return results ================================================
   return(msar)
@@ -189,7 +188,7 @@ mpd_pwr_data <- function(
     params = load_params()) {
 
   # Calculate location proportions ============================================
-  loc_props <- calculate_location_proportions(
+  loc_props <- location_props(
     travel_time = travel_time,
     home_prop   = params$global$home_prop,
     outd_prop   = params$global$outd_prop,
@@ -267,13 +266,9 @@ mpd_pwr_wifi <- function(
     vapply(
       activities,
       \(activity) {
-        print(activity)
         act_prop <- act_props[[activity]]
-        print(act_prop)
         dc <- params$devices$data[[paste("wifi", band, activity, "dutycycle", sep = "_")]]
-        print(dc)
         pwr <- params$devices$data[[paste("wifi", band, "pwr", sep = "_")]]
-        print(pwr)
         return(act_prop*dc*pwr)
       },
       numeric(1)
@@ -282,35 +277,26 @@ mpd_pwr_wifi <- function(
   return(pwr)
 }
 
-
 ###############################################################################
 # Calculate SAR
 mpd_sar_data <- function(
-    duration_low,
-    duration_lowmed,
-    duration_medhigh,
-    duration_high,
-    use_5g,
-    wifi_prop_home,
-    wifi_prop_work,
-    wifi_prop_travel,
-    urbanicity,
-    travel_time,
+    band,
+    tissue,
     params = load_params()) {
-  return(NA)
+  # Load tissue-specific params
+  tissue_params <- load_tissue_params(params, "data", tissue)
+  # Get SAR value, return result
+  sar <- tissue_params[[paste("data", band, "sar", sep = "_")]]
+  return(sar)
 }
 
 mpd_sar_wifi <- function(
-    duration_low,
-    duration_lowmed,
-    duration_medhigh,
-    duration_high,
-    use_5g,
-    wifi_prop_home,
-    wifi_prop_work,
-    wifi_prop_travel,
-    urbanicity,
-    travel_time,
+    band,
+    tissue,
     params = load_params()) {
-  return(NA)
+  # Load tissue-specific params
+  tissue_params <- load_tissue_params(params, "data", tissue)
+  # Get SAR value, return result
+  sar <- tissue_params[[paste("wifi", band, "sar", sep = "_")]]
+  return(sar)
 }

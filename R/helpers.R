@@ -264,7 +264,7 @@ fill_missing_variables <- function(data, defaults, warn_threshold = 0.1) {
 #' @param work_prop proportion of time spent at work WITHOUT considering commute
 #' @param outd_prop proportion of time spent outside WITHOUT considering commute
 #' @returns list with proportions
-calculate_location_proportions <- function(
+location_props <- function(
     travel_time,
     home_prop,
     work_prop,
