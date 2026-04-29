@@ -11,16 +11,14 @@
 #' @returns List with brain dose and body dose in mJ/kg/day
 #' @export
 #' @import yaml
-get_tablet_dose <- function(
+tablet_dose <- function(
     dur_low,
     dur_lowtomed,
     dur_medtohigh,
     dur_high,
-    params = NULL) {
-  # Load parameters if not provided ===========================================
-  if (is.null(params)) {
-    params <- load_params("params.yaml")}
+    params = load_params()) {
 
+  # Check input ===============================================================
   check_duration(c(dur_low, dur_lowtomed, dur_medtohigh, dur_high))
 
   # Calculate total duration ==================================================
@@ -31,46 +29,68 @@ get_tablet_dose <- function(
     dur_high)
 
   # Calculate time proportions of each activity ===============================
-  act_pwr_props <- get_act_pwr_props(
+  act_pwr_props <- act_pwr_props(
     low_dur     = dur_low,
     lowmed_dur  = dur_lowtomed,
     medhigh_dur = dur_medtohigh,
     high_dur    = dur_high)
 
-  # Extract parameters ========================================================
-  ## Extract shared (non-tissue specific) parameters for laptop ---------------
-  tblt_params  <- load_device_params(params, "tblt")
+  # Calculate mSAR ============================================================
+  ## Brain
+  msar_brain <- tablet_msar(
+    tissue        = "brain",
+    dur_low       = dur_low,
+    dur_lowtomed  = dur_lowtomed,
+    dur_medtohigh = dur_medtohigh,
+    dur_high      = dur_high,
+    params        = params
+  )
+  ## Body
+  msar_body <- tablet_msar(
+    tissue        = "body",
+    dur_low       = dur_low,
+    dur_lowtomed  = dur_lowtomed,
+    dur_medtohigh = dur_medtohigh,
+    dur_high      = dur_high,
+    params        = params
+  )
 
-  ## Extract brain-specific parameters (SAR values) for laptop ----------------
-  brain_params <- load_tissue_params(params, "tblt", "brain")
+  # Calculate dose ============================================================
+  ## Brain
+  dose_brain <- msar_brain * duration
+  ## Body
+  dose_body  <- msar_body * duration
 
-  ## Extract body-specific parameters (SAR values) for laptop -----------------
-  body_params  <- load_tissue_params(params, "tblt", "body")
+  return(list("brain_tblt_dose" = dose_brain, "body_tblt_dose"  = dose_body))
+}
 
+tablet_msar <- function(
+    tissue,
+    dur_low,
+    dur_lowtomed,
+    dur_medtohigh,
+    dur_high,
+    params = load_params()) {
+  return(NA)
+}
 
-  # Calculate aggregated power ================================================
-  aggr_pwr     <- get_tablet_pwr(act_pwr_props, tblt_params)
+tablet_pwr <- function(
+    dur_low,
+    dur_lowtomed,
+    dur_medtohigh,
+    dur_high,
+    params = load_params()) {
+  return(NA)
+}
 
-
-  # Calculate tissue SAR ======================================================
-  ## Brain SAR ----------------------------------------------------------------
-  brain_sar    <- get_tablet_sar(tblt_params, brain_params)
-
-  ## Body SAR -----------------------------------------------------------------
-  body_sar     <- get_tablet_sar(tblt_params, body_params)
-
-  # Calculate total doses =====================================================
-  ## Brain dose ---------------------------------------------------------------
-  brain_dose   <- duration * aggr_pwr * brain_sar
-
-  ## Body dose ----------------------------------------------------------------
-  body_dose    <- duration * aggr_pwr * body_sar
-
-  # Return output =============================================================
-  tblt_output  <- list("brain_tblt_dose" = brain_dose,
-                       "body_tblt_dose"  = body_dose)
-
-  return(tblt_output)
+tablet_sar <- function(
+    tissue,
+    dur_low,
+    dur_lowtomed,
+    dur_medtohigh,
+    dur_high,
+    params = load_params()) {
+  return(NA)
 }
 
 # =============================================================================

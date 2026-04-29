@@ -329,10 +329,11 @@ calculate_data_tech_proportions <- function(use_5g,
 #' @param lowmed_dur ...
 #' @param medhigh_dur ...
 #' @param high_dur ...
-act_pwr_props <- function(low_dur,
-                          lowmed_dur,
-                          medhigh_dur,
-                          high_dur) {
+act_pwr_props <- function(
+    low_dur,
+    lowmed_dur,
+    medhigh_dur,
+    high_dur) {
   total_dur    <- sum(low_dur, lowmed_dur, medhigh_dur, high_dur)
   if (total_dur == 0) {
     return(list("low_prop"     = 0,

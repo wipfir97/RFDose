@@ -84,37 +84,3 @@ dect_sar <- function(
   return(sar)
 }
 
-
-# =============================================================================
-#' Calculate Aggregated Power of Cordless Phone
-#'
-#' @param params descr
-#' @returns descr
-get_cordless_pwr  <- function(params) {
-  # Calculate aggregated power and return output
-  aggr_pwr <- params$dect_pwr * params$dect_duty_factor
-  return(aggr_pwr)
-}
-
-
-# =============================================================================
-#' Calculate Aggregated SAR during cordless call (tissue-specific)
-#'
-#' @param ear_proportion Proportion of holding cordless phone against ear
-#' @param params descr
-#' @param tissue_params descr
-#' @returns sar
-#' @import yaml
-get_cordless_sar  <- function(ear_proportion,
-                              params,
-                              tissue_params) {
-  # Contribution from holding phone on ear
-  ear_contr     <- ear_proportion*tissue_params$dect_ear_sar
-  # Contribution from phone in speaker mode
-  speaker_contr <- (1-ear_proportion)*tissue_params$dect_speaker_sar
-  # Combine and return results
-  aggr_sar      <- sum(ear_contr, speaker_contr)
-  return(aggr_sar)
-}
-
-# -----------------------------------------------------------------------------
