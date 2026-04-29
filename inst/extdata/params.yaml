@@ -15,17 +15,16 @@ devices:
       dect_ear_sar: 0.007025455
       dect_speaker_sar: 0.002116649
   tblt:
-    shared:
-      wifi_2_low_dutycycle: 0.009
-      wifi_2_lowmed_dutycycle: 0.025
-      wifi_2_medhigh_dutycycle: 0.176
-      wifi_2_high_dutycycle: 0.669
-      wifi_5_low_dutycycle: 0.03055
-      wifi_5_lowmed_dutycycle: 0.052275
-      wifi_5_medhigh_dutycycle: 0.064
-      wifi_5_high_dutycycle: 0.14515
-      wifi_2_pwr: 100
-      wifi_5_pwr: 200
+    wifi_2_low_dutycycle: 0.009
+    wifi_2_lowmed_dutycycle: 0.025
+    wifi_2_medhigh_dutycycle: 0.176
+    wifi_2_high_dutycycle: 0.669
+    wifi_5_low_dutycycle: 0.03055
+    wifi_5_lowmed_dutycycle: 0.052275
+    wifi_5_medhigh_dutycycle: 0.064
+    wifi_5_high_dutycycle: 0.14515
+    wifi_2_pwr: 100
+    wifi_5_pwr: 200
     brain:
       tblt_2_sar: 0.000999468
       tblt_5_sar: 0.000163091
@@ -33,19 +32,18 @@ devices:
       tblt_2_sar: 0.000860849
       tblt_5_sar: 0.000586175
   lptp:
-    shared:
-      wifi_2_low_dutycycle: 0.009
-      wifi_2_lowmed_dutycycle: 0.025
-      wifi_2_medhigh_dutycycle: 0.176
-      wifi_2_high_dutycycle: 0.669
-      wifi_5_low_dutycycle: 0.03055
-      wifi_5_lowmed_dutycycle: 0.052275
-      wifi_5_medhigh_dutycycle: 0.064
-      wifi_5_high_dutycycle: 0.14515
-      wifi_2_pwr: 100
-      wifi_5_pwr: 200
-      legs_prop: 0.2
-      tabl_prop: 0.8
+    wifi_2_low_dutycycle: 0.009
+    wifi_2_lowmed_dutycycle: 0.025
+    wifi_2_medhigh_dutycycle: 0.176
+    wifi_2_high_dutycycle: 0.669
+    wifi_5_low_dutycycle: 0.03055
+    wifi_5_lowmed_dutycycle: 0.052275
+    wifi_5_medhigh_dutycycle: 0.064
+    wifi_5_high_dutycycle: 0.14515
+    wifi_2_pwr: 100
+    wifi_5_pwr: 200
+    legs_prop: 0.2
+    tabl_prop: 0.8
     brain:
       wifi_2_legs_sar: 5.18942E-05
       wifi_2_tabl_sar: 6.89201E-05

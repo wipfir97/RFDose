@@ -46,8 +46,6 @@ mobiledata_dose <- function(
     travel_time      = travel_time,
     params           = params
   )
-  print(msar_body)
-  print(msar_brain)
 
   # Calculate total use duration ==============================================
   duration <- sum(

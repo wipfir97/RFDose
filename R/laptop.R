@@ -4,8 +4,8 @@
 #' Calculate Dose from Laptop Use
 #'
 #' @param dur_low tba
-#' @param dur_lowtomed tba
-#' @param dur_medtohigh tba
+#' @param dur_lowmed tba
+#' @param dur_medhigh tba
 #' @param dur_high tba
 #' @param params Parameter list
 #' @returns List with brain dose and body dose in mJ/kg/day
@@ -13,26 +13,26 @@
 #' @import yaml
 laptop_dose <- function(
     dur_low,
-    dur_lowtomed,
-    dur_medtohigh,
+    dur_lowmed,
+    dur_medhigh,
     dur_high,
     params = load_params()) {
 
   # Check input ===============================================================
-  check_duration(c(dur_low, dur_lowtomed, dur_medtohigh, dur_high))
+  check_duration(c(dur_low, dur_lowmed, dur_medhigh, dur_high))
 
   # Calculate total duration ==================================================
   duration <- sum(
     dur_low,
-    dur_lowtomed,
-    dur_medtohigh,
+    dur_lowmed,
+    dur_medhigh,
     dur_high)
 
   # Calculate time proportions of each activity ===============================
   act_pwr_props <- act_pwr_props(
     low_dur     = dur_low,
-    lowmed_dur  = dur_lowtomed,
-    medhigh_dur = dur_medtohigh,
+    lowmed_dur  = dur_lowmed,
+    medhigh_dur = dur_medhigh,
     high_dur    = dur_high)
 
   # Calculate mSAR ============================================================
@@ -40,8 +40,8 @@ laptop_dose <- function(
   msar_brain <- laptop_msar(
     tissue        = "brain",
     dur_low       = dur_low,
-    dur_lowtomed  = dur_lowtomed,
-    dur_medtohigh = dur_medtohigh,
+    dur_lowmed  = dur_lowmed,
+    dur_medhigh = dur_medhigh,
     dur_high      = dur_high,
     params        = params
   )
@@ -49,8 +49,8 @@ laptop_dose <- function(
   msar_body <- laptop_msar(
     tissue        = "body",
     dur_low       = dur_low,
-    dur_lowtomed  = dur_lowtomed,
-    dur_medtohigh = dur_medtohigh,
+    dur_lowmed  = dur_lowmed,
+    dur_medhigh = dur_medhigh,
     dur_high      = dur_high,
     params        = params
   )
@@ -67,30 +67,89 @@ laptop_dose <- function(
 laptop_msar <- function(
     tissue,
     dur_low,
-    dur_lowtomed,
-    dur_medtohigh,
+    dur_lowmed,
+    dur_medhigh,
     dur_high,
     params = load_params()) {
-  return(NA)
+
+  bands <- c("2", "5") # 2.4 GHz, 5.0 GHz
+
+  msar <- sum(
+    vapply(
+      bands,
+      \(band) {
+
+        prop <- params$global[[paste0("wifi_", band, "_prop")]]
+
+        ## Calculate power
+        pwr <- laptop_pwr(
+          band          = band,
+          dur_low       = dur_low,
+          dur_lowmed    = dur_lowmed,
+          dur_medhigh   = dur_medhigh,
+          dur_high      = dur_high,
+          params        = params)
+
+        ## Calculate SAR
+        sar <- laptop_sar(
+          tissue        = tissue,
+          band          = band,
+          params        = params)
+
+        prop*sar*pwr
+      },
+      numeric(1)
+    )
+  )
+  return(msar)
 }
 
 laptop_pwr <- function(
+    band,
     dur_low,
-    dur_lowtomed,
-    dur_medtohigh,
+    dur_lowmed,
+    dur_medhigh,
     dur_high,
     params = load_params()) {
-  return(NA)
+
+  # Calculate time proportions of each activity ===============================
+  act_props <- act_pwr_props(
+    low_dur     = dur_low,
+    lowmed_dur  = dur_lowmed,
+    medhigh_dur = dur_medhigh,
+    high_dur    = dur_high)
+
+  activities <- c("low", "lowmed", "medhigh", "high")
+
+  pwr <- sum(
+    vapply(
+      activities,
+      \(activity) {
+        act_prop <- act_props[[activity]]
+        dc  <- params$devices$lptp[[paste("wifi", band, activity, "dutycycle", sep = "_")]]
+        pwr <- params$devices$lptp[[paste("wifi", band, "pwr", sep = "_")]]
+        return(act_prop*dc*pwr)
+      },
+      numeric(1)
+    )
+  )
+  return(pwr)
 }
 
 laptop_sar <- function(
     tissue,
-    dur_low,
-    dur_lowtomed,
-    dur_medtohigh,
-    dur_high,
+    band,
     params = load_params()) {
-  return(NA)
+  tissue_params <- load_tissue_params(params, "lptp", tissue)
+  ## Lap
+  lap_prop <- params$devices$lptp$legs_prop
+  sar_lap <- lap_prop*tissue_params[[paste("wifi", band, "legs_sar", sep = "_")]]
+  ## Table
+  tab_prop <- params$devices$lptp$tabl_prop
+  sar_tab <- tab_prop*tissue_params[[paste("wifi", band, "tabl_sar", sep = "_")]]
+
+  ## Combine and return
+  return(sar_lap + sar_tab)
 }
 
 # =============================================================================
