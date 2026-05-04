@@ -58,16 +58,24 @@ headphones, and from headphones themselves
 }
 \details{
 The mobile call RF-EMF dose is calculated as:
-\deqn{Dose_{mobilecall} = Dose_{phone} + Dose_{phoneBluetooth} +
-Dose_{headphonesBluetooth}}
+\deqn{Dose_{mobilecall} = Dose_{phone} + Dose_{bluetooth}}
 
 Where:
 \itemize{
 \item \eqn{Dose_{mobilecall}} is the total dose from all mobile call activities
 \item \eqn{Dose_{phone}} is the dose from the mobile phone (no Bluetooth)
-\item \eqn{Dose_{phoneBluetooth}} is the dose from Bluetooth by the phone
-\item \eqn{Dose_{headphonesBluetooth}} is the dose from Bluetooth by the
-Bluetooth headphones
+\item \eqn{Dose_{phoneBluetooth}} is the dose from using Bluetooth headphones
+during the call.
+}
+
+The dose is calculated as:
+
+\deqn{mSAR * duration}
+
+Where:
+\itemize{
+\item \eqn{mSAR} is the momentary SAR value in mJ/kg
+\item \eqn{duration} is the call duration in seconds
 }
 }
 \seealso{

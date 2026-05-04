@@ -11,17 +11,23 @@
 #'
 #' @details
 #' The mobile call RF-EMF dose is calculated as:
-#' \deqn{Dose_{mobilecall} = Dose_{phone} + Dose_{phoneBluetooth} +
-#' Dose_{headphonesBluetooth}}
+#' \deqn{Dose_{mobilecall} = Dose_{phone} + Dose_{bluetooth}}
 #'
 #' Where:
 #'
 #' * \eqn{Dose_{mobilecall}} is the total dose from all mobile call activities
 #' * \eqn{Dose_{phone}} is the dose from the mobile phone (no Bluetooth)
-#' * \eqn{Dose_{phoneBluetooth}} is the dose from Bluetooth by the phone
-#' * \eqn{Dose_{headphonesBluetooth}} is the dose from Bluetooth by the
-#' Bluetooth headphones
+#' * \eqn{Dose_{bluetooth}} is the dose from using Bluetooth headphones
+#' during the call.
 #'
+#' The dose is calculated as:
+#'
+#' \deqn{mSAR * duration}
+#'
+#' Where:
+#'
+#' * \eqn{mSAR} is the momentary SAR value in mJ/kg
+#' * \eqn{duration} is the call duration in seconds
 #'
 #' @param duration Duration of mobile phone call in seconds per day
 #' @param ear_prop Proportion of time mobile phone is held against ear
@@ -44,7 +50,7 @@
 #' * "brain_call_dose" (brain RF-EMF dose from mobile calls in mJ/kg/day)
 #' * "body_call_dose" (body RF-EMF dose from mobile calls in mJ/kg/day)
 #'
-#' @seealso [get_mobilecall_phone_dose()], [get_mobilecall_bt_phone_dose()], [get_mobilecall_bt_headp_dose()]
+#' @seealso [mobilecall_msar()]
 #' @export
 mobilecall_dose <- function(
     duration,
@@ -168,8 +174,9 @@ mobilecall_msar <- function(
     use_5g,
     travel_time,
     params = load_params()) {
-
+  # TODO: merge this function with the mobilecall_bytech functions
   # Native call
+  bands_native <- c("2g", "3g", "4g", "5g")
   msar_native <- prop_native * mpc_msar_native(
     tissue       = tissue,
     headp_prop   = headp_prop,
@@ -180,6 +187,7 @@ mobilecall_msar <- function(
     params       = params
   )
   # Data call
+  bands_data <- c("3g", "4g", "5g")
   msar_data   <- prop_data * mpc_msar_data(
     tissue       = tissue,
     headp_prop   = headp_prop,
@@ -191,6 +199,7 @@ mobilecall_msar <- function(
     params       = params
   )
   # Wifi call
+  bands_wifi <- c("2", "5") # 2.4 GHz, 5.0 GHz
   msar_wifi   <- prop_wifi * mpc_msar_wifi(
     tissue       = tissue,
     headp_prop   = headp_prop,
@@ -714,6 +723,10 @@ mpc_sar_wifi <- function(
 
 ###############################################################################
 # Contributions from bluetooth heapdhones =====================================
+#' Calculate call mSAR (bluetooth contribution from phone and headphones)
+#'
+#' @param tissue Tissue
+#' @param params parameter list
 mobilecall_bt_msar <- function(
     tissue,
     params = load_params()) {
@@ -731,12 +744,19 @@ mobilecall_bt_msar <- function(
   return(msar_bt + msar_bt_phone)
 }
 
+#' Calculate call output power (bluetooth contribution only, headphones only)
+#'
+#' @param params parameter list
 mobilecall_bt_pwr <- function(
     params = load_params()) {
   pwr <- params$devices$call$bt_pwr
   return(pwr)
 }
 
+#' Calculate call sar (bluetooth contribution only, headphones only)
+#'
+#' @param tissue brain or body
+#' @param params parameter list
 mobilecall_bt_sar <- function(
     tissue,
     params = load_params()) {
@@ -745,12 +765,19 @@ mobilecall_bt_sar <- function(
   return(sar)
 }
 
+#' Calculate call output power (bluetooth contribution only, phone only)
+#'
+#' @param params parameter list
 mobilecall_bt_phone_pwr <- function(
     params = load_params()) {
   pwr <- params$devices$call$bt_pwr
   return(pwr)
 }
 
+#' Calculate call output power (bluetooth contribution only, headphones only)
+#'
+#' @param tissue brain or body
+#' @param params parameter list
 mobilecall_bt_phone_sar <- function(
     tissue,
     params = load_params()) {
