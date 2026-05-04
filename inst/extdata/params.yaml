@@ -440,10 +440,10 @@ devices:
       sar: 0.005439141
     body:
       sar: 0.004655352
-  watch:
-    shared:
-      watch_pwr: 0.00008
-      watch_phone_pwr: 0.00008
+  smartwatch:
+    watch_pwr_active: 1
+    watch_pwr_passive: 0.002
+    watch_phone_pwr: 0.002
     brain:
       watch_sar: 0.0000017
       watch_phone_sar: 0.000329981
@@ -460,51 +460,53 @@ devices:
     body:
       tracker_sar: 0.0118
       tracker_phone_sar: 0.003634651
-  headp:
-    shared:
-      headp_pwr: 0.00008
-      headp_phone_pwr: 0.15
+  headphones:
+    headp_pwr: 0.002
+    headp_phone_pwr: 0.16
     brain:
       headp_sar: 0.016990171
       headp_phone_sar: 0.000329981
     body:
       headp_sar: 0.009862
       headp_phone_sar: 0.003634651
-  hots:
-    shared:
-      hots_pwr: 5.595
+  hotspot:
+    hotspot_pwr: 9.6
     brain:
-      hots_sar: 0.000329981
+      hotspot_sar: 0.000329981
     body:
-      hots_sar: 0.003634651
+      hotspot_sar: 0.003634651
   vr:
-    shared:
-      vr_pwr: 10
+    vr_2_pwr: 100
+    vr_5_pwr: 200
+    vr_2_dutycycle: 0.05
+    vr_5_dutycycle: 0.05
+    vr_online_prop: 0.4
     brain:
-      vr_sar: 0.000606721
+      vr_2_sar: 0.016377585
+      vr_5_sar: 0.000606721
     body:
-      vr_sar: 0.0035162
-  smah:
-    shared:
-      smah_pwr: 1.64109
-      smah_active_prop: 0.01
+      vr_2_sar: 0.005180701
+      vr_5_sar: 0.0035162
+  smarthome:
+    smarthome_pwr: 1.64109
+    smarthome_active_prop: 0.01
     brain:
-      smah_sar: 0.00133
+      smarthome_sar: 0.00133
     body:
-      smah_sar: 0.009862
-  game:
-    shared:
-      game_online_prop: 0.25
-      game_2_dutycycle: 0.0276
-      game_5_dutycycle: 0.0276
-      game_2_pwr: 100
-      game_5_pwr: 200
+      smarthome_sar: 0.009862
+  gaming:
+    gaming_online_prop: 0.25
+    gaming_2_dutycycle: 0.020
+    gaming_5_dutycycle: 0.028
+    gaming_2_pwr: 100
+    gaming_5_pwr: 200
     brain:
-      game_2_sar: 0.000999468
-      game_5_sar: 0.000163091
+      gaming_2_sar: 0.000999468
+      gaming_5_sar: 0.000163091
     body:
-      game_2_sar: 0.000860849
-      game_5_sar: 0.000586175
+      gaming_2_sar: 0.000860849
+      gaming_5_sar: 0.000586175
+
 
 
 
