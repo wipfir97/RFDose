@@ -1,5 +1,82 @@
 # Calculate total RF-EMF dose (for brain and body) from other exposure sources
 
+###############################################################################
+# =============================================================================
+other_dose <- function(
+    duration_hotspot,
+    duration_smartwatch,
+    duration_tracker,
+    duration_vr,
+    duration_headphones,
+    duration_gaming,
+    params = load_params()) {
+  # Check input values ========================================================
+  ## TODO: add input checks
+
+  # Calculate dose from each device ===========================================
+  ## Smartwatch ---------------------------------------------------------------
+
+  ## Tracker ------------------------------------------------------------------
+
+  ## Headphones ---------------------------------------------------------------
+
+  ## Hotspot ------------------------------------------------------------------
+
+  ## VR headset ---------------------------------------------------------------
+
+  ## Gaming -------------------------------------------------------------------
+
+  # Sum up dose from each device (per tissue) and return result ===============
+
+  return(
+    list(
+      brain_other_dose <- dose_brain,
+      body_other_dose <- dose_body
+    )
+  )
+}
+
+smartwatch_dose <- function(
+    duration_smartwatch,
+    params = load_params()) {
+  # Active use ================================================================
+
+  # Passive use ===============================================================
+  return(NA)
+}
+
+tracker_dose <- function(
+    duration_tracker,
+    params = load_params()) {
+  return(NA)
+}
+
+headphones_dose <- function(
+    duration_headphones,
+    params = load_params()) {
+  return(NA)
+}
+
+hotspot_dose <- function(
+    duration_hotspot,
+    params = load_params()) {
+  return(NA)
+}
+
+vr_dose <- function(
+    duration_vr,
+    params = load_params()) {
+  return(NA)
+}
+
+gaming_dose <- function(
+    duration_gaming,
+    params = load_params()) {
+  return(NA)
+}
+
+
+
 # =============================================================================
 #' Calculate Dose from other exposure sources
 #'

@@ -55,15 +55,14 @@ devices:
       wifi_5_legs_sar: 0.003303364
       wifi_5_tabl_sar: 0.000883944
   wifi:
-    shared:
-      wifi_2_pwr: 0.017
-      wifi_5_pwr: 0.016
+    wifi_2_pwr: 0.018
+    wifi_5_pwr: 0.013
     brain:
       wifi_2_sar: 0.00133
-      wifi_5_sar: 0.00133
+      wifi_5_sar: 0.00047
     body:
       wifi_2_sar: 0.005295
-      wifi_5_sar: 0.005295
+      wifi_5_sar: 0.002423693
   call:
     native_prop: 0.7
     data_prop: 0.16
