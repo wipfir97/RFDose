@@ -25,7 +25,7 @@ mobilecall_dose(
 during call}
 
 \item{headp_prop}{Proportion of time Bluetooth headphones are used during
-mobile call while phone is NOT held against ear}
+mobile call}
 
 \item{urbanicity}{Urbanicity of home / workplace}
 

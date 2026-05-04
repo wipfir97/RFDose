@@ -1,6 +1,6 @@
 ###############################################################################
-# Calculate total RF-EMF dose (for brain and body) from mobile calling
-# TODO: once functions are checked, remove redundancy by combining similar functions
+# Calculate RF-EMF dose (for brain and body) from mobile calling
+## TODO remove redundancies
 
 ###############################################################################
 # Total mobile call dose ======================================================
@@ -142,8 +142,20 @@ mobilecall_dose <- function(
 # Mobilecall mSAR =============================================================
 #' Calculate momentary SAR (mSAR) from mobile calling -------------------------
 #'
-#'
-#' @export
+#' @param tissue brain or body
+#' @param prop_native proportion of native calls
+#' @param prop_data proportion of data calls
+#' @param prop_wifi proportion of wifi calls
+#' @param ear_prop Proportion of time mobile phone is held against ear
+#' during call
+#' @param headp_prop Proportion of time Bluetooth headphones are used during
+#' mobile call
+#' @param speaker_prop Proportion of time speaker mode is used during call
+#' @param urbanicity Urbanicity of home / workplace
+#' @param use_5g TRUE if participant uses 5G services on mobile phone,
+#' FALSE if not
+#' @param travel_time Time spent commuting in seconds per day
+#' @param params Parameter list
 mobilecall_msar <- function(
     tissue,
     prop_native,
@@ -197,6 +209,15 @@ mobilecall_msar <- function(
 
 # Mobilecall mSAR for native calls ============================================
 # Mobilecall mSAR (native call) -----------------------------------------------
+#' Calculate native call mSAR
+#'
+#' @param tissue Tissue
+#' @param headp_prop Headp prop
+#' @param ear_prop Ear prop
+#' @param speaker_prop Speaker prop
+#' @param urbanicity Urbanicity
+#' @param travel_time Travel time
+#' @param params parameter list
 mpc_msar_native <- function(
     tissue,
     headp_prop,
@@ -239,6 +260,16 @@ mpc_msar_native <- function(
 
 
 # Mobilecall mSAR (nativecall) by technology (2G, 3G, 4G, 5G) -----------------
+#' Calculate native call mSSAR by technology (2G, 3G, 4G, 5G)
+#'
+#' @param tissue Tissue
+#' @param tech technology (2G, 3G, 4G, 5G)
+#' @param headp_prop Headp prop
+#' @param ear_prop Ear prop
+#' @param speaker_prop Speaker prop
+#' @param urbanicity Urbanicity
+#' @param travel_time Travel time
+#' @param params parameter list
 mpc_msar_native_bytech <- function(
     tissue,
     tech,
@@ -270,6 +301,12 @@ mpc_msar_native_bytech <- function(
 }
 
 # Mobilecall output power (nativecall) by technology (2G, 3G, 4G, 5G) ---------
+#' Calculate native call output power by technology (2G, 3G, 4G, 5G)
+#'
+#' @param tech technology (2G, 3G, 4G, 5G)
+#' @param urbanicity Urbanicity
+#' @param travel_time Travel time
+#' @param params parameter list
 mpc_pwr_native <- function(
     tech,
     urbanicity,
@@ -305,6 +342,14 @@ mpc_pwr_native <- function(
 
 
 # Mobilecall SAR by technology (nativecall) -----------------------------------
+#' Calculate native call SAR by technology (2G, 3G, 4G, 5G)
+#'
+#' @param tissue Tissue
+#' @param tech technology (2G, 3G, 4G, 5G)
+#' @param headp_prop Headp prop
+#' @param ear_prop Ear prop
+#' @param speaker_prop Speaker prop
+#' @param params parameter list
 mpc_sar_native <- function(
     tissue,
     tech,
@@ -338,6 +383,16 @@ mpc_sar_native <- function(
 
 
 # Mobilecall mSAR (data call) =================================================
+#' Calculate data call mSAR
+#'
+#' @param tissue Tissue
+#' @param headp_prop Headp prop
+#' @param ear_prop Ear prop
+#' @param speaker_prop Speaker prop
+#' @param urbanicity Urbanicity
+#' @param use_5g Use 5G
+#' @param travel_time Travel time
+#' @param params parameter list
 mpc_msar_data <- function(
     tissue,
     headp_prop,
@@ -386,6 +441,16 @@ mpc_msar_data <- function(
 }
 
 # Mobilecall data msar by technology ------------------------------------------
+#' Calculate data call mSAR by technology (2G, 3G, 4G, 5G)
+#'
+#' @param tissue Tissue
+#' @param tech technology (2G, 3G, 4G, 5G)
+#' @param headp_prop Headp prop
+#' @param ear_prop Ear prop
+#' @param speaker_prop Speaker prop
+#' @param urbanicity Urbanicity
+#' @param travel_time Travel time
+#' @param params parameter list
 mpc_msar_data_bytech <- function(
     tissue,
     tech,
@@ -417,6 +482,12 @@ mpc_msar_data_bytech <- function(
 }
 
 # Mobilecall data output power by technology ----------------------------------
+#' Calculate data call mSAR by technology (2G, 3G, 4G, 5G)
+#'
+#' @param tech technology (2G, 3G, 4G, 5G)
+#' @param urbanicity Urbanicity
+#' @param travel_time Travel time
+#' @param params parameter list
 mpc_pwr_data <- function(
     tech,
     urbanicity,
@@ -454,6 +525,14 @@ mpc_pwr_data <- function(
 }
 
 # Mobilecall data sar by technology -------------------------------------------
+#' Calculate data call SAR by technology (2G, 3G, 4G, 5G)
+#'
+#' @param tissue Tissue
+#' @param tech technology (2G, 3G, 4G, 5G)
+#' @param headp_prop Headp prop
+#' @param ear_prop Ear prop
+#' @param speaker_prop Speaker prop
+#' @param params parameter list
 mpc_sar_data <- function(
     tissue,
     tech,
@@ -488,6 +567,13 @@ mpc_sar_data <- function(
 
 
 # Mobilecall mSAR (wifi call) =================================================
+#' Calculate WiFi call mSAR
+#'
+#' @param tissue Tissue
+#' @param headp_prop Headp prop
+#' @param ear_prop Ear prop
+#' @param speaker_prop Speaker prop
+#' @param params parameter list
 mpc_msar_wifi <- function(
     tissue,
     headp_prop,
@@ -526,6 +612,14 @@ mpc_msar_wifi <- function(
 }
 
 # Mobilecall mSAR by technology (WiFi call) -----------------------------------
+#' Calculate WiFi call mSAR by band (2.4 GHz, 5.0 GHz)
+#'
+#' @param tissue Tissue
+#' @param tech technology (2.4 GHz, 5.0 GHz)
+#' @param headp_prop Headp prop
+#' @param ear_prop Ear prop
+#' @param speaker_prop Speaker prop
+#' @param params parameter list
 mpc_msar_wifi_bytech <- function(
     tissue,
     tech,
@@ -553,6 +647,10 @@ mpc_msar_wifi_bytech <- function(
 }
 
 # Mobilecall output power (WiFi call) -----------------------------------------
+#' Calculate WiFi call output power by band (2.4 GHz, 5.0 GHz)
+#'
+#' @param tech technology (2.4 GHz, 5.0 GHz)
+#' @param params parameter list
 mpc_pwr_wifi <- function(
     tech,
     params = load_params()) {
@@ -573,6 +671,14 @@ mpc_pwr_wifi <- function(
 }
 
 # Mobilecall sar (WiFi call) --------------------------------------------------
+#' Calculate WiFi call SAR by technology (2.4 GHz, 5.0 GHz)
+#'
+#' @param tissue Tissue
+#' @param tech technology (2.4 GHz, 5.0 GHz)
+#' @param headp_prop Headp prop
+#' @param ear_prop Ear prop
+#' @param speaker_prop Speaker prop
+#' @param params parameter list
 mpc_sar_wifi <- function(
     tissue,
     tech,

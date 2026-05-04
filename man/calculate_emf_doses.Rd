@@ -4,14 +4,14 @@
 \alias{calculate_emf_doses}
 \title{Calculate Total RF-EMF Doses for ALL samples}
 \usage{
-calculate_emf_doses(data, param_file = NULL, default_value_file = NULL)
+calculate_emf_doses(data, params = load_params(), default_value_file = NULL)
 }
 \arguments{
 \item{data}{A data frame with required columns.}
 
-\item{param_file}{Optional path to an external YAML parameter file. Must follow same structure as internal YAML parameter file.}
-
 \item{default_value_file}{Optional path to external YAML default value file. Must follow same structure as internal YAML default value file.}
+
+\item{param_file}{Optional path to an external YAML parameter file. Must follow same structure as internal YAML parameter file.}
 }
 \value{
 A data frame. Columns named SOURCE_dose_TISSUE contain the calculated RF-EMF dose
