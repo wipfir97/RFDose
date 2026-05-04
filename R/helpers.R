@@ -7,31 +7,8 @@ load_params <- function(path = NULL) {
   if (is.null(path)) {
     path <- system.file("extdata", "params.yaml", package = "RFDose")
   }
-  params          <- yaml::read_yaml(path)
+  params  <- yaml::read_yaml(path)
   return(params)
-}
-
-# =============================================================================
-#' Load device-specific parameters
-#'
-#' @param params Parameter list
-#' @param device_type Device type
-#' @returns Parameter list specific to selected device
-#' @importFrom utils modifyList
-load_device_params <- function(params, device_type) {
-  # Check if device name exists in parameter file
-  if (!(device_type %in% names(params$devices))) {
-    stop("Invalid device type. Choose from: ",
-         paste(names(params$devices), collapse = ", "))
-  }
-  # Merge global parameters with device-specific parameters
-  device_params        <- modifyList(params$global,
-                                     params$devices[[device_type]]$shared)
-  # Flatten list and edit parameter names
-  device_params        <- unlist(device_params)
-  names(device_params) <- sub("^.*\\.", "", names(device_params))
-  device_params        <- as.list(device_params)
-  return(device_params)
 }
 
 # =============================================================================
@@ -149,32 +126,6 @@ check_boolean_not_na <- function(x, name) {
   if (length(x) != 1L || !is.logical(x) || is.na(x)) {
     stop("{name} must be type Boolean and non-NA")
   }
-}
-
-# =============================================================================
-#' Check and re-code input values - urbanicity
-#'
-#' @param urbanicity descr
-#' @returns re-coded urbanicity (binary variables)
-recode_urbanicity <- function(urbanicity) {
-  # Ensure input contains only valid urbanicity values
-  valid_values <- c("urban", "rural", "suburban")
-  if (!urbanicity %in% valid_values) {
-    stop("Invalid urbanicity values found. Allowed values are: 'urban', 'suburban', 'rural'.")
-  }
-  # Create output list with recoded urbanicity variable
-  out <- list()
-  out$home_urban  <- as.integer(urbanicity == "urban")
-  out$work_urban  <- as.integer(urbanicity == "urban")
-  out$outd_urban  <- as.integer(urbanicity == "urban")
-  out$home_suburb <- as.integer(urbanicity == "suburban")
-  out$work_suburb <- as.integer(urbanicity == "suburban")
-  out$outd_suburb <- as.integer(urbanicity == "suburban")
-  out$home_rural  <- as.integer(urbanicity == "rural")
-  out$work_rural  <- as.integer(urbanicity == "rural")
-  out$outd_rural  <- as.integer(urbanicity == "rural")
-
-  return(out)
 }
 
 # =============================================================================
@@ -336,10 +287,10 @@ act_pwr_props <- function(
     high_dur) {
   total_dur    <- sum(low_dur, lowmed_dur, medhigh_dur, high_dur)
   if (total_dur == 0) {
-    return(list("low_prop"     = 0,
-                "lowmed_prop"  = 0,
-                "medhigh_prop" = 0,
-                "high_prop"    = 0))
+    return(list("low"     = 0,
+                "lowmed"  = 0,
+                "medhigh" = 0,
+                "high"    = 0))
   } else {
     low_prop     <- low_dur/total_dur
     lowmed_prop  <- lowmed_dur/total_dur
@@ -350,33 +301,4 @@ act_pwr_props <- function(
                 "medhigh" = medhigh_prop,
                 "high"    = high_prop))
   }
-}
-
-# =============================================================================
-#' Calculate WiFi exposure duration
-#'
-#' @param travel_time time spent commutng in car/train/bus per day in s
-#' @param wifi_prop_travel proportion of time connected to WiFi (vs mobile data) during commute
-#' @param home_prop proportion of time per day spent at home
-#' @param work_prop proportion of time per day spent at school/work
-#' @returns exposure duration in s
-calculate_wifi_exposure_duration <- function(travel_time,
-                                             wifi_prop_travel,
-                                             home_prop,
-                                             work_prop) {
-  # Assumption: always exposure at home and at work
-  # If participant uses WiFi during commute at all, we assume WiFi exposure
-  # during whole commute
-  if (wifi_prop_travel > 0) {
-    wifi_travel_dur <- travel_time
-  } else {
-    wifi_travel_dur <- 0
-  }
-  wifi_home_dur   <- home_prop*86400
-  wifi_work_dur   <- work_prop*86400
-  wifi_dur <- sum(wifi_travel_dur,
-                  wifi_home_dur,
-                  wifi_work_dur)
-  check_duration(wifi_dur)
-  return(wifi_dur)
 }

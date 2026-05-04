@@ -140,6 +140,7 @@ laptop_sar <- function(
     tissue,
     band,
     params = load_params()) {
+
   tissue_params <- load_tissue_params(params, "lptp", tissue)
   ## Lap
   lap_prop <- params$devices$lptp$legs_prop

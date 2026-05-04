@@ -326,16 +326,16 @@ devices:
       wifi_2_sar: 0.000860849
       wifi_5_sar: 0.000586175
   farf:
-    home_urb_pwr_other: 0.45
-    out_urb_pwr_other: 1.29
-    work_urb_pwr_other: 0.64
-    home_sub_pwr_other: 0.27
-    out_sub_pwr_other: 0.77
-    work_sub_pwr_other: 0.38
-    home_rur_pwr_other: 0.09
-    out_rur_pwr_other: 0.25
-    work_rur_pwr_other: 0.13
-    travel_pwr_other: 0.66
+    home_urb_pwr_Other: 0.45
+    out_urb_pwr_Other: 1.29
+    work_urb_pwr_Other: 0.64
+    home_sub_pwr_Other: 0.27
+    out_sub_pwr_Other: 0.77
+    work_sub_pwr_Other: 0.38
+    home_rur_pwr_Other: 0.09
+    out_rur_pwr_Other: 0.25
+    work_rur_pwr_Other: 0.13
+    travel_pwr_Other: 0.66
     home_urb_pwr_AT: 0.53
     out_urb_pwr_AT: 1.52
     work_urb_pwr_AT: 0.11

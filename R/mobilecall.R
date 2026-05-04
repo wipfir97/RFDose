@@ -186,8 +186,6 @@ mobilecall_msar <- function(
     speaker_prop = speaker_prop,
     params       = params
   )
-  print(paste(prop_native, prop_data, prop_wifi))
-  print(paste(msar_native, msar_data, msar_wifi))
   # Combine and return result
   total_msar <- sum(
     msar_native,

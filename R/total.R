@@ -15,20 +15,8 @@
 #' @export
 calculate_emf_doses <- function(
     data,
-    param_file = NULL,
+    params = load_params(),
     default_value_file = NULL) {
-
-  # Parameters ================================================================
-  ## Load internal parameter file if no param_file is supplied ----------------
-  params <- if (is.null(param_file)) {
-    load_params("params.yaml")  # from inst/extdata
-  } else {
-    yaml::read_yaml(param_file)
-  }
-  ## Check parameter file for validity if supplied ----------------------------
-  # TODO: add validity check
-
-
   # Default values ============================================================
   ## Load internal default value file if no default_value_file is supplied ----
   defaultvars <- if (is.null(default_value_file)) {
@@ -80,13 +68,11 @@ calculate_emf_doses <- function(
 #' @param param_file parameter file
 #' @returns A list with results for brain and body dose for a single sample
 #' @export
-get_total_dose <- function(sample,
-                           params) {
+get_total_dose <- function(
+    sample,
+    params = load_params()) {
   # Check input ===============================================================
-  ## Load internal parameter file if no param_file is supplied ----------------
-  params <- if (is.null(params)) {
-    load_params("params.yaml")  # from inst/extdata
-  }
+
   ## Check if any input values in sample are missing, return error ------------
   missing_vars <- anyNA(sample)
   if (missing_vars) {
@@ -109,7 +95,7 @@ get_total_dose <- function(sample,
     )
 
   ## Calculate mobile data contribution ---------------------------------------
-  data_dose <- get_mobiledata_dose(
+  data_dose <- mobiledata_dose(
     duration_low     = sample$mpd_dur_low,
     duration_lowmed  = sample$mpd_dur_lowtomed,
     duration_medhigh = sample$mpd_dur_medtohigh,
@@ -124,7 +110,7 @@ get_total_dose <- function(sample,
     )
 
   ## Calculate far-field contribution -----------------------------------------
-  farf_dose <- get_farfield_dose(
+  farf_dose <- farfield_dose(
     country      = sample$country,
     urbanicity   = sample$urbanicity,
     travel_time  = sample$travel_time,
@@ -132,42 +118,41 @@ get_total_dose <- function(sample,
     )
 
   ## Calculate WiFi contribution ----------------------------------------------
-  wifi_dose <- get_wifi_dose(
+  wifi_dose <- wifi_dose(
     travel_time      = sample$travel_time,
     wifi_prop_travel = sample$mpd_wifi_prop_travel,
     params           = params
     )
 
   ## Calculate laptop contribution --------------------------------------------
-  lptp_dose <- get_laptop_dose(
+  lptp_dose <- laptop_dose(
     dur_low       = sample$lptp_dur_low,
-    dur_lowtomed  = sample$lptp_dur_lowtomed,
-    dur_medtohigh = sample$lptp_dur_medtohigh,
+    dur_lowmed  = sample$lptp_dur_lowtomed,
+    dur_medhigh = sample$lptp_dur_medtohigh,
     dur_high      = sample$lptp_dur_high,
     params        = params
     )
 
   ## Calculate tablet contribution --------------------------------------------
-  tblt_dose <- get_tablet_dose(
-    dur_low       = sample$tblt_dur_low,
-    dur_lowtomed  = sample$tblt_dur_lowtomed,
-    dur_medtohigh = sample$tblt_dur_medtohigh,
-    dur_high      = sample$tblt_dur_high,
-    params        = params
+  tblt_dose <- tablet_dose(
+    dur_low     = sample$tblt_dur_low,
+    dur_lowmed  = sample$tblt_dur_lowtomed,
+    dur_medhigh = sample$tblt_dur_medtohigh,
+    dur_high    = sample$tblt_dur_high,
+    params      = params
     )
 
   ## Calculate cordless contribution ------------------------------------------
-  dect_dose <- get_cordless_dose(
+  dect_dose <- cordless_dose(
     duration       = sample$dect_duration,
-    ear_proportion = sample$dect_ear_prop,
+    ear_prop       = sample$dect_ear_prop,
     params         = params
     )
 
   ## Calculate contribution of other sources -----------------------------------
-  othe_dose <- get_other_dose(
+  othe_dose <- other_dose_wrapper(
     duration_hotspot    = sample$hotspot_duration,
     duration_smartwatch = sample$smartwatch_duration,
-    duration_tracker    = sample$tracker_duration,
     duration_vr         = sample$vr_duration,
     duration_headphones = sample$headphone_duration,
     duration_gaming     = sample$gaming_duration,
