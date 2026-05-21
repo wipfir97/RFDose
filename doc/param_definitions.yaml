@@ -1,0 +1,17 @@
+call:
+  duration:
+  ear_prop:
+  headp_prop:
+  speaker_prop:
+  urbanicity:
+  use_5g:
+  travel_time:
+  headp_ear_num:
+  wifi_prop_home:
+  wifi_prop_work:
+  wifi_prop_travel:
+  params: 
+  tissue:
+  prop_native:
+  prop_data:
+  prop_wifi:

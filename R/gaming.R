@@ -1,3 +1,4 @@
+#' @export
 gaming_dose <- function(
     duration_gaming,
     params = load_params()) {

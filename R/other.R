@@ -1,3 +1,4 @@
+#' @export
 other_dose_wrapper <- function(
     duration_hotspot,
     duration_smartwatch,

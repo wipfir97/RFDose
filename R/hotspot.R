@@ -1,3 +1,4 @@
+#' @export
 hotspot_dose <- function(
     duration_hotspot,
     params = load_params()) {

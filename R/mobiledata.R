@@ -1,5 +1,6 @@
 ###############################################################################
 # Calculate dose
+#' @export
 mobiledata_dose <- function(
     duration_low,
     duration_lowmed,

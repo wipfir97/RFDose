@@ -1,3 +1,4 @@
+#' @export
 headphones_dose <- function(
     duration_headphones,
     params = load_params()) {

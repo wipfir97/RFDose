@@ -1,3 +1,4 @@
+#' @export
 vr_dose <- function(
     duration_vr,
     params = load_params()) {
