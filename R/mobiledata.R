@@ -203,8 +203,6 @@ mpd_pwr_data <- function(
     duration_medhigh,
     duration_high)
 
-  print(paste(duration_low, duration_lowmed, duration_medhigh, duration_high))
-  print(act_props)
 
   # Calculate output power ====================================================
   ## Define which locations and activities to consider
@@ -227,10 +225,7 @@ mpd_pwr_data <- function(
 
     # scale by location proportion
     pwr_scaled <- act_prop*dc*pwr*loc_prop
-    print(loc_prop)
-    print(act_prop)
 
-    print(paste("here", location, activity, pwr, dc, urbanicity, travel_time, band, pwr_scaled))
 
     return(pwr_scaled)
   }
