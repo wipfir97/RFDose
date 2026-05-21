@@ -6,7 +6,7 @@
 \usage{
 mpc_sar_wifi(
   tissue,
-  tech,
+  band,
   headp_prop,
   ear_prop,
   speaker_prop,
@@ -16,7 +16,7 @@ mpc_sar_wifi(
 \arguments{
 \item{tissue}{Tissue}
 
-\item{tech}{technology (2.4 GHz, 5.0 GHz)}
+\item{band}{technology (2.4 GHz, 5.0 GHz)}
 
 \item{headp_prop}{Headp prop}
 

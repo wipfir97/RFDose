@@ -64,7 +64,7 @@ Where:
 \itemize{
 \item \eqn{Dose_{mobilecall}} is the total dose from all mobile call activities
 \item \eqn{Dose_{phone}} is the dose from the mobile phone (no Bluetooth)
-\item \eqn{Dose_{phoneBluetooth}} is the dose from using Bluetooth headphones
+\item \eqn{Dose_{bluetooth}} is the dose from using Bluetooth headphones
 during the call.
 }
 
@@ -79,5 +79,5 @@ Where:
 }
 }
 \seealso{
-\code{\link[=get_mobilecall_phone_dose]{get_mobilecall_phone_dose()}}, \code{\link[=get_mobilecall_bt_phone_dose]{get_mobilecall_bt_phone_dose()}}, \code{\link[=get_mobilecall_bt_headp_dose]{get_mobilecall_bt_headp_dose()}}
+\code{\link[=mobilecall_msar]{mobilecall_msar()}}
 }

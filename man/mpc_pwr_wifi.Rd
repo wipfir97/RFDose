@@ -4,10 +4,10 @@
 \alias{mpc_pwr_wifi}
 \title{Calculate WiFi call output power by band (2.4 GHz, 5.0 GHz)}
 \usage{
-mpc_pwr_wifi(tech, params = load_params())
+mpc_pwr_wifi(band, params = load_params())
 }
 \arguments{
-\item{tech}{technology (2.4 GHz, 5.0 GHz)}
+\item{band}{technology (2.4 GHz, 5.0 GHz)}
 
 \item{params}{parameter list}
 }

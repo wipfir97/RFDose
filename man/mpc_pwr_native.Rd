@@ -4,10 +4,10 @@
 \alias{mpc_pwr_native}
 \title{Calculate native call output power by technology (2G, 3G, 4G, 5G)}
 \usage{
-mpc_pwr_native(tech, urbanicity, travel_time, params = load_params())
+mpc_pwr_native(band, urbanicity, travel_time, params = load_params())
 }
 \arguments{
-\item{tech}{technology (2G, 3G, 4G, 5G)}
+\item{band}{technology (2G, 3G, 4G, 5G)}
 
 \item{urbanicity}{Urbanicity}
 

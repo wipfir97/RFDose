@@ -4,10 +4,10 @@
 \alias{mpc_pwr_data}
 \title{Calculate data call mSAR by technology (2G, 3G, 4G, 5G)}
 \usage{
-mpc_pwr_data(tech, urbanicity, travel_time, params = load_params())
+mpc_pwr_data(band, urbanicity, travel_time, params = load_params())
 }
 \arguments{
-\item{tech}{technology (2G, 3G, 4G, 5G)}
+\item{band}{technology (3G, 4G, 5G)}
 
 \item{urbanicity}{Urbanicity}
 

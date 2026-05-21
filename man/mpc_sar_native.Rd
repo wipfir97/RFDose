@@ -6,7 +6,7 @@
 \usage{
 mpc_sar_native(
   tissue,
-  tech,
+  band,
   headp_prop,
   ear_prop,
   speaker_prop,
@@ -16,7 +16,7 @@ mpc_sar_native(
 \arguments{
 \item{tissue}{Tissue}
 
-\item{tech}{technology (2G, 3G, 4G, 5G)}
+\item{band}{technology (2G, 3G, 4G, 5G)}
 
 \item{headp_prop}{Headp prop}
 
