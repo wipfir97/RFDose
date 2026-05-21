@@ -91,7 +91,7 @@ mobilecall_dose <- function(
 
   # Calculate dose for mobile phone (no bluetooth) ============================
   ## Brain --------------------------------------------------------------------
-  msar_phone_brain <- mobilecall_msar(
+  msar_phone_brain <- mpc_msar(
     tissue       = "brain",
     prop_native  = native_prop,
     prop_data    = data_prop,
@@ -107,7 +107,7 @@ mobilecall_dose <- function(
   dose_phone_brain <- msar_phone_brain * duration
 
   ## Body ---------------------------------------------------------------------
-  msar_phone_body <- mobilecall_msar(
+  msar_phone_body <- mpc_msar(
     tissue       = "body",
     prop_native  = native_prop,
     prop_data    = data_prop,
@@ -144,25 +144,8 @@ mobilecall_dose <- function(
   return(output_list)
 }
 
-###############################################################################
 # Mobilecall mSAR =============================================================
-#' Calculate momentary SAR (mSAR) from mobile calling -------------------------
-#'
-#' @param tissue brain or body
-#' @param prop_native proportion of native calls
-#' @param prop_data proportion of data calls
-#' @param prop_wifi proportion of wifi calls
-#' @param ear_prop Proportion of time mobile phone is held against ear
-#' during call
-#' @param headp_prop Proportion of time Bluetooth headphones are used during
-#' mobile call
-#' @param speaker_prop Proportion of time speaker mode is used during call
-#' @param urbanicity Urbanicity of home / workplace
-#' @param use_5g TRUE if participant uses 5G services on mobile phone,
-#' FALSE if not
-#' @param travel_time Time spent commuting in seconds per day
-#' @param params Parameter list
-mobilecall_msar <- function(
+mpc_msar <- function(
     tissue,
     prop_native,
     prop_data,
@@ -174,150 +157,118 @@ mobilecall_msar <- function(
     use_5g,
     travel_time,
     params = load_params()) {
-  # TODO: merge this function with the mobilecall_bytech functions
-  # Native call
-  bands_native <- c("2g", "3g", "4g", "5g")
-  msar_native <- prop_native * mpc_msar_native(
-    tissue       = tissue,
-    headp_prop   = headp_prop,
-    ear_prop     = ear_prop,
-    speaker_prop = speaker_prop,
-    urbanicity   = urbanicity,
-    travel_time  = travel_time,
-    params       = params
-  )
-  # Data call
-  bands_data <- c("3g", "4g", "5g")
-  msar_data   <- prop_data * mpc_msar_data(
-    tissue       = tissue,
-    headp_prop   = headp_prop,
-    ear_prop     = ear_prop,
-    speaker_prop = speaker_prop,
-    urbanicity   = urbanicity,
-    use_5g       = use_5g,
-    travel_time  = travel_time,
-    params       = params
-  )
-  # Wifi call
-  bands_wifi <- c("2", "5") # 2.4 GHz, 5.0 GHz
-  msar_wifi   <- prop_wifi * mpc_msar_wifi(
-    tissue       = tissue,
-    headp_prop   = headp_prop,
-    ear_prop     = ear_prop,
-    speaker_prop = speaker_prop,
-    params       = params
-  )
-  # Combine and return result
-  total_msar <- sum(
-    msar_native,
-    msar_data,
-    msar_wifi)
+  # Setup =====================================================================
+  ## Define frequency bands for each technology -------------------------------
+  native_bands <- c("2g", "3g", "4g", "5g")
+  data_bands   <- c("3g", "4g", "5g")
+  wifi_bands   <- c("2", "5") # 2.4 GHz and 5.0 GHz
 
-  return(total_msar)
-}
+  # Native call ===============================================================
+  msar_native <- sum(
+    vapply(
+      native_bands,
+      \(band) {
+        prop <- params$devices$call[[paste0("native_", band, "_prop")]]
 
-# Mobilecall mSAR for native calls ============================================
-# Mobilecall mSAR (native call) -----------------------------------------------
-#' Calculate native call mSAR
-#'
-#' @param tissue Tissue
-#' @param headp_prop Headp prop
-#' @param ear_prop Ear prop
-#' @param speaker_prop Speaker prop
-#' @param urbanicity Urbanicity
-#' @param travel_time Travel time
-#' @param params parameter list
-mpc_msar_native <- function(
-    tissue,
-    headp_prop,
-    ear_prop,
-    speaker_prop,
-    urbanicity,
-    travel_time,
-    params = load_params()) {
+        pwr <- mpc_pwr_native(
+          band        = band,
+          urbanicity  = urbanicity,
+          travel_time = travel_time,
+          params      = params
+        )
 
-  # define technologies
-  techs <- c("2g", "3g", "4g", "5g")
+        sar <- mpc_sar_native(
+          tissue       = tissue,
+          band         = band,
+          headp_prop   = headp_prop,
+          ear_prop     = ear_prop,
+          speaker_prop = speaker_prop,
+          params       = params
+        )
 
-  # apply to all technologies
-  msar_native <- setNames(
-    lapply(techs, function(tech) {
-
-
-      prop <- params$devices$call[[paste0("native_", tech, "_prop")]]
-
-      prop * mpc_msar_native_bytech(
-        tissue       = tissue,
-        tech         = tech,
-        headp_prop   = headp_prop,
-        ear_prop     = ear_prop,
-        speaker_prop = speaker_prop,
-        urbanicity   = urbanicity,
-        travel_time  = travel_time,
-        params       = params
-      )
-    }),
-    techs
+        return(prop*sar*pwr)
+      },
+      numeric(1)
+    )
   )
 
+  # Data call =================================================================
+  msar_data <- sum(
+    vapply(
+      data_bands,
+      \(band) {
+        if (use_5g) {
+          prop <- params$devices$call[[paste0("data_", band, "_prop")]]
+        } else {
+          prop <- params$devices$call[[paste0("data_", band, "_prop_no5g")]]
+        }
 
-  # sum and return
-  total_msar_native <- sum(unlist(msar_native))
+        pwr <- mpc_pwr_data(
+          band             = band,
+          urbanicity       = urbanicity,
+          travel_time      = travel_time,
+          params           = params
+        )
 
-  return(total_msar_native)
-}
+        sar <- mpc_sar_data(
+          tissue       = tissue,
+          band         = band,
+          headp_prop   = headp_prop,
+          ear_prop     = ear_prop,
+          speaker_prop = speaker_prop,
+          params       = params
+        )
+        return(prop*sar*pwr)
+      },
+      numeric(1)
+    )
+  )
 
+  ## WiFi call ================================================================
+  msar_wifi <- sum(
+    vapply(
+      wifi_bands,
+      \(band) {
 
-# Mobilecall mSAR (nativecall) by technology (2G, 3G, 4G, 5G) -----------------
-#' Calculate native call mSSAR by technology (2G, 3G, 4G, 5G)
-#'
-#' @param tissue Tissue
-#' @param tech technology (2G, 3G, 4G, 5G)
-#' @param headp_prop Headp prop
-#' @param ear_prop Ear prop
-#' @param speaker_prop Speaker prop
-#' @param urbanicity Urbanicity
-#' @param travel_time Travel time
-#' @param params parameter list
-mpc_msar_native_bytech <- function(
-    tissue,
-    tech,
-    headp_prop,
-    ear_prop,
-    speaker_prop,
-    urbanicity,
-    travel_time,
-    params = load_params()) {
-  # output power
-  mpc_pwr_native <- mpc_pwr_native(
-    tech          = tech,
-    urbanicity    = urbanicity,
-    travel_time   = travel_time,
-    params        = params)
-  # sar
-  mpc_sar_native <- mpc_sar_native(
-    tissue        = tissue,
-    tech          = tech,
-    headp_prop    = headp_prop,
-    ear_prop      = ear_prop,
-    speaker_prop  = speaker_prop,
-    params        = params)
+        prop <- params$global[[paste0("wifi_", band, "_prop")]]
 
-  # calculate msar (output power * sar) and return result
-  msar_bytech <- mpc_pwr_native * mpc_sar_native
+        pwr <- mpc_pwr_wifi(
+          band             = band,
+          params           = params
+        )
 
-  return(msar_bytech)
+        sar <- mpc_sar_wifi(
+          tissue       = tissue,
+          band         = band,
+          headp_prop   = headp_prop,
+          ear_prop     = ear_prop,
+          speaker_prop = speaker_prop,
+          params       = params
+        )
+        prop*sar*pwr
+      },
+      numeric(1)
+    )
+  )
+  # Scale mSAR with native vs WiFi vs data use proporion ======================
+  msar <- sum(
+    prop_native*msar_native,
+    prop_data*msar_data,
+    prop_wifi*msar_wifi)
+
+  # Combine and return results ================================================
+  return(msar)
 }
 
 # Mobilecall output power (nativecall) by technology (2G, 3G, 4G, 5G) ---------
 #' Calculate native call output power by technology (2G, 3G, 4G, 5G)
 #'
-#' @param tech technology (2G, 3G, 4G, 5G)
+#' @param band technology (2G, 3G, 4G, 5G)
 #' @param urbanicity Urbanicity
 #' @param travel_time Travel time
 #' @param params parameter list
 mpc_pwr_native <- function(
-    tech,
+    band,
     urbanicity,
     travel_time,
     params = load_params()) {
@@ -330,7 +281,7 @@ mpc_pwr_native <- function(
     work_prop   = params$global$work_prop)
 
   # define prefix for finding correct parameters
-  prefix <- paste("native", tech, substr(urbanicity, 0, 3), sep = "_")
+  prefix <- paste("native", band, substr(urbanicity, 0, 3), sep = "_")
 
   # home/work
   indoor_prop <- loc_props$home + loc_props$work
@@ -340,10 +291,10 @@ mpc_pwr_native <- function(
   pwr_outdoor   <- loc_props$out * params$devices$call[[paste0(prefix, "_out_pwr")]]
 
   # commuting/traveling
-  pwr_travel <- loc_props$travel * params$devices$call[[paste0("native_",tech, "travel_pwr")]]
+  pwr_travel <- loc_props$travel * params$devices$call[[paste0("native_",band, "travel_pwr")]]
 
   # combine, multiply with duty cycle, and return resul
-  dutycycle <- params$devices$call[[paste0("native_", tech, "_dutycycle")]]
+  dutycycle <- params$devices$call[[paste0("native_", band, "_dutycycle")]]
   pwr_total <- sum(pwr_indoor, pwr_outdoor, pwr_travel) * dutycycle
 
   return(pwr_total)
@@ -354,20 +305,20 @@ mpc_pwr_native <- function(
 #' Calculate native call SAR by technology (2G, 3G, 4G, 5G)
 #'
 #' @param tissue Tissue
-#' @param tech technology (2G, 3G, 4G, 5G)
+#' @param band technology (2G, 3G, 4G, 5G)
 #' @param headp_prop Headp prop
 #' @param ear_prop Ear prop
 #' @param speaker_prop Speaker prop
 #' @param params parameter list
 mpc_sar_native <- function(
     tissue,
-    tech,
+    band,
     headp_prop,
     ear_prop,
     speaker_prop,
     params = load_params()) {
   # define prefix for finding correct tissue parameter
-  prefix <- paste0("native_", tech)
+  prefix <- paste0("native_", band)
   # load tissue-specific parameters (SAR values)
   tissue_params <- load_tissue_params(params, "call", tissue)
   # phone on ear
@@ -390,115 +341,15 @@ mpc_sar_native <- function(
   return(mpc_sar)
 }
 
-
-# Mobilecall mSAR (data call) =================================================
-#' Calculate data call mSAR
-#'
-#' @param tissue Tissue
-#' @param headp_prop Headp prop
-#' @param ear_prop Ear prop
-#' @param speaker_prop Speaker prop
-#' @param urbanicity Urbanicity
-#' @param use_5g Use 5G
-#' @param travel_time Travel time
-#' @param params parameter list
-mpc_msar_data <- function(
-    tissue,
-    headp_prop,
-    ear_prop,
-    speaker_prop,
-    urbanicity,
-    use_5g,
-    travel_time,
-    params = load_params()) {
-
-  # define technologies
-  techs <- c("2g", "3g", "4g", "5g")
-
-  # define function to get correct proportion parameter
-  get_data_prop <- function(params, tech, use_5g) {
-    if (use_5g) {
-      params$devices$call[[paste0("data_", tech, "_prop")]]
-    } else {
-      params$devices$call[[paste0("data_", tech, "_prop_no5g")]]
-    }
-  }
-  # apply to all tachnologies
-  msar_data <- setNames(
-    lapply(techs, function(tech) {
-
-      prop <- get_data_prop(params, tech, use_5g)
-
-      prop * mpc_msar_data_bytech(
-        tissue       = tissue,
-        tech         = tech,
-        headp_prop   = headp_prop,
-        ear_prop     = ear_prop,
-        speaker_prop = speaker_prop,
-        urbanicity   = urbanicity,
-        travel_time  = travel_time,
-        params       = params
-      )
-    }),
-    techs
-  )
-
-  # sum and return
-  total_msar_data <- sum(unlist(msar_data)
-  )
-  return(total_msar_data)
-}
-
-# Mobilecall data msar by technology ------------------------------------------
-#' Calculate data call mSAR by technology (2G, 3G, 4G, 5G)
-#'
-#' @param tissue Tissue
-#' @param tech technology (2G, 3G, 4G, 5G)
-#' @param headp_prop Headp prop
-#' @param ear_prop Ear prop
-#' @param speaker_prop Speaker prop
-#' @param urbanicity Urbanicity
-#' @param travel_time Travel time
-#' @param params parameter list
-mpc_msar_data_bytech <- function(
-    tissue,
-    tech,
-    headp_prop,
-    ear_prop,
-    speaker_prop,
-    urbanicity,
-    travel_time,
-    params = load_params()) {
-  # output power
-  mpc_pwr_data <- mpc_pwr_data(
-    tech          = tech,
-    urbanicity    = urbanicity,
-    travel_time   = travel_time,
-    params        = params)
-  # sar
-  mpc_sar_data <- mpc_sar_data(
-    tissue        = tissue,
-    tech          = tech,
-    headp_prop    = headp_prop,
-    ear_prop      = ear_prop,
-    speaker_prop  = speaker_prop,
-    params        = params)
-
-  # calculate msar (output power * sar) and return result
-  msar_bytech <- mpc_pwr_data * mpc_sar_data
-
-  return(msar_bytech)
-}
-
 # Mobilecall data output power by technology ----------------------------------
 #' Calculate data call mSAR by technology (2G, 3G, 4G, 5G)
 #'
-#' @param tech technology (2G, 3G, 4G, 5G)
+#' @param band technology (3G, 4G, 5G)
 #' @param urbanicity Urbanicity
 #' @param travel_time Travel time
 #' @param params parameter list
 mpc_pwr_data <- function(
-    tech,
+    band,
     urbanicity,
     travel_time,
     params = load_params()) {
@@ -511,7 +362,7 @@ mpc_pwr_data <- function(
     work_prop   = params$global$work_prop)
 
   # define prefix for finding correct parameters
-  prefix <- paste("data", tech, substr(urbanicity, 0, 3), sep = "_")
+  prefix <- paste("data", band, substr(urbanicity, 0, 3), sep = "_")
 
   # home/work
   indoor_prop <- loc_props$home + loc_props$work
@@ -523,10 +374,10 @@ mpc_pwr_data <- function(
 
 
   # commuting/traveling
-  pwr_travel <- loc_props$travel * params$devices$call[[paste0("data_",tech, "travel_pwr")]]
+  pwr_travel <- loc_props$travel * params$devices$call[[paste0("data_",band, "travel_pwr")]]
 
   # combine, multiply with duty cycle, and return resul
-  dutycycle <- params$devices$call[[paste0("data_", tech, "_dutycycle")]]
+  dutycycle <- params$devices$call[[paste0("data_", band, "_dutycycle")]]
 
   pwr_total <- sum(pwr_indoor, pwr_outdoor, pwr_travel) * dutycycle
 
@@ -537,20 +388,20 @@ mpc_pwr_data <- function(
 #' Calculate data call SAR by technology (2G, 3G, 4G, 5G)
 #'
 #' @param tissue Tissue
-#' @param tech technology (2G, 3G, 4G, 5G)
+#' @param band technology (2G, 3G, 4G, 5G)
 #' @param headp_prop Headp prop
 #' @param ear_prop Ear prop
 #' @param speaker_prop Speaker prop
 #' @param params parameter list
 mpc_sar_data <- function(
     tissue,
-    tech,
+    band,
     headp_prop,
     ear_prop,
     speaker_prop,
     params = load_params()) {
   # define prefix for finding correct tissue parameter
-  prefix <- paste0("data_", tech)
+  prefix <- paste0("data_", band)
   # load tissue-specific parameters (SAR values)
   tissue_params <- load_tissue_params(params, "call", tissue)
   # phone on ear
@@ -574,104 +425,23 @@ mpc_sar_data <- function(
   return(mpc_sar)
 }
 
-
-# Mobilecall mSAR (wifi call) =================================================
-#' Calculate WiFi call mSAR
-#'
-#' @param tissue Tissue
-#' @param headp_prop Headp prop
-#' @param ear_prop Ear prop
-#' @param speaker_prop Speaker prop
-#' @param params parameter list
-mpc_msar_wifi <- function(
-    tissue,
-    headp_prop,
-    ear_prop,
-    speaker_prop,
-    params = load_params()) {
-  # define technologies
-  techs <- c("2", "5")
-
-  # define function to get correct proportion parameter
-  get_wifi_prop <- function(params, tech) {
-    params$global[[paste0("wifi_", tech, "_prop")]]
-  }
-  # apply to all tachnologies
-  msar_wifi <- setNames(
-    lapply(techs, function(tech) {
-
-      prop <- get_wifi_prop(params, tech)
-
-      prop * mpc_msar_wifi_bytech(
-        tissue       = tissue,
-        tech         = tech,
-        headp_prop   = headp_prop,
-        ear_prop     = ear_prop,
-        speaker_prop = speaker_prop,
-        params       = params
-      )
-    }),
-    techs
-  )
-
-  # sum and return
-  total_msar_wifi <- sum(unlist(msar_wifi)
-  )
-  return(total_msar_wifi)
-}
-
-# Mobilecall mSAR by technology (WiFi call) -----------------------------------
-#' Calculate WiFi call mSAR by band (2.4 GHz, 5.0 GHz)
-#'
-#' @param tissue Tissue
-#' @param tech technology (2.4 GHz, 5.0 GHz)
-#' @param headp_prop Headp prop
-#' @param ear_prop Ear prop
-#' @param speaker_prop Speaker prop
-#' @param params parameter list
-mpc_msar_wifi_bytech <- function(
-    tissue,
-    tech,
-    headp_prop,
-    ear_prop,
-    speaker_prop,
-    params = load_params()) {
-  # output power
-  mpc_pwr_wifi <- mpc_pwr_wifi(
-    tech          = tech,
-    params        = params)
-  # sar
-  mpc_sar_wifi <- mpc_sar_wifi(
-    tissue        = tissue,
-    tech          = tech,
-    headp_prop    = headp_prop,
-    ear_prop      = ear_prop,
-    speaker_prop  = speaker_prop,
-    params        = params)
-
-  # calculate msar (output power * sar) and return result
-  msar_wifi_bytech <- mpc_pwr_wifi * mpc_sar_wifi
-
-  return(msar_wifi_bytech)
-}
-
 # Mobilecall output power (WiFi call) -----------------------------------------
 #' Calculate WiFi call output power by band (2.4 GHz, 5.0 GHz)
 #'
-#' @param tech technology (2.4 GHz, 5.0 GHz)
+#' @param band technology (2.4 GHz, 5.0 GHz)
 #' @param params parameter list
 mpc_pwr_wifi <- function(
-    tech,
+    band,
     params = load_params()) {
 
   # define prefix for finding correct parameters
-  prefix <- paste("wifi", tech, sep = "_")
+  prefix <- paste("wifi", band, sep = "_")
 
   # get power
-  pwr <- params$devices$call[[paste0("wifi_", tech, "_pwr")]]
+  pwr <- params$devices$call[[paste0("wifi_", band, "_pwr")]]
 
   # get duty cycle
-  dutycycle <- params$devices$call[[paste0("wifi_", tech, "_dutycycle")]]
+  dutycycle <- params$devices$call[[paste0("wifi_", band, "_dutycycle")]]
 
   # multiply and return
   pwr_total <- pwr * dutycycle
@@ -683,20 +453,20 @@ mpc_pwr_wifi <- function(
 #' Calculate WiFi call SAR by technology (2.4 GHz, 5.0 GHz)
 #'
 #' @param tissue Tissue
-#' @param tech technology (2.4 GHz, 5.0 GHz)
+#' @param band technology (2.4 GHz, 5.0 GHz)
 #' @param headp_prop Headp prop
 #' @param ear_prop Ear prop
 #' @param speaker_prop Speaker prop
 #' @param params parameter list
 mpc_sar_wifi <- function(
     tissue,
-    tech,
+    band,
     headp_prop,
     ear_prop,
     speaker_prop,
     params = load_params()) {
   # define prefix for finding correct tissue parameter
-  prefix <- paste0("wifi_", tech)
+  prefix <- paste0("wifi_", band)
   # load tissue-specific parameters (SAR values)
   tissue_params <- load_tissue_params(params, "call", tissue)
   # phone on ear
