@@ -45,20 +45,20 @@ library(remotes)
 To install the R package:
 
 ```{r}
-remotes::install\_github("wipfir97/RFDose")
+remotes::install_github("wipfir97/RFDose")
 ```
 
 To install the current development version:
 
 ```{r}
-remotes::install\_github("wipfir97/RFDose@dev/0.3.0")
+remotes::install_github("wipfir97/RFDose@dev/0.3.0")
 ```
 
 To install an older version of the package (example v.0.1.0):
 
 ```{r}
 # Install RFDose using your PAT
-remotes::install\_github("wipfir97/RFDose@v0.1.0")
+remotes::install_github("wipfir97/RFDose@v0.1.0")
 ```
 
 \---
