@@ -1,41 +1,23 @@
 #' @export
 headphones_dose <- function(
+    tissue,
     duration_headphones,
     params = load_params()) {
   # From ear set ==============================================================
-  ## Brain
-  dose_brain_headphones <- headphones_earset_dose(
-    tissue              = "brain",
-    duration_headphones = duration_headphones,
-    params              = params
-  )
-  ## Body
-  dose_body_headphones <- headphones_earset_dose(
-    tissue              = "body",
+  dose_headphones <- headphones_earset_dose(
+    tissue              = tissue,
     duration_headphones = duration_headphones,
     params              = params
   )
 
   # From phone (bluetooth connection to watch) ================================
-  ## Brain
-  dose_brain_phone <- headphones_phone_dose(
-    tissue              = "brain",
-    duration_headphones = duration_headphones,
-    params              = params
-  )
-  ## Body
-  dose_body_phone <- headphones_phone_dose(
-    tissue              = "body",
+  dose_phone <- headphones_phone_dose(
+    tissue              = tissue,
     duration_headphones = duration_headphones,
     params              = params
   )
 
-  return(
-    list(
-      headphones_brain_dose = sum(dose_brain_headphones, dose_brain_phone),
-      headphones_body_dose  = sum(dose_body_headphones, dose_body_phone)
-    )
-  )
+  return(sum(dose_headphones, dose_phone))
 }
 
 headphones_earset_dose <- function(

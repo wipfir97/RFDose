@@ -12,6 +12,7 @@
 #' @export
 #' @import yaml
 tablet_dose <- function(
+    tissue,
     dur_low,
     dur_lowmed,
     dur_medhigh,
@@ -28,21 +29,9 @@ tablet_dose <- function(
     dur_medhigh,
     dur_high)
 
-
-
   # Calculate mSAR ============================================================
-  ## Brain
-  msar_brain <- tablet_msar(
-    tissue        = "brain",
-    dur_low       = dur_low,
-    dur_lowmed    = dur_lowmed,
-    dur_medhigh   = dur_medhigh,
-    dur_high      = dur_high,
-    params        = params
-  )
-  ## Body
-  msar_body <- tablet_msar(
-    tissue        = "body",
+  msar <- tablet_msar(
+    tissue        = tissue,
     dur_low       = dur_low,
     dur_lowmed    = dur_lowmed,
     dur_medhigh   = dur_medhigh,
@@ -51,12 +40,9 @@ tablet_dose <- function(
   )
 
   # Calculate dose ============================================================
-  ## Brain
-  dose_brain <- msar_brain * duration
-  ## Body
-  dose_body  <- msar_body * duration
+  dose <- msar * duration
 
-  return(list("brain_tblt_dose" = dose_brain, "body_tblt_dose"  = dose_body))
+  return(dose)
 }
 
 tablet_msar <- function(

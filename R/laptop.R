@@ -12,6 +12,7 @@
 #' @export
 #' @import yaml
 laptop_dose <- function(
+    tissue,
     dur_low,
     dur_lowmed,
     dur_medhigh,
@@ -36,32 +37,18 @@ laptop_dose <- function(
     high_dur    = dur_high)
 
   # Calculate mSAR ============================================================
-  ## Brain
-  msar_brain <- laptop_msar(
-    tissue        = "brain",
-    dur_low       = dur_low,
+  msar <- laptop_msar(
+    tissue      = tissue,
+    dur_low     = dur_low,
     dur_lowmed  = dur_lowmed,
     dur_medhigh = dur_medhigh,
-    dur_high      = dur_high,
-    params        = params
-  )
-  ## Body
-  msar_body <- laptop_msar(
-    tissue        = "body",
-    dur_low       = dur_low,
-    dur_lowmed  = dur_lowmed,
-    dur_medhigh = dur_medhigh,
-    dur_high      = dur_high,
-    params        = params
+    dur_high    = dur_high,
+    params      = params
   )
 
   # Calculate dose ============================================================
-  ## Brain
-  dose_brain <- msar_brain * duration
-  ## Body
-  dose_body  <- msar_body * duration
-
-  return(list("brain_lptp_dose" = dose_brain, "body_lptp_dose"  = dose_body))
+  dose <- msar * duration
+  return(dose)
 }
 
 laptop_msar <- function(

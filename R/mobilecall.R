@@ -1,6 +1,6 @@
 ###############################################################################
 # Calculate RF-EMF dose (for brain and body) from mobile calling
-## TODO remove redundancies
+
 
 ###############################################################################
 # Total mobile call dose ======================================================
@@ -29,6 +29,7 @@
 #' * \eqn{mSAR} is the momentary SAR value in mJ/kg
 #' * \eqn{duration} is the call duration in seconds
 #'
+#' @param tissue Tissue for which to calculate dose (default: "brain" or "body")
 #' @param duration Duration of mobile phone call in seconds per day
 #' @param ear_prop Proportion of time mobile phone is held against ear
 #' during call
@@ -53,6 +54,7 @@
 #' @seealso [mobilecall_msar()]
 #' @export
 mobilecall_dose <- function(
+    tissue,
     duration,
     ear_prop,
     headp_prop,
@@ -90,9 +92,8 @@ mobilecall_dose <- function(
   data_prop <- 1-native_prop-wifi_prop
 
   # Calculate dose for mobile phone (no bluetooth) ============================
-  ## Brain --------------------------------------------------------------------
-  msar_phone_brain <- mpc_msar(
-    tissue       = "brain",
+  msar_phone <- mpc_msar(
+    tissue       = tissue,
     prop_native  = native_prop,
     prop_data    = data_prop,
     prop_wifi    = wifi_prop,
@@ -104,44 +105,20 @@ mobilecall_dose <- function(
     travel_time  = travel_time,
     params       = params)
 
-  dose_phone_brain <- msar_phone_brain * duration
+  dose_phone <- msar_phone * duration
 
-  ## Body ---------------------------------------------------------------------
-  msar_phone_body <- mpc_msar(
-    tissue       = "body",
-    prop_native  = native_prop,
-    prop_data    = data_prop,
-    prop_wifi    = wifi_prop,
-    headp_prop   = headp_prop,
-    ear_prop     = ear_prop,
-    speaker_prop = speaker_prop,
-    urbanicity   = urbanicity,
-    use_5g       = use_5g,
-    travel_time  = travel_time,
-    params       = params)
-
-  dose_phone_body <- msar_phone_body * duration
 
   # Calculate dose for bluetooth headphones ===================================
   ## Brain --------------------------------------------------------------------
-  msar_bt_brain <- mobilecall_bt_msar(tissue = "brain", params = params)
-  dose_bt_brain <- msar_bt_brain * headp_prop * headp_ear_num
-  ## Body ---------------------------------------------------------------------
-  msar_bt_body  <- mobilecall_bt_msar(tissue = "body", params = params)
-  dose_bt_body  <- msar_bt_body * headp_prop * headp_ear_num
+  msar_bt <- mobilecall_bt_msar(
+    tissue = tissue,
+    params = params)
+  dose_bt <- msar_bt * headp_prop * headp_ear_num
 
   # Add doses from different sources and return result ========================
-  ## Brain --------------------------------------------------------------------
-  brain_dose <- sum(dose_phone_brain, dose_bt_brain)
-  ## Body ---------------------------------------------------------------------
-  body_dose  <- sum(dose_phone_body, dose_bt_body)
+  dose <- sum(dose_phone, dose_bt)
 
-  ## Save as list and return --------------------------------------------------
-  output_list <- list(
-    "brain_call_dose" = brain_dose,
-    "body_call_dose"  = body_dose)
-
-  return(output_list)
+  return(dose)
 }
 
 # Mobilecall mSAR =============================================================

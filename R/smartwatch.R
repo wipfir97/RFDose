@@ -2,43 +2,25 @@
 # =============================================================================
 #' @export
 smartwatch_dose <- function(
+    tissue,
     duration_smartwatch,
     params = load_params()) {
 
   # From watch ================================================================
-  ## Brain
-  dose_brain_watch <- smartwatch_watch_dose(
-    tissue              = "brain",
-    duration_smartwatch = duration_smartwatch,
-    params              = params
-  )
-  ## Body
-  dose_body_watch <- smartwatch_watch_dose(
-    tissue              = "body",
+  dose_watch <- smartwatch_watch_dose(
+    tissue              = tissue,
     duration_smartwatch = duration_smartwatch,
     params              = params
   )
 
   # From phone (bluetooth connection to watch) ================================
-  ## Brain
-  dose_brain_phone <- smartwatch_phone_dose(
-    tissue              = "brain",
-    duration_smartwatch = duration_smartwatch,
-    params              = params
-  )
-  ## Body
-  dose_body_phone <- smartwatch_phone_dose(
-    tissue              = "body",
+  dose_phone <- smartwatch_phone_dose(
+    tissue              = tissue,
     duration_smartwatch = duration_smartwatch,
     params              = params
   )
 
-  return(
-    list(
-      smartwatch_brain_dose = sum(dose_brain_watch, dose_brain_phone),
-      smartwatch_body_dose  = sum(dose_body_watch, dose_body_phone)
-    )
-  )
+  return(sum(dose_watch, dose_phone))
 }
 
 smartwatch_watch_dose <- function(

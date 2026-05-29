@@ -11,6 +11,7 @@
 #' @export
 #' @import yaml
 cordless_dose <- function(
+    tissue,
     duration,
     ear_prop,
     params = load_params()) {
@@ -22,26 +23,16 @@ cordless_dose <- function(
   check_proportions(proportions = ear_prop)
 
   # Calculate brain and body mSAR =============================================
-  ## Brain
-  msar_brain <- dect_msar(
-    tissue   = "brain",
-    ear_prop = ear_prop,
-    params   = params
-  )
-  ## Body
-  msar_body <- dect_msar(
-    tissue   = "body",
+  msar <- dect_msar(
+    tissue   = tissue,
     ear_prop = ear_prop,
     params   = params
   )
 
   # Calculate dose and return result ==========================================
-  ## Brain
-  dose_brain <- msar_brain * duration
-  ## Body
-  dose_body  <- msar_body * duration
+  dose <- msar * duration
 
-  return(list("brain_dect_dose" = dose_brain, "body_dect_dose"  = dose_body))
+  return(dose)
 }
 
 dect_msar <- function(

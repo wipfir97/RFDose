@@ -4,6 +4,7 @@
 #' Wrapper function that calculates RF-EMF doses for a full data frame.
 #'
 #' @param data A data frame with required columns.
+#' @param tissue Tissue for which to calculate dose (default: "brain" or "body")
 #' @param param_file Optional path to an external YAML parameter file. Must follow same structure as internal YAML parameter file.
 #' @param default_value_file Optional path to external YAML default value file. Must follow same structure as internal YAML default value file.
 #' @returns A data frame. Columns named SOURCE_dose_TISSUE contain the calculated RF-EMF dose
@@ -15,6 +16,7 @@
 #' @export
 calculate_emf_doses <- function(
     data,
+    tissue,
     params = load_params(),
     default_value_file = NULL) {
   # Default values ============================================================
@@ -49,6 +51,7 @@ calculate_emf_doses <- function(
       outcome = list(
         get_total_dose(
           as.list(dplyr::pick(dplyr::everything())),
+          tissue = tissue,
           params
         )
       )
@@ -70,6 +73,7 @@ calculate_emf_doses <- function(
 #' @export
 get_total_dose <- function(
     sample,
+    tissue,
     params = load_params()) {
   # Check input ===============================================================
 
@@ -81,6 +85,7 @@ get_total_dose <- function(
   # Calculate contribution of each exposure source ============================
   ## Calculate mobile call contribution ---------------------------------------
   call_dose <- mobilecall_dose(
+    tissue           = tissue,
     duration         = sample$mpc_duration,
     ear_prop         = sample$mpc_ear_prop,
     headp_prop       = sample$mpc_headp_prop,
@@ -96,6 +101,7 @@ get_total_dose <- function(
 
   ## Calculate mobile data contribution ---------------------------------------
   data_dose <- mobiledata_dose(
+    tissue           = tissue,
     duration_low     = sample$mpd_dur_low,
     duration_lowmed  = sample$mpd_dur_lowtomed,
     duration_medhigh = sample$mpd_dur_medtohigh,
@@ -111,6 +117,7 @@ get_total_dose <- function(
 
   ## Calculate far-field contribution -----------------------------------------
   farf_dose <- farfield_dose(
+    tissue           = tissue,
     country      = sample$country,
     urbanicity   = sample$urbanicity,
     travel_time  = sample$travel_time,
@@ -119,6 +126,7 @@ get_total_dose <- function(
 
   ## Calculate WiFi contribution ----------------------------------------------
   wifi_dose <- wifi_dose(
+    tissue           = tissue,
     travel_time      = sample$travel_time,
     wifi_prop_travel = sample$mpd_wifi_prop_travel,
     params           = params
@@ -126,15 +134,17 @@ get_total_dose <- function(
 
   ## Calculate laptop contribution --------------------------------------------
   lptp_dose <- laptop_dose(
-    dur_low       = sample$lptp_dur_low,
+    tissue      = tissue,
+    dur_low     = sample$lptp_dur_low,
     dur_lowmed  = sample$lptp_dur_lowtomed,
     dur_medhigh = sample$lptp_dur_medtohigh,
-    dur_high      = sample$lptp_dur_high,
-    params        = params
+    dur_high    = sample$lptp_dur_high,
+    params      = params
     )
 
   ## Calculate tablet contribution --------------------------------------------
   tblt_dose <- tablet_dose(
+    tissue      = tissue,
     dur_low     = sample$tblt_dur_low,
     dur_lowmed  = sample$tblt_dur_lowtomed,
     dur_medhigh = sample$tblt_dur_medtohigh,
@@ -144,6 +154,7 @@ get_total_dose <- function(
 
   ## Calculate cordless contribution ------------------------------------------
   dect_dose <- cordless_dose(
+    tissue         = tissue,
     duration       = sample$dect_duration,
     ear_prop       = sample$dect_ear_prop,
     params         = params
@@ -151,6 +162,7 @@ get_total_dose <- function(
 
   ## Calculate contribution of other sources -----------------------------------
   othe_dose <- other_dose_wrapper(
+    tissue              = tissue,
     duration_hotspot    = sample$hotspot_duration,
     duration_smartwatch = sample$smartwatch_duration,
     duration_vr         = sample$vr_duration,
@@ -159,46 +171,16 @@ get_total_dose <- function(
     params              = params
     )
 
-
-  # Calculate total dose ======================================================
-  ## Brain
-  total_brain_dose <- sum(
-    call_dose$brain_call_dose,
-    data_dose$brain_data_dose,
-    dect_dose$brain_dect_dose,
-    farf_dose$brain_farf_dose,
-    wifi_dose$brain_wifi_dose,
-    lptp_dose$brain_lptp_dose,
-    tblt_dose$brain_tblt_dose,
-    othe_dose$brain_othe_dose
-    )
-
-  ## Body
-  total_body_dose <- sum(
-    call_dose$body_call_dose,
-    data_dose$body_data_dose,
-    dect_dose$body_dect_dose,
-    farf_dose$body_farf_dose,
-    wifi_dose$body_wifi_dose,
-    lptp_dose$body_lptp_dose,
-    tblt_dose$body_tblt_dose,
-    othe_dose$body_othe_dose
-    )
-
-  ## Save as list
-  tota_dose <- list("brain_total_dose" = total_brain_dose,
-                    "body_total_dose"  = total_body_dose)
-
   # Return output =============================================================
-  output_list <- c(call_dose,
-                   data_dose,
-                   dect_dose,
-                   farf_dose,
-                   wifi_dose,
-                   lptp_dose,
-                   tblt_dose,
-                   othe_dose,
-                   tota_dose)
+  output_list <- c(
+    "call_dose"  = call_dose,
+    "data_dose"  = data_dose,
+    "dect_dose"  = dect_dose,
+    "farf_dose"  = farf_dose,
+    "wifi_dose"  = wifi_dose,
+    "lptp_dose"  = lptp_dose,
+    "tblt_dose"  = tblt_dose,
+    "other_dose" = othe_dose)
 
   return(output_list)
 }

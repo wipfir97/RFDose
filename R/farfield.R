@@ -4,6 +4,7 @@
 # =============================================================================
 #' @export
 farfield_dose <- function(
+    tissue,
     country,
     urbanicity,
     travel_time,
@@ -13,17 +14,8 @@ farfield_dose <- function(
 
   # Calculate mSAR ============================================================
   ## Brain --------------------------------------------------------------------
-  msar_brain <- farfield_msar(
-    tissue      = "brain",
-    country     = country,
-    urbanicity  = urbanicity,
-    travel_time = travel_time,
-    params      = params
-  )
-
-  ## Body ---------------------------------------------------------------------
-  msar_body <- farfield_msar(
-    tissue      = "body",
+  msar <- farfield_msar(
+    tissue      = tissue,
     country     = country,
     urbanicity  = urbanicity,
     travel_time = travel_time,
@@ -32,17 +24,9 @@ farfield_dose <- function(
 
   # Calculate dose and return result ==========================================
   duration <- 86400 # assumption: exposed all day
-  ## Brain --------------------------------------------------------------------
-  dose_brain <- duration*msar_brain
-  ## Body ---------------------------------------------------------------------
-  dose_body <- duration*msar_body
+  dose <- duration*msar
 
-  return(
-    list(
-      brain_farf_dose = dose_brain,
-      body_farf_dose  = dose_body
-    )
-  )
+  return(dose)
 }
 
 farfield_msar <- function(

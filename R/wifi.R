@@ -4,6 +4,7 @@
 # =============================================================================
 #' @export
 wifi_dose <- function(
+    tissue,
     travel_time,
     wifi_prop_travel,
     params = load_params()) {
@@ -16,6 +17,7 @@ wifi_dose <- function(
     home_prop   = params$global$home_prop,
     outd_prop   = params$global$outd_prop,
     work_prop   = params$global$work_prop)
+
   duration <- 86400 * sum(
     loc_props$home, # assumption: always WiFi exposure at home and work
     loc_props$work, # assumption: no WiFi exposure outdoors
@@ -23,31 +25,16 @@ wifi_dose <- function(
 
   # Calculate mSAR ============================================================
   ## Brain --------------------------------------------------------------------
-  msar_brain <- wifi_msar(
-    tissue           = "brain",
-    travel_time      = travel_time,
-    wifi_prop_travel = wifi_prop_travel,
-    params           = params
-  )
-  ## Body ---------------------------------------------------------------------
-  msar_body <- wifi_msar(
-    tissue           = "body",
+  msar <- wifi_msar(
+    tissue           = tissue,
     travel_time      = travel_time,
     wifi_prop_travel = wifi_prop_travel,
     params           = params
   )
 
   # Calculate dose and return result ==========================================
-  ## Brain --------------------------------------------------------------------
-  dose_brain <- duration*msar_brain
-  ## Body ---------------------------------------------------------------------
-  dose_body <- duration*msar_body
-  return(
-    list(
-      brain_wifi_dose = dose_brain,
-      body_wifi_dose = dose_body
-    )
-  )
+  dose <- duration*msar
+  return(dose)
 }
 
 wifi_msar <- function(

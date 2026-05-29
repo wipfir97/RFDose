@@ -2,6 +2,7 @@
 # Calculate dose
 #' @export
 mobiledata_dose <- function(
+    tissue,
     duration_low,
     duration_lowmed,
     duration_medhigh,
@@ -17,24 +18,8 @@ mobiledata_dose <- function(
   ## TODO: add input checks
 
   # Calculate mSAR ============================================================
-  ## Brain --------------------------------------------------------------------
-  msar_brain <- mpd_msar(
-    tissue           = "brain",
-    duration_low     = duration_low,
-    duration_lowmed  = duration_lowmed,
-    duration_medhigh = duration_medhigh,
-    duration_high    = duration_high,
-    use_5g           = use_5g,
-    wifi_prop_home   = wifi_prop_home,
-    wifi_prop_work   = wifi_prop_work,
-    wifi_prop_travel = wifi_prop_travel,
-    urbanicity       = urbanicity,
-    travel_time      = travel_time,
-    params           = params
-  )
-  ## Body ---------------------------------------------------------------------
-  msar_body <- mpd_msar(
-    tissue           = "body",
+  msar <- mpd_msar(
+    tissue           = tissue,
     duration_low     = duration_low,
     duration_lowmed  = duration_lowmed,
     duration_medhigh = duration_medhigh,
@@ -56,16 +41,11 @@ mobiledata_dose <- function(
     duration_high)
 
   # Calculate dose ============================================================
-  ## Brain --------------------------------------------------------------------
-  dose_brain <- duration*msar_brain
-
-  ## Body ---------------------------------------------------------------------
-  dose_body  <- duration*msar_body
+  dose <- duration*msar
 
   # Return result =============================================================
-  return(list("brain_data_dose" = dose_brain, "body_data_dose" = dose_body))
+  return(dose)
 }
-
 
 ###############################################################################
 # Calculate mSAR
