@@ -2,19 +2,35 @@
 % Please edit documentation in R/mobilecall.R
 \name{mpc_pwr_native}
 \alias{mpc_pwr_native}
-\title{Calculate native call output power by technology (2G, 3G, 4G, 5G)}
+\title{Calculate Mobile Phone Output Power during Native Mobile Phone Calls}
 \usage{
 mpc_pwr_native(band, urbanicity, travel_time, params = load_params())
 }
 \arguments{
-\item{band}{technology (2G, 3G, 4G, 5G)}
+\item{band}{Technology (2G, 3G, 4G, or 5G) used for the call}
 
-\item{urbanicity}{Urbanicity}
+\item{urbanicity}{Urbanicity of home / workplace (rural, suburban, or urban)}
 
-\item{travel_time}{Travel time}
+\item{travel_time}{Time spent commuting in seconds per day}
 
-\item{params}{parameter list}
+\item{params}{Parameter list (optional). If not specified, calculations use
+default parameters.}
+}
+\value{
+Output power in mW
 }
 \description{
-Calculate native call output power by technology (2G, 3G, 4G, 5G)
+Description TBA
+}
+\details{
+The output power depends in the technology used and the location in which the
+call is performed (urbanicity, indoors/outdoors/commuting)
+}
+\examples{
+mpc_pwr_native(
+band        = "4G",
+urbanicity  = "suburban",
+travel_time = 1800,
+params      = load_params())
+
 }

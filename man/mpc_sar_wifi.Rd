@@ -2,7 +2,7 @@
 % Please edit documentation in R/mobilecall.R
 \name{mpc_sar_wifi}
 \alias{mpc_sar_wifi}
-\title{Calculate WiFi call SAR by technology (2.4 GHz, 5.0 GHz)}
+\title{Calculate nSAR during WiFi Mobile Phone Calls}
 \usage{
 mpc_sar_wifi(
   tissue,
@@ -14,18 +14,38 @@ mpc_sar_wifi(
 )
 }
 \arguments{
-\item{tissue}{Tissue}
+\item{tissue}{Tissue for which to calculate nSAR (default: "brain" or "body")}
 
-\item{band}{technology (2.4 GHz, 5.0 GHz)}
+\item{band}{Frequency band ("2" for 2.4 GHz, "5" for 5.0 GHz) used for the call}
 
-\item{headp_prop}{Headp prop}
+\item{headp_prop}{Proportion of call performed with active Bluetooth connection
+to headphones}
 
-\item{ear_prop}{Ear prop}
+\item{ear_prop}{Proportion of call performed with phone held against ear}
 
-\item{speaker_prop}{Speaker prop}
+\item{speaker_prop}{Proportion of call performed in speaker mode}
 
-\item{params}{parameter list}
+\item{params}{Parameter list (optional). If not specified, calculations use
+default parameters.}
+}
+\value{
+nSAR in W/kg/W
 }
 \description{
-Calculate WiFi call SAR by technology (2.4 GHz, 5.0 GHz)
+Description TBA
+}
+\details{
+The normalized specific absorption rate (nSAR) depends on the tissue, the
+technology (2.4GHz or 5.0GHz), and the location of the phone during the
+call (against ear, with Bluetooth headphones, in speaker mode)
+}
+\examples{
+mpc_sar_wifi(
+tissue       = "brain",
+band         = "4G",
+headp_prop   = 0.17,
+ear_prop     = 0.67,
+speaker_prop = 0.17,
+params       = load_params())
+
 }

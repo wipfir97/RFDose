@@ -2,15 +2,28 @@
 % Please edit documentation in R/mobilecall.R
 \name{mpc_pwr_wifi}
 \alias{mpc_pwr_wifi}
-\title{Calculate WiFi call output power by band (2.4 GHz, 5.0 GHz)}
+\title{Calculate Mobile Phone Output Power during WiFi Mobile Phone Calls}
 \usage{
 mpc_pwr_wifi(band, params = load_params())
 }
 \arguments{
-\item{band}{technology (2.4 GHz, 5.0 GHz)}
+\item{band}{Frequency band ("2" for 2.4 GHz, "5" for 5.0 GHz) used for the call}
 
-\item{params}{parameter list}
+\item{params}{Parameter list (optional). If not specified, calculations use
+default parameters.}
+}
+\value{
+Output power in mW
 }
 \description{
-Calculate WiFi call output power by band (2.4 GHz, 5.0 GHz)
+Description TBA
+}
+\details{
+The output power depends on the frequency band (2.4 GHz or 5.0 GHz)
+}
+\examples{
+mpc_pwr_wifi(
+band        = "5",
+params      = load_params())
+
 }

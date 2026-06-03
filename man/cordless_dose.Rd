@@ -4,7 +4,7 @@
 \alias{cordless_dose}
 \title{Calculate Dose from Cordless Calling}
 \usage{
-cordless_dose(duration, ear_prop, params = load_params())
+cordless_dose(tissue, duration, ear_prop, params = load_params())
 }
 \arguments{
 \item{duration}{Duration of cordless calls in seconds. >= 0 and <= 86400}

@@ -2,7 +2,7 @@
 % Please edit documentation in R/mobilecall.R
 \name{mpc_sar_data}
 \alias{mpc_sar_data}
-\title{Calculate data call SAR by technology (2G, 3G, 4G, 5G)}
+\title{Calculate nSAR during Data Mobile Phone Calls}
 \usage{
 mpc_sar_data(
   tissue,
@@ -14,18 +14,38 @@ mpc_sar_data(
 )
 }
 \arguments{
-\item{tissue}{Tissue}
+\item{tissue}{Tissue for which to calculate nSAR (default: "brain" or "body")}
 
-\item{band}{technology (2G, 3G, 4G, 5G)}
+\item{band}{Technology (2G, 3G, 4G, or 5G) used for the call}
 
-\item{headp_prop}{Headp prop}
+\item{headp_prop}{Proportion of call performed with active Bluetooth connection
+to headphones}
 
-\item{ear_prop}{Ear prop}
+\item{ear_prop}{Proportion of call performed with phone held against ear}
 
-\item{speaker_prop}{Speaker prop}
+\item{speaker_prop}{Proportion of call performed in speaker mode}
 
-\item{params}{parameter list}
+\item{params}{Parameter list (optional). If not specified, calculations use
+default parameters.}
+}
+\value{
+nSAR in W/kg/W
 }
 \description{
-Calculate data call SAR by technology (2G, 3G, 4G, 5G)
+Description TBA
+}
+\details{
+The normalized specific absorption rate (nSAR) depends on the tissue, the
+technology (2G, 3G, 4G or 5G), and the location of the phone during the
+call (against ear, with Bluetooth headphones, in speaker mode)
+}
+\examples{
+mpc_sar_data(
+tissue       = "brain",
+band         = "4G",
+headp_prop   = 0.17,
+ear_prop     = 0.67,
+speaker_prop = 0.17,
+params       = load_params())
+
 }

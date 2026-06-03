@@ -2,9 +2,10 @@
 % Please edit documentation in R/mobilecall.R
 \name{mobilecall_dose}
 \alias{mobilecall_dose}
-\title{Calculate RF-EMF dose from mobile calling (mobile phone and Bluethooth)}
+\title{Calculation of RF-EMF Dose from Mobile Phone Calls}
 \usage{
 mobilecall_dose(
+  tissue,
   duration,
   ear_prop,
   headp_prop,
@@ -19,41 +20,40 @@ mobilecall_dose(
 )
 }
 \arguments{
+\item{tissue}{Tissue for which to calculate dose (default: "brain" or "body")}
+
 \item{duration}{Duration of mobile phone call in seconds per day}
 
-\item{ear_prop}{Proportion of time mobile phone is held against ear
-during call}
+\item{ear_prop}{Proportion of call performed with phone held against ear}
 
-\item{headp_prop}{Proportion of time Bluetooth headphones are used during
-mobile call}
+\item{headp_prop}{Proportion of call performed with active Bluetooth connection
+to headphones}
 
-\item{urbanicity}{Urbanicity of home / workplace}
+\item{urbanicity}{Urbanicity of home / workplace (rural, suburban, or urban)}
 
-\item{use_5g}{TRUE if participant uses 5G services on mobile phone,
-FALSE if not}
+\item{use_5g}{TRUE if 5G services are used for calls, FALSE if not}
 
 \item{travel_time}{Time spent commuting in seconds per day}
 
-\item{headp_ear_num}{If particpant uses 1 or 2 Bluetooth headphones
-during mobile call}
+\item{headp_ear_num}{Number of Bluetooth headphones used during call}
 
-\item{wifi_prop_home}{...}
+\item{wifi_prop_home}{Proportion of time connected to WiFi (vs mobile data)
+at home}
 
-\item{wifi_prop_work}{...}
+\item{wifi_prop_work}{Proportion of time connected to WiFi (vs mobile data)
+at school / work}
 
-\item{wifi_prop_travel}{...}
+\item{wifi_prop_travel}{Proportion of time connected to WiFi (vs mobile data)
+while commuting}
 
-\item{params}{Parameter list}
+\item{params}{Parameter list (optional). If not specified, calculations use
+default parameters.}
 }
 \value{
-List with two values:
-\itemize{
-\item "brain_call_dose" (brain RF-EMF dose from mobile calls in mJ/kg/day)
-\item "body_call_dose" (body RF-EMF dose from mobile calls in mJ/kg/day)
-}
+Tissue-specific RF-EMF dose in mJ/kg/day
 }
 \description{
-Includes all sources: RF-EMF from phone itself, for Bluetooth connection to
+Includes RF-EMF exposure from phone itself, for Bluetooth connection to
 headphones, and from headphones themselves
 }
 \details{
@@ -68,7 +68,7 @@ Where:
 during the call.
 }
 
-The dose is calculated as:
+For each source (phone and bluetooth), the dose is calculated as:
 
 \deqn{mSAR * duration}
 
@@ -78,6 +78,22 @@ Where:
 \item \eqn{duration} is the call duration in seconds
 }
 }
+\examples{
+mobilecall_dose(
+tissue           = "brain",
+duration         = 400,
+ear_prop         = 0.67,
+headp_prop       = 0.17,
+urbanicity       = "suburban",
+use_5g           = TRUE,
+travel_time      = 1800,
+headp_ear_num    = 2,
+wifi_prop_home   = 1,
+wifi_prop_work   = 0.8,
+wifi_prop_travel = 0,
+params           = load_params())
+
+}
 \seealso{
-\code{\link[=mobilecall_msar]{mobilecall_msar()}}
+\code{\link[=mpc_msar]{mpc_msar()}}
 }

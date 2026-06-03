@@ -4,7 +4,7 @@
 \alias{get_total_dose}
 \title{Calculate Total RF-EMF Dose for Brain and Body from All Sources}
 \usage{
-get_total_dose(sample, params = load_params())
+get_total_dose(sample, tissue, params = load_params())
 }
 \arguments{
 \item{sample}{A list with input values for a single sample}

@@ -4,7 +4,14 @@
 \alias{tablet_dose}
 \title{Calculate Dose from Tablet Use}
 \usage{
-tablet_dose(dur_low, dur_lowmed, dur_medhigh, dur_high, params = load_params())
+tablet_dose(
+  tissue,
+  dur_low,
+  dur_lowmed,
+  dur_medhigh,
+  dur_high,
+  params = load_params()
+)
 }
 \arguments{
 \item{dur_low}{tba}

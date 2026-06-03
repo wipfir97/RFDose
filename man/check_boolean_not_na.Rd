@@ -4,7 +4,7 @@
 \alias{check_boolean_not_na}
 \title{Check if value is boolean and non-NA}
 \usage{
-check_boolean_not_na(x, name)
+check_boolean_not_na(x)
 }
 \arguments{
 \item{x}{number}

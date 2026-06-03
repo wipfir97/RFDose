@@ -4,7 +4,14 @@
 \alias{laptop_dose}
 \title{Calculate Dose from Laptop Use}
 \usage{
-laptop_dose(dur_low, dur_lowmed, dur_medhigh, dur_high, params = load_params())
+laptop_dose(
+  tissue,
+  dur_low,
+  dur_lowmed,
+  dur_medhigh,
+  dur_high,
+  params = load_params()
+)
 }
 \arguments{
 \item{dur_low}{tba}

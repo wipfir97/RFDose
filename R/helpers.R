@@ -52,7 +52,7 @@ check_proportions <- function(proportions) {
   # Check if proportions are each below 0
   for (proportion in proportions) {
     if (proportion > 1 | proportion < 0 | is.na(proportion)) {
-      stop("Input proportions must be between 0 and 1. Check your input values.")
+      stop("Input proportion(s) are not between 0 and 1.")
     }
   }
 
@@ -60,7 +60,7 @@ check_proportions <- function(proportions) {
   if (length(proportions) > 1) {
     if (!isTRUE(all.equal(sum(unlist(proportions)), 1, tolerance = 1e-6))) {
       if(!(sum(unlist(proportions)) == 0)) {
-        stop("Proportions do not sum to 1. Check your input values:")
+        warning("Input proportions do not sum to 1.")
       }
     }
   }
@@ -72,6 +72,7 @@ check_proportions <- function(proportions) {
 #' @param duration single duration value or vector
 #' @returns TRUE if duration is valid, FALSE if duration is not valid
 check_duration <- function(duration) {
+  check_numeric_not_na(duration)
   # Ensure input is numeric
   problems <- c()
   if (any(!is.numeric(duration))) {
@@ -100,9 +101,9 @@ check_duration <- function(duration) {
 #'
 #' @param x number
 #' @param name name of value
-check_numeric_not_na <- function(x, name) {
+check_numeric_not_na <- function(x) {
   if (length(x) != 1L || !is.numeric(x) || is.na(x)) {
-    stop("{name} must be numeric and non-NA")
+    stop("Value must be numeric and non-NA")
   }
 }
 
@@ -111,9 +112,9 @@ check_numeric_not_na <- function(x, name) {
 #'
 #' @param x number
 #' @param name name of value
-check_character_not_na <- function(x, name) {
+check_character_not_na <- function(x) {
   if (length(x) != 1L || !is.character(x) || is.na(x)) {
-    stop("{name} must be type character and non-NA")
+    stop("Value must be type character and non-NA")
   }
 }
 
@@ -122,9 +123,9 @@ check_character_not_na <- function(x, name) {
 #'
 #' @param x number
 #' @param name name of value
-check_boolean_not_na <- function(x, name) {
+check_boolean_not_na <- function(x) {
   if (length(x) != 1L || !is.logical(x) || is.na(x)) {
-    stop("{name} must be type Boolean and non-NA")
+    stop("Value must be type Boolean and non-NA")
   }
 }
 
@@ -133,11 +134,26 @@ check_boolean_not_na <- function(x, name) {
 #'
 #' @param urbanicity urbanicity
 check_urbanicity <- function(urbanicity) {
+  check_character_not_na(urbanicity)
   # Ensure input contains only valid urbanicity values
   valid_urbanicity <- c("rural", "suburban", "urban")
 
   if (!urbanicity %in% valid_urbanicity) {
-    stop("{urbanicity} is an invalid urbanicity input value. Please enter rural, suburban, or urban.")
+    stop("Invalid urbanicity input value. Please enter rural, suburban, or urban.")
+  }
+}
+
+# =============================================================================
+#' Check tissue
+#'
+#' @param tissue Tissue
+#' @param device Device
+#' @param params Params
+check_tissue <- function(tissue, device, params) {
+  check_character_not_na(tissue)
+  param_names <- names(params$devices[[device]])
+  if (!(tissue %in% param_names)) {
+    stop("Invalid tissue.")
   }
 }
 
@@ -146,6 +162,7 @@ check_urbanicity <- function(urbanicity) {
 #'
 #' @param country Country
 check_country <- function(country) {
+  check_character_not_na(country)
   # Ensure input contains only valid urbanicity values
   valid_countries <- c("AT", "BE", "FR", "HU", "IT", "NL", "PL", "ES", "CH", "UK", "Other")
 
