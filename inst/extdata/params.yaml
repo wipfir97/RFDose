@@ -257,8 +257,8 @@ devices:
       wifi_5_headp_pock_sar: 0.002646374
       wifi_5_headp_else_sar: 0
       wifi_5_speaker_sar: 0.001182344
-      bt_phone_face_sar: 0.0009
-      bt_phone_pock_sar: 0.01015
+      bt_phone_face_sar: 0.000860849
+      bt_phone_pock_sar: 0.010153247
       bt_phone_else_sar: 0
       bt_headp_sar: 0.009862
   data:

@@ -316,7 +316,7 @@ mpc_msar <- function(
 # Mobilecall output power (nativecall) by technology (2G, 3G, 4G, 5G) ---------
 #' Calculate Mobile Phone Output Power during Native Mobile Phone Calls
 #'
-#' Description TBA
+#' Calculates the mobile phone output power during calls using native network.
 #'
 #' @details
 #' The output power depends in the technology used and the location in which the
@@ -376,7 +376,7 @@ mpc_pwr_native <- function(
 # Mobilecall SAR by technology (nativecall) -----------------------------------
 #' Calculate nSAR during Native Mobile Phone Calls
 #'
-#' Description TBA
+#' Calculates tissue-specific nSAR from mobile phone calls using native network.
 #'
 #' @details
 #' The normalized specific absorption rate (nSAR) depends on the tissue, the
@@ -439,7 +439,7 @@ mpc_sar_native <- function(
 # Mobilecall data output power by technology ----------------------------------
 #' Calculate Mobile Phone Output Power during Data Mobile Phone Calls
 #'
-#' Description TBA
+#' Calculates the mobile phone output power during calls using mobile data.
 #'
 #' @details
 #' The output power depends in the technology used and the location in which the
@@ -501,7 +501,7 @@ mpc_pwr_data <- function(
 # Mobilecall data sar by technology -------------------------------------------
 #' Calculate nSAR during Data Mobile Phone Calls
 #'
-#' Description TBA
+#' Calculates tissue-specific nSAR from mobile phone calls using mobile data.
 #'
 #' @details
 #' The normalized specific absorption rate (nSAR) depends on the tissue, the
@@ -565,7 +565,7 @@ mpc_sar_data <- function(
 # Mobilecall output power (WiFi call) -----------------------------------------
 #' Calculate Mobile Phone Output Power during WiFi Mobile Phone Calls
 #'
-#' Description TBA
+#' Calculates the mobile phone output power during calls using WiFi connection.
 #'
 #' @details
 #' The output power depends on the frequency band (2.4 GHz or 5.0 GHz)
@@ -605,7 +605,7 @@ mpc_pwr_wifi <- function(
 # Mobilecall sar (WiFi call) --------------------------------------------------
 #' Calculate nSAR during WiFi Mobile Phone Calls
 #'
-#' Description TBA
+#' Calculates tissue-specific nSAR from mobile phone calls using WiFi connection.
 #'
 #' @details
 #' The normalized specific absorption rate (nSAR) depends on the tissue, the
@@ -669,15 +669,27 @@ mpc_sar_wifi <- function(
 
 ###############################################################################
 # Contributions from bluetooth heapdhones =====================================
-#' Calculate call mSAR (Bluetooth contribution from phone and headphones)
+#' Calculate mobile call mSAR from Bluetooth headphones
 #'
-#' Description TBA
+#' Calculates mSAR from mobile calling using bluetooth headphones (both the
+#' contribution from the headphones and the contribution of the mobile phone
+#' establishing a connection to the headphones)
+#'
+#' @details
+#' The mSAR is calculated as:
+#' \deqn{mSAR_{bt} = mSAR_{bt_phone} + mSAR_{bt_headphones}}
+#'
+#' where the mSAR (of bt_phone and bt_headphones) is calculated as:
+#'
+#' \deqn{mSAR = nSAR * output_power}
 #'
 #' @param tissue Tissue for which to calculate mSAR (default: "brain" or "body")
 #' @param params Parameter list (optional). If not specified, calculations use
 #' default parameters.
 #'
 #' @returns mSAR from Bluetooth calls in mW/kg
+#'
+#' @seealso [mpc_bt_pwr(), mpc_bt_sar(), mpc_bt_phone_pwr(), mpc_bt_phone_pwr()]
 #'
 #' @examples
 #' mpc_bt_msar(
@@ -691,13 +703,13 @@ mpc_bt_msar <- function(
     params = load_params()) {
 
   # from bluetooth headphones
-  pwr_bt <- mobilecall_bt_pwr(params = params)
-  sar_bt <- mobilecall_bt_sar(tissue = tissue, params = params)
+  pwr_bt <- mpc_bt_pwr(params = params)
+  sar_bt <- mpc_bt_sar(tissue = tissue, params = params)
   msar_bt <- pwr_bt * sar_bt
 
   # from phone
-  pwr_p  <- mobilecall_bt_phone_pwr(params = params)
-  sar_p  <- mobilecall_bt_phone_sar(tissue = tissue, params = params)
+  pwr_p  <- mpc_bt_phone_pwr(params = params)
+  sar_p  <- mpc_bt_phone_sar(tissue = tissue, params = params)
   msar_bt_phone <- pwr_p * sar_p
 
   return(msar_bt + msar_bt_phone)
@@ -705,7 +717,7 @@ mpc_bt_msar <- function(
 
 #' Calculate call output power (Bluetooth contribution only, headphones only)
 #'
-#' Description TBA
+#' Returns the output power of Bluetooth headphones during mobile phone calls.
 #'
 #' @param params Parameter list (optional). If not specified, calculations use
 #' default parameters.
@@ -719,7 +731,8 @@ mpc_bt_pwr <- function(
 
 #' Calculate call sar (bluetooth contribution only, headphones only)
 #'
-#' Description TBA
+#' Returns the tissue-specific nSAR value from Bluetooth headphones during mobile
+#' phone calls.
 #'
 #' @param tissue Tissue for which to calculate nSAR (default: "brain" or "body")
 #' @param params Parameter list (optional). If not specified, calculations use
@@ -736,7 +749,8 @@ mpc_bt_sar <- function(
 
 #' Calculate call output power (bluetooth contribution only, phone only)
 #'
-#' Description TBA
+#' Returns the output power of the mobile phone during mobile calls when connected
+#' to Bluetooth headphones (Bluetooth contribution only!)
 #'
 #' @param params Parameter list (optional). If not specified, calculations use
 #' default parameters.
@@ -750,7 +764,8 @@ mpc_bt_phone_pwr <- function(
 
 #' Calculate call output power (bluetooth contribution only, headphones only)
 #'
-#' Description TBA
+#' Returns the tissue-speficic nSAR from the mobile phones during calls when
+#' connected to Bluetooth headphones (Bluetooth contribution only!)
 #'
 #' @param tissue Tissue for which to calculate nSAR (default: "brain" or "body")
 #' @param params Parameter list (optional). If not specified, calculations use

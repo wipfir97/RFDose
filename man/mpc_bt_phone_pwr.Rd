@@ -14,5 +14,6 @@ default parameters.}
 Output power bluetooth headphones (phone only) in mJ
 }
 \description{
-Description TBA
+Returns the output power of the mobile phone during mobile calls when connected
+to Bluetooth headphones (Bluetooth contribution only!)
 }

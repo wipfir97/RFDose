@@ -20,7 +20,7 @@ default parameters.}
 Output power in mW
 }
 \description{
-Description TBA
+Calculates the mobile phone output power during calls using native network.
 }
 \details{
 The output power depends in the technology used and the location in which the

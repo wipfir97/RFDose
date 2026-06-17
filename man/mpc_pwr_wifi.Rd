@@ -16,7 +16,7 @@ default parameters.}
 Output power in mW
 }
 \description{
-Description TBA
+Calculates the mobile phone output power during calls using WiFi connection.
 }
 \details{
 The output power depends on the frequency band (2.4 GHz or 5.0 GHz)

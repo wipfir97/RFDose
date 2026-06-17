@@ -16,5 +16,6 @@ default parameters.}
 nSAR in W/kg/W
 }
 \description{
-Description TBA
+Returns the tissue-speficic nSAR from the mobile phones during calls when
+connected to Bluetooth headphones (Bluetooth contribution only!)
 }

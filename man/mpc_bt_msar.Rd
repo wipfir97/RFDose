@@ -2,7 +2,7 @@
 % Please edit documentation in R/mobilecall.R
 \name{mpc_bt_msar}
 \alias{mpc_bt_msar}
-\title{Calculate call mSAR (Bluetooth contribution from phone and headphones)}
+\title{Calculate mobile call mSAR from Bluetooth headphones}
 \usage{
 mpc_bt_msar(tissue, params = load_params())
 }
@@ -16,7 +16,17 @@ default parameters.}
 mSAR from Bluetooth calls in mW/kg
 }
 \description{
-Description TBA
+Calculates mSAR from mobile calling using bluetooth headphones (both the
+contribution from the headphones and the contribution of the mobile phone
+establishing a connection to the headphones)
+}
+\details{
+The mSAR is calculated as:
+\deqn{mSAR_{bt} = mSAR_{bt_phone} + mSAR_{bt_headphones}}
+
+where the mSAR (of bt_phone and bt_headphones) is calculated as:
+
+\deqn{mSAR = nSAR * output_power}
 }
 \examples{
 mpc_bt_msar(
@@ -24,4 +34,7 @@ tissue = "brain",
 params = load_params()
 )
 
+}
+\seealso{
+\code{\link[=mpc_bt_pwr(), mpc_bt_sar(), mpc_bt_phone_pwr(), mpc_bt_phone_pwr]{mpc_bt_pwr(), mpc_bt_sar(), mpc_bt_phone_pwr(), mpc_bt_phone_pwr()}}
 }

@@ -32,7 +32,7 @@ default parameters.}
 nSAR in W/kg/W
 }
 \description{
-Description TBA
+Calculates tissue-specific nSAR from mobile phone calls using mobile data.
 }
 \details{
 The normalized specific absorption rate (nSAR) depends on the tissue, the

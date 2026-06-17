@@ -1,208 +1,230 @@
-# Test mobile call helper functions
-# mpc_sar_native_bytech =======================================================
-## check if mpc_sar_native_bytech sar values match reference values
-reference_cases <- list(
+# Bluetooth functions #########################################################
+## mpc_bt_msar ================================================================
+cases_mpc_bt_msar <- list(
   list(
     input = list(
-      tissue = "brain",
-      tech   = "2g",
-      headp_prop = 0.17,
-      ear_prop = 0.66,
-      speaker_prop = 0.17
+      tissue = "brain"
     ),
-    output = 0.04840192
+    output = (0.000462133+9.05709E-06)/0.17 # (msar bt + msar phone)/headp_prop
+
   ),
   list(
     input = list(
-      tissue = "body",
-      tech   = "2g",
-      headp_prop = 0.17,
-      ear_prop = 0.66,
-      speaker_prop = 0.17
+      tissue = "body"
     ),
-    output = 0.00655103
-  ),
-  list(
-    input = list(
-      tissue = "brain",
-      tech   = "3g",
-      headp_prop = 0.17,
-      ear_prop = 0.66,
-      speaker_prop = 0.17
-    ),
-    output = 0.044794452
-  ),
-  list(
-    input = list(
-      tissue = "body",
-      tech   = "3g",
-      headp_prop = 0.17,
-      ear_prop = 0.66,
-      speaker_prop = 0.17
-    ),
-    output = 0.006058526
-  ),
-  list(
-    input = list(
-      tissue = "brain",
-      tech   = "4g",
-      headp_prop = 0.17,
-      ear_prop = 0.66,
-      speaker_prop = 0.17
-    ),
-    output = 0.04286737
-  ),
-  list(
-    input = list(
-      tissue = "body",
-      tech   = "4g",
-      headp_prop = 0.17,
-      ear_prop = 0.66,
-      speaker_prop = 0.17
-    ),
-    output = 0.006103341
-  ),
-  list(
-    input = list(
-      tissue = "brain",
-      tech   = "5g",
-      headp_prop = 0.17,
-      ear_prop = 0.66,
-      speaker_prop = 0.17
-    ),
-    output = 0.00269136
-  ),
-  list(
-    input = list(
-      tissue = "body",
-      tech   = "5g",
-      headp_prop = 0.17,
-      ear_prop = 0.66,
-      speaker_prop = 0.17
-    ),
-    output = 0.004257159
+    output = (0.000268246+9.97613E-05)/0.17 # (msar bt + msar phone)/headp_prop
   )
 )
-test_that("mpc_sar_native_bytech sar values match reference values", {
-  for (case in reference_cases) {
-    result <- do.call(mpc_sar_native_bytech, case$input)
+
+test_that("mpc_bt_msar matches reference values", {
+  for (case in cases_mpc_bt_msar) {
+    result <- do.call(mpc_bt_msar, case$input)
+    expect_equal(result, case$output, tolerance = 1e-3)
+  }
+})
+
+## mpc_bt_pwr =================================================================
+test_that("mpc_bt_pwr matches reference values", {
+    result <- mpc_bt_pwr()
+    expect_equal(result, 0.16, tolerance = 1e-3)
+})
+
+## mpc_bt_sar =================================================================
+cases_mpc_bt_sar <- list(
+  list(
+    input = list(
+      tissue = "brain"
+    ),
+    output = 0.01699017
+  ),
+  list(
+    input = list(
+      tissue = "body"
+    ),
+    output = 0.009862
+  )
+)
+
+test_that("mpc_bt_sar matches reference values", {
+  for (case in cases_mpc_bt_sar) {
+    result <- do.call(mpc_bt_sar, case$input)
+    expect_equal(result, case$output, tolerance = 1e-3)
+  }
+})
+
+## mpc_bt_phone_pwr ===========================================================
+test_that("mpc_bt_phone_pwr matches reference values", {
+    result <- mpc_bt_phone_pwr()
+    expect_equal(result, 0.16, tolerance = 1e-3)
+})
+
+## mpc_bt_phone_sar ===========================================================
+cases_mpc_bt_phone_sar <- list(
+  list(
+    input = list(
+      tissue = "brain"
+    ),
+    output = 0.000332981
+  ),
+  list(
+    input = list(
+      tissue = "body"
+    ),
+    output = 0.003667694
+  )
+)
+
+test_that("mpc_bt_phone_sar matches reference values", {
+  for (case in cases_mpc_bt_phone_sar) {
+    result <- do.call(mpc_bt_phone_sar, case$input)
+    expect_equal(result, case$output, tolerance = 1e-3)
+  }
+})
+
+# Call functions ##############################################################
+## mpc_msar ===================================================================
+cases_mpc_msar <- list(
+  list(
+    input = list(
+      tissue       = "brain",
+      prop_native  = 0.7,
+      prop_data    = 0.16,
+      prop_wifi    = 0.14,
+      headp_prop   = 0.17,
+      ear_prop     = 0.67,
+      speaker_prop = 0.17,
+      urbanicity   = "suburban",
+      use_5g       = TRUE,
+      travel_time  = 1800
+    ),
+    output = 0.254694
+  ),
+  list(
+    input = list(
+      tissue       = "body",
+      prop_native  = 0.7,
+      prop_data    = 0.16,
+      prop_wifi    = 0.14,
+      headp_prop   = 0.17,
+      ear_prop     = 0.66,
+      speaker_prop = 0.17,
+      urbanicity   = "suburban",
+      use_5g       = TRUE,
+      travel_time  = 1800
+    ),
+    output = 0.038438
+  )
+)
+
+test_that("mpc_msar matches reference values", {
+  for (case in cases_mpc_msar) {
+    result <- do.call(mpc_msar, case$input)
     expect_equal(result, case$output, tolerance = 1e-2)
   }
 })
 
-# mpc_pwr_native_bytech =======================================================
-## check if mpc_pwr_native_bytech output power  values match reference values
-# TODO: add reference values for other urbanicities,
-reference_cases <- list(
+## mpc_pwr_native =============================================================
+cases_mpc_pwr_native <- list(
   list(
     input = list(
-      tech   = "2g",
-      urbanicity = "suburban",
+      band        = "2g",
+      urbanicity  = "suburban",
       travel_time = 1800
     ),
     output = 142.56
   ),
   list(
     input = list(
-      tech   = "3g",
-      urbanicity = "suburban",
+      band        = "3g",
+      urbanicity  = "suburban",
       travel_time = 1800
     ),
     output = 1.85
   ),
   list(
     input = list(
-      tech   = "4g",
-      urbanicity = "suburban",
+      band        = "4g",
+      urbanicity  = "suburban",
       travel_time = 1800
     ),
     output = 6.63
   ),
   list(
     input = list(
-      tech   = "5g",
-      urbanicity = "suburban",
+      band        = "5g",
+      urbanicity  = "suburban",
       travel_time = 1800
     ),
     output = 0
   )
 )
 
-test_that("mpc_pwr_native_bytech output power values match reference values", {
-  for (case in reference_cases) {
-    result <- do.call(mpc_pwr_native_bytech, case$input)
+test_that("mpc_pwr_native matches reference values", {
+  for (case in cases_mpc_pwr_native) {
+    result <- do.call(mpc_pwr_native, case$input)
     expect_equal(result, case$output, tolerance = 1e-2)
   }
 })
 
-# mpc_msar_native_bytech ======================================================
-# TODO: add more reference values
-reference_cases <- list(
+## mpc_sar_native =============================================================
+
+## mpc_pwr_data ===============================================================
+cases_mpc_pwr_data <- list(
   list(
     input = list(
-      tissue = "brain",
-      tech   = "2g",
-      headp_prop = 0.17,
-      ear_prop = 0.66,
-      speaker_prop = 0.17,
-      urbanicity = "suburban",
+      band        = "3g",
+      urbanicity  = "suburban",
       travel_time = 1800
     ),
-    output = 6.900257
-  )
-)
-
-test_that("mpc_msar_native_bytech msar values match reference values", {
-  for (case in reference_cases) {
-    result <- do.call(mpc_msar_native_bytech, case$input)
-    expect_equal(result, case$output, tolerance = 1e-2)
-  }
-})
-
-# mpc_sar_data =============================================================
-## mpc_sar_data_bytech
-reference_cases <- list(
+    output = 5.39
+  ),
   list(
     input = list(
-      tissue = "brain",
-      tech   = "4g",
-      headp_prop = 0.17,
-      ear_prop = 0.66,
-      speaker_prop = 0.17
-    ),
-    output = 0.04840192
-  )
-)
-test_that("mpc_sar_data_bytech sar values match reference values", {
-  for (case in reference_cases) {
-    result <- do.call(mpc_sar_data_bytech, case$input)
-    expect_equal(result, case$output, tolerance = 1e-2)
-  }
-})
-
-# mpc_pwr_data =============================================================
-## mpc_pwr_data_bytech
-reference_cases <- list(
-  list(
-    input = list(
-      tech   = "4g",
-      urbanicity = "suburban",
+      band        = "4g",
+      urbanicity  = "suburban",
       travel_time = 1800
     ),
     output = 4.28
+  ),
+  list(
+    input = list(
+      band        = "5g",
+      urbanicity  = "suburban",
+      travel_time = 1800
+    ),
+    output = 2.47
   )
 )
-test_that("mpc_pwr_data_bytech sar values match reference values", {
-  for (case in reference_cases) {
-    result <- do.call(mpc_pwr_data_bytech, case$input)
+
+test_that("mpc_pwr_data matches reference values", {
+  for (case in cases_mpc_pwr_data) {
+    result <- do.call(mpc_pwr_data, case$input)
+    expect_equal(result, case$output, tolerance = 1e-2)
+  }
+})
+## mpc_sar_data ===============================================================
+
+## mpc_pwr_wifi ===============================================================
+cases_mpc_pwr_wifi <- list(
+  list(
+    input = list(
+      band        = "2"
+    ),
+    output = 2.738
+  ),
+  list(
+    input = list(
+      band        = "5"
+    ),
+    output = 8.77
+  )
+)
+
+test_that("mpc_pwr_wifi matches reference values", {
+  for (case in cases_mpc_pwr_wifi) {
+    result <- do.call(mpc_pwr_wifi, case$input)
     expect_equal(result, case$output, tolerance = 1e-2)
   }
 })
 
-
-
-# mobilecall_msar =============================================================
-
-# mpc_sar_wifi ================================================================
-
-# mpc_pwr_wifi ================================================================
+## mpc_sar_wifi ===============================================================
