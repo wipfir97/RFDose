@@ -81,7 +81,8 @@ To calculate the RF-EMF doses for each participant, run the following code:
 
 ```{r}
 # Calculate example doses
-calculate\\\_emf\\\_doses(example\\\_data)
+calculate_emf_doses(example_data, tissue = "brain") # brain dose
+calculate_emf_doses(example_data, tissue = "body")  # body dose
 ```
 
 \---

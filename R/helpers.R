@@ -51,7 +51,8 @@ check_proportions <- function(proportions) {
 
   # Check if proportions are each below 0
   for (proportion in proportions) {
-    if (proportion > 1 | proportion < 0 | is.na(proportion)) {
+    tol <- .Machine$double.eps^0.5  # tolerance for floating point 0
+    if (proportion > 1 | proportion < -tol | is.na(proportion)) {
       stop("Input proportion(s) are not between 0 and 1.")
     }
   }

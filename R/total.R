@@ -31,9 +31,6 @@ calculate_emf_doses <- function(
     yaml::read_yaml(default_value_file)
   }
 
-  ## Check default value file for validity if supplied ------------------------
-  # TODO: add validity check
-
   ## Replace NAs with default values ------------------------------------------
   results <- fill_missing_variables(
     data           = data,
@@ -76,7 +73,6 @@ get_total_dose <- function(
     tissue,
     params = load_params()) {
   # Check input ===============================================================
-
   ## Check if any input values in sample are missing, return error ------------
   missing_vars <- anyNA(sample)
   if (missing_vars) {

@@ -1,5 +1,9 @@
 ###############################################################################
-# Calculate dose
+# Calculate RF-EMF dose (for brain and body) from mobile data
+
+
+###############################################################################
+# Total mobile data dose ======================================================
 #' @export
 mobiledata_dose <- function(
     tissue,
