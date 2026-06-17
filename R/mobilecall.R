@@ -363,7 +363,7 @@ mpc_pwr_native <- function(
   pwr_outdoor   <- loc_props$out * params$devices$call[[paste0(prefix, "_out_pwr")]]
 
   # commuting/traveling
-  pwr_travel <- loc_props$travel * params$devices$call[[paste0("native_",band, "travel_pwr")]]
+  pwr_travel <- loc_props$travel * params$devices$call[[paste0("native_",band, "_travel_pwr")]]
 
   # combine, multiply with duty cycle, and return resul
   dutycycle <- params$devices$call[[paste0("native_", band, "_dutycycle")]]
@@ -488,7 +488,7 @@ mpc_pwr_data <- function(
 
 
   # commuting/traveling
-  pwr_travel <- loc_props$travel * params$devices$call[[paste0("data_",band, "travel_pwr")]]
+  pwr_travel <- loc_props$travel * params$devices$call[[paste0("data_",band, "_travel_pwr")]]
 
   # combine, multiply with duty cycle, and return resul
   dutycycle <- params$devices$call[[paste0("data_", band, "_dutycycle")]]

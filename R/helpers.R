@@ -72,11 +72,14 @@ check_proportions <- function(proportions) {
 #' @param duration single duration value or vector
 #' @returns TRUE if duration is valid, FALSE if duration is not valid
 check_duration <- function(duration) {
-  check_numeric_not_na(duration)
-  # Ensure input is numeric
+  # Ensure input is numeric and not NA
   problems <- c()
   if (any(!is.numeric(duration))) {
     stop("Duration must be numeric. Check your input values.")
+  }
+
+  if (any(is.na(duration))) {
+    stop("Duration must not be NA. Check your input values.")
   }
 
   if (any(duration < 0)) {
@@ -104,6 +107,8 @@ check_duration <- function(duration) {
 check_numeric_not_na <- function(x) {
   if (length(x) != 1L || !is.numeric(x) || is.na(x)) {
     stop("Value must be numeric and non-NA")
+  } else {
+    return(TRUE)
   }
 }
 

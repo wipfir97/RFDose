@@ -15,7 +15,14 @@ mobiledata_dose <- function(
     travel_time,
     params = load_params()) {
   # Check input ===============================================================
-  ## TODO: add input checks
+  check_tissue(tissue, "data", params)
+  check_duration(c(duration_low, duration_lowmed, duration_medhigh, duration_high))
+  check_boolean_not_na(use_5g)
+  check_proportions(wifi_prop_home)
+  check_proportions(wifi_prop_work)
+  check_proportions(wifi_prop_travel)
+  check_urbanicity(urbanicity)
+  check_duration(travel_time)
 
   # Calculate mSAR ============================================================
   msar <- mpd_msar(
@@ -55,10 +62,10 @@ mpd_msar <- function(
     duration_lowmed,
     duration_medhigh,
     duration_high,
+    use_5g,
     wifi_prop_home,
     wifi_prop_work,
     wifi_prop_travel,
-    use_5g,
     urbanicity,
     travel_time,
     params = load_params()) {
