@@ -7,7 +7,7 @@
 mpc_pwr_native(band, urbanicity, travel_time, params = load_params())
 }
 \arguments{
-\item{band}{Technology (2G, 3G, 4G, or 5G) used for the call}
+\item{band}{Technology (2G, 3g, 4g, or 5g) used for the call}
 
 \item{urbanicity}{Urbanicity of home / workplace (rural, suburban, or urban)}
 
@@ -28,7 +28,7 @@ call is performed (urbanicity, indoors/outdoors/commuting)
 }
 \examples{
 mpc_pwr_native(
-band        = "4G",
+band        = "4g",
 urbanicity  = "suburban",
 travel_time = 1800,
 params      = load_params())

@@ -36,7 +36,7 @@ to headphones}
 
 \item{urbanicity}{Urbanicity of home / workplace (rural, suburban, or urban)}
 
-\item{use_5g}{TRUE if 5G services are used for calls, FALSE if not}
+\item{use_5g}{TRUE if 5g services are used for calls, FALSE if not}
 
 \item{travel_time}{Time spent commuting in seconds per day}
 
@@ -58,10 +58,10 @@ outputpower_{data} + nSAR_{wifi} \times outputpower_{wifi}}
 
 where
 \itemize{
-\item \eqn{nSAR_{mobilecall}}, \eqn{nSAR_{data}}, \eqn{nSAR_{data}} are the nSAR
+\item \eqn{nSAR_{native}}, \eqn{nSAR_{data}}, \eqn{nSAR_{wifi}} are the nSAR
 (normalized specific absorption rates, in W/kg/W) from mobile phone calls using
 native, mobile data, or WiFi networks, respectively
-\item \eqn{outputpower_{mobilecall}}, \eqn{outputpower_{data}},
+\item \eqn{outputpower_{native}}, \eqn{outputpower_{data}},
 \eqn{outputpower_{wifi}} are the output powers in mW of the device (mobile
 phone) using native, mobile data, or WiFi networks, respectively
 }

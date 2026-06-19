@@ -36,7 +36,7 @@
 #' @param headp_prop Proportion of call performed with active Bluetooth connection
 #' to headphones
 #' @param urbanicity Urbanicity of home / workplace (rural, suburban, or urban)
-#' @param use_5g TRUE if 5G services are used for calls, FALSE if not
+#' @param use_5g TRUE if 5g services are used for calls, FALSE if not
 #' @param travel_time Time spent commuting in seconds per day
 #' @param headp_ear_num Number of Bluetooth headphones used during call
 #' @param wifi_prop_home Proportion of time connected to WiFi (vs mobile data)
@@ -160,10 +160,10 @@ mobilecall_dose <- function(
 #'
 #' where
 #'
-#' * \eqn{nSAR_{mobilecall}}, \eqn{nSAR_{data}}, \eqn{nSAR_{data}} are the nSAR
+#' * \eqn{nSAR_{native}}, \eqn{nSAR_{data}}, \eqn{nSAR_{wifi}} are the nSAR
 #' (normalized specific absorption rates, in W/kg/W) from mobile phone calls using
 #' native, mobile data, or WiFi networks, respectively
-#' * \eqn{outputpower_{mobilecall}}, \eqn{outputpower_{data}},
+#' * \eqn{outputpower_{native}}, \eqn{outputpower_{data}},
 #' \eqn{outputpower_{wifi}} are the output powers in mW of the device (mobile
 #' phone) using native, mobile data, or WiFi networks, respectively
 #'
@@ -176,7 +176,7 @@ mobilecall_dose <- function(
 #' @param ear_prop Proportion of call performed with phone held against ear
 #' @param speaker_prop Proportion of call performed in speaker mode
 #' @param urbanicity Urbanicity of home / workplace (rural, suburban, or urban)
-#' @param use_5g TRUE if 5G services are used for calls, FALSE if not
+#' @param use_5g TRUE if 5g services are used for calls, FALSE if not
 #' @param travel_time Time spent commuting in seconds per day
 #' @param params Parameter list (optional). If not specified, calculations use
 #' default parameters.
@@ -313,7 +313,7 @@ mpc_msar <- function(
   return(msar)
 }
 
-# Mobilecall output power (nativecall) by technology (2G, 3G, 4G, 5G) ---------
+# Mobilecall output power (nativecall) by technology (2G, 3g, 4g, 5g) ---------
 #' Calculate Mobile Phone Output Power during Native Mobile Phone Calls
 #'
 #' Calculates the mobile phone output power during calls using native network.
@@ -323,7 +323,7 @@ mpc_msar <- function(
 #' call is performed (urbanicity, indoors/outdoors/commuting)
 #'
 #'
-#' @param band Technology (2G, 3G, 4G, or 5G) used for the call
+#' @param band Technology (2G, 3g, 4g, or 5g) used for the call
 #' @param urbanicity Urbanicity of home / workplace (rural, suburban, or urban)
 #' @param travel_time Time spent commuting in seconds per day
 #' @param params Parameter list (optional). If not specified, calculations use
@@ -333,7 +333,7 @@ mpc_msar <- function(
 #'
 #' @examples
 #' mpc_pwr_native(
-#' band        = "4G",
+#' band        = "4g",
 #' urbanicity  = "suburban",
 #' travel_time = 1800,
 #' params      = load_params())
@@ -380,12 +380,12 @@ mpc_pwr_native <- function(
 #'
 #' @details
 #' The normalized specific absorption rate (nSAR) depends on the tissue, the
-#' technology (2G, 3G, 4G or 5G), and the location of the phone during the
+#' technology (2G, 3g, 4g or 5g), and the location of the phone during the
 #' call (against ear, with Bluetooth headphones, in speaker mode)
 #'
 #'
 #' @param tissue Tissue for which to calculate nSAR (default: "brain" or "body")
-#' @param band Technology (2G, 3G, 4G, or 5G) used for the call
+#' @param band Technology (2G, 3g, 4g, or 5g) used for the call
 #' @param headp_prop Proportion of call performed with active Bluetooth connection
 #' to headphones
 #' @param ear_prop Proportion of call performed with phone held against ear
@@ -398,7 +398,7 @@ mpc_pwr_native <- function(
 #' @examples
 #' mpc_sar_native(
 #' tissue       = "brain",
-#' band         = "4G",
+#' band         = "4g",
 #' headp_prop   = 0.17,
 #' ear_prop     = 0.67,
 #' speaker_prop = 0.17,
@@ -446,7 +446,7 @@ mpc_sar_native <- function(
 #' call is performed (urbanicity, indoors/outdoors/commuting)
 #'
 #'
-#' @param band Technology (2G, 3G, 4G, or 5G) used for the call
+#' @param band Technology (3g, 4g, or 5g) used for the call
 #' @param urbanicity Urbanicity of home / workplace (rural, suburban, or urban)
 #' @param travel_time Time spent commuting in seconds per day
 #' @param params Parameter list (optional). If not specified, calculations use
@@ -456,7 +456,7 @@ mpc_sar_native <- function(
 #'
 #' @examples
 #' mpc_pwr_data(
-#' band        = "4G",
+#' band        = "4g",
 #' urbanicity  = "suburban",
 #' travel_time = 1800,
 #' params      = load_params())
@@ -505,12 +505,12 @@ mpc_pwr_data <- function(
 #'
 #' @details
 #' The normalized specific absorption rate (nSAR) depends on the tissue, the
-#' technology (2G, 3G, 4G or 5G), and the location of the phone during the
+#' technology (2G, 3g, 4g or 5g), and the location of the phone during the
 #' call (against ear, with Bluetooth headphones, in speaker mode)
 #'
 #'
 #' @param tissue Tissue for which to calculate nSAR (default: "brain" or "body")
-#' @param band Technology (2G, 3G, 4G, or 5G) used for the call
+#' @param band Technology (2G, 3g, 4g, or 5g) used for the call
 #' @param headp_prop Proportion of call performed with active Bluetooth connection
 #' to headphones
 #' @param ear_prop Proportion of call performed with phone held against ear
@@ -523,7 +523,7 @@ mpc_pwr_data <- function(
 #' @examples
 #' mpc_sar_data(
 #' tissue       = "brain",
-#' band         = "4G",
+#' band         = "4g",
 #' headp_prop   = 0.17,
 #' ear_prop     = 0.67,
 #' speaker_prop = 0.17,
@@ -609,7 +609,7 @@ mpc_pwr_wifi <- function(
 #'
 #' @details
 #' The normalized specific absorption rate (nSAR) depends on the tissue, the
-#' technology (2.4GHz or 5.0GHz), and the location of the phone during the
+#' technology (2.4gHz or 5.0GHz), and the location of the phone during the
 #' call (against ear, with Bluetooth headphones, in speaker mode)
 #'
 #'
@@ -627,7 +627,7 @@ mpc_pwr_wifi <- function(
 #' @examples
 #' mpc_sar_wifi(
 #' tissue       = "brain",
-#' band         = "4G",
+#' band         = "2",
 #' headp_prop   = 0.17,
 #' ear_prop     = 0.67,
 #' speaker_prop = 0.17,

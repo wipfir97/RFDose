@@ -16,7 +16,7 @@ mpc_sar_native(
 \arguments{
 \item{tissue}{Tissue for which to calculate nSAR (default: "brain" or "body")}
 
-\item{band}{Technology (2G, 3G, 4G, or 5G) used for the call}
+\item{band}{Technology (2G, 3g, 4g, or 5g) used for the call}
 
 \item{headp_prop}{Proportion of call performed with active Bluetooth connection
 to headphones}
@@ -36,13 +36,13 @@ Calculates tissue-specific nSAR from mobile phone calls using native network.
 }
 \details{
 The normalized specific absorption rate (nSAR) depends on the tissue, the
-technology (2G, 3G, 4G or 5G), and the location of the phone during the
+technology (2G, 3g, 4g or 5g), and the location of the phone during the
 call (against ear, with Bluetooth headphones, in speaker mode)
 }
 \examples{
 mpc_sar_native(
 tissue       = "brain",
-band         = "4G",
+band         = "4g",
 headp_prop   = 0.17,
 ear_prop     = 0.67,
 speaker_prop = 0.17,

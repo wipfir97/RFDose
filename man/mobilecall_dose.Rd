@@ -31,7 +31,7 @@ to headphones}
 
 \item{urbanicity}{Urbanicity of home / workplace (rural, suburban, or urban)}
 
-\item{use_5g}{TRUE if 5G services are used for calls, FALSE if not}
+\item{use_5g}{TRUE if 5g services are used for calls, FALSE if not}
 
 \item{travel_time}{Time spent commuting in seconds per day}
 

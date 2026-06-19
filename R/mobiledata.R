@@ -4,6 +4,64 @@
 
 ###############################################################################
 # Total mobile data dose ======================================================
+#' Calculation of RF-EMF Dose from Mobile Phone Data Use
+#'
+#'
+#' @details
+#' The mobile data RF-EMF dose is calculated as:
+#' \deqn{Dose_{data} = mSAR_{data}*duration{data}}
+#'
+#' Where:
+#'
+#' * \eqn{Dose_{data}} is the dose from mobile data use
+#' * \eqn{mSAR_{data}} is the momentary SAR value in mJ/kg
+#' * \eqn{duration{data}} is the duration of mobile data use
+#'
+#' We distinguish between 4 types of mobile data use:
+#'
+#' 1. Low output power: sending e-mails, browsing the internet, scrolling and
+#'    chatting on social media, sending text messages
+#' 2. Low to medium output power: online gaming, streaming music, sending voice
+#'    messages
+#' 3. Medium to high output power: watching videos, uploading pictures or
+#'    videos, making video calls
+#' 4. High output power: uploading large files
+#'
+#' @param tissue Tissue for which to calculate dose (default: "brain" or "body")
+#' @param duration_low Duration (in seconds per day) of low output power activities
+#' @param duration_lowmed Duration (in seconds per day) of low-medium output power activities
+#' @param duration_medhigh Duration (in seconds per day) of medium-high output power activities
+#' @param duration_high Duration (in seconds per day) of high output power activities
+#' @param use_5g TRUE if 5G services are used for data transfer, FALSE if not
+#' @param wifi_prop_home Proportion of time connected to WiFi (vs mobile data)
+#' at home
+#' @param wifi_prop_work Proportion of time connected to WiFi (vs mobile data)
+#' at school / work
+#' @param wifi_prop_travel Proportion of time connected to WiFi (vs mobile data)
+#' while commuting
+#' @param urbanicity Urbanicity of home / workplace (rural, suburban, or urban)
+#' @param travel_time Time spent commuting in seconds per day
+#' @param params Parameter list (optional). If not specified, calculations use
+#' default parameters.
+#'
+#' @returns Tissue-specific RF-EMF dose from data use in mJ/kg/day
+#'
+#' @examples
+#' mobiledata_dose(
+#' tissue           = "brain",
+#' duration_low     = 4860,
+#' duration_lowmed  = 540,
+#' duration_medhigh = 4860,
+#' duration_high    = 540,
+#' use_5g           = FALSE,
+#' wifi_prop_home   = 0.5,
+#' wifi_prop_work   = 0.5,
+#' wifi_prop_travel = 0.5,
+#' urbanicity       = "suburban",
+#' travel_time      = 1800,
+#' params           = load_params())
+#'
+#' @seealso [mpd_msar()]
 #' @export
 mobiledata_dose <- function(
     tissue,
@@ -60,6 +118,61 @@ mobiledata_dose <- function(
 
 ###############################################################################
 # Calculate mSAR
+#' Calculation of mSAR from Mobile Phone Data
+#'
+#' Calculates mSAR (momentary specifc absorption rate) from data (mobile data
+#' and WiFi) use for a specific tissue
+#'
+#' @details
+#' The mSAR is calculated as
+#'
+#' \deqn{mSAR = nSAR_{mobiledata} \times
+#' outputpower_{mobiledata} + nSAR_{wifi} \times outputpower_{wifi}}
+#'
+#' where
+#'
+#' * \eqn{nSAR_{data}}, \eqn{nSAR_{wifi}} are the nSAR
+#' (normalized specific absorption rates, in W/kg/W) from data use using
+#' mobile data or WiFi networks, respectively
+#' * \eqn{outputpower_{data}}, \eqn{outputpower_{wifi}} are the output powers (mW)
+#' of the device (mobilephone) using mobile data or WiFi networks, respectively
+#'
+#' @param tissue Tissue for which to calculate mSAR (default: "brain" or "body")
+#' @param duration_low Duration (in seconds per day) of low output power activities
+#' @param duration_lowmed Duration (in seconds per day) of low-medium output power activities
+#' @param duration_medhigh Duration (in seconds per day) of medium-high output power activities
+#' @param duration_high Duration (in seconds per day) of high output power activities
+#' @param use_5g TRUE if 5G services are used for data transfer, FALSE if not
+#' @param wifi_prop_home Proportion of time connected to WiFi (vs mobile data)
+#' at home
+#' @param wifi_prop_work Proportion of time connected to WiFi (vs mobile data)
+#' at school / work
+#' @param wifi_prop_travel Proportion of time connected to WiFi (vs mobile data)
+#' while commuting
+#' @param urbanicity Urbanicity of home / workplace (rural, suburban, or urban)
+#' @param travel_time Time spent commuting in seconds per day
+#' @param params Parameter list (optional). If not specified, calculations use
+#' default parameters.
+#'
+#' @returns Momentary SAR (mSAR) from mobile data use in mW/kg
+#'
+#' @examples
+#' mpd_msar(
+#' tissue           = "brain",
+#' duration_low     = 4860,
+#' duration_lowmed  = 540,
+#' duration_medhigh = 4860,
+#' duration_high    = 540,
+#' use_5g           = FALSE,
+#' wifi_prop_home   = 0.5,
+#' wifi_prop_work   = 0.5,
+#' wifi_prop_travel = 0.5,
+#' urbanicity       = "suburban",
+#' travel_time      = 1800,
+#' params           = load_params())
+#'
+#' @seealso [mpd_pwr_data(), mpd_pwr_wifi(), mpd_sar_data(), mpd_sar_wifi()]
+#' @export
 mpd_msar <- function(
     tissue,
     duration_low,
@@ -164,9 +277,41 @@ mpd_msar <- function(
   return(msar)
 }
 
-
 ###############################################################################
-# Calculate output power
+# Calculate output power (data)
+#' Calculate Mobile Phone Output Power during Mobile Data Use
+#'
+#' Calculates the mobile phone output power during mobile data use.
+#'
+#' @details
+#' The output power depends in the technology used, the location in which the
+#' mobile data network (urbanicity, indoors/outdoors/commuting), and the activity
+#' the phone is used for.
+#'
+#' @param band Technology (3g, 4g, or 5g)
+#' @param duration_low Duration (in seconds per day) of low output power activities
+#' @param duration_lowmed Duration (in seconds per day) of low-medium output power activities
+#' @param duration_medhigh Duration (in seconds per day) of medium-high output power activities
+#' @param duration_high Duration (in seconds per day) of high output power activities
+#' @param urbanicity Urbanicity of home / workplace (rural, suburban, or urban)
+#' @param travel_time Time spent commuting in seconds per day
+#' @param params Parameter list (optional). If not specified, calculations use
+#' default parameters.
+#'
+#' @returns Output power in mW
+#'
+#' @examples
+#' mpd_pwr_data(
+#' band             = "4g",
+#' duration_low     = 4860,
+#' duration_lowmed  = 540,
+#' duration_medhigh = 4860,
+#' duration_high    = 540,
+#' urbanicity       = "rural",
+#' travel_time      = 1800,
+#' params           = load_params())
+#'
+#' @export
 mpd_pwr_data <- function(
     band,
     duration_low,
@@ -235,7 +380,35 @@ mpd_pwr_data <- function(
 
   return(pwr)
 }
-
+# Wifi ========================================================================
+#' Calculate Mobile Phone Output Power during WiFi Use
+#'
+#' Calculates the mobile phone output power during WiFi use
+#'
+#' @details
+#' The output power depends on the frequency band (2.4 GHz or 5.0 GHz) and the
+#' type of activity.
+#'
+#' @param band WiFi frequency band ("2" for 2.4 GHz, "5" for 5.0 GHz)
+#' @param duration_low Duration (in seconds per day) of low output power activities
+#' @param duration_lowmed Duration (in seconds per day) of low-medium output power activities
+#' @param duration_medhigh Duration (in seconds per day) of medium-high output power activities
+#' @param duration_high Duration (in seconds per day) of high output power activities
+#' @param params Parameter list (optional). If not specified, calculations use
+#' default parameters.
+#'
+#' @returns Output power in mW
+#'
+#' @examples
+#' mpc_pwr_wifi(
+#' band             = "2",
+#' duration_low     = 4860,
+#' duration_lowmed  = 540,
+#' duration_medhigh = 4860,
+#' duration_high    = 540,
+#' params           = load_params())
+#'
+#' @export
 mpd_pwr_wifi <- function(
     band,
     duration_low,
@@ -253,7 +426,6 @@ mpd_pwr_wifi <- function(
   activities <- c("low", "lowmed", "medhigh", "high")
 
   # Define function for WiFi calculation and sum over activities ==============
-  ## TODO: improve efficiency of getting output power (same for every activity)
   pwr <- sum(
     vapply(
       activities,
@@ -270,7 +442,30 @@ mpd_pwr_wifi <- function(
 }
 
 ###############################################################################
-# Calculate SAR
+# Calculate SAR (data) ========================================================
+#' Calculate nSAR during mobile data use on mobile phone
+#'
+#' Calculates tissue-specific nSAR from mobile data use on mobile phone.
+#'
+#' @details
+#' The normalized specific absorption rate (nSAR) depends on the tissue and
+#' the frequency band.
+#'
+#'
+#' @param tissue Tissue for which to calculate nSAR (default: "brain" or "body")
+#' @param band Technology ("3g", "4g", or "5g")
+#' @param params Parameter list (optional). If not specified, calculations use
+#' default parameters.
+#'
+#' @returns nSAR in W/kg/W
+#'
+#' @examples
+#' mpd_sar_data(
+#' tissue       = "brain",
+#' band         = "5g",
+#' params       = load_params())
+#'
+#' @export
 mpd_sar_data <- function(
     band,
     tissue,
@@ -282,6 +477,30 @@ mpd_sar_data <- function(
   return(sar)
 }
 
+# Calculate SAR (wifi) ========================================================
+#' Calculate nSAR during WiFi Use on mobile phone
+#'
+#' Calculates tissue-specific nSAR from WiFi use on mobile phone.
+#'
+#' @details
+#' The normalized specific absorption rate (nSAR) depends on the tissue and
+#' the frequency band.
+#'
+#'
+#' @param tissue Tissue for which to calculate nSAR (default: "brain" or "body")
+#' @param band Frequency band ("2" for 2.4 GHz, "5" for 5.0 GHz)
+#' @param params Parameter list (optional). If not specified, calculations use
+#' default parameters.
+#'
+#' @returns nSAR in W/kg/W
+#'
+#' @examples
+#' mpd_sar_wifi(
+#' tissue       = "brain",
+#' band         = "2",
+#' params       = load_params())
+#'
+#' @export
 mpd_sar_wifi <- function(
     band,
     tissue,
