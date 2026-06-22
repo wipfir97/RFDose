@@ -91,7 +91,7 @@ check_duration <- function(duration) {
     problems <- c(problems, "Some durations exceed 86400 seconds per day.")
   }
 
-  if (sum(duration > 86400)) {
+  if (sum(duration) > 86400) {
     problems <- c(problems, "The sum of durations exceeds 86400 seconds per day.")
   }
 

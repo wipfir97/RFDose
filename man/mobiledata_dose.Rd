@@ -52,17 +52,15 @@ default parameters.}
 Tissue-specific RF-EMF dose from data use in mJ/kg/day
 }
 \description{
-Calculation of RF-EMF Dose from Mobile Phone Data Use
+The mobile data RF-EMF dose is calculated as:
+\deqn{Dose_{data} = mSAR_{data}*duration_{data}}
 }
 \details{
-The mobile data RF-EMF dose is calculated as:
-\deqn{Dose_{data} = mSAR_{data}*duration{data}}
-
 Where:
 \itemize{
 \item \eqn{Dose_{data}} is the dose from mobile data use
 \item \eqn{mSAR_{data}} is the momentary SAR value in mJ/kg
-\item \eqn{duration{data}} is the duration of mobile data use
+\item \eqn{duration_{data}} is the duration of mobile data use
 }
 
 We distinguish between 4 types of mobile data use:

@@ -6,16 +6,16 @@
 # Total mobile data dose ======================================================
 #' Calculation of RF-EMF Dose from Mobile Phone Data Use
 #'
-#'
-#' @details
 #' The mobile data RF-EMF dose is calculated as:
-#' \deqn{Dose_{data} = mSAR_{data}*duration{data}}
+#' \deqn{Dose_{data} = mSAR_{data}*duration_{data}}
 #'
 #' Where:
 #'
 #' * \eqn{Dose_{data}} is the dose from mobile data use
 #' * \eqn{mSAR_{data}} is the momentary SAR value in mJ/kg
-#' * \eqn{duration{data}} is the duration of mobile data use
+#' * \eqn{duration_{data}} is the duration of mobile data use
+#'
+#' @details
 #'
 #' We distinguish between 4 types of mobile data use:
 #'

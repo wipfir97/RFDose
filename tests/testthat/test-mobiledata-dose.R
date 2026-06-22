@@ -121,3 +121,20 @@ test_that("mobiledata_dose errors if required argument is invalid", {
   )
 })
 
+test_that("mobiledata_dose errors warns if sum of durations is over 86400", {
+  expect_warning(
+    mobiledata_dose(
+      tissue           = "brain",
+      duration_low     = 90000,
+      duration_lowmed  = 540,
+      duration_medhigh = 4860,
+      duration_high    = 540,
+      use_5g           = TRUE,
+      wifi_prop_home   = 0.5,
+      wifi_prop_work   = 0.5,
+      wifi_prop_travel = 0.5,
+      urbanicity       = "suburban",
+      travel_time      = 1800)
+  )
+})
+
