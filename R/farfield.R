@@ -1,7 +1,38 @@
-# Calculate total RF-EMF dose (for brain and body) from far-field exposure
-
-###############################################################################
 # =============================================================================
+#' Calculate RF-EMF Dose from Far-field Sources
+#'
+#' Calculates the tissue-specific RF-EMF dose from far-field sources
+#'
+#' @details
+#'
+#' The RF-EMF dose from far-field sources is calculated as:
+#'
+#' \deqn{Dose_{farfield} = mSAR_{farfield}*86400}
+#'
+#' Where:
+#'
+#' * \eqn{Dose_{farfield}} is the dose from tablet use
+#' * \eqn{mSAR_{farfield}} is the momentary SAR value in mJ/kg
+#'
+#' @param country Country of residence (Austria = "AT", Belgium = "BE", France = FR,
+#' Hungary = "HU", Italy = "IT", Netherlands = "NL", Poland = "PL", Spain = "ES",
+#' Switzerland = "CH", United Kingdom = "UK", elsewhere = "Other")
+#' @param urbanicity Urbanicity of home / workplace (rural, suburban, or urban)
+#' @param travel_time Time spent commuting in seconds per day
+#' @param params Parameter list (optional). If not specified, calculations use
+#' default parameters.
+#'
+#' @returns Tissue-specific RF-EMF dose from far-field sources in mJ/kg/day
+#'
+#' @examples
+#' farfield_dose(
+#'   tissue      = "body",
+#'   country     = "CH",
+#'   urbanicity  = "suburban",
+#'   travel_time = 1800)
+#'
+#' @export
+#' @seealso [farfield_msar()]
 #' @export
 farfield_dose <- function(
     tissue,
@@ -29,6 +60,33 @@ farfield_dose <- function(
   return(dose)
 }
 
+# =============================================================================
+#' Calculate mSAR of Far-field Sources
+#'
+#' Calculates the mSAR of far-field sources
+#'
+#' @details
+#' The output power depends on the country, urbanicity, and time spent commuting.
+#'
+#' @param country Country of residence (Austria = "AT", Belgium = "BE", France = FR,
+#' Hungary = "HU", Italy = "IT", Netherlands = "NL", Poland = "PL", Spain = "ES",
+#' Switzerland = "CH", United Kingdom = "UK", elsewhere = "Other")
+#' @param urbanicity Urbanicity of home / workplace (rural, suburban, or urban)
+#' @param travel_time Time spent commuting in seconds per day
+#' @param params Parameter list (optional). If not specified, calculations use
+#' default parameters.
+#'
+#' @returns mSAR in W/kg/W/m**2
+#'
+#' @examples
+#' farfield_msar(
+#'   tissue      = "body",
+#'   country     = "CH",
+#'   urbanicity  = "suburban",
+#'   travel_time = 1800)
+#'
+#' @export
+#' @seealso [farfield_pwr(), farfield_sar()]
 farfield_msar <- function(
     tissue,
     country,
@@ -53,6 +111,31 @@ farfield_msar <- function(
   return(msar)
 }
 
+# =============================================================================
+#' Calculate Output Power of Far-field Sources
+#'
+#' Calculates the output power of far-field sources
+#'
+#' @details
+#' The output power depends on the country, urbanicity, and time spent commuting.
+#'
+#' @param country Country of residence (Austria = "AT", Belgium = "BE", France = FR,
+#' Hungary = "HU", Italy = "IT", Netherlands = "NL", Poland = "PL", Spain = "ES",
+#' Switzerland = "CH", United Kingdom = "UK", elsewhere = "Other")
+#' @param urbanicity Urbanicity of home / workplace (rural, suburban, or urban)
+#' @param travel_time Time spent commuting in seconds per day
+#' @param params Parameter list (optional). If not specified, calculations use
+#' default parameters.
+#'
+#' @returns Output power in mW/m**2
+#'
+#' @examples
+#' farfield_pwr(
+#' country     = "CH",
+#' urbanicity  = "suburban",
+#' travel_time = 1800)
+#'
+#' @export
 farfield_pwr <- function(
     country,
     urbanicity,
@@ -87,6 +170,28 @@ farfield_pwr <- function(
   return(pwr)
 }
 
+
+# =============================================================================
+#' Calculate nSAR from Far-Field Sources
+#'
+#' Calculates tissue-specific nSAR from far-field sources.
+#'
+#' @details
+#' The normalized specific absorption rate (nSAR) depends on the tissue and
+#' the frequency band.
+#'
+#' @param tissue Tissue for which to calculate nSAR (default: "brain" or "body")
+#' @param params Parameter list (optional). If not specified, calculations use
+#' default parameters.
+#'
+#' @returns nSAR in W/kg/W/m**2
+#'
+#' @examples
+#' farfield_sar(
+#' tissue       = "brain",
+#' params       = load_params())
+#'
+#' @export
 farfield_sar <- function(
     tissue,
     params = load_params()) {
