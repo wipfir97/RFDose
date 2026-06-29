@@ -7,6 +7,8 @@
 farfield_msar(tissue, country, urbanicity, travel_time, params = load_params())
 }
 \arguments{
+\item{tissue}{Tissue for which to calculate nSAR (default: "brain" or "body")}
+
 \item{country}{Country of residence (Austria = "AT", Belgium = "BE", France = FR,
 Hungary = "HU", Italy = "IT", Netherlands = "NL", Poland = "PL", Spain = "ES",
 Switzerland = "CH", United Kingdom = "UK", elsewhere = "Other")}

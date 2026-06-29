@@ -1,7 +1,37 @@
-# Calculate total RF-EMF dose (for brain and body) from WiFi
-
-###############################################################################
 # =============================================================================
+#' Calculate RF-EMF Dose from WiFi Router
+#'
+#' Calculates the tissue-specific RF-EMF dose from WiFi router
+#'
+#' @details
+#'
+#' The RF-EMF dose from WiFi router is calculated as:
+#'
+#' \deqn{Dose_{WiFi} = mSAR_{farfield}*duration_{WiFi}}
+#'
+#' Where:
+#'
+#' * \eqn{Dose_{WiFi}} is the dose from WiFi Router
+#' * \eqn{mSAR_{WiFi}} is the momentary SAR value in mJ/kg
+#' * \eqn{duration_{WiFi}} is the duration of time exposed to a WiFi router in seconds/day
+#'
+#' @param tissue Tissue for which to calculate nSAR (default: "brain" or "body")
+#' @param travel_time Time spent commuting in seconds per day
+#' @param wifi_prop_travel Proportion of time connected to WiFi (vs mobile data)
+#' while commuting
+#' @param params Parameter list (optional). If not specified, calculations use
+#' default parameters.
+#'
+#' @returns Tissue-specific RF-EMF dose from Wifi router in mJ/kg/day
+#'
+#' @examples
+#' wifi_dose(
+#'   tissue           = "body",
+#'   travel_time      = 1800,
+#'   wifi_prop_travel = 0.5)
+#'
+#' @export
+#' @seealso [wifi_msar()]
 #' @export
 wifi_dose <- function(
     tissue,
@@ -9,7 +39,9 @@ wifi_dose <- function(
     wifi_prop_travel,
     params = load_params()) {
   # Input checks ==============================================================
-  ## TODO add input checks
+  check_tissue(tissue, "data", params)
+  check_duration(travel_time)
+  check_proportions(wifi_prop_travel)
 
   # Calculate exposure duration ===============================================
   loc_props <- location_props(
@@ -37,6 +69,32 @@ wifi_dose <- function(
   return(dose)
 }
 
+# =============================================================================
+#' Calculate mSAR of WiFi Router
+#'
+#' Calculates the mSAR of WiFi Router
+#'
+#' @details
+#' The output power depends on the time spent commuting and the proportion of
+#' time a WiFi connection (vs mobile data) is used while commuting.
+#'
+#' @param tissue Tissue for which to calculate nSAR (default: "brain" or "body")
+#' @param travel_time Time spent commuting in seconds per day
+#' @param wifi_prop_travel Proportion of time connected to WiFi (vs mobile data)
+#' while commuting
+#' @param params Parameter list (optional). If not specified, calculations use
+#' default parameters.
+#'
+#' @returns mSAR in W/kg/W/m**2
+#'
+#' @examples
+#' wifi_msar(
+#'   tissue           = "body",
+#'   travel_time      = 1800,
+#'   wifi_prop_travel = 0.5)
+#'
+#' @export
+#' @seealso [wifi_pwr(), wifi_sar()]
 wifi_msar <- function(
     tissue,
     travel_time,
@@ -71,6 +129,26 @@ wifi_msar <- function(
   return(msar)
 }
 
+
+# =============================================================================
+#' Calculate Output Power of WiFi Router
+#'
+#' Calculates the output power of WiFi router
+#'
+#' @details
+#' The output power depends on the WiFi frequency band.
+#'
+#' @param band Frequency band ("2" for 2.4 GHz, "5" for 5.0 GHz)
+#' @param params Parameter list (optional). If not specified, calculations use
+#' default parameters.
+#'
+#' @returns Output power in mW/m**2
+#'
+#' @examples
+#' wifi_pwr(
+#' band = "2")
+#'
+#' @export
 wifi_pwr <- function(
     band,
     params = load_params()) {
@@ -81,6 +159,29 @@ wifi_pwr <- function(
   return(pwr)
 }
 
+# =============================================================================
+#' Calculate nSAR from WiFi Router
+#'
+#' Calculates tissue-specific nSAR from WiFi Router
+#'
+#' @details
+#' The normalized specific absorption rate (nSAR) depends on the tissue and
+#' the WiFi frequency band.
+#'
+#' @param tissue Tissue for which to calculate nSAR (default: "brain" or "body")
+#' @param band Frequency band ("2" for 2.4 GHz, "5" for 5.0 GHz)
+#' @param params Parameter list (optional). If not specified, calculations use
+#' default parameters.
+#'
+#' @returns nSAR in W/kg/W/m**2
+#'
+#' @examples
+#' wifi_sar(
+#' tissue = "brain",
+#' band   = "5",
+#' params = load_params())
+#'
+#' @export
 wifi_sar <- function(
     tissue,
     band,

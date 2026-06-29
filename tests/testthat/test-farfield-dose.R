@@ -2,7 +2,8 @@
 test_that("farfield_dose errors if required argument is missing", {
   expect_error(
     farfield_dose(
-      country = "CH",
+      tissue      = "brain",
+      country     = "CH",
       travel_time = 1800),
     "urbanicity"
   )
@@ -11,20 +12,23 @@ test_that("farfield_dose errors if required argument is missing", {
 test_that("farfield_dose errors if input values are incorrect type", {
   expect_error(
     farfield_dose(
-      country = 5,
-      urbanicity = "suburban",
+      tissue      = "brain",
+      country     = 5,
+      urbanicity  = "suburban",
       travel_time = 1800)
   )
   expect_error(
     farfield_dose(
-      country = "CH",
-      urbanicity = 7,
+      tissue      = "brain",
+      country     = "CH",
+      urbanicity  = 7,
       travel_time = 1800)
   )
   expect_error(
     farfield_dose(
-      country = "CH",
-      urbanicity = "suburban",
+      tissue      = "brain",
+      country     = "CH",
+      urbanicity  = "suburban",
       travel_time = "1800"),
     "numeric"
   )
@@ -33,8 +37,9 @@ test_that("farfield_dose errors if input values are incorrect type", {
 test_that("farfield_dose errors if unknown country code is used", {
   expect_error(
     farfield_dose(
-      country = "XY",
-      urbanicity = "suburban",
+      tissue      = "body",
+      country     = "XY",
+      urbanicity  = "suburban",
       travel_time = 1800)
   )
 })
@@ -42,8 +47,9 @@ test_that("farfield_dose errors if unknown country code is used", {
 test_that("farfield_dose errors if invalid urbanicity input is used", {
   expect_error(
     farfield_dose(
-      country = "AT",
-      urbanicity = "forest",
+      tissue      = "brain",
+      country     = "AT",
+      urbanicity  = "forest",
       travel_time = 1800)
   )
 })
@@ -51,9 +57,20 @@ test_that("farfield_dose errors if invalid urbanicity input is used", {
 test_that("farfield_dose errors if nonsensical travel_time is used", {
   expect_error(
     farfield_dose(
-      country = "CH",
-      urbanicity = "rural",
+      tissue      = "body",
+      country     = "CH",
+      urbanicity  = "rural",
       travel_time = -1800)
+  )
+})
+
+test_that("farfield_dose errors if invalid tissue is used", {
+  expect_error(
+    farfield_dose(
+      tissue      = "test",
+      country     = "CH",
+      urbanicity  = "rural",
+      travel_time = 1800)
   )
 })
 

@@ -7,6 +7,8 @@
 farfield_dose(tissue, country, urbanicity, travel_time, params = load_params())
 }
 \arguments{
+\item{tissue}{Tissue for which to calculate nSAR (default: "brain" or "body")}
+
 \item{country}{Country of residence (Austria = "AT", Belgium = "BE", France = FR,
 Hungary = "HU", Italy = "IT", Netherlands = "NL", Poland = "PL", Spain = "ES",
 Switzerland = "CH", United Kingdom = "UK", elsewhere = "Other")}
@@ -31,7 +33,7 @@ The RF-EMF dose from far-field sources is calculated as:
 
 Where:
 \itemize{
-\item \eqn{Dose_{farfield}} is the dose from tablet use
+\item \eqn{Dose_{farfield}} is the dose from far-field sources
 \item \eqn{mSAR_{farfield}} is the momentary SAR value in mJ/kg
 }
 }

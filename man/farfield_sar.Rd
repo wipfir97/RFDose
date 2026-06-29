@@ -19,8 +19,7 @@ nSAR in W/kg/W/m**2
 Calculates tissue-specific nSAR from far-field sources.
 }
 \details{
-The normalized specific absorption rate (nSAR) depends on the tissue and
-the frequency band.
+The normalized specific absorption rate (nSAR) depends on the tissue.
 }
 \examples{
 farfield_sar(

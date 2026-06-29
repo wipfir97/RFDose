@@ -11,9 +11,10 @@
 #'
 #' Where:
 #'
-#' * \eqn{Dose_{farfield}} is the dose from tablet use
+#' * \eqn{Dose_{farfield}} is the dose from far-field sources
 #' * \eqn{mSAR_{farfield}} is the momentary SAR value in mJ/kg
 #'
+#' @param tissue Tissue for which to calculate nSAR (default: "brain" or "body")
 #' @param country Country of residence (Austria = "AT", Belgium = "BE", France = FR,
 #' Hungary = "HU", Italy = "IT", Netherlands = "NL", Poland = "PL", Spain = "ES",
 #' Switzerland = "CH", United Kingdom = "UK", elsewhere = "Other")
@@ -41,7 +42,10 @@ farfield_dose <- function(
     travel_time,
     params = load_params()) {
   # Check input values ========================================================
-  ## TODO: input checks
+  check_tissue(tissue, "data", params)
+  check_country(country)
+  check_urbanicity(urbanicity)
+  check_duration(travel_time)
 
   # Calculate mSAR ============================================================
   ## Brain --------------------------------------------------------------------
@@ -68,6 +72,7 @@ farfield_dose <- function(
 #' @details
 #' The output power depends on the country, urbanicity, and time spent commuting.
 #'
+#' @param tissue Tissue for which to calculate nSAR (default: "brain" or "body")
 #' @param country Country of residence (Austria = "AT", Belgium = "BE", France = FR,
 #' Hungary = "HU", Italy = "IT", Netherlands = "NL", Poland = "PL", Spain = "ES",
 #' Switzerland = "CH", United Kingdom = "UK", elsewhere = "Other")
@@ -177,8 +182,7 @@ farfield_pwr <- function(
 #' Calculates tissue-specific nSAR from far-field sources.
 #'
 #' @details
-#' The normalized specific absorption rate (nSAR) depends on the tissue and
-#' the frequency band.
+#' The normalized specific absorption rate (nSAR) depends on the tissue.
 #'
 #' @param tissue Tissue for which to calculate nSAR (default: "brain" or "body")
 #' @param params Parameter list (optional). If not specified, calculations use
