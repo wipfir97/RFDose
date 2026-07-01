@@ -1,9 +1,20 @@
 global:
-  wifi_2_prop: 0.58
-  wifi_5_prop: 0.42
-  home_prop: 0.71
-  outd_prop: 0.08
-  work_prop: 0.21
+  wifi_probs:
+    distirbution: "beta"
+    wifi_2_prop_mean: 0.58
+    wifi_2_prop_sd: 0.058
+    wifi_5_prop_mean: 0.42
+    wifi_5_prop_sd: 0.042
+  environment_prob:
+    distirbution: "dirichlet"
+    home_prop_mean: 0.71
+    home_prop_sd: 0.071
+    outd_prop_mean: 0.08
+    outd_prop_sd: 0.008
+    work_prop_mean: 0.21
+    work_prop_sd: 0.021
+    travel_prop_mean: 0.02
+    travel_prop_sd: 0.015
 devices:
   dect:
     dect_pwr: 250
@@ -102,20 +113,98 @@ devices:
       data_4g_prop_no5g_sd: 0.098
       data_5g_prop_no5g_mean: 0
       data_5g_prop_no5g_sd: 0
-    native_2g_dutycycle:
+    2g_freq_props:
+      distribution: "dirichlet"
+      f900_2g_prop_mean: 0.5
+      f900_2g_prop_sd: 0.05
+      f1800_2g_prop_mean: 0.5
+      f1800_2g_prop_sd: 0.05
+    3g_freq_props:
+      distribution: "dirichlet"
+      f900_3g_prop_mean: 0.5
+      f900_3g_prop_sd: 0.05
+      f2100_3g_prop_mean: 0.5
+      f2100_3g_prop_sd: 0.05
+    4g_freq_props:
+      distribution: "dirichlet"
+      f700_4g_prop_mean: 0.04
+      f700_4g_prop_sd: 0.03
+      f800_4g_prop_mean: 0.19
+      f800_4g_prop_sd: 0.08
+      f900_4g_prop_mean: 0.21
+      f900_4g_prop_sd: 0.07
+      f1450_4g_prop_mean: 0.0
+      f1450_4g_prop_sd: 0.0
+      f1800_4g_prop_mean: 0.28
+      f1800_4g_prop_sd: 0.06
+      f2100_4g_prop_mean: 0.19
+      f2100_4g_prop_sd: 0.06
+      f2600_4g_prop_mean: 0.09
+      f2600_4g_prop_sd: 0.04
+    5g_freq_props:
+      f3500_5g_prop: 1.0
+    6g_freq_props:
+      fxxx_6g_prop: 1.0
+    bt_freq_props:
+      f2400_bt_prop: 1.0
+
+    phone_positions:
+      distribution: "dirichlet"
+      ear_cheek1_prop_mean: 0.5
+      ear_cheek1_prop_sd: 0.05
+      ear_cheek2_prop_mean: 0.1
+      ear_cheek2_prop_sd: 0.01
+      ear_cheek3_prop_mean: 0.1
+      ear_cheek3_prop_sd: 0.01
+      ear_tilt1_prop_mean: 0.15
+      ear_tilt1_prop_sd: 0.015
+      ear_tilt2_prop_mean: 0.75
+      ear_tilt2_prop_sd: 0.075
+      ear_tilt3_prop_mean: 0.75
+      ear_tilt3_prop_sd: 0.075
+      front_eyes_cen_ver_prop_mean: 0.6
+      front_eyes_cen_ver_prop_sd: 0.06
+      front_eyes_cen_hor_prop_mean: 0.1
+      front_eyes_cen_hor_prop_sd: 0.01
+      front_eyes_left_ver_prop_mean: 0.07
+      front_eyes_left_ver_prop_sd: 0.007
+      front_eyes_left_hor_prop_mean: 0.03
+      front_eyes_left_hor_prop_sd: 0.003
+      front_eyes_right_ver_prop_mean: 0.07
+      front_eyes_right_ver_prop_sd: 0.007
+      front_eyes_right_hor_prop_mean: 0.03
+      front_eyes_right_hor_prop_sd: 0.003
+      front_eyes_down_ver_prop_mean: 0.07
+      front_eyes_down_ver_prop_sd: 0.007
+      front_eyes_down_hor_prop_mean: 0.03
+      front_eyes_down_hor_prop_sd: 0.003
+      belly_cen_ver_prop_mean: 0.02
+      belly_cen_ver_prop_sd: 0.002
+      belly_cen_hor_prop_mean: 0.02
+      belly_cen_hor_prop_sd: 0.002
+      belly_left_ver_prop_mean: 0.2
+      belly_left_ver_prop_sd: 0.02
+      belly_left_hor_prop_mean: 0.01
+      belly_left_hor_prop_sd: 0.001
+      belly_right_ver_prop_mean: 0.7
+      belly_right_ver_prop_sd: 0.07
+      belly_right_hor_prop_mean: 0.01
+      belly_right_hor_prop_sd: 0.001
+      belly_up_ver_prop_mean: 0.03
+      belly_up_ver_prop_sd: 0.003
+      belly_up_hor_prop_mean: 0.01
+      belly_up_hor_prop_sd: 0.001
+
+
+
+    native_dutycycle:
       distribution: "beta"
       native_2g_dutycycle_mean: 0.12
       native_2g_dutycycle_sd: 0.001
-    native_3g_dutycycle:
-      distribution: "beta"
       native_3g_dutycycle_mean: 0.98
       native_3g_dutycycle_sd: 0.03
-    native_4g_dutycycle:
-      distribution: "beta"
       native_4g_dutycycle_mean: 0.043
       native_4g_dutycycle_sd: 0.01
-    native_5g_dutycycle:
-      distribution: "beta"
       native_5g_dutycycle_mean: 0.000
       native_5g_dutycycle_sd: 0.000
     native_band_loc_scen_pwr:
@@ -232,20 +321,14 @@ devices:
       native_5g_travel_pwr_sd: 32.93
       native_5g_travel_pwr_min: 0.001
       native_5g_travel_pwr_max: 200
-    data_2g_dutycycle:
+    data_dutycycle:
       distribution: "beta"
       data_2g_dutycycle_mean: 0
       data_2g_dutycycle_sd: 0
-    data_3g_dutycycle:
-      distribution: "beta"
       data_3g_dutycycle_mean: 0.54
       data_3g_dutycycle_sd: 0.14
-    data_4g_dutycycle:
-      distribution: "beta"
       data_4g_dutycycle_mean: 0.056
       data_4g_dutycycle_sd: 0.04
-    data_5g_dutycycle:
-      distribution: "beta"
       data_5g_dutycycle_mean: 0.051
       data_5g_dutycycle_sd: 0.005
     data_band_loc_scen_pwr:
@@ -343,144 +426,588 @@ devices:
       data_5g_urb_ind_pwr_min: 0.001
       data_5g_urb_ind_pwr_max: 200
       data_5g_rur_ind_pwr_mean: 51.91
-      data_5g_rur_ind_pwr_sd: 51.91
+      data_5g_rur_ind_pwr_sd: 15.573
       data_5g_rur_ind_pwr_min: 0.001
       data_5g_rur_ind_pwr_max: 200
       data_5g_sub_out_pwr_mean: 40.045
-      data_5g_sub_out_pwr_sd: 40.045
+      data_5g_sub_out_pwr_sd: 12.014
       data_5g_sub_out_pwr_min: 0.001
       data_5g_sub_out_pwr_max: 200
       data_5g_urb_out_pwr_mean: 36.92
-      data_5g_urb_out_pwr_sd: 36.92
+      data_5g_urb_out_pwr_sd: 11.076
       data_5g_urb_out_pwr_min: 0.001
       data_5g_urb_out_pwr_max: 200
       data_5g_rur_out_pwr_mean: 43.17
-      data_5g_rur_out_pwr_sd: 43.17
+      data_5g_rur_out_pwr_sd: 12.951
       data_5g_rur_out_pwr_min: 0.001
       data_5g_rur_out_pwr_max: 200
       data_5g_travel_pwr_mean: 31.52
-      data_5g_travel_pwr_sd: 31.52
+      data_5g_travel_pwr_sd: 9.456
       data_5g_travel_pwr_min: 0.001
       data_5g_travel_pwr_max: 200
-    wifi_2_pwr: 100
-    wifi_5_pwr: 200
-    wifi_2_dutycycle: 0.02738
-    wifi_5_dutycycle: 0.04385
-    headp_face_prop: 0.333
-    headp_pock_prop: 0.333
-    headp_else_prop: 0.333
-    bt_pwr: 0.16
+      wifi_2_pwr_mean: 100
+      wifi_2_pwr_sd: 30
+      wifi_2_pwr_min: 0.001
+      wifi_2_pwr_max: 100
+      wifi_5_pwr_mean: 200
+      wifi_5_pwr_sd: 60
+      wifi_5_pwr_min: 0.001
+      wifi_5_pwr_max: 200
+      bt_pwr_mean: 0.16
+      bt_pwr_sd: 0.016
+      bt_pwr_min: 0.0
+      bt_pwr_max: 2.5
+    wifi_dutycycle:
+      distribution: "beta"
+      wifi_2_dutycycle_mean: 0.02738
+      wifi_2_dutycycle_sd: 0.014
+      wifi_5_dutycycle_mean: 0.04385
+      wifi_5_dutycycle_sd: 0.003
+    position_props:
+      distribution: "dirichlet"
+      headp_face_prop_mean: 0.333
+      headp_face_prop_sd: 0.0333
+      headp_pock_prop_mean: 0.333
+      headp_pock_prop_sd: 0.0333
+      headp_else_prop_mean: 0.333
+      headp_else_prop_sd: 0.0333
+    mpc_distance:
+      distribution: "dirichlet"
+      mpc_dist_ear_mean: 8.0
+      mpc_dist_ear_sd: 0.8
+      mpc_dist_ear_min: 6
+      mpc_dist_ear_max: 50
+      mpc_dist_speaker_mean: 100
+      mpc_dist_speaker_sd: 80
+      mpc_dist_speaker_min: 50
+      mpc_dist_speaker_max: 150
 
-    brain:
-      native_2g_ear_sar: 0.07139
-      native_2g_headp_face_sar: 0.0038757
-      native_2g_headp_pock_sar: 0.00000911
-      native_2g_headp_else_sar: 0
-      native_2g_speaker_sar: 0.00628
-      native_3g_ear_sar: 0.06603
-      native_3g_headp_face_sar: 0.0036294
-      native_3g_headp_pock_sar: 0.00000882
-      native_3g_headp_else_sar: 0
-      native_3g_speaker_sar: 0.00594
-      native_4g_ear_sar: 0.06329
-      native_4g_headp_face_sar: 0.0032346
-      native_4g_headp_pock_sar: 0.00000978
-      native_4g_headp_else_sar: 0
-      native_4g_speaker_sar: 0.005369
-      native_5g_ear_sar: 0.0039
-      native_5g_headp_face_sar: 0.0005054
-      native_5g_headp_pock_sar: 0.00000017
-      native_5g_headp_else_sar: 0
-      native_5g_speaker_sar: 0.000675
-      data_2g_ear_sar: 0.07139
-      data_2g_headp_face_sar: 0.0038757
-      data_2g_headp_pock_sar: 0.00000911
-      data_2g_headp_else_sar: 0
-      data_2g_speaker_sar: 0.00628
-      data_3g_ear_sar: 0.06603
-      data_3g_headp_face_sar: 0.0036294
-      data_3g_headp_pock_sar: 0.00000882
-      data_3g_headp_else_sar: 0
-      data_3g_speaker_sar: 0.00594
-      data_4g_ear_sar: 0.06329
-      data_4g_headp_face_sar: 0.0032346
-      data_4g_headp_pock_sar: 0.00000978
-      data_4g_headp_else_sar: 0
-      data_4g_speaker_sar: 0.005369
-      data_5g_ear_sar: 0.0039
-      data_5g_headp_face_sar: 0.0005054
-      data_5g_headp_pock_sar: 0.00000017
-      data_5g_headp_else_sar: 0
-      data_5g_speaker_sar: 0.000675
-      wifi_2_ear_sar: 0.016377585
-      wifi_2_headp_face_sar: 0.000999468
-      wifi_2_headp_pock_sar: 4.75109794184096E-07
-      wifi_2_headp_else_sar: 0
-      wifi_2_speaker_sar: 0.001272228
-      wifi_5_ear_sar: 0.000606727
-      wifi_5_headp_face_sar: 0.000163091
-      wifi_5_headp_pock_sar: 0.000000021
-      wifi_5_headp_else_sar: 0
-      wifi_5_speaker_sar: 0.000169973
-      bt_phone_face_sar: 0.000999468
-      bt_phone_pock_sar: 0.000000475
-      bt_phone_else_sar: 0
-      bt_headp_sar: 0.01699017
-    body:
-      native_2g_ear_sar: 0.008183
-      native_2g_headp_face_sar: 0.001082
-      native_2g_headp_pock_sar: 0.012277
-      native_2g_headp_else_sar: 0
-      native_2g_speaker_sar: 0.002316
-      native_3g_ear_sar: 0.007597
-      native_3g_headp_face_sar: 0.001066
-      native_3g_headp_pock_sar: 0.010754
-      native_3g_headp_else_sar: 0
-      native_3g_speaker_sar: 0.002208
-      native_4g_ear_sar: 0.007628
-      native_4g_headp_face_sar: 0.001301
-      native_4g_headp_pock_sar: 0.011222
-      native_4g_headp_else_sar: 0
-      native_4g_speaker_sar: 0.002207
-      native_5g_ear_sar: 0.004750
-      native_5g_headp_face_sar: 0.0007066
-      native_5g_headp_pock_sar: 0.0047746
-      native_5g_headp_else_sar: 0
-      native_5g_speaker_sar: 0.004775
-      data_2g_ear_sar: 0.008183
-      data_2g_headp_face_sar: 0.001082
-      data_2g_headp_pock_sar: 0.012277
-      data_2g_headp_else_sar: 0
-      data_2g_speaker_sar: 0.002316
-      data_3g_ear_sar: 0.007597
-      data_3g_headp_face_sar: 0.001066
-      data_3g_headp_pock_sar: 0.010754
-      data_3g_headp_else_sar: 0
-      data_3g_speaker_sar: 0.002208
-      data_4g_ear_sar: 0.007628
-      data_4g_headp_face_sar: 0.001031
-      data_4g_headp_pock_sar: 0.011222
-      data_4g_headp_else_sar: 0
-      data_4g_speaker_sar: 0.002207
-      data_5g_ear_sar: 0.004750
-      data_5g_headp_face_sar: 0.0007066
-      data_5g_headp_pock_sar: 0.0047746
-      data_5g_headp_else_sar: 0
-      data_5g_speaker_sar: 0.004775
-      wifi_2_ear_sar: 0.005180701
-      wifi_2_headp_face_sar: 0.000860849
-      wifi_2_headp_pock_sar: 0.010153247
-      wifi_2_headp_else_sar: 0
-      wifi_2_speaker_sar: 0.001750505
-      wifi_5_ear_sar: 0.003516185
-      wifi_5_headp_face_sar: 0.000586175
-      wifi_5_headp_pock_sar: 0.002646374
-      wifi_5_headp_else_sar: 0
-      wifi_5_speaker_sar: 0.001182344
-      bt_phone_face_sar: 0.000860849
-      bt_phone_pock_sar: 0.010153247
-      bt_phone_else_sar: 0
-      bt_headp_sar: 0.009862
+    Duke:
+      body:
+        Duke_body_700_front_of_eyes_center_vertical_sar: 2.62829358791014
+        Duke_body_700_front_of_eyes_center_horizontal_sar: 2.62029276910084
+        Duke_body_700_front_of_eyes_left_vertical_sar: 2.67433645262368
+        Duke_body_700_front_of_eyes_left_horizontal_sar: 2.62364035953655
+        Duke_body_700_front_of_eyes_right_vertical_sar: 2.6802107746467
+        Duke_body_700_front_of_eyes_right_horizontal_sar: 2.6152812509107
+        Duke_body_700_front_of_eyes_down_vertical_sar: 2.64782663855648
+        Duke_body_700_front_of_eyes_down_horizontal_sar: 2.65432808088713
+        Duke_body_835_front_of_eyes_center_vertical_sar: 2.34660575902212
+        Duke_body_835_front_of_eyes_center_horizontal_sar: 2.33081912331824
+        Duke_body_835_front_of_eyes_left_vertical_sar: 2.35071664635545
+        Duke_body_835_front_of_eyes_left_horizontal_sar: 2.33626503774475
+        Duke_body_835_front_of_eyes_right_vertical_sar: 2.35035009387243
+        Duke_body_835_front_of_eyes_right_horizontal_sar: 2.32354124615998
+        Duke_body_835_front_of_eyes_down_vertical_sar: 2.36472148358516
+        Duke_body_835_front_of_eyes_down_horizontal_sar: 2.3525171957797
+        Duke_body_1450_front_of_eyes_center_vertical_sar: 1.34868774744779
+        Duke_body_1450_front_of_eyes_center_horizontal_sar: 0.897451072508176
+        Duke_body_1450_front_of_eyes_left_vertical_sar: 1.29986898255739
+        Duke_body_1450_front_of_eyes_left_horizontal_sar: 0.89793119979269
+        Duke_body_1450_front_of_eyes_right_vertical_sar: 1.32317386560091
+        Duke_body_1450_front_of_eyes_right_horizontal_sar: 0.900068574747703
+        Duke_body_1450_front_of_eyes_down_vertical_sar: 1.48499493112403
+        Duke_body_1450_front_of_eyes_down_horizontal_sar: 1.03030115558509
+        Duke_body_2140_front_of_eyes_center_vertical_sar: 1.32545781258478
+        Duke_body_2140_front_of_eyes_center_horizontal_sar: 1.02272225390249
+        Duke_body_2140_front_of_eyes_left_vertical_sar: 1.53932000866859
+        Duke_body_2140_front_of_eyes_left_horizontal_sar: 0.867736479564627
+        Duke_body_2140_front_of_eyes_right_vertical_sar: 1.53567056230722
+        Duke_body_2140_front_of_eyes_right_horizontal_sar: 0.803907941609042
+        Duke_body_2140_front_of_eyes_down_vertical_sar: 1.48428362534952
+        Duke_body_2140_front_of_eyes_down_horizontal_sar: 1.02272225390249
+        Duke_body_2450_front_of_eyes_center_vertical_sar: 1.39305867575297
+        Duke_body_2450_front_of_eyes_center_horizontal_sar: 0.900748985643468
+        Duke_body_2450_front_of_eyes_left_vertical_sar: 1.36500045623453
+        Duke_body_2450_front_of_eyes_left_horizontal_sar: 0.914986098853896
+        Duke_body_2450_front_of_eyes_right_vertical_sar: 1.38741435797539
+        Duke_body_2450_front_of_eyes_right_horizontal_sar: 0.900644849373904
+        Duke_body_2450_front_of_eyes_down_vertical_sar: 1.46830399585671
+        Duke_body_2450_front_of_eyes_down_horizontal_sar: 1.12030367869343
+        Duke_body_3500_front_of_eyes_center_vertical_sar: 1.00375380858243
+        Duke_body_3500_front_of_eyes_center_horizontal_sar: 0.568380513317951
+        Duke_body_3500_front_of_eyes_left_vertical_sar: 0.935206253869566
+        Duke_body_3500_front_of_eyes_left_horizontal_sar: 0.58639986819757
+        Duke_body_3500_front_of_eyes_right_vertical_sar: 1.0576543140428
+        Duke_body_3500_front_of_eyes_right_horizontal_sar: 0.573869182540118
+        Duke_body_3500_front_of_eyes_down_vertical_sar: 1.13078891896311
+        Duke_body_3500_front_of_eyes_down_horizontal_sar: 0.682736666847691
+        Duke_body_5200_front_of_eyes_center_vertical_sar: 0.608708700861238
+        Duke_body_5200_front_of_eyes_center_horizontal_sar: 0.680763171388875
+        Duke_body_5200_front_of_eyes_left_vertical_sar: 0.585719555999444
+        Duke_body_5200_front_of_eyes_left_horizontal_sar: 0.711743024402422
+        Duke_body_5200_front_of_eyes_right_vertical_sar: 0.611000989195383
+        Duke_body_5200_front_of_eyes_right_horizontal_sar: 0.700787024195038
+        Duke_body_5200_front_of_eyes_down_vertical_sar: 0.677112792300758
+        Duke_body_5200_front_of_eyes_down_horizontal_sar: 0.726750731532313
+        Duke_body_5800_front_of_eyes_center_vertical_sar: 0.555940152094637
+        Duke_body_5800_front_of_eyes_center_horizontal_sar: 0.654487928777619
+        Duke_body_5800_front_of_eyes_left_vertical_sar: 0.549554288776029
+        Duke_body_5800_front_of_eyes_left_horizontal_sar: 0.650050068531175
+        Duke_body_5800_front_of_eyes_right_vertical_sar: 0.552137232962963
+        Duke_body_5800_front_of_eyes_right_horizontal_sar: 0.633687453373169
+        Duke_body_5800_front_of_eyes_down_vertical_sar: 0.636030798365918
+        Duke_body_5800_front_of_eyes_down_horizontal_sar: 0.682892960718544
+      brain:
+        Duke_brain_700_front_of_eyes_center_vertical_sar: 0.322235768557809
+        Duke_brain_700_front_of_eyes_center_horizontal_sar: 0.564089064783121
+        Duke_brain_700_front_of_eyes_left_vertical_sar: 0.373345519568208
+        Duke_brain_700_front_of_eyes_left_horizontal_sar: 0.584661769031794
+        Duke_brain_700_front_of_eyes_right_vertical_sar: 0.331846679020899
+        Duke_brain_700_front_of_eyes_right_horizontal_sar: 0.5368578271693
+        Duke_brain_700_front_of_eyes_down_vertical_sar: 0.162419806143158
+        Duke_brain_700_front_of_eyes_down_horizontal_sar: 0.516197079998332
+        Duke_brain_835_front_of_eyes_center_vertical_sar: 0.198129812790972
+        Duke_brain_835_front_of_eyes_center_horizontal_sar: 0.38012207342558
+        Duke_brain_835_front_of_eyes_left_vertical_sar: 0.204381444061858
+        Duke_brain_835_front_of_eyes_left_horizontal_sar: 0.40883955769668
+        Duke_brain_835_front_of_eyes_right_vertical_sar: 0.193662916600432
+        Duke_brain_835_front_of_eyes_right_horizontal_sar: 0.345357160355427
+        Duke_brain_835_front_of_eyes_down_vertical_sar: 0.113833041580408
+        Duke_brain_835_front_of_eyes_down_horizontal_sar: 0.335904653454508
+        Duke_brain_1450_front_of_eyes_center_vertical_sar: 2.67674247949734
+        Duke_brain_1450_front_of_eyes_center_horizontal_sar: 2.01112093459255
+        Duke_brain_1450_front_of_eyes_left_vertical_sar: 2.51547369147673
+        Duke_brain_1450_front_of_eyes_left_horizontal_sar: 2.03635665691421
+        Duke_brain_1450_front_of_eyes_right_vertical_sar: 2.67122438222069
+        Duke_brain_1450_front_of_eyes_right_horizontal_sar: 2.0155983942639
+        Duke_brain_1450_front_of_eyes_down_vertical_sar: 2.09604143046972
+        Duke_brain_1450_front_of_eyes_down_horizontal_sar: 1.43568643874755
+        Duke_brain_2140_front_of_eyes_center_vertical_sar: 1.07032905625977
+        Duke_brain_2140_front_of_eyes_center_horizontal_sar: 1.18753241450209
+        Duke_brain_2140_front_of_eyes_left_vertical_sar: 1.18252348991935
+        Duke_brain_2140_front_of_eyes_left_horizontal_sar: 1.18252348991935
+        Duke_brain_2140_front_of_eyes_right_vertical_sar: 1.36213195551166
+        Duke_brain_2140_front_of_eyes_right_horizontal_sar: 1.17209871942563
+        Duke_brain_2140_front_of_eyes_down_vertical_sar: 0.967906604629175
+        Duke_brain_2140_front_of_eyes_down_horizontal_sar: 0.812388483255043
+        Duke_brain_2450_front_of_eyes_center_vertical_sar: 1.324897050627
+        Duke_brain_2450_front_of_eyes_center_horizontal_sar: 1.0160652909762
+        Duke_brain_2450_front_of_eyes_left_vertical_sar: 1.27758849340777
+        Duke_brain_2450_front_of_eyes_left_horizontal_sar: 1.04407663216003
+        Duke_brain_2450_front_of_eyes_right_vertical_sar: 1.33998252429863
+        Duke_brain_2450_front_of_eyes_right_horizontal_sar: 0.967423191630226
+        Duke_brain_2450_front_of_eyes_down_vertical_sar: 1.07674637171943
+        Duke_brain_2450_front_of_eyes_down_horizontal_sar: 0.702198873178545
+        Duke_brain_3500_front_of_eyes_center_vertical_sar: 0.412697495195415
+        Duke_brain_3500_front_of_eyes_center_horizontal_sar: 0.755520310804047
+        Duke_brain_3500_front_of_eyes_left_vertical_sar: 0.377725241728523
+        Duke_brain_3500_front_of_eyes_left_horizontal_sar: 0.766187905474561
+        Duke_brain_3500_front_of_eyes_right_vertical_sar: 0.444030841475701
+        Duke_brain_3500_front_of_eyes_right_horizontal_sar: 0.692435428004989
+        Duke_brain_3500_front_of_eyes_down_vertical_sar: 0.347959141566533
+        Duke_brain_3500_front_of_eyes_down_horizontal_sar: 0.542649793086592
+        Duke_brain_5200_front_of_eyes_center_vertical_sar: 0.0758701095738474
+        Duke_brain_5200_front_of_eyes_center_horizontal_sar: 0.0688734992099619
+        Duke_brain_5200_front_of_eyes_left_vertical_sar: 0.0717021228075498
+        Duke_brain_5200_front_of_eyes_left_horizontal_sar: 0.0966546157221357
+        Duke_brain_5200_front_of_eyes_right_vertical_sar: 0.0812923537408873
+        Duke_brain_5200_front_of_eyes_right_horizontal_sar: 0.0867578654529379
+        Duke_brain_5200_front_of_eyes_down_vertical_sar: 0.0509856396724483
+        Duke_brain_5200_front_of_eyes_down_horizontal_sar: 0.0494326498961654
+        Duke_brain_5800_front_of_eyes_center_vertical_sar: 0.0294677273958378
+        Duke_brain_5800_front_of_eyes_center_horizontal_sar: 0.0339550194560221
+        Duke_brain_5800_front_of_eyes_left_vertical_sar: 0.0300276502495216
+        Duke_brain_5800_front_of_eyes_left_horizontal_sar: 0.038524318235522
+        Duke_brain_5800_front_of_eyes_right_vertical_sar: 0.0404165504740503
+        Duke_brain_5800_front_of_eyes_right_horizontal_sar: 0.0299720233200455
+        Duke_brain_5800_front_of_eyes_down_vertical_sar: 0.0191469837216835
+        Duke_brain_5800_front_of_eyes_down_horizontal_sar: 0.0152147345206391
+    Ella:
+      body:
+        Ella_body_700_front_of_eyes_center_vertical_sar: 0
+        Ella_body_700_front_of_eyes_center_horizontal_sar: 0
+        Ella_body_700_front_of_eyes_left_vertical_sar: 0
+        Ella_body_700_front_of_eyes_left_horizontal_sar: 0
+        Ella_body_700_front_of_eyes_right_vertical_sar: 0
+        Ella_body_700_front_of_eyes_right_horizontal_sar: 0
+        Ella_body_700_front_of_eyes_down_vertical_sar: 0
+        Ella_body_700_front_of_eyes_down_horizontal_sar: 0
+        Ella_body_835_front_of_eyes_center_vertical_sar: 0
+        Ella_body_835_front_of_eyes_center_horizontal_sar: 0
+        Ella_body_835_front_of_eyes_left_vertical_sar: 0
+        Ella_body_835_front_of_eyes_left_horizontal_sar: 0
+        Ella_body_835_front_of_eyes_right_vertical_sar: 0
+        Ella_body_835_front_of_eyes_right_horizontal_sar: 0
+        Ella_body_835_front_of_eyes_down_vertical_sar: 0
+        Ella_body_835_front_of_eyes_down_horizontal_sar: 0
+        Ella_body_1450_front_of_eyes_center_vertical_sar: 0
+        Ella_body_1450_front_of_eyes_center_horizontal_sar: 0
+        Ella_body_1450_front_of_eyes_left_vertical_sar: 0
+        Ella_body_1450_front_of_eyes_left_horizontal_sar: 0
+        Ella_body_1450_front_of_eyes_right_vertical_sar: 0
+        Ella_body_1450_front_of_eyes_right_horizontal_sar: 0
+        Ella_body_1450_front_of_eyes_down_vertical_sar: 0
+        Ella_body_1450_front_of_eyes_down_horizontal_sar: 0
+        Ella_body_2140_front_of_eyes_center_vertical_sar: 0
+        Ella_body_2140_front_of_eyes_center_horizontal_sar: 0
+        Ella_body_2140_front_of_eyes_left_vertical_sar: 0
+        Ella_body_2140_front_of_eyes_left_horizontal_sar: 0
+        Ella_body_2140_front_of_eyes_right_vertical_sar: 0
+        Ella_body_2140_front_of_eyes_right_horizontal_sar: 0
+        Ella_body_2140_front_of_eyes_down_vertical_sar: 0
+        Ella_body_2140_front_of_eyes_down_horizontal_sar: 0
+        Ella_body_2450_front_of_eyes_center_vertical_sar: 0
+        Ella_body_2450_front_of_eyes_center_horizontal_sar: 0
+        Ella_body_2450_front_of_eyes_left_vertical_sar: 0
+        Ella_body_2450_front_of_eyes_left_horizontal_sar: 0
+        Ella_body_2450_front_of_eyes_right_vertical_sar: 0
+        Ella_body_2450_front_of_eyes_right_horizontal_sar: 0
+        Ella_body_2450_front_of_eyes_down_vertical_sar: 0
+        Ella_body_2450_front_of_eyes_down_horizontal_sar: 0
+        Ella_body_3500_front_of_eyes_center_vertical_sar: 0
+        Ella_body_3500_front_of_eyes_center_horizontal_sar: 0
+        Ella_body_3500_front_of_eyes_left_vertical_sar: 0
+        Ella_body_3500_front_of_eyes_left_horizontal_sar: 0
+        Ella_body_3500_front_of_eyes_right_vertical_sar: 0
+        Ella_body_3500_front_of_eyes_right_horizontal_sar: 0
+        Ella_body_3500_front_of_eyes_down_vertical_sar: 0
+        Ella_body_3500_front_of_eyes_down_horizontal_sar: 0
+        Ella_body_5200_front_of_eyes_center_vertical_sar: 0
+        Ella_body_5200_front_of_eyes_center_horizontal_sar: 0
+        Ella_body_5200_front_of_eyes_left_vertical_sar: 0
+        Ella_body_5200_front_of_eyes_left_horizontal_sar: 0
+        Ella_body_5200_front_of_eyes_right_vertical_sar: 0
+        Ella_body_5200_front_of_eyes_right_horizontal_sar: 0
+        Ella_body_5200_front_of_eyes_down_vertical_sar: 0
+        Ella_body_5200_front_of_eyes_down_horizontal_sar: 0
+        Ella_body_5800_front_of_eyes_center_vertical_sar: 0
+        Ella_body_5800_front_of_eyes_center_horizontal_sar: 0
+        Ella_body_5800_front_of_eyes_left_vertical_sar: 0
+        Ella_body_5800_front_of_eyes_left_horizontal_sar: 0
+        Ella_body_5800_front_of_eyes_right_vertical_sar: 0
+        Ella_body_5800_front_of_eyes_right_horizontal_sar: 0
+        Ella_body_5800_front_of_eyes_down_vertical_sar: 0
+        Ella_body_5800_front_of_eyes_down_horizontal_sar: 0
+      brain:
+        Ella_brain_700_front_of_eyes_center_vertical_sar: 0
+        Ella_brain_700_front_of_eyes_center_horizontal_sar: 0
+        Ella_brain_700_front_of_eyes_left_vertical_sar: 0
+        Ella_brain_700_front_of_eyes_left_horizontal_sar: 0
+        Ella_brain_700_front_of_eyes_right_vertical_sar: 0
+        Ella_brain_700_front_of_eyes_right_horizontal_sar: 0
+        Ella_brain_700_front_of_eyes_down_vertical_sar: 0
+        Ella_brain_700_front_of_eyes_down_horizontal_sar: 0
+        Ella_brain_835_front_of_eyes_center_vertical_sar: 0
+        Ella_brain_835_front_of_eyes_center_horizontal_sar: 0
+        Ella_brain_835_front_of_eyes_left_vertical_sar: 0
+        Ella_brain_835_front_of_eyes_left_horizontal_sar: 0
+        Ella_brain_835_front_of_eyes_right_vertical_sar: 0
+        Ella_brain_835_front_of_eyes_right_horizontal_sar: 0
+        Ella_brain_835_front_of_eyes_down_vertical_sar: 0
+        Ella_brain_835_front_of_eyes_down_horizontal_sar: 0
+        Ella_brain_1450_front_of_eyes_center_vertical_sar: 0
+        Ella_brain_1450_front_of_eyes_center_horizontal_sar: 0
+        Ella_brain_1450_front_of_eyes_left_vertical_sar: 0
+        Ella_brain_1450_front_of_eyes_left_horizontal_sar: 0
+        Ella_brain_1450_front_of_eyes_right_vertical_sar: 0
+        Ella_brain_1450_front_of_eyes_right_horizontal_sar: 0
+        Ella_brain_1450_front_of_eyes_down_vertical_sar: 0
+        Ella_brain_1450_front_of_eyes_down_horizontal_sar: 0
+        Ella_brain_2140_front_of_eyes_center_vertical_sar: 0
+        Ella_brain_2140_front_of_eyes_center_horizontal_sar: 0
+        Ella_brain_2140_front_of_eyes_left_vertical_sar: 0
+        Ella_brain_2140_front_of_eyes_left_horizontal_sar: 0
+        Ella_brain_2140_front_of_eyes_right_vertical_sar: 0
+        Ella_brain_2140_front_of_eyes_right_horizontal_sar: 0
+        Ella_brain_2140_front_of_eyes_down_vertical_sar: 0
+        Ella_brain_2140_front_of_eyes_down_horizontal_sar: 0
+        Ella_brain_2450_front_of_eyes_center_vertical_sar: 0
+        Ella_brain_2450_front_of_eyes_center_horizontal_sar: 0
+        Ella_brain_2450_front_of_eyes_left_vertical_sar: 0
+        Ella_brain_2450_front_of_eyes_left_horizontal_sar: 0
+        Ella_brain_2450_front_of_eyes_right_vertical_sar: 0
+        Ella_brain_2450_front_of_eyes_right_horizontal_sar: 0
+        Ella_brain_2450_front_of_eyes_down_vertical_sar: 0
+        Ella_brain_2450_front_of_eyes_down_horizontal_sar: 0
+        Ella_brain_3500_front_of_eyes_center_vertical_sar: 0
+        Ella_brain_3500_front_of_eyes_center_horizontal_sar: 0
+        Ella_brain_3500_front_of_eyes_left_vertical_sar: 0
+        Ella_brain_3500_front_of_eyes_left_horizontal_sar: 0
+        Ella_brain_3500_front_of_eyes_right_vertical_sar: 0
+        Ella_brain_3500_front_of_eyes_right_horizontal_sar: 0
+        Ella_brain_3500_front_of_eyes_down_vertical_sar: 0
+        Ella_brain_3500_front_of_eyes_down_horizontal_sar: 0
+        Ella_brain_5200_front_of_eyes_center_vertical_sar: 0
+        Ella_brain_5200_front_of_eyes_center_horizontal_sar: 0
+        Ella_brain_5200_front_of_eyes_left_vertical_sar: 0
+        Ella_brain_5200_front_of_eyes_left_horizontal_sar: 0
+        Ella_brain_5200_front_of_eyes_right_vertical_sar: 0
+        Ella_brain_5200_front_of_eyes_right_horizontal_sar: 0
+        Ella_brain_5200_front_of_eyes_down_vertical_sar: 0
+        Ella_brain_5200_front_of_eyes_down_horizontal_sar: 0
+        Ella_brain_5800_front_of_eyes_center_vertical_sar: 0
+        Ella_brain_5800_front_of_eyes_center_horizontal_sar: 0
+        Ella_brain_5800_front_of_eyes_left_vertical_sar: 0
+        Ella_brain_5800_front_of_eyes_left_horizontal_sar: 0
+        Ella_brain_5800_front_of_eyes_right_vertical_sar: 0
+        Ella_brain_5800_front_of_eyes_right_horizontal_sar: 0
+        Ella_brain_5800_front_of_eyes_down_vertical_sar: 0
+        Ella_brain_5800_front_of_eyes_down_horizontal_sar: 0
+    Boy:
+      body:
+        Boy_body_700_front_of_eyes_center_vertical_sar: 0
+        Boy_body_700_front_of_eyes_center_horizontal_sar: 0
+        Boy_body_700_front_of_eyes_left_vertical_sar: 0
+        Boy_body_700_front_of_eyes_left_horizontal_sar: 0
+        Boy_body_700_front_of_eyes_right_vertical_sar: 0
+        Boy_body_700_front_of_eyes_right_horizontal_sar: 0
+        Boy_body_700_front_of_eyes_down_vertical_sar: 0
+        Boy_body_700_front_of_eyes_down_horizontal_sar: 0
+        Boy_body_835_front_of_eyes_center_vertical_sar: 0
+        Boy_body_835_front_of_eyes_center_horizontal_sar: 0
+        Boy_body_835_front_of_eyes_left_vertical_sar: 0
+        Boy_body_835_front_of_eyes_left_horizontal_sar: 0
+        Boy_body_835_front_of_eyes_right_vertical_sar: 0
+        Boy_body_835_front_of_eyes_right_horizontal_sar: 0
+        Boy_body_835_front_of_eyes_down_vertical_sar: 0
+        Boy_body_835_front_of_eyes_down_horizontal_sar: 0
+        Boy_body_1450_front_of_eyes_center_vertical_sar: 0
+        Boy_body_1450_front_of_eyes_center_horizontal_sar: 0
+        Boy_body_1450_front_of_eyes_left_vertical_sar: 0
+        Boy_body_1450_front_of_eyes_left_horizontal_sar: 0
+        Boy_body_1450_front_of_eyes_right_vertical_sar: 0
+        Boy_body_1450_front_of_eyes_right_horizontal_sar: 0
+        Boy_body_1450_front_of_eyes_down_vertical_sar: 0
+        Boy_body_1450_front_of_eyes_down_horizontal_sar: 0
+        Boy_body_2140_front_of_eyes_center_vertical_sar: 0
+        Boy_body_2140_front_of_eyes_center_horizontal_sar: 0
+        Boy_body_2140_front_of_eyes_left_vertical_sar: 0
+        Boy_body_2140_front_of_eyes_left_horizontal_sar: 0
+        Boy_body_2140_front_of_eyes_right_vertical_sar: 0
+        Boy_body_2140_front_of_eyes_right_horizontal_sar: 0
+        Boy_body_2140_front_of_eyes_down_vertical_sar: 0
+        Boy_body_2140_front_of_eyes_down_horizontal_sar: 0
+        Boy_body_2450_front_of_eyes_center_vertical_sar: 0
+        Boy_body_2450_front_of_eyes_center_horizontal_sar: 0
+        Boy_body_2450_front_of_eyes_left_vertical_sar: 0
+        Boy_body_2450_front_of_eyes_left_horizontal_sar: 0
+        Boy_body_2450_front_of_eyes_right_vertical_sar: 0
+        Boy_body_2450_front_of_eyes_right_horizontal_sar: 0
+        Boy_body_2450_front_of_eyes_down_vertical_sar: 0
+        Boy_body_2450_front_of_eyes_down_horizontal_sar: 0
+        Boy_body_3500_front_of_eyes_center_vertical_sar: 0
+        Boy_body_3500_front_of_eyes_center_horizontal_sar: 0
+        Boy_body_3500_front_of_eyes_left_vertical_sar: 0
+        Boy_body_3500_front_of_eyes_left_horizontal_sar: 0
+        Boy_body_3500_front_of_eyes_right_vertical_sar: 0
+        Boy_body_3500_front_of_eyes_right_horizontal_sar: 0
+        Boy_body_3500_front_of_eyes_down_vertical_sar: 0
+        Boy_body_3500_front_of_eyes_down_horizontal_sar: 0
+        Boy_body_5200_front_of_eyes_center_vertical_sar: 0
+        Boy_body_5200_front_of_eyes_center_horizontal_sar: 0
+        Boy_body_5200_front_of_eyes_left_vertical_sar: 0
+        Boy_body_5200_front_of_eyes_left_horizontal_sar: 0
+        Boy_body_5200_front_of_eyes_right_vertical_sar: 0
+        Boy_body_5200_front_of_eyes_right_horizontal_sar: 0
+        Boy_body_5200_front_of_eyes_down_vertical_sar: 0
+        Boy_body_5200_front_of_eyes_down_horizontal_sar: 0
+        Boy_body_5800_front_of_eyes_center_vertical_sar: 0
+        Boy_body_5800_front_of_eyes_center_horizontal_sar: 0
+        Boy_body_5800_front_of_eyes_left_vertical_sar: 0
+        Boy_body_5800_front_of_eyes_left_horizontal_sar: 0
+        Boy_body_5800_front_of_eyes_right_vertical_sar: 0
+        Boy_body_5800_front_of_eyes_right_horizontal_sar: 0
+        Boy_body_5800_front_of_eyes_down_vertical_sar: 0
+        Boy_body_5800_front_of_eyes_down_horizontal_sar: 0
+      brain:
+        Boy_brain_700_front_of_eyes_center_vertical_sar: 0
+        Boy_brain_700_front_of_eyes_center_horizontal_sar: 0
+        Boy_brain_700_front_of_eyes_left_vertical_sar: 0
+        Boy_brain_700_front_of_eyes_left_horizontal_sar: 0
+        Boy_brain_700_front_of_eyes_right_vertical_sar: 0
+        Boy_brain_700_front_of_eyes_right_horizontal_sar: 0
+        Boy_brain_700_front_of_eyes_down_vertical_sar: 0
+        Boy_brain_700_front_of_eyes_down_horizontal_sar: 0
+        Boy_brain_835_front_of_eyes_center_vertical_sar: 0
+        Boy_brain_835_front_of_eyes_center_horizontal_sar: 0
+        Boy_brain_835_front_of_eyes_left_vertical_sar: 0
+        Boy_brain_835_front_of_eyes_left_horizontal_sar: 0
+        Boy_brain_835_front_of_eyes_right_vertical_sar: 0
+        Boy_brain_835_front_of_eyes_right_horizontal_sar: 0
+        Boy_brain_835_front_of_eyes_down_vertical_sar: 0
+        Boy_brain_835_front_of_eyes_down_horizontal_sar: 0
+        Boy_brain_1450_front_of_eyes_center_vertical_sar: 0
+        Boy_brain_1450_front_of_eyes_center_horizontal_sar: 0
+        Boy_brain_1450_front_of_eyes_left_vertical_sar: 0
+        Boy_brain_1450_front_of_eyes_left_horizontal_sar: 0
+        Boy_brain_1450_front_of_eyes_right_vertical_sar: 0
+        Boy_brain_1450_front_of_eyes_right_horizontal_sar: 0
+        Boy_brain_1450_front_of_eyes_down_vertical_sar: 0
+        Boy_brain_1450_front_of_eyes_down_horizontal_sar: 0
+        Boy_brain_2140_front_of_eyes_center_vertical_sar: 0
+        Boy_brain_2140_front_of_eyes_center_horizontal_sar: 0
+        Boy_brain_2140_front_of_eyes_left_vertical_sar: 0
+        Boy_brain_2140_front_of_eyes_left_horizontal_sar: 0
+        Boy_brain_2140_front_of_eyes_right_vertical_sar: 0
+        Boy_brain_2140_front_of_eyes_right_horizontal_sar: 0
+        Boy_brain_2140_front_of_eyes_down_vertical_sar: 0
+        Boy_brain_2140_front_of_eyes_down_horizontal_sar: 0
+        Boy_brain_2450_front_of_eyes_center_vertical_sar: 0
+        Boy_brain_2450_front_of_eyes_center_horizontal_sar: 0
+        Boy_brain_2450_front_of_eyes_left_vertical_sar: 0
+        Boy_brain_2450_front_of_eyes_left_horizontal_sar: 0
+        Boy_brain_2450_front_of_eyes_right_vertical_sar: 0
+        Boy_brain_2450_front_of_eyes_right_horizontal_sar: 0
+        Boy_brain_2450_front_of_eyes_down_vertical_sar: 0
+        Boy_brain_2450_front_of_eyes_down_horizontal_sar: 0
+        Boy_brain_3500_front_of_eyes_center_vertical_sar: 0
+        Boy_brain_3500_front_of_eyes_center_horizontal_sar: 0
+        Boy_brain_3500_front_of_eyes_left_vertical_sar: 0
+        Boy_brain_3500_front_of_eyes_left_horizontal_sar: 0
+        Boy_brain_3500_front_of_eyes_right_vertical_sar: 0
+        Boy_brain_3500_front_of_eyes_right_horizontal_sar: 0
+        Boy_brain_3500_front_of_eyes_down_vertical_sar: 0
+        Boy_brain_3500_front_of_eyes_down_horizontal_sar: 0
+        Boy_brain_5200_front_of_eyes_center_vertical_sar: 0
+        Boy_brain_5200_front_of_eyes_center_horizontal_sar: 0
+        Boy_brain_5200_front_of_eyes_left_vertical_sar: 0
+        Boy_brain_5200_front_of_eyes_left_horizontal_sar: 0
+        Boy_brain_5200_front_of_eyes_right_vertical_sar: 0
+        Boy_brain_5200_front_of_eyes_right_horizontal_sar: 0
+        Boy_brain_5200_front_of_eyes_down_vertical_sar: 0
+        Boy_brain_5200_front_of_eyes_down_horizontal_sar: 0
+        Boy_brain_5800_front_of_eyes_center_vertical_sar: 0
+        Boy_brain_5800_front_of_eyes_center_horizontal_sar: 0
+        Boy_brain_5800_front_of_eyes_left_vertical_sar: 0
+        Boy_brain_5800_front_of_eyes_left_horizontal_sar: 0
+        Boy_brain_5800_front_of_eyes_right_vertical_sar: 0
+        Boy_brain_5800_front_of_eyes_right_horizontal_sar: 0
+        Boy_brain_5800_front_of_eyes_down_vertical_sar: 0
+        Boy_brain_5800_front_of_eyes_down_horizontal_sar: 0
+    Girl:
+      body:
+        Girl_body_700_front_of_eyes_center_vertical_sar: 0
+        Girl_body_700_front_of_eyes_center_horizontal_sar: 0
+        Girl_body_700_front_of_eyes_left_vertical_sar: 0
+        Girl_body_700_front_of_eyes_left_horizontal_sar: 0
+        Girl_body_700_front_of_eyes_right_vertical_sar: 0
+        Girl_body_700_front_of_eyes_right_horizontal_sar: 0
+        Girl_body_700_front_of_eyes_down_vertical_sar: 0
+        Girl_body_700_front_of_eyes_down_horizontal_sar: 0
+        Girl_body_835_front_of_eyes_center_vertical_sar: 0
+        Girl_body_835_front_of_eyes_center_horizontal_sar: 0
+        Girl_body_835_front_of_eyes_left_vertical_sar: 0
+        Girl_body_835_front_of_eyes_left_horizontal_sar: 0
+        Girl_body_835_front_of_eyes_right_vertical_sar: 0
+        Girl_body_835_front_of_eyes_right_horizontal_sar: 0
+        Girl_body_835_front_of_eyes_down_vertical_sar: 0
+        Girl_body_835_front_of_eyes_down_horizontal_sar: 0
+        Girl_body_1450_front_of_eyes_center_vertical_sar: 0
+        Girl_body_1450_front_of_eyes_center_horizontal_sar: 0
+        Girl_body_1450_front_of_eyes_left_vertical_sar: 0
+        Girl_body_1450_front_of_eyes_left_horizontal_sar: 0
+        Girl_body_1450_front_of_eyes_right_vertical_sar: 0
+        Girl_body_1450_front_of_eyes_right_horizontal_sar: 0
+        Girl_body_1450_front_of_eyes_down_vertical_sar: 0
+        Girl_body_1450_front_of_eyes_down_horizontal_sar: 0
+        Girl_body_2140_front_of_eyes_center_vertical_sar: 0
+        Girl_body_2140_front_of_eyes_center_horizontal_sar: 0
+        Girl_body_2140_front_of_eyes_left_vertical_sar: 0
+        Girl_body_2140_front_of_eyes_left_horizontal_sar: 0
+        Girl_body_2140_front_of_eyes_right_vertical_sar: 0
+        Girl_body_2140_front_of_eyes_right_horizontal_sar: 0
+        Girl_body_2140_front_of_eyes_down_vertical_sar: 0
+        Girl_body_2140_front_of_eyes_down_horizontal_sar: 0
+        Girl_body_2450_front_of_eyes_center_vertical_sar: 0
+        Girl_body_2450_front_of_eyes_center_horizontal_sar: 0
+        Girl_body_2450_front_of_eyes_left_vertical_sar: 0
+        Girl_body_2450_front_of_eyes_left_horizontal_sar: 0
+        Girl_body_2450_front_of_eyes_right_vertical_sar: 0
+        Girl_body_2450_front_of_eyes_right_horizontal_sar: 0
+        Girl_body_2450_front_of_eyes_down_vertical_sar: 0
+        Girl_body_2450_front_of_eyes_down_horizontal_sar: 0
+        Girl_body_3500_front_of_eyes_center_vertical_sar: 0
+        Girl_body_3500_front_of_eyes_center_horizontal_sar: 0
+        Girl_body_3500_front_of_eyes_left_vertical_sar: 0
+        Girl_body_3500_front_of_eyes_left_horizontal_sar: 0
+        Girl_body_3500_front_of_eyes_right_vertical_sar: 0
+        Girl_body_3500_front_of_eyes_right_horizontal_sar: 0
+        Girl_body_3500_front_of_eyes_down_vertical_sar: 0
+        Girl_body_3500_front_of_eyes_down_horizontal_sar: 0
+        Girl_body_5200_front_of_eyes_center_vertical_sar: 0
+        Girl_body_5200_front_of_eyes_center_horizontal_sar: 0
+        Girl_body_5200_front_of_eyes_left_vertical_sar: 0
+        Girl_body_5200_front_of_eyes_left_horizontal_sar: 0
+        Girl_body_5200_front_of_eyes_right_vertical_sar: 0
+        Girl_body_5200_front_of_eyes_right_horizontal_sar: 0
+        Girl_body_5200_front_of_eyes_down_vertical_sar: 0
+        Girl_body_5200_front_of_eyes_down_horizontal_sar: 0
+        Girl_body_5800_front_of_eyes_center_vertical_sar: 0
+        Girl_body_5800_front_of_eyes_center_horizontal_sar: 0
+        Girl_body_5800_front_of_eyes_left_vertical_sar: 0
+        Girl_body_5800_front_of_eyes_left_horizontal_sar: 0
+        Girl_body_5800_front_of_eyes_right_vertical_sar: 0
+        Girl_body_5800_front_of_eyes_right_horizontal_sar: 0
+        Girl_body_5800_front_of_eyes_down_vertical_sar: 0
+        Girl_body_5800_front_of_eyes_down_horizontal_sar: 0
+      brain:
+        Girl_brain_700_front_of_eyes_center_vertical_sar: 0
+        Girl_brain_700_front_of_eyes_center_horizontal_sar: 0
+        Girl_brain_700_front_of_eyes_left_vertical_sar: 0
+        Girl_brain_700_front_of_eyes_left_horizontal_sar: 0
+        Girl_brain_700_front_of_eyes_right_vertical_sar: 0
+        Girl_brain_700_front_of_eyes_right_horizontal_sar: 0
+        Girl_brain_700_front_of_eyes_down_vertical_sar: 0
+        Girl_brain_700_front_of_eyes_down_horizontal_sar: 0
+        Girl_brain_835_front_of_eyes_center_vertical_sar: 0
+        Girl_brain_835_front_of_eyes_center_horizontal_sar: 0
+        Girl_brain_835_front_of_eyes_left_vertical_sar: 0
+        Girl_brain_835_front_of_eyes_left_horizontal_sar: 0
+        Girl_brain_835_front_of_eyes_right_vertical_sar: 0
+        Girl_brain_835_front_of_eyes_right_horizontal_sar: 0
+        Girl_brain_835_front_of_eyes_down_vertical_sar: 0
+        Girl_brain_835_front_of_eyes_down_horizontal_sar: 0
+        Girl_brain_1450_front_of_eyes_center_vertical_sar: 0
+        Girl_brain_1450_front_of_eyes_center_horizontal_sar: 0
+        Girl_brain_1450_front_of_eyes_left_vertical_sar: 0
+        Girl_brain_1450_front_of_eyes_left_horizontal_sar: 0
+        Girl_brain_1450_front_of_eyes_right_vertical_sar: 0
+        Girl_brain_1450_front_of_eyes_right_horizontal_sar: 0
+        Girl_brain_1450_front_of_eyes_down_vertical_sar: 0
+        Girl_brain_1450_front_of_eyes_down_horizontal_sar: 0
+        Girl_brain_2140_front_of_eyes_center_vertical_sar: 0
+        Girl_brain_2140_front_of_eyes_center_horizontal_sar: 0
+        Girl_brain_2140_front_of_eyes_left_vertical_sar: 0
+        Girl_brain_2140_front_of_eyes_left_horizontal_sar: 0
+        Girl_brain_2140_front_of_eyes_right_vertical_sar: 0
+        Girl_brain_2140_front_of_eyes_right_horizontal_sar: 0
+        Girl_brain_2140_front_of_eyes_down_vertical_sar: 0
+        Girl_brain_2140_front_of_eyes_down_horizontal_sar: 0
+        Girl_brain_2450_front_of_eyes_center_vertical_sar: 0
+        Girl_brain_2450_front_of_eyes_center_horizontal_sar: 0
+        Girl_brain_2450_front_of_eyes_left_vertical_sar: 0
+        Girl_brain_2450_front_of_eyes_left_horizontal_sar: 0
+        Girl_brain_2450_front_of_eyes_right_vertical_sar: 0
+        Girl_brain_2450_front_of_eyes_right_horizontal_sar: 0
+        Girl_brain_2450_front_of_eyes_down_vertical_sar: 0
+        Girl_brain_2450_front_of_eyes_down_horizontal_sar: 0
+        Girl_brain_3500_front_of_eyes_center_vertical_sar: 0
+        Girl_brain_3500_front_of_eyes_center_horizontal_sar: 0
+        Girl_brain_3500_front_of_eyes_left_vertical_sar: 0
+        Girl_brain_3500_front_of_eyes_left_horizontal_sar: 0
+        Girl_brain_3500_front_of_eyes_right_vertical_sar: 0
+        Girl_brain_3500_front_of_eyes_right_horizontal_sar: 0
+        Girl_brain_3500_front_of_eyes_down_vertical_sar: 0
+        Girl_brain_3500_front_of_eyes_down_horizontal_sar: 0
+        Girl_brain_5200_front_of_eyes_center_vertical_sar: 0
+        Girl_brain_5200_front_of_eyes_center_horizontal_sar: 0
+        Girl_brain_5200_front_of_eyes_left_vertical_sar: 0
+        Girl_brain_5200_front_of_eyes_left_horizontal_sar: 0
+        Girl_brain_5200_front_of_eyes_right_vertical_sar: 0
+        Girl_brain_5200_front_of_eyes_right_horizontal_sar: 0
+        Girl_brain_5200_front_of_eyes_down_vertical_sar: 0
+        Girl_brain_5200_front_of_eyes_down_horizontal_sar: 0
+        Girl_brain_5800_front_of_eyes_center_vertical_sar: 0
+        Girl_brain_5800_front_of_eyes_center_horizontal_sar: 0
+        Girl_brain_5800_front_of_eyes_left_vertical_sar: 0
+        Girl_brain_5800_front_of_eyes_left_horizontal_sar: 0
+        Girl_brain_5800_front_of_eyes_right_vertical_sar: 0
+        Girl_brain_5800_front_of_eyes_right_horizontal_sar: 0
+        Girl_brain_5800_front_of_eyes_down_vertical_sar: 0
+        Girl_brain_5800_front_of_eyes_down_horizontal_sar: 0
+
+
   data:
     data_2g_prop: 0
     data_3g_prop: 0.02
