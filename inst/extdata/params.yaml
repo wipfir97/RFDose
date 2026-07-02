@@ -1,4 +1,59 @@
 global:
+  default_stochastics:
+    sex:
+      distribution: "beta"
+      male_mean: 0.5
+      male_sd: 0.05
+      female_mean: 0.5
+      female_sd: 0.05
+    age:
+      distribution: "beta"
+      adult_mean: 0.7
+      adult_sd: 0.07
+      child_mean: 0.3
+      child_sd: 0.03
+
+    use_5g:
+      distribution: "bernulli"
+      use_5g_mean: 0.148589
+      use_5g_sd: 0.355704
+    urbanicity:
+      distirbution: "dirichlet"
+      urban: 0.4
+      urban: 0.04
+      suburban: 0.5
+      suburban: 0.05
+      rural: 0.1
+      rural: 0.01
+    duration:
+      distirbution: "truncated hurdle Gamma"
+      mpc_duration_mean: 653.00
+      mpc_duration_sd: 1940
+      mpc_duration_min: 0
+      mpc_duration_max: 14400
+    call_mode_prop:
+      distirbution: "dirichlet"
+      mpc_ear_prop_mean: 0.45
+      mpc_ear_prop_sd: 0.33
+      speaker_prop_mean: 0.32
+      speaker_prop_sd: 0.032
+      mpc_headp_prop_mean: 0.23
+      mpc_headp_prop_sd: 0.2
+    headp_num:
+      distirbution: "beta"
+      headp_ear_num_mean: 1
+      headp_ear_num_sd: 0.175
+    wifi_environment_probs:
+      distirbution: "beta"
+      mpd_wifi_prop_home_mean: 0.70
+      mpd_wifi_prop_home_sd: 0.34
+      mpd_wifi_prop_work_mean: 0.47
+      mpd_wifi_prop_work_sd: 0.38
+      mpd_wifi_prop_travel_mean: 0.31
+      mpd_wifi_prop_travel_sd: 0.31
+
+
+
   wifi_probs:
     distirbution: "beta"
     wifi_2_prop_mean: 0.58
