@@ -24,8 +24,8 @@ global:
 
 
   wifi_probs:
-    wifi_2_prop: 0.58
-    wifi_5_prop: 0.42
+    wifi_2400_prop: 0.58
+    wifi_5000_prop: 0.42
   environment_prob:
     home_prop: 0.71
     outd_prop: 0.08

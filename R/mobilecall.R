@@ -214,7 +214,7 @@ mpc_msar <- function(
   ## Define frequency bands for each technology -------------------------------
   native_bands <- c("2g", "3g", "4g", "5g")
   data_bands   <- c("3g", "4g", "5g")
-  wifi_bands   <- c("2", "5") # 2.4 GHz and 5.0 GHz
+  wifi_bands   <- c("2400", "5000") # 2.4 GHz and 5.0 GHz
 
   # Native call ===============================================================
   msar_native <- sum(
@@ -275,14 +275,27 @@ mpc_msar <- function(
           travel_time      = travel_time,
           params           = params
         )
-
-        sar <- mpc_sar_data(
-          tissue       = tissue,
-          band         = band,
-          headp_prop   = headp_prop,
-          ear_prop     = ear_prop,
-          speaker_prop = speaker_prop,
-          params       = params
+        band_freq_names <- names(params$devices$call[[paste0(band, "_freq_props")]])
+        band_freq_names <- sub("^f", "", band_freq_names)
+        band_freq_names <-sub(paste0("_",band,"_prop$"), "", band_freq_names)
+        sar <- sum(
+          vapply(
+            band_freq_names,
+            \(freq) {
+              freq_prop <- params$devices$call[[paste0(band, "_freq_props")]][[
+                paste0("f",freq,"_",band,"_","prop")]]
+              sar <- mpc_sar_data(
+                tissue       = tissue,
+                freq         = freq,
+                headp_prop   = headp_prop,
+                ear_prop     = ear_prop,
+                speaker_prop = speaker_prop,
+                params       = params
+              )
+              return(freq_prop*freq_sar)
+            },
+            numeric(1)
+          )
         )
         return(prop*sar*pwr)
       },
@@ -294,18 +307,18 @@ mpc_msar <- function(
   msar_wifi <- sum(
     vapply(
       wifi_bands,
-      \(band) {
+      \(freq) {
 
-        prop <- params$global$wifi_probs[[paste0("wifi_", band, "_prop")]]
+        prop <- params$global$wifi_probs[[paste0("wifi_", freq, "_prop")]]
 
         pwr <- mpc_pwr_wifi(
-          band             = band,
+          freq             = freq,
           params           = params
         )
 
         sar <- mpc_sar_wifi(
           tissue       = tissue,
-          band         = band,
+          freq         = freq,
           headp_prop   = headp_prop,
           ear_prop     = ear_prop,
           speaker_prop = speaker_prop,
@@ -420,13 +433,13 @@ mpc_pwr_native <- function(
 #' @export
 mpc_sar_native <- function(
     tissue,
-    band,
+    freq,
     headp_prop,
     ear_prop,
     speaker_prop,
     params = load_params()) {
   # define prefix for finding correct tissue parameter
-  prefix <- paste0("native_", band)
+  prefix <- paste0("Duke_body_", freq)
   # load tissue-specific parameters (SAR values)
   tissue_params <- load_tissue_params(params, "call", tissue)
   # phone on ear
@@ -545,13 +558,13 @@ mpc_pwr_data <- function(
 #' @export
 mpc_sar_data <- function(
     tissue,
-    band,
+    freq,
     headp_prop,
     ear_prop,
     speaker_prop,
     params = load_params()) {
   # define prefix for finding correct tissue parameter
-  prefix <- paste0("data_", band)
+  prefix <- paste0("Duke_body_", freq)
   # load tissue-specific parameters (SAR values)
   tissue_params <- load_tissue_params(params, "call", tissue)
   # phone on ear
@@ -597,17 +610,17 @@ mpc_sar_data <- function(
 #'
 #' @export
 mpc_pwr_wifi <- function(
-    band,
+    freq,
     params = load_params()) {
 
   # define prefix for finding correct parameters
-  prefix <- paste("wifi", band, sep = "_")
+  prefix <- paste("wifi", freq, sep = "_")
 
   # get power
-  pwr <- params$devices$call[[paste0("wifi_", band, "_pwr")]]
+  pwr <- params$devices$call[[paste0("wifi_", freq, "_pwr")]]
 
   # get duty cycle
-  dutycycle <- params$devices$call[[paste0("wifi_", band, "_dutycycle")]]
+  dutycycle <- params$devices$call[[paste0("wifi_", freq, "_dutycycle")]]
 
   # multiply and return
   pwr_total <- pwr * dutycycle
@@ -649,13 +662,13 @@ mpc_pwr_wifi <- function(
 #' @export
 mpc_sar_wifi <- function(
     tissue,
-    band,
+    freq,
     headp_prop,
     ear_prop,
     speaker_prop,
     params = load_params()) {
   # define prefix for finding correct tissue parameter
-  prefix <- paste0("wifi_", band)
+  prefix <- paste0("wifi_", freq)
   # load tissue-specific parameters (SAR values)
   tissue_params <- load_tissue_params(params, "call", tissue)
   # phone on ear
