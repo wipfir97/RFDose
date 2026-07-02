@@ -147,7 +147,7 @@ devices:
       native_4g_prop_mean: 0.975
       native_4g_prop_sd: 0.311
       native_5g_prop_mean: 0
-      native_5g_prop_sd: 332
+      native_5g_prop_sd: 0.332
     data_band_props:
       distribution: "dirichlet"
       data_2g_prop_mean: 0
