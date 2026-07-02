@@ -26,7 +26,7 @@ load_tissue_params <- function(params, device_type, tissue_name) {
   }
 
   # Extract tissue parameters while keeping device/global parameters
-  tissue_params        <- params$devices[[device_type]][[tissue_name]]
+  tissue_params        <- params$devices[[device_type]][["Duke"]][[tissue_name]]
   # Flatten list and edit parameter names
   tissue_params        <- unlist(tissue_params)
   names(tissue_params) <- sub("^.*\\.", "", names(tissue_params))

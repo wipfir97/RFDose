@@ -88,11 +88,11 @@ mobilecall_dose <- function(
   # TODO: double check this step and find more elegant solution
   loc_props <- location_props(
     travel_time = travel_time,
-    home_prop   = params$global$home_prop,
-    outd_prop   = params$global$outd_prop,
-    work_prop   = params$global$work_prop)
+    home_prop   = params$global$environment_prob$home_prop,
+    outd_prop   = params$global$environment_prob$outd_prop,
+    work_prop   = params$global$environment_prob$work_prop)
 
-  native_prop <- params$devices$call$native_prop
+  native_prop <- params$devices$call$call_type$native_prop
 
   wifi_prop <- (1-native_prop)*sum(
     loc_props$home*wifi_prop_home,
@@ -221,7 +221,7 @@ mpc_msar <- function(
     vapply(
       native_bands,
       \(band) {
-        prop <- params$devices$call[[paste0("native_", band, "_prop")]]
+        prop <- params$devices$call$native_band_props[[paste0("native_", band, "_prop")]]
 
         pwr <- mpc_pwr_native(
           band        = band,
@@ -229,14 +229,27 @@ mpc_msar <- function(
           travel_time = travel_time,
           params      = params
         )
-
-        sar <- mpc_sar_native(
-          tissue       = tissue,
-          band         = band,
-          headp_prop   = headp_prop,
-          ear_prop     = ear_prop,
-          speaker_prop = speaker_prop,
-          params       = params
+        band_freq_names <- names(params$devices$call[[paste0(band, "_freq_props")]])
+        band_freq_names <- sub("^f", "", band_freq_names)
+        band_freq_names <-sub(paste0("_",band,"_prop$"), "", band_freq_names)
+        sar <- sum(
+          vapply(
+            band_freq_names,
+            \(freq) {
+              freq_prop <- params$devices$call[[paste0(band, "_freq_props")]][[
+                paste0("f",freq,"_",band,"_","prop")]]
+              freq_sar <- mpc_sar_native(
+                tissue       = tissue,
+                freq         = freq,
+                headp_prop   = headp_prop,
+                ear_prop     = ear_prop,
+                speaker_prop = speaker_prop,
+                params       = params
+              )
+              return(freq_prop*freq_sar)
+            },
+            numeric(1)
+          )
         )
 
         return(prop*sar*pwr)
@@ -251,9 +264,9 @@ mpc_msar <- function(
       data_bands,
       \(band) {
         if (use_5g) {
-          prop <- params$devices$call[[paste0("data_", band, "_prop")]]
+          prop <- params$devices$call$data_band_props[[paste0("data_", band, "_prop")]]
         } else {
-          prop <- params$devices$call[[paste0("data_", band, "_prop_no5g")]]
+          prop <- params$devices$call$datano5g_band_props[[paste0("data_", band, "_prop_no5g")]]
         }
 
         pwr <- mpc_pwr_data(
@@ -283,7 +296,7 @@ mpc_msar <- function(
       wifi_bands,
       \(band) {
 
-        prop <- params$global[[paste0("wifi_", band, "_prop")]]
+        prop <- params$global$wifi_probs[[paste0("wifi_", band, "_prop")]]
 
         pwr <- mpc_pwr_wifi(
           band             = band,
