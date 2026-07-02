@@ -157,7 +157,7 @@ check_urbanicity <- function(urbanicity) {
 #' @param params Params
 check_tissue <- function(tissue, device, params) {
   check_character_not_na(tissue)
-  param_names <- names(params$devices[[device]])
+  param_names <- names(params$devices[[device]][["Duke"]])
   if (!(tissue %in% param_names)) {
     stop("Invalid tissue.")
   }
@@ -182,8 +182,8 @@ check_country <- function(country) {
 #'
 #' @param headp_num Number of headphones
 check_headp_num <- function(headp_num) {
-  if (!headp_num %in% c(0, 1, 2)) {
-    stop("Invalid number of headphones. Must be 0, 1 or 2.")
+  if (!headp_num %in% c(1, 2)) {
+    stop("Invalid number of headphones. Must be 1 or 2.")
   }
 }
 
