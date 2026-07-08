@@ -324,7 +324,7 @@ mpc_msar <- function(
           speaker_prop = speaker_prop,
           params       = params
         )
-        prop*sar*pwr
+        return(prop*sar*pwr)
       },
       numeric(1)
     )
@@ -438,20 +438,77 @@ mpc_sar_native <- function(
     ear_prop,
     speaker_prop,
     params = load_params()) {
+
+
+  ear_position <- c("ear_cheek1","ear_cheek2","ear_cheek3",
+                    "ear_tilt1","ear_tilt2","ear_tilt3")
+  fronal_position <- c("front_eyes_cen_ver","front_eyes_cen_hor",
+                       "front_eyes_left_ver","front_eyes_left_hor",
+                       "front_eyes_right_ver","front_eyes_right_hor",
+                       "front_eyes_down_ver","front_eyes_down_hor")
+  belly_position <- c("belly_cen_ver_prop","belly_cen_hor_prop",
+                      "belly_left_ver_pro","belly_left_hor_prop",
+                      "belly_right_ver_pro","belly_right_hor_prop",
+                      "belly_up_ver_prop","belly_up_hor_prop")
+
+
   # define prefix for finding correct tissue parameter
-  prefix <- paste0("Duke_body_", freq)
+  prefix <- paste0("Duke_body_", freq,"_")
   # load tissue-specific parameters (SAR values)
   tissue_params <- load_tissue_params(params, "call", tissue)
   # phone on ear
-  mpc_sar_ear <- tissue_params[[paste0(prefix, "_ear_sar")]]
+  mpc_sar_ear <- sum(
+    vapply(
+      ear_position,
+      \(positions) {
+        ear_sar <- paste0(prefix,positions,"_sar")
+        ear_prop <- paste0(positions,"_prop")
+        return(tissue_params[[ear_sar]]*params$device$call$phone_positions[[ear_prop]]) #here also distance shift has to be added
+      },
+      numeric(1)
+    )
+  )
   # phone with headphone
+  headp_sar_face <-  sum(
+    vapply(
+      fronal_position,
+      \(positions) {
+        frontal_sar <- paste0(prefix,positions,"_sar")
+        frontal_prop <- paste0(positions,"_prop")
+        return(tissue_params[[frontal_sar]]*params$device$call$phone_positions[[frontal_prop]]) #here also distance shift has to be added
+      },
+      numeric(1)
+    )
+  )
+  headp_sar_pocket <-  sum(
+    vapply(
+      belly_position,
+      \(positions) {
+        belly_sar <- paste0(prefix,positions,"_sar")
+        belly_prop <- paste0(positions,"_prop")
+        return(tissue_params[[belly_sar]]*params$device$call$phone_positions[[belly_prop]]) #here also distance shift has to be added
+      },
+      numeric(1)
+    )
+  )
+  headp_sar_else <- tissue_params[[paste0("Duke_",tissue,"_headp_else")]]
   mpc_sar_headphones <- sum(
-    params$devices$call$headp_face_prop * tissue_params[[paste0(prefix, "_headp_face_sar")]],
-    params$devices$call$headp_pock_prop * tissue_params[[paste0(prefix, "_headp_pock_sar")]],
-    params$devices$call$headp_else_prop * tissue_params[[paste0(prefix, "_headp_else_sar")]]
+    params$devices$call$position_props$headp_face_prop * headp_sar_face,
+    params$devices$call$position_props$headp_pock_prop * headp_sar_pocket,
+    params$devices$call$position_props$headp_else_prop * headp_sar_else
   )
   # phone in speaker mode
-  mpc_sar_speaker <- tissue_params[[paste0(prefix, "_speaker_sar")]]
+  mpc_sar_speaker <-  sum(
+    vapply(
+      fronal_position,
+      \(positions) {
+        frontal_sar <- paste0(prefix,positions,"_sar")
+        frontal_prop <- paste0(positions,"_prop")
+        return(tissue_params[[frontal_sar]]*params$device$call$phone_positions[[frontal_prop]]) #here also distance shift has to be added
+      },
+      numeric(1)
+    )
+  )
 
   mpc_sar <- sum(
     ear_prop * mpc_sar_ear,
@@ -461,6 +518,8 @@ mpc_sar_native <- function(
 
   return(mpc_sar)
 }
+
+
 
 # Mobilecall data output power by technology ----------------------------------
 #' Calculate Mobile Phone Output Power during Data Mobile Phone Calls
