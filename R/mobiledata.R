@@ -1,42 +1,69 @@
-# Calculate total RF-EMF dose (for brain and body) from mobile data
+###############################################################################
+# Calculate RF-EMF dose (for brain and body) from mobile data
 
-# =============================================================================
-#' Calculate dose from using data on mobile phone (mobile data and WiFi)
+
+###############################################################################
+# Total mobile data dose ======================================================
+#' Calculation of RF-EMF Dose from Mobile Phone Data Use
 #'
-#' Calculates the total RF-EMF dose from data transfer using a mobile phone.
-#' This includes mobile data (3G, 4G, 5G) and WiFi use.
-#' It does NOT include RF-EMF exposure from voice calling, which is calculated separately.
-#'
-#' @details
 #' The mobile data RF-EMF dose is calculated as:
-#' \deqn{Dose_{mobiledata} = Duration_{mobiledata} \times Power_{mobiledata} \times SAR_{mobiledata}}
+#' \deqn{Dose_{data} = mSAR_{data}*duration_{data}}
 #'
 #' Where:
 #'
-#' * \eqn{Duration_{mobiledata}} is the duration of mobile data use in seconds per day
-#' * \eqn{Power_{mobiledata}} is the output power of the mobile phone during mobile data use in mW
-#' * \eqn{SAR_{mobiledata}} is the specific absorption rate in W/kg/W
+#' * \eqn{Dose_{data}} is the dose from mobile data use
+#' * \eqn{mSAR_{data}} is the momentary SAR value in mJ/kg
+#' * \eqn{duration_{data}} is the duration of mobile data use
 #'
-#' @param duration_low duration of low output power activities on mobile phone in s/day
-#' @param duration_lowmed duration of low-medium output power activities on mobile phone in s/day
-#' @param duration_medhigh duration of medium-high output power activities on mobile phone in s/day
-#' @param duration_high duration of high output power activities on mobile phone in s/day
-#' @param use_5g TRUE if participant uses 5G services on mobile phone, FALSE if not
-#' @param wifi_prop_home Proportion of time WiFi connection is used for data transfer AT HOME (vs mobile data)
-#' @param wifi_prop_work Proportion of time WiFi connection is used for data transfer AT WORK/SCHOOL (vs mobile data)
-#' @param wifi_prop_travel Proportion of time WiFi connection is used for data transfer WHILE COMMUTING (vs mobile data)
-#' @param urbanicity Urbanicity of home / workplace
+#' @details
+#'
+#' We distinguish between 4 types of mobile data use:
+#'
+#' 1. Low output power: sending e-mails, browsing the internet, scrolling and
+#'    chatting on social media, sending text messages
+#' 2. Low to medium output power: online gaming, streaming music, sending voice
+#'    messages
+#' 3. Medium to high output power: watching videos, uploading pictures or
+#'    videos, making video calls
+#' 4. High output power: uploading large files
+#'
+#' @param tissue Tissue for which to calculate dose (default: "brain" or "body")
+#' @param duration_low Duration (in seconds per day) of low output power activities
+#' @param duration_lowmed Duration (in seconds per day) of low-medium output power activities
+#' @param duration_medhigh Duration (in seconds per day) of medium-high output power activities
+#' @param duration_high Duration (in seconds per day) of high output power activities
+#' @param use_5g TRUE if 5G services are used for data transfer, FALSE if not
+#' @param wifi_prop_home Proportion of time connected to WiFi (vs mobile data)
+#' at home
+#' @param wifi_prop_work Proportion of time connected to WiFi (vs mobile data)
+#' at school / work
+#' @param wifi_prop_travel Proportion of time connected to WiFi (vs mobile data)
+#' while commuting
+#' @param urbanicity Urbanicity of home / workplace (rural, suburban, or urban)
 #' @param travel_time Time spent commuting in seconds per day
-#' @param params Parameter list
+#' @param params Parameter list (optional). If not specified, calculations use
+#' default parameters.
 #'
-#' @returns List with two values:
+#' @returns Tissue-specific RF-EMF dose from data use in mJ/kg/day
 #'
-#' * "brain_data_dose" (brain RF-EMF dose from mobile data use in mJ/kg/day)
-#' * "body_data_dose" (body RF-EMF dose from mobile data use in mJ/kg/day)
+#' @examples
+#' mobiledata_dose(
+#' tissue           = "brain",
+#' duration_low     = 4860,
+#' duration_lowmed  = 540,
+#' duration_medhigh = 4860,
+#' duration_high    = 540,
+#' use_5g           = FALSE,
+#' wifi_prop_home   = 0.5,
+#' wifi_prop_work   = 0.5,
+#' wifi_prop_travel = 0.5,
+#' urbanicity       = "suburban",
+#' travel_time      = 1800)
 #'
-#' @seealso [get_mobiledata_pwr()], [get_mobiledata_sar()], [get_mobilecall_dose()]
+#' @seealso [mpd_msar()]
 #' @export
-get_mobiledata_dose <- function(
+mobiledata_dose <- function(
+    tissue,
     duration_low,
     duration_lowmed,
     duration_medhigh,
@@ -47,599 +74,435 @@ get_mobiledata_dose <- function(
     wifi_prop_travel,
     urbanicity,
     travel_time,
-    params = NULL) {
-  # Load parameters if not provided ===========================================
-  if (is.null(params)) {
-    params <- load_params("params.yaml")}
-
-  # Check if input arguments are correct type =================================
-  ## TODO: is there any way to make this section more elegant?
-  check_numeric_not_na(duration_low)
-  check_numeric_not_na(duration_lowmed)
-  check_numeric_not_na(duration_medhigh)
-  check_numeric_not_na(duration_high)
+    params = load_params()) {
+  # Check input ===============================================================
+  check_tissue(tissue, "data", params)
+  check_duration(c(duration_low, duration_lowmed, duration_medhigh, duration_high))
   check_boolean_not_na(use_5g)
-  check_numeric_not_na(wifi_prop_home)
-  check_numeric_not_na(wifi_prop_work)
-  check_numeric_not_na(wifi_prop_travel)
-  check_character_not_na(urbanicity)
-  check_numeric_not_na(travel_time)
-
-  # Check if input parameters are within allowed bounds =======================
-  ## TODO: is there any way to make this section more elegant?
-  check_duration(duration_low)
-  check_duration(duration_lowmed)
-  check_duration(duration_medhigh)
-  check_duration(duration_high)
   check_proportions(wifi_prop_home)
   check_proportions(wifi_prop_work)
   check_proportions(wifi_prop_travel)
   check_urbanicity(urbanicity)
   check_duration(travel_time)
 
-  # Convert activity durations to proportions and check =======================
-  act_pwr_props <- get_act_pwr_props(
-    low_dur     = duration_low,
-    lowmed_dur  = duration_lowmed,
-    medhigh_dur = duration_medhigh,
-    high_dur    = duration_high)
-  check_proportions(proportions = as.vector(act_pwr_props))
+  # Calculate mSAR ============================================================
+  msar <- mpd_msar(
+    tissue           = tissue,
+    duration_low     = duration_low,
+    duration_lowmed  = duration_lowmed,
+    duration_medhigh = duration_medhigh,
+    duration_high    = duration_high,
+    use_5g           = use_5g,
+    wifi_prop_home   = wifi_prop_home,
+    wifi_prop_work   = wifi_prop_work,
+    wifi_prop_travel = wifi_prop_travel,
+    urbanicity       = urbanicity,
+    travel_time      = travel_time,
+    params           = params
+  )
 
-  # Calculate and check total use duration ====================================
-  duration  <- sum(
+  # Calculate total use duration ==============================================
+  duration <- sum(
     duration_low,
     duration_lowmed,
     duration_medhigh,
     duration_high)
-  check_duration(duration = duration)
 
-  # Extract parameters ========================================================
-  ## Extract shared (non-tissue specific) parameters for mobile data ----------
-  data_params  <- load_device_params(params, "data")
+  # Calculate dose ============================================================
+  dose <- duration*msar
 
-  ## Extract brain-specific parameters (SAR values) for mobile data -----------
-  brain_params <- load_tissue_params(params, "data", "brain")
-
-  ## Extract body-specific parameters (SAR values) for mobile data ------------
-  body_params  <- load_tissue_params(params, "data", "body")
-
-  ## Derive proportion spent at home vs work vs outdoors vs travelling --------
-  loc_props <- calculate_location_proportions(
-    travel_time = travel_time,
-    home_prop   = data_params$home_prop,
-    work_prop   = data_params$work_prop,
-    outd_prop   = data_params$outd_prop)
-  check_proportions(proportions = as.vector(loc_props))
-
-  # Calculate total proportion of time being connected to WiFi ===============
-  # TODO: add check for this function
-  wifi_prop <- sum(
-    loc_props$travel*wifi_prop_travel, # assumption: no WiFi outdoors
-    loc_props$home*wifi_prop_home,
-    loc_props$work*wifi_prop_work)
-
-  # Calculate aggregated power ================================================
-  aggr_pwr     <- get_mobiledata_pwr(
-    wifi_prop_home   = wifi_prop_home,
-    wifi_prop_work   = wifi_prop_work,
-    wifi_prop_travel = wifi_prop_travel,
-    use_5g           = use_5g,
-    urbanicity       = urbanicity,
-    travel_time      = travel_time,
-    act_pwr_props    = act_pwr_props,
-    params           = data_params)
-
-  # Calculate tissue-specific SAR =============================================
-  ## Calculate aggregated brain SAR -------------------------------------------
-  brain_sar    <- get_mobiledata_sar(
-    wifi_prop     = wifi_prop,
-    params        = data_params,
-    tissue_params = brain_params)
-
-  ## Calculate aggregated body SAR --------------------------------------------
-  body_sar     <- get_mobiledata_sar(
-    wifi_prop     = wifi_prop,
-    params        = data_params,
-    tissue_params = body_params)
-
-  # Calculate tissue-specific dose ============================================
-  ## Calculate brain dose -----------------------------------------------------
-  brain_dose   <- duration*aggr_pwr*brain_sar
-
-  ## Calculate body dose ------------------------------------------------------
-  body_dose    <- duration*aggr_pwr*body_sar
-
-  # Return output =============================================================
-  output_list <- list("brain_data_dose" = brain_dose,
-                      "body_data_dose"  = body_dose)
-
-  return(output_list)
+  # Return result =============================================================
+  return(dose)
 }
 
-# =============================================================================
-#' Calculate mobile data aggregated output power
+###############################################################################
+# Calculate mSAR
+#' Calculation of mSAR from Mobile Phone Data
 #'
-#' Calculates the output power of the mobile phone during mobile data use in mW
+#' Calculates mSAR (momentary specifc absorption rate) from data (mobile data
+#' and WiFi) use for a specific tissue
 #'
 #' @details
-#' The mobile phone output power during mobile data use is calculated as:
-#' \deqn{Power = Prop_{WiFi} \times Power_{WiFi} + Prop_{Data} \times Power_{Data}}
+#' The mSAR is calculated as
 #'
-#' Where:
+#' \deqn{mSAR = nSAR_{mobiledata} \times
+#' outputpower_{mobiledata} + nSAR_{wifi} \times outputpower_{wifi}}
 #'
-#' * \eqn{Prop_{WiFi}}, \eqn{Prop_{Data}} are the proportion of time mobile calls are done using WiFi and mobile data, respectively.
-#' * \eqn{Power_{WiFi}}, \eqn{Prop_{Data}} are the output power (mW) of the mobile phone using WiFi and mobile data respectively.
+#' where
 #'
-#' @param wifi_prop_home Proportion of time WiFi connection is used AT HOME (vs mobile data)
-#' @param wifi_prop_work Proportion of time WiFi connection is used AT WORK (vs mobile data)
-#' @param wifi_prop_travel Proportion of time WiFi connection is used WHILE TRAVELLING/COMMUTING (vs mobile data)
-#' @param use_5g TRUE if participant uses 5G services on mobile phone, FALSE if not
-#' @param urbanicity Urbanicity of home / workplace
+#' * \eqn{nSAR_{data}}, \eqn{nSAR_{wifi}} are the nSAR
+#' (normalized specific absorption rates, in W/kg/W) from data use using
+#' mobile data or WiFi networks, respectively
+#' * \eqn{outputpower_{data}}, \eqn{outputpower_{wifi}} are the output powers (mW)
+#' of the device (mobilephone) using mobile data or WiFi networks, respectively
+#'
+#' @param tissue Tissue for which to calculate mSAR (default: "brain" or "body")
+#' @param duration_low Duration (in seconds per day) of low output power activities
+#' @param duration_lowmed Duration (in seconds per day) of low-medium output power activities
+#' @param duration_medhigh Duration (in seconds per day) of medium-high output power activities
+#' @param duration_high Duration (in seconds per day) of high output power activities
+#' @param use_5g TRUE if 5G services are used for data transfer, FALSE if not
+#' @param wifi_prop_home Proportion of time connected to WiFi (vs mobile data)
+#' at home
+#' @param wifi_prop_work Proportion of time connected to WiFi (vs mobile data)
+#' at school / work
+#' @param wifi_prop_travel Proportion of time connected to WiFi (vs mobile data)
+#' while commuting
+#' @param urbanicity Urbanicity of home / workplace (rural, suburban, or urban)
 #' @param travel_time Time spent commuting in seconds per day
-#' @param act_pwr_props List with proportion of time spent in low vs low-mid vs mid-high vs high output power activities
-#' @param params parameter list
+#' @param params Parameter list (optional). If not specified, calculations use
+#' default parameters.
 #'
-#' @returns Mobile phone output power during mobile data use in mW
+#' @returns Momentary SAR (mSAR) from mobile data use in mW/kg
 #'
-#' @seealso [get_mpd_wifi_pwr()], [get_mpd_data_pwr()]
-get_mobiledata_pwr <- function(
+#' @examples
+#' mpd_msar(
+#' tissue           = "brain",
+#' duration_low     = 4860,
+#' duration_lowmed  = 540,
+#' duration_medhigh = 4860,
+#' duration_high    = 540,
+#' use_5g           = FALSE,
+#' wifi_prop_home   = 0.5,
+#' wifi_prop_work   = 0.5,
+#' wifi_prop_travel = 0.5,
+#' urbanicity       = "suburban",
+#' travel_time      = 1800)
+#'
+#' @seealso [mpd_pwr_data(), mpd_pwr_wifi(), mpd_sar_data(), mpd_sar_wifi()]
+#' @export
+mpd_msar <- function(
+    tissue,
+    duration_low,
+    duration_lowmed,
+    duration_medhigh,
+    duration_high,
+    use_5g,
     wifi_prop_home,
     wifi_prop_work,
     wifi_prop_travel,
-    use_5g,
-    act_pwr_props,
-    travel_time,
     urbanicity,
-    params) {
-  # Get power from data =======================================================
-  data_pwr <- get_mpd_data_pwr(
-    use_5g        = use_5g,
-    urbanicity    = urbanicity,
-    travel_time   = travel_time,
-    act_pwr_props = act_pwr_props,
-    params = params)
+    travel_time,
+    params = load_params()) {
 
-  # Get power from wifi =======================================================
-  wifi_pwr <- get_mpd_wifi_pwr(
-    act_pwr_props = act_pwr_props,
-    travel_time   = travel_time,
-    params        = params)
+  # Setup =====================================================================
+  ## Define frequency bands for each technology -------------------------------
+  data_bands <- c("3g", "4g", "5g")
+  wifi_bands <- c("2", "5") # 2.4 GHz and 5.0 GHz
 
-  # Combine power from data and wifi by location ==============================
-  ## Home ---------------------------------------------------------------------
-  pwr_home <- combine_mpd_source_power(
-    wifi_prop_home,
-    wifi_pwr$home,
-    data_pwr$home)
-  ## School/work --------------------------------------------------------------
-  pwr_work <- combine_mpd_source_power(
-    wifi_prop_work,
-    wifi_pwr$work,
-    data_pwr$work)
-  ## Outdoors -----------------------------------------------------------------
-  pwr_outd <- data_pwr$outdoor # assume WiFi exposure is negligible outdoors
-  ## Travelling/commuting -----------------------------------------------------
-  pwr_trav <- combine_mpd_source_power(
-    wifi_prop_travel,
-    wifi_pwr$travel,
-    data_pwr$travel)
+  ## Calculate overall data vs wifi prop --------------------------------------
+  loc_props <- location_props(
+    travel_time = travel_time,
+    home_prop   = params$global$home_prop,
+    work_prop   = params$global$work_prop,
+    outd_prop   = params$global$outd_prop)
 
-  # Calculate aggregated power ================================================
-  aggr_pwr <- sum(pwr_home, pwr_work, pwr_outd, pwr_trav)
+  wifi_prop_overall <- sum(
+    loc_props$home * wifi_prop_home, # assumption of no WiFi outdoors
+    loc_props$work * wifi_prop_work,
+    loc_props$travel * wifi_prop_travel
+  )
+  data_prop_overall <- 1-wifi_prop_overall
 
-  return(aggr_pwr)
+
+  # Apply mSAR calculation to all data frequency bands ========================
+  msar_data <- sum(
+    vapply(
+      data_bands,
+      \(band) {
+
+      if (use_5g) {
+        prop <- params$devices$data[[paste0("data_", band, "_prop")]]
+      } else {
+        prop <- params$devices$data[[paste0("data_", band, "_prop_no5g")]]
+      }
+
+      pwr <- mpd_pwr_data(
+        band         = band,
+        duration_low     = duration_low,
+        duration_lowmed  = duration_lowmed,
+        duration_medhigh = duration_medhigh,
+        duration_high    = duration_high,
+        urbanicity   = urbanicity,
+        travel_time  = travel_time,
+        params       = params
+      )
+
+      sar <- mpd_sar_data(
+        tissue       = tissue,
+        band         = band,
+        params       = params
+      )
+      return(prop*sar*pwr)
+      },
+      numeric(1)
+    )
+  )
+
+  # apply mSAR calculation to all WiFi frequency bands =========================
+  msar_wifi <- sum(
+    vapply(
+      wifi_bands,
+      \(band) {
+
+      prop <- params$global[[paste0("wifi_", band, "_prop")]]
+
+      pwr <- mpd_pwr_wifi(
+        band             = band,
+        duration_low     = duration_low,
+        duration_lowmed  = duration_lowmed,
+        duration_medhigh = duration_medhigh,
+        duration_high    = duration_high,
+        params           = params
+      )
+
+      sar <- mpd_sar_wifi(
+        tissue       = tissue,
+        band         = band,
+        params       = params
+      )
+      prop*sar*pwr
+    },
+    numeric(1)
+    )
+  )
+
+  # Scale mSAR with WiFi vs data use proporion ================================
+  msar <- sum(
+    data_prop_overall*msar_data,
+    wifi_prop_overall*msar_wifi)
+
+  # Combine and return results ================================================
+  return(msar)
 }
 
-# -----------------------------------------------------------------------------
-#' Combine source power
+###############################################################################
+# Calculate output power (data)
+#' Calculate Mobile Phone Output Power during Mobile Data Use
 #'
-#' Combines the output power from WiFi and Data by scaling it with their use
-#' proportions.
-#'
-#' @param wifi_prop Proportion of time connected to WiFi (vs data)
-#' @param wifi_pwr Output power from WiFi in mW
-#' @param data_pwr Output power from data in mW
-#' @returns combined power from WiFi and data in mW
-combine_mpd_source_power<- function(
-    wifi_prop,
-    wifi_pwr,
-    data_pwr) {
-  # calculate proportion of time connected to mobile data (vs WiFi)
-  data_prop <- 1-wifi_prop
-  # Calculate weighted power and return result
-  combined_pwr <- sum(
-    wifi_prop*wifi_pwr,
-    data_prop*data_pwr)
-
-  return(combined_pwr)
-}
-
-# -----------------------------------------------------------------------------
-#' Calculate mobile phone aggregated output power from mobile data (3G, 4G, 5G) use
-#'
-#' Calculates mobile phone aggregated output power from mobile data (3G, 4G, 5G) use
+#' Calculates the mobile phone output power during mobile data use.
 #'
 #' @details
-#' The mobile phone output power from mobile data use is calculated as:
-#' \deqn{Power = Prop_{3G} \times Power_{3G} + Prop_{4G} \times Power_{4G} + Prop_{5G} \times Power_{5G}}
+#' The output power depends in the technology used, the location in which the
+#' mobile data network (urbanicity, indoors/outdoors/commuting), and the activity
+#' the phone is used for.
 #'
-#' Where:
-#'
-#' * \eqn{Prop_{3G}}, \eqn{Prop_{4G}}, \eqn{Prop_{5G}} are the proportions of 3G, 4G and 5G
-#' * \eqn{Power_{3G}}, \eqn{Power_{4G}}, \eqn{Power_{5G}} are the output powers of 3G, 4G and 5G (to be refined further)
-#'
-#' @param use_5g TRUE if participant uses 5G, FALSE otherwise
-#' @param urbanicity Urbanicity of home/work environment
-#' @param act_pwr_props List with proportion of time spent in low vs low-mid vs mid-high vs high output power activities
+#' @param band Technology (3g, 4g, or 5g)
+#' @param duration_low Duration (in seconds per day) of low output power activities
+#' @param duration_lowmed Duration (in seconds per day) of low-medium output power activities
+#' @param duration_medhigh Duration (in seconds per day) of medium-high output power activities
+#' @param duration_high Duration (in seconds per day) of high output power activities
+#' @param urbanicity Urbanicity of home / workplace (rural, suburban, or urban)
 #' @param travel_time Time spent commuting in seconds per day
-#' @param params Device-specific parameter list
+#' @param params Parameter list (optional). If not specified, calculations use
+#' default parameters.
 #'
-#' @returns Output power from mobile data (3G, 4G, 5G) use on mobile phone in mW
-get_mpd_data_pwr <- function(
-    use_5g,
+#' @returns Output power in mW
+#'
+#' @examples
+#' mpd_pwr_data(
+#' band             = "4g",
+#' duration_low     = 4860,
+#' duration_lowmed  = 540,
+#' duration_medhigh = 4860,
+#' duration_high    = 540,
+#' urbanicity       = "rural",
+#' travel_time      = 1800)
+#'
+#' @export
+mpd_pwr_data <- function(
+    band,
+    duration_low,
+    duration_lowmed,
+    duration_medhigh,
+    duration_high,
     urbanicity,
-    act_pwr_props,
     travel_time,
-    params) {
+    params = load_params()) {
 
-  # Recode urbanicity =========================================================
-  urb_list <- recode_urbanicity(urbanicity  = urbanicity)
-
-  # Recode location proportions ===============================================
-  loc_props <- calculate_location_proportions(
+  # Calculate location proportions ============================================
+  loc_props <- location_props(
     travel_time = travel_time,
-    home_prop   = params$home_prop,
-    outd_prop   = params$outd_prop,
-    work_prop   = params$work_prop)
+    home_prop   = params$global$home_prop,
+    outd_prop   = params$global$outd_prop,
+    work_prop   = params$global$work_prop)
 
-  # Calculate output power from different technologies ========================
-  ## For 3G -------------------------------------------------------------------
-  pwr_3g <- calculate_data_power_for_tech(
-    tech          = "3g",
-    act_pwr_props = act_pwr_props,
-    urb_list      = urb_list,
-    loc_props     = loc_props,
-    params        = params)
-  ## For 4G -------------------------------------------------------------------
-  pwr_4g <- calculate_data_power_for_tech(
-    tech          = "4g",
-    act_pwr_props = act_pwr_props,
-    urb_list      = urb_list,
-    loc_props     = loc_props,
-    params        = params)
-  ## For 5G -------------------------------------------------------------------
-  pwr_5g <- calculate_data_power_for_tech(
-    tech          = "5g",
-    act_pwr_props = act_pwr_props,
-    urb_list      = urb_list,
-    loc_props     = loc_props,
-    params        = params)
+  ## sum up work/school and home
+  loc_props$ind <- loc_props$home + loc_props$work
 
-  # Calculate technology use proportions ======================================
-  props <- calculate_data_tech_proportions(use_5g = use_5g, params = params)
+  # Calculate activity proportions ============================================
+  act_props <- act_pwr_props(
+    duration_low,
+    duration_lowmed,
+    duration_medhigh,
+    duration_high)
 
-  # Scale by tech props and sum for each environment ==========================
-  ## For home -----------------------------------------------------------------
-  pwr_home <- sum(
-    props$prop_3g * pwr_3g$home,
-    props$prop_4g * pwr_4g$home,
-    props$prop_5g * pwr_5g$home)
-  ## For school/work ----------------------------------------------------------
-  pwr_work <- sum(
-    props$prop_3g * pwr_3g$work,
-    props$prop_4g * pwr_4g$work,
-    props$prop_5g * pwr_5g$work)
-  ## For outdoors -------------------------------------------------------------
-  pwr_outd <- sum(
-    props$prop_3g * pwr_3g$outdoor,
-    props$prop_4g * pwr_4g$outdoor,
-    props$prop_5g * pwr_5g$outdoor)
-  ## For commute/travel -------------------------------------------------------
-  pwr_trav <- sum(
-    props$prop_3g * pwr_3g$travel,
-    props$prop_4g * pwr_4g$travel,
-    props$prop_5g * pwr_5g$travel)
 
-  # Save as list and return result ============================================
-  result <- list(
-    home    = pwr_home,
-    work    = pwr_work,
-    outdoor = pwr_outd,
-    travel  = pwr_trav)
-  return(result)
-}
+  # Calculate output power ====================================================
+  ## Define which locations and activities to consider
+  locations   <- c("ind", "out", "travel")
+  activities  <- c("low", "lowmed", "medhigh", "high")
 
-# -----------------------------------------------------------------------------
-#' Calculate weighted duty cycle
-#'
-#' @param act_pwr_props List with proportion of time spent in low vs low-mid vs mid-high vs high output power activities
-#' @param tech Type of technology used ("3g", "4g", or "5g")
-#' @param params Device-specific parameter list
-#' @returns weighted duty cycle
-calculate_data_duty_cycle <- function(
-    act_pwr_props,
-    tech,
-    params) {
-  # TODO: this functions will be updated soon
-  # Low / lowmed activities ===================================================
-  low <- sum(
-    act_pwr_props$low_prop * params[[paste0("data_", tech, "_low_ind_dutycycle")]],
-    act_pwr_props$lowmed_prop * params[[paste0("data_", tech, "_lowmed_ind_dutycycle")]]
-  )
+  ## Define function to calculate power for each location and activity
+  ## TODO: move this to helper functions so laptop and tablet may access it
+  calculate_pwr <- function(location, activity, loc_props, act_props, params) {
+    loc_prop <- loc_props[[as.character(location)]]
+    act_prop <- act_props[[as.character(activity)]]
+    # get pwr based on location and urbanicity
+    if (location == "travel") {
+      pwr  <- params$devices$data[[paste("data", band, location, "pwr", sep = "_")]] # urbanicity not considered
+    } else {
+      pwr  <- params$devices$data[[paste("data", band, substr(urbanicity, 0, 3), location, "pwr", sep = "_")]]
+    }
+    # get duty cycle based on activity
+    dc   <- params$devices$data[[paste("data", band, activity, "dutycycle", sep = "_")]]
 
-  # Medhigh / high activities =================================================
-  high <- sum(
-    act_pwr_props$medhigh_prop * params[[paste0("data_", tech, "_medhigh_ind_dutycycle")]],
-    act_pwr_props$high_prop    * params[[paste0("data_", tech, "_high_ind_dutycycle")]]
-  )
+    # scale by location proportion
+    pwr_scaled <- act_prop*dc*pwr*loc_prop
 
-  return(list(low = low, high = high))
-}
 
-# -----------------------------------------------------------------------------
-#' Calculate power by environment
-#'
-#' @param duty_cycle List of two elements (low and high) with corresponding duty cycle
-#' @param urb_list Urbanicity list
-#' @param loc_props Lost of location proportions
-#' @param tech Type of technology used ("3g", "4g", or "5g")
-#' @param env Environment ("home", "work", "outdoor", or "travel")
-#' @param params Device-specific parameter list
-#' @returns weighted duty cycle
-calculate_data_power_by_env <- function(
-    duty_cycle,
-    urb_list,
-    loc_props,
-    tech,
-    env,
-    params) {
-
-  # Define which parameter suffix to find correct parameter in list ===========
-  suffix <- switch(
-    env,
-    home    = "ind_pwr",
-    work    = "ind_pwr",
-    outdoor = "out_pwr",
-    travel  = "travel_pwr")
-
-  # For indoor/outdoor
-  if (env != "travel") {
-    low <- duty_cycle$low  * sum(
-      params[[paste0("data_", tech, "_suburb_", suffix)]] * urb_list$home_suburb,
-      params[[paste0("data_", tech, "_urb_", suffix)]]    * urb_list$home_urban,
-      params[[paste0("data_", tech, "_rural_", suffix)]]  * urb_list$home_rural
-    )
-    high <- duty_cycle$high * sum(
-      params[[paste0("data_", tech, "_suburb_", suffix)]] * urb_list$home_suburb,
-      params[[paste0("data_", tech, "_urb_", suffix)]]    * urb_list$home_urban,
-      params[[paste0("data_", tech, "_rural_", suffix)]]  * urb_list$home_rural
-    )
-  } else {
-    low  <- duty_cycle$low  * params[[paste0("data_", tech, "_travel_pwr")]]
-    high <- duty_cycle$high * params[[paste0("data_", tech, "_travel_pwr")]]
+    return(pwr_scaled)
   }
 
-  prop <- loc_props[[ifelse(env == "outdoor", "outd", env)]]
-  return(sum(low, high) * prop)
-}
-
-
-# -----------------------------------------------------------------------------
-#' Calculate total power by data technology
-#'
-#' @param tech Type of technology used ("3g", "4g", or "5g")
-#' @param act_pwr_props List with proportion of time spent in low vs low-mid vs mid-high vs high output power activities
-#' @param urb_list Urbanicity list
-#' @param loc_props List of location proportions
-#' @param params Device-specific parameter list
-calculate_data_power_for_tech <- function(
-    tech,
-    act_pwr_props,
-    urb_list,
-    loc_props,
-    params) {
-
-  # Calculate weighted duty cycle =============================================
-  duty <- calculate_data_duty_cycle(act_pwr_props, tech, params)
-
-  # Calculate weighted power by environment ===================================
-  ## Home ---------------------------------------------------------------------
-  home_pwr <- calculate_data_power_by_env(
-    duty_cycle = duty,
-    urb_list   = urb_list,
-    loc_props  = loc_props,
-    tech       = tech,
-    env        = "home",
-    params     = params)
-  ## Work/school --------------------------------------------------------------
-  work_pwr <- calculate_data_power_by_env(
-    duty_cycle = duty,
-    urb_list   = urb_list,
-    loc_props  = loc_props,
-    tech       = tech,
-    env        = "work",
-    params     = params)
-  ## Outdoors -----------------------------------------------------------------
-  outd_pwr <- calculate_data_power_by_env(
-    duty_cycle = duty,
-    urb_list   = urb_list,
-    loc_props  = loc_props,
-    tech       = tech,
-    env        = "outdoor",
-    params     = params)
-  ## Travel/commute -----------------------------------------------------------
-  trav_pwr <- calculate_data_power_by_env(
-    duty_cycle = duty,
-    urb_list   = urb_list,
-    loc_props  = loc_props,
-    tech       = tech,
-    env        = "travel",
-    params     = params)
-
-  # Store in list and return result ===========================================
-  return(list(
-    home    = home_pwr,
-    work    = work_pwr,
-    outdoor = outd_pwr,
-    travel  = trav_pwr)
+  pwr <-with(
+    expand.grid(
+      location = locations,
+      activity = activities,
+      KEEP.OUT.ATTRS = FALSE
+    ),
+    sum(
+      mapply(
+        calculate_pwr,
+        location, activity, MoreArgs = list(loc_props, act_props, params)))
   )
+
+  return(pwr)
 }
-
-
-# -----------------------------------------------------------------------------
-#' Calculate mobile phone aggregated output power from WiFi use
+# Wifi ========================================================================
+#' Calculate Mobile Phone Output Power during WiFi Use
 #'
-#' Calculates mobile phone aggregated output power from WiFi use (2.4GHz, 5.0GHz)
+#' Calculates the mobile phone output power during WiFi use
 #'
 #' @details
-#' The output power is calculated as:
+#' The output power depends on the frequency band (2.4 GHz or 5.0 GHz) and the
+#' type of activity.
 #'
-#' \deqn{Power_{WiFi} = Prop_{2.4GHz}\times Power_{2.4GHz} + Prop_{5.0GHz}\times Power_{5.0GHz}}
+#' @param band WiFi frequency band ("2" for 2.4 GHz, "5" for 5.0 GHz)
+#' @param duration_low Duration (in seconds per day) of low output power activities
+#' @param duration_lowmed Duration (in seconds per day) of low-medium output power activities
+#' @param duration_medhigh Duration (in seconds per day) of medium-high output power activities
+#' @param duration_high Duration (in seconds per day) of high output power activities
+#' @param params Parameter list (optional). If not specified, calculations use
+#' default parameters.
 #'
-#' Where:
-#' \eqn{Prop_{2.4GHz}}, \eqn{Prop_{5.0GHz}} are the proportions of 2.4GHz vs 5.0GHz WiFi
-#' \eqn{Power_{2.4GHz}}, \eqn{Power_{5.0GHz}} are the output power from 2.4GHz and 5.0GHz WiFi in mW, respectively
+#' @returns Output power in mW
 #'
-#' @param travel_time Time spent commuting in seconds per day
-#' @param act_pwr_props List with proportion of time spent in low vs low-mid vs mid-high vs high output power activities
-#' @param params device-specific parameters
+#' @examples
+#' mpd_pwr_wifi(
+#' band             = "2",
+#' duration_low     = 4860,
+#' duration_lowmed  = 540,
+#' duration_medhigh = 4860,
+#' duration_high    = 540)
 #'
-#' @returns Output power from WiFi use on mobile phone in mW
-get_mpd_wifi_pwr <- function(act_pwr_props,
-                             travel_time,
-                             params) {
-
-  # Recode location proportions ===============================================
-  loc_props <- calculate_location_proportions(
-    travel_time = travel_time,
-    home_prop   = params$home_prop,
-    outd_prop   = params$outd_prop,
-    work_prop   = params$work_prop)
-
-  # Calculate WiFi output power ===============================================
-  wifi_pwr <- calculate_total_wifi_power(act_pwr_props, params)
-
-  # Scale by proportion of time spent in each location ========================
-
-  wifi_pwr_loc <- list(
-    home = wifi_pwr*loc_props$home,
-    work = wifi_pwr*loc_props$work,
-    outdoor = 0, #assumption of negligible WiFi exposure outdoors
-    travel = wifi_pwr*loc_props$travel)
-
-  ## Return result ------------------------------------------------------------
-  return(wifi_pwr_loc)
-}
-
-# -----------------------------------------------------------------------------
-#' Calculate WiFi duty cycle
-#'
-#' @param act_pwr_props List with proportion of time spent in low vs low-mid vs mid-high vs high output power activities
-#' @param band Frequency band ("2" for 2.4 GHz, "5" for 5.0 GHz)
-#' @param params device-specific parameters
-calculate_wifi_duty_cycle <- function(
-    act_pwr_props,
+#' @export
+mpd_pwr_wifi <- function(
     band,
-    params) {
+    duration_low,
+    duration_lowmed,
+    duration_medhigh,
+    duration_high,
+    params = load_params()) {
 
-  # Low/lowmed activities =====================================================
-  low <- sum(
-    act_pwr_props$low_prop * params[[paste0("wifi_", band, "_low_dutycycle")]],
-    act_pwr_props$lowmed_prop * params[[paste0("wifi_", band, "_lowmed_dutycycle")]]
+  # Calculate activity proportions ============================================
+  act_props <- act_pwr_props(
+    duration_low,
+    duration_lowmed,
+    duration_medhigh,
+    duration_high)
+  activities <- c("low", "lowmed", "medhigh", "high")
+
+  # Define function for WiFi calculation and sum over activities ==============
+  pwr <- sum(
+    vapply(
+      activities,
+      \(activity) {
+        act_prop <- act_props[[activity]]
+        dc <- params$devices$data[[paste("wifi", band, activity, "dutycycle", sep = "_")]]
+        pwr <- params$devices$data[[paste("wifi", band, "pwr", sep = "_")]]
+        return(act_prop*dc*pwr)
+      },
+      numeric(1)
+    )
   )
-
-  # Medhigh/high activities ===================================================
-  high <- sum(
-    act_pwr_props$medhigh_prop * params[[paste0("wifi_", band, "_medhigh_dutycycle")]],
-    act_pwr_props$high_prop * params[[paste0("wifi_", band, "_high_dutycycle")]]
-  )
-  return(list(low = low, high = high))
+  return(pwr)
 }
 
-# -----------------------------------------------------------------------------
-#' Calculate WiFi output power by frequency band
+###############################################################################
+# Calculate SAR (data) ========================================================
+#' Calculate nSAR during mobile data use on mobile phone
 #'
-#' @param act_pwr_props List with proportion of time spent in low vs low-mid vs mid-high vs high output power activities
-#' @param band Frequency band ("2" for 2.4 GHz, "5" for 5.0 GHz)
-#' @param params device-specific parameters
-calculate_wifi_band_power <- function(
-    act_pwr_props,
-    band,
-    params) {
-
-  # Calculate duty cycle ======================================================
-  duty <- calculate_wifi_duty_cycle(
-    act_pwr_props = act_pwr_props,
-    band          = band,
-    params        = params)
-
-  # Calculate power weighted by duty cycle ====================================
-  low_pwr  <- duty$low  * params[[paste0("wifi_", band, "_pwr")]]
-  high_pwr <- duty$high * params[[paste0("wifi_", band, "_pwr")]]
-
-  # Return total power ========================================================
-  return(sum(low_pwr, high_pwr))
-}
-
-# -----------------------------------------------------------------------------
-#' Calculate total wifi output power
-#'
-#' @param act_pwr_props List with proportion of time spent in low vs low-mid vs mid-high vs high output power activities
-#' @param params device-specific parameters
-calculate_total_wifi_power <- function(
-    act_pwr_props,
-    params) {
-
-  # By frequency band =========================================================
-  ## 2.4 GHz ------------------------------------------------------------------
-  wifi_2_pwr <- calculate_wifi_band_power(act_pwr_props, "2", params)
-  ## 5.0 GHz ------------------------------------------------------------------
-  wifi_5_pwr <- calculate_wifi_band_power(act_pwr_props, "5", params)
-
-  # Weigh by 2.4GHz vs 5GHz proportions and return result =====================
-  wifi_pwr <- sum(params$wifi_2_prop * wifi_2_pwr,
-                  params$wifi_5_prop * wifi_5_pwr)
-
-  return(wifi_pwr)
-}
-
-
-# =============================================================================
-#' Calculate SAR from data use on mobile phone (mobile data and WiFi)
-#'
-#' Calculates specific absorption rate (SAR) from data use on mobile phone (mobile data and WiFi)
+#' Calculates tissue-specific nSAR from mobile data use on mobile phone.
 #'
 #' @details
-#' The SAR is calculated as follows:
-#' \deqn{SAR = Prop_{WiFi}\times SAR_{WiFi} + Prop_{Data}\times SAR_{data}}
+#' The normalized specific absorption rate (nSAR) depends on the tissue and
+#' the frequency band.
 #'
-#' Where:
-#' \eqn{Prop_{WiFi}}, \eqn{Prop_{Data}} are the WiFi and data use proportions
-#' \eqn{SAR_{WiFi}}, \eqn{SAR_{Data}} are the SAR values from WiFi and from data
 #'
-#' @param wifi_prop Proportion of time WiFi connection is used for data transfer (vs mobile data)
-#' @param params Parameter list
-#' @param tissue_params Tissue-specific parameters (SAR-values)
-get_mobiledata_sar <- function(
-    wifi_prop,
-    params,
-    tissue_params) {
-
-  # From mobile data ==========================================================
-  data_contr <- (1-wifi_prop) * tissue_params$data_face_sar
-
-  # From WiFi =================================================================
-  ## 2.4 GHz ------------------------------------------------------------------
-  wifi_2     <- params$wifi_2_prop * tissue_params$wifi_2_face_sar
-  ## 5.0 GHz ------------------------------------------------------------------
-  wifi_5     <- params$wifi_5_prop * tissue_params$wifi_5_face_sar
-  ## Total --------------------------------------------------------------------
-  wifi_contr <- wifi_prop * sum(wifi_2, wifi_5)
-
-  # Aggregated SAR ============================================================
-  aggr_sar <- sum(data_contr, wifi_contr)
-  return(aggr_sar)
+#' @param tissue Tissue for which to calculate nSAR (default: "brain" or "body")
+#' @param band Technology ("3g", "4g", or "5g")
+#' @param params Parameter list (optional). If not specified, calculations use
+#' default parameters.
+#'
+#' @returns nSAR in W/kg/W
+#'
+#' @examples
+#' mpd_sar_data(
+#' tissue       = "brain",
+#' band         = "5g")
+#'
+#' @export
+mpd_sar_data <- function(
+    band,
+    tissue,
+    params = load_params()) {
+  # Load tissue-specific params
+  tissue_params <- load_tissue_params(params, "data", tissue)
+  # Get SAR value, return result
+  sar <- tissue_params[[paste("data", band, "sar", sep = "_")]]
+  return(sar)
 }
 
-
-
+# Calculate SAR (wifi) ========================================================
+#' Calculate nSAR during WiFi Use on mobile phone
+#'
+#' Calculates tissue-specific nSAR from WiFi use on mobile phone.
+#'
+#' @details
+#' The normalized specific absorption rate (nSAR) depends on the tissue and
+#' the frequency band.
+#'
+#'
+#' @param tissue Tissue for which to calculate nSAR (default: "brain" or "body")
+#' @param band Frequency band ("2" for 2.4 GHz, "5" for 5.0 GHz)
+#' @param params Parameter list (optional). If not specified, calculations use
+#' default parameters.
+#'
+#' @returns nSAR in W/kg/W
+#'
+#' @examples
+#' mpd_sar_wifi(
+#' tissue       = "brain",
+#' band         = "2")
+#'
+#' @export
+mpd_sar_wifi <- function(
+    band,
+    tissue,
+    params = load_params()) {
+  # Load tissue-specific params
+  tissue_params <- load_tissue_params(params, "data", tissue)
+  # Get SAR value, return result
+  sar <- tissue_params[[paste("wifi", band, "sar", sep = "_")]]
+  return(sar)
+}

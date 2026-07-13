@@ -1,11 +1,11 @@
 Package: RFDose
 Type: Package
-Title: Functions for RF-EMF Dose Calculations
-Version: 0.2.0
-Author: Irina Wipf
-Maintainer: <irina.wipf@swisstph.ch>
+Title: Deterministic radiofrequency electromagnetic field (RF-EMF) dose calculator
+Version: 0.3.0
+Authors@R:
+    person("Irina", "Wipf", , "irina.wipf@swisstph.ch", role = c("aut", "cre"))
 Description: Package for calculating RF-EMF doses for cohorts.
-License: GPL-3
+License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.3.2

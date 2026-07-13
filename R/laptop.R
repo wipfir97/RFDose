@@ -1,146 +1,276 @@
-# Calculate total RF-EMF dose (for brain and body) from laptop use
-
 # =============================================================================
-#' Calculate Dose from Laptop Use
+#' Calculate RF-EMF Dose from Laptop Use
 #'
-#' @param dur_low tba
-#' @param dur_lowtomed tba
-#' @param dur_medtohigh tba
-#' @param dur_high tba
-#' @param params Parameter list
-#' @returns List with brain dose and body dose in mJ/kg/day
+#' Calculates the tissue-specific RF-EMF dose from laptop use.
+#'
+#' @details
+#'
+#' The laptop RF-EMF dose is calculated as:
+#'
+#' \deqn{Dose_{laptop} = mSAR_{laptop}*duration_{laptop}}
+#'
+#' Where:
+#'
+#' * \eqn{Dose_{laptop}} is the dose from laptop use
+#' * \eqn{mSAR_{laptop}} is the momentary SAR value in mJ/kg
+#' * \eqn{duration_{laptop}} is the duration of laptop use
+#'
+#'
+#'
+#' We distinguish between 4 types of activities:
+#'
+#' 1. Low output power: sending e-mails, browsing the internet, scrolling and
+#'    chatting on social media, sending text messages
+#' 2. Low to medium output power: online gaming, streaming music, sending voice
+#'    messages
+#' 3. Medium to high output power: watching videos, uploading pictures or
+#'    videos, making video calls
+#' 4. High output power: uploading large files
+#'
+#' @param tissue Tissue for which to calculate dose (default: "brain" or "body")
+#' @param dur_low Duration (in seconds per day) of low output power activities on laptop
+#' @param dur_lowmed Duration (in seconds per day) of low-medium output power activities on laptop
+#' @param dur_medhigh Duration (in seconds per day) of medium-high output power activities on laptop
+#' @param dur_high Duration (in seconds per day) of high output power activities on laptop
+#' @param params Parameter list (optional). If not specified, calculations use
+#' default parameters.
+#'
+#' @returns Tissue-specific RF-EMF dose from laptop use in mJ/kg/day
+#'
+#' @examples
+#' laptop_dose(
+#'   tissue      = "brain",
+#'   dur_low     = 0,
+#'   dur_lowmed  = 1230,
+#'   dur_medhigh = 0,
+#'   dur_high    = 0)
+#'
 #' @export
-#' @import yaml
-get_laptop_dose <- function(dur_low,
-                            dur_lowtomed,
-                            dur_medtohigh,
-                            dur_high,
-                            params = NULL) {
-  # Load parameters if not provided ===========================================
-  if (is.null(params)) {
-    params <- load_params("params.yaml")}
+#' @seealso [laptop_msar()]
+laptop_dose <- function(
+    tissue,
+    dur_low,
+    dur_lowmed,
+    dur_medhigh,
+    dur_high,
+    params = load_params()) {
 
-  check_duration(c(dur_low, dur_lowtomed, dur_medtohigh, dur_high))
+  # Check input ===============================================================
+  check_duration(c(dur_low, dur_lowmed, dur_medhigh, dur_high))
+  check_tissue(tissue, "lptp", params)
 
-  # Calculate total use duration ==============================================
-  duration <- sum(dur_low,
-                  dur_lowtomed,
-                  dur_medtohigh,
-                  dur_high)
-
+  # Calculate total duration ==================================================
+  duration <- sum(
+    dur_low,
+    dur_lowmed,
+    dur_medhigh,
+    dur_high)
 
   # Calculate time proportions of each activity ===============================
-  act_pwr_props <- get_act_pwr_props(low_dur     = dur_low,
-                                     lowmed_dur  = dur_lowtomed,
-                                     medhigh_dur = dur_medtohigh,
-                                     high_dur    = dur_high)
+  act_pwr_props <- act_pwr_props(
+    low_dur     = dur_low,
+    lowmed_dur  = dur_lowmed,
+    medhigh_dur = dur_medhigh,
+    high_dur    = dur_high)
 
-  # Extract parameters ========================================================
-  ## Extract shared (non-tissue specific) parameters for laptop ---------------
-  lptp_params  <- load_device_params(params, "lptp")
+  # Calculate mSAR ============================================================
+  msar <- laptop_msar(
+    tissue      = tissue,
+    dur_low     = dur_low,
+    dur_lowmed  = dur_lowmed,
+    dur_medhigh = dur_medhigh,
+    dur_high    = dur_high,
+    params      = params
+  )
 
-  ## Extract brain-specific parameters (SAR values) for laptop ----------------
-  brain_params <- load_tissue_params(params, "lptp", "brain")
-
-  ## Extract body-specific parameters (SAR values) for laptop -----------------
-  body_params  <- load_tissue_params(params, "lptp", "body")
-
-
-  # Calculate aggregated power ================================================
-  aggr_pwr     <- get_laptop_pwr(act_pwr_props,
-                                 lptp_params)
-
-  # Calculate tissue-specific SAR =============================================
-  ## Brain SAR ----------------------------------------------------------------
-  brain_sar    <- get_laptop_sar(lptp_params, brain_params)
-
-  ## Body SAR -----------------------------------------------------------------
-  body_sar     <- get_laptop_sar(lptp_params, body_params)
-
-  # Calculate total doses =====================================================
-  ## Brain dose ---------------------------------------------------------------
-  brain_dose <- duration * aggr_pwr * brain_sar
-
-  ## Body dose ----------------------------------------------------------------
-  body_dose  <- duration * aggr_pwr * body_sar
-
-  # Return output =============================================================
-  lptp_output <- list("brain_lptp_dose" = brain_dose,
-                      "body_lptp_dose"  = body_dose)
-  return(lptp_output)
+  # Calculate dose ============================================================
+  dose <- msar * duration
+  return(dose)
 }
 
 # =============================================================================
-#' Calculate Laptop Aggregated Power
+#' Calculate mSAR from Laptop Use
 #'
-#' @param act_pwr_props text
-#' @param params text
-#' @returns text
-get_laptop_pwr <- function(act_pwr_props,
-                           params) {
-  # Calculate power for 2.4 GHz ===============================================
-  ## Weighted duty cycles -----------------------------------------------------
-  lptp_2_low_dutycycle   <- sum(act_pwr_props$low_prop*params$wifi_2_low_dutycycle,
-                                act_pwr_props$lowmed_prop*params$wifi_2_lowmed_dutycycle)
+#' Calculates the tissue-specific momentary SAR (mSAR) from laptop use.
+#'
+#' @details
+#'
+#' The mSAR is calculated as:
+#'
+#' \deqn{mSAR_{laptop} = nSAR_{laptop}*outputpower_{laptop}}
+#'
+#' Where:
+#'
+#' * \eqn{mSAR_{laptop}} is the mSAR from laptop use
+#' * \eqn{nSAR_{laptop}} is the normalised SAR value in mJ/kg
+#' * \eqn{outputpower_{laptop}} is the duration of laptop use
+#'
+#'
+#' We distinguish between 4 types of activities:
+#'
+#' 1. Low output power: sending e-mails, browsing the internet, scrolling and
+#'    chatting on social media, sending text messages
+#' 2. Low to medium output power: online gaming, streaming music, sending voice
+#'    messages
+#' 3. Medium to high output power: watching videos, uploading pictures or
+#'    videos, making video calls
+#' 4. High output power: uploading large files
+#'
+#' @param tissue Tissue for which to calculate mSAR (default: "brain" or "body")
+#' @param dur_low Duration (in seconds per day) of low output power activities on laptop
+#' @param dur_lowmed Duration (in seconds per day) of low-medium output power activities on laptop
+#' @param dur_medhigh Duration (in seconds per day) of medium-high output power activities on laptop
+#' @param dur_high Duration (in seconds per day) of high output power activities on laptop
+#' @param params Parameter list (optional). If not specified, calculations use
+#' default parameters.
+#'
+#' @returns Tissue-specific mSAR from laptop use in mW/kg
+#'
+#' @examples
+#' laptop_msar(
+#'   tissue      = "brain",
+#'   dur_low     = 0,
+#'   dur_lowmed  = 1230,
+#'   dur_medhigh = 0,
+#'   dur_high    = 0)
+#'
+#' @export
+#' @seealso [laptop_pwr(), laptop_sar()]
+laptop_msar <- function(
+    tissue,
+    dur_low,
+    dur_lowmed,
+    dur_medhigh,
+    dur_high,
+    params = load_params()) {
 
-  lptp_2_high_dutycycle  <- sum(act_pwr_props$medhigh_prop*params$wifi_2_medhigh_dutycycle,
-                                act_pwr_props$high_prop*params$wifi_2_high_dutycycle)
+  bands <- c("2", "5") # 2.4 GHz, 5.0 GHz
 
-  ## Output power -------------------------------------------------------------
-  lptp_2_pwr_low    <- lptp_2_low_dutycycle * params$wifi_2_pwr
-  lptp_2_pwr_high   <- lptp_2_high_dutycycle * params$wifi_2_pwr
+  msar <- sum(
+    vapply(
+      bands,
+      \(band) {
 
-  lptp_2_pwr <- sum(lptp_2_pwr_low, lptp_2_pwr_high)
+        prop <- params$global[[paste0("wifi_", band, "_prop")]]
 
-  lptp_2_contr  <- params$wifi_2_prop * lptp_2_pwr
+        ## Calculate power
+        pwr <- laptop_pwr(
+          band          = band,
+          dur_low       = dur_low,
+          dur_lowmed    = dur_lowmed,
+          dur_medhigh   = dur_medhigh,
+          dur_high      = dur_high,
+          params        = params)
 
-  # Calculate power for 5.0 GHz ===============================================
-  ## Weighted duty cycles -----------------------------------------------------
-  lptp_5_low_dutycycle     <- act_pwr_props$low_prop*params$wifi_5_low_dutycycle
-  lptp_5_lowmed_dutycycle  <- act_pwr_props$lowmed_prop*params$wifi_5_lowmed_dutycycle
-  lptp_5_medhigh_dutycycle <- act_pwr_props$medhigh_prop*params$wifi_5_medhigh_dutycycle
-  lptp_5_high_dutycycle    <- act_pwr_props$high_prop*params$wifi_5_high_dutycycle
-  ## Output power -------------------------------------------------------------
-  lptp_5_pwr    <- params$wifi_5_pwr * sum(lptp_5_low_dutycycle,
-                                           lptp_5_lowmed_dutycycle,
-                                           lptp_5_medhigh_dutycycle,
-                                           lptp_5_high_dutycycle)
-  lptp_5_contr  <- params$wifi_5_prop * lptp_5_pwr
+        ## Calculate SAR
+        sar <- laptop_sar(
+          tissue        = tissue,
+          band          = band,
+          params        = params)
 
-  # Combine 2.4 and 5.0 GHz
-  aggr_pwr      <- sum(lptp_2_contr, lptp_5_contr)
-
-
-  # Return output
-  return(aggr_pwr)
+        prop*sar*pwr
+      },
+      numeric(1)
+    )
+  )
+  return(msar)
 }
 
 # =============================================================================
-#' Calculate Laptop Aggregated SAR
+#' Calculate Laptop Output Power
 #'
-#' @param params descr
-#' @param tissue_params descr
-#' @returns Aggregated tissue SAR from laptop use (W/kg/W)
-get_laptop_sar <- function(params,
-                           tissue_params) {
-  # Calculate SAR for 2.4 GHz with laptop on legs
-  sar_2_legs  <- params$legs_prop * tissue_params$wifi_2_legs_sar
+#' Calculates the laptop output power during use
+#'
+#' @details
+#' The output power depends on the frequency band (2.4 GHz or 5.0 GHz) and the
+#' type of activity.
+#'
+#' @param band WiFi frequency band ("2" for 2.4 GHz, "5" for 5.0 GHz)
+#' @param dur_low Duration (in seconds per day) of low output power activities on laptop
+#' @param dur_lowmed Duration (in seconds per day) of low-medium output power activities on laptop
+#' @param dur_medhigh Duration (in seconds per day) of medium-high output power activities on laptop
+#' @param dur_high Duration (in seconds per day) of high output power activities on laptop
+#' @param params Parameter list (optional). If not specified, calculations use
+#' default parameters.
+#'
+#' @returns Output power in mW
+#'
+#' @examples
+#' laptop_pwr(
+#'   band        = "2",
+#'   dur_low     = 0,
+#'   dur_lowmed  = 1230,
+#'   dur_medhigh = 0,
+#'   dur_high    = 0)
+#'
+#' @export
+laptop_pwr <- function(
+    band,
+    dur_low,
+    dur_lowmed,
+    dur_medhigh,
+    dur_high,
+    params = load_params()) {
 
-  # Calculate SAR for 2.4 GHz with laptop on table
-  sar_2_tabl  <- params$tabl_prop * tissue_params$wifi_2_tabl_sar
+  # Calculate time proportions of each activity ===============================
+  act_props <- act_pwr_props(
+    low_dur     = dur_low,
+    lowmed_dur  = dur_lowmed,
+    medhigh_dur = dur_medhigh,
+    high_dur    = dur_high)
 
-  # Calculate SAR for 5.0 GHz with laptop on legs
-  sar_5_legs  <- params$legs_prop * tissue_params$wifi_5_legs_sar
+  activities <- c("low", "lowmed", "medhigh", "high")
 
-  # Calculate SAR for 5.0 GHz with laptop on table
-  sar_5_tabl  <- params$tabl_prop * tissue_params$wifi_5_tabl_sar
+  pwr <- sum(
+    vapply(
+      activities,
+      \(activity) {
+        act_prop <- act_props[[activity]]
+        dc  <- params$devices$lptp[[paste("wifi", band, activity, "dutycycle", sep = "_")]]
+        pwr <- params$devices$lptp[[paste("wifi", band, "pwr", sep = "_")]]
+        return(act_prop*dc*pwr)
+      },
+      numeric(1)
+    )
+  )
+  return(pwr)
+}
 
-  # Add for legs and table for 2.4 GHz and 5.0 GHz respectively
-  sar_2_contr <- params$wifi_2_prop * sum(sar_2_legs, sar_2_tabl)
-  sar_5_contr <- params$wifi_5_prop * sum(sar_5_legs, sar_5_tabl)
+# =============================================================================
+#' Calculate nSAR during Laptop Use
+#'
+#' Calculates tissue-specific nSAR from laptop use.
+#'
+#' @details
+#' The normalized specific absorption rate (nSAR) depends on the tissue and
+#' the frequency band.
+#'
+#' @param tissue Tissue for which to calculate nSAR (default: "brain" or "body")
+#' @param band Frequency band ("2" for 2.4 GHz, "5" for 5.0 GHz)
+#' @param params Parameter list (optional). If not specified, calculations use
+#' default parameters.
+#'
+#' @returns nSAR in W/kg/W
+#'
+#' @examples
+#' laptop_sar(
+#' tissue       = "brain",
+#' band         = "2")
+#'
+#' @export
+laptop_sar <- function(
+    tissue,
+    band,
+    params = load_params()) {
 
-  # Aggregate SAR for 2.4 GHz and 5.0 GHz and return output
-  aggr_sar    <- sum(sar_2_contr, sar_5_contr)
+  tissue_params <- load_tissue_params(params, "lptp", tissue)
+  ## Lap
+  lap_prop <- params$devices$lptp$legs_prop
+  sar_lap <- lap_prop*tissue_params[[paste("wifi", band, "legs_sar", sep = "_")]]
+  ## Table
+  tab_prop <- params$devices$lptp$tabl_prop
+  sar_tab <- tab_prop*tissue_params[[paste("wifi", band, "tabl_sar", sep = "_")]]
 
-  return(aggr_sar)
+  ## Combine and return
+  return(sar_lap + sar_tab)
 }

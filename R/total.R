@@ -1,46 +1,45 @@
 ###############################################################################
 #' Calculate Total RF-EMF Doses for ALL samples
 #'
-#' Wrapper function that calculates RF-EMF doses for a full data frame.
+#' Wrapper function that calculates RF-EMF doses for a data frame of observations.
+#' This function will be removed in the future.
 #'
-#' @param data A data frame with required columns.
-#' @param param_file Optional path to an external YAML parameter file. Must follow same structure as internal YAML parameter file.
-#' @param default_value_file Optional path to external YAML default value file. Must follow same structure as internal YAML default value file.
-#' @returns A data frame. Columns named SOURCE_dose_TISSUE contain the calculated RF-EMF dose
+#' @details
+#' Additional details will follow.
+#'
+#'
+#' @param data A data frame. Must have the exact same columns as the provided example dataset.
+#' Columns must not be missing. Missing values will be replaced with default values.
+#' @param tissue Tissue for which to calculate dose (default: "brain" or "body")
+#' @param params Parameter list (optional). If not specified, calculations use
+#' default parameters.
+#' @param default_value_file List of default values (optional).
+#'
+#' @returns A data frame. Columns contain the calculated RF-EMF dose
 #' of each row in mJ/kg/day, for each exposure source and each tissue.
+#'
 #' @import dplyr
 #' @importFrom tidyr unnest
 #' @importFrom tidyr unnest_wider
 #' @import yaml
+#'
 #' @export
 calculate_emf_doses <- function(
     data,
-    param_file = NULL,
+    tissue,
+    params = load_params(),
     default_value_file = NULL) {
-
-  # Parameters ================================================================
-  ## Load internal parameter file if no param_file is supplied ----------------
-  params <- if (is.null(param_file)) {
-    load_params("params.yaml")  # from inst/extdata
-  } else {
-    yaml::read_yaml(param_file)
-  }
-  ## Check parameter file for validity if supplied ----------------------------
-  # TODO: add validity check
-
-
   # Default values ============================================================
   ## Load internal default value file if no default_value_file is supplied ----
   defaultvars <- if (is.null(default_value_file)) {
-    yaml::read_yaml(system.file("extdata",
-                                "defaultvariables.yaml",
-                                package = "RFDose"))
+    yaml::read_yaml(
+      system.file(
+        "extdata",
+        "defaultvariables.yaml",
+        package = "RFDose"))
   } else {
     yaml::read_yaml(default_value_file)
   }
-
-  ## Check default value file for validity if supplied ------------------------
-  # TODO: add validity check
 
   ## Replace NAs with default values ------------------------------------------
   results <- fill_missing_variables(
@@ -57,8 +56,9 @@ calculate_emf_doses <- function(
     dplyr::rowwise() |>
     dplyr::mutate(
       outcome = list(
-        get_total_dose(
+        total_dose(
           as.list(dplyr::pick(dplyr::everything())),
+          tissue = tissue,
           params
         )
       )
@@ -72,21 +72,29 @@ calculate_emf_doses <- function(
 
 
 ###############################################################################
-#' Calculate Total RF-EMF Dose for Brain and Body from All Sources
+#' Calculate Total RF-EMF Dose from All Sources
 #'
+#' Calculates the total RF-EMF dose from all available RF-EMF sources
+#' for a specific tissue.
 #'
+#' @details
 #'
-#' @param sample A list with input values for a single sample
-#' @param params A parameter list
-#' @returns A list with results for brain and body dose for a single sample
+#' A detailed description of the dose calculation will follow.
+#'
+#' @param sample A list with input values for a single observation. List elements must
+#' match the names and data types of the provided example dataset and must not be NA.
+#' @param tissue Tissue for which to calculate dose (default: "brain" or "body")
+#' @param params Parameter list (optional). If not specified, calculations use
+#' default parameters.
+#'
+#' @returns Total RF-EMF dose in mJ/kg/day for the specified tissue.
+#'
 #' @export
-get_total_dose <- function(sample,
-                           params = NULL) {
+total_dose <- function(
+    sample,
+    tissue,
+    params = load_params()) {
   # Check input ===============================================================
-  ## Load internal parameter file if no param_file is supplied ----------------
-  params <- if (is.null(params)) {
-    load_params("params.yaml")  # from inst/extdata
-  }
   ## Check if any input values in sample are missing, return error ------------
   missing_vars <- anyNA(sample)
   if (missing_vars) {
@@ -94,7 +102,8 @@ get_total_dose <- function(sample,
   }
   # Calculate contribution of each exposure source ============================
   ## Calculate mobile call contribution ---------------------------------------
-  call_dose <- get_mobilecall_dose(
+  call_dose <- mobilecall_dose(
+    tissue           = tissue,
     duration         = sample$mpc_duration,
     ear_prop         = sample$mpc_ear_prop,
     headp_prop       = sample$mpc_headp_prop,
@@ -109,7 +118,8 @@ get_total_dose <- function(sample,
     )
 
   ## Calculate mobile data contribution ---------------------------------------
-  data_dose <- get_mobiledata_dose(
+  data_dose <- mobiledata_dose(
+    tissue           = tissue,
     duration_low     = sample$mpd_dur_low,
     duration_lowmed  = sample$mpd_dur_lowtomed,
     duration_medhigh = sample$mpd_dur_medtohigh,
@@ -124,7 +134,8 @@ get_total_dose <- function(sample,
     )
 
   ## Calculate far-field contribution -----------------------------------------
-  farf_dose <- get_farfield_dose(
+  farf_dose <- farfield_dose(
+    tissue           = tissue,
     country      = sample$country,
     urbanicity   = sample$urbanicity,
     travel_time  = sample$travel_time,
@@ -132,88 +143,62 @@ get_total_dose <- function(sample,
     )
 
   ## Calculate WiFi contribution ----------------------------------------------
-  wifi_dose <- get_wifi_dose(
+  wifi_dose <- wifi_dose(
+    tissue           = tissue,
     travel_time      = sample$travel_time,
     wifi_prop_travel = sample$mpd_wifi_prop_travel,
     params           = params
     )
 
   ## Calculate laptop contribution --------------------------------------------
-  lptp_dose <- get_laptop_dose(
-    dur_low       = sample$lptp_dur_low,
-    dur_lowtomed  = sample$lptp_dur_lowtomed,
-    dur_medtohigh = sample$lptp_dur_medtohigh,
-    dur_high      = sample$lptp_dur_high,
-    params        = params
+  lptp_dose <- laptop_dose(
+    tissue      = tissue,
+    dur_low     = sample$lptp_dur_low,
+    dur_lowmed  = sample$lptp_dur_lowtomed,
+    dur_medhigh = sample$lptp_dur_medtohigh,
+    dur_high    = sample$lptp_dur_high,
+    params      = params
     )
 
   ## Calculate tablet contribution --------------------------------------------
-  tblt_dose <- get_tablet_dose(
-    dur_low       = sample$tblt_dur_low,
-    dur_lowtomed  = sample$tblt_dur_lowtomed,
-    dur_medtohigh = sample$tblt_dur_medtohigh,
-    dur_high      = sample$tblt_dur_high,
-    params        = params
+  tblt_dose <- tablet_dose(
+    tissue      = tissue,
+    dur_low     = sample$tblt_dur_low,
+    dur_lowmed  = sample$tblt_dur_lowtomed,
+    dur_medhigh = sample$tblt_dur_medtohigh,
+    dur_high    = sample$tblt_dur_high,
+    params      = params
     )
 
   ## Calculate cordless contribution ------------------------------------------
-  dect_dose <- get_cordless_dose(
+  dect_dose <- cordless_dose(
+    tissue         = tissue,
     duration       = sample$dect_duration,
-    ear_proportion = sample$dect_ear_prop,
+    ear_prop       = sample$dect_ear_prop,
     params         = params
     )
 
   ## Calculate contribution of other sources -----------------------------------
-  othe_dose <- get_other_dose(
+  othe_dose <- other_dose_wrapper(
+    tissue              = tissue,
     duration_hotspot    = sample$hotspot_duration,
     duration_smartwatch = sample$smartwatch_duration,
-    duration_tracker    = sample$tracker_duration,
     duration_vr         = sample$vr_duration,
     duration_headphones = sample$headphone_duration,
     duration_gaming     = sample$gaming_duration,
     params              = params
     )
 
-
-  # Calculate total dose ======================================================
-  ## Brain
-  total_brain_dose <- sum(
-    call_dose$brain_call_dose,
-    data_dose$brain_data_dose,
-    dect_dose$brain_dect_dose,
-    farf_dose$brain_farf_dose,
-    wifi_dose$brain_wifi_dose,
-    lptp_dose$brain_lptp_dose,
-    tblt_dose$brain_tblt_dose,
-    othe_dose$brain_othe_dose
-    )
-
-  ## Body
-  total_body_dose <- sum(
-    call_dose$body_call_dose,
-    data_dose$body_data_dose,
-    dect_dose$body_dect_dose,
-    farf_dose$body_farf_dose,
-    wifi_dose$body_wifi_dose,
-    lptp_dose$body_lptp_dose,
-    tblt_dose$body_tblt_dose,
-    othe_dose$body_othe_dose
-    )
-
-  ## Save as list
-  tota_dose <- list("brain_total_dose" = total_brain_dose,
-                    "body_total_dose"  = total_body_dose)
-
   # Return output =============================================================
-  output_list <- c(call_dose,
-                   data_dose,
-                   dect_dose,
-                   farf_dose,
-                   wifi_dose,
-                   lptp_dose,
-                   tblt_dose,
-                   othe_dose,
-                   tota_dose)
+  output_list <- c(
+    "call_dose"  = call_dose,
+    "data_dose"  = data_dose,
+    "dect_dose"  = dect_dose,
+    "farf_dose"  = farf_dose,
+    "wifi_dose"  = wifi_dose,
+    "lptp_dose"  = lptp_dose,
+    "tblt_dose"  = tblt_dose,
+    "other_dose" = othe_dose)
 
   return(output_list)
 }

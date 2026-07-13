@@ -1,152 +1,259 @@
-# Calculate total RF-EMF dose (for brain and body) from tablet use
-
 # =============================================================================
-#' Calculate Dose from Tablet Use
+#' Calculate RF-EMF Dose from Tablet Use
 #'
-#' @param dur_low tba
-#' @param dur_lowtomed tba
-#' @param dur_medtohigh tba
-#' @param dur_high tba
-#' @param params Parameter list
-#' @returns List with brain dose and body dose in mJ/kg/day
+#' Calculates the tissue-specific RF-EMF dose from tablet use.
+#'
+#' @details
+#'
+#' The tablet RF-EMF dose is calculated as:
+#'
+#' \deqn{Dose_{tablet} = mSAR_{tablet}*duration_{tablet}}
+#'
+#' Where:
+#'
+#' * \eqn{Dose_{tablet}} is the dose from tablet use
+#' * \eqn{mSAR_{tablet}} is the momentary SAR value in mJ/kg
+#' * \eqn{duration_{tablet}} is the duration of tablet use
+#'
+#' We distinguish between 4 types of activities:
+#'
+#' 1. Low output power: sending e-mails, browsing the internet, scrolling and
+#'    chatting on social media, sending text messages
+#' 2. Low to medium output power: online gaming, streaming music, sending voice
+#'    messages
+#' 3. Medium to high output power: watching videos, uploading pictures or
+#'    videos, making video calls
+#' 4. High output power: uploading large files
+#'
+#' @param tissue Tissue for which to calculate dose (default: "brain" or "body")
+#' @param dur_low Duration (in seconds per day) of low output power activities on tablet
+#' @param dur_lowmed Duration (in seconds per day) of low-medium output power activities on tablet
+#' @param dur_medhigh Duration (in seconds per day) of medium-high output power activities on tablet
+#' @param dur_high Duration (in seconds per day) of high output power activities on tablet
+#' @param params Parameter list (optional). If not specified, calculations use
+#' default parameters.
+#'
+#' @returns Tissue-specific RF-EMF dose from tablet use in mJ/kg/day
+#'
+#' @examples
+#' tablet_dose(
+#'   tissue      = "brain",
+#'   dur_low     = 0,
+#'   dur_lowmed  = 681,
+#'   dur_medhigh = 0,
+#'   dur_high    = 0)
+#'
 #' @export
-#' @import yaml
-get_tablet_dose <- function(
+#' @seealso [tablet_msar()]
+tablet_dose <- function(
+    tissue,
     dur_low,
-    dur_lowtomed,
-    dur_medtohigh,
+    dur_lowmed,
+    dur_medhigh,
     dur_high,
-    params = NULL) {
-  # Load parameters if not provided ===========================================
-  if (is.null(params)) {
-    params <- load_params("params.yaml")}
+    params = load_params()) {
 
-  check_duration(c(dur_low, dur_lowtomed, dur_medtohigh, dur_high))
+  # Check input ===============================================================
+  check_duration(c(dur_low, dur_lowmed, dur_medhigh, dur_high))
 
   # Calculate total duration ==================================================
   duration <- sum(
     dur_low,
-    dur_lowtomed,
-    dur_medtohigh,
+    dur_lowmed,
+    dur_medhigh,
     dur_high)
 
-  # Calculate time proportions of each activity ===============================
-  act_pwr_props <- get_act_pwr_props(
-    low_dur     = dur_low,
-    lowmed_dur  = dur_lowtomed,
-    medhigh_dur = dur_medtohigh,
-    high_dur    = dur_high)
+  # Calculate mSAR ============================================================
+  msar <- tablet_msar(
+    tissue        = tissue,
+    dur_low       = dur_low,
+    dur_lowmed    = dur_lowmed,
+    dur_medhigh   = dur_medhigh,
+    dur_high      = dur_high,
+    params        = params
+  )
 
-  # Extract parameters ========================================================
-  ## Extract shared (non-tissue specific) parameters for laptop ---------------
-  tblt_params  <- load_device_params(params, "tblt")
+  # Calculate dose ============================================================
+  dose <- msar * duration
 
-  ## Extract brain-specific parameters (SAR values) for laptop ----------------
-  brain_params <- load_tissue_params(params, "tblt", "brain")
-
-  ## Extract body-specific parameters (SAR values) for laptop -----------------
-  body_params  <- load_tissue_params(params, "tblt", "body")
-
-
-  # Calculate aggregated power ================================================
-  aggr_pwr     <- get_tablet_pwr(act_pwr_props, tblt_params)
-
-
-  # Calculate tissue SAR ======================================================
-  ## Brain SAR ----------------------------------------------------------------
-  brain_sar    <- get_tablet_sar(tblt_params, brain_params)
-
-  ## Body SAR -----------------------------------------------------------------
-  body_sar     <- get_tablet_sar(tblt_params, body_params)
-
-  # Calculate total doses =====================================================
-  ## Brain dose ---------------------------------------------------------------
-  brain_dose   <- duration * aggr_pwr * brain_sar
-
-  ## Body dose ----------------------------------------------------------------
-  body_dose    <- duration * aggr_pwr * body_sar
-
-  # Return output =============================================================
-  tblt_output  <- list("brain_tblt_dose" = brain_dose,
-                       "body_tblt_dose"  = body_dose)
-
-  return(tblt_output)
+  return(dose)
 }
 
 # =============================================================================
-#' Calculate Tablet Aggregated Power
+#' Calculate mSAR from Tablet Use
 #'
-#' @param act_pwr_props descr
-#' @param params descr
-#' @returns Aggregated tablet power
-get_tablet_pwr <- function(
-    act_pwr_props,
-    params) {
-  # Calculate power for 2.4 GHz ===============================================
-  ## Weighted duty cycles -----------------------------------------------------
-  ### Low output power activities
-  tblt_2_low_dutycycle   <- sum(
-    act_pwr_props$low_prop*params$wifi_2_low_dutycycle,
-    act_pwr_props$lowmed_prop*params$wifi_2_lowmed_dutycycle)
-  ### High output power activities
-  tblt_2_high_dutycycle  <- sum(
-    act_pwr_props$medhigh_prop*params$wifi_2_medhigh_dutycycle,
-    act_pwr_props$high_prop*params$wifi_2_high_dutycycle)
+#' Calculates the tissue-specific momentary SAR (mSAR) from tablet use.
+#'
+#' @details
+#'
+#' The mSAR is calculated as:
+#'
+#' \deqn{mSAR_{tablet} = nSAR_{tablet}*outputpower_{tablet}}
+#'
+#' Where:
+#'
+#' * \eqn{mSAR_{tablet}} is the mSAR from tablet use
+#' * \eqn{nSAR_{tablet}} is the normalised SAR value in mJ/kg
+#' * \eqn{outputpower_{tablet}} is the duration of tablet use
+#'
+#'
+#' We distinguish between 4 types of activities:
+#'
+#' 1. Low output power: sending e-mails, browsing the internet, scrolling and
+#'    chatting on social media, sending text messages
+#' 2. Low to medium output power: online gaming, streaming music, sending voice
+#'    messages
+#' 3. Medium to high output power: watching videos, uploading pictures or
+#'    videos, making video calls
+#' 4. High output power: uploading large files
+#'
+#' @param tissue Tissue for which to calculate mSAR (default: "brain" or "body")
+#' @param dur_low Duration (in seconds per day) of low output power activities on tablet
+#' @param dur_lowmed Duration (in seconds per day) of low-medium output power activities on tablet
+#' @param dur_medhigh Duration (in seconds per day) of medium-high output power activities on tablet
+#' @param dur_high Duration (in seconds per day) of high output power activities on tablet
+#' @param params Parameter list (optional). If not specified, calculations use
+#' default parameters.
+#'
+#' @returns Tissue-specific mSAR from tablet use in mW/kg
+#'
+#' @examples
+#' tablet_msar(
+#'   tissue      = "brain",
+#'   dur_low     = 0,
+#'   dur_lowmed  = 1230,
+#'   dur_medhigh = 0,
+#'   dur_high    = 0)
+#'
+#' @export
+#' @seealso [tablet_pwr(), tablet_sar()]
+tablet_msar <- function(
+    tissue,
+    dur_low,
+    dur_lowmed,
+    dur_medhigh,
+    dur_high,
+    params = load_params()) {
+  ## List frequency bands
+  bands <- c("2", "5") # 2.4 GHz, 5.0 GHz
 
-  ## Output power -------------------------------------------------------------
-  ### Calculate low and high output power, respectively
-  tblt_2_pwr_low    <- tblt_2_low_dutycycle * params$wifi_2_pwr
-  tblt_2_pwr_high   <- tblt_2_high_dutycycle * params$wifi_2_pwr
-  ### Sum up low and high output power
-  tblt_2_pwr <- sum(tblt_2_pwr_low, tblt_2_pwr_high)
-  ### Scale output by total proportion of 2.4GHz WiFi
-  tblt_2_contr  <- params$wifi_2_prop * tblt_2_pwr
+  msar <- sum(
+    vapply(
+      bands,
+      \(band) {
 
-  # Calculate power for 5.0 GHz ===============================================
-  ## Weighted duty cycles -----------------------------------------------------
-  ### Low output power activities
-  tblt_5_low_dutycycle   <- sum(
-    act_pwr_props$low_prop*params$wifi_5_low_dutycycle,
-    act_pwr_props$lowmed_prop*params$wifi_5_lowmed_dutycycle)
-  ### High output power activities
-  tblt_5_high_dutycycle  <- sum(
-    act_pwr_props$medhigh_prop*params$wifi_5_medhigh_dutycycle,
-    act_pwr_props$high_prop*params$wifi_5_high_dutycycle)
+        prop <- params$global[[paste0("wifi_", band, "_prop")]]
 
-  ## Output power -------------------------------------------------------------
-  ### Calculate low and high output power, respectively
-  tblt_5_pwr_low    <- tblt_5_low_dutycycle * params$wifi_5_pwr
-  tblt_5_pwr_high   <- tblt_5_high_dutycycle * params$wifi_5_pwr
-  ### Sum up low and high output power
-  tblt_5_pwr <- sum(tblt_5_pwr_low, tblt_5_pwr_high)
-  ### Scale output by total proportion of 5.0GHz WiFi
-  tblt_5_contr  <- params$wifi_5_prop * tblt_5_pwr
+        ## Calculate power
+        pwr <- tablet_pwr(
+          band          = band,
+          dur_low       = dur_low,
+          dur_lowmed    = dur_lowmed,
+          dur_medhigh   = dur_medhigh,
+          dur_high      = dur_high,
+          params        = params)
 
-  # Combine output power from 2.4 and 5.0 GHz =================================
+        ## Calculate SAR
+        sar <- tablet_sar(
+          tissue        = tissue,
+          band          = band,
+          params        = params)
 
-  aggr_pwr     <- sum(tblt_2_contr, tblt_5_contr)
-  # Return output
-  return(aggr_pwr)
+        prop*sar*pwr
+      },
+      numeric(1)
+    )
+  )
+  return(msar)
 }
 
 # =============================================================================
-#' Calculate Tablet Aggregated SAR
+#' Calculate Tablet Output Power
 #'
-#' @param params descr
-#' @param tissue_params descr
-#' @returns Aggregated tablet SAR
-get_tablet_sar <- function(
-    params,
-    tissue_params) {
-  # Calculate SAR from 2.4 GHz
-  sar_2    <- params$wifi_2_prop * tissue_params$tblt_2_sar
+#' Calculates the tablet output power during use
+#'
+#' @details
+#' The output power depends on the frequency band (2.4 GHz or 5.0 GHz) and the
+#' type of activity.
+#'
+#' @param band WiFi frequency band ("2" for 2.4 GHz, "5" for 5.0 GHz)
+#' @param dur_low Duration (in seconds per day) of low output power activities on tablet
+#' @param dur_lowmed Duration (in seconds per day) of low-medium output power activities on tablet
+#' @param dur_medhigh Duration (in seconds per day) of medium-high output power activities on tablet
+#' @param dur_high Duration (in seconds per day) of high output power activities on tablet
+#' @param params Parameter list (optional). If not specified, calculations use
+#' default parameters.
+#'
+#' @returns Output power in mW
+#'
+#' @examples
+#' tablet_pwr(
+#'   band        = "5",
+#'   dur_low     = 0,
+#'   dur_lowmed  = 681,
+#'   dur_medhigh = 0,
+#'   dur_high    = 0)
+#'
+#' @export
+tablet_pwr <- function(
+    band,
+    dur_low,
+    dur_lowmed,
+    dur_medhigh,
+    dur_high,
+    params = load_params()) {
+  # Calculate activity proportions ============================================
+  act_props <- act_pwr_props(
+    dur_low,
+    dur_lowmed,
+    dur_medhigh,
+    dur_high)
 
-  # Calculate SAR from 5.0 GHz
-  sar_5    <- params$wifi_5_prop * tissue_params$tblt_5_sar
+  activities <- c("low", "lowmed", "medhigh", "high")
 
-  # Combine 2.4 and 5.0 GHz
-  aggr_sar <- sum(sar_2, sar_5)
+  # Calculate power ===========================================================
+  pwr <- sum(
+    vapply(
+      activities,
+      \(activity) {
+        act_prop <- act_props[[activity]]
+        dc <- params$devices$tblt[[paste("wifi", band, activity, "dutycycle", sep = "_")]]
+        pwr <- params$devices$tblt[[paste("wifi", band, "pwr", sep = "_")]]
+        return(act_prop*dc*pwr)
+      },
+      numeric(1)
+    )
+  )
+  return(pwr)
+}
 
-  # Return output
-  return(aggr_sar)
+# =============================================================================
+#' Calculate nSAR during Tablet Use
+#'
+#' Calculates tissue-specific nSAR from tablet use.
+#'
+#' @details
+#' The normalized specific absorption rate (nSAR) depends on the tissue and
+#' the frequency band.
+#'
+#' @param tissue Tissue for which to calculate nSAR (default: "brain" or "body")
+#' @param band Frequency band ("2" for 2.4 GHz, "5" for 5.0 GHz)
+#' @param params Parameter list (optional). If not specified, calculations use
+#' default parameters.
+#'
+#' @returns nSAR in W/kg/W
+#'
+#' @examples
+#' tablet_sar(
+#' tissue       = "brain",
+#' band         = "2")
+#'
+#' @export
+tablet_sar <- function(
+    tissue,
+    band,
+    params = load_params()) {
+  tissue_params <- load_tissue_params(params, "tblt", tissue)
+  sar <- tissue_params[[paste("tblt", band, "sar", sep ="_")]]
+  return(sar)
 }
