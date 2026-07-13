@@ -3,8 +3,8 @@ library(dplyr)
 library(tidyr)
 
 file = "Duke_male_adult.xlsx"
-sheet = "Duke_fronteyes_normalized"
-prefix = "Duke_fronteyes"
+sheet = "Duke_ear_normalized"
+prefix = "Duke_ear"
 
 df <- read_excel(file, sheet = sheet)
 df <- dplyr::select(df, -`Average_brain (W/kg)`, -`Average_WB (W/kg)`)
@@ -40,3 +40,4 @@ df_interp <- df_interp %>% mutate(
 )
 
 write.csv(df_interp, file = paste0("data/",sheet,"_interpol.csv"))
+
