@@ -3,8 +3,8 @@ library(dplyr)
 library(tidyr)
 
 file = "Duke_male_adult.xlsx"
-sheet = "Duke_ear_normalized"
-prefix = "Duke_ear"
+sheet = "Duke_belly_normalized"
+prefix = "Duke"
 
 df <- read_excel(file, sheet = sheet)
 df <- dplyr::select(df, -`Average_brain (W/kg)`, -`Average_WB (W/kg)`)
@@ -35,8 +35,8 @@ df_interp <- df %>%
   ungroup()
 
 df_interp <- df_interp %>% mutate(
-  yaml_name_whole_body = paste0(prefix, "_",frequency_mhz,"_",placement,": ",`SAR_wholebody (mW/kg)`),
-  yaml_name_whole_brain = paste0(prefix, "_",frequency_mhz,"_",placement,": ",`SAR_brain (mW/kg)`)
+  yaml_name_whole_body = paste0(prefix,"_body", "_",frequency_mhz,"_",placement,"_sar: ",`SAR_wholebody (mW/kg)`),
+  yaml_name_whole_brain = paste0(prefix,"_brain", "_",frequency_mhz,"_",placement,"_sar: ",`SAR_brain (mW/kg)`)
 )
 
 write.csv(df_interp, file = paste0("data/",sheet,"_interpol.csv"))
