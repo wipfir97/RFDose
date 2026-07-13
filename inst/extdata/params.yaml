@@ -496,8 +496,8 @@ devices:
       smarthome_sar: 0.009862
   gaming:
     gaming_online_prop: 0.25
-    gaming_2_dutycycle: 0.020
-    gaming_5_dutycycle: 0.028
+    gaming_2_dutycycle: 0.0195
+    gaming_5_dutycycle: 0.0276
     gaming_2_pwr: 100
     gaming_5_pwr: 200
     brain:

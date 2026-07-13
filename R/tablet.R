@@ -15,8 +15,6 @@
 #' * \eqn{mSAR_{tablet}} is the momentary SAR value in mJ/kg
 #' * \eqn{duration_{tablet}} is the duration of tablet use
 #'
-#'
-#'
 #' We distinguish between 4 types of activities:
 #'
 #' 1. Low output power: sending e-mails, browsing the internet, scrolling and

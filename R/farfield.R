@@ -14,7 +14,7 @@
 #' * \eqn{Dose_{farfield}} is the dose from far-field sources
 #' * \eqn{mSAR_{farfield}} is the momentary SAR value in mJ/kg
 #'
-#' @param tissue Tissue for which to calculate nSAR (default: "brain" or "body")
+#' @param tissue Tissue for which to calculate dose (default: "brain" or "body")
 #' @param country Country of residence (Austria = "AT", Belgium = "BE", France = FR,
 #' Hungary = "HU", Italy = "IT", Netherlands = "NL", Poland = "PL", Spain = "ES",
 #' Switzerland = "CH", United Kingdom = "UK", elsewhere = "Other")

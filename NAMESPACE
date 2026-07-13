@@ -2,6 +2,9 @@
 
 export(calculate_emf_doses)
 export(cordless_dose)
+export(dect_msar)
+export(dect_pwr)
+export(dect_sar)
 export(farfield_dose)
 export(farfield_msar)
 export(farfield_pwr)

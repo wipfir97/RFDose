@@ -2,21 +2,47 @@
 % Please edit documentation in R/cordless.R
 \name{cordless_dose}
 \alias{cordless_dose}
-\title{Calculate Dose from Cordless Calling}
+\title{Calculate Dose from Cordless Calls}
 \usage{
 cordless_dose(tissue, duration, ear_prop, params = load_params())
 }
 \arguments{
-\item{duration}{Duration of cordless calls in seconds. >= 0 and <= 86400}
+\item{tissue}{Tissue for which to calculate dose (default: "brain" or "body")}
+
+\item{duration}{Duration of cordless calls in s/day.}
 
 \item{ear_prop}{Proportion of time cordless phone is held against ear
-during calls. >=0 and <=1.}
+during calls.}
 
-\item{params}{Parameter list.}
+\item{params}{Parameter list (optional). If not specified, calculations use
+default parameters.}
 }
 \value{
-List with brain dose and body dose in mJ/kg/day
+Tissue-specific RF-EMF dose from DECT/cordless phone calls in mJ/kg/day
 }
 \description{
-Calculate Dose from Cordless Calling
+Calculates RF-EMF dose from making calls with cordless phone (also known as
+DECT phone).
+}
+\details{
+The dose is calculated as
+
+\deqn{Dose_{DECT} = mSAR_{DECT}*duration_{DECT}}
+
+Where:
+\itemize{
+\item \eqn{Dose_{DECT}} is the dose from DECT/cordless phone calls
+\item \eqn{mSAR_{DECT}} is the momentary SAR value in mJ/kg
+\item \eqn{duration_{DECT}} is the duration of the calls in s/day
+}
+}
+\examples{
+cordless_dose(
+  tissue      = "brain",
+  duration    = 600,
+  ear_prop    = 0.9)
+
+}
+\seealso{
+\code{\link[=dect_msar]{dect_msar()}}
 }

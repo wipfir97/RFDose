@@ -7,7 +7,7 @@
 farfield_dose(tissue, country, urbanicity, travel_time, params = load_params())
 }
 \arguments{
-\item{tissue}{Tissue for which to calculate nSAR (default: "brain" or "body")}
+\item{tissue}{Tissue for which to calculate dose (default: "brain" or "body")}
 
 \item{country}{Country of residence (Austria = "AT", Belgium = "BE", France = FR,
 Hungary = "HU", Italy = "IT", Netherlands = "NL", Poland = "PL", Spain = "ES",
