@@ -23,7 +23,6 @@ The output power depends on the frequency band (2.4 GHz or 5.0 GHz)
 }
 \examples{
 mpc_pwr_wifi(
-band        = "5",
-params      = load_params())
+band  = "5")
 
 }

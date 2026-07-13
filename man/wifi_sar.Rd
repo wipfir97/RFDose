@@ -27,7 +27,6 @@ the WiFi frequency band.
 \examples{
 wifi_sar(
 tissue = "brain",
-band   = "5",
-params = load_params())
+band   = "5")
 
 }

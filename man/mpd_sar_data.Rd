@@ -27,7 +27,6 @@ the frequency band.
 \examples{
 mpd_sar_data(
 tissue       = "brain",
-band         = "5g",
-params       = load_params())
+band         = "5g")
 
 }

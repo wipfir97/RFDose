@@ -1,18 +1,28 @@
 ###############################################################################
 #' Calculate Total RF-EMF Doses for ALL samples
 #'
-#' Wrapper function that calculates RF-EMF doses for a full data frame.
+#' Wrapper function that calculates RF-EMF doses for a data frame of observations.
+#' This function will be removed in the future.
 #'
-#' @param data A data frame with required columns.
+#' @details
+#' Additional details will follow.
+#'
+#'
+#' @param data A data frame. Must have the exact same columns as the provided example dataset.
+#' Columns must not be missing. Missing values will be replaced with default values.
 #' @param tissue Tissue for which to calculate dose (default: "brain" or "body")
-#' @param param_file Optional path to an external YAML parameter file. Must follow same structure as internal YAML parameter file.
-#' @param default_value_file Optional path to external YAML default value file. Must follow same structure as internal YAML default value file.
-#' @returns A data frame. Columns named SOURCE_dose_TISSUE contain the calculated RF-EMF dose
+#' @param params Parameter list (optional). If not specified, calculations use
+#' default parameters.
+#' @param default_value_file List of default values (optional).
+#'
+#' @returns A data frame. Columns contain the calculated RF-EMF dose
 #' of each row in mJ/kg/day, for each exposure source and each tissue.
+#'
 #' @import dplyr
 #' @importFrom tidyr unnest
 #' @importFrom tidyr unnest_wider
 #' @import yaml
+#'
 #' @export
 calculate_emf_doses <- function(
     data,
@@ -46,7 +56,7 @@ calculate_emf_doses <- function(
     dplyr::rowwise() |>
     dplyr::mutate(
       outcome = list(
-        get_total_dose(
+        total_dose(
           as.list(dplyr::pick(dplyr::everything())),
           tissue = tissue,
           params
@@ -62,13 +72,25 @@ calculate_emf_doses <- function(
 
 
 ###############################################################################
-#' Calculate Total RF-EMF Dose for Brain and Body from All Sources
+#' Calculate Total RF-EMF Dose from All Sources
 #'
-#' @param sample A list with input values for a single sample
-#' @param param_file parameter file
-#' @returns A list with results for brain and body dose for a single sample
+#' Calculates the total RF-EMF dose from all available RF-EMF sources
+#' for a specific tissue.
+#'
+#' @details
+#'
+#' A detailed description of the dose calculation will follow.
+#'
+#' @param sample A list with input values for a single observation. List elements must
+#' match the names and data types of the provided example dataset and must not be NA.
+#' @param tissue Tissue for which to calculate dose (default: "brain" or "body")
+#' @param params Parameter list (optional). If not specified, calculations use
+#' default parameters.
+#'
+#' @returns Total RF-EMF dose in mJ/kg/day for the specified tissue.
+#'
 #' @export
-get_total_dose <- function(
+total_dose <- function(
     sample,
     tissue,
     params = load_params()) {

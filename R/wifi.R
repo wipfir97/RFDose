@@ -32,7 +32,6 @@
 #'
 #' @export
 #' @seealso [wifi_msar()]
-#' @export
 wifi_dose <- function(
     tissue,
     travel_time,
@@ -178,8 +177,7 @@ wifi_pwr <- function(
 #' @examples
 #' wifi_sar(
 #' tissue = "brain",
-#' band   = "5",
-#' params = load_params())
+#' band   = "5")
 #'
 #' @export
 wifi_sar <- function(

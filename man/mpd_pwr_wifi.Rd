@@ -38,12 +38,11 @@ The output power depends on the frequency band (2.4 GHz or 5.0 GHz) and the
 type of activity.
 }
 \examples{
-mpc_pwr_wifi(
+mpd_pwr_wifi(
 band             = "2",
 duration_low     = 4860,
 duration_lowmed  = 540,
 duration_medhigh = 4860,
-duration_high    = 540,
-params           = load_params())
+duration_high    = 540)
 
 }

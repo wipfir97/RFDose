@@ -82,8 +82,7 @@ wifi_prop_home   = 0.5,
 wifi_prop_work   = 0.5,
 wifi_prop_travel = 0.5,
 urbanicity       = "suburban",
-travel_time      = 1800,
-params           = load_params())
+travel_time      = 1800)
 
 }
 \seealso{

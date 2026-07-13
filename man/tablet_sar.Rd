@@ -27,7 +27,6 @@ the frequency band.
 \examples{
 tablet_sar(
 tissue       = "brain",
-band         = "2",
-params       = load_params())
+band         = "2")
 
 }

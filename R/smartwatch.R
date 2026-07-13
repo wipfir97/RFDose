@@ -84,7 +84,7 @@ smartwatch_dose <- function(
 #'   tissue              = "body",
 #'   duration_smartwatch = 6000)
 #'
-#'   @export
+#' @export
 smartwatch_watch_dose <- function(
     tissue,
     duration_smartwatch,
@@ -147,7 +147,7 @@ smartwatch_watch_dose <- function(
 #'   tissue              = "body",
 #'   duration_smartwatch = 6000)
 #'
-#'   @export
+#' @export
 smartwatch_phone_dose <- function(
     tissue,
     duration_smartwatch,

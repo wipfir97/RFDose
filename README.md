@@ -7,12 +7,12 @@ Jalilian et al. (publication in writing stage).
 
 This package is a work in progress and is continuously updated. We are currently testing the calculations and adding documentation, and there may still be errors and bugs. 
 
-IMPORTANT information for test users: 
+IMPORTANT information for users switching from 0.2.0 to 0.3.0: 
 
 * The definition of the headp\_prop input variable changed from version 0.2.0 to 0.3.0.
-* From version 0.3.0, the tissue (default: "brain" or "body") needs to be specified when using the `calculate_emf_doses` function
-* The output structure of the calculate_emf_doses changed from version 0.2.0 to 0.3.0 and the total dose calculation was removed.
-* We will soon add helper functions to modify the default value and parameter files once testing is completed.
+* The calculate_emf_doses() function changed: From version 0.3.0, the tissue (default: "brain" or "body") needs to be specified when using the `calculate_emf_doses` function! In addition, the output structure changed and the total_dose output column was removed. Please refer to the function documentation.
+
+
 
 
 \---
@@ -26,7 +26,8 @@ IMPORTANT information for test users:
 |0.0.1|Basic test version (not on Github)|Completed|
 |0.1.0|Initial draft version for internal use|Completed|
 |0.2.0|Revised draft version with updated calculations, variables, and unit tests. Based on dose calculator version 7.3|Completed|
-|0.3.0|Updated, likely final version (based on dose calculator 7.6). **Will allow custom parameter and default values.** Based on dose calculator version 7.5|In progress|
+|0.3.0|Updated version with major changes in dose calculations (based on dose calculator 7.6). Based on dose calculator version 7.6|Completed|
+|0.4.0|Expected to be a smaller update (based on dose calculator version 7.7), with updated parameter values and additional helper functions for overwriting parameters and default values |In development|
 
 
 
@@ -51,14 +52,14 @@ remotes::install_github("wipfir97/RFDose")
 To install the current development version:
 
 ```{r}
-remotes::install_github("wipfir97/RFDose@dev/0.3.0")
+remotes::install_github("wipfir97/RFDose@dev/0.4.0")
 ```
 
-To install an older version of the package (example v.0.1.0):
+To install an older version of the package (example v.0.2.0):
 
 ```{r}
 # Install RFDose using your PAT
-remotes::install_github("wipfir97/RFDose@v0.1.0")
+remotes::install_github("wipfir97/RFDose@v0.2.0")
 ```
 
 \---
@@ -72,9 +73,9 @@ For a quick start, you can load the in-build example data set. This contains 3 s
 # Load package
 library(RFDose)
 # Load example data
-data(example\\\_data)
+data(example_data)
 # View example data
-head(example\\\_data)
+head(example_data)
 ```
 
 To calculate the RF-EMF doses for each participant, run the following code:

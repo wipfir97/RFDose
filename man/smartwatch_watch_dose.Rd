@@ -37,5 +37,4 @@ smartwatch_watch_dose(
   tissue              = "body",
   duration_smartwatch = 6000)
 
-  @export
 }

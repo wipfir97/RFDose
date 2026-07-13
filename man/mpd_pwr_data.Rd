@@ -52,7 +52,6 @@ duration_lowmed  = 540,
 duration_medhigh = 4860,
 duration_high    = 540,
 urbanicity       = "rural",
-travel_time      = 1800,
-params           = load_params())
+travel_time      = 1800)
 
 }

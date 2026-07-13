@@ -246,8 +246,7 @@ tablet_pwr <- function(
 #' @examples
 #' tablet_sar(
 #' tissue       = "brain",
-#' band         = "2",
-#' params       = load_params())
+#' band         = "2")
 #'
 #' @export
 tablet_sar <- function(

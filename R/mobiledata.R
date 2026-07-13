@@ -58,8 +58,7 @@
 #' wifi_prop_work   = 0.5,
 #' wifi_prop_travel = 0.5,
 #' urbanicity       = "suburban",
-#' travel_time      = 1800,
-#' params           = load_params())
+#' travel_time      = 1800)
 #'
 #' @seealso [mpd_msar()]
 #' @export
@@ -168,8 +167,7 @@ mobiledata_dose <- function(
 #' wifi_prop_work   = 0.5,
 #' wifi_prop_travel = 0.5,
 #' urbanicity       = "suburban",
-#' travel_time      = 1800,
-#' params           = load_params())
+#' travel_time      = 1800)
 #'
 #' @seealso [mpd_pwr_data(), mpd_pwr_wifi(), mpd_sar_data(), mpd_sar_wifi()]
 #' @export
@@ -205,6 +203,7 @@ mpd_msar <- function(
     loc_props$travel * wifi_prop_travel
   )
   data_prop_overall <- 1-wifi_prop_overall
+
 
   # Apply mSAR calculation to all data frequency bands ========================
   msar_data <- sum(
@@ -308,8 +307,7 @@ mpd_msar <- function(
 #' duration_medhigh = 4860,
 #' duration_high    = 540,
 #' urbanicity       = "rural",
-#' travel_time      = 1800,
-#' params           = load_params())
+#' travel_time      = 1800)
 #'
 #' @export
 mpd_pwr_data <- function(
@@ -400,13 +398,12 @@ mpd_pwr_data <- function(
 #' @returns Output power in mW
 #'
 #' @examples
-#' mpc_pwr_wifi(
+#' mpd_pwr_wifi(
 #' band             = "2",
 #' duration_low     = 4860,
 #' duration_lowmed  = 540,
 #' duration_medhigh = 4860,
-#' duration_high    = 540,
-#' params           = load_params())
+#' duration_high    = 540)
 #'
 #' @export
 mpd_pwr_wifi <- function(
@@ -462,8 +459,7 @@ mpd_pwr_wifi <- function(
 #' @examples
 #' mpd_sar_data(
 #' tissue       = "brain",
-#' band         = "5g",
-#' params       = load_params())
+#' band         = "5g")
 #'
 #' @export
 mpd_sar_data <- function(
@@ -497,8 +493,7 @@ mpd_sar_data <- function(
 #' @examples
 #' mpd_sar_wifi(
 #' tissue       = "brain",
-#' band         = "2",
-#' params       = load_params())
+#' band         = "2")
 #'
 #' @export
 mpd_sar_wifi <- function(

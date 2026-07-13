@@ -30,7 +30,6 @@ call is performed (urbanicity, indoors/outdoors/commuting)
 mpc_pwr_native(
 band        = "4g",
 urbanicity  = "suburban",
-travel_time = 1800,
-params      = load_params())
+travel_time = 1800)
 
 }

@@ -71,14 +71,13 @@ mpc_msar(
 tissue           = "body",
 prop_native      = 0.7,
 prop_data        = 0.2,
-prop_wifi        = 0.1
+prop_wifi        = 0.1,
 headp_prop       = 0.17,
 ear_prop         = 0.67,
 speaker_prop     = 0.17,
 urbanicity       = "suburban",
 use_5g           = TRUE,
-travel_time      = 1800,
-params           = load_params())
+travel_time      = 1800)
 
 }
 \seealso{

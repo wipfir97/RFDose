@@ -84,7 +84,7 @@ headphones_dose <- function(
 #'   tissue              = "body",
 #'   duration_headphones = 6000)
 #'
-#'   @export
+#' @export
 headphones_earset_dose <- function(
     tissue,
     duration_headphones,
@@ -133,7 +133,7 @@ headphones_earset_dose <- function(
 #'   tissue              = "body",
 #'   duration_headphones = 6000)
 #'
-#'   @export
+#' @export
 headphones_phone_dose <- function(
     tissue,
     duration_headphones,

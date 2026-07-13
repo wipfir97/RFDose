@@ -90,8 +90,7 @@ travel_time      = 1800,
 headp_ear_num    = 2,
 wifi_prop_home   = 1,
 wifi_prop_work   = 0.8,
-wifi_prop_travel = 0,
-params           = load_params())
+wifi_prop_travel = 0)
 
 }
 \seealso{

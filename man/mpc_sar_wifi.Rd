@@ -45,7 +45,6 @@ tissue       = "brain",
 band         = "2",
 headp_prop   = 0.17,
 ear_prop     = 0.67,
-speaker_prop = 0.17,
-params       = load_params())
+speaker_prop = 0.17)
 
 }

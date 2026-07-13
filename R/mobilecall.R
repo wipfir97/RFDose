@@ -62,8 +62,7 @@
 #' headp_ear_num    = 2,
 #' wifi_prop_home   = 1,
 #' wifi_prop_work   = 0.8,
-#' wifi_prop_travel = 0,
-#' params           = load_params())
+#' wifi_prop_travel = 0)
 #'
 #' @seealso [mpc_msar()]
 #' @export
@@ -187,14 +186,13 @@ mobilecall_dose <- function(
 #' tissue           = "body",
 #' prop_native      = 0.7,
 #' prop_data        = 0.2,
-#' prop_wifi        = 0.1
+#' prop_wifi        = 0.1,
 #' headp_prop       = 0.17,
 #' ear_prop         = 0.67,
 #' speaker_prop     = 0.17,
 #' urbanicity       = "suburban",
 #' use_5g           = TRUE,
-#' travel_time      = 1800,
-#' params           = load_params())
+#' travel_time      = 1800)
 #'
 #' @seealso [mpc_pwr_native(), mpc_pwr_data(), mpc_pwr_wifi(), mpc_sar_native(), mpc_sar_data(), mpc_sar_wifi()]
 #' @export
@@ -335,8 +333,7 @@ mpc_msar <- function(
 #' mpc_pwr_native(
 #' band        = "4g",
 #' urbanicity  = "suburban",
-#' travel_time = 1800,
-#' params      = load_params())
+#' travel_time = 1800)
 #'
 #' @export
 mpc_pwr_native <- function(
@@ -401,8 +398,7 @@ mpc_pwr_native <- function(
 #' band         = "4g",
 #' headp_prop   = 0.17,
 #' ear_prop     = 0.67,
-#' speaker_prop = 0.17,
-#' params       = load_params())
+#' speaker_prop = 0.17)
 #'
 #' @export
 mpc_sar_native <- function(
@@ -458,8 +454,7 @@ mpc_sar_native <- function(
 #' mpc_pwr_data(
 #' band        = "4g",
 #' urbanicity  = "suburban",
-#' travel_time = 1800,
-#' params      = load_params())
+#' travel_time = 1800)
 #'
 #' @export
 mpc_pwr_data <- function(
@@ -526,8 +521,7 @@ mpc_pwr_data <- function(
 #' band         = "4g",
 #' headp_prop   = 0.17,
 #' ear_prop     = 0.67,
-#' speaker_prop = 0.17,
-#' params       = load_params())
+#' speaker_prop = 0.17)
 #'
 #' @export
 mpc_sar_data <- function(
@@ -579,8 +573,7 @@ mpc_sar_data <- function(
 #'
 #' @examples
 #' mpc_pwr_wifi(
-#' band        = "5",
-#' params      = load_params())
+#' band  = "5")
 #'
 #' @export
 mpc_pwr_wifi <- function(
@@ -630,8 +623,7 @@ mpc_pwr_wifi <- function(
 #' band         = "2",
 #' headp_prop   = 0.17,
 #' ear_prop     = 0.67,
-#' speaker_prop = 0.17,
-#' params       = load_params())
+#' speaker_prop = 0.17)
 #'
 #' @export
 mpc_sar_wifi <- function(
@@ -693,8 +685,7 @@ mpc_sar_wifi <- function(
 #'
 #' @examples
 #' mpc_bt_msar(
-#' tissue = "brain",
-#' params = load_params()
+#' tissue = "brain"
 #' )
 #'
 #' @export

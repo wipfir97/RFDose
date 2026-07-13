@@ -23,7 +23,6 @@ The normalized specific absorption rate (nSAR) depends on the tissue.
 }
 \examples{
 farfield_sar(
-tissue       = "brain",
-params       = load_params())
+tissue       = "brain")
 
 }

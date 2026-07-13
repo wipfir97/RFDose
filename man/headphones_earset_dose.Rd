@@ -38,5 +38,4 @@ headphones_earset_dose(
   tissue              = "body",
   duration_headphones = 6000)
 
-  @export
 }

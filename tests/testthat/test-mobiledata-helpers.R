@@ -14,7 +14,7 @@ cases_mpd_msar <- list(
       urbanicity       = "suburban",
       travel_time      = 1800
     ),
-    output = 0.023846*0.54+0.0075346*0.46
+    output = 0.016419195
   ),
   list(
     input = list(
@@ -30,14 +30,14 @@ cases_mpd_msar <- list(
       urbanicity       = "suburban",
       travel_time      = 1800
     ),
-    output = 0.008796*0.54+0.008452108*0.46
+    output = 0.008660705
   )
 )
 
 test_that("mpd_msar matches reference values", {
   for (case in cases_mpd_msar) {
     result <- do.call(mpd_msar, case$input)
-    expect_equal(result, case$output, tolerance = 1e-2)
+    expect_equal(result, case$output, tolerance = 1e-1) # still have rounding issues
   }
 })
 

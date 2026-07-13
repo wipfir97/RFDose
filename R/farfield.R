@@ -32,7 +32,6 @@
 #'   urbanicity  = "suburban",
 #'   travel_time = 1800)
 #'
-#' @export
 #' @seealso [farfield_msar()]
 #' @export
 farfield_dose <- function(
@@ -192,8 +191,7 @@ farfield_pwr <- function(
 #'
 #' @examples
 #' farfield_sar(
-#' tissue       = "brain",
-#' params       = load_params())
+#' tissue       = "brain")
 #'
 #' @export
 farfield_sar <- function(

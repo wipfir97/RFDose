@@ -30,8 +30,7 @@ where the mSAR (of bt_phone and bt_headphones) is calculated as:
 }
 \examples{
 mpc_bt_msar(
-tissue = "brain",
-params = load_params()
+tissue = "brain"
 )
 
 }

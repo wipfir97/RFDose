@@ -255,8 +255,7 @@ laptop_pwr <- function(
 #' @examples
 #' laptop_sar(
 #' tissue       = "brain",
-#' band         = "2",
-#' params       = load_params())
+#' band         = "2")
 #'
 #' @export
 laptop_sar <- function(
