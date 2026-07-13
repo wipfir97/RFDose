@@ -103,6 +103,10 @@ mobilecall_dose <- function(
 
   #############################################################################
   # Input checks ==============================================================
+
+  #find name of simulation dummy
+  dummy <- determine_dummy(params$global$input_stochastics$sex,
+                           params$global$input_stochastics$age)
   check_tissue(tissue, "call", params)
   check_duration(duration)
   check_proportions(c(ear_prop, headp_prop, speaker_prop))
@@ -451,11 +455,13 @@ mpc_sar_native <- function(
                       "belly_right_ver_pro","belly_right_hor_prop",
                       "belly_up_ver_prop","belly_up_hor_prop")
 
-
+  #find name of simulation dummy
+  dummy <- determine_dummy(params$global$input_stochastics$sex,
+                           params$global$input_stochastics$age)
   # define prefix for finding correct tissue parameter
-  prefix <- paste0("Duke_body_", freq,"_")
+  prefix <- paste0(dummy,"_",tissue,"_", freq,"_")
   # load tissue-specific parameters (SAR values)
-  tissue_params <- load_tissue_params(params, "call", tissue)
+  tissue_params <- load_tissue_params(params, "call", tissue,dummy)
   # phone on ear
   mpc_sar_ear <- sum(
     vapply(
@@ -491,7 +497,7 @@ mpc_sar_native <- function(
       numeric(1)
     )
   )
-  headp_sar_else <- tissue_params[[paste0("Duke_",tissue,"_headp_else")]]
+  headp_sar_else <- tissue_params[[paste0(dummy,"_",tissue,"_headp_else")]]
   mpc_sar_headphones <- sum(
     params$devices$call$position_props$headp_face_prop * headp_sar_face,
     params$devices$call$position_props$headp_pock_prop * headp_sar_pocket,
@@ -622,27 +628,15 @@ mpc_sar_data <- function(
     ear_prop,
     speaker_prop,
     params = load_params()) {
-  # define prefix for finding correct tissue parameter
-  prefix <- paste0("Duke_body_", freq)
-  # load tissue-specific parameters (SAR values)
-  tissue_params <- load_tissue_params(params, "call", tissue)
-  # phone on ear
-  mpc_sar_ear <- tissue_params[[paste0(prefix, "_ear_sar")]]
-  # phone with headphone
-  mpc_sar_headphones <- sum(
-    params$devices$call$headp_face_prop * tissue_params[[paste0(prefix, "_headp_face_sar")]],
-    params$devices$call$headp_pock_prop * tissue_params[[paste0(prefix, "_headp_pock_sar")]],
-    params$devices$call$headp_else_prop * tissue_params[[paste0(prefix, "_headp_else_sar")]]
-  )
-  # phone in speaker mode
-  mpc_sar_speaker <- tissue_params[[paste0(prefix, "_speaker_sar")]]
 
 
-  mpc_sar <- sum(
-    ear_prop * mpc_sar_ear,
-    headp_prop * mpc_sar_headphones,
-    speaker_prop * mpc_sar_speaker
-  )
+  mpc_sar <- mpc_sar_native(
+    tissue,
+    freq,
+    headp_prop,
+    ear_prop,
+    speaker_prop,
+    params = load_params())
 
   return(mpc_sar)
 }
@@ -726,27 +720,15 @@ mpc_sar_wifi <- function(
     ear_prop,
     speaker_prop,
     params = load_params()) {
-  # define prefix for finding correct tissue parameter
-  prefix <- paste0("wifi_", freq)
-  # load tissue-specific parameters (SAR values)
-  tissue_params <- load_tissue_params(params, "call", tissue)
-  # phone on ear
-  mpc_sar_ear <- tissue_params[[paste0(prefix, "_ear_sar")]]
-  # phone with headphone
-  mpc_sar_headphones <- sum(
-    params$devices$call$headp_face_prop * tissue_params[[paste0(prefix, "_headp_face_sar")]],
-    params$devices$call$headp_pock_prop * tissue_params[[paste0(prefix, "_headp_pock_sar")]],
-    params$devices$call$headp_else_prop * tissue_params[[paste0(prefix, "_headp_else_sar")]]
-  )
-  # phone in speaker mode
-  mpc_sar_speaker <- tissue_params[[paste0(prefix, "_speaker_sar")]]
 
+  mpc_sar <- mpc_sar_native(
+    tissue,
+    freq,
+    headp_prop,
+    ear_prop,
+    speaker_prop,
+    params = load_params())
 
-  mpc_sar <- sum(
-    ear_prop * mpc_sar_ear,
-    headp_prop * mpc_sar_headphones,
-    speaker_prop * mpc_sar_speaker
-  )
 
   return(mpc_sar)
 }
@@ -827,7 +809,10 @@ mpc_bt_pwr <- function(
 mpc_bt_sar <- function(
     tissue,
     params = load_params()) {
-  tissue_params <- load_tissue_params(params, "call", tissue)
+
+  dummy <- determine_dummy(params$global$input_stochastics$sex,
+                           params$global$input_stochastics$age)
+  tissue_params <- load_tissue_params(params, "call", tissue,dummy)
   sar <- tissue_params$bt_headp_sar
   return(sar)
 }
@@ -860,7 +845,10 @@ mpc_bt_phone_pwr <- function(
 mpc_bt_phone_sar <- function(
     tissue,
     params = load_params()) {
-  tissue_params <- load_tissue_params(params, "call", tissue)
+  #find name of simulation dummy
+  dummy <- determine_dummy(params$global$input_stochastics$sex,
+                           params$global$input_stochastics$age)
+  tissue_params <- load_tissue_params(params, "call", tissue,dummy)
   sar_face <- params$devices$call$headp_face_prop * tissue_params$bt_phone_face_sar
   sar_pock <- params$devices$call$headp_pock_prop * tissue_params$bt_phone_pock_sar
   sar_else <- params$devices$call$headp_else_prop * tissue_params$bt_phone_else_sar

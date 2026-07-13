@@ -18,7 +18,7 @@ load_params <- function(path = NULL) {
 #' @param device_type Name of device
 #' @param tissue_name Name of tissue
 #' @returns Parameter list specific to selected device and tissue
-load_tissue_params <- function(params, device_type, tissue_name) {
+load_tissue_params <- function(params, device_type, tissue_name, dummy) {
   # Check if device name exists in parameter file
   if (!(device_type %in% names(params$devices))) {
     stop("Invalid device type. Choose from: ",
@@ -26,12 +26,27 @@ load_tissue_params <- function(params, device_type, tissue_name) {
   }
 
   # Extract tissue parameters while keeping device/global parameters
-  tissue_params        <- params$devices[[device_type]][["Duke"]][[tissue_name]]
+  tissue_params        <- params$devices[[device_type]][[dummy]][[tissue_name]]
   # Flatten list and edit parameter names
   tissue_params        <- unlist(tissue_params)
   names(tissue_params) <- sub("^.*\\.", "", names(tissue_params))
   tissue_params        <- as.list(tissue_params)
   return(tissue_params)
+}
+
+# =============================================================================
+#' Determine dummy from sex and age
+#'
+
+#' @param  Sex male or female
+#' @param  Age adult or child
+#' @returns Name of the dummy
+determine_dummy <- function(sex, age) {
+  if (sex == "male" && age == "adult") return("Duke")
+  if (sex == "female" && age == "adult") return("Ella")
+  if (sex == "male" && age == "child") return("Boy")
+  if (sex == "female" && age == "child") return("Girl")
+  NA_character_
 }
 
 
@@ -155,9 +170,9 @@ check_urbanicity <- function(urbanicity) {
 #' @param tissue Tissue
 #' @param device Device
 #' @param params Params
-check_tissue <- function(tissue, device, params) {
+check_tissue <- function(tissue, device, params,dummy) {
   check_character_not_na(tissue)
-  param_names <- names(params$devices[[device]][["Duke"]])
+  param_names <- names(params$devices[[device]][[dummy]])
   if (!(tissue %in% param_names)) {
     stop("Invalid tissue.")
   }

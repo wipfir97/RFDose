@@ -1,5 +1,5 @@
 global:
-  default_stochastics:
+  input_stochastics:
     sex:
       distribution: "beta"
       male_mean: 0.5

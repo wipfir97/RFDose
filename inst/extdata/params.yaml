@@ -1,5 +1,5 @@
 global:
-  default_stochastics:
+  input_stochastics:
     sex: "male"
     age: "adult"
     use_5g:
