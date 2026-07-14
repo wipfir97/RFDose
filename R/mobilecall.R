@@ -86,18 +86,18 @@ mobilecall_dose <- function(
   speaker_prop <- 1-ear_prop-headp_prop
   ## Derive data and wifi proportion ------------------------------------------
   # TODO: double check this step and find more elegant solution
-  loc_props <- location_props(
-    travel_time = travel_time,
-    home_prop   = params$global$environment_prob$home_prop,
-    outd_prop   = params$global$environment_prob$outd_prop,
-    work_prop   = params$global$environment_prob$work_prop)
+  # loc_props <- location_props(
+  #   travel_time = travel_time,
+  #   home_prop   = params$global$environment_prop$home_prop,
+  #   outd_prop   = params$global$environment_prop$outd_prop,
+  #   work_prop   = params$global$environment_prop$work_prop)
 
   native_prop <- params$devices$call$call_type$native_prop
 
   wifi_prop <- (1-native_prop)*sum(
-    loc_props$home*wifi_prop_home,
-    loc_props$work*wifi_prop_work,
-    loc_props$travel*wifi_prop_travel)
+    params$global$environment_prop$home*wifi_prop_home,
+    params$global$environment_prop$work_prop*wifi_prop_work,
+    params$global$environment_prop$travel_prop*wifi_prop_travel)
 
   data_prop <- 1-native_prop-wifi_prop
 
@@ -107,7 +107,7 @@ mobilecall_dose <- function(
   #find name of simulation dummy
   dummy <- determine_dummy(params$global$input_stochastics$sex,
                            params$global$input_stochastics$age)
-  check_tissue(tissue, "call", params)
+  check_tissue(tissue, "call", params,dummy)
   check_duration(duration)
   check_proportions(c(ear_prop, headp_prop, speaker_prop))
   check_urbanicity(urbanicity)
@@ -288,7 +288,7 @@ mpc_msar <- function(
             \(freq) {
               freq_prop <- params$devices$call[[paste0(band, "_freq_props")]][[
                 paste0("f",freq,"_",band,"_","prop")]]
-              sar <- mpc_sar_data(
+              freq_sar <- mpc_sar_data(
                 tissue       = tissue,
                 freq         = freq,
                 headp_prop   = headp_prop,
@@ -376,28 +376,41 @@ mpc_pwr_native <- function(
     params = load_params()) {
 
   # calculate location proportions
-  loc_props <- location_props(
-    travel_time = travel_time,
-    home_prop   = params$global$home_prop,
-    outd_prop   = params$global$outd_prop,
-    work_prop   = params$global$work_prop)
+  # loc_props <- location_props(
+  #   travel_time = travel_time,
+  #   home_prop   = params$global$home_prop,
+  #   outd_prop   = params$global$outd_prop,
+  #   work_prop   = params$global$work_prop)
+  environment <- c("urb","sub","rur")
+  indoor_prop <- params$global$environment_prop$home_prop + params$global$environment_prop$work_prop
 
-  # define prefix for finding correct parameters
-  prefix <- paste("native", band, substr(urbanicity, 0, 3), sep = "_")
+  pwr_total <- sum(
+    vapply(
+      environment,
+      \(urbanicity) {
 
-  # home/work
-  indoor_prop <- loc_props$home + loc_props$work
-  pwr_indoor  <- indoor_prop * params$devices$call[[paste0(prefix, "_ind_pwr")]]
+        # define prefix for finding correct parameters
+        prefix <- paste("native", band, substr(urbanicity, 0, 3), sep = "_")
 
-  # outdoors
-  pwr_outdoor   <- loc_props$out * params$devices$call[[paste0(prefix, "_out_pwr")]]
+        # home/work
+        pwr_indoor  <- indoor_prop * params$devices$call$native_pwr[[paste0(prefix, "_ind_pwr")]]
 
-  # commuting/traveling
-  pwr_travel <- loc_props$travel * params$devices$call[[paste0("native_",band, "_travel_pwr")]]
+        # outdoors
+        pwr_outdoor   <- params$global$environment_prop$outd_prop * params$devices$call$native_pwr[[paste0(prefix, "_out_pwr")]]
 
-  # combine, multiply with duty cycle, and return resul
-  dutycycle <- params$devices$call[[paste0("native_", band, "_dutycycle")]]
-  pwr_total <- sum(pwr_indoor, pwr_outdoor, pwr_travel) * dutycycle
+        # commuting/traveling (same in every env)
+        pwr_travel <- params$global$environment_prop$travel_prop * params$devices$call$native_pwr[[paste0("native_",band, "_travel_pwr")]]
+
+        # combine, multiply with duty cycle, and return result (same in every env)
+        dutycycle <- params$devices$call$native_dutycycle[[paste0("native_", band, "_dutycycle")]]
+        pwr_loc_total <- sum(pwr_indoor, pwr_outdoor, pwr_travel) * dutycycle
+
+        # calculate prower prop of environment
+        return(pwr_loc_total*params$global$input_stochastics$urbanicity[[paste0(urbanicity,"_prop")]])
+      },
+      numeric(1)
+    )
+  )
 
   return(pwr_total)
 }
@@ -444,16 +457,16 @@ mpc_sar_native <- function(
     params = load_params()) {
 
 
-  ear_position <- c("ear_cheek1","ear_cheek2","ear_cheek3",
-                    "ear_tilt1","ear_tilt2","ear_tilt3")
-  fronal_position <- c("front_eyes_cen_ver","front_eyes_cen_hor",
-                       "front_eyes_left_ver","front_eyes_left_hor",
-                       "front_eyes_right_ver","front_eyes_right_hor",
-                       "front_eyes_down_ver","front_eyes_down_hor")
-  belly_position <- c("belly_cen_ver_prop","belly_cen_hor_prop",
-                      "belly_left_ver_pro","belly_left_hor_prop",
-                      "belly_right_ver_pro","belly_right_hor_prop",
-                      "belly_up_ver_prop","belly_up_hor_prop")
+  ear_position <- c("cheek1","cheek2","cheek3",
+                    "tilt1","tilt2","tilt3")
+  frontal_position <- c("front_of_eyes_center_vertical","front_of_eyes_center_horizontal",
+                       "front_of_eyes_left_vertical","front_of_eyes_left_horizontal",
+                       "front_of_eyes_right_vertical","front_of_eyes_right_horizontal",
+                       "front_of_eyes_down_vertical","front_of_eyes_down_horizontal")
+  belly_position <- c("belly_center_vertical","belly_center_horizontal",
+                      "belly_left_vertical","belly_left_horizontal",
+                      "belly_right_vertical","belly_right_horizontal",
+                      "belly_up_vertical","belly_up_horizontal")
 
   #find name of simulation dummy
   dummy <- determine_dummy(params$global$input_stochastics$sex,
@@ -477,7 +490,7 @@ mpc_sar_native <- function(
   # phone with headphone
   headp_sar_face <-  sum(
     vapply(
-      fronal_position,
+      frontal_position,
       \(positions) {
         frontal_sar <- paste0(prefix,positions,"_sar")
         frontal_prop <- paste0(positions,"_prop")
@@ -506,7 +519,7 @@ mpc_sar_native <- function(
   # phone in speaker mode
   mpc_sar_speaker <-  sum(
     vapply(
-      fronal_position,
+      frontal_position,
       \(positions) {
         frontal_sar <- paste0(prefix,positions,"_sar")
         frontal_prop <- paste0(positions,"_prop")
@@ -559,33 +572,37 @@ mpc_pwr_data <- function(
     travel_time,
     params = load_params()) {
 
-  # calculate location proportions
-  loc_props <- location_props(
-    travel_time = travel_time,
-    home_prop   = params$global$home_prop,
-    outd_prop   = params$global$outd_prop,
-    work_prop   = params$global$work_prop)
 
-  # define prefix for finding correct parameters
-  prefix <- paste("data", band, substr(urbanicity, 0, 3), sep = "_")
+  environment <- c("urb","sub","rur")
+  indoor_prop <- params$global$environment_prop$home_prop + params$global$environment_prop$work_prop
 
-  # home/work
-  indoor_prop <- loc_props$home + loc_props$work
+  pwr_total <- sum(
+    vapply(
+      environment,
+      \(urbanicity) {
 
-  pwr_indoor  <- indoor_prop * params$devices$call[[paste0(prefix, "_ind_pwr")]]
+        # define prefix for finding correct parameters
+        prefix <- paste("data", band, substr(urbanicity, 0, 3), sep = "_")
 
-  # outdoors
-  pwr_outdoor   <- loc_props$out * params$devices$call[[paste0(prefix, "_out_pwr")]]
+        # home/work
+        pwr_indoor  <- indoor_prop * params$devices$call$data_pwr[[paste0(prefix, "_ind_pwr")]]
 
+        # outdoors
+        pwr_outdoor   <- params$global$environment_prop$outd_prop * params$devices$call$data_pwr[[paste0(prefix, "_out_pwr")]]
 
-  # commuting/traveling
-  pwr_travel <- loc_props$travel * params$devices$call[[paste0("data_",band, "_travel_pwr")]]
+        # commuting/traveling (same in every env)
+        pwr_travel <- params$global$environment_prop$travel_prop * params$devices$call$data_pwr[[paste0("data_",band, "_travel_pwr")]]
 
-  # combine, multiply with duty cycle, and return resul
-  dutycycle <- params$devices$call[[paste0("data_", band, "_dutycycle")]]
+        # combine, multiply with duty cycle, and return result (same in every env)
+        dutycycle <- params$devices$call$data_dutycycle[[paste0("data_", band, "_dutycycle")]]
+        pwr_loc_total <- sum(pwr_indoor, pwr_outdoor, pwr_travel) * dutycycle
 
-  pwr_total <- sum(pwr_indoor, pwr_outdoor, pwr_travel) * dutycycle
-
+        # calculate prower prop of environment
+        return(pwr_loc_total*params$global$input_stochastics$urbanicity[[paste0(urbanicity,"_prop")]])
+      },
+      numeric(1)
+    )
+  )
   return(pwr_total)
 }
 
@@ -637,7 +654,6 @@ mpc_sar_data <- function(
     ear_prop,
     speaker_prop,
     params = load_params())
-
   return(mpc_sar)
 }
 
@@ -670,10 +686,10 @@ mpc_pwr_wifi <- function(
   prefix <- paste("wifi", freq, sep = "_")
 
   # get power
-  pwr <- params$devices$call[[paste0("wifi_", freq, "_pwr")]]
+  pwr <- params$devices$call$data_pwr[[paste0("wifi_", freq, "_pwr")]]
 
   # get duty cycle
-  dutycycle <- params$devices$call[[paste0("wifi_", freq, "_dutycycle")]]
+  dutycycle <- params$devices$call$wifi_dutycycle[[paste0("wifi_", freq, "_dutycycle")]]
 
   # multiply and return
   pwr_total <- pwr * dutycycle

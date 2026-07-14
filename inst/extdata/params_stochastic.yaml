@@ -19,12 +19,12 @@ global:
       use_5g_sd: 0.355704
     urbanicity:
       distirbution: "dirichlet"
-      urban_mean: 0.4
-      urban_sd: 0.04
-      suburban_mean: 0.5
-      suburban_sd: 0.05
-      rural_mean: 0.1
-      rural_sd: 0.01
+      urb_prop_mean: 0.4
+      urb_prop_sd: 0.04
+      sub_prop_mean: 0.5
+      sub_prop_sd: 0.05
+      rur_prop_mean: 0.1
+      rur_prop_sd: 0.01
     duration:
       distirbution: "truncated hurdle Gamma"
       mpc_duration_mean: 653.00
@@ -205,50 +205,50 @@ devices:
 
     phone_positions:
       distribution: "dirichlet"
-      ear_cheek1_prop_mean: 0.5
-      ear_cheek1_prop_sd: 0.05
-      ear_cheek2_prop_mean: 0.1
-      ear_cheek2_prop_sd: 0.01
-      ear_cheek3_prop_mean: 0.1
-      ear_cheek3_prop_sd: 0.01
-      ear_tilt1_prop_mean: 0.15
-      ear_tilt1_prop_sd: 0.015
-      ear_tilt2_prop_mean: 0.75
-      ear_tilt2_prop_sd: 0.075
-      ear_tilt3_prop_mean: 0.75
-      ear_tilt3_prop_sd: 0.075
-      front_eyes_cen_ver_prop_mean: 0.6
-      front_eyes_cen_ver_prop_sd: 0.06
-      front_eyes_cen_hor_prop_mean: 0.1
-      front_eyes_cen_hor_prop_sd: 0.01
-      front_eyes_left_ver_prop_mean: 0.07
-      front_eyes_left_ver_prop_sd: 0.007
-      front_eyes_left_hor_prop_mean: 0.03
-      front_eyes_left_hor_prop_sd: 0.003
-      front_eyes_right_ver_prop_mean: 0.07
-      front_eyes_right_ver_prop_sd: 0.007
-      front_eyes_right_hor_prop_mean: 0.03
-      front_eyes_right_hor_prop_sd: 0.003
-      front_eyes_down_ver_prop_mean: 0.07
-      front_eyes_down_ver_prop_sd: 0.007
-      front_eyes_down_hor_prop_mean: 0.03
-      front_eyes_down_hor_prop_sd: 0.003
-      belly_cen_ver_prop_mean: 0.02
-      belly_cen_ver_prop_sd: 0.002
-      belly_cen_hor_prop_mean: 0.02
-      belly_cen_hor_prop_sd: 0.002
-      belly_left_ver_prop_mean: 0.2
-      belly_left_ver_prop_sd: 0.02
-      belly_left_hor_prop_mean: 0.01
-      belly_left_hor_prop_sd: 0.001
-      belly_right_ver_prop_mean: 0.7
-      belly_right_ver_prop_sd: 0.07
-      belly_right_hor_prop_mean: 0.01
-      belly_right_hor_prop_sd: 0.001
-      belly_up_ver_prop_mean: 0.03
-      belly_up_ver_prop_sd: 0.003
-      belly_up_hor_prop_mean: 0.01
-      belly_up_hor_prop_sd: 0.001
+      cheek1_prop_mean: 0.5
+      cheek1_prop_sd: 0.05
+      cheek2_prop_mean: 0.1
+      cheek2_prop_sd: 0.01
+      cheek3_prop_mean: 0.1
+      cheek3_prop_sd: 0.01
+      tilt1_prop_mean: 0.15
+      tilt1_prop_sd: 0.015
+      tilt2_prop_mean: 0.75
+      tilt2_prop_sd: 0.075
+      tilt3_prop_mean: 0.75
+      tilt3_prop_sd: 0.075
+      front_of_eyes_center_vertical_prop_mean: 0.6
+      front_of_eyes_center_vertical_prop_sd: 0.06
+      front_of_eyes_center_horizontal_prop_mean: 0.1
+      front_of_eyes_center_horizontal_prop_sd: 0.01
+      front_of_eyes_left_vertical_prop_mean: 0.07
+      front_of_eyes_left_vertical_prop_sd: 0.007
+      front_of_eyes_left_horizontal_prop_mean: 0.03
+      front_of_eyes_left_horizontal_prop_sd: 0.003
+      front_of_eyes_right_vertical_prop_mean: 0.07
+      front_of_eyes_right_vertical_prop_sd: 0.007
+      front_of_eyes_right_horizontal_prop_mean: 0.03
+      front_of_eyes_right_horizontal_prop_sd: 0.003
+      front_of_eyes_down_vertical_prop_mean: 0.07
+      front_of_eyes_down_vertical_prop_sd: 0.007
+      front_of_eyes_down_horizontal_prop_mean: 0.03
+      front_of_eyes_down_horizontal_prop_sd: 0.003
+      belly_center_vertical_prop_mean: 0.02
+      belly_center_vertical_prop_sd: 0.002
+      belly_center_horizontal_prop_mean: 0.02
+      belly_center_horizontal_prop_sd: 0.002
+      belly_left_vertical_prop_mean: 0.2
+      belly_left_vertical_prop_sd: 0.02
+      belly_left_horizontal_prop_mean: 0.01
+      belly_left_horizontal_prop_sd: 0.001
+      belly_right_vertical_prop_mean: 0.7
+      belly_right_vertical_prop_sd: 0.07
+      belly_right_horizontal_prop_mean: 0.01
+      belly_right_horizontal_prop_sd: 0.001
+      belly_up_vertical_prop_mean: 0.03
+      belly_up_vertical_prop_sd: 0.003
+      belly_up_horizontal_prop_mean: 0.01
+      belly_up_horizontal_prop_sd: 0.001
 
 
 
@@ -262,7 +262,7 @@ devices:
       native_4g_dutycycle_sd: 0.01
       native_5g_dutycycle_mean: 0.000
       native_5g_dutycycle_sd: 0.000
-    native_band_loc_scen_pwr:
+    native_pwr:
       distirbution: "truncated_normal"
       native_2g_sub_ind_pwr_mean: 1281.52
       native_2g_sub_ind_pwr_sd: 702.14
@@ -386,7 +386,7 @@ devices:
       data_4g_dutycycle_sd: 0.04
       data_5g_dutycycle_mean: 0.051
       data_5g_dutycycle_sd: 0.005
-    data_band_loc_scen_pwr:
+    data_pwr:
       distirbution: "truncated_normal"
       data_2g_sub_ind_pwr_mean: 0
       data_2g_sub_ind_pwr_sd: 0
@@ -603,70 +603,70 @@ devices:
         Duke_body_5800_front_of_eyes_right_horizontal_sar: 0.633687453373169
         Duke_body_5800_front_of_eyes_down_vertical_sar: 0.636030798365918
         Duke_body_5800_front_of_eyes_down_horizontal_sar: 0.682892960718544
-        Duke_body_700_belly_level_center_vertical: 0.715194061933857
-        Duke_body_700_belly_level_center_horizontal: 0.734918659857158
-        Duke_body_700_belly_level_left_vertical: 0.714437653555588
-        Duke_body_700_belly_level_left_horizontal: 0.736616545766086
-        Duke_body_700_belly_level_right_vertical: 0.715616276830668
-        Duke_body_700_belly_level_right_horizontal: 0.724391381809254
-        Duke_body_700_belly_level_up_vertical: 0.713820237393401
-        Duke_body_700_belly_level_up_horizontal: 0.730305444868044
-        Duke_body_835_belly_level_center_vertical: 0.552519264819626
-        Duke_body_835_belly_level_center_horizontal: 0.566197514782732
-        Duke_body_835_belly_level_left_vertical: 0.545344776722937
-        Duke_body_835_belly_level_left_horizontal: 0.571257381422289
-        Duke_body_835_belly_level_right_vertical: 0.550044811965346
-        Duke_body_835_belly_level_right_horizontal: 0.544678323399076
-        Duke_body_835_belly_level_up_vertical: 0.549763977087118
-        Duke_body_835_belly_level_up_horizontal: 0.559886764363142
-        Duke_body_1450_belly_level_center_vertical: 0.224478732178639
-        Duke_body_1450_belly_level_center_horizontal: 0.17276765094694
-        Duke_body_1450_belly_level_left_vertical: 0.189890368299157
-        Duke_body_1450_belly_level_left_horizontal: 0.168672880323805
-        Duke_body_1450_belly_level_right_vertical: 0.229008513971172
-        Duke_body_1450_belly_level_right_horizontal: 0.152874164394344
-        Duke_body_1450_belly_level_up_vertical: 0.221856098120103
-        Duke_body_1450_belly_level_up_horizontal: 0.168672880323805
-        Duke_body_2140_belly_level_center_vertical: 0.159152561859997
-        Duke_body_2140_belly_level_center_horizontal: 0.114184329435249
-        Duke_body_2140_belly_level_left_vertical: 0.159551777152887
-        Duke_body_2140_belly_level_left_horizontal: 0.140804070001926
-        Duke_body_2140_belly_level_right_vertical: 0.166031005773801
-        Duke_body_2140_belly_level_right_horizontal: 0.121132351038311
-        Duke_body_2140_belly_level_up_vertical: 0.167596849677615
-        Duke_body_2140_belly_level_up_horizontal: 0.125942889005111
-        Duke_body_2450_belly_level_center_vertical: 0.171966967577461
-        Duke_body_2450_belly_level_center_horizontal: 0.128395118161502
-        Duke_body_2450_belly_level_left_vertical: 0.143287027940706
-        Duke_body_2450_belly_level_left_horizontal: 0.136016776798287
-        Duke_body_2450_belly_level_right_vertical: 0.170065529481874
-        Duke_body_2450_belly_level_right_horizontal: 0.104182283132511
-        Duke_body_2450_belly_level_up_vertical: 0.157463158424597
-        Duke_body_2450_belly_level_up_horizontal: 0.110591188635771
-        Duke_body_3500_belly_level_center_vertical: 0.087412093352225
-        Duke_body_3500_belly_level_center_horizontal: 0.0783727780116932
-        Duke_body_3500_belly_level_left_vertical: 0.0628612240375772
-        Duke_body_3500_belly_level_left_horizontal: 0.0798131915958386
-        Duke_body_3500_belly_level_right_vertical: 0.0948644625874306
-        Duke_body_3500_belly_level_right_horizontal: 0.0798131915958386
-        Duke_body_3500_belly_level_up_vertical: 0.0939865018677872
-        Duke_body_3500_belly_level_up_horizontal: 0.0750305697626545
-        Duke_body_5200_belly_level_center_vertical: 0.0591337091580134
-        Duke_body_5200_belly_level_center_horizontal: 0.0561156652084054
-        Duke_body_5200_belly_level_left_vertical: 0.0407051777796905
-        Duke_body_5200_belly_level_left_horizontal: 0.0573772282977029
-        Duke_body_5200_belly_level_right_vertical: 0.0653942776982106
-        Duke_body_5200_belly_level_right_horizontal: 0.0466611873495615
-        Duke_body_5200_belly_level_up_vertical: 0.0626620752387649
-        Duke_body_5200_belly_level_up_horizontal: 0.0539250180897115
-        Duke_body_5800_belly_level_center_vertical: 0.055962682750681
-        Duke_body_5800_belly_level_center_horizontal: 0.0561343504933198
-        Duke_body_5800_belly_level_left_vertical: 0.0421201109983195
-        Duke_body_5800_belly_level_left_horizontal: 0.0564322856935385
-        Duke_body_5800_belly_level_right_vertical: 0.0657101943868972
-        Duke_body_5800_belly_level_right_horizontal: 0.046094119430208
-        Duke_body_5800_belly_level_up_vertical: 0.0569688345023842
-        Duke_body_5800_belly_level_up_horizontal: 0.0573682567421503
+        Duke_body_700_belly_center_vertical: 0.715194061933857
+        Duke_body_700_belly_center_horizontal: 0.734918659857158
+        Duke_body_700_belly_left_vertical: 0.714437653555588
+        Duke_body_700_belly_left_horizontal: 0.736616545766086
+        Duke_body_700_belly_right_vertical: 0.715616276830668
+        Duke_body_700_belly_right_horizontal: 0.724391381809254
+        Duke_body_700_belly_up_vertical: 0.713820237393401
+        Duke_body_700_belly_up_horizontal: 0.730305444868044
+        Duke_body_835_belly_center_vertical: 0.552519264819626
+        Duke_body_835_belly_center_horizontal: 0.566197514782732
+        Duke_body_835_belly_left_vertical: 0.545344776722937
+        Duke_body_835_belly_left_horizontal: 0.571257381422289
+        Duke_body_835_belly_right_vertical: 0.550044811965346
+        Duke_body_835_belly_right_horizontal: 0.544678323399076
+        Duke_body_835_belly_up_vertical: 0.549763977087118
+        Duke_body_835_belly_up_horizontal: 0.559886764363142
+        Duke_body_1450_belly_center_vertical: 0.224478732178639
+        Duke_body_1450_belly_center_horizontal: 0.17276765094694
+        Duke_body_1450_belly_left_vertical: 0.189890368299157
+        Duke_body_1450_belly_left_horizontal: 0.168672880323805
+        Duke_body_1450_belly_right_vertical: 0.229008513971172
+        Duke_body_1450_belly_right_horizontal: 0.152874164394344
+        Duke_body_1450_belly_up_vertical: 0.221856098120103
+        Duke_body_1450_belly_up_horizontal: 0.168672880323805
+        Duke_body_2140_belly_center_vertical: 0.159152561859997
+        Duke_body_2140_belly_center_horizontal: 0.114184329435249
+        Duke_body_2140_belly_left_vertical: 0.159551777152887
+        Duke_body_2140_belly_left_horizontal: 0.140804070001926
+        Duke_body_2140_belly_right_vertical: 0.166031005773801
+        Duke_body_2140_belly_right_horizontal: 0.121132351038311
+        Duke_body_2140_belly_up_vertical: 0.167596849677615
+        Duke_body_2140_belly_up_horizontal: 0.125942889005111
+        Duke_body_2450_belly_center_vertical: 0.171966967577461
+        Duke_body_2450_belly_center_horizontal: 0.128395118161502
+        Duke_body_2450_belly_left_vertical: 0.143287027940706
+        Duke_body_2450_belly_left_horizontal: 0.136016776798287
+        Duke_body_2450_belly_right_vertical: 0.170065529481874
+        Duke_body_2450_belly_right_horizontal: 0.104182283132511
+        Duke_body_2450_belly_up_vertical: 0.157463158424597
+        Duke_body_2450_belly_up_horizontal: 0.110591188635771
+        Duke_body_3500_belly_center_vertical: 0.087412093352225
+        Duke_body_3500_belly_center_horizontal: 0.0783727780116932
+        Duke_body_3500_belly_left_vertical: 0.0628612240375772
+        Duke_body_3500_belly_left_horizontal: 0.0798131915958386
+        Duke_body_3500_belly_right_vertical: 0.0948644625874306
+        Duke_body_3500_belly_right_horizontal: 0.0798131915958386
+        Duke_body_3500_belly_up_vertical: 0.0939865018677872
+        Duke_body_3500_belly_up_horizontal: 0.0750305697626545
+        Duke_body_5200_belly_center_vertical: 0.0591337091580134
+        Duke_body_5200_belly_center_horizontal: 0.0561156652084054
+        Duke_body_5200_belly_left_vertical: 0.0407051777796905
+        Duke_body_5200_belly_left_horizontal: 0.0573772282977029
+        Duke_body_5200_belly_right_vertical: 0.0653942776982106
+        Duke_body_5200_belly_right_horizontal: 0.0466611873495615
+        Duke_body_5200_belly_up_vertical: 0.0626620752387649
+        Duke_body_5200_belly_up_horizontal: 0.0539250180897115
+        Duke_body_5800_belly_center_vertical: 0.055962682750681
+        Duke_body_5800_belly_center_horizontal: 0.0561343504933198
+        Duke_body_5800_belly_left_vertical: 0.0421201109983195
+        Duke_body_5800_belly_left_horizontal: 0.0564322856935385
+        Duke_body_5800_belly_right_vertical: 0.0657101943868972
+        Duke_body_5800_belly_right_horizontal: 0.046094119430208
+        Duke_body_5800_belly_up_vertical: 0.0569688345023842
+        Duke_body_5800_belly_up_horizontal: 0.0573682567421503
 
       brain:
         Duke_brain_700_front_of_eyes_center_vertical_sar: 0.322235768557809

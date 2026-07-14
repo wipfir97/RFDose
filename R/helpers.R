@@ -281,7 +281,6 @@ location_props <- function(
                        "work"   = work_prop_scaled,
                        "out"   = outd_prop_scaled)
   #check_proportions(unlist(scaled_props))
-
   return(scaled_props)
 }
 
