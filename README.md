@@ -110,6 +110,7 @@ We consider the following exposure sources in the dose calculations:
 
 ### Calculation
 
+```bash
 total_dose()
    ├── mobilecall_dose()     
        └── mobilecall_msar()
@@ -131,6 +132,7 @@ total_dose()
        └── ...
    └── farfield_dose()
        └── ...
+```
 
 #### Variable overview (version 0.2.0)
 
