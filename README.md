@@ -92,6 +92,7 @@ calculate_emf_doses(example_data, tissue = "body")  # body dose
 
 ## Documentation
 
+
 ### Exposure sources
 
 We consider the following exposure sources in the dose calculations:
@@ -106,6 +107,30 @@ We consider the following exposure sources in the dose calculations:
 |Tablet|tblt|Tablet use|
 |Far-field|farf|Far-field exposure|
 |Other|othe|Other devices: smart watch, tracker, VR headset, hotspot, bluetooth headphones, smart home|
+
+### Calculation
+
+total_dose()
+   ├── mobilecall_dose()     
+       └── mobilecall_msar()
+           ├── mobilecall_nsar()
+               ├── ... # sub-functions
+           └── mobilecall_pwr()
+               ├── ... # sub-functions
+   ├── mobiledata_dose()   
+       └── ... # same structure as mobilecall_dose()
+   ├── cordless_dose() 
+       └── ...
+   ├── laptop_dose()
+       └──...
+   ├── tablet_dose()
+       └── ...
+   ├── other_dose_wrapper()
+       └── ... # further devices
+   ├── wifi_dose
+       └── ...
+   └── farfield_dose()
+       └── ...
 
 #### Variable overview (version 0.2.0)
 

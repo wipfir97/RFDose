@@ -1,7 +1,7 @@
 Package: RFDose
 Type: Package
 Title: Deterministic radiofrequency electromagnetic field (RF-EMF) dose calculator
-Version: 0.3.0
+Version: 0.4.0
 Authors@R:
     person("Irina", "Wipf", , "irina.wipf@swisstph.ch", role = c("aut", "cre"))
 Description: Package for calculating RF-EMF doses for cohorts.
