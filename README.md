@@ -112,19 +112,17 @@ We consider the following exposure sources in the dose calculations:
 
 ```bash
 total_dose()
-   ├── mobilecall_dose()     
-   │    └── mobilecall_msar()
-   │         ├── mobilecall_nsar()
-   |         |    ├── ... # sub-functions
-   |         └── mobilecall_pwr()
-   |              ├── ... # sub-functions
-   ├── mobiledata_dose()   
-   ├── cordless_dose() 
-   ├── laptop_dose()
-   ├── tablet_dose()
-   ├── other_dose_wrapper()
-   ├── wifi_dose()
-   └── farfield_dose()
+├── mobilecall_dose()     
+│    └── mobilecall_dose()
+│         ├── mobilecall_nsar()
+│         └── mobilecall_pwr()
+├── mobiledata_dose()   
+├── cordless_dose() 
+├── laptop_dose()
+├── tablet_dose()
+├── other_dose_wrapper()
+├── wifi_dose()
+└── farfield_dose()
 ```
 
 #### Variable overview (version 0.2.0)
