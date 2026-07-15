@@ -1,5 +1,5 @@
 global:
-  input_stochastics:
+  input_stoch:
     sex:
       distribution: "beta"
       male_mean: 0.5
@@ -158,7 +158,7 @@ devices:
       data_4g_prop_sd: 0.31
       data_5g_prop_mean: 0.315
       data_5g_prop_sd: 0.33
-    data_bandno5g_props:
+    data_band_no5g_props:
       distribution: "dirichlet"
       data_2g_prop_no5g_mean: 0
       data_2g_prop_no5g_sd: 0
@@ -213,10 +213,10 @@ devices:
       cheek3_prop_sd: 0.01
       tilt1_prop_mean: 0.15
       tilt1_prop_sd: 0.015
-      tilt2_prop_mean: 0.75
-      tilt2_prop_sd: 0.075
-      tilt3_prop_mean: 0.75
-      tilt3_prop_sd: 0.075
+      tilt2_prop_mean: 0.075
+      tilt2_prop_sd: 0.0075
+      tilt3_prop_mean: 0.075
+      tilt3_prop_sd: 0.0075
       front_of_eyes_center_vertical_prop_mean: 0.6
       front_of_eyes_center_vertical_prop_sd: 0.06
       front_of_eyes_center_horizontal_prop_mean: 0.1

@@ -1,9 +1,9 @@
 global:
-  input_stochastics:
+  sim: "template"
+  input_stoch:
     sex: "male"
     age: "adult"
-    use_5g:
-      use_5g: TRUE
+    use_5g: TRUE
     urbanicity:
       urb_prop: 0.4
       sub_prop: 0.5
@@ -20,17 +20,15 @@ global:
       mpd_wifi_prop_home: 0.70
       mpd_wifi_prop_work: 0.47
       mpd_wifi_prop_travel: 0.31
-
-
-
   wifi_probs:
     wifi_2400_prop: 0.58
     wifi_5000_prop: 0.42
-  environment_prob:
+  environment_prop:
     home_prop: 0.69
     outd_prop: 0.08
     work_prop: 0.21
     travel_prop: 0.02
+
 devices:
   dect:
     dect_pwr: 250
@@ -105,7 +103,7 @@ devices:
       data_3g_prop: 0.02
       data_4g_prop: 0.66
       data_5g_prop: 0.315
-    data_bandno5g_props:
+    data_band_no5g_props:
       data_2g_prop_no5g: 0
       data_3g_prop_no5g: 0.02
       data_4g_prop_no5g: 0.98
@@ -136,8 +134,8 @@ devices:
       cheek2_prop: 0.1
       cheek3_prop: 0.1
       tilt1_prop: 0.15
-      tilt2_prop: 0.75
-      tilt3_prop: 0.75
+      tilt2_prop: 0.075
+      tilt3_prop: 0.075
       front_of_eyes_center_vertical_prop: 0.6
       front_of_eyes_center_horizontal_prop: 0.1
       front_of_eyes_left_vertical_prop: 0.07

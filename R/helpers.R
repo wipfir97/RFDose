@@ -3,11 +3,12 @@
 #'
 #'@param path Name of parameter file to load (must be in yaml format)
 #'@returns List of parameters loaded from yaml input file
-load_params <- function(path = NULL) {
+load_params <- function(path = NULL,version = "") {
   if (is.null(path)) {
-    path <- system.file("extdata", "params.yaml", package = "RFDose")
+    path <- system.file("extdata", paste0("params",version,".yaml"), package = "RFDose")
   }
   params  <- yaml::read_yaml(path)
+  print(params$global$sim)
   return(params)
 }
 

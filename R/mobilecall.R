@@ -63,7 +63,7 @@
 #' wifi_prop_home   = 1,
 #' wifi_prop_work   = 0.8,
 #' wifi_prop_travel = 0,
-#' params           = load_params())
+#' params           = load_params(version = "_template"))
 #'
 #' @seealso [mpc_msar()]
 #' @export
@@ -79,18 +79,14 @@ mobilecall_dose <- function(
     wifi_prop_home,
     wifi_prop_work,
     wifi_prop_travel,
-    params = load_params()) {
+    simulation,
+    params = load_params(version = simulation)) {
   #############################################################################
-  # Derive additional input values ============================================
-  ## Derive speaker mode use proportion ---------------------------------------
-  speaker_prop <- 1-ear_prop-headp_prop
+
+  ## Derive other input vars---------------------------------------------------
+  speaker_prop <- 1- ear_prop - headp_prop
+
   ## Derive data and wifi proportion ------------------------------------------
-  # TODO: double check this step and find more elegant solution
-  # loc_props <- location_props(
-  #   travel_time = travel_time,
-  #   home_prop   = params$global$environment_prop$home_prop,
-  #   outd_prop   = params$global$environment_prop$outd_prop,
-  #   work_prop   = params$global$environment_prop$work_prop)
 
   native_prop <- params$devices$call$call_type$native_prop
 
@@ -105,8 +101,8 @@ mobilecall_dose <- function(
   # Input checks ==============================================================
 
   #find name of simulation dummy
-  dummy <- determine_dummy(params$global$input_stochastics$sex,
-                           params$global$input_stochastics$age)
+  dummy <- determine_dummy(params$global$input_stoch$sex,
+                           params$global$input_stoch$age)
   check_tissue(tissue, "call", params,dummy)
   check_duration(duration)
   check_proportions(c(ear_prop, headp_prop, speaker_prop))
@@ -118,7 +114,10 @@ mobilecall_dose <- function(
   check_proportions(wifi_prop_work)
   check_proportions(wifi_prop_travel)
   check_proportions(c(native_prop, wifi_prop, data_prop))
-  check_proportions(c(loc_props$travel, loc_props$home, loc_props$work, loc_props$out))
+  check_proportions(c(params$global$environment_prop$travel_prop,
+                      params$global$environment_prop$home_prop,
+                      params$global$environment_prop$work_prop,
+                      params$global$environment_prop$outd_prop))
 
   # Calculate dose for mobile phone (no bluetooth) ============================
   msar_phone <- mpc_msar(
@@ -198,7 +197,7 @@ mobilecall_dose <- function(
 #' urbanicity       = "suburban",
 #' use_5g           = TRUE,
 #' travel_time      = 1800,
-#' params           = load_params())
+#' params           = load_params(version = "_template"))
 #'
 #' @seealso [mpc_pwr_native(), mpc_pwr_data(), mpc_pwr_wifi(), mpc_sar_native(), mpc_sar_data(), mpc_sar_wifi()]
 #' @export
@@ -213,7 +212,7 @@ mpc_msar <- function(
     urbanicity,
     use_5g,
     travel_time,
-    params = load_params()) {
+    params = load_params(version = simulation)) {
   # Setup =====================================================================
   ## Define frequency bands for each technology -------------------------------
   native_bands <- c("2g", "3g", "4g", "5g")
@@ -270,7 +269,7 @@ mpc_msar <- function(
         if (use_5g) {
           prop <- params$devices$call$data_band_props[[paste0("data_", band, "_prop")]]
         } else {
-          prop <- params$devices$call$datano5g_band_props[[paste0("data_", band, "_prop_no5g")]]
+          prop <- params$devices$call$data_band_no5g_props[[paste0("data_", band, "_prop_no5g")]]
         }
 
         pwr <- mpc_pwr_data(
@@ -366,14 +365,14 @@ mpc_msar <- function(
 #' band        = "4g",
 #' urbanicity  = "suburban",
 #' travel_time = 1800,
-#' params      = load_params())
+#' params      = load_params(version = "_template"))
 #'
 #' @export
 mpc_pwr_native <- function(
     band,
     urbanicity,
     travel_time,
-    params = load_params()) {
+    params = load_params(version = simulation)) {
 
   # calculate location proportions
   # loc_props <- location_props(
@@ -406,7 +405,7 @@ mpc_pwr_native <- function(
         pwr_loc_total <- sum(pwr_indoor, pwr_outdoor, pwr_travel) * dutycycle
 
         # calculate prower prop of environment
-        return(pwr_loc_total*params$global$input_stochastics$urbanicity[[paste0(urbanicity,"_prop")]])
+        return(pwr_loc_total*params$global$input_stoch$urbanicity[[paste0(urbanicity,"_prop")]])
       },
       numeric(1)
     )
@@ -445,7 +444,7 @@ mpc_pwr_native <- function(
 #' headp_prop   = 0.17,
 #' ear_prop     = 0.67,
 #' speaker_prop = 0.17,
-#' params       = load_params())
+#' params       = load_params(version = "_template"))
 #'
 #' @export
 mpc_sar_native <- function(
@@ -454,7 +453,7 @@ mpc_sar_native <- function(
     headp_prop,
     ear_prop,
     speaker_prop,
-    params = load_params()) {
+    params) {
 
 
   ear_position <- c("cheek1","cheek2","cheek3",
@@ -469,8 +468,8 @@ mpc_sar_native <- function(
                       "belly_up_vertical","belly_up_horizontal")
 
   #find name of simulation dummy
-  dummy <- determine_dummy(params$global$input_stochastics$sex,
-                           params$global$input_stochastics$age)
+  dummy <- determine_dummy(params$global$input_stoch$sex,
+                           params$global$input_stoch$age)
   # define prefix for finding correct tissue parameter
   prefix <- paste0(dummy,"_",tissue,"_", freq,"_")
   # load tissue-specific parameters (SAR values)
@@ -481,8 +480,8 @@ mpc_sar_native <- function(
       ear_position,
       \(positions) {
         ear_sar <- paste0(prefix,positions,"_sar")
-        ear_prop <- paste0(positions,"_prop")
-        return(tissue_params[[ear_sar]]*params$device$call$phone_positions[[ear_prop]]) #here also distance shift has to be added
+        ear_props <- paste0(positions,"_prop")
+        return(tissue_params[[ear_sar]]*params$device$call$phone_positions[[ear_props]]) #here also distance shift has to be added
       },
       numeric(1)
     )
@@ -510,7 +509,7 @@ mpc_sar_native <- function(
       numeric(1)
     )
   )
-  headp_sar_else <- tissue_params[[paste0(dummy,"_",tissue,"_headp_else")]]
+  headp_sar_else <- tissue_params[[paste0(dummy,"_",tissue,"_headp_else_sar")]]
   mpc_sar_headphones <- sum(
     params$devices$call$position_props$headp_face_prop * headp_sar_face,
     params$devices$call$position_props$headp_pock_prop * headp_sar_pocket,
@@ -534,7 +533,6 @@ mpc_sar_native <- function(
     headp_prop * mpc_sar_headphones,
     speaker_prop * mpc_sar_speaker
   )
-
   return(mpc_sar)
 }
 
@@ -563,14 +561,14 @@ mpc_sar_native <- function(
 #' band        = "4g",
 #' urbanicity  = "suburban",
 #' travel_time = 1800,
-#' params      = load_params())
+#' params      = load_params(version = "_template"))
 #'
 #' @export
 mpc_pwr_data <- function(
     band,
     urbanicity,
     travel_time,
-    params = load_params()) {
+    params) {
 
 
   environment <- c("urb","sub","rur")
@@ -598,7 +596,7 @@ mpc_pwr_data <- function(
         pwr_loc_total <- sum(pwr_indoor, pwr_outdoor, pwr_travel) * dutycycle
 
         # calculate prower prop of environment
-        return(pwr_loc_total*params$global$input_stochastics$urbanicity[[paste0(urbanicity,"_prop")]])
+        return(pwr_loc_total*params$global$input_stoch$urbanicity[[paste0(urbanicity,"_prop")]])
       },
       numeric(1)
     )
@@ -635,7 +633,7 @@ mpc_pwr_data <- function(
 #' headp_prop   = 0.17,
 #' ear_prop     = 0.67,
 #' speaker_prop = 0.17,
-#' params       = load_params())
+#' params       = load_params(version = "_template"))
 #'
 #' @export
 mpc_sar_data <- function(
@@ -644,7 +642,7 @@ mpc_sar_data <- function(
     headp_prop,
     ear_prop,
     speaker_prop,
-    params = load_params()) {
+    params) {
 
 
   mpc_sar <- mpc_sar_native(
@@ -653,7 +651,7 @@ mpc_sar_data <- function(
     headp_prop,
     ear_prop,
     speaker_prop,
-    params = load_params())
+    params = params)
   return(mpc_sar)
 }
 
@@ -675,12 +673,12 @@ mpc_sar_data <- function(
 #' @examples
 #' mpc_pwr_wifi(
 #' band        = "5",
-#' params      = load_params())
+#' params      = load_params(version = "_template"))
 #'
 #' @export
 mpc_pwr_wifi <- function(
     freq,
-    params = load_params()) {
+    params = load_params(version = "_template")) {
 
   # define prefix for finding correct parameters
   prefix <- paste("wifi", freq, sep = "_")
@@ -726,7 +724,7 @@ mpc_pwr_wifi <- function(
 #' headp_prop   = 0.17,
 #' ear_prop     = 0.67,
 #' speaker_prop = 0.17,
-#' params       = load_params())
+#' params       = load_params(version = "_template"))
 #'
 #' @export
 mpc_sar_wifi <- function(
@@ -735,7 +733,7 @@ mpc_sar_wifi <- function(
     headp_prop,
     ear_prop,
     speaker_prop,
-    params = load_params()) {
+    params) {
 
   mpc_sar <- mpc_sar_native(
     tissue,
@@ -743,7 +741,7 @@ mpc_sar_wifi <- function(
     headp_prop,
     ear_prop,
     speaker_prop,
-    params = load_params())
+    params = params)
 
 
   return(mpc_sar)
@@ -777,13 +775,13 @@ mpc_sar_wifi <- function(
 #' @examples
 #' mpc_bt_msar(
 #' tissue = "brain",
-#' params = load_params()
+#' params = load_params(version = "_template")
 #' )
 #'
 #' @export
 mpc_bt_msar <- function(
     tissue,
-    params = load_params()) {
+    params) {
 
   # from bluetooth headphones
   pwr_bt <- mpc_bt_pwr(params = params)
@@ -794,7 +792,6 @@ mpc_bt_msar <- function(
   pwr_p  <- mpc_bt_phone_pwr(params = params)
   sar_p  <- mpc_bt_phone_sar(tissue = tissue, params = params)
   msar_bt_phone <- pwr_p * sar_p
-
   return(msar_bt + msar_bt_phone)
 }
 
@@ -807,8 +804,8 @@ mpc_bt_msar <- function(
 #'
 #' @returns Output power bluetooth headphones (headphones only) in mJ
 mpc_bt_pwr <- function(
-    params = load_params()) {
-  pwr <- params$devices$call$bt_pwr
+    params) {
+  pwr <- params$devices$call$data_pwr$bt_pwr
   return(pwr)
 }
 
@@ -824,13 +821,33 @@ mpc_bt_pwr <- function(
 #' @returns nSAR in W/kg/W
 mpc_bt_sar <- function(
     tissue,
-    params = load_params()) {
+    params) {
 
-  dummy <- determine_dummy(params$global$input_stochastics$sex,
-                           params$global$input_stochastics$age)
+
+  ear_position <- c("cheek1","cheek2","cheek3",
+                    "tilt1","tilt2","tilt3")
+
+  #find name of simulation dummy
+  dummy <- determine_dummy(params$global$input_stoch$sex,
+                           params$global$input_stoch$age)
+  # define prefix for finding correct tissue parameter
+  prefix <- paste0(dummy,"_",tissue,"_2400_")
+  # load tissue-specific parameters (SAR values)
   tissue_params <- load_tissue_params(params, "call", tissue,dummy)
-  sar <- tissue_params$bt_headp_sar
-  return(sar)
+
+  # headphone on ear (prop weighted mean sar of all positions)
+  bt_sar_headp <- sum(
+    vapply(
+      ear_position,
+      \(positions) {
+        ear_sar <- paste0(prefix,positions,"_sar")
+        ear_props <- paste0(positions,"_prop")
+        return(tissue_params[[ear_sar]]*params$device$call$phone_positions[[ear_props]]) #here also distance shift has to be added
+      },
+      numeric(1)
+    )
+  )
+  return(bt_sar_headp)
 }
 
 #' Calculate call output power (bluetooth contribution only, phone only)
@@ -843,8 +860,8 @@ mpc_bt_sar <- function(
 #'
 #' @returns Output power bluetooth headphones (phone only) in mJ
 mpc_bt_phone_pwr <- function(
-    params = load_params()) {
-  pwr <- params$devices$call$bt_pwr
+    params) {
+  pwr <- params$devices$call$data_pwr$bt_pwr
   return(pwr)
 }
 
@@ -860,15 +877,56 @@ mpc_bt_phone_pwr <- function(
 #' @returns nSAR in W/kg/W
 mpc_bt_phone_sar <- function(
     tissue,
-    params = load_params()) {
+    params) {
+
+  frontal_position <- c("front_of_eyes_center_vertical","front_of_eyes_center_horizontal",
+                        "front_of_eyes_left_vertical","front_of_eyes_left_horizontal",
+                        "front_of_eyes_right_vertical","front_of_eyes_right_horizontal",
+                        "front_of_eyes_down_vertical","front_of_eyes_down_horizontal")
+  belly_position <- c("belly_center_vertical","belly_center_horizontal",
+                      "belly_left_vertical","belly_left_horizontal",
+                      "belly_right_vertical","belly_right_horizontal",
+                      "belly_up_vertical","belly_up_horizontal")
+
   #find name of simulation dummy
-  dummy <- determine_dummy(params$global$input_stochastics$sex,
-                           params$global$input_stochastics$age)
+  dummy <- determine_dummy(params$global$input_stoch$sex,
+                           params$global$input_stoch$age)
   tissue_params <- load_tissue_params(params, "call", tissue,dummy)
-  sar_face <- params$devices$call$headp_face_prop * tissue_params$bt_phone_face_sar
-  sar_pock <- params$devices$call$headp_pock_prop * tissue_params$bt_phone_pock_sar
-  sar_else <- params$devices$call$headp_else_prop * tissue_params$bt_phone_else_sar
-  return(sar_face + sar_pock + sar_else)
+
+  # define prefix for finding correct tissue parameter
+  prefix <- paste0(dummy,"_",tissue,"_2400_")
+
+  # phone with headphone
+  headp_bt_sar_face <-  sum(
+    vapply(
+      frontal_position,
+      \(positions) {
+        frontal_sar <- paste0(prefix,positions,"_sar")
+        frontal_prop <- paste0(positions,"_prop")
+        return(tissue_params[[frontal_sar]]*params$device$call$phone_positions[[frontal_prop]]) #here also distance shift has to be added
+      },
+      numeric(1)
+    )
+  )
+  headp_bt_sar_pocket <-  sum(
+    vapply(
+      belly_position,
+      \(positions) {
+        belly_sar <- paste0(prefix,positions,"_sar")
+        belly_prop <- paste0(positions,"_prop")
+        return(tissue_params[[belly_sar]]*params$device$call$phone_positions[[belly_prop]]) #here also distance shift has to be added
+      },
+      numeric(1)
+    )
+  )
+  headp_bt_sar_else <- tissue_params[[paste0(dummy,"_",tissue,"_headp_else_sar")]]
+  mpc_sar_headphone_bt <- sum(
+    params$devices$call$position_props$headp_face_prop * headp_bt_sar_face,
+    params$devices$call$position_props$headp_pock_prop * headp_bt_sar_pocket,
+    params$devices$call$position_props$headp_else_prop * headp_bt_sar_else
+  )
+
+  return(mpc_sar_headphone_bt)
 }
 
 
