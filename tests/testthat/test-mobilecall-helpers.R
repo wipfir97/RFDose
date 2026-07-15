@@ -1,85 +1,53 @@
 # Bluetooth functions #########################################################
-## mpc_bt_msar ================================================================
-cases_mpc_bt_msar <- list(
+## mpc_bt_earset_msar =========================================================
+cases_mpc_bt_earset_msar <- list(
   list(
     input = list(
       tissue = "brain"
     ),
-    output = (0.000462133+9.05709E-06)/0.17 # (msar bt + msar phone)/headp_prop
+    output = 0.000462133/0.17
 
   ),
   list(
     input = list(
       tissue = "body"
     ),
-    output = (0.000268246+9.97613E-05)/0.17 # (msar bt + msar phone)/headp_prop
+    output = 0.000268246/0.17
   )
 )
 
-test_that("mpc_bt_msar matches reference values", {
-  for (case in cases_mpc_bt_msar) {
-    result <- do.call(mpc_bt_msar, case$input)
-    expect_equal(result, case$output, tolerance = 1e-3)
+test_that("mpc_bt_earset_msar matches reference values", {
+  for (case in cases_mpc_bt_earset_msar) {
+    result <- do.call(mpc_bt_earset_msar, case$input)
+    expect_equal(result, case$output, tolerance = 1e-4)
   }
 })
 
-## mpc_bt_pwr =================================================================
-test_that("mpc_bt_pwr matches reference values", {
-    result <- mpc_bt_pwr()
-    expect_equal(result, 0.16, tolerance = 1e-3)
-})
-
-## mpc_bt_sar =================================================================
-cases_mpc_bt_sar <- list(
+## mpc_bt_phone_msar ==========================================================
+cases_mpc_bt_phone_msar <- list(
   list(
     input = list(
       tissue = "brain"
     ),
-    output = 0.01699017
+    output = 9.05709E-06/0.17
+
   ),
   list(
     input = list(
       tissue = "body"
     ),
-    output = 0.009862
+    output = 9.97613E-05/0.17
   )
 )
 
-test_that("mpc_bt_sar matches reference values", {
-  for (case in cases_mpc_bt_sar) {
-    result <- do.call(mpc_bt_sar, case$input)
-    expect_equal(result, case$output, tolerance = 1e-2)
+test_that("mpc_bt_phone_msar matches reference values", {
+  for (case in cases_mpc_bt_phone_msar) {
+    result <- do.call(mpc_bt_phone_msar, case$input)
+    expect_equal(result, case$output, tolerance = 1e-4)
   }
 })
 
-## mpc_bt_phone_pwr ===========================================================
-test_that("mpc_bt_phone_pwr matches reference values", {
-    result <- mpc_bt_phone_pwr()
-    expect_equal(result, 0.16, tolerance = 1e-3)
-})
 
-## mpc_bt_phone_sar ===========================================================
-cases_mpc_bt_phone_sar <- list(
-  list(
-    input = list(
-      tissue = "brain"
-    ),
-    output = 0.000332981
-  ),
-  list(
-    input = list(
-      tissue = "body"
-    ),
-    output = 0.003667694
-  )
-)
-
-test_that("mpc_bt_phone_sar matches reference values", {
-  for (case in cases_mpc_bt_phone_sar) {
-    result <- do.call(mpc_bt_phone_sar, case$input)
-    expect_equal(result, case$output, tolerance = 1e-3)
-  }
-})
 
 # Call functions ##############################################################
 ## mpc_msar ===================================================================
@@ -119,7 +87,7 @@ cases_mpc_msar <- list(
 test_that("mpc_msar matches reference values", {
   for (case in cases_mpc_msar) {
     result <- do.call(mpc_msar, case$input)
-    expect_equal(result, case$output, tolerance = 1e-2)
+    expect_equal(result, case$output, tolerance = 1e-3)
   }
 })
 
@@ -162,7 +130,7 @@ cases_mpc_pwr_native <- list(
 test_that("mpc_pwr_native matches reference values", {
   for (case in cases_mpc_pwr_native) {
     result <- do.call(mpc_pwr_native, case$input)
-    expect_equal(result, case$output, tolerance = 1e-2)
+    expect_equal(result, case$output, tolerance = 1e-3)
   }
 })
 
@@ -213,7 +181,7 @@ cases_mpc_sar_native <- list(
 test_that("mpc_sar_native matches reference values", {
   for (case in cases_mpc_sar_native) {
     result <- do.call(mpc_sar_native, case$input)
-    expect_equal(result, case$output, tolerance = 1e-2)
+    expect_equal(result, case$output, tolerance = 1e-3)
   }
 })
 
@@ -248,7 +216,7 @@ cases_mpc_pwr_data <- list(
 test_that("mpc_pwr_data matches reference values", {
   for (case in cases_mpc_pwr_data) {
     result <- do.call(mpc_pwr_data, case$input)
-    expect_equal(result, case$output, tolerance = 1e-2)
+    expect_equal(result, case$output, tolerance = 1e-3)
   }
 })
 ## mpc_sar_data ===============================================================
@@ -298,7 +266,7 @@ cases_mpc_sar_data <- list(
 test_that("mpc_sar_data matches reference values", {
   for (case in cases_mpc_sar_data) {
     result <- do.call(mpc_sar_data, case$input)
-    expect_equal(result, case$output, tolerance = 1e-2)
+    expect_equal(result, case$output, tolerance = 1e-3)
   }
 })
 
@@ -322,7 +290,7 @@ cases_mpc_pwr_wifi <- list(
 test_that("mpc_pwr_wifi matches reference values", {
   for (case in cases_mpc_pwr_wifi) {
     result <- do.call(mpc_pwr_wifi, case$input)
-    expect_equal(result, case$output, tolerance = 1e-2)
+    expect_equal(result, case$output, tolerance = 1e-3)
   }
 })
 
@@ -373,6 +341,6 @@ cases_mpc_sar_wifi <- list(
 test_that("mpc_sar_wifi matches reference values", {
   for (case in cases_mpc_sar_wifi) {
     result <- do.call(mpc_sar_wifi, case$input)
-    expect_equal(result, case$output, tolerance = 1e-2)
+    expect_equal(result, case$output, tolerance = 1e-3)
   }
 })
