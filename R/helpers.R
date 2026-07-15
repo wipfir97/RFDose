@@ -340,3 +340,31 @@ act_pwr_props <- function(
                 "high"    = high_prop))
   }
 }
+
+
+# =============================================================================
+#' Distance-based SAR scaling using the inverse-square law
+#'
+#' Adjusts a reference Specific Absorption Rate (SAR) value to a different
+#' phone-to-body distance using an inverse-square distance law with a small
+#' near-field offset. The scaling follows:
+#'
+#' \deqn{SAR(d) = SAR(d_{ref}) \left(\frac{d_{ref} + \delta}{d + \delta}\right)^2}
+#'
+#' where \eqn{d} is the target distance, \eqn{d_{ref}} is the reference
+#' distance at which the SAR value was computed (e.g. 200 mm), and
+#' \eqn{\delta} is a small near-field offset (typically around 6 mm).
+#'
+#' @param sar_ref Numeric. Reference SAR value at `dist_ref`.
+#' @param dist Numeric. Target phone-to-body distance.
+#' @param dist_ref Numeric. Reference distance at which `sar_ref` was computed.
+#' @param delta Numeric. Near-field offset added to both distances.
+#'
+#' @return Numeric. The SAR value scaled to the target distance.
+#'
+#' @export
+dist_law <- function(sar_ref,dist,dist_ref,delta){
+
+  return(sar_ref*((dist_ref+delta)/(dist + delta))^2)
+}
+
