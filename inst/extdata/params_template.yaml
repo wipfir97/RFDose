@@ -125,7 +125,7 @@ devices:
     5g_freq_props:
       f3500_5g_prop: 1.0
     6g_freq_props:
-      fxxx_6g_prop: 1.0
+      fxxxx_6g_prop: 1.0
     bt_freq_props:
       f2400_bt_prop: 1.0
 

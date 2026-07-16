@@ -45,6 +45,7 @@
 #' at school / work
 #' @param wifi_prop_travel Proportion of time connected to WiFi (vs mobile data)
 #' while commuting
+#' @param simulation tag of simulation round
 #' @param params Parameter list (optional). If not specified, calculations use
 #' default parameters.
 #'

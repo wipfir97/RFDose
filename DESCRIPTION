@@ -13,7 +13,9 @@ Roxygen: list(markdown = TRUE)
 Imports: 
     dplyr,
     tidyr,
-    yaml
+    yaml,
+    truncnorm,
+    MCMCpack
 Suggests: 
     knitr,
     rmarkdown,
