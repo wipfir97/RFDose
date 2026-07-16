@@ -45,8 +45,8 @@ load_tissue_params <- function(params, device_type, tissue_name, dummy) {
 determine_dummy <- function(sex, age) {
   if (sex == "male" && age == "adult") return("Duke")
   if (sex == "female" && age == "adult") return("Ella")
-  if (sex == "male" && age == "child") return("Boy")
-  if (sex == "female" && age == "child") return("Girl")
+  if (sex == "male" && age == "child") return("Thelonious")
+  if (sex == "female" && age == "child") return("Eartha")
   NA_character_
 }
 

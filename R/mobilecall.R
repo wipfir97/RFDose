@@ -533,10 +533,13 @@ mpc_sar_native <- function(
     #adjust distance with distance law (in mm), here no stochastic because we assume that the distance stays the same in the pocket
     #the brain sar only increases that moch how the phone is closer to the head
     #in the pocket the phone is still quiet far away from the head.
-    dummy_chest_hight <- 500
+    dummy <- determine_dummy(params$global$input_stoch$sex,
+                             params$global$input_stoch$age)
+    dummy_chest_height <- params$devices$call[[dummy]]$height/2
+
     headp_sar_pocket <- dist_law(sar = headp_sar_pocket,
-                                 dist = 500,
-                                 dist_ref = sqrt(dummy_chest_hight^2+200^2),
+                                 dist = dummy_chest_height,
+                                 dist_ref = sqrt(dummy_chest_height^2+200^2),
                                  delta = 6)
   }
 
@@ -980,10 +983,12 @@ mpc_bt_phone_sar <- function(
     #adjust distance with distance law (in mm), here no stochastic because we assume that the distance stays the same in the pocket
     #the brain sar only increases that moch how the phone is closer to the head
     #in the pocket the phone is still quiet far away from the head.
-    dummy_chest_hight <- 500
+    dummy <- determine_dummy(params$global$input_stoch$sex,
+                             params$global$input_stoch$age)
+    dummy_chest_height <- params$devices$call[[dummy]]$height/2
     headp_bt_sar_pocket <- dist_law(sar = headp_bt_sar_pocket,
-                                 dist = 500,
-                                 dist_ref = sqrt(dummy_chest_hight^2+200^2),
+                                 dist = dummy_chest_height,
+                                 dist_ref = sqrt(dummy_chest_height^2+200^2),
                                  delta = 6)
   }
 
