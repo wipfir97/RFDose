@@ -9,11 +9,44 @@ simulate_params <- function(tissue,
                             wifi_prop_home,
                             wifi_prop_work,
                             wifi_prop_travel,
+                            sex,
+                            age,
+                            country,
+                            mpd_dur_low,
+                            mpd_dur_lowtomed,
+                            mpd_dur_medtohigh,
+                            mpd_dur_high,
+                            dect_duration,
+                            dect_ear_prop,
+                            lptp_dur_low,
+                            lptp_dur_lowtomed,
+                            lptp_dur_medtohigh,
+                            lptp_dur_high,
+                            tblt_dur_low,
+                            tblt_dur_lowtomed,
+                            tblt_dur_medtohigh,
+                            tblt_dur_high,
+                            hotspot_duration,
+                            smartwatch_duration,
+                            tracker_duration,
+                            vr_duration,
+                            headphone_duration,
+                            gaming_duration,
                             simulation,
                             params = load_params(version = simulation)){
 
+
+  inputs <- as.list(environment())
+  browser()
+
 }
 
+simulate_params("tissue",100,
+                            0.5,
+                            0.5,
+                            "urban",
+                            TRUE,
+                simulation = "_template")
 
 
 #' Draw a random value from a specified distribution
@@ -105,13 +138,18 @@ evaluate_distribution <- function(dist_name,
       r_bernoulli(p_categorie1= p_categorie1,categorie1=categorie1 ,categorie2 =categorie2 )
     )
 
+  } else if (dist_name == "trunc_lognormal"){
+    return(
+      r_trunc_lognormal(mean, sd, max = max)
+    )
+
   } else {
 
     stop("Unsupported distribution. Choose 'truncnorm' or 'gamma'.")
 
   }
 }
-
+r_trunc_lognormal <- function(mean, sd, max = Inf)
 #' Draw a random value from a truncated normal distribution
 #'
 #' Draws a single random value from a normal distribution truncated to a
@@ -267,7 +305,46 @@ r_bernoulli <- function(p_categorie1,categorie1,categorie2) {
 
 
 
+#' Draw a random value from a truncated Lognormal distribution
+#'
+#' Draws a single random value from a Lognormal distribution truncated
+#' at an upper bound.
+#'
+#' @param mean Mean of the Lognormal distribution on the original scale.
+#' @param sd Standard deviation of the Lognormal distribution on the original scale.
+#' @param max Upper truncation bound.
+#'
+#' @return A single random draw from the truncated Lognormal distribution.
+#' @export
+r_trunc_lognormal <- function(mean, sd, max = Inf) {
 
+  if (mean <= 0) stop("mean must be greater than 0.")
+  if (sd <= 0) stop("sd must be greater than 0.")
+
+  # Convert original scale parameters to log-scale parameters
+  sigma2 <- log(1 + (sd^2 / mean^2))
+
+  sigma <- sqrt(sigma2)
+
+  mu <- log(mean) - sigma2 / 2
+
+
+  # Upper truncation probability
+  p_max <- plnorm(
+    max,
+    meanlog = mu,
+    sdlog = sigma
+  )
+
+  # Draw only below max
+  u <- runif(1, 0, p_max)
+
+  qlnorm(
+    u,
+    meanlog = mu,
+    sdlog = sigma
+  )
+}
 
 
 
@@ -497,4 +574,41 @@ barplot(
   xlab = "Category",
   col = "steelblue"
 )
+
+#___________________________________________________________________________________________________________________
+# truncated lognormal
+
+x <- replicate(
+  100000,
+  evaluate_distribution(
+    dist_name = "trunc_lognormal",
+    mean = 200,
+    sd = 100,
+    p_zero = NULL,
+    min = NULL,
+    max = 350,
+    a0 = NULL,
+    p_categorie1 = NULL,
+    categorie1 = NULL,
+    categorie2 = NULL
+  )
+)
+
+hist(
+  x,
+  breaks = 30,
+  probability = TRUE,
+  col = "lightblue",
+  border = "white",
+  main = "Truncated Lognormal Distribution",
+  xlab = "Value"
+)
+
+lines(density(x), lwd = 2, col = "red")
+abline(v = mean(x), col = "blue", lwd = 2, lty = 2)
+
+# Optional: Mittelwert und SD anzeigen
+cat("Mean:", mean(x), "\n")
+cat("SD:", sd(x), "\n")
+cat("Max:", max(x), "\n")
 
