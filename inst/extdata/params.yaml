@@ -1,9 +1,9 @@
 global:
   wifi_2_prop: 0.58
   wifi_5_prop: 0.42
-  home_prop: 0.71
-  outd_prop: 0.08
-  work_prop: 0.21
+  home_prop: 0.708333333
+  outd_prop: 0.083333333
+  work_prop: 0.208333333
 devices:
   dect:
     dect_pwr: 250
@@ -65,31 +65,31 @@ devices:
       wifi_5_sar: 0.002423693
   call:
     native_prop: 0.7
-    data_prop: 0.16
-    wifi_prop: 0.14
+    data_prop: 0.12
+    wifi_prop: 0.18
     native_2g_prop: 0.0075
     native_3g_prop: 0.0175
-    native_4g_prop: 0.98
+    native_4g_prop: 0.975
     native_5g_prop: 0
     data_2g_prop: 0
-    data_3g_prop: 0.02
+    data_3g_prop: 0.0175
     data_4g_prop: 0.66
-    data_5g_prop: 0.315
+    data_5g_prop: 0.3225
     data_2g_prop_no5g: 0
-    data_3g_prop_no5g: 0.02
-    data_4g_prop_no5g: 0.98
+    data_3g_prop_no5g: 0.0175
+    data_4g_prop_no5g: 0.9825
     data_5g_prop_no5g: 0
     native_2g_dutycycle: 0.12
-    native_3g_dutycycle: 0.98
-    native_4g_dutycycle: 0.043
+    native_3g_dutycycle: 0.979275
+    native_4g_dutycycle: 0.043038
     native_5g_dutycycle: 0.000
     native_2g_sub_ind_pwr: 1281.52
     native_2g_urb_ind_pwr: 374.8682087
     native_2g_rur_ind_pwr: 1371.23
-    native_2g_sub_out_pwr: 383.90
-    native_2g_urb_out_pwr: 173.81
-    native_2g_rur_out_pwr: 433.90
-    native_2g_travel_pwr: 383.9
+    native_2g_sub_out_pwr: 476.13
+    native_2g_urb_out_pwr: 70.22
+    native_2g_rur_out_pwr: 509.46
+    native_2g_travel_pwr: 476.1
     native_3g_sub_ind_pwr: 2.03
     native_3g_urb_ind_pwr: 0.97
     native_3g_rur_ind_pwr: 6.2
@@ -112,9 +112,9 @@ devices:
     native_5g_rur_out_pwr: 125.2
     native_5g_travel_pwr: 109.75
     data_2g_dutycycle: 0
-    data_3g_dutycycle: 0.54
-    data_4g_dutycycle: 0.056
-    data_5g_dutycycle: 0.051
+    data_3g_dutycycle: 0.544567
+    data_4g_dutycycle: 0.055613
+    data_5g_dutycycle: 0.051400
     data_2g_sub_ind_pwr: 0
     data_2g_urb_ind_pwr: 0
     data_2g_rur_ind_pwr: 0
@@ -152,111 +152,111 @@ devices:
     headp_else_prop: 0.333
     bt_pwr: 0.16
     brain:
-      native_2g_ear_sar: 0.07139
-      native_2g_headp_face_sar: 0.0038757
-      native_2g_headp_pock_sar: 0.00000911
-      native_2g_headp_else_sar: 0
-      native_2g_speaker_sar: 0.00628
-      native_3g_ear_sar: 0.06603
-      native_3g_headp_face_sar: 0.0036294
-      native_3g_headp_pock_sar: 0.00000882
-      native_3g_headp_else_sar: 0
-      native_3g_speaker_sar: 0.00594
-      native_4g_ear_sar: 0.06329
-      native_4g_headp_face_sar: 0.0032346
-      native_4g_headp_pock_sar: 0.00000978
-      native_4g_headp_else_sar: 0
-      native_4g_speaker_sar: 0.005369
-      native_5g_ear_sar: 0.0039
-      native_5g_headp_face_sar: 0.0005054
-      native_5g_headp_pock_sar: 0.00000017
-      native_5g_headp_else_sar: 0
-      native_5g_speaker_sar: 0.000675
-      data_2g_ear_sar: 0.07139
-      data_2g_headp_face_sar: 0.0038757
-      data_2g_headp_pock_sar: 0.00000911
+      data_2g_ear_sar: 0.08098
+      data_2g_headp_face_sar: 0.0041018
+      data_2g_headp_pock_sar: 0.00000365
       data_2g_headp_else_sar: 0
-      data_2g_speaker_sar: 0.00628
-      data_3g_ear_sar: 0.06603
-      data_3g_headp_face_sar: 0.0036294
-      data_3g_headp_pock_sar: 0.00000882
+      data_2g_speaker_sar: 0.00726
+      data_3g_ear_sar: 0.07618
+      data_3g_headp_face_sar: 0.0038276
+      data_3g_headp_pock_sar: 0.00000355
       data_3g_headp_else_sar: 0
-      data_3g_speaker_sar: 0.00594
-      data_4g_ear_sar: 0.06329
-      data_4g_headp_face_sar: 0.0032346
-      data_4g_headp_pock_sar: 0.00000978
+      data_3g_speaker_sar: 0.00680
+      data_4g_ear_sar: 0.07502
+      data_4g_headp_face_sar: 0.0035994
+      data_4g_headp_pock_sar: 0.00000438
       data_4g_headp_else_sar: 0
-      data_4g_speaker_sar: 0.005369
-      data_5g_ear_sar: 0.0039
-      data_5g_headp_face_sar: 0.0005054
-      data_5g_headp_pock_sar: 0.00000017
+      data_4g_speaker_sar: 0.006546
+      data_5g_ear_sar: 0.0055
+      data_5g_headp_face_sar: 0.0006715
+      data_5g_headp_pock_sar: 0.00000023
       data_5g_headp_else_sar: 0
-      data_5g_speaker_sar: 0.000675 
-      wifi_2_ear_sar: 0.016377585
-      wifi_2_headp_face_sar: 0.000999468
-      wifi_2_headp_pock_sar: 4.75109794184096E-07
+      data_5g_speaker_sar: 0.000957
+      native_2g_ear_sar: 0.08098
+      native_2g_headp_face_sar: 0.0041018
+      native_2g_headp_pock_sar: 0.00000365
+      native_2g_headp_else_sar: 0
+      native_2g_speaker_sar: 0.00726
+      native_3g_ear_sar: 0.07618
+      native_3g_headp_face_sar: 0.0038276
+      native_3g_headp_pock_sar: 0.00000355
+      native_3g_headp_else_sar: 0
+      native_3g_speaker_sar: 0.00680
+      native_4g_ear_sar: 0.07502
+      native_4g_headp_face_sar: 0.0035994
+      native_4g_headp_pock_sar: 0.00000438
+      native_4g_headp_else_sar: 0
+      native_4g_speaker_sar: 0.006546
+      native_5g_ear_sar: 0.0055
+      native_5g_headp_face_sar: 0.0006715
+      native_5g_headp_pock_sar: 0.00000023
+      native_5g_headp_else_sar: 0
+      native_5g_speaker_sar: 0.000957
+      wifi_2_ear_sar: 0.026727749
+      wifi_2_headp_face_sar: 0.001119463
+      wifi_2_headp_pock_sar: 0.000000328
       wifi_2_headp_else_sar: 0
-      wifi_2_speaker_sar: 0.001272228
-      wifi_5_ear_sar: 0.000606727
-      wifi_5_headp_face_sar: 0.000163091
-      wifi_5_headp_pock_sar: 0.000000021
+      wifi_2_speaker_sar: 0.001556721
+      wifi_5_ear_sar: 0.001040371
+      wifi_5_headp_face_sar: 0.000320072
+      wifi_5_headp_pock_sar: 0.000000000014
       wifi_5_headp_else_sar: 0
-      wifi_5_speaker_sar: 0.000169973
+      wifi_5_speaker_sar: 0.000332549
       bt_phone_face_sar: 0.000999468
       bt_phone_pock_sar: 0.000000475
       bt_phone_else_sar: 0
       bt_headp_sar: 0.01699017
     body:
-      native_2g_ear_sar: 0.008183
-      native_2g_headp_face_sar: 0.001082
-      native_2g_headp_pock_sar: 0.012277
+      native_2g_ear_sar: 0.011697
+      native_2g_headp_face_sar: 0.001073
+      native_2g_headp_pock_sar: 0.009881
       native_2g_headp_else_sar: 0
-      native_2g_speaker_sar: 0.002316
-      native_3g_ear_sar: 0.007597
-      native_3g_headp_face_sar: 0.001066
-      native_3g_headp_pock_sar: 0.010754
+      native_2g_speaker_sar: 0.002308
+      native_3g_ear_sar: 0.011424
+      native_3g_headp_face_sar: 0.001062
+      native_3g_headp_pock_sar: 0.009435
       native_3g_headp_else_sar: 0
-      native_3g_speaker_sar: 0.002208
-      native_4g_ear_sar: 0.007628
-      native_4g_headp_face_sar: 0.001301
-      native_4g_headp_pock_sar: 0.011222
+      native_3g_speaker_sar: 0.002225
+      native_4g_ear_sar: 0.011416
+      native_4g_headp_face_sar: 0.001036
+      native_4g_headp_pock_sar: 0.009394
       native_4g_headp_else_sar: 0
-      native_4g_speaker_sar: 0.002207
-      native_5g_ear_sar: 0.004750
-      native_5g_headp_face_sar: 0.0007066
-      native_5g_headp_pock_sar: 0.0047746
+      native_4g_speaker_sar: 0.002231
+      native_5g_ear_sar: 0.009308
+      native_5g_headp_face_sar: 0.0007263
+      native_5g_headp_pock_sar: 0.0040845
       native_5g_headp_else_sar: 0
-      native_5g_speaker_sar: 0.004775
-      data_2g_ear_sar: 0.008183
-      data_2g_headp_face_sar: 0.001082
-      data_2g_headp_pock_sar: 0.012277
+      native_5g_speaker_sar: 0.004084
+      data_2g_ear_sar: 0.011697
+      data_2g_headp_face_sar: 0.001073
+      data_2g_headp_pock_sar: 0.009881
       data_2g_headp_else_sar: 0
-      data_2g_speaker_sar: 0.002316
-      data_3g_ear_sar: 0.007597
-      data_3g_headp_face_sar: 0.001066
-      data_3g_headp_pock_sar: 0.010754
+      data_2g_speaker_sar: 0.002308
+      data_3g_ear_sar: 0.011424
+      data_3g_headp_face_sar: 0.001062
+      data_3g_headp_pock_sar: 0.009435
       data_3g_headp_else_sar: 0
-      data_3g_speaker_sar: 0.002208
-      data_4g_ear_sar: 0.007628
-      data_4g_headp_face_sar: 0.001031
-      data_4g_headp_pock_sar: 0.011222
+      data_3g_speaker_sar: 0.002225
+      data_4g_ear_sar: 0.011416
+      data_4g_headp_face_sar: 0.001036
+      data_4g_headp_pock_sar: 0.009394
       data_4g_headp_else_sar: 0
-      data_4g_speaker_sar: 0.002207
-      data_5g_ear_sar: 0.004750
-      data_5g_headp_face_sar: 0.0007066
-      data_5g_headp_pock_sar: 0.0047746
+      data_4g_speaker_sar: 0.002231
+      data_5g_ear_sar: 0.009308
+      data_5g_headp_face_sar: 0.0007263
+      data_5g_headp_pock_sar: 0.0040845
       data_5g_headp_else_sar: 0
-      data_5g_speaker_sar: 0.004775
-      wifi_2_ear_sar: 0.005180701
+      data_5g_speaker_sar: 0.004084
+      wifi_2_ear_sar: 0.010022773
       wifi_2_headp_face_sar: 0.000860849
-      wifi_2_headp_pock_sar: 0.010153247
+      wifi_2_headp_pock_sar: 0.006278143
       wifi_2_headp_else_sar: 0
-      wifi_2_speaker_sar: 0.001750505
-      wifi_5_ear_sar: 0.003516185
-      wifi_5_headp_face_sar: 0.000586175
-      wifi_5_headp_pock_sar: 0.002646374
+      wifi_2_speaker_sar: 0.001762495
+      wifi_5_ear_sar: 0.006538522
+      wifi_5_headp_face_sar: 0.000553633
+      wifi_5_headp_pock_sar: 0.002473388
       wifi_5_headp_else_sar: 0
-      wifi_5_speaker_sar: 0.001182344
+      wifi_5_speaker_sar: 0.00127148
       bt_phone_face_sar: 0.000860849
       bt_phone_pock_sar: 0.010153247
       bt_phone_else_sar: 0

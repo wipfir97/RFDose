@@ -100,6 +100,7 @@ mobilecall_dose <- function(
 
   data_prop <- 1-native_prop-wifi_prop
 
+
   #############################################################################
   # Input checks ==============================================================
   check_tissue(tissue, "call", params)
@@ -130,7 +131,6 @@ mobilecall_dose <- function(
     params       = params)
 
   dose_phone <- msar_phone * duration
-  print(dose_phone)
 
   # Calculate dose for bluetooth headphones ===================================
   ## Contribution of headphones/earset
@@ -493,10 +493,13 @@ mpc_pwr_data <- function(
   # commuting/traveling
   pwr_travel <- loc_props$travel * params$devices$call[[paste0("data_",band, "_travel_pwr")]]
 
-  # combine, multiply with duty cycle, and return resul
+  # combine, multiply with duty cycle, and return result
   dutycycle <- params$devices$call[[paste0("data_", band, "_dutycycle")]]
 
+
   pwr_total <- sum(pwr_indoor, pwr_outdoor, pwr_travel) * dutycycle
+
+
 
   return(pwr_total)
 }
