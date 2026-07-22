@@ -9,11 +9,11 @@ devices:
     dect_pwr: 250
     dect_dutycycle: 0.04
     brain:
-      dect_ear_sar: 0.034926
-      dect_speaker_sar: 0.002603877
+      dect_ear_sar: 0.046356407
+      dect_speaker_sar: 0.003210772
     body:
-      dect_ear_sar: 0.007025455
-      dect_speaker_sar: 0.002116649
+      dect_ear_sar: 0.011088893
+      dect_speaker_sar: 0.002088857
   tblt:
     wifi_2_low_dutycycle: 0.009
     wifi_2_lowmed_dutycycle: 0.025
@@ -26,11 +26,11 @@ devices:
     wifi_2_pwr: 100
     wifi_5_pwr: 200
     brain:
-      tblt_2_sar: 0.000999468
-      tblt_5_sar: 0.000163091
+      tblt_2_sar: 0.001119463
+      tblt_5_sar: 0.000320072
     body:
-      tblt_2_sar: 0.000860849
-      tblt_5_sar: 0.000586175
+      tblt_2_sar: 0.000863117
+      tblt_5_sar: 0.000553633
   lptp:
     wifi_2_low_dutycycle: 0.009
     wifi_2_lowmed_dutycycle: 0.025
@@ -45,15 +45,15 @@ devices:
     legs_prop: 0.2
     tabl_prop: 0.8
     brain:
-      wifi_2_legs_sar: 5.18942E-05
-      wifi_2_tabl_sar: 6.89201E-05
-      wifi_5_legs_sar: 6.75E-06
-      wifi_5_tabl_sar: 9.50E-06
+      wifi_2_legs_sar: 0.000034320
+      wifi_2_tabl_sar: 0.000039139
+      wifi_5_legs_sar: 0.000002239
+      wifi_5_tabl_sar: 0.000009211
     body:
-      wifi_2_legs_sar: 0.005001918
-      wifi_2_tabl_sar: 0.001261547
-      wifi_5_legs_sar: 0.003303364
-      wifi_5_tabl_sar: 0.000883944
+      wifi_2_legs_sar: 0.007105568
+      wifi_2_tabl_sar: 0.003184117
+      wifi_5_legs_sar: 0.005462274
+      wifi_5_tabl_sar: 0.002186701
   wifi:
     wifi_2_pwr: 0.018
     wifi_5_pwr: 0.013
@@ -263,12 +263,12 @@ devices:
       bt_headp_sar: 0.009862
   data:
     data_2g_prop: 0
-    data_3g_prop: 0.02
+    data_3g_prop: 0.0175
     data_4g_prop: 0.66
-    data_5g_prop: 0.315
+    data_5g_prop: 0.3225
     data_2g_prop_no5g: 0
-    data_3g_prop_no5g: 0.02
-    data_4g_prop_no5g: 0.98
+    data_3g_prop_no5g: 0.0175
+    data_4g_prop_no5g: 0.9825
     data_5g_prop_no5g: 0
     data_3g_low_dutycycle: 0.438
     data_3g_lowmed_dutycycle: 0.544566667
@@ -314,17 +314,17 @@ devices:
     wifi_5_high_dutycycle: 0.14515
     wifi_5_pwr: 200.00
     brain:
-      data_3g_sar: 0.003629446
-      data_4g_sar: 0.003234564
-      data_5g_sar: 0.000505446
-      wifi_2_sar: 0.000999468
-      wifi_5_sar: 0.000163091
+      data_3g_sar: 0.003827632
+      data_4g_sar: 0.003599419
+      data_5g_sar: 0.000671496
+      wifi_2_sar: 0.001119463
+      wifi_5_sar: 0.000320072
     body:
-      data_3g_sar: 0.001066043
-      data_4g_sar: 0.001031137
-      data_5g_sar: 0.000706621
-      wifi_2_sar: 0.000860849
-      wifi_5_sar: 0.000586175
+      data_3g_sar: 0.001061719
+      data_4g_sar: 0.001036151
+      data_5g_sar: 0.000726276
+      wifi_2_sar: 0.000863117
+      wifi_5_sar: 0.000553633
   farf:
     home_urb_pwr_Other: 0.45
     out_urb_pwr_Other: 1.29

@@ -13,7 +13,7 @@ test_that("cordless_dose errors if required argument is NA", {
       cordless_dose(
         tissue      = "brain",
         duration    = NA,
-        ear_prop    = 0.9)
+        ear_prop    = 0.35)
     )
   )
 })
@@ -23,13 +23,13 @@ test_that("cordless_dose errors if input argument is incorrect type", {
     cordless_dose(
       tissue      = "body",
       duration    = "600",
-      ear_prop    = 0.9)
+      ear_prop    = 0.35)
   )
   expect_error(
     cordless_dose(
       tissue      = "brain",
       duration    = 600,
-      ear_prop    = "0.9")
+      ear_prop    = "0.35")
   )
 })
 
@@ -38,13 +38,13 @@ test_that("cordless_dose errors if input argument is not valid", {
     cordless_dose(
       tissue      = "head",
       duration    = 600,
-      ear_prop    = 0.9)
+      ear_prop    = 0.35)
   )
   expect_error(
     cordless_dose(
       tissue      = "body",
       duration    = -600,
-      ear_prop    = 0.9)
+      ear_prop    = 0.35)
   )
   expect_error(
     cordless_dose(
@@ -59,7 +59,7 @@ test_that("cordless_dose warns if duration exceeds 86400 seconds", {
     cordless_dose(
       tissue      = "brain",
       duration    = 90000,
-      ear_prop    = 0.9)
+      ear_prop    = 0.35)
   )
 })
 
@@ -67,16 +67,16 @@ cases_cordless_dose <- list(
   list(
     input = list(
       tissue      = "brain",
-      duration    = 204,
-      ear_prop    = 0.9
+      duration    = 69,
+      ear_prop    = 0.35
     ),
     output = 64.655
   ),
   list(
     input = list(
       tissue      = "body",
-      duration    = 204,
-      ear_prop    = 0.9
+      duration    = 69,
+      ear_prop    = 0.35
     ),
     output = 13.331
   )
