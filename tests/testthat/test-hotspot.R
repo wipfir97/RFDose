@@ -46,20 +46,34 @@ cases_hotspot_dose <- list(
       tissue = "brain",
       duration_hotspot = 3600
     ),
-    output = 11.4
+    output = 12.770991
   ),
   list(
     input = list(
       tissue = "body",
       duration_hotspot = 3600
     ),
-    output = 125.61
+    output = 81.444646
+  ),
+  list(
+    input = list(
+      tissue = "brain",
+      duration_hotspot = 0
+    ),
+    output = 0
+  ),
+  list(
+    input = list(
+      tissue = "body",
+      duration_hotspot = 0
+    ),
+    output = 0
   )
 )
 
 test_that("hotspot_dose matches reference values", {
   for (case in cases_hotspot_dose) {
     result <- do.call(hotspot_dose, case$input)
-    expect_equal(result, case$output, tolerance = 1e-2)
+    expect_equal(result, case$output, tolerance = 1e-3)
   }
 })

@@ -97,10 +97,13 @@ smartwatch_watch_dose <- function(
   tissue_params <- load_tissue_params(params, "smartwatch", tissue)
 
   # Calculate active and passive use duration =================================
+  file_dur    <- (duration_smartwatch*120)/86400
+  active_dur  <- file_dur/2
+  passive_dur <- duration_smartwatch-(file_dur/2)
   mode_dur <- list(
-    active = duration_smartwatch*(1/1440),
-    passive = 86400 - duration_smartwatch*(1/1440))
-
+    active  = active_dur,
+    passive = passive_dur
+    )
   modes <- c("active", "passive")
 
   dose <- sum(

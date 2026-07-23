@@ -58,11 +58,11 @@ devices:
     wifi_2_pwr: 0.018
     wifi_5_pwr: 0.013
     brain:
-      wifi_2_sar: 0.00133
-      wifi_5_sar: 0.00047
+      wifi_2_sar: 0.001330
+      wifi_5_sar: 0.000556
     body:
       wifi_2_sar: 0.005295
-      wifi_5_sar: 0.002423693
+      wifi_5_sar: 0.002402
   call:
     native_prop: 0.7
     data_prop: 0.12
@@ -445,36 +445,26 @@ devices:
     watch_pwr_passive: 0.002
     watch_phone_pwr: 0.002
     brain:
-      watch_sar: 0.0000017
-      watch_phone_sar: 0.000329981
+      watch_sar: 0.000024
+      watch_phone_sar: 0.000370
     body:
-      watch_sar: 0.01365
-      watch_phone_sar: 0.003634651
-  tracker:
-    shared:
-      tracker_pwr: 0.00008
-      tracker_phone_pwr: 0.00008
-    brain:
-      tracker_sar: 0.000031
-      tracker_phone_sar: 0.000329981
-    body:
-      tracker_sar: 0.0118
-      tracker_phone_sar: 0.003634651
+      watch_sar: 0.010634
+      watch_phone_sar: 0.0023566
   headphones:
     headp_pwr: 0.002
     headp_phone_pwr: 0.16
     brain:
-      headp_sar: 0.016990171
-      headp_phone_sar: 0.000329981
+      headp_sar: 0.020049
+      headp_phone_sar: 0.000370
     body:
-      headp_sar: 0.009862
-      headp_phone_sar: 0.003634651
+      headp_sar: 0.014058
+      headp_phone_sar: 0.002357
   hotspot:
-    hotspot_pwr: 9.6
+    hotspot_pwr: 5.22
     brain:
-      hotspot_sar: 0.000329981
+      hotspot_sar: 0.000370
     body:
-      hotspot_sar: 0.003634651
+      hotspot_sar: 0.002357
   vr:
     vr_2_pwr: 100
     vr_5_pwr: 200
@@ -482,18 +472,11 @@ devices:
     vr_5_dutycycle: 0.05
     vr_online_prop: 0.4
     brain:
-      vr_2_sar: 0.016377585
-      vr_5_sar: 0.000606721
+      vr_2_sar: 0.026728
+      vr_5_sar: 0.001040
     body:
-      vr_2_sar: 0.005180701
-      vr_5_sar: 0.0035162
-  smarthome:
-    smarthome_pwr: 1.64109
-    smarthome_active_prop: 0.01
-    brain:
-      smarthome_sar: 0.00133
-    body:
-      smarthome_sar: 0.009862
+      vr_2_sar: 0.010023
+      vr_5_sar: 0.006539
   gaming:
     gaming_online_prop: 0.25
     gaming_2_dutycycle: 0.0195
@@ -501,11 +484,11 @@ devices:
     gaming_2_pwr: 100
     gaming_5_pwr: 200
     brain:
-      gaming_2_sar: 0.000999468
-      gaming_5_sar: 0.000163091
+      gaming_2_sar: 0.001119
+      gaming_5_sar: 0.000320
     body:
-      gaming_2_sar: 0.000860849
-      gaming_5_sar: 0.000586175
+      gaming_2_sar: 0.000863
+      gaming_5_sar: 0.000554
 
 
 

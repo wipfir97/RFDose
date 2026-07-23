@@ -44,16 +44,16 @@ cases_headphones_dose <- list(
   list(
     input = list(
       tissue = "brain",
-      duration_headphones = 8280
+      duration_headphones = 8411.05
     ),
-    output = 1.0
+    output = 1.171858
   ),
   list(
     input = list(
       tissue = "body",
-      duration_headphones = 8280
+      duration_headphones = 8411.05
     ),
-    output = 5.14
+    output = 3.644465
   )
 )
 
@@ -110,23 +110,23 @@ cases_headphones_earset_dose <- list(
   list(
     input = list(
       tissue = "brain",
-      duration_headphones = 8280
+      duration_headphones = 8411
     ),
-    output = 0.563
+    output = 0.674549
   ),
   list(
     input = list(
       tissue = "body",
-      duration_headphones = 8280
+      duration_headphones = 8411
     ),
-    output = 0.327
+    output = 0.472972
   )
 )
 
 test_that("headphones_earset_dose matches reference values", {
   for (case in cases_headphones_earset_dose) {
     result <- do.call(headphones_earset_dose, case$input)
-    expect_equal(result, case$output, tolerance = 1e-2)
+    expect_equal(result, case$output, tolerance = 1e-3)
   }
 })
 
@@ -176,22 +176,22 @@ cases_headphones_phone_dose <- list(
   list(
     input = list(
       tissue = "brain",
-      duration_headphones = 8280
+      duration_headphones = 8411
     ),
-    output = 0.437
+    output = 0.497308
   ),
   list(
     input = list(
       tissue = "body",
-      duration_headphones = 8280
+      duration_headphones = 8411
     ),
-    output = 4.815
+    output = 3.171493
   )
 )
 
 test_that("headphones_phone_dose matches reference values", {
   for (case in cases_headphones_phone_dose) {
     result <- do.call(headphones_phone_dose, case$input)
-    expect_equal(result, case$output, tolerance = 1e-2)
+    expect_equal(result, case$output, tolerance = 1e-3)
   }
 })

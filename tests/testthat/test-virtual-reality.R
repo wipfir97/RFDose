@@ -46,20 +46,34 @@ cases_vr_dose <- list(
       tissue = "brain",
       duration_vr = 600
     ),
-    output = 12.01
+    output = 19.651207
   ),
   list(
     input = list(
       tissue = "body",
       duration_vr = 600
     ),
-    output = 7.15
+    output = 13.566680
+  ),
+  list(
+    input = list(
+      tissue = "brain",
+      duration_vr = 0
+    ),
+    output = 0
+  ),
+  list(
+    input = list(
+      tissue = "body",
+      duration_vr = 0
+    ),
+    output = 0
   )
 )
 
 test_that("vr_dose matches reference values", {
   for (case in cases_vr_dose) {
     result <- do.call(vr_dose, case$input)
-    expect_equal(result, case$output, tolerance = 1e-2)
+    expect_equal(result, case$output, tolerance = 1e-3)
   }
 })

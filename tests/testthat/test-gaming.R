@@ -2,7 +2,7 @@
 test_that("gaming_dose errors if required argument is NA", {
   expect_error(
     gaming_dose(
-      tissue           = "brain",
+      tissue          = "brain",
       duration_gaming = NA)
   )
 })
@@ -44,22 +44,36 @@ cases_gaming_dose <- list(
   list(
     input = list(
       tissue = "brain",
+      duration_gaming = 0
+    ),
+    output = 0
+  ),
+  list(
+    input = list(
+      tissue = "body",
+      duration_gaming = 0
+    ),
+    output = 0
+  ),
+  list(
+    input = list(
+      tissue = "brain",
       duration_gaming = 3600
     ),
-    output = 1.358
+    output = 1.807350
   ),
   list(
     input = list(
       tissue = "body",
       duration_gaming = 3600
     ),
-    output = 2.099
+    output = 2.033755
   )
 )
 
 test_that("gaming_dose matches reference values", {
   for (case in cases_gaming_dose) {
     result <- do.call(gaming_dose, case$input)
-    expect_equal(result, case$output, tolerance = 1e-2)
+    expect_equal(result, case$output, tolerance = 1e-3)
   }
 })
