@@ -37,7 +37,7 @@
 #' to headphones
 #' @param urbanicity Urbanicity of home / workplace (rural, suburban, or urban)
 #' @param use_5g TRUE if 5g services are used for calls, FALSE if not
-#' @param travel_time Time spent commuting in seconds per day
+#' @param travel_time Time spent commuting in seconds per day (not used in SDM)
 #' @param headp_ear_num Number of Bluetooth headphones used during call
 #' @param wifi_prop_home Proportion of time connected to WiFi (vs mobile data)
 #' at home
@@ -216,8 +216,8 @@ mpc_msar <- function(
     params = load_params(version = simulation)) {
   # Setup =====================================================================
   ## Define frequency bands for each technology -------------------------------
-  native_bands <- c("2g", "3g", "4g", "5g")
-  data_bands   <- c("3g", "4g", "5g")
+  native_bands <- c("2g", "3g", "4g", "5g","6g")
+  data_bands   <- c("3g", "4g", "5g","6g")
   wifi_bands   <- c("2400", "5000") # 2.4 GHz and 5.0 GHz
 
   # Native call ===============================================================
@@ -624,7 +624,6 @@ mpc_pwr_data <- function(
 
         # define prefix for finding correct parameters
         prefix <- paste("data", band, substr(urbanicity, 0, 3), sep = "_")
-
         # home/work
         pwr_indoor  <- indoor_prop * params$devices$call$data_pwr[[paste0(prefix, "_ind_pwr")]]
 
@@ -866,7 +865,6 @@ mpc_bt_pwr <- function(
 mpc_bt_sar <- function(
     tissue,
     params) {
-
 
   ear_position <- c("cheek1","cheek2","cheek3",
                     "tilt1","tilt2","tilt3")

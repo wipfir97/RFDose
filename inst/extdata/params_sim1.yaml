@@ -1,5 +1,27 @@
 global:
-  sim: "template"
+  sim: "sim1"
+  input_default:
+    country: "Other"
+    mpd_dur_low: 4860
+    mpd_dur_lowtomed: 540
+    mpd_dur_medtohigh: 4860
+    mpd_dur_high: 540
+    dect_duration: 204
+    dect_ear_prop: 0.9
+    lptp_dur_low: 1967
+    lptp_dur_lowtomed: 219
+    lptp_dur_medtohigh: 1967
+    lptp_dur_high: 219
+    tblt_dur_low: 728
+    tblt_dur_lowtomed: 81
+    tblt_dur_medtohigh: 728
+    tblt_dur_high: 81
+    hotspot_duration: 0
+    smartwatch_duration: 0
+    tracker_duration: 0
+    vr_duration: 0
+    headphone_duration: 0
+    gaming_duration: 600
   input_stoch:
     sex: "male"
     age: "adult"

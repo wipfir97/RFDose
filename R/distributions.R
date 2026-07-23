@@ -1,5 +1,4 @@
-simulate_params <- function(tissue,
-                            duration,
+simulate_params <- function(duration,
                             ear_prop,
                             headp_prop,
                             urbanicity,
@@ -33,20 +32,590 @@ simulate_params <- function(tissue,
                             headphone_duration,
                             gaming_duration,
                             simulation,
-                            params = load_params(version = simulation)){
+                            params = NULL){
+  params <- load_params(version = simulation)
+
+  #:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+  #set non-stochastic inputs
+  non_stochastic_inputs <- c(
+    "country",
+    "mpd_dur_low",
+    "mpd_dur_lowtomed",
+    "mpd_dur_medtohigh",
+    "mpd_dur_high",
+    "dect_duration",
+    "dect_ear_prop",
+    "lptp_dur_low",
+    "lptp_dur_lowtomed",
+    "lptp_dur_medtohigh",
+    "lptp_dur_high",
+    "tblt_dur_low",
+    "tblt_dur_lowtomed",
+    "tblt_dur_medtohigh",
+    "tblt_dur_high",
+    "hotspot_duration",
+    "smartwatch_duration",
+    "tracker_duration",
+    "vr_duration",
+    "headphone_duration",
+    "gaming_duration"
+  )
+
+  for (nm in non_stochastic_inputs) {
+
+    is_missing <- eval(
+      substitute(
+        missing(x),
+        list(x = as.name(nm))
+      )
+    )
+
+    if (!is_missing) {
+      params$global$input_default[[nm]] <- get(nm)
+    }
+
+  }
+  #:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+  # set stochastic input
+
+  params_stochastic = yaml::read_yaml(system.file("extdata", paste0("params_stochastic.yaml"), package = "RFDose"))
+
+  # use defaults if missing
+  if (missing(duration)) {duration <- params_stochastic$global$input_stoch$duration$mpc_duration_mean}
+  if (missing(ear_prop)) {ear_prop <- params_stochastic$global$input_stoch$call_mode_prop$mpc_ear_prop_mean}
+  if (missing(headp_prop)) {headp_prop <- params_stochastic$global$input_stoch$call_mode_prop$mpc_headp_prop_mean}
+  speaker_prop <- 1 - ear_prop - headp_prop
+  if (missing(headp_ear_num)) {headp_ear_num <- params_stochastic$global$input_stoch$headp_num$headp_ear_num_mean}
+  if (missing(wifi_prop_home)) {wifi_prop_home <- params_stochastic$global$input_stoch$wifi_environment_probs$mpd_wifi_prop_home_mean}
+  if (missing(wifi_prop_work)) {wifi_prop_work <- params_stochastic$global$input_stoch$wifi_environment_probs$mpd_wifi_prop_work_mean}
+  if (missing(wifi_prop_travel)) {wifi_prop_travel <- params_stochastic$global$input_stoch$wifi_environment_probs$mpd_wifi_prop_travel_mean}
+  if (missing(travel_time)) {
+    travel_prop <- params_stochastic$global$environment_prop$travel_prop_mean
+    home_prop <- params_stochastic$global$environment_prop$home_prop_mean
+  } else {
+    travel_prop <- travel_time/86400
+    home_prop <- params_stochastic$global$environment_prop$home_prop_mean +
+                params_stochastic$global$environment_prop$travel_prop_mean -
+                travel_prop
+  }
+
+  #pick duration
+  params$global$input_stoch$duration$mpc_duration <- evaluate_distribution(
+        dist_name = params_stochastic$global$input_stoch$duration$distribution,
+        mean = duration,
+        sd = params_stochastic$global$input_stoch$duration$mpc_duration_sd,
+        p_zero = params_stochastic$global$input_stoch$duration$mpc_duration_pzero,
+        max = params_stochastic$global$input_stoch$duration$mpc_duration_max
+      )
+
+  #pick ear_prop, headp_prop, speaker_prop
+  props <- evaluate_distribution(
+    dist_name = params_stochastic$global$input_stoch$call_mode_prop$distribution,
+    mean = c(ear_prop,headp_prop,speaker_prop),
+    a0 = params_stochastic$global$input_stoch$call_mode_prop$call_mode_prop_a0
+  )
+  params$global$input_stoch$call_mode_prop$mpc_ear_prop   <- props[1]
+  params$global$input_stoch$call_mode_prop$mpc_headp_prop <- props[2]
+  params$global$input_stoch$call_mode_prop$speaker_prop   <- props[3]
+
+  #pick headp_ear_num
+  params$global$input_stoch$headp_num <- evaluate_distribution(
+    dist_name = params_stochastic$global$input_stoch$headp_num$distribution,
+    mean = c(params_stochastic$global$input_stoch$headp_num$headp_ear_num_mean,
+             1-params_stochastic$global$input_stoch$headp_num$headp_ear_num_mean),
+    a0 = params_stochastic$global$input_stoch$headp_num$headp_ear_num_a0
+  )[1] + 1
+
+  #pick home_prop, work_prop, outdoor_prop and travel_prop
+  env_props <- evaluate_distribution(
+    dist_name = params_stochastic$global$environment_prop$distribution,
+    mean = c(home_prop,
+             params_stochastic$global$environment_prop$outd_prop_mean,
+             params_stochastic$global$environment_prop$work_prop_mean,
+             travel_prop),
+    a0 = params_stochastic$global$environment_prop$environment_prop_a0
+  )
+  params$global$environment_prop$home_prop <- env_props[1]
+  params$global$environment_prop$outd_prop <- env_props[2]
+  params$global$environment_prop$work_prop <- env_props[3]
+  params$global$environment_prop$travel_prop <- env_props[4]
 
 
-  inputs <- as.list(environment())
-  browser()
+  #pick wifi_prop_home
+  params$global$input_stoch$wifi_environment_probs$mpd_wifi_prop_home <- evaluate_distribution(
+    dist_name = params_stochastic$global$input_stoch$wifi_environment_probs$distribution,
+    mean = c(params_stochastic$global$input_stoch$wifi_environment_probs$mpd_wifi_prop_home_mean,
+             1-params_stochastic$global$input_stoch$wifi_environment_probs$mpd_wifi_prop_home_mean),
+    a0 = params_stochastic$global$input_stoch$wifi_environment_probs$mpd_wifi_prop_home_a0
+  )[1]
 
+  #pick mpd_wifi_prop_work
+  params$global$input_stoch$wifi_environment_probs$mpd_wifi_prop_work <- evaluate_distribution(
+    dist_name = params_stochastic$global$input_stoch$wifi_environment_probs$distribution,
+    mean = c(params_stochastic$global$input_stoch$wifi_environment_probs$mpd_wifi_prop_work_mean,
+             1-params_stochastic$global$input_stoch$wifi_environment_probs$mpd_wifi_prop_work_mean),
+    a0 = params_stochastic$global$input_stoch$wifi_environment_probs$mpd_wifi_prop_work_a0
+  )[1]
+
+  #pick mpd_wifi_prop_travel
+  params$global$input_stoch$wifi_environment_probs$mpd_wifi_prop_travel <- evaluate_distribution(
+    dist_name = params_stochastic$global$input_stoch$wifi_environment_probs$distribution,
+    mean = c(params_stochastic$global$input_stoch$wifi_environment_probs$mpd_wifi_prop_travel_mean,
+             1-params_stochastic$global$input_stoch$wifi_environment_probs$mpd_wifi_prop_travel_mean),
+    a0 = params_stochastic$global$input_stoch$wifi_environment_probs$mpd_wifi_prop_travel_a0
+  )[1]
+
+
+  #pick sex (if default is given, this sex is taken for every simulation)
+  if (missing(sex)) { sex <- evaluate_distribution(
+      dist_name = params_stochastic$global$input_stoch$sex$distribution,
+      p_categorie1 = params_stochastic$global$input_stoch$sex$male_prop,
+      categorie1 = "male",
+      categorie2 = "female"
+    )
+  }
+  params$global$input_stoch$sex <- sex
+
+  #pick age (if default is given, this age is taken for every simulation)
+  if (missing(age)) { age <- evaluate_distribution(
+    dist_name = params_stochastic$global$input_stoch$age$distribution,
+    p_categorie1 = params_stochastic$global$input_stoch$age$adult_prop,
+    categorie1 = "adult",
+    categorie2 = "child"
+    )
+  }
+  params$global$input_stoch$age <- age
+
+  #pick use_5g (if default is given, it is taken for every simulation)
+  if (missing(use_5g)) {use_5g <- evaluate_distribution(
+    dist_name = params_stochastic$global$input_stoch$use_5g$distribution,
+    p_categorie1 = params_stochastic$global$input_stoch$use_5g$use_5g_prop,
+    categorie1 = TRUE,
+    categorie2 = FALSE
+  )
+  }
+  params$global$input_stoch$use_5g <- use_5g
+
+  if (missing(urbanicity)) {
+    urban_props <- evaluate_distribution(
+      dist_name = params_stochastic$global$input_stoch$urbanicity$distribution,
+      mean = c(params_stochastic$global$input_stoch$urbanicity$urb_prop,
+               params_stochastic$global$input_stoch$urbanicity$sub_prop,
+               params_stochastic$global$input_stoch$urbanicity$rur_prop),
+      a0 = params_stochastic$global$input_stoch$urbanicity$urbanicity_a0
+    )
+    params$global$input_stoch$urbanicity$urb_prop <- urban_props[1]
+    params$global$input_stoch$urbanicity$sub_prop <- urban_props[2]
+    params$global$input_stoch$urbanicity$rur_prop <- urban_props[3]
+
+  } else {
+    params$global$input_stoch$urbanicity$urb_prop <- 1*(urbanicity=="urban")
+    params$global$input_stoch$urbanicity$sub_prop <- 1*(urbanicity=="suburban")
+    params$global$input_stoch$urbanicity$rur_prop <- 1*(urbanicity=="rural")
+  }
+
+
+
+
+  #:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+  # set stochastic parameters
+
+  # pick wifi_probs_____________________________________________________________
+  wifi_p <- evaluate_distribution(
+    dist_name = params_stochastic$global$wifi_probs$distribution,
+    mean = c(params_stochastic$global$wifi_probs$wifi_2400_prop,
+             params_stochastic$global$wifi_probs$wifi_5000_prop),
+    a0 = params_stochastic$global$wifi_probs$wifi_prop_a0
+  )
+  params$global$wifi_probs$wifi_2400_prop <-  wifi_p[1]
+  params$global$wifi_probs$wifi_5000_prop <-  wifi_p[2]
+
+  # pick call_type______________________________________________________________
+  nativecall_prop <- evaluate_distribution(
+    dist_name = params_stochastic$devices$call$call_type$distribution,
+    mean = c(params_stochastic$devices$call$call_type$native_prop_mean,
+             1 - params_stochastic$devices$call$call_type$native_prop_mean),
+    a0 = params_stochastic$device$call$call_type$call_type_a0
+  )[1]
+  params$devices$call$call_type$native_prop <-  nativecall_prop
+  wificall_prop <-  (1-nativecall_prop)*(
+    params$global$input_stoch$wifi_environment_probs$mpd_wifi_prop_home*params$global$environment_prop$home_prop +
+    params$global$input_stoch$wifi_environment_probs$mpd_wifi_prop_work*params$global$environment_prop$work_prop +
+    params$global$input_stoch$wifi_environment_probs$mpd_wifi_prop_travel*params$global$environment_prop$travel_prop
+  )
+  params$devices$call$call_type$wifi_prop <- wificall_prop
+  params$devices$call$call_type$data_prop <- 1-nativecall_prop-wificall_prop
+
+  # pick native_band_props______________________________________________________
+  native_prop <- evaluate_distribution(
+    dist_name = params_stochastic$devices$call$native_band_props$distribution,
+    mean = c(params_stochastic$devices$call$native_band_props$native_2g_prop_mean,
+             params_stochastic$devices$call$native_band_props$native_3g_prop_mean,
+             params_stochastic$devices$call$native_band_props$native_4g_prop_mean,
+             params_stochastic$devices$call$native_band_props$native_5g_prop_mean,
+             params_stochastic$devices$call$native_band_props$native_6g_prop_mean),
+    a0 = params_stochastic$device$call$native_band_props$native_prop_a0
+  )
+  params$devices$call$native_band_props$native_2g_prop <- native_prop[1]
+  params$devices$call$native_band_props$native_3g_prop <- native_prop[2]
+  params$devices$call$native_band_props$native_4g_prop <- native_prop[3]
+  params$devices$call$native_band_props$native_5g_prop <- native_prop[4]
+  params$devices$call$native_band_props$native_6g_prop <- native_prop[5]
+
+  # pick data_band_props, data_band_no5g_props
+  if (use_5g){
+    data_prop <- evaluate_distribution(
+      dist_name = params_stochastic$devices$call$data_band_props$distribution,
+      mean = c(params_stochastic$devices$call$data_band_props$data_2g_prop_mean,
+               params_stochastic$devices$call$data_band_props$data_3g_prop_mean,
+               params_stochastic$devices$call$data_band_props$data_4g_prop_mean,
+               params_stochastic$devices$call$data_band_props$data_5g_prop_mean,
+               params_stochastic$devices$call$data_band_props$data_6g_prop_mean),
+      a0 = params_stochastic$device$call$data_band_props$data_prop_a0
+    )
+    params$devices$call$data_band_props$data_2g_prop <- data_prop[1]
+    params$devices$call$data_band_props$data_3g_prop <- data_prop[2]
+    params$devices$call$data_band_props$data_4g_prop <- data_prop[3]
+    params$devices$call$data_band_props$data_5g_prop <- data_prop[4]
+    params$devices$call$data_band_props$data_6g_prop <- data_prop[5]
+  } else {
+    data_prop <- evaluate_distribution(
+      dist_name = params_stochastic$devices$call$data_band_no5g_props$distribution,
+      mean = c(params_stochastic$devices$call$data_band_no5g_props$data_2g_prop_no5g_mean,
+               params_stochastic$devices$call$data_band_no5g_props$data_3g_prop_no5g_mean,
+               params_stochastic$devices$call$data_band_no5g_props$data_4g_prop_no5g_mean,
+               params_stochastic$devices$call$data_band_no5g_props$data_5g_prop_no5g_mean,
+               params_stochastic$devices$call$data_band_no5g_props$data_6g_prop_no5g_mean),
+      a0 = params_stochastic$device$call$data_band_no5g_props$data_prop_no5g_a0
+    )
+    params$devices$call$data_band_no5g_props$data_2g_prop_no5g <- data_prop[1]
+    params$devices$call$data_band_no5g_props$data_3g_prop_no5g <- data_prop[2]
+    params$devices$call$data_band_no5g_props$data_4g_prop_no5g <- data_prop[3]
+    params$devices$call$data_band_no5g_props$data_5g_prop_no5g <- data_prop[4]
+    params$devices$call$data_band_no5g_props$data_6g_prop_no5g <- data_prop[5]
+  }
+
+  # pick 2g_freq_props__________________________________________________________
+  prop_2g <- evaluate_distribution(
+    dist_name = params_stochastic$devices$call[["2g_freq_props"]]$distribution,
+    mean = c(params_stochastic$devices$call[["2g_freq_props"]]$f900_2g_prop_mean,
+             params_stochastic$devices$call[["2g_freq_props"]]$f1800_2g_prop_mean),
+    a0 = params_stochastic$device$call[["2g_freq_props"]]$prop_2g_a0
+  )
+  params$devices$call[["2g_freq_props"]]$f900_2g_prop <-  prop_2g[1]
+  params$devices$call[["2g_freq_props"]]$f1800_2g_prop <-  prop_2g[2]
+
+  # pick 3g_freq_props
+  prop_3g <- evaluate_distribution(
+    dist_name = params_stochastic$devices$call[["3g_freq_props"]]$distribution,
+    mean = c(params_stochastic$devices$call[["3g_freq_props"]]$f900_3g_prop_mean,
+             params_stochastic$devices$call[["3g_freq_props"]]$f2100_3g_prop_mean),
+    a0 = params_stochastic$device$call[["3g_freq_props"]]$prop_3g_a0
+  )
+  params$devices$call[["3g_freq_props"]]$f900_3g_prop <-  prop_3g[1]
+  params$devices$call[["3g_freq_props"]]$f2100_3g_prop <-  prop_3g[2]
+
+  # pick 4g_freq_props
+  prop_4g <- evaluate_distribution(
+    dist_name = params_stochastic$devices$call[["4g_freq_props"]]$distribution,
+    mean = c(params_stochastic$devices$call[["4g_freq_props"]]$f700_4g_prop_mean,
+             params_stochastic$devices$call[["4g_freq_props"]]$f800_4g_prop_mean,
+             params_stochastic$devices$call[["4g_freq_props"]]$f900_4g_prop_mean,
+             params_stochastic$devices$call[["4g_freq_props"]]$f1450_4g_prop_mean,
+             params_stochastic$devices$call[["4g_freq_props"]]$f1800_4g_prop_mean,
+             params_stochastic$devices$call[["4g_freq_props"]]$f2100_4g_prop_mean,
+             params_stochastic$devices$call[["4g_freq_props"]]$f2600_4g_prop_mean),
+    a0 = params_stochastic$device$call[["4g_freq_props"]]$prop_4g_a0
+  )
+  params$devices$call[["4g_freq_props"]]$f700_4g_prop <-  prop_4g[1]
+  params$devices$call[["4g_freq_props"]]$f800_4g_prop <-  prop_4g[2]
+  params$devices$call[["4g_freq_props"]]$f900_4g_prop <-  prop_4g[3]
+  params$devices$call[["4g_freq_props"]]$f1450_4g_prop <-  prop_4g[4]
+  params$devices$call[["4g_freq_props"]]$f1800_4g_prop <-  prop_4g[5]
+  params$devices$call[["4g_freq_props"]]$f2100_4g_prop <-  prop_4g[6]
+  params$devices$call[["4g_freq_props"]]$f2600_4g_prop <-  prop_4g[7]
+
+  # pick 5g_freq_props
+  prop_5g <- evaluate_distribution(
+    dist_name = params_stochastic$devices$call[["5g_freq_props"]]$distribution,
+    mean = c(params_stochastic$devices$call[["5g_freq_props"]]$f3500_5g_prop_mean,
+             params_stochastic$devices$call[["5g_freq_props"]]$fxxxx_5g_prop_mean),
+    a0 = params_stochastic$device$call[["5g_freq_props"]]$prop_5g_a0
+  )
+  params$devices$call[["5g_freq_props"]]$f3500_5g_prop <-  prop_5g[1]
+  params$devices$call[["5g_freq_props"]]$fxxxx_5g_prop <-  prop_5g[2]
+
+  # pick 6g_freq_props
+  prop_6g <- evaluate_distribution(
+    dist_name = params_stochastic$devices$call[["6g_freq_props"]]$distribution,
+    mean = c(params_stochastic$devices$call[["6g_freq_props"]]$fyyyy_6g_prop_mean,
+             params_stochastic$devices$call[["6g_freq_props"]]$fzzzz_6g_prop_mean),
+    a0 = params_stochastic$device$call[["6g_freq_props"]]$prop_6g_a0
+  )
+  params$devices$call[["6g_freq_props"]]$fyyyy_6g_prop <-  prop_6g[1]
+  params$devices$call[["6g_freq_props"]]$fzzzz_6g_prop <-  prop_6g[2]
+
+  # pick phone_positions________________________________________________________
+  ## ear
+  ear_p <- evaluate_distribution(
+    dist_name = params_stochastic$devices$call$phone_positions$distribution,
+    mean = c(params_stochastic$devices$call$phone_positions$cheek1_prop_mean,
+             params_stochastic$devices$call$phone_positions$cheek2_prop_mean,
+             params_stochastic$devices$call$phone_positions$cheek3_prop_mean,
+             params_stochastic$devices$call$phone_positions$tilt1_prop_mean,
+             params_stochastic$devices$call$phone_positions$tilt2_prop_mean,
+             params_stochastic$devices$call$phone_positions$tilt3_prop_mean),
+    a0 = params_stochastic$device$call$phone_positions$ear_prop_a0
+  )
+  params$devices$call$phone_positions$cheek1_prop <-  ear_p[1]
+  params$devices$call$phone_positions$cheek2_prop <-  ear_p[2]
+  params$devices$call$phone_positions$cheek3_prop <-  ear_p[3]
+  params$devices$call$phone_positions$tilt1_prop <-  ear_p[4]
+  params$devices$call$phone_positions$tilt2_prop <-  ear_p[5]
+  params$devices$call$phone_positions$tilt3_prop <-  ear_p[6]
+
+  ## front eyes
+  front_eyes_p <- evaluate_distribution(
+    dist_name = params_stochastic$devices$call$phone_positions$distribution,
+    mean = c(params_stochastic$devices$call$phone_positions$front_of_eyes_center_vertical_prop_mean,
+             params_stochastic$devices$call$phone_positions$front_of_eyes_center_horizontal_prop_mean,
+             params_stochastic$devices$call$phone_positions$front_of_eyes_left_vertical_prop_mean,
+             params_stochastic$devices$call$phone_positions$front_of_eyes_left_horizontal_prop_mean,
+             params_stochastic$devices$call$phone_positions$front_of_eyes_right_vertical_prop_mean,
+             params_stochastic$devices$call$phone_positions$front_of_eyes_right_horizontal_prop_mean,
+             params_stochastic$devices$call$phone_positions$front_of_eyes_down_vertical_prop_mean,
+             params_stochastic$devices$call$phone_positions$front_of_eyes_down_horizontal_prop_mean),
+    a0 = params_stochastic$device$call$phone_positions$front_of_eyes_prop_a0
+  )
+  params$devices$call$phone_positions$front_of_eyes_center_vertical_prop <-  front_eyes_p[1]
+  params$devices$call$phone_positions$front_of_eyes_center_horizontal_prop <-  front_eyes_p[2]
+  params$devices$call$phone_positions$front_of_eyes_left_vertical_prop <-  front_eyes_p[3]
+  params$devices$call$phone_positions$front_of_eyes_left_horizontal_prop <-  front_eyes_p[4]
+  params$devices$call$phone_positions$front_of_eyes_right_vertical_prop <-  front_eyes_p[5]
+  params$devices$call$phone_positions$front_of_eyes_right_horizontal_prop <-  front_eyes_p[6]
+  params$devices$call$phone_positions$front_of_eyes_down_vertical_prop <-  front_eyes_p[7]
+  params$devices$call$phone_positions$front_of_eyes_down_horizontal_prop <-  front_eyes_p[8]
+  ## belly
+  belly_p <- evaluate_distribution(
+    dist_name = params_stochastic$devices$call$phone_positions$distribution,
+    mean = c(params_stochastic$devices$call$phone_positions$belly_center_vertical_prop_mean,
+             params_stochastic$devices$call$phone_positions$belly_center_horizontal_prop_mean,
+             params_stochastic$devices$call$phone_positions$belly_left_vertical_prop_mean,
+             params_stochastic$devices$call$phone_positions$belly_left_horizontal_prop_mean,
+             params_stochastic$devices$call$phone_positions$belly_right_vertical_prop_mean,
+             params_stochastic$devices$call$phone_positions$belly_right_horizontal_prop_mean,
+             params_stochastic$devices$call$phone_positions$belly_up_vertical_prop_mean,
+             params_stochastic$devices$call$phone_positions$belly_up_horizontal_prop_mean),
+    a0 = params_stochastic$device$call$phone_positions$belly_prop_a0
+  )
+  params$devices$call$phone_positions$belly_center_vertical_prop <-  belly_p[1]
+  params$devices$call$phone_positions$belly_center_horizontal_prop <-  belly_p[2]
+  params$devices$call$phone_positions$belly_left_vertical_prop <-  belly_p[3]
+  params$devices$call$phone_positions$belly_left_horizontal_prop <-  belly_p[4]
+  params$devices$call$phone_positions$belly_right_vertical_prop <-  belly_p[5]
+  params$devices$call$phone_positions$belly_right_horizontal_prop <-  belly_p[6]
+  params$devices$call$phone_positions$belly_up_vertical_prop <-  belly_p[7]
+  params$devices$call$phone_positions$belly_up_horizontal_prop <-  belly_p[8]
+
+
+  # pick native_dutycycle_______________________________________________________
+  ## dutycycle 2g
+  params$devices$call$native_dutycycle$native_2g_dutycycle <- evaluate_distribution(
+    dist_name = params_stochastic$devices$call$native_dutycycle$distribution,
+    mean = c(params_stochastic$devices$call$native_dutycycle$native_2g_dutycycle_mean,
+             1-params_stochastic$devices$call$native_dutycycle$native_2g_dutycycle_mean),
+    a0 = params_stochastic$devices$call$native_dutycycle$native_2g_dutycycle_a0)[1]
+  ## dutycycle 3g
+  params$devices$call$native_dutycycle$native_3g_dutycycle <- evaluate_distribution(
+    dist_name = params_stochastic$devices$call$native_dutycycle$distribution,
+    mean = c(params_stochastic$devices$call$native_dutycycle$native_3g_dutycycle_mean,
+             1-params_stochastic$devices$call$native_dutycycle$native_3g_dutycycle_mean),
+    a0 = params_stochastic$devices$call$native_dutycycle$native_3g_dutycycle_a0)[1]
+  ## dutycycle 4g
+  params$devices$call$native_dutycycle$native_4g_dutycycle <- evaluate_distribution(
+    dist_name = params_stochastic$devices$call$native_dutycycle$distribution,
+    mean = c(params_stochastic$devices$call$native_dutycycle$native_4g_dutycycle_mean,
+             1-params_stochastic$devices$call$native_dutycycle$native_4g_dutycycle_mean),
+    a0 = params_stochastic$devices$call$native_dutycycle$native_4g_dutycycle_a0)[1]
+  ## dutycycle 5g
+  params$devices$call$native_dutycycle$native_5g_dutycycle <- evaluate_distribution(
+    dist_name = params_stochastic$devices$call$native_dutycycle$distribution,
+    mean = c(params_stochastic$devices$call$native_dutycycle$native_5g_dutycycle_mean,
+             1-params_stochastic$devices$call$native_dutycycle$native_5g_dutycycle_mean),
+    a0 = params_stochastic$devices$call$native_dutycycle$native_5g_dutycycle_a0)[1]
+  ## dutycycle 6g
+  params$devices$call$native_dutycycle$native_6g_dutycycle <- evaluate_distribution(
+    dist_name = params_stochastic$devices$call$native_dutycycle$distribution,
+    mean = c(params_stochastic$devices$call$native_dutycycle$native_6g_dutycycle_mean,
+             1-params_stochastic$devices$call$native_dutycycle$native_6g_dutycycle_mean),
+    a0 = params_stochastic$devices$call$native_dutycycle$native_6g_dutycycle_a0)[1]
+  # pick data_dutycycle
+  ## dutycycle 2g
+  params$devices$call$data_dutycycle$data_2g_dutycycle <- evaluate_distribution(
+    dist_name = params_stochastic$devices$call$data_dutycycle$distribution,
+    mean = c(params_stochastic$devices$call$data_dutycycle$data_2g_dutycycle_mean,
+             1-params_stochastic$devices$call$data_dutycycle$data_2g_dutycycle_mean),
+    a0 = params_stochastic$devices$call$data_dutycycle$data_2g_dutycycle_a0)[1]
+  ## dutycycle 3g
+  params$devices$call$data_dutycycle$data_3g_dutycycle <- evaluate_distribution(
+    dist_name = params_stochastic$devices$call$data_dutycycle$distribution,
+    mean = c(params_stochastic$devices$call$data_dutycycle$data_3g_dutycycle_mean,
+             1-params_stochastic$devices$call$data_dutycycle$data_3g_dutycycle_mean),
+    a0 = params_stochastic$devices$call$data_dutycycle$data_3g_dutycycle_a0)[1]
+  ## dutycycle 4g
+  params$devices$call$data_dutycycle$data_4g_dutycycle <- evaluate_distribution(
+    dist_name = params_stochastic$devices$call$data_dutycycle$distribution,
+    mean = c(params_stochastic$devices$call$data_dutycycle$data_4g_dutycycle_mean,
+             1-params_stochastic$devices$call$data_dutycycle$data_4g_dutycycle_mean),
+    a0 = params_stochastic$devices$call$data_dutycycle$data_4g_dutycycle_a0)[1]
+  ## dutycycle 5g
+  params$devices$call$data_dutycycle$data_5g_dutycycle <- evaluate_distribution(
+    dist_name = params_stochastic$devices$call$data_dutycycle$distribution,
+    mean = c(params_stochastic$devices$call$data_dutycycle$data_5g_dutycycle_mean,
+             1-params_stochastic$devices$call$data_dutycycle$data_5g_dutycycle_mean),
+    a0 = params_stochastic$devices$call$data_dutycycle$data_5g_dutycycle_a0)[1]
+  ## dutycycle 6g
+  params$devices$call$data_dutycycle$data_6g_dutycycle <- evaluate_distribution(
+    dist_name = params_stochastic$devices$call$data_dutycycle$distribution,
+    mean = c(params_stochastic$devices$call$data_dutycycle$data_6g_dutycycle_mean,
+             1-params_stochastic$devices$call$data_dutycycle$data_6g_dutycycle_mean),
+    a0 = params_stochastic$devices$call$data_dutycycle$data_6g_dutycycle_a0)[1]
+
+  # pick wifi_dutycycle
+  ## wifi_2_dutycycle
+  params$devices$call$wifi_dutycycle$wifi_2400_dutycycle <- evaluate_distribution(
+    dist_name = params_stochastic$devices$call$wifi_dutycycle$distribution,
+    mean = c(params_stochastic$devices$call$wifi_dutycycle$wifi_2_dutycycle_mean,
+             1-params_stochastic$devices$call$wifi_dutycycle$wifi_2_dutycycle_mean),
+    a0 = params_stochastic$devices$call$wifi_dutycycle$wifi_2_dutycycle_a0)[1]
+  ## wifi_5_dutycycle
+  params$devices$call$wifi_dutycycle$wifi_5000_dutycycle <- evaluate_distribution(
+    dist_name = params_stochastic$devices$call$wifi_dutycycle$distribution,
+    mean = c(params_stochastic$devices$call$wifi_dutycycle$wifi_5_dutycycle_mean,
+             1-params_stochastic$devices$call$wifi_dutycycle$wifi_5_dutycycle_mean),
+    a0 = params_stochastic$devices$call$wifi_dutycycle$wifi_5_dutycycle_a0)[1]
+
+  # pick native_pwr_____________________________________________________________
+  power_vars <- c(
+    "native_2g_sub_ind_pwr",
+    "native_2g_urb_ind_pwr",
+    "native_2g_rur_ind_pwr",
+    "native_2g_sub_out_pwr",
+    "native_2g_urb_out_pwr",
+    "native_2g_rur_out_pwr",
+    "native_2g_travel_pwr",
+    "native_3g_sub_ind_pwr",
+    "native_3g_urb_ind_pwr",
+    "native_3g_rur_ind_pwr",
+    "native_3g_sub_out_pwr",
+    "native_3g_urb_out_pwr",
+    "native_3g_rur_out_pwr",
+    "native_3g_travel_pwr",
+    "native_4g_sub_ind_pwr",
+    "native_4g_urb_ind_pwr",
+    "native_4g_rur_ind_pwr",
+    "native_4g_sub_out_pwr",
+    "native_4g_urb_out_pwr",
+    "native_4g_rur_out_pwr",
+    "native_4g_travel_pwr",
+    "native_5g_sub_ind_pwr",
+    "native_5g_urb_ind_pwr",
+    "native_5g_rur_ind_pwr",
+    "native_5g_sub_out_pwr",
+    "native_5g_urb_out_pwr",
+    "native_5g_rur_out_pwr",
+    "native_5g_travel_pwr"
+  )
+
+  for (nm in power_vars) {
+
+    params$devices$call$native_pwr[[nm]] <- evaluate_distribution(
+      dist_name = params_stochastic$devices$call$native_pwr$distribution,
+      mean = params_stochastic$devices$call$native_pwr[[paste0(nm, "_mean")]],
+      sd   = params_stochastic$devices$call$native_pwr[[paste0(nm, "_sd")]],
+      max  = params_stochastic$devices$call$native_pwr[[paste0(nm, "_max")]]
+    )
+
+  }
+  # pick data_pwr
+  power_vars <- c(
+    "data_2g_sub_ind_pwr",
+    "data_2g_urb_ind_pwr",
+    "data_2g_rur_ind_pwr",
+    "data_2g_sub_out_pwr",
+    "data_2g_urb_out_pwr",
+    "data_2g_rur_out_pwr",
+    "data_2g_travel_pwr",
+    "data_3g_sub_ind_pwr",
+    "data_3g_urb_ind_pwr",
+    "data_3g_rur_ind_pwr",
+    "data_3g_sub_out_pwr",
+    "data_3g_urb_out_pwr",
+    "data_3g_rur_out_pwr",
+    "data_3g_travel_pwr",
+    "data_4g_sub_ind_pwr",
+    "data_4g_urb_ind_pwr",
+    "data_4g_rur_ind_pwr",
+    "data_4g_sub_out_pwr",
+    "data_4g_urb_out_pwr",
+    "data_4g_rur_out_pwr",
+    "data_4g_travel_pwr",
+    "data_5g_sub_ind_pwr",
+    "data_5g_urb_ind_pwr",
+    "data_5g_rur_ind_pwr",
+    "data_5g_sub_out_pwr",
+    "data_5g_urb_out_pwr",
+    "data_5g_rur_out_pwr",
+    "data_5g_travel_pwr",
+    "wifi_2400_pwr",
+    "wifi_5000_pwr",
+    "bt_pwr"
+  )
+  for (nm in power_vars) {
+    mean <- params_stochastic$devices$call$data_pwr[[paste0(nm, "_mean")]]
+    if (mean > 0){
+      params$devices$call$data_pwr[[nm]] <- evaluate_distribution(
+        dist_name = params_stochastic$devices$call$data_pwr$distribution,
+        mean = mean,
+        sd   = params_stochastic$devices$call$data_pwr[[paste0(nm, "_sd")]],
+        max  = params_stochastic$devices$call$data_pwr[[paste0(nm, "_max")]]
+      )
+    }
+  }
+  # pick position_props
+  pos_prop <- evaluate_distribution(
+    dist_name = params_stochastic$devices$call$position_props$distribution,
+    mean = c(params_stochastic$devices$call$position_props$headp_face_prop_mean,
+             params_stochastic$devices$call$position_props$headp_pock_prop_mean,
+             params_stochastic$devices$call$position_props$headp_else_prop_mean),
+    a0 = params_stochastic$device$call$position_props$position_prop_a0
+  )
+  params$devices$call$position_props$headp_face_prop <-  pos_prop[1]
+  params$devices$call$position_props$headp_pock_prop <-  pos_prop[2]
+  params$devices$call$position_props$headp_else_prop <-  pos_prop[3]
+
+  # pick mpc_distance
+
+  params$devices$call$mpc_distance$mpc_dist_ear <- evaluate_distribution(
+    dist_name = params_stochastic$devices$call$mpc_distance$distribution,
+    mean = params_stochastic$devices$call$mpc_distance$mpc_dist_ear_mean,
+    sd   = params_stochastic$devices$call$mpc_distance$mpc_dist_ear_sd,
+    max  = params_stochastic$devices$call$mpc_distance$mpc_dist_ear_max
+  )
+
+  params$devices$call$mpc_distance$mpc_dist_speaker <- evaluate_distribution(
+    dist_name = params_stochastic$devices$call$mpc_distance$distribution,
+    mean = params_stochastic$devices$call$mpc_distance$mpc_dist_speaker_mean,
+    sd   = params_stochastic$devices$call$mpc_distance$mpc_dist_speaker_sd,
+    max  = params_stochastic$devices$call$mpc_distance$mpc_dist_speaker_max
+  )
+  # pick
+
+
+  return(params)
 }
 
-simulate_params("tissue",100,
-                            0.5,
-                            0.5,
-                            "urban",
-                            TRUE,
-                simulation = "_template")
+
 
 
 #' Draw a random value from a specified distribution
@@ -128,7 +697,7 @@ evaluate_distribution <- function(dist_name,
 
   } else if (dist_name == "beta"){
     # The beta distr. is a special case of the Dirichlet distr. with two props.
-    if (length(mean) == 2) stop("Input needs to be 2 values!")
+    if (length(mean) != 2) stop("Input needs to be 2 values!")
     return(
       r_dirichlet(mean,a0)
       )
@@ -149,7 +718,7 @@ evaluate_distribution <- function(dist_name,
 
   }
 }
-r_trunc_lognormal <- function(mean, sd, max = Inf)
+
 #' Draw a random value from a truncated normal distribution
 #'
 #' Draws a single random value from a normal distribution truncated to a
@@ -364,251 +933,4 @@ r_trunc_lognormal <- function(mean, sd, max = Inf) {
 
 
 
-#___________________________________________________________________________________________________________________
-#trunc_normal
-
-
-x <- replicate(
-  100000,
-  evaluate_distribution(
-    dist_name = "trunc_norm",
-    mean = 200,
-    sd = 100,
-    min = 50,
-    max = 350
-  )
-)
-
-hist(
-  x,
-  breaks = 30,
-  probability = TRUE,
-  col = "lightblue",
-  border = "white",
-  main = "Truncated normal Distribution",
-  xlab = "Value"
-)
-
-lines(density(x), lwd = 2, col = "red")
-abline(v = mean(x), col = "blue", lwd = 2, lty = 2)
-
-
-
-
-
-#___________________________________________________________________________________________________________________
-#trunc_gamma
-
-
-x <- replicate(
-  100000,
-  evaluate_distribution(
-    dist_name = "trunc_gamma",
-    mean = 200,
-    sd = 100,
-    max = 350
-  )
-)
-
-hist(
-  x,
-  breaks = 30,
-  probability = TRUE,
-  col = "lightblue",
-  border = "white",
-  main = "Truncated Gamma Distribution",
-  xlab = "Value"
-)
-
-lines(density(x), lwd = 2, col = "red")
-abline(v = mean(x), col = "blue", lwd = 2, lty = 2)
-
-
-
-
-
-
-#___________________________________________________________________________________________________________________
-#trunc_hurdle_gamma
-
-
-x <- replicate(
-  100000,
-  evaluate_distribution(
-    dist_name = "trunc_hurdle_gamma",
-    mean = 5,
-    sd = 4,
-    p_zero = 0.2,
-    max = 12
-  )
-)
-
-hist(
-  x,
-  breaks = 50,
-  probability = TRUE,
-  col = "lightblue",
-  border = "white",
-  main = "Truncated hurdle Gamma Distribution",
-  xlab = "Value"
-)
-
-lines(density(x), lwd = 2, col = "red")
-
-abline(v = mean(x), col = "blue", lwd = 2, lty = 2)
-
-
-
-
-
-#___________________________________________________________________________________________________________________
-#visualize_gamma
-
-set.seed(123)
-
-# 1000 Ziehungen
-x <- t(replicate(
-  1000,
-  r_dirichlet(
-    mean = c(0.4, 0.5, 0.1),
-    a0 = 100
-  )
-))
-
-# Spalten benennen
-colnames(x) <- c("urban", "suburban", "rural")
-
-# Erste Ziehungen ansehen
-head(x)
-
-# Mittelwerte prüfen
-colMeans(x)
-
-# Standardabweichungen prüfen
-apply(x, 2, sd)
-
-par(
-  mfrow = c(1, 3),
-  oma = c(0, 0, 3, 0)   # oberer äußerer Rand
-)
-
-hist(
-  x[, 1],
-  breaks = 30,
-  probability = TRUE,
-  main = "Urban",
-  xlab = "Proportion",
-  col = "lightblue"
-)
-abline(v = mean(x[, 1]), col = "red", lwd = 2)
-
-hist(
-  x[, 2],
-  breaks = 30,
-  probability = TRUE,
-  main = "Suburban",
-  xlab = "Proportion",
-  col = "lightblue"
-)
-abline(v = mean(x[, 2]), col = "red", lwd = 2)
-
-hist(
-  x[, 3],
-  breaks = 30,
-  probability = TRUE,
-  main = "Rural",
-  xlab = "Proportion",
-  col = "lightblue"
-)
-abline(v = mean(x[, 3]), col = "red", lwd = 2)
-title("Dirichlet Distribution", outer = TRUE, cex.main = 1.5)
-par(mfrow = c(1, 1))
-
-
-
-
-#___________________________________________________________________________________________________________________
-#visualize_bernoulli
-
-
-# Anzahl der Ziehungen
-n <- 1000
-
-# Parameter für Bernoulli-Test
-p_categorie1 <- 0.7
-categorie1 <- "Headphone"
-categorie2 <- "No Headphone"
-
-# 1000 Ziehungen
-results <- replicate(
-  n,
-  evaluate_distribution(
-    dist_name = "bernoulli",
-    mean = NULL,
-    sd = NULL,
-    p_zero = NULL,
-    min = NULL,
-    max = NULL,
-    a0 = NULL,
-    p_categorie1 = p_categorie1,
-    categorie1 = categorie1,
-    categorie2 = categorie2
-  )
-)
-
-# Häufigkeiten zählen
-counts <- table(results)
-
-# Ausgabe
-counts
-
-# Relative Häufigkeiten
-proportions <- prop.table(counts)
-proportions
-
-# Balkendiagramm
-barplot(
-  counts,
-  main = paste0("Bernoulli simulation (n=", n, ")"),
-  ylab = "Number of draws",
-  xlab = "Category",
-  col = "steelblue"
-)
-
-#___________________________________________________________________________________________________________________
-# truncated lognormal
-
-x <- replicate(
-  100000,
-  evaluate_distribution(
-    dist_name = "trunc_lognormal",
-    mean = 200,
-    sd = 100,
-    p_zero = NULL,
-    min = NULL,
-    max = 350,
-    a0 = NULL,
-    p_categorie1 = NULL,
-    categorie1 = NULL,
-    categorie2 = NULL
-  )
-)
-
-hist(
-  x,
-  breaks = 30,
-  probability = TRUE,
-  col = "lightblue",
-  border = "white",
-  main = "Truncated Lognormal Distribution",
-  xlab = "Value"
-)
-
-lines(density(x), lwd = 2, col = "red")
-abline(v = mean(x), col = "blue", lwd = 2, lty = 2)
-
-# Optional: Mittelwert und SD anzeigen
-cat("Mean:", mean(x), "\n")
-cat("SD:", sd(x), "\n")
-cat("Max:", max(x), "\n")
 

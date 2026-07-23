@@ -1,66 +1,56 @@
 global:
+  sim: "template"
+  input_default:
+    country: "Other"
+    mpd_dur_low: 4860
+    mpd_dur_lowtomed: 540
+    mpd_dur_medtohigh: 4860
+    mpd_dur_high: 540
+    dect_duration: 204
+    dect_ear_prop: 0.9
+    lptp_dur_low: 1967
+    lptp_dur_lowtomed: 219
+    lptp_dur_medtohigh: 1967
+    lptp_dur_high: 219
+    tblt_dur_low: 728
+    tblt_dur_lowtomed: 81
+    tblt_dur_medtohigh: 728
+    tblt_dur_high: 81
+    hotspot_duration: 0
+    smartwatch_duration: 0
+    tracker_duration: 0
+    vr_duration: 0
+    headphone_duration: 0
+    gaming_duration: 600
   input_stoch:
-    sex:
-      distribution: "bernoulli"
-      male_prop: 0.5
-      female_prop: 0.5
-    age:
-      distribution: "bernoulli"
-      adult_prop: 0.7
-      child_prop: 0.3
-
-    use_5g:
-      distribution: "bernoulli"
-      use_5g_prop: 0.148589
+    sex: "male"
+    age: "adult"
+    use_5g: TRUE
     urbanicity:
-      distribution: "dirichlet"
       urb_prop: 0.4
       sub_prop: 0.5
       rur_prop: 0.1
-      urbanicity_a0: 100
     duration:
-      distribution: "trunc_hurdle_gamma"
-      mpc_duration_mean: 653.00
-      mpc_duration_sd: 1940
-      mpc_duration_min: 0
-      mpc_duration_max: 14400
-      mpc_duration_pzero: 0.35
+      mpc_duration: 653.00
     call_mode_prop:
-      distribution: "dirichlet"
-      mpc_ear_prop_mean: 0.45
-      speaker_prop_mean: 0.32
-      mpc_headp_prop_mean: 0.23
-      call_mode_prop_a0: 100
+      mpc_ear_prop: 0.45
+      speaker_prop: 0.32
+      mpc_headp_prop: 0.23
     headp_num:
-      distribution: "beta"
-      headp_ear_num_mean: 0.95
-      headp_ear_num_a0: 18
+      headp_ear_num: 2
     wifi_environment_probs:
-      distribution: "beta"
-      mpd_wifi_prop_home_mean: 0.70
-      mpd_wifi_prop_home_sd: 0.34
-      mpd_wifi_prop_home_a0: 0.817
-      mpd_wifi_prop_work_mean: 0.47
-      mpd_wifi_prop_work_sd: 0.38
-      mpd_wifi_prop_work_a0: 0.725
-      mpd_wifi_prop_travel_mean: 0.31
-      mpd_wifi_prop_travel_sd: 0.31
-      mpd_wifi_prop_travel_a0: 1.226
-
-
-
+      mpd_wifi_prop_home: 0.70
+      mpd_wifi_prop_work: 0.47
+      mpd_wifi_prop_travel: 0.31
   wifi_probs:
-    distribution: "beta"
     wifi_2400_prop: 0.58
     wifi_5000_prop: 0.42
-    wifi_prop_a0: 100
   environment_prop:
-    distribution: "dirichlet"
-    home_prop_mean: 0.69
-    outd_prop_mean: 0.08
-    work_prop_mean: 0.21
-    travel_prop_mean: 0.02
-    environment_prop_a0: 100
+    home_prop: 0.69
+    outd_prop: 0.08
+    work_prop: 0.21
+    travel_prop: 0.02
+
 devices:
   dect:
     dect_pwr: 250
@@ -122,438 +112,155 @@ devices:
       wifi_5_sar: 0.002423693
   call:
     call_type:
-      distribution: "dirichlet"
-      native_prop_mean: 0.7
-      call_type_a0: 83
+      native_prop: 0.7
+      data_prop: 0.12
+      wifi_prop: 0.18
     native_band_props:
-      distribution: "dirichlet"
-      native_2g_prop_mean: 0.0075
-      native_3g_prop_mean: 0.0175
-      native_4g_prop_mean: 0.975
-      native_5g_prop_mean: 0
-      native_6g_prop_mean: 0
-      native_prop_a0: 100
+      native_2g_prop: 0.0075
+      native_3g_prop: 0.0175
+      native_4g_prop: 0.975
+      native_5g_prop: 0
     data_band_props:
-      distribution: "dirichlet"
-      data_2g_prop_mean: 0
-      data_3g_prop_mean: 0.02
-      data_4g_prop_mean: 0.66
-      data_5g_prop_mean: 0.32
-      data_6g_prop_mean: 0
-      data_prop_a0: 100
+      data_2g_prop: 0
+      data_3g_prop: 0.02
+      data_4g_prop: 0.66
+      data_5g_prop: 0.32
     data_band_no5g_props:
-      distribution: "dirichlet"
-      data_2g_prop_no5g_mean: 0
-      data_3g_prop_no5g_mean: 0.02
-      data_4g_prop_no5g_mean: 0.98
-      data_5g_prop_no5g_mean: 0
-      data_6g_prop_no5g_mean: 0
-      data_prop_no5g_a0: 100
+      data_2g_prop_no5g: 0
+      data_3g_prop_no5g: 0.02
+      data_4g_prop_no5g: 0.98
+      data_5g_prop_no5g: 0
     2g_freq_props:
-      distribution: "dirichlet"
-      f900_2g_prop_mean: 0.5
-      f1800_2g_prop_mean: 0.5
-      prop_2g_a0: 100
+      f900_2g_prop: 0.5
+      f1800_2g_prop: 0.5
     3g_freq_props:
-      distribution: "dirichlet"
-      f900_3g_prop_mean: 0.5
-      f2100_3g_prop_mean: 0.5
-      prop_3g_a0: 100
+      f900_3g_prop: 0.5
+      f2100_3g_prop: 0.5
     4g_freq_props:
-      distribution: "dirichlet"
-      f700_4g_prop_mean: 0.04
-      f800_4g_prop_mean: 0.19
-      f900_4g_prop_mean: 0.21
-      f1450_4g_prop_mean: 0.0
-      f1800_4g_prop_mean: 0.28
-      f2100_4g_prop_mean: 0.19
-      f2600_4g_prop_mean: 0.09
-      prop_4g_a0: 100
+      f700_4g_prop: 0.04
+      f800_4g_prop: 0.19
+      f900_4g_prop: 0.21
+      f1450_4g_prop: 0.0
+      f1800_4g_prop: 0.28
+      f2100_4g_prop: 0.19
+      f2600_4g_prop: 0.09
     5g_freq_props:
-      distribution: "dirichlet"
-      f3500_5g_prop_mean: 1.0
-      fxxxx_5g_prop_mean: 0.0
-      prop_5g_a0: 100
+      f3500_5g_prop: 1.0
+      fxxxx_5g_prop: 0.0
     6g_freq_props:
-      distribution: "dirichlet"
-      fyyyy_6g_prop_mean: 1.0
-      fzzzz_6g_prop_mean: 0.0
-      prop_6g_a0: 100
+      fxxxx_6g_prop: 1.0
+      fyyyy_6g_prop: 0.0
     bt_freq_props:
       f2400_bt_prop: 1.0
 
     phone_positions:
-      distribution: "dirichlet"
-      cheek1_prop_mean: 0.5
-      cheek2_prop_mean: 0.1
-      cheek3_prop_mean: 0.1
-      tilt1_prop_mean: 0.15
-      tilt2_prop_mean: 0.075
-      tilt3_prop_mean: 0.075
-      ear_prop_a0: 100
-      front_of_eyes_center_vertical_prop_mean: 0.6
-      front_of_eyes_center_horizontal_prop_mean: 0.1
-      front_of_eyes_left_vertical_prop_mean: 0.07
-      front_of_eyes_left_horizontal_prop_mean: 0.03
-      front_of_eyes_right_vertical_prop_mean: 0.07
-      front_of_eyes_right_horizontal_prop_mean: 0.03
-      front_of_eyes_down_vertical_prop_mean: 0.07
-      front_of_eyes_down_horizontal_prop_mean: 0.03
-      front_of_eyes_prop_a0: 100
-      belly_center_vertical_prop_mean: 0.02
-      belly_center_horizontal_prop_mean: 0.02
-      belly_left_vertical_prop_mean: 0.2
-      belly_left_horizontal_prop_mean: 0.01
-      belly_right_vertical_prop_mean: 0.7
-      belly_right_horizontal_prop_mean: 0.01
-      belly_up_vertical_prop_mean: 0.03
-      belly_up_horizontal_prop_mean: 0.01
-      belly_prop_a0: 100
+      cheek1_prop: 0.5
+      cheek2_prop: 0.1
+      cheek3_prop: 0.1
+      tilt1_prop: 0.15
+      tilt2_prop: 0.075
+      tilt3_prop: 0.075
+      front_of_eyes_center_vertical_prop: 0.6
+      front_of_eyes_center_horizontal_prop: 0.1
+      front_of_eyes_left_vertical_prop: 0.07
+      front_of_eyes_left_horizontal_prop: 0.03
+      front_of_eyes_right_vertical_prop: 0.07
+      front_of_eyes_right_horizontal_prop: 0.03
+      front_of_eyes_down_vertical_prop: 0.07
+      front_of_eyes_down_horizontal_prop: 0.03
+      belly_center_vertical_prop: 0.02
+      belly_center_horizontal_prop: 0.02
+      belly_left_vertical_prop: 0.2
+      belly_left_horizontal_prop: 0.01
+      belly_right_vertical_prop: 0.7
+      belly_right_horizontal_prop: 0.01
+      belly_up_vertical_prop: 0.03
+      belly_up_horizontal_prop: 0.01
+
 
 
     native_dutycycle:
-      distribution: "beta"
-      native_2g_dutycycle_mean: 0.12
-      native_2g_dutycycle_a0: 105599
-      native_3g_dutycycle_mean: 0.98
-      native_3g_dutycycle_a0: 20.8
-      native_4g_dutycycle_mean: 0.043
-      native_4g_dutycycle_a0: 410.5
-      native_5g_dutycycle_mean: 0.000
-      native_5g_dutycycle_a0: 1
-      native_6g_dutycycle_mean: 0.000
-      native_6g_dutycycle_a0: 1
+      native_2g_dutycycle: 0.12
+      native_3g_dutycycle: 0.98
+      native_4g_dutycycle: 0.043
+      native_5g_dutycycle: 0.000
+      native_6g_dutycycle: 0.000
     native_pwr:
-      distribution: "trunc_lognormal"
-      native_2g_sub_ind_pwr_mean: 1281.52
-      native_2g_sub_ind_pwr_sd: 702.14
-      native_2g_sub_ind_pwr_min: 0.001
-      native_2g_sub_ind_pwr_max: 2000
-      native_2g_urb_ind_pwr_mean: 374.8682087
-      native_2g_urb_ind_pwr_sd: 262.86
-      native_2g_urb_ind_pwr_min: 0.001
-      native_2g_urb_ind_pwr_max: 2000
-      native_2g_rur_ind_pwr_mean: 1371.23
-      native_2g_rur_ind_pwr_sd: 575.25
-      native_2g_rur_ind_pwr_min: 0.001
-      native_2g_rur_ind_pwr_max: 2000
-      native_2g_sub_out_pwr_mean: 383.90
-      native_2g_sub_out_pwr_sd: 130.43
-      native_2g_sub_out_pwr_min: 0.001
-      native_2g_sub_out_pwr_max: 2000
-      native_2g_urb_out_pwr_mean: 173.81
-      native_2g_urb_out_pwr_sd: 49.0
-      native_2g_urb_out_pwr_min: 0.001
-      native_2g_urb_out_pwr_max: 2000
-      native_2g_rur_out_pwr_mean: 433.90
-      native_2g_rur_out_pwr_sd: 107.0
-      native_2g_rur_out_pwr_min: 0.001
-      native_2g_rur_out_pwr_max: 2000
-      native_2g_travel_pwr_mean: 383.9
-      native_2g_travel_pwr_sd: 130.43
-      native_2g_travel_pwr_min: 0.001
-      native_2g_travel_pwr_max: 2000
-      native_3g_sub_ind_pwr_mean: 2.03
-      native_3g_sub_ind_pwr_sd: 0.61
-      native_3g_sub_ind_pwr_min: 0.001
-      native_3g_sub_ind_pwr_max: 250
-      native_3g_urb_ind_pwr_mean: 0.97
-      native_3g_urb_ind_pwr_sd: 0.69
-      native_3g_urb_ind_pwr_min: 0.001
-      native_3g_urb_ind_pwr_max: 250
-      native_3g_rur_ind_pwr_mean: 6.2
-      native_3g_rur_ind_pwr_sd: 1.86
-      native_3g_rur_ind_pwr_min: 0.001
-      native_3g_rur_ind_pwr_max: 250
-      native_3g_sub_out_pwr_mean: 0.63
-      native_3g_sub_out_pwr_sd: 0.33
-      native_3g_sub_out_pwr_min: 0.001
-      native_3g_sub_out_pwr_max: 250
-      native_3g_urb_out_pwr_mean: 0.22
-      native_3g_urb_out_pwr_sd: 0.18
-      native_3g_urb_out_pwr_min: 0.001
-      native_3g_urb_out_pwr_max: 250
-      native_3g_rur_out_pwr_mean: 2.64
-      native_3g_rur_out_pwr_sd: 0.79
-      native_3g_rur_out_pwr_min: 0.001
-      native_3g_rur_out_pwr_max: 250
-      native_3g_travel_pwr_mean: 0.63
-      native_3g_travel_pwr_sd: 0.33
-      native_3g_travel_pwr_min: 0.001
-      native_3g_travel_pwr_max: 250
-      native_4g_sub_ind_pwr_mean: 159.3
-      native_4g_sub_ind_pwr_sd: 47.79
-      native_4g_sub_ind_pwr_min: 0.001
-      native_4g_sub_ind_pwr_max: 200
-      native_4g_urb_ind_pwr_mean: 140.5
-      native_4g_urb_ind_pwr_sd: 42.15
-      native_4g_urb_ind_pwr_min: 0.001
-      native_4g_urb_ind_pwr_max: 200
-      native_4g_rur_ind_pwr_mean: 178.1
-      native_4g_rur_ind_pwr_sd: 53.43
-      native_4g_rur_ind_pwr_min: 0.001
-      native_4g_rur_ind_pwr_max: 200
-      native_4g_sub_out_pwr_mean: 109.75
-      native_4g_sub_out_pwr_sd: 32.93
-      native_4g_sub_out_pwr_min: 0.001
-      native_4g_sub_out_pwr_max: 200
-      native_4g_urb_out_pwr_mean: 94.3
-      native_4g_urb_out_pwr_sd: 28.29
-      native_4g_urb_out_pwr_min: 0.001
-      native_4g_urb_out_pwr_max: 200
-      native_4g_rur_out_pwr_mean: 125.2
-      native_4g_rur_out_pwr_sd: 37.56
-      native_4g_rur_out_pwr_min: 0.001
-      native_4g_rur_out_pwr_max: 200
-      native_4g_travel_pwr_mean: 109.75
-      native_4g_travel_pwr_sd: 32.93
-      native_4g_travel_pwr_min: 0.001
-      native_4g_travel_pwr_max: 200
-      native_5g_sub_ind_pwr_mean: 159.3
-      native_5g_sub_ind_pwr_sd: 47.79
-      native_5g_sub_ind_pwr_min: 0.001
-      native_5g_sub_ind_pwr_max: 200
-      native_5g_urb_ind_pwr_mean: 140.5
-      native_5g_urb_ind_pwr_sd: 42.15
-      native_5g_urb_ind_pwr_min: 0.001
-      native_5g_urb_ind_pwr_max: 200
-      native_5g_rur_ind_pwr_mean: 178.1
-      native_5g_rur_ind_pwr_sd: 53.43
-      native_5g_rur_ind_pwr_min: 0.001
-      native_5g_rur_ind_pwr_max: 200
-      native_5g_sub_out_pwr_mean: 109.75
-      native_5g_sub_out_pwr_sd: 32.93
-      native_5g_sub_out_pwr_min: 0.001
-      native_5g_sub_out_pwr_max: 200
-      native_5g_urb_out_pwr_mean: 94.3
-      native_5g_urb_out_pwr_sd: 28.29
-      native_5g_urb_out_pwr_min: 0.001
-      native_5g_urb_out_pwr_max: 200
-      native_5g_rur_out_pwr_mean: 125.2
-      native_5g_rur_out_pwr_sd: 37.56
-      native_5g_rur_out_pwr_min: 0.001
-      native_5g_rur_out_pwr_max: 200
-      native_5g_travel_pwr_mean: 109.75
-      native_5g_travel_pwr_sd: 32.93
-      native_5g_travel_pwr_min: 0.001
-      native_5g_travel_pwr_max: 200
-      native_6g_sub_ind_pwr_mean: 0
-      native_6g_sub_ind_pwr_sd: 0
-      native_6g_sub_ind_pwr_min: 0
-      native_6g_sub_ind_pwr_max: 0
-      native_6g_urb_ind_pwr_mean: 0
-      native_6g_urb_ind_pwr_sd: 0
-      native_6g_urb_ind_pwr_min: 0
-      native_6g_urb_ind_pwr_max: 0
-      native_6g_rur_ind_pwr_mean: 0
-      native_6g_rur_ind_pwr_sd: 0
-      native_6g_rur_ind_pwr_min: 0
-      native_6g_rur_ind_pwr_max: 0
-      native_6g_sub_out_pwr_mean: 0
-      native_6g_sub_out_pwr_sd: 0
-      native_6g_sub_out_pwr_min: 0
-      native_6g_sub_out_pwr_max: 0
-      native_6g_urb_out_pwr_mean: 0
-      native_6g_urb_out_pwr_sd: 0
-      native_6g_urb_out_pwr_min: 0
-      native_6g_urb_out_pwr_max: 0
-      native_6g_rur_out_pwr_mean: 0
-      native_6g_rur_out_pwr_sd: 0
-      native_6g_rur_out_pwr_min: 0
-      native_6g_rur_out_pwr_max: 0
-      native_6g_travel_pwr_mean: 0
-      native_6g_travel_pwr_sd: 0
-      native_6g_travel_pwr_min: 0
-      native_6g_travel_pwr_max: 0
-
+      native_2g_sub_ind_pwr: 1281.52
+      native_2g_urb_ind_pwr: 374.8682087
+      native_2g_rur_ind_pwr: 1371.23
+      native_2g_sub_out_pwr: 383.90
+      native_2g_urb_out_pwr: 173.81
+      native_2g_rur_out_pwr: 433.90
+      native_2g_travel_pwr: 383.9
+      native_3g_sub_ind_pwr: 2.03
+      native_3g_urb_ind_pwr: 0.97
+      native_3g_rur_ind_pwr: 6.2
+      native_3g_sub_out_pwr: 0.63
+      native_3g_urb_out_pwr: 0.22
+      native_3g_rur_out_pwr: 2.64
+      native_3g_travel_pwr: 0.63
+      native_4g_sub_ind_pwr: 159.3
+      native_4g_urb_ind_pwr: 140.5
+      native_4g_rur_ind_pwr: 178.1
+      native_4g_sub_out_pwr: 109.75
+      native_4g_urb_out_pwr: 94.3
+      native_4g_rur_out_pwr: 125.2
+      native_4g_travel_pwr: 109.75
+      native_5g_sub_ind_pwr: 159.3
+      native_5g_urb_ind_pwr: 140.5
+      native_5g_rur_ind_pwr: 178.1
+      native_5g_sub_out_pwr: 109.75
+      native_5g_urb_out_pwr: 94.3
+      native_5g_rur_out_pwr: 125.2
+      native_5g_travel_pwr: 109.75
     data_dutycycle:
-      distribution: "beta"
-      data_2g_dutycycle_mean: 0
-      data_2g_dutycycle_a0: 1
-      data_3g_dutycycle_mean: 0.54
-      data_3g_dutycycle_a0: 11.7
-      data_4g_dutycycle_mean: 0.056
-      data_4g_dutycycle_a0: 32.0
-      data_5g_dutycycle_mean: 0.051
-      data_5g_dutycycle_a0: 1935.0
-      data_6g_dutycycle_mean: 0
-      data_6g_dutycycle_a0: 1
+      data_2g_dutycycle: 0
+      data_3g_dutycycle: 0.54
+      data_4g_dutycycle: 0.056
+      data_5g_dutycycle: 0.051
     data_pwr:
-      distribution: "trunc_lognormal"
-      data_2g_sub_ind_pwr_mean: 0
-      data_2g_sub_ind_pwr_sd: 0
-      data_2g_sub_ind_pwr_min: 0
-      data_2g_sub_ind_pwr_max: 0
-      data_2g_urb_ind_pwr_mean: 0
-      data_2g_urb_ind_pwr_sd: 0
-      data_2g_urb_ind_pwr_min: 0
-      data_2g_urb_ind_pwr_max: 0
-      data_2g_rur_ind_pwr_mean: 0
-      data_2g_rur_ind_pwr_sd: 0
-      data_2g_rur_ind_pwr_min: 0
-      data_2g_rur_ind_pwr_max: 0
-      data_2g_sub_out_pwr_mean: 0
-      data_2g_sub_out_pwr_sd: 0
-      data_2g_sub_out_pwr_min: 0
-      data_2g_sub_out_pwr_max: 0
-      data_2g_urb_out_pwr_mean: 0
-      data_2g_urb_out_pwr_sd: 0
-      data_2g_urb_out_pwr_min: 0
-      data_2g_urb_out_pwr_max: 0
-      data_2g_rur_out_pwr_mean: 0
-      data_2g_rur_out_pwr_sd: 0
-      data_2g_rur_out_pwr_min: 0
-      data_2g_rur_out_pwr_max: 0
-      data_2g_travel_pwr_mean: 0
-      data_2g_travel_pwr_sd: 0
-      data_2g_travel_pwr_min: 0
-      data_2g_travel_pwr_max: 0
-      data_3g_sub_ind_pwr_mean: 2.04
-      data_3g_sub_ind_pwr_sd: 0.612
-      data_3g_sub_ind_pwr_min: 0.001
-      data_3g_sub_ind_pwr_max: 250
-      data_3g_urb_ind_pwr_mean: 0.605
-      data_3g_urb_ind_pwr_sd: 0.81
-      data_3g_urb_ind_pwr_min: 0.001
-      data_3g_urb_ind_pwr_max: 250
-      data_3g_rur_ind_pwr_mean: 6.28
-      data_3g_rur_ind_pwr_sd: 1.884
-      data_3g_rur_ind_pwr_min: 0.001
-      data_3g_rur_ind_pwr_max: 250
-      data_3g_sub_out_pwr_mean: 0.87
-      data_3g_sub_out_pwr_sd: 0.261
-      data_3g_sub_out_pwr_min: 0.001
-      data_3g_sub_out_pwr_max: 250
-      data_3g_urb_out_pwr_mean: 0.01
-      data_3g_urb_out_pwr_sd: 0.003
-      data_3g_urb_out_pwr_min: 0.001
-      data_3g_urb_out_pwr_max: 250
-      data_3g_rur_out_pwr_mean: 2.68
-      data_3g_rur_out_pwr_sd: 0.804
-      data_3g_rur_out_pwr_min: 0.001
-      data_3g_rur_out_pwr_max: 250
-      data_3g_travel_pwr_mean: 0.87
-      data_3g_travel_pwr_sd: 0.261
-      data_3g_travel_pwr_min: 0.001
-      data_3g_travel_pwr_max: 250
-      data_4g_sub_ind_pwr_mean: 77.8985184
-      data_4g_sub_ind_pwr_sd: 23.370
-      data_4g_sub_ind_pwr_min: 0.001
-      data_4g_sub_ind_pwr_max: 200
-      data_4g_urb_ind_pwr_mean: 64.1056383
-      data_4g_urb_ind_pwr_sd: 19.232
-      data_4g_urb_ind_pwr_min: 0.001
-      data_4g_urb_ind_pwr_max: 200
-      data_4g_rur_ind_pwr_mean: 91.69139849
-      data_4g_rur_ind_pwr_sd: 27.507
-      data_4g_rur_ind_pwr_min: 0.001
-      data_4g_rur_ind_pwr_max: 200
-      data_4g_sub_out_pwr_mean: 68.40566226
-      data_4g_sub_out_pwr_sd: 20.522
-      data_4g_sub_out_pwr_min: 0.001
-      data_4g_sub_out_pwr_max: 200
-      data_4g_urb_out_pwr_mean: 54.47906924
-      data_4g_urb_out_pwr_sd: 16.344
-      data_4g_urb_out_pwr_min: 0.001
-      data_4g_urb_out_pwr_max: 200
-      data_4g_rur_out_pwr_mean: 82.33225528
-      data_4g_rur_out_pwr_sd: 24.700
-      data_4g_rur_out_pwr_min: 0.001
-      data_4g_rur_out_pwr_max: 200
-      data_4g_travel_pwr_mean: 74.3
-      data_4g_travel_pwr_sd: 22.290
-      data_4g_travel_pwr_min: 0.001
-      data_4g_travel_pwr_max: 200
-      data_5g_sub_ind_pwr_mean: 49.13
-      data_5g_sub_ind_pwr_sd: 14.739
-      data_5g_sub_ind_pwr_min: 0.001
-      data_5g_sub_ind_pwr_max: 200
-      data_5g_urb_ind_pwr_mean: 46.35
-      data_5g_urb_ind_pwr_sd: 13.405
-      data_5g_urb_ind_pwr_min: 0.001
-      data_5g_urb_ind_pwr_max: 200
-      data_5g_rur_ind_pwr_mean: 51.91
-      data_5g_rur_ind_pwr_sd: 15.573
-      data_5g_rur_ind_pwr_min: 0.001
-      data_5g_rur_ind_pwr_max: 200
-      data_5g_sub_out_pwr_mean: 40.045
-      data_5g_sub_out_pwr_sd: 12.014
-      data_5g_sub_out_pwr_min: 0.001
-      data_5g_sub_out_pwr_max: 200
-      data_5g_urb_out_pwr_mean: 36.92
-      data_5g_urb_out_pwr_sd: 11.076
-      data_5g_urb_out_pwr_min: 0.001
-      data_5g_urb_out_pwr_max: 200
-      data_5g_rur_out_pwr_mean: 43.17
-      data_5g_rur_out_pwr_sd: 12.951
-      data_5g_rur_out_pwr_min: 0.001
-      data_5g_rur_out_pwr_max: 200
-      data_5g_travel_pwr_mean: 31.52
-      data_5g_travel_pwr_sd: 9.456
-      data_5g_travel_pwr_min: 0.001
-      data_5g_travel_pwr_max: 200
-      data_6g_sub_ind_pwr_mean: 0
-      data_6g_sub_ind_pwr_sd: 0
-      data_6g_sub_ind_pwr_min: 0
-      data_6g_sub_ind_pwr_max: 0
-      data_6g_urb_ind_pwr_mean: 0
-      data_6g_urb_ind_pwr_sd: 0
-      data_6g_urb_ind_pwr_min: 0
-      data_6g_urb_ind_pwr_max: 0
-      data_6g_rur_ind_pwr_mean: 0
-      data_6g_rur_ind_pwr_sd: 0
-      data_6g_rur_ind_pwr_min: 0
-      data_6g_rur_ind_pwr_max: 0
-      data_6g_sub_out_pwr_mean: 0
-      data_6g_sub_out_pwr_sd: 0
-      data_6g_sub_out_pwr_min: 0
-      data_6g_sub_out_pwr_max: 0
-      data_6g_urb_out_pwr_mean: 0
-      data_6g_urb_out_pwr_sd: 0
-      data_6g_urb_out_pwr_min: 0
-      data_6g_urb_out_pwr_max: 0
-      data_6g_rur_out_pwr_mean: 0
-      data_6g_rur_out_pwr_sd: 0
-      data_6g_rur_out_pwr_min: 0
-      data_6g_rur_out_pwr_max: 0
-      data_6g_travel_pwr_mean: 0
-      data_6g_travel_pwr_sd: 0
-      data_6g_travel_pwr_min: 0
-      data_6g_travel_pwr_max: 0
-      wifi_2400_pwr_mean: 100
-      wifi_2400_pwr_sd: 30
-      wifi_2400_pwr_min: 0.001
-      wifi_2400_pwr_max: 100
-      wifi_5000_pwr_mean: 200
-      wifi_5000_pwr_sd: 60
-      wifi_5000_pwr_min: 0.001
-      wifi_5000_pwr_max: 200
-      bt_pwr_mean: 0.16
-      bt_pwr_sd: 0.016
-      bt_pwr_min: 0.0
-      bt_pwr_max: 2.5
+      data_2g_sub_ind_pwr: 0
+      data_2g_urb_ind_pwr: 0
+      data_2g_rur_ind_pwr: 0
+      data_2g_sub_out_pwr: 0
+      data_2g_urb_out_pwr: 0
+      data_2g_rur_out_pwr: 0
+      data_2g_travel_pwr: 0
+      data_3g_sub_ind_pwr: 2.04
+      data_3g_urb_ind_pwr: 0.605
+      data_3g_rur_ind_pwr: 6.28
+      data_3g_sub_out_pwr: 0.87
+      data_3g_urb_out_pwr: 0.01
+      data_3g_rur_out_pwr: 2.68
+      data_3g_travel_pwr: 0.87
+      data_4g_sub_ind_pwr: 77.8985184
+      data_4g_urb_ind_pwr: 64.1056383
+      data_4g_rur_ind_pwr: 91.69139849
+      data_4g_sub_out_pwr: 68.40566226
+      data_4g_urb_out_pwr: 54.47906924
+      data_4g_rur_out_pwr: 82.33225528
+      data_4g_travel_pwr: 74.3
+      data_5g_sub_ind_pwr: 49.13
+      data_5g_urb_ind_pwr: 46.35
+      data_5g_rur_ind_pwr: 51.91
+      data_5g_sub_out_pwr: 40.045
+      data_5g_urb_out_pwr: 36.92
+      data_5g_rur_out_pwr: 43.17
+      data_5g_travel_pwr: 31.52
+      wifi_2400_pwr: 100
+      wifi_5000_pwr: 200
+      bt_pwr: 0.16
     wifi_dutycycle:
-      distribution: "beta"
-      wifi_2_dutycycle_mean: 0.02738
-      wifi_2_dutycycle_a0: 134.9
-      wifi_5_dutycycle_mean: 0.04385
-      wifi_5_dutycycle_a0: 4657.6
+      wifi_2400_dutycycle: 0.02738
+      wifi_5000_dutycycle: 0.04385
     position_props:
-      distribution: "dirichlet"
-      headp_face_prop_mean: 0.333
-      headp_pock_prop_mean: 0.333
-      headp_else_prop_mean: 0.334
-      position_prop_a0: 203.0
+      headp_face_prop: 0.333
+      headp_pock_prop: 0.333
+      headp_else_prop: 0.334
     mpc_distance:
-      distribution: "trunc_lognormal"
-      mpc_dist_ear_mean: 8.0
-      mpc_dist_ear_sd: 0.8
-      mpc_dist_ear_min: 6
-      mpc_dist_ear_max: 50
-      mpc_dist_speaker_mean: 100
-      mpc_dist_speaker_sd: 80
-      mpc_dist_speaker_min: 50
-      mpc_dist_speaker_max: 150
+      mpc_dist_ear: 8.0
+      mpc_dist_speaker: 100
 
     Duke:
       height: 1770
@@ -569,9 +276,6 @@ devices:
         Duke_body_2600_front_of_eyes_center_horizontal_sar: 0.853267775311251
         Duke_body_3500_front_of_eyes_center_horizontal_sar: 0.568380513317951
         Duke_body_5000_front_of_eyes_center_horizontal_sar: 0.667541682204061
-        Duke_body_xxxx_front_of_eyes_center_horizontal_sar: 0
-        Duke_body_yyyy_front_of_eyes_center_horizontal_sar: 0
-        Duke_body_zzzz_front_of_eyes_center_horizontal_sar: 0
         Duke_body_700_front_of_eyes_center_vertical_sar: 2.62829358791014
         Duke_body_800_front_of_eyes_center_vertical_sar: 2.41963593688198
         Duke_body_900_front_of_eyes_center_vertical_sar: 2.24113474966873
@@ -582,9 +286,6 @@ devices:
         Duke_body_2600_front_of_eyes_center_vertical_sar: 1.33744369472861
         Duke_body_3500_front_of_eyes_center_vertical_sar: 1.00375380858243
         Duke_body_5000_front_of_eyes_center_vertical_sar: 0.655184595887261
-        Duke_body_xxxx_front_of_eyes_center_vertical_sar: 0
-        Duke_body_yyyy_front_of_eyes_center_vertical_sar: 0
-        Duke_body_zzzz_front_of_eyes_center_vertical_sar: 0
         Duke_body_700_front_of_eyes_down_horizontal_sar: 2.65432808088713
         Duke_body_800_front_of_eyes_down_horizontal_sar: 2.43076446228903
         Duke_body_900_front_of_eyes_down_horizontal_sar: 2.21277078502742
@@ -595,9 +296,6 @@ devices:
         Duke_body_2600_front_of_eyes_down_horizontal_sar: 1.05779410557261
         Duke_body_3500_front_of_eyes_down_horizontal_sar: 0.682736666847691
         Duke_body_5000_front_of_eyes_down_horizontal_sar: 0.721572606275298
-        Duke_body_xxxx_front_of_eyes_down_horizontal_sar: 0
-        Duke_body_yyyy_front_of_eyes_down_horizontal_sar: 0
-        Duke_body_zzzz_front_of_eyes_down_horizontal_sar: 0
         Duke_body_700_front_of_eyes_down_vertical_sar: 2.64782663855648
         Duke_body_800_front_of_eyes_down_vertical_sar: 2.4381191163555
         Duke_body_900_front_of_eyes_down_vertical_sar: 2.27174225446325
@@ -608,9 +306,6 @@ devices:
         Duke_body_2600_front_of_eyes_down_vertical_sar: 1.42008755630049
         Duke_body_3500_front_of_eyes_down_vertical_sar: 1.13078891896311
         Duke_body_5000_front_of_eyes_down_vertical_sar: 0.730486454261035
-        Duke_body_xxxx_front_of_eyes_down_vertical_sar: 0
-        Duke_body_yyyy_front_of_eyes_down_vertical_sar: 0
-        Duke_body_zzzz_front_of_eyes_down_vertical_sar: 0
         Duke_body_700_front_of_eyes_left_horizontal_sar: 2.62364035953655
         Duke_body_800_front_of_eyes_left_horizontal_sar: 2.41076975080189
         Duke_body_900_front_of_eyes_left_horizontal_sar: 2.18424601422136
@@ -621,9 +316,6 @@ devices:
         Duke_body_2600_front_of_eyes_left_horizontal_sar: 0.868045208760135
         Duke_body_3500_front_of_eyes_left_horizontal_sar: 0.58639986819757
         Duke_body_5000_front_of_eyes_left_horizontal_sar: 0.696996770731263
-        Duke_body_xxxx_front_of_eyes_left_horizontal_sar: 0
-        Duke_body_yyyy_front_of_eyes_left_horizontal_sar: 0
-        Duke_body_zzzz_front_of_eyes_left_horizontal_sar: 0
         Duke_body_700_front_of_eyes_left_vertical_sar: 2.67433645262368
         Duke_body_800_front_of_eyes_left_vertical_sar: 2.43461807761018
         Duke_body_900_front_of_eyes_left_vertical_sar: 2.23965144611663
@@ -634,9 +326,6 @@ devices:
         Duke_body_2600_front_of_eyes_left_vertical_sar: 1.30360128446811
         Duke_body_3500_front_of_eyes_left_vertical_sar: 0.935206253869566
         Duke_body_5000_front_of_eyes_left_vertical_sar: 0.626835638101811
-        Duke_body_xxxx_front_of_eyes_left_vertical_sar: 0
-        Duke_body_yyyy_front_of_eyes_left_vertical_sar: 0
-        Duke_body_zzzz_front_of_eyes_left_vertical_sar: 0
         Duke_body_700_front_of_eyes_right_horizontal_sar: 2.6152812509107
         Duke_body_800_front_of_eyes_right_horizontal_sar: 2.39917754368795
         Duke_body_900_front_of_eyes_right_horizontal_sar: 2.17309291503511
@@ -647,9 +336,6 @@ devices:
         Duke_body_2600_front_of_eyes_right_horizontal_sar: 0.853962611254792
         Duke_body_3500_front_of_eyes_right_horizontal_sar: 0.573869182540118
         Duke_body_5000_front_of_eyes_right_horizontal_sar: 0.685855513412106
-        Duke_body_xxxx_front_of_eyes_right_horizontal_sar: 0
-        Duke_body_yyyy_front_of_eyes_right_horizontal_sar: 0
-        Duke_body_zzzz_front_of_eyes_right_horizontal_sar: 0
         Duke_body_700_front_of_eyes_right_vertical_sar: 2.6802107746467
         Duke_body_800_front_of_eyes_right_vertical_sar: 2.43586952962872
         Duke_body_900_front_of_eyes_right_vertical_sar: 2.241786752673
@@ -660,9 +346,6 @@ devices:
         Duke_body_2600_front_of_eyes_right_vertical_sar: 1.34030578027074
         Duke_body_3500_front_of_eyes_right_vertical_sar: 1.0576543140428
         Duke_body_5000_front_of_eyes_right_vertical_sar: 0.663548439177432
-        Duke_body_xxxx_front_of_eyes_right_vertical_sar: 0
-        Duke_body_yyyy_front_of_eyes_right_vertical_sar: 0
-        Duke_body_zzzz_front_of_eyes_right_vertical_sar: 0
         Duke_body_700_cheek1_sar: 6.54004025505779
         Duke_body_800_cheek1_sar: 6.44645172731326
         Duke_body_900_cheek1_sar: 6.88450977431196
@@ -673,9 +356,6 @@ devices:
         Duke_body_2600_cheek1_sar: 10.3645381843772
         Duke_body_3500_cheek1_sar: 10.0117844148851
         Duke_body_5000_cheek1_sar: 7.05214505318114
-        Duke_body_xxxx_cheek1_sar: 0
-        Duke_body_yyyy_cheek1_sar: 0
-        Duke_body_zzzz_cheek1_sar: 0
         Duke_body_700_cheek2_sar: 6.53048079211866
         Duke_body_800_cheek2_sar: 6.41113646447829
         Duke_body_900_cheek2_sar: 6.83492978643166
@@ -686,9 +366,6 @@ devices:
         Duke_body_2600_cheek2_sar: 10.3891117680555
         Duke_body_3500_cheek2_sar: 10.4911626608124
         Duke_body_5000_cheek2_sar: 6.95140829567839
-        Duke_body_xxxx_cheek2_sar: 0
-        Duke_body_yyyy_cheek2_sar: 0
-        Duke_body_zzzz_cheek2_sar: 0
         Duke_body_700_cheek3_sar: 6.95271569857319
         Duke_body_800_cheek3_sar: 6.56045392659454
         Duke_body_900_cheek3_sar: 6.89773881779434
@@ -699,9 +376,6 @@ devices:
         Duke_body_2600_cheek3_sar: 10.31123735384
         Duke_body_3500_cheek3_sar: 9.6386786011247
         Duke_body_5000_cheek3_sar: 7.25958614336458
-        Duke_body_xxxx_cheek3_sar: 0
-        Duke_body_yyyy_cheek3_sar: 0
-        Duke_body_zzzz_cheek3_sar: 0
         Duke_body_700_tilt1_sar: 6.42061264139115
         Duke_body_800_tilt1_sar: 6.10230641386499
         Duke_body_900_tilt1_sar: 6.49793872841868
@@ -712,9 +386,6 @@ devices:
         Duke_body_2600_tilt1_sar: 9.93189282566372
         Duke_body_3500_tilt1_sar: 9.411723
         Duke_body_5000_tilt1_sar: 6.25038393920258
-        Duke_body_xxxx_tilt1_sar: 0
-        Duke_body_yyyy_tilt1_sar: 0
-        Duke_body_zzzz_tilt1_sar: 0
         Duke_body_700_tilt2_sar: 6.3924608059721
         Duke_body_800_tilt2_sar: 6.06619275206536
         Duke_body_900_tilt2_sar: 6.45544593032435
@@ -725,9 +396,6 @@ devices:
         Duke_body_2600_tilt2_sar: 10.2566369371833
         Duke_body_3500_tilt2_sar: 9.709424
         Duke_body_5000_tilt2_sar: 7.12769868543657
-        Duke_body_xxxx_tilt2_sar: 0
-        Duke_body_yyyy_tilt2_sar: 0
-        Duke_body_zzzz_tilt2_sar: 0
         Duke_body_700_tilt3_sar: 6.84599749469996
         Duke_body_800_tilt3_sar: 6.24038269585601
         Duke_body_900_tilt3_sar: 6.53576867137624
@@ -738,9 +406,6 @@ devices:
         Duke_body_2600_tilt3_sar: 9.61127774097228
         Duke_body_3500_tilt3_sar: 9.139638
         Duke_body_5000_tilt3_sar: 5.85467894156383
-        Duke_body_xxxx_tilt3_sar: 0
-        Duke_body_yyyy_tilt3_sar: 0
-        Duke_body_zzzz_tilt3_sar: 0
         Duke_body_700_belly_center_horizontal_sar: 2.7525043440343
         Duke_body_800_belly_center_horizontal_sar: 2.55311033605155
         Duke_body_900_belly_center_horizontal_sar: 2.39312157034007
@@ -751,9 +416,6 @@ devices:
         Duke_body_2600_belly_center_horizontal_sar: 1.69076779804005
         Duke_body_3500_belly_center_horizontal_sar: 1.4249596002126
         Duke_body_5000_belly_center_horizontal_sar: 1.10186536709058
-        Duke_body_xxxx_belly_center_horizontal_sar: 0
-        Duke_body_yyyy_belly_center_horizontal_sar: 0
-        Duke_body_zzzz_belly_center_horizontal_sar: 0
         Duke_body_700_belly_center_vertical_sar: 2.67862944544516
         Duke_body_800_belly_center_vertical_sar: 2.48951882575097
         Duke_body_900_belly_center_vertical_sar: 2.39103026442757
@@ -764,9 +426,6 @@ devices:
         Duke_body_2600_belly_center_vertical_sar: 2.21893977566258
         Duke_body_3500_belly_center_vertical_sar: 1.58931078822227
         Duke_body_5000_belly_center_vertical_sar: 1.17144570579552
-        Duke_body_xxxx_belly_center_vertical_sar: 0
-        Duke_body_yyyy_belly_center_vertical_sar: 0
-        Duke_body_zzzz_belly_center_vertical_sar: 0
         Duke_body_700_belly_left_horizontal_sar: 2.75886346728871
         Duke_body_800_belly_left_horizontal_sar: 2.57119781063005
         Duke_body_900_belly_left_horizontal_sar: 2.40888559375148
@@ -777,9 +436,6 @@ devices:
         Duke_body_2600_belly_left_horizontal_sar: 1.78279089229648
         Duke_body_3500_belly_left_horizontal_sar: 1.45114893810616
         Duke_body_5000_belly_left_horizontal_sar: 1.12594918080443
-        Duke_body_xxxx_belly_left_horizontal_sar: 0
-        Duke_body_yyyy_belly_left_horizontal_sar: 0
-        Duke_body_zzzz_belly_left_horizontal_sar: 0
         Duke_body_700_belly_left_vertical_sar: 2.67579645526437
         Duke_body_800_belly_left_vertical_sar: 2.46547541862584
         Duke_body_900_belly_left_vertical_sar: 2.32840144336129
@@ -790,9 +446,6 @@ devices:
         Duke_body_2600_belly_left_vertical_sar: 1.82297121092362
         Duke_body_3500_belly_left_vertical_sar: 1.14293134613777
         Duke_body_5000_belly_left_vertical_sar: 0.812129178008836
-        Duke_body_xxxx_belly_left_vertical_sar: 0
-        Duke_body_yyyy_belly_left_vertical_sar: 0
-        Duke_body_zzzz_belly_left_vertical_sar: 0
         Duke_body_700_belly_right_horizontal_sar: 2.71307633636425
         Duke_body_800_belly_right_horizontal_sar: 2.47297535750794
         Duke_body_900_belly_right_horizontal_sar: 2.28887902369661
@@ -803,9 +456,6 @@ devices:
         Duke_body_2600_belly_right_horizontal_sar: 1.41405158342649
         Duke_body_3500_belly_right_horizontal_sar: 1.45114893810616
         Duke_body_5000_belly_right_horizontal_sar: 0.947546723288207
-        Duke_body_xxxx_belly_right_horizontal_sar: 0
-        Duke_body_yyyy_belly_right_horizontal_sar: 0
-        Duke_body_zzzz_belly_right_horizontal_sar: 0
         Duke_body_700_belly_right_vertical_sar: 2.6802107746467
         Duke_body_800_belly_right_vertical_sar: 2.48188964191732
         Duke_body_900_belly_right_vertical_sar: 2.38584103111771
@@ -816,9 +466,6 @@ devices:
         Duke_body_2600_belly_right_vertical_sar: 2.21627219938534
         Duke_body_3500_belly_right_vertical_sar: 1.72480841068056
         Duke_body_5000_belly_right_vertical_sar: 1.29161360377947
-        Duke_body_xxxx_belly_right_vertical_sar: 0
-        Duke_body_yyyy_belly_right_vertical_sar: 0
-        Duke_body_zzzz_belly_right_vertical_sar: 0
         Duke_body_700_belly_up_horizontal_sar: 2.73522638527357
         Duke_body_800_belly_up_horizontal_sar: 2.52812810236509
         Duke_body_900_belly_up_horizontal_sar: 2.36428539846885
@@ -829,9 +476,6 @@ devices:
         Duke_body_2600_belly_up_horizontal_sar: 1.47586361573327
         Duke_body_3500_belly_up_horizontal_sar: 1.36419217750281
         Duke_body_5000_belly_up_horizontal_sar: 1.05824599573915
-        Duke_body_xxxx_belly_up_horizontal_sar: 0
-        Duke_body_yyyy_belly_up_horizontal_sar: 0
-        Duke_body_zzzz_belly_up_horizontal_sar: 0
         Duke_body_700_belly_up_vertical_sar: 2.67348403518128
         Duke_body_800_belly_up_vertical_sar: 2.47923327840995
         Duke_body_900_belly_up_vertical_sar: 2.37760791252014
@@ -842,9 +486,6 @@ devices:
         Duke_body_2600_belly_up_vertical_sar: 2.06801837200187
         Duke_body_3500_belly_up_vertical_sar: 1.70884548850522
         Duke_body_5000_belly_up_vertical_sar: 1.24424944546396
-        Duke_body_xxxx_belly_up_vertical_sar: 0
-        Duke_body_yyyy_belly_up_vertical_sar: 0
-        Duke_body_zzzz_belly_up_vertical_sar: 0
 
       brain:
         Duke_brain_headp_else_sar: 0
@@ -858,9 +499,6 @@ devices:
         Duke_brain_2600_front_of_eyes_center_horizontal_sar: 0.978844579523033
         Duke_brain_3500_front_of_eyes_center_horizontal_sar: 0.755520310804047
         Duke_brain_5000_front_of_eyes_center_horizontal_sar: 0.14965547704456
-        Duke_brain_xxxx_front_of_eyes_center_horizontal_sar: 0
-        Duke_brain_yyyy_front_of_eyes_center_horizontal_sar: 0
-        Duke_brain_zzzz_front_of_eyes_center_horizontal_sar: 0
         Duke_brain_700_front_of_eyes_center_vertical_sar: 0.322235768557809
         Duke_brain_800_front_of_eyes_center_vertical_sar: 0.230305430952745
         Duke_brain_900_front_of_eyes_center_vertical_sar: 0.460097005207093
@@ -871,9 +509,6 @@ devices:
         Duke_brain_2600_front_of_eyes_center_vertical_sar: 1.19458282842249
         Duke_brain_3500_front_of_eyes_center_vertical_sar: 0.412697495195415
         Duke_brain_5000_front_of_eyes_center_vertical_sar: 0.115496860823444
-        Duke_brain_xxxx_front_of_eyes_center_vertical_sar: 0
-        Duke_brain_yyyy_front_of_eyes_center_vertical_sar: 0
-        Duke_brain_zzzz_front_of_eyes_center_vertical_sar: 0
         Duke_brain_700_front_of_eyes_down_horizontal_sar: 0.516197079998332
         Duke_brain_800_front_of_eyes_down_horizontal_sar: 0.382647134410315
         Duke_brain_900_front_of_eyes_down_horizontal_sar: 0.452141752713122
@@ -884,9 +519,6 @@ devices:
         Duke_brain_2600_front_of_eyes_down_horizontal_sar: 0.679406147451123
         Duke_brain_3500_front_of_eyes_down_horizontal_sar: 0.542649793086592
         Duke_brain_5000_front_of_eyes_down_horizontal_sar: 0.107458196153863
-        Duke_brain_xxxx_front_of_eyes_down_horizontal_sar: 0
-        Duke_brain_yyyy_front_of_eyes_down_horizontal_sar: 0
-        Duke_brain_zzzz_front_of_eyes_down_horizontal_sar: 0
         Duke_brain_700_front_of_eyes_down_vertical_sar: 0.162419806143158
         Duke_brain_800_front_of_eyes_down_vertical_sar: 0.126429610170751
         Duke_brain_900_front_of_eyes_down_vertical_sar: 0.323334741219116
@@ -897,9 +529,6 @@ devices:
         Duke_brain_2600_front_of_eyes_down_vertical_sar: 0.972633910269016
         Duke_brain_3500_front_of_eyes_down_vertical_sar: 0.347959141566533
         Duke_brain_5000_front_of_eyes_down_vertical_sar: 0.0859236987188113
-        Duke_brain_xxxx_front_of_eyes_down_vertical_sar: 0
-        Duke_brain_yyyy_front_of_eyes_down_vertical_sar: 0
-        Duke_brain_zzzz_front_of_eyes_down_vertical_sar: 0
         Duke_brain_700_front_of_eyes_left_horizontal_sar: 0.584661769031794
         Duke_brain_800_front_of_eyes_left_horizontal_sar: 0.454423093968746
         Duke_brain_900_front_of_eyes_left_horizontal_sar: 0.580853560053004
@@ -910,9 +539,6 @@ devices:
         Duke_brain_2600_front_of_eyes_left_horizontal_sar: 1.00437824263354
         Duke_brain_3500_front_of_eyes_left_horizontal_sar: 0.766187905474561
         Duke_brain_5000_front_of_eyes_left_horizontal_sar: 0.17542323804595
-        Duke_brain_xxxx_front_of_eyes_left_horizontal_sar: 0
-        Duke_brain_yyyy_front_of_eyes_left_horizontal_sar: 0
-        Duke_brain_zzzz_front_of_eyes_left_horizontal_sar: 0
         Duke_brain_700_front_of_eyes_left_vertical_sar: 0.373345519568208
         Duke_brain_800_front_of_eyes_left_vertical_sar: 0.24818694511906
         Duke_brain_900_front_of_eyes_left_vertical_sar: 0.448643226308959
@@ -923,9 +549,6 @@ devices:
         Duke_brain_2600_front_of_eyes_left_vertical_sar: 1.14903660031073
         Duke_brain_3500_front_of_eyes_left_vertical_sar: 0.377725241728523
         Duke_brain_5000_front_of_eyes_left_vertical_sar: 0.107704842680606
-        Duke_brain_xxxx_front_of_eyes_left_vertical_sar: 0
-        Duke_brain_yyyy_front_of_eyes_left_vertical_sar: 0
-        Duke_brain_zzzz_front_of_eyes_left_vertical_sar: 0
         Duke_brain_700_front_of_eyes_right_horizontal_sar: 0.5368578271693
         Duke_brain_800_front_of_eyes_right_horizontal_sar: 0.395005481381246
         Duke_brain_900_front_of_eyes_right_horizontal_sar: 0.521886721662827
@@ -936,9 +559,6 @@ devices:
         Duke_brain_2600_front_of_eyes_right_horizontal_sar: 0.928139225398049
         Duke_brain_3500_front_of_eyes_right_horizontal_sar: 0.692435428004989
         Duke_brain_5000_front_of_eyes_right_horizontal_sar: 0.158014049282591
-        Duke_brain_xxxx_front_of_eyes_right_horizontal_sar: 0
-        Duke_brain_yyyy_front_of_eyes_right_horizontal_sar: 0
-        Duke_brain_zzzz_front_of_eyes_right_horizontal_sar: 0
         Duke_brain_700_front_of_eyes_right_vertical_sar: 0.331846679020899
         Duke_brain_800_front_of_eyes_right_vertical_sar: 0.22948833648722
         Duke_brain_900_front_of_eyes_right_vertical_sar: 0.455519006462736
@@ -949,9 +569,6 @@ devices:
         Duke_brain_2600_front_of_eyes_right_vertical_sar: 1.2119894267525
         Duke_brain_3500_front_of_eyes_right_vertical_sar: 0.444030841475701
         Duke_brain_5000_front_of_eyes_right_vertical_sar: 0.123967469944983
-        Duke_brain_xxxx_front_of_eyes_right_vertical_sar: 0
-        Duke_brain_yyyy_front_of_eyes_right_vertical_sar: 0
-        Duke_brain_zzzz_front_of_eyes_right_vertical_sar: 0
         Duke_brain_700_cheek1_sar: 7.2673878492964
         Duke_brain_800_cheek1_sar: 12.6894602339979
         Duke_brain_900_cheek1_sar: 18.4543418411156
@@ -962,9 +579,6 @@ devices:
         Duke_brain_2600_cheek1_sar: 51.5898274703438
         Duke_brain_3500_cheek1_sar: 24.4559178417414
         Duke_brain_5000_cheek1_sar: 5.72257529377378
-        Duke_brain_xxxx_cheek1_sar: 0
-        Duke_brain_yyyy_cheek1_sar: 0
-        Duke_brain_zzzz_cheek1_sar: 0
         Duke_brain_700_cheek2_sar: 7.55130107980572
         Duke_brain_800_cheek2_sar: 14.966011749997
         Duke_brain_900_cheek2_sar: 21.8963825317052
@@ -975,9 +589,6 @@ devices:
         Duke_brain_2600_cheek2_sar: 70.71435962267
         Duke_brain_3500_cheek2_sar: 30.9734903316628
         Duke_brain_5000_cheek2_sar: 6.47234207834639
-        Duke_brain_xxxx_cheek2_sar: 0
-        Duke_brain_yyyy_cheek2_sar: 0
-        Duke_brain_zzzz_cheek2_sar: 0
         Duke_brain_700_cheek3_sar: 7.20523206834565
         Duke_brain_800_cheek3_sar: 14.5653372745
         Duke_brain_900_cheek3_sar: 20.7385754840523
@@ -988,9 +599,6 @@ devices:
         Duke_brain_2600_cheek3_sar: 49.7068108775186
         Duke_brain_3500_cheek3_sar: 17.5629380517754
         Duke_brain_5000_cheek3_sar: 4.65036780772797
-        Duke_brain_xxxx_cheek3_sar: 0
-        Duke_brain_yyyy_cheek3_sar: 0
-        Duke_brain_zzzz_cheek3_sar: 0
         Duke_brain_700_tilt1_sar: 7.42406214866266
         Duke_brain_800_tilt1_sar: 12.7300794967966
         Duke_brain_900_tilt1_sar: 21.7737299465486
@@ -1000,9 +608,6 @@ devices:
         Duke_brain_2400_tilt1_sar: 54.5096996295187
         Duke_brain_2600_tilt1_sar: 48.3711636956711
         Duke_brain_3500_tilt1_sar: 21.78583
-        Duke_brain_xxxx_tilt1_sar: 0
-        Duke_brain_yyyy_tilt1_sar: 0
-        Duke_brain_zzzz_tilt1_sar: 0
         Duke_brain_5000_tilt1_sar: 5.54090623933774
         Duke_brain_700_tilt2_sar: 7.8774084426321
         Duke_brain_800_tilt2_sar: 13.3941075034983
@@ -1014,9 +619,6 @@ devices:
         Duke_brain_2600_tilt2_sar: 48.8380203961579
         Duke_brain_3500_tilt2_sar: 24.08108
         Duke_brain_5000_tilt2_sar: 6.25280324119847
-        Duke_brain_xxxx_tilt2_sar: 0
-        Duke_brain_yyyy_tilt2_sar: 0
-        Duke_brain_zzzz_tilt2_sar: 0
         Duke_brain_700_tilt3_sar: 7.20096649461083
         Duke_brain_800_tilt3_sar: 12.451910092937
         Duke_brain_900_tilt3_sar: 21.5075501923143
@@ -1027,9 +629,6 @@ devices:
         Duke_brain_2600_tilt3_sar: 47.60021615187
         Duke_brain_3500_tilt3_sar: 18.1684301576107
         Duke_brain_5000_tilt3_sar: 4.4128179189729
-        Duke_brain_xxxx_tilt3_sar: 0
-        Duke_brain_yyyy_tilt3_sar: 0
-        Duke_brain_zzzz_tilt3_sar: 0
         Duke_brain_700_belly_center_horizontal_sar: 0.0132939471995957
         Duke_brain_800_belly_center_horizontal_sar: 0.0140895714051897
         Duke_brain_900_belly_center_horizontal_sar: 0.0190081304277761
@@ -1040,9 +639,6 @@ devices:
         Duke_brain_2600_belly_center_horizontal_sar: 0.0228752757499224
         Duke_brain_3500_belly_center_horizontal_sar: 0.0036865295306909
         Duke_brain_5000_belly_center_horizontal_sar: 0.000433754436409744
-        Duke_brain_xxxx_belly_center_horizontal_sar: 0
-        Duke_brain_yyyy_belly_center_horizontal_sar: 0
-        Duke_brain_zzzz_belly_center_horizontal_sar: 0
         Duke_brain_700_belly_center_vertical_sar: 0.00288217648588656
         Duke_brain_800_belly_center_vertical_sar: 0.00244862009423405
         Duke_brain_900_belly_center_vertical_sar: 0.0143790423021494
@@ -1053,9 +649,6 @@ devices:
         Duke_brain_2600_belly_center_vertical_sar: 0.0633030951942683
         Duke_brain_3500_belly_center_vertical_sar: 0.00756644854464676
         Duke_brain_5000_belly_center_vertical_sar: 0.000890183575866167
-        Duke_brain_xxxx_belly_center_vertical_sar: 0
-        Duke_brain_yyyy_belly_center_vertical_sar: 0
-        Duke_brain_zzzz_belly_center_vertical_sar: 0
         Duke_brain_700_belly_left_horizontal_sar: 0.0170115146646767
         Duke_brain_800_belly_left_horizontal_sar: 0.0177357421964489
         Duke_brain_900_belly_left_horizontal_sar: 0.0207151414152471
@@ -1066,9 +659,6 @@ devices:
         Duke_brain_2600_belly_left_horizontal_sar: 0.0206426007442921
         Duke_brain_3500_belly_left_horizontal_sar: 0.00445812517776529
         Duke_brain_5000_belly_left_horizontal_sar: 0.000524528571678612
-        Duke_brain_xxxx_belly_left_horizontal_sar: 0
-        Duke_brain_yyyy_belly_left_horizontal_sar: 0
-        Duke_brain_zzzz_belly_left_horizontal_sar: 0
         Duke_brain_700_belly_left_vertical_sar: 0.00365998027287915
         Duke_brain_800_belly_left_vertical_sar: 0.00268559217991306
         Duke_brain_900_belly_left_vertical_sar: 0.0145670421029494
@@ -1079,9 +669,6 @@ devices:
         Duke_brain_2600_belly_left_vertical_sar: 0.0556193451239639
         Duke_brain_3500_belly_left_vertical_sar: 0.00541797360375718
         Duke_brain_5000_belly_left_vertical_sar: 0.000637425622838374
-        Duke_brain_xxxx_belly_left_vertical_sar: 0
-        Duke_brain_yyyy_belly_left_vertical_sar: 0
-        Duke_brain_zzzz_belly_left_vertical_sar: 0
         Duke_brain_700_belly_right_horizontal_sar: 0.0462562836778344
         Duke_brain_800_belly_right_horizontal_sar: 0.0212883599459037
         Duke_brain_900_belly_right_horizontal_sar: 0.0190261482430091
@@ -1092,9 +679,6 @@ devices:
         Duke_brain_2600_belly_right_horizontal_sar: 0.0154800157836012
         Duke_brain_3500_belly_right_horizontal_sar: 0.00344191435888798
         Duke_brain_5000_belly_right_horizontal_sar: 0.000404959678529213
-        Duke_brain_xxxx_belly_right_horizontal_sar: 0
-        Duke_brain_yyyy_belly_right_horizontal_sar: 0
-        Duke_brain_zzzz_belly_right_horizontal_sar: 0
         Duke_brain_700_belly_right_vertical_sar: 0.00197566007807913
         Duke_brain_800_belly_right_vertical_sar: 0.00193569091813864
         Duke_brain_900_belly_right_vertical_sar: 0.0176517407687481
@@ -1105,9 +689,6 @@ devices:
         Duke_brain_2600_belly_right_vertical_sar: 0.0696289841791778
         Duke_brain_3500_belly_right_vertical_sar: 0.00804603610850034
         Duke_brain_5000_belly_right_vertical_sar: 0.000946600032744416
-        Duke_brain_xxxx_belly_right_vertical_sar: 0
-        Duke_brain_yyyy_belly_right_vertical_sar: 0
-        Duke_brain_zzzz_belly_right_vertical_sar: 0
         Duke_brain_700_belly_up_horizontal_sar: 0.056187433135885
         Duke_brain_800_belly_up_horizontal_sar: 0.0316802965216144
         Duke_brain_900_belly_up_horizontal_sar: 0.0343285525475575
@@ -1118,9 +699,6 @@ devices:
         Duke_brain_2600_belly_up_horizontal_sar: 0.0458434047359819
         Duke_brain_3500_belly_up_horizontal_sar: 0.0210752354528918
         Duke_brain_5000_belly_up_horizontal_sar: 0.00250709908957573
-        Duke_brain_xxxx_belly_up_horizontal_sar: 0
-        Duke_brain_yyyy_belly_up_horizontal_sar: 0
-        Duke_brain_zzzz_belly_up_horizontal_sar: 0
         Duke_brain_700_belly_up_vertical_sar: 0.00430693169991977
         Duke_brain_800_belly_up_vertical_sar: 0.00208832483742928
         Duke_brain_900_belly_up_vertical_sar: 0.0249232114820245
@@ -1131,9 +709,6 @@ devices:
         Duke_brain_2600_belly_up_vertical_sar: 0.129553104953061
         Duke_brain_3500_belly_up_vertical_sar: 0.0281480498798747
         Duke_brain_5000_belly_up_vertical_sar: 0.00334196552853573
-        Duke_brain_xxxx_belly_up_vertical_sar: 0
-        Duke_brain_yyyy_belly_up_vertical_sar: 0
-        Duke_brain_zzzz_belly_up_vertical_sar: 0
 
     Ella:
       height: 1630
@@ -1162,9 +737,6 @@ devices:
         Ella_body_2600_front_of_eyes_center_vertical_sar: 0
         Ella_body_3500_front_of_eyes_center_vertical_sar: 0
         Ella_body_5000_front_of_eyes_center_vertical_sar: 0
-        Ella_body_xxxx_front_of_eyes_center_vertical_sar: 0
-        Ella_body_yyyy_front_of_eyes_center_vertical_sar: 0
-        Ella_body_zzzz_front_of_eyes_center_vertical_sar: 0
         Ella_body_700_front_of_eyes_down_horizontal_sar: 0
         Ella_body_800_front_of_eyes_down_horizontal_sar: 0
         Ella_body_900_front_of_eyes_down_horizontal_sar: 0
@@ -1175,9 +747,6 @@ devices:
         Ella_body_2600_front_of_eyes_down_horizontal_sar: 0
         Ella_body_3500_front_of_eyes_down_horizontal_sar: 0
         Ella_body_5000_front_of_eyes_down_horizontal_sar: 0
-        Ella_body_xxxx_front_of_eyes_down_horizontal_sar: 0
-        Ella_body_yyyy_front_of_eyes_down_horizontal_sar: 0
-        Ella_body_zzzz_front_of_eyes_down_horizontal_sar: 0
         Ella_body_700_front_of_eyes_down_vertical_sar: 0
         Ella_body_800_front_of_eyes_down_vertical_sar: 0
         Ella_body_900_front_of_eyes_down_vertical_sar: 0
@@ -1188,9 +757,6 @@ devices:
         Ella_body_2600_front_of_eyes_down_vertical_sar: 0
         Ella_body_3500_front_of_eyes_down_vertical_sar: 0
         Ella_body_5000_front_of_eyes_down_vertical_sar: 0
-        Ella_body_xxxx_front_of_eyes_down_vertical_sar: 0
-        Ella_body_yyyy_front_of_eyes_down_vertical_sar: 0
-        Ella_body_zzzz_front_of_eyes_down_vertical_sar: 0
         Ella_body_700_front_of_eyes_left_horizontal_sar: 0
         Ella_body_800_front_of_eyes_left_horizontal_sar: 0
         Ella_body_900_front_of_eyes_left_horizontal_sar: 0
@@ -1201,9 +767,6 @@ devices:
         Ella_body_2600_front_of_eyes_left_horizontal_sar: 0
         Ella_body_3500_front_of_eyes_left_horizontal_sar: 0
         Ella_body_5000_front_of_eyes_left_horizontal_sar: 0
-        Ella_body_xxxx_front_of_eyes_left_horizontal_sar: 0
-        Ella_body_yyyy_front_of_eyes_left_horizontal_sar: 0
-        Ella_body_zzzz_front_of_eyes_left_horizontal_sar: 0
         Ella_body_700_front_of_eyes_left_vertical_sar: 0
         Ella_body_800_front_of_eyes_left_vertical_sar: 0
         Ella_body_900_front_of_eyes_left_vertical_sar: 0
@@ -1214,9 +777,6 @@ devices:
         Ella_body_2600_front_of_eyes_left_vertical_sar: 0
         Ella_body_3500_front_of_eyes_left_vertical_sar: 0
         Ella_body_5000_front_of_eyes_left_vertical_sar: 0
-        Ella_body_xxxx_front_of_eyes_left_vertical_sar: 0
-        Ella_body_yyyy_front_of_eyes_left_vertical_sar: 0
-        Ella_body_zzzz_front_of_eyes_left_vertical_sar: 0
         Ella_body_700_front_of_eyes_right_horizontal_sar: 0
         Ella_body_800_front_of_eyes_right_horizontal_sar: 0
         Ella_body_900_front_of_eyes_right_horizontal_sar: 0
@@ -1227,9 +787,6 @@ devices:
         Ella_body_2600_front_of_eyes_right_horizontal_sar: 0
         Ella_body_3500_front_of_eyes_right_horizontal_sar: 0
         Ella_body_5000_front_of_eyes_right_horizontal_sar: 0
-        Ella_body_xxxx_front_of_eyes_right_horizontal_sar: 0
-        Ella_body_yyyy_front_of_eyes_right_horizontal_sar: 0
-        Ella_body_zzzz_front_of_eyes_right_horizontal_sar: 0
         Ella_body_700_front_of_eyes_right_vertical_sar: 0
         Ella_body_800_front_of_eyes_right_vertical_sar: 0
         Ella_body_900_front_of_eyes_right_vertical_sar: 0
@@ -1240,9 +797,6 @@ devices:
         Ella_body_2600_front_of_eyes_right_vertical_sar: 0
         Ella_body_3500_front_of_eyes_right_vertical_sar: 0
         Ella_body_5000_front_of_eyes_right_vertical_sar: 0
-        Ella_body_xxxx_front_of_eyes_right_vertical_sar: 0
-        Ella_body_yyyy_front_of_eyes_right_vertical_sar: 0
-        Ella_body_zzzz_front_of_eyes_right_vertical_sar: 0
         Ella_body_700_cheek1_sar: 0
         Ella_body_800_cheek1_sar: 0
         Ella_body_900_cheek1_sar: 0
@@ -1263,9 +817,6 @@ devices:
         Ella_body_2600_cheek2_sar: 0
         Ella_body_3500_cheek2_sar: 0
         Ella_body_5000_cheek2_sar: 0
-        Ella_body_xxxx_cheek2_sar: 0
-        Ella_body_yyyy_cheek2_sar: 0
-        Ella_body_zzzz_cheek2_sar: 0
         Ella_body_700_cheek3_sar: 0
         Ella_body_800_cheek3_sar: 0
         Ella_body_900_cheek3_sar: 0
@@ -1276,9 +827,6 @@ devices:
         Ella_body_2600_cheek3_sar: 0
         Ella_body_3500_cheek3_sar: 0
         Ella_body_5000_cheek3_sar: 0
-        Ella_body_xxxx_cheek3_sar: 0
-        Ella_body_yyyy_cheek3_sar: 0
-        Ella_body_zzzz_cheek3_sar: 0
         Ella_body_700_tilt1_sar: 0
         Ella_body_800_tilt1_sar: 0
         Ella_body_900_tilt1_sar: 0
@@ -1289,9 +837,6 @@ devices:
         Ella_body_2600_tilt1_sar: 0
         Ella_body_3500_tilt1_sar: 0
         Ella_body_5000_tilt1_sar: 0
-        Ella_body_xxxx_tilt1_sar: 0
-        Ella_body_yyyy_tilt1_sar: 0
-        Ella_body_zzzz_tilt1_sar: 0
         Ella_body_700_tilt2_sar: 0
         Ella_body_800_tilt2_sar: 0
         Ella_body_900_tilt2_sar: 0
@@ -1302,9 +847,6 @@ devices:
         Ella_body_2600_tilt2_sar: 0
         Ella_body_3500_tilt2_sar: 0
         Ella_body_5000_tilt2_sar: 0
-        Ella_body_xxxx_tilt2_sar: 0
-        Ella_body_yyyy_tilt2_sar: 0
-        Ella_body_zzzz_tilt2_sar: 0
         Ella_body_700_tilt3_sar: 0
         Ella_body_800_tilt3_sar: 0
         Ella_body_900_tilt3_sar: 0
@@ -1315,9 +857,6 @@ devices:
         Ella_body_2600_tilt3_sar: 0
         Ella_body_3500_tilt3_sar: 0
         Ella_body_5000_tilt3_sar: 0
-        Ella_body_xxxx_tilt3_sar: 0
-        Ella_body_yyyy_tilt3_sar: 0
-        Ella_body_zzzz_tilt3_sar: 0
         Ella_body_700_belly_center_horizontal_sar: 0
         Ella_body_800_belly_center_horizontal_sar: 0
         Ella_body_900_belly_center_horizontal_sar: 0
@@ -1328,9 +867,6 @@ devices:
         Ella_body_2600_belly_center_horizontal_sar: 0
         Ella_body_3500_belly_center_horizontal_sar: 0
         Ella_body_5000_belly_center_horizontal_sar: 0
-        Ella_body_xxxx_belly_center_horizontal_sar: 0
-        Ella_body_yyyy_belly_center_horizontal_sar: 0
-        Ella_body_zzzz_belly_center_horizontal_sar: 0
         Ella_body_700_belly_center_vertical_sar: 0
         Ella_body_800_belly_center_vertical_sar: 0
         Ella_body_900_belly_center_vertical_sar: 0
@@ -1341,9 +877,6 @@ devices:
         Ella_body_2600_belly_center_vertical_sar: 0
         Ella_body_3500_belly_center_vertical_sar: 0
         Ella_body_5000_belly_center_vertical_sar: 0
-        Ella_body_xxxx_belly_center_vertical_sar: 0
-        Ella_body_yyyy_belly_center_vertical_sar: 0
-        Ella_body_zzzz_belly_center_vertical_sar: 0
         Ella_body_700_belly_left_horizontal_sar: 0
         Ella_body_800_belly_left_horizontal_sar: 0
         Ella_body_900_belly_left_horizontal_sar: 0
@@ -1354,9 +887,6 @@ devices:
         Ella_body_2600_belly_left_horizontal_sar: 0
         Ella_body_3500_belly_left_horizontal_sar: 0
         Ella_body_5000_belly_left_horizontal_sar: 0
-        Ella_body_xxxx_belly_left_horizontal_sar: 0
-        Ella_body_yyyy_belly_left_horizontal_sar: 0
-        Ella_body_zzzz_belly_left_horizontal_sar: 0
         Ella_body_700_belly_left_vertical_sar: 0
         Ella_body_800_belly_left_vertical_sar: 0
         Ella_body_900_belly_left_vertical_sar: 0
@@ -1367,9 +897,6 @@ devices:
         Ella_body_2600_belly_left_vertical_sar: 0
         Ella_body_3500_belly_left_vertical_sar: 0
         Ella_body_5000_belly_left_vertical_sar: 0
-        Ella_body_xxxx_belly_left_vertical_sar: 0
-        Ella_body_yyyy_belly_left_vertical_sar: 0
-        Ella_body_zzzz_belly_left_vertical_sar: 0
         Ella_body_700_belly_right_horizontal_sar: 0
         Ella_body_800_belly_right_horizontal_sar: 0
         Ella_body_900_belly_right_horizontal_sar: 0
@@ -1380,9 +907,6 @@ devices:
         Ella_body_2600_belly_right_horizontal_sar: 0
         Ella_body_3500_belly_right_horizontal_sar: 0
         Ella_body_5000_belly_right_horizontal_sar: 0
-        Ella_body_xxxx_belly_right_horizontal_sar: 0
-        Ella_body_yyyy_belly_right_horizontal_sar: 0
-        Ella_body_zzzz_belly_right_horizontal_sar: 0
         Ella_body_700_belly_right_vertical_sar: 0
         Ella_body_800_belly_right_vertical_sar: 0
         Ella_body_900_belly_right_vertical_sar: 0
@@ -1393,9 +917,6 @@ devices:
         Ella_body_2600_belly_right_vertical_sar: 0
         Ella_body_3500_belly_right_vertical_sar: 0
         Ella_body_5000_belly_right_vertical_sar: 0
-        Ella_body_xxxx_belly_right_vertical_sar: 0
-        Ella_body_yyyy_belly_right_vertical_sar: 0
-        Ella_body_zzzz_belly_right_vertical_sar: 0
         Ella_body_700_belly_up_horizontal_sar: 0
         Ella_body_800_belly_up_horizontal_sar: 0
         Ella_body_900_belly_up_horizontal_sar: 0
@@ -1406,9 +927,6 @@ devices:
         Ella_body_2600_belly_up_horizontal_sar: 0
         Ella_body_3500_belly_up_horizontal_sar: 0
         Ella_body_5000_belly_up_horizontal_sar: 0
-        Ella_body_xxxx_belly_up_horizontal_sar: 0
-        Ella_body_yyyy_belly_up_horizontal_sar: 0
-        Ella_body_zzzz_belly_up_horizontal_sar: 0
         Ella_body_700_belly_up_vertical_sar: 0
         Ella_body_800_belly_up_vertical_sar: 0
         Ella_body_900_belly_up_vertical_sar: 0
@@ -1433,9 +951,6 @@ devices:
         Ella_brain_2600_front_of_eyes_center_horizontal_sar: 0
         Ella_brain_3500_front_of_eyes_center_horizontal_sar: 0
         Ella_brain_5000_front_of_eyes_center_horizontal_sar: 0
-        Ella_brain_xxxx_front_of_eyes_center_horizontal_sar: 0
-        Ella_brain_yyyy_front_of_eyes_center_horizontal_sar: 0
-        Ella_brain_zzzz_front_of_eyes_center_horizontal_sar: 0
         Ella_brain_700_front_of_eyes_center_vertical_sar: 0
         Ella_brain_800_front_of_eyes_center_vertical_sar: 0
         Ella_brain_900_front_of_eyes_center_vertical_sar: 0
@@ -1446,9 +961,6 @@ devices:
         Ella_brain_2600_front_of_eyes_center_vertical_sar: 0
         Ella_brain_3500_front_of_eyes_center_vertical_sar: 0
         Ella_brain_5000_front_of_eyes_center_vertical_sar: 0
-        Ella_brain_xxxx_front_of_eyes_center_vertical_sar: 0
-        Ella_brain_yyyy_front_of_eyes_center_vertical_sar: 0
-        Ella_brain_zzzz_front_of_eyes_center_vertical_sar: 0
         Ella_brain_700_front_of_eyes_down_horizontal_sar: 0
         Ella_brain_800_front_of_eyes_down_horizontal_sar: 0
         Ella_brain_900_front_of_eyes_down_horizontal_sar: 0
@@ -1459,9 +971,6 @@ devices:
         Ella_brain_2600_front_of_eyes_down_horizontal_sar: 0
         Ella_brain_3500_front_of_eyes_down_horizontal_sar: 0
         Ella_brain_5000_front_of_eyes_down_horizontal_sar: 0
-        Ella_brain_xxxx_front_of_eyes_down_horizontal_sar: 0
-        Ella_brain_yyyy_front_of_eyes_down_horizontal_sar: 0
-        Ella_brain_zzzz_front_of_eyes_down_horizontal_sar: 0
         Ella_brain_700_front_of_eyes_down_vertical_sar: 0
         Ella_brain_800_front_of_eyes_down_vertical_sar: 0
         Ella_brain_900_front_of_eyes_down_vertical_sar: 0
@@ -1472,9 +981,6 @@ devices:
         Ella_brain_2600_front_of_eyes_down_vertical_sar: 0
         Ella_brain_3500_front_of_eyes_down_vertical_sar: 0
         Ella_brain_5000_front_of_eyes_down_vertical_sar: 0
-        Ella_brain_xxxx_front_of_eyes_down_vertical_sar: 0
-        Ella_brain_yyyy_front_of_eyes_down_vertical_sar: 0
-        Ella_brain_zzzz_front_of_eyes_down_vertical_sar: 0
         Ella_brain_700_front_of_eyes_left_horizontal_sar: 0
         Ella_brain_800_front_of_eyes_left_horizontal_sar: 0
         Ella_brain_900_front_of_eyes_left_horizontal_sar: 0
@@ -1485,9 +991,6 @@ devices:
         Ella_brain_2600_front_of_eyes_left_horizontal_sar: 0
         Ella_brain_3500_front_of_eyes_left_horizontal_sar: 0
         Ella_brain_5000_front_of_eyes_left_horizontal_sar: 0
-        Ella_brain_xxxx_front_of_eyes_left_horizontal_sar: 0
-        Ella_brain_yyyy_front_of_eyes_left_horizontal_sar: 0
-        Ella_brain_zzzz_front_of_eyes_left_horizontal_sar: 0
         Ella_brain_700_front_of_eyes_left_vertical_sar: 0
         Ella_brain_800_front_of_eyes_left_vertical_sar: 0
         Ella_brain_900_front_of_eyes_left_vertical_sar: 0
@@ -1498,9 +1001,6 @@ devices:
         Ella_brain_2600_front_of_eyes_left_vertical_sar: 0
         Ella_brain_3500_front_of_eyes_left_vertical_sar: 0
         Ella_brain_5000_front_of_eyes_left_vertical_sar: 0
-        Ella_brain_xxxx_front_of_eyes_left_vertical_sar: 0
-        Ella_brain_yyyy_front_of_eyes_left_vertical_sar: 0
-        Ella_brain_zzzz_front_of_eyes_left_vertical_sar: 0
         Ella_brain_700_front_of_eyes_right_horizontal_sar: 0
         Ella_brain_800_front_of_eyes_right_horizontal_sar: 0
         Ella_brain_900_front_of_eyes_right_horizontal_sar: 0
@@ -1511,9 +1011,6 @@ devices:
         Ella_brain_2600_front_of_eyes_right_horizontal_sar: 0
         Ella_brain_3500_front_of_eyes_right_horizontal_sar: 0
         Ella_brain_5000_front_of_eyes_right_horizontal_sar: 0
-        Ella_brain_xxxx_front_of_eyes_right_horizontal_sar: 0
-        Ella_brain_yyyy_front_of_eyes_right_horizontal_sar: 0
-        Ella_brain_zzzz_front_of_eyes_right_horizontal_sar: 0
         Ella_brain_700_front_of_eyes_right_vertical_sar: 0
         Ella_brain_800_front_of_eyes_right_vertical_sar: 0
         Ella_brain_900_front_of_eyes_right_vertical_sar: 0
@@ -1524,9 +1021,6 @@ devices:
         Ella_brain_2600_front_of_eyes_right_vertical_sar: 0
         Ella_brain_3500_front_of_eyes_right_vertical_sar: 0
         Ella_brain_5000_front_of_eyes_right_vertical_sar: 0
-        Ella_brain_xxxx_front_of_eyes_right_vertical_sar: 0
-        Ella_brain_yyyy_front_of_eyes_right_vertical_sar: 0
-        Ella_brain_zzzz_front_of_eyes_right_vertical_sar: 0
         Ella_brain_700_cheek1_sar: 0
         Ella_brain_800_cheek1_sar: 0
         Ella_brain_900_cheek1_sar: 0
@@ -1537,9 +1031,6 @@ devices:
         Ella_brain_2600_cheek1_sar: 0
         Ella_brain_3500_cheek1_sar: 0
         Ella_brain_5000_cheek1_sar: 0
-        Ella_brain_xxxx_cheek1_sar: 0
-        Ella_brain_yyyy_cheek1_sar: 0
-        Ella_brain_zzzz_cheek1_sar: 0
         Ella_brain_700_cheek2_sar: 0
         Ella_brain_800_cheek2_sar: 0
         Ella_brain_900_cheek2_sar: 0
@@ -1550,9 +1041,6 @@ devices:
         Ella_brain_2600_cheek2_sar: 0
         Ella_brain_3500_cheek2_sar: 0
         Ella_brain_5000_cheek2_sar: 0
-        Ella_brain_xxxx_cheek2_sar: 0
-        Ella_brain_yyyy_cheek2_sar: 0
-        Ella_brain_zzzz_cheek2_sar: 0
         Ella_brain_700_cheek3_sar: 0
         Ella_brain_800_cheek3_sar: 0
         Ella_brain_900_cheek3_sar: 0
@@ -1563,9 +1051,6 @@ devices:
         Ella_brain_2600_cheek3_sar: 0
         Ella_brain_3500_cheek3_sar: 0
         Ella_brain_5000_cheek3_sar: 0
-        Ella_brain_xxxx_cheek3_sar: 0
-        Ella_brain_yyyy_cheek3_sar: 0
-        Ella_brain_zzzz_cheek3_sar: 0
         Ella_brain_700_tilt1_sar: 0
         Ella_brain_800_tilt1_sar: 0
         Ella_brain_900_tilt1_sar: 0
@@ -1576,9 +1061,6 @@ devices:
         Ella_brain_2600_tilt1_sar: 0
         Ella_brain_3500_tilt1_sar: 0
         Ella_brain_5000_tilt1_sar: 0
-        Ella_brain_xxxx_tilt1_sar: 0
-        Ella_brain_yyyy_tilt1_sar: 0
-        Ella_brain_zzzz_tilt1_sar: 0
         Ella_brain_700_tilt2_sar: 0
         Ella_brain_800_tilt2_sar: 0
         Ella_brain_900_tilt2_sar: 0
@@ -1589,9 +1071,6 @@ devices:
         Ella_brain_2600_tilt2_sar: 0
         Ella_brain_3500_tilt2_sar: 0
         Ella_brain_5000_tilt2_sar: 0
-        Ella_brain_xxxx_tilt2_sar: 0
-        Ella_brain_yyyy_tilt2_sar: 0
-        Ella_brain_zzzz_tilt2_sar: 0
         Ella_brain_700_tilt3_sar: 0
         Ella_brain_800_tilt3_sar: 0
         Ella_brain_900_tilt3_sar: 0
@@ -1602,9 +1081,6 @@ devices:
         Ella_brain_2600_tilt3_sar: 0
         Ella_brain_3500_tilt3_sar: 0
         Ella_brain_5000_tilt3_sar: 0
-        Ella_brain_xxxx_tilt3_sar: 0
-        Ella_brain_yyyy_tilt3_sar: 0
-        Ella_brain_zzzz_tilt3_sar: 0
         Ella_brain_700_belly_center_horizontal_sar: 0
         Ella_brain_800_belly_center_horizontal_sar: 0
         Ella_brain_900_belly_center_horizontal_sar: 0
@@ -1615,9 +1091,6 @@ devices:
         Ella_brain_2600_belly_center_horizontal_sar: 0
         Ella_brain_3500_belly_center_horizontal_sar: 0
         Ella_brain_5000_belly_center_horizontal_sar: 0
-        Ella_brain_xxxx_belly_center_horizontal_sar: 0
-        Ella_brain_yyyy_belly_center_horizontal_sar: 0
-        Ella_brain_zzzz_belly_center_horizontal_sar: 0
         Ella_brain_700_belly_center_vertical_sar: 0
         Ella_brain_800_belly_center_vertical_sar: 0
         Ella_brain_900_belly_center_vertical_sar: 0
@@ -1628,9 +1101,6 @@ devices:
         Ella_brain_2600_belly_center_vertical_sar: 0
         Ella_brain_3500_belly_center_vertical_sar: 0
         Ella_brain_5000_belly_center_vertical_sar: 0
-        Ella_brain_xxxx_belly_center_vertical_sar: 0
-        Ella_brain_yyyy_belly_center_vertical_sar: 0
-        Ella_brain_zzzz_belly_center_vertical_sar: 0
         Ella_brain_700_belly_left_horizontal_sar: 0
         Ella_brain_800_belly_left_horizontal_sar: 0
         Ella_brain_900_belly_left_horizontal_sar: 0
@@ -1641,9 +1111,6 @@ devices:
         Ella_brain_2600_belly_left_horizontal_sar: 0
         Ella_brain_3500_belly_left_horizontal_sar: 0
         Ella_brain_5000_belly_left_horizontal_sar: 0
-        Ella_brain_xxxx_belly_left_horizontal_sar: 0
-        Ella_brain_yyyy_belly_left_horizontal_sar: 0
-        Ella_brain_zzzz_belly_left_horizontal_sar: 0
         Ella_brain_700_belly_left_vertical_sar: 0
         Ella_brain_800_belly_left_vertical_sar: 0
         Ella_brain_900_belly_left_vertical_sar: 0
@@ -1654,9 +1121,6 @@ devices:
         Ella_brain_2600_belly_left_vertical_sar: 0
         Ella_brain_3500_belly_left_vertical_sar: 0
         Ella_brain_5000_belly_left_vertical_sar: 0
-        Ella_brain_xxxx_belly_left_vertical_sar: 0
-        Ella_brain_yyyy_belly_left_vertical_sar: 0
-        Ella_brain_zzzz_belly_left_vertical_sar: 0
         Ella_brain_700_belly_right_horizontal_sar: 0
         Ella_brain_800_belly_right_horizontal_sar: 0
         Ella_brain_900_belly_right_horizontal_sar: 0
@@ -1667,9 +1131,6 @@ devices:
         Ella_brain_2600_belly_right_horizontal_sar: 0
         Ella_brain_3500_belly_right_horizontal_sar: 0
         Ella_brain_5000_belly_right_horizontal_sar: 0
-        Ella_brain_xxxx_belly_right_horizontal_sar: 0
-        Ella_brain_yyyy_belly_right_horizontal_sar: 0
-        Ella_brain_zzzz_belly_right_horizontal_sar: 0
         Ella_brain_700_belly_right_vertical_sar: 0
         Ella_brain_800_belly_right_vertical_sar: 0
         Ella_brain_900_belly_right_vertical_sar: 0
@@ -1680,9 +1141,6 @@ devices:
         Ella_brain_2600_belly_right_vertical_sar: 0
         Ella_brain_3500_belly_right_vertical_sar: 0
         Ella_brain_5000_belly_right_vertical_sar: 0
-        Ella_brain_xxxx_belly_right_vertical_sar: 0
-        Ella_brain_yyyy_belly_right_vertical_sar: 0
-        Ella_brain_zzzz_belly_right_vertical_sar: 0
         Ella_brain_700_belly_up_horizontal_sar: 0
         Ella_brain_800_belly_up_horizontal_sar: 0
         Ella_brain_900_belly_up_horizontal_sar: 0
@@ -1693,9 +1151,6 @@ devices:
         Ella_brain_2600_belly_up_horizontal_sar: 0
         Ella_brain_3500_belly_up_horizontal_sar: 0
         Ella_brain_5000_belly_up_horizontal_sar: 0
-        Ella_brain_xxxx_belly_up_horizontal_sar: 0
-        Ella_brain_yyyy_belly_up_horizontal_sar: 0
-        Ella_brain_zzzz_belly_up_horizontal_sar: 0
         Ella_brain_700_belly_up_vertical_sar: 0
         Ella_brain_800_belly_up_vertical_sar: 0
         Ella_brain_900_belly_up_vertical_sar: 0
@@ -1721,9 +1176,6 @@ devices:
         Thelonious_body_2600_front_of_eyes_center_horizontal_sar: 0
         Thelonious_body_3500_front_of_eyes_center_horizontal_sar: 0
         Thelonious_body_5000_front_of_eyes_center_horizontal_sar: 0
-        Thelonious_body_xxxx_front_of_eyes_center_horizontal_sar: 0
-        Thelonious_body_yyyy_front_of_eyes_center_horizontal_sar: 0
-        Thelonious_body_zzzz_front_of_eyes_center_horizontal_sar: 0
         Thelonious_body_700_front_of_eyes_center_vertical_sar: 0
         Thelonious_body_800_front_of_eyes_center_vertical_sar: 0
         Thelonious_body_900_front_of_eyes_center_vertical_sar: 0
@@ -1734,9 +1186,6 @@ devices:
         Thelonious_body_2600_front_of_eyes_center_vertical_sar: 0
         Thelonious_body_3500_front_of_eyes_center_vertical_sar: 0
         Thelonious_body_5000_front_of_eyes_center_vertical_sar: 0
-        Thelonious_body_xxxx_front_of_eyes_center_vertical_sar: 0
-        Thelonious_body_yyyy_front_of_eyes_center_vertical_sar: 0
-        Thelonious_body_zzzz_front_of_eyes_center_vertical_sar: 0
         Thelonious_body_700_front_of_eyes_down_horizontal_sar: 0
         Thelonious_body_800_front_of_eyes_down_horizontal_sar: 0
         Thelonious_body_900_front_of_eyes_down_horizontal_sar: 0
@@ -1747,9 +1196,6 @@ devices:
         Thelonious_body_2600_front_of_eyes_down_horizontal_sar: 0
         Thelonious_body_3500_front_of_eyes_down_horizontal_sar: 0
         Thelonious_body_5000_front_of_eyes_down_horizontal_sar: 0
-        Thelonious_body_xxxx_front_of_eyes_down_horizontal_sar: 0
-        Thelonious_body_yyyy_front_of_eyes_down_horizontal_sar: 0
-        Thelonious_body_zzzz_front_of_eyes_down_horizontal_sar: 0
         Thelonious_body_700_front_of_eyes_down_vertical_sar: 0
         Thelonious_body_800_front_of_eyes_down_vertical_sar: 0
         Thelonious_body_900_front_of_eyes_down_vertical_sar: 0
@@ -1760,9 +1206,6 @@ devices:
         Thelonious_body_2600_front_of_eyes_down_vertical_sar: 0
         Thelonious_body_3500_front_of_eyes_down_vertical_sar: 0
         Thelonious_body_5000_front_of_eyes_down_vertical_sar: 0
-        Thelonious_body_xxxx_front_of_eyes_down_vertical_sar: 0
-        Thelonious_body_yyyy_front_of_eyes_down_vertical_sar: 0
-        Thelonious_body_zzzz_front_of_eyes_down_vertical_sar: 0
         Thelonious_body_700_front_of_eyes_left_horizontal_sar: 0
         Thelonious_body_800_front_of_eyes_left_horizontal_sar: 0
         Thelonious_body_900_front_of_eyes_left_horizontal_sar: 0
@@ -1773,9 +1216,6 @@ devices:
         Thelonious_body_2600_front_of_eyes_left_horizontal_sar: 0
         Thelonious_body_3500_front_of_eyes_left_horizontal_sar: 0
         Thelonious_body_5000_front_of_eyes_left_horizontal_sar: 0
-        Thelonious_body_xxxx_front_of_eyes_left_horizontal_sar: 0
-        Thelonious_body_yyyy_front_of_eyes_left_horizontal_sar: 0
-        Thelonious_body_zzzz_front_of_eyes_left_horizontal_sar: 0
         Thelonious_body_700_front_of_eyes_left_vertical_sar: 0
         Thelonious_body_800_front_of_eyes_left_vertical_sar: 0
         Thelonious_body_900_front_of_eyes_left_vertical_sar: 0
@@ -1786,9 +1226,6 @@ devices:
         Thelonious_body_2600_front_of_eyes_left_vertical_sar: 0
         Thelonious_body_3500_front_of_eyes_left_vertical_sar: 0
         Thelonious_body_5000_front_of_eyes_left_vertical_sar: 0
-        Thelonious_body_xxxx_front_of_eyes_left_vertical_sar: 0
-        Thelonious_body_yyyy_front_of_eyes_left_vertical_sar: 0
-        Thelonious_body_zzzz_front_of_eyes_left_vertical_sar: 0
         Thelonious_body_700_front_of_eyes_right_horizontal_sar: 0
         Thelonious_body_800_front_of_eyes_right_horizontal_sar: 0
         Thelonious_body_900_front_of_eyes_right_horizontal_sar: 0
@@ -1799,9 +1236,6 @@ devices:
         Thelonious_body_2600_front_of_eyes_right_horizontal_sar: 0
         Thelonious_body_3500_front_of_eyes_right_horizontal_sar: 0
         Thelonious_body_5000_front_of_eyes_right_horizontal_sar: 0
-        Thelonious_body_xxxx_front_of_eyes_right_horizontal_sar: 0
-        Thelonious_body_yyyy_front_of_eyes_right_horizontal_sar: 0
-        Thelonious_body_zzzz_front_of_eyes_right_horizontal_sar: 0
         Thelonious_body_700_front_of_eyes_right_vertical_sar: 0
         Thelonious_body_800_front_of_eyes_right_vertical_sar: 0
         Thelonious_body_900_front_of_eyes_right_vertical_sar: 0
@@ -1812,9 +1246,6 @@ devices:
         Thelonious_body_2600_front_of_eyes_right_vertical_sar: 0
         Thelonious_body_3500_front_of_eyes_right_vertical_sar: 0
         Thelonious_body_5000_front_of_eyes_right_vertical_sar: 0
-        Thelonious_body_xxxx_front_of_eyes_right_vertical_sar: 0
-        Thelonious_body_yyyy_front_of_eyes_right_vertical_sar: 0
-        Thelonious_body_zzzz_front_of_eyes_right_vertical_sar: 0
         Thelonious_body_700_cheek1_sar: 0
         Thelonious_body_800_cheek1_sar: 0
         Thelonious_body_900_cheek1_sar: 0
@@ -1825,9 +1256,6 @@ devices:
         Thelonious_body_2600_cheek1_sar: 0
         Thelonious_body_3500_cheek1_sar: 0
         Thelonious_body_5000_cheek1_sar: 0
-        Thelonious_body_xxxx_cheek1_sar: 0
-        Thelonious_body_yyyy_cheek1_sar: 0
-        Thelonious_body_zzzz_cheek1_sar: 0
         Thelonious_body_700_cheek2_sar: 0
         Thelonious_body_800_cheek2_sar: 0
         Thelonious_body_900_cheek2_sar: 0
@@ -1838,9 +1266,6 @@ devices:
         Thelonious_body_2600_cheek2_sar: 0
         Thelonious_body_3500_cheek2_sar: 0
         Thelonious_body_5000_cheek2_sar: 0
-        Thelonious_body_xxxx_cheek2_sar: 0
-        Thelonious_body_yyyy_cheek2_sar: 0
-        Thelonious_body_zzzz_cheek2_sar: 0
         Thelonious_body_700_cheek3_sar: 0
         Thelonious_body_800_cheek3_sar: 0
         Thelonious_body_900_cheek3_sar: 0
@@ -1851,9 +1276,6 @@ devices:
         Thelonious_body_2600_cheek3_sar: 0
         Thelonious_body_3500_cheek3_sar: 0
         Thelonious_body_5000_cheek3_sar: 0
-        Thelonious_body_xxxx_cheek3_sar: 0
-        Thelonious_body_yyyy_cheek3_sar: 0
-        Thelonious_body_zzzz_cheek3_sar: 0
         Thelonious_body_700_tilt1_sar: 0
         Thelonious_body_800_tilt1_sar: 0
         Thelonious_body_900_tilt1_sar: 0
@@ -1864,9 +1286,6 @@ devices:
         Thelonious_body_2600_tilt1_sar: 0
         Thelonious_body_3500_tilt1_sar: 0
         Thelonious_body_5000_tilt1_sar: 0
-        Thelonious_body_xxxx_tilt1_sar: 0
-        Thelonious_body_yyyy_tilt1_sar: 0
-        Thelonious_body_zzzz_tilt1_sar: 0
         Thelonious_body_700_tilt2_sar: 0
         Thelonious_body_800_tilt2_sar: 0
         Thelonious_body_900_tilt2_sar: 0
@@ -1877,9 +1296,6 @@ devices:
         Thelonious_body_2600_tilt2_sar: 0
         Thelonious_body_3500_tilt2_sar: 0
         Thelonious_body_5000_tilt2_sar: 0
-        Thelonious_body_xxxx_tilt2_sar: 0
-        Thelonious_body_yyyy_tilt2_sar: 0
-        Thelonious_body_zzzz_tilt2_sar: 0
         Thelonious_body_700_tilt3_sar: 0
         Thelonious_body_800_tilt3_sar: 0
         Thelonious_body_900_tilt3_sar: 0
@@ -1890,9 +1306,6 @@ devices:
         Thelonious_body_2600_tilt3_sar: 0
         Thelonious_body_3500_tilt3_sar: 0
         Thelonious_body_5000_tilt3_sar: 0
-        Thelonious_body_xxxx_tilt3_sar: 0
-        Thelonious_body_yyyy_tilt3_sar: 0
-        Thelonious_body_zzzz_tilt3_sar: 0
         Thelonious_body_700_belly_center_horizontal_sar: 0
         Thelonious_body_800_belly_center_horizontal_sar: 0
         Thelonious_body_900_belly_center_horizontal_sar: 0
@@ -1903,9 +1316,6 @@ devices:
         Thelonious_body_2600_belly_center_horizontal_sar: 0
         Thelonious_body_3500_belly_center_horizontal_sar: 0
         Thelonious_body_5000_belly_center_horizontal_sar: 0
-        Thelonious_body_xxxx_belly_center_horizontal_sar: 0
-        Thelonious_body_yyyy_belly_center_horizontal_sar: 0
-        Thelonious_body_zzzz_belly_center_horizontal_sar: 0
         Thelonious_body_700_belly_center_vertical_sar: 0
         Thelonious_body_800_belly_center_vertical_sar: 0
         Thelonious_body_900_belly_center_vertical_sar: 0
@@ -1916,9 +1326,6 @@ devices:
         Thelonious_body_2600_belly_center_vertical_sar: 0
         Thelonious_body_3500_belly_center_vertical_sar: 0
         Thelonious_body_5000_belly_center_vertical_sar: 0
-        Thelonious_body_xxxx_belly_center_vertical_sar: 0
-        Thelonious_body_yyyy_belly_center_vertical_sar: 0
-        Thelonious_body_zzzz_belly_center_vertical_sar: 0
         Thelonious_body_700_belly_left_horizontal_sar: 0
         Thelonious_body_800_belly_left_horizontal_sar: 0
         Thelonious_body_900_belly_left_horizontal_sar: 0
@@ -1929,9 +1336,6 @@ devices:
         Thelonious_body_2600_belly_left_horizontal_sar: 0
         Thelonious_body_3500_belly_left_horizontal_sar: 0
         Thelonious_body_5000_belly_left_horizontal_sar: 0
-        Thelonious_body_xxxx_belly_left_horizontal_sar: 0
-        Thelonious_body_yyyy_belly_left_horizontal_sar: 0
-        Thelonious_body_zzzz_belly_left_horizontal_sar: 0
         Thelonious_body_700_belly_left_vertical_sar: 0
         Thelonious_body_800_belly_left_vertical_sar: 0
         Thelonious_body_900_belly_left_vertical_sar: 0
@@ -1942,9 +1346,6 @@ devices:
         Thelonious_body_2600_belly_left_vertical_sar: 0
         Thelonious_body_3500_belly_left_vertical_sar: 0
         Thelonious_body_5000_belly_left_vertical_sar: 0
-        Thelonious_body_xxxx_belly_left_vertical_sar: 0
-        Thelonious_body_yyyy_belly_left_vertical_sar: 0
-        Thelonious_body_zzzz_belly_left_vertical_sar: 0
         Thelonious_body_700_belly_right_horizontal_sar: 0
         Thelonious_body_800_belly_right_horizontal_sar: 0
         Thelonious_body_900_belly_right_horizontal_sar: 0
@@ -1955,9 +1356,6 @@ devices:
         Thelonious_body_2600_belly_right_horizontal_sar: 0
         Thelonious_body_3500_belly_right_horizontal_sar: 0
         Thelonious_body_5000_belly_right_horizontal_sar: 0
-        Thelonious_body_xxxx_belly_right_horizontal_sar: 0
-        Thelonious_body_yyyy_belly_right_horizontal_sar: 0
-        Thelonious_body_zzzz_belly_right_horizontal_sar: 0
         Thelonious_body_700_belly_right_vertical_sar: 0
         Thelonious_body_800_belly_right_vertical_sar: 0
         Thelonious_body_900_belly_right_vertical_sar: 0
@@ -1968,9 +1366,6 @@ devices:
         Thelonious_body_2600_belly_right_vertical_sar: 0
         Thelonious_body_3500_belly_right_vertical_sar: 0
         Thelonious_body_5000_belly_right_vertical_sar: 0
-        Thelonious_body_xxxx_belly_right_vertical_sar: 0
-        Thelonious_body_yyyy_belly_right_vertical_sar: 0
-        Thelonious_body_zzzz_belly_right_vertical_sar: 0
         Thelonious_body_700_belly_up_horizontal_sar: 0
         Thelonious_body_800_belly_up_horizontal_sar: 0
         Thelonious_body_900_belly_up_horizontal_sar: 0
@@ -1981,9 +1376,6 @@ devices:
         Thelonious_body_2600_belly_up_horizontal_sar: 0
         Thelonious_body_3500_belly_up_horizontal_sar: 0
         Thelonious_body_5000_belly_up_horizontal_sar: 0
-        Thelonious_body_xxxx_belly_up_horizontal_sar: 0
-        Thelonious_body_yyyy_belly_up_horizontal_sar: 0
-        Thelonious_body_zzzz_belly_up_horizontal_sar: 0
         Thelonious_body_700_belly_up_vertical_sar: 0
         Thelonious_body_800_belly_up_vertical_sar: 0
         Thelonious_body_900_belly_up_vertical_sar: 0
@@ -2007,9 +1399,6 @@ devices:
         Thelonious_brain_2600_front_of_eyes_center_horizontal_sar: 0
         Thelonious_brain_3500_front_of_eyes_center_horizontal_sar: 0
         Thelonious_brain_5000_front_of_eyes_center_horizontal_sar: 0
-        Thelonious_brain_xxxx_front_of_eyes_center_horizontal_sar: 0
-        Thelonious_brain_yyyy_front_of_eyes_center_horizontal_sar: 0
-        Thelonious_brain_zzzz_front_of_eyes_center_horizontal_sar: 0
         Thelonious_brain_700_front_of_eyes_center_vertical_sar: 0
         Thelonious_brain_800_front_of_eyes_center_vertical_sar: 0
         Thelonious_brain_900_front_of_eyes_center_vertical_sar: 0
@@ -2020,9 +1409,6 @@ devices:
         Thelonious_brain_2600_front_of_eyes_center_vertical_sar: 0
         Thelonious_brain_3500_front_of_eyes_center_vertical_sar: 0
         Thelonious_brain_5000_front_of_eyes_center_vertical_sar: 0
-        Thelonious_brain_xxxx_front_of_eyes_center_vertical_sar: 0
-        Thelonious_brain_yyyy_front_of_eyes_center_vertical_sar: 0
-        Thelonious_brain_zzzz_front_of_eyes_center_vertical_sar: 0
         Thelonious_brain_700_front_of_eyes_down_horizontal_sar: 0
         Thelonious_brain_800_front_of_eyes_down_horizontal_sar: 0
         Thelonious_brain_900_front_of_eyes_down_horizontal_sar: 0
@@ -2033,9 +1419,6 @@ devices:
         Thelonious_brain_2600_front_of_eyes_down_horizontal_sar: 0
         Thelonious_brain_3500_front_of_eyes_down_horizontal_sar: 0
         Thelonious_brain_5000_front_of_eyes_down_horizontal_sar: 0
-        Thelonious_brain_xxxx_front_of_eyes_down_horizontal_sar: 0
-        Thelonious_brain_yyyy_front_of_eyes_down_horizontal_sar: 0
-        Thelonious_brain_zzzz_front_of_eyes_down_horizontal_sar: 0
         Thelonious_brain_700_front_of_eyes_down_vertical_sar: 0
         Thelonious_brain_800_front_of_eyes_down_vertical_sar: 0
         Thelonious_brain_900_front_of_eyes_down_vertical_sar: 0
@@ -2046,9 +1429,6 @@ devices:
         Thelonious_brain_2600_front_of_eyes_down_vertical_sar: 0
         Thelonious_brain_3500_front_of_eyes_down_vertical_sar: 0
         Thelonious_brain_5000_front_of_eyes_down_vertical_sar: 0
-        Thelonious_brain_xxxx_front_of_eyes_down_vertical_sar: 0
-        Thelonious_brain_yyyy_front_of_eyes_down_vertical_sar: 0
-        Thelonious_brain_zzzz_front_of_eyes_down_vertical_sar: 0
         Thelonious_brain_700_front_of_eyes_left_horizontal_sar: 0
         Thelonious_brain_800_front_of_eyes_left_horizontal_sar: 0
         Thelonious_brain_900_front_of_eyes_left_horizontal_sar: 0
@@ -2059,9 +1439,6 @@ devices:
         Thelonious_brain_2600_front_of_eyes_left_horizontal_sar: 0
         Thelonious_brain_3500_front_of_eyes_left_horizontal_sar: 0
         Thelonious_brain_5000_front_of_eyes_left_horizontal_sar: 0
-        Thelonious_brain_xxxx_front_of_eyes_left_horizontal_sar: 0
-        Thelonious_brain_yyyy_front_of_eyes_left_horizontal_sar: 0
-        Thelonious_brain_zzzz_front_of_eyes_left_horizontal_sar: 0
         Thelonious_brain_700_front_of_eyes_left_vertical_sar: 0
         Thelonious_brain_800_front_of_eyes_left_vertical_sar: 0
         Thelonious_brain_900_front_of_eyes_left_vertical_sar: 0
@@ -2072,9 +1449,6 @@ devices:
         Thelonious_brain_2600_front_of_eyes_left_vertical_sar: 0
         Thelonious_brain_3500_front_of_eyes_left_vertical_sar: 0
         Thelonious_brain_5000_front_of_eyes_left_vertical_sar: 0
-        Thelonious_brain_xxxx_front_of_eyes_left_vertical_sar: 0
-        Thelonious_brain_yyyy_front_of_eyes_left_vertical_sar: 0
-        Thelonious_brain_zzzz_front_of_eyes_left_vertical_sar: 0
         Thelonious_brain_700_front_of_eyes_right_horizontal_sar: 0
         Thelonious_brain_800_front_of_eyes_right_horizontal_sar: 0
         Thelonious_brain_900_front_of_eyes_right_horizontal_sar: 0
@@ -2085,9 +1459,6 @@ devices:
         Thelonious_brain_2600_front_of_eyes_right_horizontal_sar: 0
         Thelonious_brain_3500_front_of_eyes_right_horizontal_sar: 0
         Thelonious_brain_5000_front_of_eyes_right_horizontal_sar: 0
-        Thelonious_brain_xxxx_front_of_eyes_right_horizontal_sar: 0
-        Thelonious_brain_yyyy_front_of_eyes_right_horizontal_sar: 0
-        Thelonious_brain_zzzz_front_of_eyes_right_horizontal_sar: 0
         Thelonious_brain_700_front_of_eyes_right_vertical_sar: 0
         Thelonious_brain_800_front_of_eyes_right_vertical_sar: 0
         Thelonious_brain_900_front_of_eyes_right_vertical_sar: 0
@@ -2098,9 +1469,6 @@ devices:
         Thelonious_brain_2600_front_of_eyes_right_vertical_sar: 0
         Thelonious_brain_3500_front_of_eyes_right_vertical_sar: 0
         Thelonious_brain_5000_front_of_eyes_right_vertical_sar: 0
-        Thelonious_brain_xxxx_front_of_eyes_right_vertical_sar: 0
-        Thelonious_brain_yyyy_front_of_eyes_right_vertical_sar: 0
-        Thelonious_brain_zzzz_front_of_eyes_right_vertical_sar: 0
         Thelonious_brain_700_cheek1_sar: 0
         Thelonious_brain_800_cheek1_sar: 0
         Thelonious_brain_900_cheek1_sar: 0
@@ -2111,9 +1479,6 @@ devices:
         Thelonious_brain_2600_cheek1_sar: 0
         Thelonious_brain_3500_cheek1_sar: 0
         Thelonious_brain_5000_cheek1_sar: 0
-        Thelonious_brain_xxxx_cheek1_sar: 0
-        Thelonious_brain_yyyy_cheek1_sar: 0
-        Thelonious_brain_zzzz_cheek1_sar: 0
         Thelonious_brain_700_cheek2_sar: 0
         Thelonious_brain_800_cheek2_sar: 0
         Thelonious_brain_900_cheek2_sar: 0
@@ -2124,9 +1489,6 @@ devices:
         Thelonious_brain_2600_cheek2_sar: 0
         Thelonious_brain_3500_cheek2_sar: 0
         Thelonious_brain_5000_cheek2_sar: 0
-        Thelonious_brain_xxxx_cheek2_sar: 0
-        Thelonious_brain_yyyy_cheek2_sar: 0
-        Thelonious_brain_zzzz_cheek2_sar: 0
         Thelonious_brain_700_cheek3_sar: 0
         Thelonious_brain_800_cheek3_sar: 0
         Thelonious_brain_900_cheek3_sar: 0
@@ -2137,9 +1499,6 @@ devices:
         Thelonious_brain_2600_cheek3_sar: 0
         Thelonious_brain_3500_cheek3_sar: 0
         Thelonious_brain_5000_cheek3_sar: 0
-        Thelonious_brain_xxxx_cheek3_sar: 0
-        Thelonious_brain_yyyy_cheek3_sar: 0
-        Thelonious_brain_zzzz_cheek3_sar: 0
         Thelonious_brain_700_tilt1_sar: 0
         Thelonious_brain_800_tilt1_sar: 0
         Thelonious_brain_900_tilt1_sar: 0
@@ -2150,9 +1509,6 @@ devices:
         Thelonious_brain_2600_tilt1_sar: 0
         Thelonious_brain_3500_tilt1_sar: 0
         Thelonious_brain_5000_tilt1_sar: 0
-        Thelonious_brain_xxxx_tilt1_sar: 0
-        Thelonious_brain_yyyy_tilt1_sar: 0
-        Thelonious_brain_zzzz_tilt1_sar: 0
         Thelonious_brain_700_tilt2_sar: 0
         Thelonious_brain_800_tilt2_sar: 0
         Thelonious_brain_900_tilt2_sar: 0
@@ -2163,9 +1519,6 @@ devices:
         Thelonious_brain_2600_tilt2_sar: 0
         Thelonious_brain_3500_tilt2_sar: 0
         Thelonious_brain_5000_tilt2_sar: 0
-        Thelonious_brain_xxxx_tilt2_sar: 0
-        Thelonious_brain_yyyy_tilt2_sar: 0
-        Thelonious_brain_zzzz_tilt2_sar: 0
         Thelonious_brain_700_tilt3_sar: 0
         Thelonious_brain_800_tilt3_sar: 0
         Thelonious_brain_900_tilt3_sar: 0
@@ -2176,9 +1529,6 @@ devices:
         Thelonious_brain_2600_tilt3_sar: 0
         Thelonious_brain_3500_tilt3_sar: 0
         Thelonious_brain_5000_tilt3_sar: 0
-        Thelonious_brain_xxxx_tilt3_sar: 0
-        Thelonious_brain_yyyy_tilt3_sar: 0
-        Thelonious_brain_zzzz_tilt3_sar: 0
         Thelonious_brain_700_belly_center_horizontal_sar: 0
         Thelonious_brain_800_belly_center_horizontal_sar: 0
         Thelonious_brain_900_belly_center_horizontal_sar: 0
@@ -2189,9 +1539,6 @@ devices:
         Thelonious_brain_2600_belly_center_horizontal_sar: 0
         Thelonious_brain_3500_belly_center_horizontal_sar: 0
         Thelonious_brain_5000_belly_center_horizontal_sar: 0
-        Thelonious_brain_xxxx_belly_center_horizontal_sar: 0
-        Thelonious_brain_yyyy_belly_center_horizontal_sar: 0
-        Thelonious_brain_zzzz_belly_center_horizontal_sar: 0
         Thelonious_brain_700_belly_center_vertical_sar: 0
         Thelonious_brain_800_belly_center_vertical_sar: 0
         Thelonious_brain_900_belly_center_vertical_sar: 0
@@ -2202,9 +1549,6 @@ devices:
         Thelonious_brain_2600_belly_center_vertical_sar: 0
         Thelonious_brain_3500_belly_center_vertical_sar: 0
         Thelonious_brain_5000_belly_center_vertical_sar: 0
-        Thelonious_brain_xxxx_belly_center_vertical_sar: 0
-        Thelonious_brain_yyyy_belly_center_vertical_sar: 0
-        Thelonious_brain_zzzz_belly_center_vertical_sar: 0
         Thelonious_brain_700_belly_left_horizontal_sar: 0
         Thelonious_brain_800_belly_left_horizontal_sar: 0
         Thelonious_brain_900_belly_left_horizontal_sar: 0
@@ -2215,9 +1559,6 @@ devices:
         Thelonious_brain_2600_belly_left_horizontal_sar: 0
         Thelonious_brain_3500_belly_left_horizontal_sar: 0
         Thelonious_brain_5000_belly_left_horizontal_sar: 0
-        Thelonious_brain_xxxx_belly_left_horizontal_sar: 0
-        Thelonious_brain_yyyy_belly_left_horizontal_sar: 0
-        Thelonious_brain_zzzz_belly_left_horizontal_sar: 0
         Thelonious_brain_700_belly_left_vertical_sar: 0
         Thelonious_brain_800_belly_left_vertical_sar: 0
         Thelonious_brain_900_belly_left_vertical_sar: 0
@@ -2228,9 +1569,6 @@ devices:
         Thelonious_brain_2600_belly_left_vertical_sar: 0
         Thelonious_brain_3500_belly_left_vertical_sar: 0
         Thelonious_brain_5000_belly_left_vertical_sar: 0
-        Thelonious_brain_xxxx_belly_left_vertical_sar: 0
-        Thelonious_brain_yyyy_belly_left_vertical_sar: 0
-        Thelonious_brain_zzzz_belly_left_vertical_sar: 0
         Thelonious_brain_700_belly_right_horizontal_sar: 0
         Thelonious_brain_800_belly_right_horizontal_sar: 0
         Thelonious_brain_900_belly_right_horizontal_sar: 0
@@ -2241,9 +1579,6 @@ devices:
         Thelonious_brain_2600_belly_right_horizontal_sar: 0
         Thelonious_brain_3500_belly_right_horizontal_sar: 0
         Thelonious_brain_5000_belly_right_horizontal_sar: 0
-        Thelonious_brain_xxxx_belly_right_horizontal_sar: 0
-        Thelonious_brain_yyyy_belly_right_horizontal_sar: 0
-        Thelonious_brain_zzzz_belly_right_horizontal_sar: 0
         Thelonious_brain_700_belly_right_vertical_sar: 0
         Thelonious_brain_800_belly_right_vertical_sar: 0
         Thelonious_brain_900_belly_right_vertical_sar: 0
@@ -2254,9 +1589,6 @@ devices:
         Thelonious_brain_2600_belly_right_vertical_sar: 0
         Thelonious_brain_3500_belly_right_vertical_sar: 0
         Thelonious_brain_5000_belly_right_vertical_sar: 0
-        Thelonious_brain_xxxx_belly_right_vertical_sar: 0
-        Thelonious_brain_yyyy_belly_right_vertical_sar: 0
-        Thelonious_brain_zzzz_belly_right_vertical_sar: 0
         Thelonious_brain_700_belly_up_horizontal_sar: 0
         Thelonious_brain_800_belly_up_horizontal_sar: 0
         Thelonious_brain_900_belly_up_horizontal_sar: 0
@@ -2267,9 +1599,6 @@ devices:
         Thelonious_brain_2600_belly_up_horizontal_sar: 0
         Thelonious_brain_3500_belly_up_horizontal_sar: 0
         Thelonious_brain_5000_belly_up_horizontal_sar: 0
-        Thelonious_brain_xxxx_belly_up_horizontal_sar: 0
-        Thelonious_brain_yyyy_belly_up_horizontal_sar: 0
-        Thelonious_brain_zzzz_belly_up_horizontal_sar: 0
         Thelonious_brain_700_belly_up_vertical_sar: 0
         Thelonious_brain_800_belly_up_vertical_sar: 0
         Thelonious_brain_900_belly_up_vertical_sar: 0
@@ -2295,9 +1624,6 @@ devices:
         Eartha_body_2600_front_of_eyes_center_horizontal_sar: 0
         Eartha_body_3500_front_of_eyes_center_horizontal_sar: 0
         Eartha_body_5000_front_of_eyes_center_horizontal_sar: 0
-        Eartha_body_xxxx_front_of_eyes_center_horizontal_sar: 0
-        Eartha_body_yyyy_front_of_eyes_center_horizontal_sar: 0
-        Eartha_body_zzzz_front_of_eyes_center_horizontal_sar: 0
         Eartha_body_700_front_of_eyes_center_vertical_sar: 0
         Eartha_body_800_front_of_eyes_center_vertical_sar: 0
         Eartha_body_900_front_of_eyes_center_vertical_sar: 0
@@ -2308,9 +1634,6 @@ devices:
         Eartha_body_2600_front_of_eyes_center_vertical_sar: 0
         Eartha_body_3500_front_of_eyes_center_vertical_sar: 0
         Eartha_body_5000_front_of_eyes_center_vertical_sar: 0
-        Eartha_body_xxxx_front_of_eyes_center_vertical_sar: 0
-        Eartha_body_yyyy_front_of_eyes_center_vertical_sar: 0
-        Eartha_body_zzzz_front_of_eyes_center_vertical_sar: 0
         Eartha_body_700_front_of_eyes_down_horizontal_sar: 0
         Eartha_body_800_front_of_eyes_down_horizontal_sar: 0
         Eartha_body_900_front_of_eyes_down_horizontal_sar: 0
@@ -2321,9 +1644,6 @@ devices:
         Eartha_body_2600_front_of_eyes_down_horizontal_sar: 0
         Eartha_body_3500_front_of_eyes_down_horizontal_sar: 0
         Eartha_body_5000_front_of_eyes_down_horizontal_sar: 0
-        Eartha_body_xxxx_front_of_eyes_down_horizontal_sar: 0
-        Eartha_body_yyyy_front_of_eyes_down_horizontal_sar: 0
-        Eartha_body_zzzz_front_of_eyes_down_horizontal_sar: 0
         Eartha_body_700_front_of_eyes_down_vertical_sar: 0
         Eartha_body_800_front_of_eyes_down_vertical_sar: 0
         Eartha_body_900_front_of_eyes_down_vertical_sar: 0
@@ -2334,9 +1654,6 @@ devices:
         Eartha_body_2600_front_of_eyes_down_vertical_sar: 0
         Eartha_body_3500_front_of_eyes_down_vertical_sar: 0
         Eartha_body_5000_front_of_eyes_down_vertical_sar: 0
-        Eartha_body_xxxx_front_of_eyes_down_vertical_sar: 0
-        Eartha_body_yyyy_front_of_eyes_down_vertical_sar: 0
-        Eartha_body_zzzz_front_of_eyes_down_vertical_sar: 0
         Eartha_body_700_front_of_eyes_left_horizontal_sar: 0
         Eartha_body_800_front_of_eyes_left_horizontal_sar: 0
         Eartha_body_900_front_of_eyes_left_horizontal_sar: 0
@@ -2347,9 +1664,6 @@ devices:
         Eartha_body_2600_front_of_eyes_left_horizontal_sar: 0
         Eartha_body_3500_front_of_eyes_left_horizontal_sar: 0
         Eartha_body_5000_front_of_eyes_left_horizontal_sar: 0
-        Eartha_body_xxxx_front_of_eyes_left_horizontal_sar: 0
-        Eartha_body_yyyy_front_of_eyes_left_horizontal_sar: 0
-        Eartha_body_zzzz_front_of_eyes_left_horizontal_sar: 0
         Eartha_body_700_front_of_eyes_left_vertical_sar: 0
         Eartha_body_800_front_of_eyes_left_vertical_sar: 0
         Eartha_body_900_front_of_eyes_left_vertical_sar: 0
@@ -2360,9 +1674,6 @@ devices:
         Eartha_body_2600_front_of_eyes_left_vertical_sar: 0
         Eartha_body_3500_front_of_eyes_left_vertical_sar: 0
         Eartha_body_5000_front_of_eyes_left_vertical_sar: 0
-        Eartha_body_xxxx_front_of_eyes_left_vertical_sar: 0
-        Eartha_body_yyyy_front_of_eyes_left_vertical_sar: 0
-        Eartha_body_zzzz_front_of_eyes_left_vertical_sar: 0
         Eartha_body_700_front_of_eyes_right_horizontal_sar: 0
         Eartha_body_800_front_of_eyes_right_horizontal_sar: 0
         Eartha_body_900_front_of_eyes_right_horizontal_sar: 0
@@ -2373,9 +1684,6 @@ devices:
         Eartha_body_2600_front_of_eyes_right_horizontal_sar: 0
         Eartha_body_3500_front_of_eyes_right_horizontal_sar: 0
         Eartha_body_5000_front_of_eyes_right_horizontal_sar: 0
-        Eartha_body_xxxx_front_of_eyes_right_horizontal_sar: 0
-        Eartha_body_yyyy_front_of_eyes_right_horizontal_sar: 0
-        Eartha_body_zzzz_front_of_eyes_right_horizontal_sar: 0
         Eartha_body_700_front_of_eyes_right_vertical_sar: 0
         Eartha_body_800_front_of_eyes_right_vertical_sar: 0
         Eartha_body_900_front_of_eyes_right_vertical_sar: 0
@@ -2386,9 +1694,6 @@ devices:
         Eartha_body_2600_front_of_eyes_right_vertical_sar: 0
         Eartha_body_3500_front_of_eyes_right_vertical_sar: 0
         Eartha_body_5000_front_of_eyes_right_vertical_sar: 0
-        Eartha_body_xxxx_front_of_eyes_right_vertical_sar: 0
-        Eartha_body_yyyy_front_of_eyes_right_vertical_sar: 0
-        Eartha_body_zzzz_front_of_eyes_right_vertical_sar: 0
         Eartha_body_700_cheek1_sar: 0
         Eartha_body_800_cheek1_sar: 0
         Eartha_body_900_cheek1_sar: 0
@@ -2399,9 +1704,6 @@ devices:
         Eartha_body_2600_cheek1_sar: 0
         Eartha_body_3500_cheek1_sar: 0
         Eartha_body_5000_cheek1_sar: 0
-        Eartha_body_xxxx_cheek1_sar: 0
-        Eartha_body_yyyy_cheek1_sar: 0
-        Eartha_body_zzzz_cheek1_sar: 0
         Eartha_body_700_cheek2_sar: 0
         Eartha_body_800_cheek2_sar: 0
         Eartha_body_900_cheek2_sar: 0
@@ -2412,9 +1714,6 @@ devices:
         Eartha_body_2600_cheek2_sar: 0
         Eartha_body_3500_cheek2_sar: 0
         Eartha_body_5000_cheek2_sar: 0
-        Eartha_body_xxxx_cheek2_sar: 0
-        Eartha_body_yyyy_cheek2_sar: 0
-        Eartha_body_zzzz_cheek2_sar: 0
         Eartha_body_700_cheek3_sar: 0
         Eartha_body_800_cheek3_sar: 0
         Eartha_body_900_cheek3_sar: 0
@@ -2425,9 +1724,6 @@ devices:
         Eartha_body_2600_cheek3_sar: 0
         Eartha_body_3500_cheek3_sar: 0
         Eartha_body_5000_cheek3_sar: 0
-        Eartha_body_xxxx_cheek3_sar: 0
-        Eartha_body_yyyy_cheek3_sar: 0
-        Eartha_body_zzzz_cheek3_sar: 0
         Eartha_body_700_tilt1_sar: 0
         Eartha_body_800_tilt1_sar: 0
         Eartha_body_900_tilt1_sar: 0
@@ -2438,9 +1734,6 @@ devices:
         Eartha_body_2600_tilt1_sar: 0
         Eartha_body_3500_tilt1_sar: 0
         Eartha_body_5000_tilt1_sar: 0
-        Eartha_body_xxxx_tilt1_sar: 0
-        Eartha_body_yyyy_tilt1_sar: 0
-        Eartha_body_zzzz_tilt1_sar: 0
         Eartha_body_700_tilt2_sar: 0
         Eartha_body_800_tilt2_sar: 0
         Eartha_body_900_tilt2_sar: 0
@@ -2451,9 +1744,6 @@ devices:
         Eartha_body_2600_tilt2_sar: 0
         Eartha_body_3500_tilt2_sar: 0
         Eartha_body_5000_tilt2_sar: 0
-        Eartha_body_xxxx_tilt2_sar: 0
-        Eartha_body_yyyy_tilt2_sar: 0
-        Eartha_body_zzzz_tilt2_sar: 0
         Eartha_body_700_tilt3_sar: 0
         Eartha_body_800_tilt3_sar: 0
         Eartha_body_900_tilt3_sar: 0
@@ -2464,9 +1754,6 @@ devices:
         Eartha_body_2600_tilt3_sar: 0
         Eartha_body_3500_tilt3_sar: 0
         Eartha_body_5000_tilt3_sar: 0
-        Eartha_body_xxxx_tilt3_sar: 0
-        Eartha_body_yyyy_tilt3_sar: 0
-        Eartha_body_zzzz_tilt3_sar: 0
         Eartha_body_700_belly_center_horizontal_sar: 0
         Eartha_body_800_belly_center_horizontal_sar: 0
         Eartha_body_900_belly_center_horizontal_sar: 0
@@ -2477,9 +1764,6 @@ devices:
         Eartha_body_2600_belly_center_horizontal_sar: 0
         Eartha_body_3500_belly_center_horizontal_sar: 0
         Eartha_body_5000_belly_center_horizontal_sar: 0
-        Eartha_body_xxxx_belly_center_horizontal_sar: 0
-        Eartha_body_yyyy_belly_center_horizontal_sar: 0
-        Eartha_body_zzzz_belly_center_horizontal_sar: 0
         Eartha_body_700_belly_center_vertical_sar: 0
         Eartha_body_800_belly_center_vertical_sar: 0
         Eartha_body_900_belly_center_vertical_sar: 0
@@ -2490,9 +1774,6 @@ devices:
         Eartha_body_2600_belly_center_vertical_sar: 0
         Eartha_body_3500_belly_center_vertical_sar: 0
         Eartha_body_5000_belly_center_vertical_sar: 0
-        Eartha_body_xxxx_belly_center_vertical_sar: 0
-        Eartha_body_yyyy_belly_center_vertical_sar: 0
-        Eartha_body_zzzz_belly_center_vertical_sar: 0
         Eartha_body_700_belly_left_horizontal_sar: 0
         Eartha_body_800_belly_left_horizontal_sar: 0
         Eartha_body_900_belly_left_horizontal_sar: 0
@@ -2503,9 +1784,6 @@ devices:
         Eartha_body_2600_belly_left_horizontal_sar: 0
         Eartha_body_3500_belly_left_horizontal_sar: 0
         Eartha_body_5000_belly_left_horizontal_sar: 0
-        Eartha_body_xxxx_belly_left_horizontal_sar: 0
-        Eartha_body_yyyy_belly_left_horizontal_sar: 0
-        Eartha_body_zzzz_belly_left_horizontal_sar: 0
         Eartha_body_700_belly_left_vertical_sar: 0
         Eartha_body_800_belly_left_vertical_sar: 0
         Eartha_body_900_belly_left_vertical_sar: 0
@@ -2516,9 +1794,6 @@ devices:
         Eartha_body_2600_belly_left_vertical_sar: 0
         Eartha_body_3500_belly_left_vertical_sar: 0
         Eartha_body_5000_belly_left_vertical_sar: 0
-        Eartha_body_xxxx_belly_left_vertical_sar: 0
-        Eartha_body_yyyy_belly_left_vertical_sar: 0
-        Eartha_body_zzzz_belly_left_vertical_sar: 0
         Eartha_body_700_belly_right_horizontal_sar: 0
         Eartha_body_800_belly_right_horizontal_sar: 0
         Eartha_body_900_belly_right_horizontal_sar: 0
@@ -2529,9 +1804,6 @@ devices:
         Eartha_body_2600_belly_right_horizontal_sar: 0
         Eartha_body_3500_belly_right_horizontal_sar: 0
         Eartha_body_5000_belly_right_horizontal_sar: 0
-        Eartha_body_xxxx_belly_right_horizontal_sar: 0
-        Eartha_body_yyyy_belly_right_horizontal_sar: 0
-        Eartha_body_zzzz_belly_right_horizontal_sar: 0
         Eartha_body_700_belly_right_vertical_sar: 0
         Eartha_body_800_belly_right_vertical_sar: 0
         Eartha_body_900_belly_right_vertical_sar: 0
@@ -2542,9 +1814,6 @@ devices:
         Eartha_body_2600_belly_right_vertical_sar: 0
         Eartha_body_3500_belly_right_vertical_sar: 0
         Eartha_body_5000_belly_right_vertical_sar: 0
-        Eartha_body_xxxx_belly_right_vertical_sar: 0
-        Eartha_body_yyyy_belly_right_vertical_sar: 0
-        Eartha_body_zzzz_belly_right_vertical_sar: 0
         Eartha_body_700_belly_up_horizontal_sar: 0
         Eartha_body_800_belly_up_horizontal_sar: 0
         Eartha_body_900_belly_up_horizontal_sar: 0
@@ -2555,9 +1824,6 @@ devices:
         Eartha_body_2600_belly_up_horizontal_sar: 0
         Eartha_body_3500_belly_up_horizontal_sar: 0
         Eartha_body_5000_belly_up_horizontal_sar: 0
-        Eartha_body_xxxx_belly_up_horizontal_sar: 0
-        Eartha_body_yyyy_belly_up_horizontal_sar: 0
-        Eartha_body_zzzz_belly_up_horizontal_sar: 0
         Eartha_body_700_belly_up_vertical_sar: 0
         Eartha_body_800_belly_up_vertical_sar: 0
         Eartha_body_900_belly_up_vertical_sar: 0
@@ -2581,8 +1847,6 @@ devices:
         Eartha_brain_2600_front_of_eyes_center_horizontal_sar: 0
         Eartha_brain_3500_front_of_eyes_center_horizontal_sar: 0
         Eartha_brain_5000_front_of_eyes_center_horizontal_sar: 0
-        Eartha_brain_xxxx_front_of_eyes_center_horizontal_sar: 0
-        Eartha_brain_yyyy_front_of_eyes_center_horizontal_sar: 0
         Eartha_brain_700_front_of_eyes_center_vertical_sar: 0
         Eartha_brain_800_front_of_eyes_center_vertical_sar: 0
         Eartha_brain_900_front_of_eyes_center_vertical_sar: 0
@@ -2593,9 +1857,6 @@ devices:
         Eartha_brain_2600_front_of_eyes_center_vertical_sar: 0
         Eartha_brain_3500_front_of_eyes_center_vertical_sar: 0
         Eartha_brain_5000_front_of_eyes_center_vertical_sar: 0
-        Eartha_brain_xxxx_front_of_eyes_center_vertical_sar: 0
-        Eartha_brain_yyyy_front_of_eyes_center_vertical_sar: 0
-        Eartha_brain_zzzz_front_of_eyes_center_vertical_sar: 0
         Eartha_brain_700_front_of_eyes_down_horizontal_sar: 0
         Eartha_brain_800_front_of_eyes_down_horizontal_sar: 0
         Eartha_brain_900_front_of_eyes_down_horizontal_sar: 0
@@ -2606,9 +1867,6 @@ devices:
         Eartha_brain_2600_front_of_eyes_down_horizontal_sar: 0
         Eartha_brain_3500_front_of_eyes_down_horizontal_sar: 0
         Eartha_brain_5000_front_of_eyes_down_horizontal_sar: 0
-        Eartha_brain_xxxx_front_of_eyes_down_horizontal_sar: 0
-        Eartha_brain_yyyy_front_of_eyes_down_horizontal_sar: 0
-        Eartha_brain_zzzz_front_of_eyes_down_horizontal_sar: 0
         Eartha_brain_700_front_of_eyes_down_vertical_sar: 0
         Eartha_brain_800_front_of_eyes_down_vertical_sar: 0
         Eartha_brain_900_front_of_eyes_down_vertical_sar: 0
@@ -2619,9 +1877,6 @@ devices:
         Eartha_brain_2600_front_of_eyes_down_vertical_sar: 0
         Eartha_brain_3500_front_of_eyes_down_vertical_sar: 0
         Eartha_brain_5000_front_of_eyes_down_vertical_sar: 0
-        Eartha_brain_xxxx_front_of_eyes_down_vertical_sar: 0
-        Eartha_brain_yyyy_front_of_eyes_down_vertical_sar: 0
-        Eartha_brain_zzzz_front_of_eyes_down_vertical_sar: 0
         Eartha_brain_700_front_of_eyes_left_horizontal_sar: 0
         Eartha_brain_800_front_of_eyes_left_horizontal_sar: 0
         Eartha_brain_900_front_of_eyes_left_horizontal_sar: 0
@@ -2632,9 +1887,6 @@ devices:
         Eartha_brain_2600_front_of_eyes_left_horizontal_sar: 0
         Eartha_brain_3500_front_of_eyes_left_horizontal_sar: 0
         Eartha_brain_5000_front_of_eyes_left_horizontal_sar: 0
-        Eartha_brain_xxxx_front_of_eyes_left_horizontal_sar: 0
-        Eartha_brain_yyyy_front_of_eyes_left_horizontal_sar: 0
-        Eartha_brain_zzzz_front_of_eyes_left_horizontal_sar: 0
         Eartha_brain_700_front_of_eyes_left_vertical_sar: 0
         Eartha_brain_800_front_of_eyes_left_vertical_sar: 0
         Eartha_brain_900_front_of_eyes_left_vertical_sar: 0
@@ -2645,9 +1897,6 @@ devices:
         Eartha_brain_2600_front_of_eyes_left_vertical_sar: 0
         Eartha_brain_3500_front_of_eyes_left_vertical_sar: 0
         Eartha_brain_5000_front_of_eyes_left_vertical_sar: 0
-        Eartha_brain_xxxx_front_of_eyes_left_vertical_sar: 0
-        Eartha_brain_yyyy_front_of_eyes_left_vertical_sar: 0
-        Eartha_brain_zzzz_front_of_eyes_left_vertical_sar: 0
         Eartha_brain_700_front_of_eyes_right_horizontal_sar: 0
         Eartha_brain_800_front_of_eyes_right_horizontal_sar: 0
         Eartha_brain_900_front_of_eyes_right_horizontal_sar: 0
@@ -2658,9 +1907,6 @@ devices:
         Eartha_brain_2600_front_of_eyes_right_horizontal_sar: 0
         Eartha_brain_3500_front_of_eyes_right_horizontal_sar: 0
         Eartha_brain_5000_front_of_eyes_right_horizontal_sar: 0
-        Eartha_brain_xxxx_front_of_eyes_right_horizontal_sar: 0
-        Eartha_brain_yyyy_front_of_eyes_right_horizontal_sar: 0
-        Eartha_brain_zzzz_front_of_eyes_right_horizontal_sar: 0
         Eartha_brain_700_front_of_eyes_right_vertical_sar: 0
         Eartha_brain_800_front_of_eyes_right_vertical_sar: 0
         Eartha_brain_900_front_of_eyes_right_vertical_sar: 0
@@ -2671,9 +1917,6 @@ devices:
         Eartha_brain_2600_front_of_eyes_right_vertical_sar: 0
         Eartha_brain_3500_front_of_eyes_right_vertical_sar: 0
         Eartha_brain_5000_front_of_eyes_right_vertical_sar: 0
-        Eartha_brain_xxxx_front_of_eyes_right_vertical_sar: 0
-        Eartha_brain_yyyy_front_of_eyes_right_vertical_sar: 0
-        Eartha_brain_zzzz_front_of_eyes_right_vertical_sar: 0
         Eartha_brain_700_cheek1_sar: 0
         Eartha_brain_800_cheek1_sar: 0
         Eartha_brain_900_cheek1_sar: 0
@@ -2684,9 +1927,6 @@ devices:
         Eartha_brain_2600_cheek1_sar: 0
         Eartha_brain_3500_cheek1_sar: 0
         Eartha_brain_5000_cheek1_sar: 0
-        Eartha_brain_xxxx_cheek1_sar: 0
-        Eartha_brain_yyyy_cheek1_sar: 0
-        Eartha_brain_zzzz_cheek1_sar: 0
         Eartha_brain_700_cheek2_sar: 0
         Eartha_brain_800_cheek2_sar: 0
         Eartha_brain_900_cheek2_sar: 0
@@ -2697,9 +1937,6 @@ devices:
         Eartha_brain_2600_cheek2_sar: 0
         Eartha_brain_3500_cheek2_sar: 0
         Eartha_brain_5000_cheek2_sar: 0
-        Eartha_brain_xxxx_cheek2_sar: 0
-        Eartha_brain_yyyy_cheek2_sar: 0
-        Eartha_brain_zzzz_cheek2_sar: 0
         Eartha_brain_700_cheek3_sar: 0
         Eartha_brain_800_cheek3_sar: 0
         Eartha_brain_900_cheek3_sar: 0
@@ -2710,9 +1947,6 @@ devices:
         Eartha_brain_2600_cheek3_sar: 0
         Eartha_brain_3500_cheek3_sar: 0
         Eartha_brain_5000_cheek3_sar: 0
-        Eartha_brain_xxxx_cheek3_sar: 0
-        Eartha_brain_yyyy_cheek3_sar: 0
-        Eartha_brain_zzzz_cheek3_sar: 0
         Eartha_brain_700_tilt1_sar: 0
         Eartha_brain_800_tilt1_sar: 0
         Eartha_brain_900_tilt1_sar: 0
@@ -2723,9 +1957,6 @@ devices:
         Eartha_brain_2600_tilt1_sar: 0
         Eartha_brain_3500_tilt1_sar: 0
         Eartha_brain_5000_tilt1_sar: 0
-        Eartha_brain_xxxx_tilt1_sar: 0
-        Eartha_brain_yyyy_tilt1_sar: 0
-        Eartha_brain_zzzz_tilt1_sar: 0
         Eartha_brain_700_tilt2_sar: 0
         Eartha_brain_800_tilt2_sar: 0
         Eartha_brain_900_tilt2_sar: 0
@@ -2736,9 +1967,6 @@ devices:
         Eartha_brain_2600_tilt2_sar: 0
         Eartha_brain_3500_tilt2_sar: 0
         Eartha_brain_5000_tilt2_sar: 0
-        Eartha_brain_xxxx_tilt2_sar: 0
-        Eartha_brain_yyyy_tilt2_sar: 0
-        Eartha_brain_zzzz_tilt2_sar: 0
         Eartha_brain_700_tilt3_sar: 0
         Eartha_brain_800_tilt3_sar: 0
         Eartha_brain_900_tilt3_sar: 0
@@ -2749,9 +1977,6 @@ devices:
         Eartha_brain_2600_tilt3_sar: 0
         Eartha_brain_3500_tilt3_sar: 0
         Eartha_brain_5000_tilt3_sar: 0
-        Eartha_brain_xxxx_tilt3_sar: 0
-        Eartha_brain_yyyy_tilt3_sar: 0
-        Eartha_brain_zzzz_tilt3_sar: 0
         Eartha_brain_700_belly_center_horizontal_sar: 0
         Eartha_brain_800_belly_center_horizontal_sar: 0
         Eartha_brain_900_belly_center_horizontal_sar: 0
@@ -2762,9 +1987,6 @@ devices:
         Eartha_brain_2600_belly_center_horizontal_sar: 0
         Eartha_brain_3500_belly_center_horizontal_sar: 0
         Eartha_brain_5000_belly_center_horizontal_sar: 0
-        Eartha_brain_xxxx_belly_center_horizontal_sar: 0
-        Eartha_brain_yyyy_belly_center_horizontal_sar: 0
-        Eartha_brain_zzzz_belly_center_horizontal_sar: 0
         Eartha_brain_700_belly_center_vertical_sar: 0
         Eartha_brain_800_belly_center_vertical_sar: 0
         Eartha_brain_900_belly_center_vertical_sar: 0
@@ -2775,9 +1997,6 @@ devices:
         Eartha_brain_2600_belly_center_vertical_sar: 0
         Eartha_brain_3500_belly_center_vertical_sar: 0
         Eartha_brain_5000_belly_center_vertical_sar: 0
-        Eartha_brain_xxxx_belly_center_vertical_sar: 0
-        Eartha_brain_yyyy_belly_center_vertical_sar: 0
-        Eartha_brain_zzzz_belly_center_vertical_sar: 0
         Eartha_brain_700_belly_left_horizontal_sar: 0
         Eartha_brain_800_belly_left_horizontal_sar: 0
         Eartha_brain_900_belly_left_horizontal_sar: 0
@@ -2788,9 +2007,6 @@ devices:
         Eartha_brain_2600_belly_left_horizontal_sar: 0
         Eartha_brain_3500_belly_left_horizontal_sar: 0
         Eartha_brain_5000_belly_left_horizontal_sar: 0
-        Eartha_brain_xxxx_belly_left_horizontal_sar: 0
-        Eartha_brain_yyyy_belly_left_horizontal_sar: 0
-        Eartha_brain_zzzz_belly_left_horizontal_sar: 0
         Eartha_brain_700_belly_left_vertical_sar: 0
         Eartha_brain_800_belly_left_vertical_sar: 0
         Eartha_brain_900_belly_left_vertical_sar: 0
@@ -2801,9 +2017,6 @@ devices:
         Eartha_brain_2600_belly_left_vertical_sar: 0
         Eartha_brain_3500_belly_left_vertical_sar: 0
         Eartha_brain_5000_belly_left_vertical_sar: 0
-        Eartha_brain_xxxx_belly_left_vertical_sar: 0
-        Eartha_brain_yyyy_belly_left_vertical_sar: 0
-        Eartha_brain_zzzz_belly_left_vertical_sar: 0
         Eartha_brain_700_belly_right_horizontal_sar: 0
         Eartha_brain_800_belly_right_horizontal_sar: 0
         Eartha_brain_900_belly_right_horizontal_sar: 0
@@ -2814,9 +2027,6 @@ devices:
         Eartha_brain_2600_belly_right_horizontal_sar: 0
         Eartha_brain_3500_belly_right_horizontal_sar: 0
         Eartha_brain_5000_belly_right_horizontal_sar: 0
-        Eartha_brain_xxxx_belly_right_horizontal_sar: 0
-        Eartha_brain_yyyy_belly_right_horizontal_sar: 0
-        Eartha_brain_zzzz_belly_right_horizontal_sar: 0
         Eartha_brain_700_belly_right_vertical_sar: 0
         Eartha_brain_800_belly_right_vertical_sar: 0
         Eartha_brain_900_belly_right_vertical_sar: 0
@@ -2827,9 +2037,6 @@ devices:
         Eartha_brain_2600_belly_right_vertical_sar: 0
         Eartha_brain_3500_belly_right_vertical_sar: 0
         Eartha_brain_5000_belly_right_vertical_sar: 0
-        Eartha_brain_xxxx_belly_right_vertical_sar: 0
-        Eartha_brain_yyyy_belly_right_vertical_sar: 0
-        Eartha_brain_zzzz_belly_right_vertical_sar: 0
         Eartha_brain_700_belly_up_horizontal_sar: 0
         Eartha_brain_800_belly_up_horizontal_sar: 0
         Eartha_brain_900_belly_up_horizontal_sar: 0
@@ -2840,9 +2047,6 @@ devices:
         Eartha_brain_2600_belly_up_horizontal_sar: 0
         Eartha_brain_3500_belly_up_horizontal_sar: 0
         Eartha_brain_5000_belly_up_horizontal_sar: 0
-        Eartha_brain_xxxx_belly_up_horizontal_sar: 0
-        Eartha_brain_yyyy_belly_up_horizontal_sar: 0
-        Eartha_brain_zzzz_belly_up_horizontal_sar: 0
         Eartha_brain_700_belly_up_vertical_sar: 0
         Eartha_brain_800_belly_up_vertical_sar: 0
         Eartha_brain_900_belly_up_vertical_sar: 0
@@ -2853,6 +2057,7 @@ devices:
         Eartha_brain_2600_belly_up_vertical_sar: 0
         Eartha_brain_3500_belly_up_vertical_sar: 0
         Eartha_brain_5000_belly_up_vertical_sar: 0
+
 
 
   data:
