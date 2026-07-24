@@ -134,7 +134,9 @@ mobilecall_dose <- function(
     params       = params)
 
   dose_phone <- msar_phone * duration
-
+  print(paste0(" "))
+  print(paste0("phone_sar/duration: ",msar_phone,"/",duration))
+  print(paste0("dose_phone: ",dose_phone))
 
   # Calculate dose for bluetooth headphones ===================================
   ## Brain --------------------------------------------------------------------
@@ -143,9 +145,12 @@ mobilecall_dose <- function(
     headp_ear_num = headp_ear_num,
     params = params)
   dose_bt <- msar_bt * headp_prop
+  print(paste0("bt_dose: ",dose_bt))
 
   # Add doses from different sources and return result ========================
   dose <- sum(dose_phone, dose_bt)
+  print(paste0(" "))
+  print(paste0("dose: ",dose))
 
   return(dose)
 }
@@ -250,12 +255,15 @@ mpc_msar <- function(
                 speaker_prop = speaker_prop,
                 params       = params
               )
+              print(paste0("native","_",band,"_",freq,": ",freq_prop,"      ",freq_sar))
               return(freq_prop*freq_sar)
             },
             numeric(1)
           )
         )
-
+        print(paste0("native","_",band,": ",prop," ",sar," ",pwr))
+        print(paste0("total: ",prop*sar*pwr))
+        print(paste0(" "))
         return(prop*sar*pwr)
       },
       numeric(1)
@@ -338,6 +346,11 @@ mpc_msar <- function(
     prop_native*msar_native,
     prop_data*msar_data,
     prop_wifi*msar_wifi)
+
+  print(paste0(" "))
+  print(paste0("native: ", prop_native, " ",msar_native))
+  print(paste0("data: ", prop_data, " ",msar_data))
+  print(paste0("wifi: ", prop_wifi, " ",msar_wifi))
 
   # Combine and return results ================================================
   return(msar)
@@ -488,10 +501,12 @@ mpc_sar_native <- function(
     )
   )
   #adjust distance with distance law (in mm).
-  mpc_sar_ear <- dist_law(sar = mpc_sar_ear,
-                          dist = params$devices$call$mpc_distance$mpc_dist_ear,
-                          dist_ref = 8,
-                          delta = 6)
+  if (params$global$dist_correction) {
+    mpc_sar_ear <- dist_law(sar = mpc_sar_ear,
+                            dist = params$devices$call$mpc_distance$mpc_dist_ear,
+                            dist_ref = 8,
+                            delta = 6)
+  }
 
   # phone with headphone
   headp_sar_face <-  sum(
@@ -506,10 +521,12 @@ mpc_sar_native <- function(
     )
   )
   #adjust distance with distance law (in mm), here + 100 because we want 200 as mean.
-  headp_sar_face <- dist_law(sar = headp_sar_face,
-                              dist = params$devices$call$mpc_distance$mpc_dist_speaker+100,
-                              dist_ref = 200,
-                              delta = 6)
+  if (params$global$dist_correction) {
+    headp_sar_face <- dist_law(sar = headp_sar_face,
+                                dist = params$devices$call$mpc_distance$mpc_dist_speaker+100,
+                                dist_ref = 200,
+                                delta = 6)
+  }
 
   headp_sar_pocket <-  sum(
     vapply(
@@ -523,25 +540,26 @@ mpc_sar_native <- function(
     )
   )
 
+  if (params$global$dist_correction) {
+    if (tissue == "body"){
+      #adjust distance with distance law (in mm), here no stochastic because we assume that the distance stays the same in the pocket
+      headp_sar_pocket <- dist_law(sar = headp_sar_pocket,
+                                   dist = 8,
+                                   dist_ref = 200,
+                                   delta = 6)
+    } else if (tissue == "brain"){
+      #adjust distance with distance law (in mm), here no stochastic because we assume that the distance stays the same in the pocket
+      #the brain sar only increases that moch how the phone is closer to the head
+      #in the pocket the phone is still quiet far away from the head.
+      dummy <- determine_dummy(params$global$input_stoch$sex,
+                               params$global$input_stoch$age)
+      dummy_chest_height <- params$devices$call[[dummy]]$height/2
 
-  if (tissue == "body"){
-    #adjust distance with distance law (in mm), here no stochastic because we assume that the distance stays the same in the pocket
-    headp_sar_pocket <- dist_law(sar = headp_sar_pocket,
-                                 dist = 8,
-                                 dist_ref = 200,
-                                 delta = 6)
-  } else if (tissue == "brain"){
-    #adjust distance with distance law (in mm), here no stochastic because we assume that the distance stays the same in the pocket
-    #the brain sar only increases that moch how the phone is closer to the head
-    #in the pocket the phone is still quiet far away from the head.
-    dummy <- determine_dummy(params$global$input_stoch$sex,
-                             params$global$input_stoch$age)
-    dummy_chest_height <- params$devices$call[[dummy]]$height/2
-
-    headp_sar_pocket <- dist_law(sar = headp_sar_pocket,
-                                 dist = dummy_chest_height,
-                                 dist_ref = sqrt(dummy_chest_height^2+200^2),
-                                 delta = 6)
+      headp_sar_pocket <- dist_law(sar = headp_sar_pocket,
+                                   dist = dummy_chest_height,
+                                   dist_ref = sqrt(dummy_chest_height^2+200^2),
+                                   delta = 6)
+    }
   }
 
 
@@ -563,12 +581,13 @@ mpc_sar_native <- function(
       numeric(1)
     )
   )
-  # adjust distance with distance law (in mm).
-  mpc_sar_speaker <- dist_law(sar = mpc_sar_speaker,
-                              dist = params$devices$call$mpc_distance$mpc_dist_speaker,
-                              dist_ref = 200,
-                              delta = 6)
-
+  if (params$global$dist_correction) {
+    # adjust distance with distance law (in mm).
+    mpc_sar_speaker <- dist_law(sar = mpc_sar_speaker,
+                                dist = params$devices$call$mpc_distance$mpc_dist_speaker,
+                                dist_ref = 200,
+                                delta = 6)
+  }
 
 
   mpc_sar <- sum(
@@ -624,6 +643,7 @@ mpc_pwr_data <- function(
 
         # define prefix for finding correct parameters
         prefix <- paste("data", band, substr(urbanicity, 0, 3), sep = "_")
+
         # home/work
         pwr_indoor  <- indoor_prop * params$devices$call$data_pwr[[paste0(prefix, "_ind_pwr")]]
 
@@ -889,11 +909,13 @@ mpc_bt_sar <- function(
       numeric(1)
     )
   )
-  #adjust distance with distance law (in mm). No stochastics hear because headphones don't change vary in position
-  bt_sar_headp <- dist_law(sar = bt_sar_headp,
-                          dist = 1,
-                          dist_ref = 8,
-                          delta = 6)
+  if (params$global$dist_correction) {
+    #adjust distance with distance law (in mm). No stochastics hear because headphones don't change vary in position
+    bt_sar_headp <- dist_law(sar = bt_sar_headp,
+                            dist = 1,
+                            dist_ref = 8,
+                            delta = 6)
+  }
   return(bt_sar_headp)
 }
 
@@ -955,11 +977,13 @@ mpc_bt_phone_sar <- function(
       numeric(1)
     )
   )
-  #adjust distance with distance law (in mm), here + 100 because we want 200 as mean.
-  headp_bt_sar_face <- dist_law(sar = headp_bt_sar_face,
-                             dist = params$devices$call$mpc_distance$mpc_dist_speaker+100,
-                             dist_ref = 200,
-                             delta = 6)
+  if (params$global$dist_correction) {
+    #adjust distance with distance law (in mm), here + 100 because we want 200 as mean.
+    headp_bt_sar_face <- dist_law(sar = headp_bt_sar_face,
+                               dist = params$devices$call$mpc_distance$mpc_dist_speaker+100,
+                               dist_ref = 200,
+                               delta = 6)
+  }
 
   headp_bt_sar_pocket <-  sum(
     vapply(
@@ -972,23 +996,25 @@ mpc_bt_phone_sar <- function(
       numeric(1)
     )
   )
-  if (tissue == "body"){
-    #adjust distance with distance law (in mm), here no stochastic because we assume that the distance stays the same in the pocket
-    headp_bt_sar_pocket <- dist_law(sar = headp_bt_sar_pocket,
-                                 dist = 8,
-                                 dist_ref = 200,
-                                 delta = 6)
-  } else if (tissue == "brain"){
-    #adjust distance with distance law (in mm), here no stochastic because we assume that the distance stays the same in the pocket
-    #the brain sar only increases that moch how the phone is closer to the head
-    #in the pocket the phone is still quiet far away from the head.
-    dummy <- determine_dummy(params$global$input_stoch$sex,
-                             params$global$input_stoch$age)
-    dummy_chest_height <- params$devices$call[[dummy]]$height/2
-    headp_bt_sar_pocket <- dist_law(sar = headp_bt_sar_pocket,
-                                 dist = dummy_chest_height,
-                                 dist_ref = sqrt(dummy_chest_height^2+200^2),
-                                 delta = 6)
+  if (params$global$dist_correction) {
+    if (tissue == "body"){
+      #adjust distance with distance law (in mm), here no stochastic because we assume that the distance stays the same in the pocket
+      headp_bt_sar_pocket <- dist_law(sar = headp_bt_sar_pocket,
+                                   dist = 8,
+                                   dist_ref = 200,
+                                   delta = 6)
+    } else if (tissue == "brain"){
+      #adjust distance with distance law (in mm), here no stochastic because we assume that the distance stays the same in the pocket
+      #the brain sar only increases that moch how the phone is closer to the head
+      #in the pocket the phone is still quiet far away from the head.
+      dummy <- determine_dummy(params$global$input_stoch$sex,
+                               params$global$input_stoch$age)
+      dummy_chest_height <- params$devices$call[[dummy]]$height/2
+      headp_bt_sar_pocket <- dist_law(sar = headp_bt_sar_pocket,
+                                   dist = dummy_chest_height,
+                                   dist_ref = sqrt(dummy_chest_height^2+200^2),
+                                   delta = 6)
+    }
   }
 
   headp_bt_sar_else <- tissue_params[[paste0(dummy,"_",tissue,"_headp_else_sar")]]

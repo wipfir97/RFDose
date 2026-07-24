@@ -1,5 +1,6 @@
 global:
   sim: "template"
+  dist_correction: TRUE
   input_default:
     country: "Other"
     mpd_dur_low: 4860
@@ -978,6 +979,9 @@ devices:
         Ella_body_2600_cheek1_sar: 0
         Ella_body_3500_cheek1_sar: 0
         Ella_body_5000_cheek1_sar: 0
+        Ella_body_xxxx_cheek1_sar: 0
+        Ella_body_yyyy_cheek1_sar: 0
+        Ella_body_zzzz_cheek1_sar: 0
         Ella_body_700_cheek2_sar: 0
         Ella_body_800_cheek2_sar: 0
         Ella_body_900_cheek2_sar: 0
@@ -1144,6 +1148,9 @@ devices:
         Ella_body_2600_belly_up_vertical_sar: 0
         Ella_body_3500_belly_up_vertical_sar: 0
         Ella_body_5000_belly_up_vertical_sar: 0
+        Ella_body_xxxx_belly_up_vertical_sar: 0
+        Ella_body_yyyy_belly_up_vertical_sar: 0
+        Ella_body_zzzz_belly_up_vertical_sar: 0
 
 
       brain:
@@ -1431,6 +1438,9 @@ devices:
         Ella_brain_2600_belly_up_vertical_sar: 0
         Ella_brain_3500_belly_up_vertical_sar: 0
         Ella_brain_5000_belly_up_vertical_sar: 0
+        Ella_brain_xxxx_belly_up_vertical_sar: 0
+        Ella_brain_yyyy_belly_up_vertical_sar: 0
+        Ella_brain_zzzz_belly_up_vertical_sar: 0
 
     Thelonious:
       height: 1160
@@ -1719,6 +1729,9 @@ devices:
         Thelonious_body_2600_belly_up_vertical_sar: 0
         Thelonious_body_3500_belly_up_vertical_sar: 0
         Thelonious_body_5000_belly_up_vertical_sar: 0
+        Thelonious_body_xxxx_belly_up_vertical_sar: 0
+        Thelonious_body_yyyy_belly_up_vertical_sar: 0
+        Thelonious_body_zzzz_belly_up_vertical_sar: 0
 
       brain:
         Thelonious_brain_headp_else_sar: 0
@@ -2005,6 +2018,9 @@ devices:
         Thelonious_brain_2600_belly_up_vertical_sar: 0
         Thelonious_brain_3500_belly_up_vertical_sar: 0
         Thelonious_brain_5000_belly_up_vertical_sar: 0
+        Thelonious_brain_xxxx_belly_up_vertical_sar: 0
+        Thelonious_brain_yyyy_belly_up_vertical_sar: 0
+        Thelonious_brain_zzzz_belly_up_vertical_sar: 0
 
     Eartha:
       height: 1360
@@ -2293,6 +2309,9 @@ devices:
         Eartha_body_2600_belly_up_vertical_sar: 0
         Eartha_body_3500_belly_up_vertical_sar: 0
         Eartha_body_5000_belly_up_vertical_sar: 0
+        Eartha_body_xxxx_belly_up_vertical_sar: 0
+        Eartha_body_yyyy_belly_up_vertical_sar: 0
+        Eartha_body_zzzz_belly_up_vertical_sar: 0
 
       brain:
         Eartha_brain_headp_else_sar: 0
@@ -2308,6 +2327,7 @@ devices:
         Eartha_brain_5000_front_of_eyes_center_horizontal_sar: 0
         Eartha_brain_xxxx_front_of_eyes_center_horizontal_sar: 0
         Eartha_brain_yyyy_front_of_eyes_center_horizontal_sar: 0
+        Eartha_brain_zzzz_front_of_eyes_center_horizontal_sar: 0
         Eartha_brain_700_front_of_eyes_center_vertical_sar: 0
         Eartha_brain_800_front_of_eyes_center_vertical_sar: 0
         Eartha_brain_900_front_of_eyes_center_vertical_sar: 0
@@ -2578,6 +2598,9 @@ devices:
         Eartha_brain_2600_belly_up_vertical_sar: 0
         Eartha_brain_3500_belly_up_vertical_sar: 0
         Eartha_brain_5000_belly_up_vertical_sar: 0
+        Eartha_brain_xxxx_belly_up_vertical_sar: 0
+        Eartha_brain_yyyy_belly_up_vertical_sar: 0
+        Eartha_brain_zzzz_belly_up_vertical_sar: 0
 
 
 

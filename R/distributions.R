@@ -524,18 +524,26 @@ simulate_params <- function(duration,
     "native_5g_sub_out_pwr",
     "native_5g_urb_out_pwr",
     "native_5g_rur_out_pwr",
-    "native_5g_travel_pwr"
+    "native_5g_travel_pwr",
+    "native_6g_sub_ind_pwr",
+    "native_6g_urb_ind_pwr",
+    "native_6g_rur_ind_pwr",
+    "native_6g_sub_out_pwr",
+    "native_6g_urb_out_pwr",
+    "native_6g_rur_out_pwr",
+    "native_6g_travel_pwr"
   )
 
   for (nm in power_vars) {
-
-    params$devices$call$native_pwr[[nm]] <- evaluate_distribution(
-      dist_name = params_stochastic$devices$call$native_pwr$distribution,
-      mean = params_stochastic$devices$call$native_pwr[[paste0(nm, "_mean")]],
-      sd   = params_stochastic$devices$call$native_pwr[[paste0(nm, "_sd")]],
-      max  = params_stochastic$devices$call$native_pwr[[paste0(nm, "_max")]]
-    )
-
+    mean <- params_stochastic$devices$call$native_pwr[[paste0(nm, "_mean")]]
+    if (mean >0){
+      params$devices$call$native_pwr[[nm]] <- evaluate_distribution(
+        dist_name = params_stochastic$devices$call$native_pwr$distribution,
+        mean = params_stochastic$devices$call$native_pwr[[paste0(nm, "_mean")]],
+        sd   = params_stochastic$devices$call$native_pwr[[paste0(nm, "_sd")]],
+        max  = params_stochastic$devices$call$native_pwr[[paste0(nm, "_max")]]
+      )
+    }
   }
   # pick data_pwr
   power_vars <- c(
@@ -567,6 +575,13 @@ simulate_params <- function(duration,
     "data_5g_urb_out_pwr",
     "data_5g_rur_out_pwr",
     "data_5g_travel_pwr",
+    "data_6g_sub_ind_pwr",
+    "data_6g_urb_ind_pwr",
+    "data_6g_rur_ind_pwr",
+    "data_6g_sub_out_pwr",
+    "data_6g_urb_out_pwr",
+    "data_6g_rur_out_pwr",
+    "data_6g_travel_pwr",
     "wifi_2400_pwr",
     "wifi_5000_pwr",
     "bt_pwr"

@@ -32,6 +32,7 @@ load_tissue_params <- function(params, device_type, tissue_name, dummy) {
   tissue_params        <- unlist(tissue_params)
   names(tissue_params) <- sub("^.*\\.", "", names(tissue_params))
   tissue_params        <- as.list(tissue_params)
+  print(params$global$sim)
   return(tissue_params)
 }
 
