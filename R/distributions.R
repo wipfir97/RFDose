@@ -119,7 +119,7 @@ simulate_params <- function(duration,
   params$global$input_stoch$call_mode_prop$speaker_prop   <- props[3]
 
   #pick headp_ear_num
-  params$global$input_stoch$headp_num <- evaluate_distribution(
+  params$global$input_stoch$headp_num$headp_ear_num <- evaluate_distribution(
     dist_name = params_stochastic$global$input_stoch$headp_num$distribution,
     mean = c(params_stochastic$global$input_stoch$headp_num$headp_ear_num_mean,
              1-params_stochastic$global$input_stoch$headp_num$headp_ear_num_mean),

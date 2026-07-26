@@ -8,7 +8,6 @@ load_params <- function(path = NULL,version = "") {
     path <- system.file("extdata", paste0("params",version,".yaml"), package = "RFDose")
   }
   params  <- yaml::read_yaml(path)
-  print(params$global$sim)
   return(params)
 }
 
@@ -32,7 +31,6 @@ load_tissue_params <- function(params, device_type, tissue_name, dummy) {
   tissue_params        <- unlist(tissue_params)
   names(tissue_params) <- sub("^.*\\.", "", names(tissue_params))
   tissue_params        <- as.list(tissue_params)
-  print(params$global$sim)
   return(tissue_params)
 }
 

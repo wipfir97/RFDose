@@ -82,6 +82,7 @@ mobilecall_dose <- function(
     wifi_prop_travel,
     simulation,
     params = load_params(version = simulation)) {
+  print(params$global$sim)
   #############################################################################
 
   ## Derive other input vars---------------------------------------------------
@@ -106,10 +107,10 @@ mobilecall_dose <- function(
   check_tissue(tissue, "call", params,dummy)
   check_duration(duration)
   check_proportions(c(ear_prop, headp_prop, speaker_prop))
-  check_urbanicity(urbanicity)
+  # check_urbanicity(urbanicity)
   check_boolean_not_na(use_5g)
   check_duration(travel_time)
-  check_headp_num(headp_ear_num)
+  # check_headp_num(headp_ear_num)
   check_proportions(wifi_prop_home)
   check_proportions(wifi_prop_work)
   check_proportions(wifi_prop_travel)
@@ -134,9 +135,9 @@ mobilecall_dose <- function(
     params       = params)
 
   dose_phone <- msar_phone * duration
-  print(paste0(" "))
-  print(paste0("phone_sar/duration: ",msar_phone,"/",duration))
-  print(paste0("dose_phone: ",dose_phone))
+  # print(paste0(" "))
+  # print(paste0("phone_sar/duration: ",msar_phone,"/",duration))
+  # print(paste0("dose_phone: ",dose_phone))
 
   # Calculate dose for bluetooth headphones ===================================
   ## Brain --------------------------------------------------------------------
@@ -144,13 +145,13 @@ mobilecall_dose <- function(
     tissue = tissue,
     headp_ear_num = headp_ear_num,
     params = params)
-  dose_bt <- msar_bt * headp_prop
-  print(paste0("bt_dose: ",dose_bt))
+  dose_bt <- msar_bt * headp_prop * duration
+  # print(paste0("bt_dose: ",dose_bt))
 
   # Add doses from different sources and return result ========================
   dose <- sum(dose_phone, dose_bt)
-  print(paste0(" "))
-  print(paste0("dose: ",dose))
+  # print(paste0(" "))
+  # print(paste0("dose: ",dose))
 
   return(dose)
 }
@@ -255,15 +256,15 @@ mpc_msar <- function(
                 speaker_prop = speaker_prop,
                 params       = params
               )
-              print(paste0("native","_",band,"_",freq,": ",freq_prop,"      ",freq_sar))
+              # print(paste0("native","_",band,"_",freq,": ",freq_prop,"      ",freq_sar))
               return(freq_prop*freq_sar)
             },
             numeric(1)
           )
         )
-        print(paste0("native","_",band,": ",prop," ",sar," ",pwr))
-        print(paste0("total: ",prop*sar*pwr))
-        print(paste0(" "))
+        # print(paste0("native","_",band,": ",prop," ",sar," ",pwr))
+        # print(paste0("total: ",prop*sar*pwr))
+        # print(paste0(" "))
         return(prop*sar*pwr)
       },
       numeric(1)
@@ -347,10 +348,10 @@ mpc_msar <- function(
     prop_data*msar_data,
     prop_wifi*msar_wifi)
 
-  print(paste0(" "))
-  print(paste0("native: ", prop_native, " ",msar_native))
-  print(paste0("data: ", prop_data, " ",msar_data))
-  print(paste0("wifi: ", prop_wifi, " ",msar_wifi))
+  # print(paste0(" "))
+  # print(paste0("native: ", prop_native, " ",msar_native))
+  # print(paste0("data: ", prop_data, " ",msar_data))
+  # print(paste0("wifi: ", prop_wifi, " ",msar_wifi))
 
   # Combine and return results ================================================
   return(msar)
