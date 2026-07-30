@@ -277,6 +277,7 @@ mpc_msar <- function(
           speaker_prop = speaker_prop,
           params       = params
         )
+
         return(prop*sar*pwr)
       },
       numeric(1)
@@ -304,6 +305,10 @@ mpc_msar <- function(
           speaker_prop = speaker_prop,
           params       = params
         )
+
+        print(paste(band, pwr))
+        print(paste(band, sar))
+
         prop*sar*pwr
       },
       numeric(1)

@@ -84,12 +84,12 @@ devices:
     native_4g_dutycycle: 0.043038
     native_5g_dutycycle: 0.000
     native_2g_sub_ind_pwr: 1281.52
-    native_2g_urb_ind_pwr: 374.8682087
+    native_2g_urb_ind_pwr: 374.87
     native_2g_rur_ind_pwr: 1371.23
-    native_2g_sub_out_pwr: 476.13
-    native_2g_urb_out_pwr: 70.22
-    native_2g_rur_out_pwr: 509.46
-    native_2g_travel_pwr: 476.1
+    native_2g_sub_out_pwr: 383.9
+    native_2g_urb_out_pwr: 173.81
+    native_2g_rur_out_pwr: 433.90
+    native_2g_travel_pwr: 383.9
     native_3g_sub_ind_pwr: 2.03
     native_3g_urb_ind_pwr: 0.97
     native_3g_rur_ind_pwr: 6.2
@@ -126,7 +126,7 @@ devices:
     data_3g_urb_ind_pwr: 0.605
     data_3g_rur_ind_pwr: 6.28
     data_3g_sub_out_pwr: 0.87
-    data_3g_urb_out_pwr: 0.01
+    data_3g_urb_out_pwr: 0.26
     data_3g_rur_out_pwr: 2.68
     data_3g_travel_pwr: 0.87
     data_4g_sub_ind_pwr: 77.8985184
@@ -146,7 +146,7 @@ devices:
     wifi_2_pwr: 100
     wifi_5_pwr: 200
     wifi_2_dutycycle: 0.02738
-    wifi_5_dutycycle: 0.04385
+    wifi_5_dutycycle: 0.04930
     headp_face_prop: 0.333
     headp_pock_prop: 0.333
     headp_else_prop: 0.333
@@ -271,9 +271,9 @@ devices:
     data_4g_prop_no5g: 0.9825
     data_5g_prop_no5g: 0
     data_3g_low_dutycycle: 0.438
-    data_3g_lowmed_dutycycle: 0.544566667
-    data_3g_medhigh_dutycycle: 0.592
-    data_3g_high_dutycycle: 0.810866667
+    data_3g_lowmed_dutycycle: 0.505
+    data_3g_medhigh_dutycycle: 0.542
+    data_3g_high_dutycycle: 0.783
     data_3g_sub_ind_pwr: 114.02
     data_3g_sub_out_pwr: 48.64
     data_3g_urb_ind_pwr: 1.84
@@ -304,14 +304,14 @@ devices:
     data_5g_rur_out_pwr: 43.170
     data_5g_travel_pwr: 31.520
     wifi_2_low_dutycycle: 0.009
-    wifi_2_lowmed_dutycycle: 0.025
-    wifi_2_medhigh_dutycycle: 0.176
-    wifi_2_high_dutycycle: 0.669
+    wifi_2_lowmed_dutycycle: 0.022
+    wifi_2_medhigh_dutycycle: 0.138
+    wifi_2_high_dutycycle: 0.671
     wifi_2_pwr: 100.00
-    wifi_5_low_dutycycle: 0.03055
-    wifi_5_lowmed_dutycycle: 0.052275
-    wifi_5_medhigh_dutycycle: 0.064
-    wifi_5_high_dutycycle: 0.14515
+    wifi_5_low_dutycycle: 0.024
+    wifi_5_lowmed_dutycycle: 0.039
+    wifi_5_medhigh_dutycycle: 0.054
+    wifi_5_high_dutycycle: 0.495
     wifi_5_pwr: 200.00
     brain:
       data_3g_sar: 0.003827632

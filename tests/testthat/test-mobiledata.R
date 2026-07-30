@@ -138,3 +138,45 @@ test_that("mobiledata_dose errors warns if sum of durations is over 86400", {
   )
 })
 
+cases_mobiledata_dose <- list(
+  list(
+    input = list(
+      tissue           = "brain",
+      duration_low     = 3989,
+      duration_lowmed  = 4917,
+      duration_medhigh = 5651,
+      duration_high    = 0,
+      use_5g           = TRUE,
+      wifi_prop_home   = 0.74,
+      wifi_prop_work   = 0.49,
+      wifi_prop_travel = 0.31,
+      urbanicity       = "suburban",
+      travel_time      = 1850
+    ),
+    output = 146.95
+  ),
+  list(
+    input = list(
+      tissue           = "body",
+      duration_low     = 3989,
+      duration_lowmed  = 4917,
+      duration_medhigh = 5651,
+      duration_high    = 0,
+      use_5g           = TRUE,
+      wifi_prop_home   = 0.74,
+      wifi_prop_work   = 0.49,
+      wifi_prop_travel = 0.31,
+      urbanicity       = "suburban",
+      travel_time      = 1850
+    ),
+    output = 78.69
+  )
+)
+
+test_that("mobiledata_dose matches reference values", {
+  for (case in cases_mobiledata_dose) {
+    result <- do.call(mobiledata_dose, case$input)
+    expect_equal(result, case$output, tolerance = 1e-3) # still have rounding issues
+  }
+})
+
