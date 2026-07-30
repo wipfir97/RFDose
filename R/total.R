@@ -11,7 +11,8 @@
 #' @param data A data frame. Must have the exact same columns as the provided example dataset.
 #' Columns must not be missing. Missing values will be replaced with default values.
 #' @param tissue Tissue for which to calculate dose (default: "brain" or "body")
-#' @param params Parameter list (optional). If not specified, calculations use
+#' @param params (experimental) Path to a parameter file in .yaml format. Must match the structure
+#' of the internal parameter file. If not specified, calculations use
 #' default parameters.
 #' @param default_value_file List of default values (optional).
 #'
@@ -27,8 +28,14 @@
 calculate_emf_doses <- function(
     data,
     tissue,
-    params = load_params(),
+    params = NULL,
     default_value_file = NULL) {
+  # Parameter file ============================================================
+  params <- if (is.null(params)) {
+    load_params()
+  } else {
+    yaml::read_yaml(params)
+  }
   # Default values ============================================================
   ## Load internal default value file if no default_value_file is supplied ----
   defaultvars <- if (is.null(default_value_file)) {
@@ -59,7 +66,7 @@ calculate_emf_doses <- function(
         total_dose(
           as.list(dplyr::pick(dplyr::everything())),
           tissue = tissue,
-          params
+          params = params
         )
       )
     ) |>
