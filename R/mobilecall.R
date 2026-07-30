@@ -306,9 +306,6 @@ mpc_msar <- function(
           params       = params
         )
 
-        print(paste(band, pwr))
-        print(paste(band, sar))
-
         prop*sar*pwr
       },
       numeric(1)
