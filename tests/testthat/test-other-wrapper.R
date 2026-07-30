@@ -66,10 +66,10 @@ cases_other_dose_wrapper <- list(
       duration_hotspot    = 3600,
       duration_smartwatch = 86400,
       duration_vr         = 0,
-      duration_headphones = 8280,
+      duration_headphones = 8411.14305,
       duration_gaming     = 3600
     ),
-    output = 13.82
+    output = 13.34
   ),
   list(
     input = list(
@@ -77,17 +77,17 @@ cases_other_dose_wrapper <- list(
       duration_hotspot    = 3600,
       duration_smartwatch = 86400,
       duration_vr         = 0,
-      duration_headphones = 8280,
+      duration_headphones = 8411.14305,
       duration_gaming     = 3600
     ),
-    output = 136.66
+    output = 59.94
   )
 )
 
 test_that("other_dose_wrapper matches reference values", {
   for (case in cases_other_dose_wrapper) {
     result <- do.call(other_dose_wrapper, case$input)
-    expect_equal(result, case$output, tolerance = 1e-2)
+    expect_equal(result, case$output, tolerance = 1e-3)
   }
 })
 

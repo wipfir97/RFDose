@@ -46,14 +46,14 @@ cases_hotspot_dose <- list(
       tissue = "brain",
       duration_hotspot = 3600
     ),
-    output = 12.770991
+    output = 6.89
   ),
   list(
     input = list(
       tissue = "body",
       duration_hotspot = 3600
     ),
-    output = 81.444646
+    output = 43.91
   ),
   list(
     input = list(

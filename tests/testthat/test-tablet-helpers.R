@@ -8,7 +8,7 @@ cases_tablet_msar <- list(
       dur_medhigh = 612,
       dur_high    = 0
     ),
-    output = 0.0071303
+    output = 0.0056911
   ),
   list(
     input = list(
@@ -18,14 +18,14 @@ cases_tablet_msar <- list(
       dur_medhigh = 612,
       dur_high    = 0
     ),
-    output = 0.0068521
+    output = 0.005471607
   )
 )
 
 test_that("tablet_msar matches reference values", {
   for (case in cases_tablet_msar) {
     result <- do.call(tablet_msar, case$input)
-    expect_equal(result, case$output, tolerance = 1e-2)
+    expect_equal(result, case$output, tolerance = 1e-3)
   }
 })
 
@@ -39,7 +39,7 @@ cases_tablet_pwr <- list(
       dur_medhigh = 612,
       dur_high    = 0
     ),
-    output = 8.81
+    output = 7.02
   ),
   list(
     input = list(
@@ -49,14 +49,14 @@ cases_tablet_pwr <- list(
       dur_medhigh = 612,
       dur_high    = 0
     ),
-    output = 10.51
+    output = 8.41
   )
 )
 
 test_that("tablet_pwr matches reference values", {
   for (case in cases_tablet_pwr) {
     result <- do.call(tablet_pwr, case$input)
-    expect_equal(result, case$output, tolerance = 1e-2)
+    expect_equal(result, case$output, tolerance = 1e-3)
   }
 })
 

@@ -32,14 +32,14 @@ devices:
       tblt_2_sar: 0.000863117
       tblt_5_sar: 0.000553633
   lptp:
-    wifi_2_low_dutycycle: 0.009
-    wifi_2_lowmed_dutycycle: 0.022
-    wifi_2_medhigh_dutycycle: 0.138
-    wifi_2_high_dutycycle: 0.671
-    wifi_5_low_dutycycle: 0.024
-    wifi_5_lowmed_dutycycle: 0.039
-    wifi_5_medhigh_dutycycle: 0.054
-    wifi_5_high_dutycycle: 0.495
+    wifi_2_low_dutycycle: 0.0086
+    wifi_2_lowmed_dutycycle: 0.0220
+    wifi_2_medhigh_dutycycle: 0.1378
+    wifi_2_high_dutycycle: 0.6706
+    wifi_5_low_dutycycle: 0.0243
+    wifi_5_lowmed_dutycycle: 0.0386
+    wifi_5_medhigh_dutycycle: 0.0537
+    wifi_5_high_dutycycle: 0.4948
     wifi_2_pwr: 100
     wifi_5_pwr: 200
     legs_prop: 0.2
@@ -264,7 +264,7 @@ devices:
   data:
     data_2g_prop: 0
     data_3g_prop: 0.0175
-    data_4g_prop: 0.66
+    data_4g_prop: 0.6600
     data_5g_prop: 0.3225
     data_2g_prop_no5g: 0
     data_3g_prop_no5g: 0.0175
@@ -274,13 +274,13 @@ devices:
     data_3g_lowmed_dutycycle: 0.505
     data_3g_medhigh_dutycycle: 0.542
     data_3g_high_dutycycle: 0.783
-    data_3g_sub_ind_pwr: 114.02
-    data_3g_sub_out_pwr: 48.64
-    data_3g_urb_ind_pwr: 1.84
-    data_3g_urb_out_pwr: 0.78
-    data_3g_rur_ind_pwr: 167.11
-    data_3g_rur_out_pwr: 71.29
-    data_3g_travel_pwr: 48.64
+    data_3g_sub_ind_pwr: 114.025
+    data_3g_sub_out_pwr: 48.641
+    data_3g_urb_ind_pwr: 1.837
+    data_3g_urb_out_pwr: 0.783
+    data_3g_rur_ind_pwr: 167.109
+    data_3g_rur_out_pwr: 71.285
+    data_3g_travel_pwr: 48.640
     data_4g_low_dutycycle: 0.006
     data_4g_lowmed_dutycycle: 0.056
     data_4g_medhigh_dutycycle: 0.134
@@ -303,15 +303,15 @@ devices:
     data_5g_rur_ind_pwr: 51.910
     data_5g_rur_out_pwr: 43.170
     data_5g_travel_pwr: 31.520
-    wifi_2_low_dutycycle: 0.009
-    wifi_2_lowmed_dutycycle: 0.022
-    wifi_2_medhigh_dutycycle: 0.138
-    wifi_2_high_dutycycle: 0.671
+    wifi_2_low_dutycycle: 0.0086
+    wifi_2_lowmed_dutycycle: 0.0220
+    wifi_2_medhigh_dutycycle: 0.1378
+    wifi_2_high_dutycycle: 0.6706
     wifi_2_pwr: 100.00
-    wifi_5_low_dutycycle: 0.024
-    wifi_5_lowmed_dutycycle: 0.039
-    wifi_5_medhigh_dutycycle: 0.054
-    wifi_5_high_dutycycle: 0.495
+    wifi_5_low_dutycycle: 0.0243
+    wifi_5_lowmed_dutycycle: 0.0386
+    wifi_5_medhigh_dutycycle: 0.0537
+    wifi_5_high_dutycycle: 0.4948
     wifi_5_pwr: 200.00
     brain:
       data_3g_sar: 0.003827632

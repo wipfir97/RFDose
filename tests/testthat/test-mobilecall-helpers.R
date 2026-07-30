@@ -56,38 +56,38 @@ cases_mpc_msar <- list(
     input = list(
       tissue       = "brain",
       prop_native  = 0.7,
-      prop_data    = 0.12,
-      prop_wifi    = 0.18,
-      headp_prop   = 0.23,
-      ear_prop     = 0.45,
-      speaker_prop = 0.32,
+      prop_data    = 0.115394,
+      prop_wifi    = 0.184606,
+      headp_prop   = 0.229485,
+      ear_prop     = 0.447769,
+      speaker_prop = 0.322746,
       urbanicity   = "suburban",
       use_5g       = TRUE,
       travel_time  = 1850
     ),
-    output = 0.209202
+    output = 0.209016
   ),
   list(
     input = list(
       tissue       = "body",
       prop_native  = 0.7,
-      prop_data    = 0.12,
-      prop_wifi    = 0.18,
-      headp_prop   = 0.23,
-      ear_prop     = 0.45,
-      speaker_prop = 0.32,
+      prop_data    = 0.115394,
+      prop_wifi    = 0.184606,
+      headp_prop   = 0.229485,
+      ear_prop     = 0.447769,
+      speaker_prop = 0.322746,
       urbanicity   = "suburban",
       use_5g       = TRUE,
       travel_time  = 1850
     ),
-    output = 0.042085
+    output = 0.042345
   )
 )
 
 test_that("mpc_msar matches reference values", {
   for (case in cases_mpc_msar) {
     result <- do.call(mpc_msar, case$input)
-    expect_equal(result, case$output, tolerance = 1e-2)
+    expect_equal(result, case$output, tolerance = 1e-3)
   }
 })
 
@@ -99,7 +99,7 @@ cases_mpc_pwr_native <- list(
       urbanicity  = "suburban",
       travel_time = 1850
     ),
-    output = 143.65853
+    output = 142.49923
   ),
   list(
     input = list(
@@ -140,9 +140,9 @@ cases_mpc_sar_native <- list(
     input = list(
       tissue       = "brain",
       band         = "2g",
-      headp_prop   = 0.23,
-      ear_prop     = 0.45,
-      speaker_prop = 0.32
+      headp_prop   = 0.229485,
+      ear_prop     = 0.447769,
+      speaker_prop = 0.322746
     ),
     output = 0.038915611
   ),
@@ -150,9 +150,9 @@ cases_mpc_sar_native <- list(
     input = list(
       tissue       = "body",
       band         = "3g",
-      headp_prop   = 0.23,
-      ear_prop     = 0.45,
-      speaker_prop = 0.32
+      headp_prop   = 0.229485,
+      ear_prop     = 0.447769,
+      speaker_prop = 0.322746
     ),
     output = 0.00663549
   ),
@@ -160,9 +160,9 @@ cases_mpc_sar_native <- list(
     input = list(
       tissue       = "brain",
       band         = "4g",
-      headp_prop   = 0.23,
-      ear_prop     = 0.45,
-      speaker_prop = 0.32
+      headp_prop   = 0.229485,
+      ear_prop     = 0.447769,
+      speaker_prop = 0.322746
     ),
     output = 0.035978107
   ),
@@ -170,9 +170,9 @@ cases_mpc_sar_native <- list(
     input = list(
       tissue       = "body",
       band         = "5g",
-      headp_prop   = 0.23,
-      ear_prop     = 0.45,
-      speaker_prop = 0.32
+      headp_prop   = 0.229485,
+      ear_prop     = 0.447769,
+      speaker_prop = 0.322746
     ),
     output = 0.00585367
   )
@@ -181,7 +181,7 @@ cases_mpc_sar_native <- list(
 test_that("mpc_sar_native matches reference values", {
   for (case in cases_mpc_sar_native) {
     result <- do.call(mpc_sar_native, case$input)
-    expect_equal(result, case$output, tolerance = 1e-2)
+    expect_equal(result, case$output, tolerance = 1e-3)
   }
 })
 
@@ -225,9 +225,9 @@ cases_mpc_sar_data <- list(
     input = list(
       tissue       = "brain",
       band         = "2g",
-      headp_prop   = 0.23,
-      ear_prop     = 0.45,
-      speaker_prop = 0.32
+      headp_prop   = 0.229485,
+      ear_prop     = 0.447769,
+      speaker_prop = 0.322746
     ),
     output = 3.89E-02
   ),
@@ -235,9 +235,9 @@ cases_mpc_sar_data <- list(
     input = list(
       tissue       = "body",
       band         = "3g",
-      headp_prop   = 0.23,
-      ear_prop     = 0.45,
-      speaker_prop = 0.32
+      headp_prop   = 0.229485,
+      ear_prop     = 0.447769,
+      speaker_prop = 0.322746
     ),
     output = 6.64E-03
   ),
@@ -245,9 +245,9 @@ cases_mpc_sar_data <- list(
     input = list(
       tissue       = "brain",
       band         = "4g",
-      headp_prop   = 0.23,
-      ear_prop     = 0.45,
-      speaker_prop = 0.32
+      headp_prop   = 0.229485,
+      ear_prop     = 0.447769,
+      speaker_prop = 0.322746
     ),
     output = 3.60E-02
   ),
@@ -255,9 +255,9 @@ cases_mpc_sar_data <- list(
     input = list(
       tissue       = "body",
       band         = "5g",
-      headp_prop   = 0.23,
-      ear_prop     = 0.45,
-      speaker_prop = 0.32
+      headp_prop   = 0.229485,
+      ear_prop     = 0.447769,
+      speaker_prop = 0.322746
     ),
     output = 5.85E-03
   )
@@ -266,7 +266,7 @@ cases_mpc_sar_data <- list(
 test_that("mpc_sar_data matches reference values", {
   for (case in cases_mpc_sar_data) {
     result <- do.call(mpc_sar_data, case$input)
-    expect_equal(result, case$output, tolerance = 1e-2)
+    expect_equal(result, case$output, tolerance = 1e-3)
   }
 })
 
@@ -283,7 +283,7 @@ cases_mpc_pwr_wifi <- list(
     input = list(
       band        = "5"
     ),
-    output = 8.77
+    output = 9.860
   )
 )
 
@@ -300,9 +300,9 @@ cases_mpc_sar_wifi <- list(
     input = list(
       tissue       = "brain",
       band         = "2",
-      headp_prop   = 0.23,
-      ear_prop     = 0.45,
-      speaker_prop = 0.32
+      headp_prop   = 0.229485,
+      ear_prop     = 0.447769,
+      speaker_prop = 0.322746
     ),
     output = 0.012555857
   ),
@@ -310,9 +310,9 @@ cases_mpc_sar_wifi <- list(
     input = list(
       tissue       = "body",
       band         = "2",
-      headp_prop   = 0.23,
-      ear_prop     = 0.45,
-      speaker_prop = 0.32
+      headp_prop   = 0.229485,
+      ear_prop     = 0.447769,
+      speaker_prop = 0.322746
     ),
     output = 0.00560245
   ),
@@ -320,9 +320,9 @@ cases_mpc_sar_wifi <- list(
     input = list(
       tissue       = "brain",
       band         = "5",
-      headp_prop   = 0.23,
-      ear_prop     = 0.45,
-      speaker_prop = 0.32
+      headp_prop   = 0.229485,
+      ear_prop     = 0.447769,
+      speaker_prop = 0.322746
     ),
     output = 0.000597634
   ),
@@ -330,9 +330,9 @@ cases_mpc_sar_wifi <- list(
     input = list(
       tissue       = "body",
       band         = "5",
-      headp_prop   = 0.23,
-      ear_prop     = 0.45,
-      speaker_prop = 0.32
+      headp_prop   = 0.229485,
+      ear_prop     = 0.447769,
+      speaker_prop = 0.322746
     ),
     output = 0.00356943
   )
@@ -342,6 +342,6 @@ test_that("mpc_sar_wifi matches reference values", {
   for (case in cases_mpc_sar_wifi) {
     result <- do.call(mpc_sar_wifi, case$input)
     # tolerance due to rounded values in reference calculations
-    expect_equal(result, case$output, tolerance = 1e-2)
+    expect_equal(result, case$output, tolerance = 1e-3)
   }
 })

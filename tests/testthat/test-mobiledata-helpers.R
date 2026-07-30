@@ -14,7 +14,7 @@ cases_mpd_msar <- list(
       urbanicity       = "suburban",
       travel_time      = 1850
     ),
-    output = 0.010986358
+    output = 0.0100946
   ),
   list(
     input = list(
@@ -30,14 +30,14 @@ cases_mpd_msar <- list(
       urbanicity       = "suburban",
       travel_time      = 1850
     ),
-    output = 0.006212321
+    output = 0.0054054
   )
 )
 
 test_that("mpd_msar matches reference values", {
   for (case in cases_mpd_msar) {
     result <- do.call(mpd_msar, case$input)
-    expect_equal(result, case$output, tolerance = 1e-2) # still have rounding issues
+    expect_equal(result, case$output, tolerance = 1e-3) # still have rounding issues
   }
 })
 
@@ -46,21 +46,21 @@ cases_mpd_pwr_data <- list(
   list(
     input = list(
       band             = "3g",
-      duration_low     = 3989,
-      duration_lowmed  = 4917,
-      duration_medhigh = 5651,
+      duration_low     = 3989.318141,
+      duration_lowmed  = 4916.971705,
+      duration_medhigh = 5650.714779,
       duration_high    = 0,
       urbanicity       = "suburban",
       travel_time      = 1850
     ),
-    output = 57.21
+    output = 53.70
   ),
   list(
     input = list(
       band             = "4g",
-      duration_low     = 3989,
-      duration_lowmed  = 4917,
-      duration_medhigh = 5651,
+      duration_low     = 3989.318141,
+      duration_lowmed  = 4916.971705,
+      duration_medhigh = 5650.714779,
       duration_high    = 0,
       urbanicity       = "suburban",
       travel_time      = 1850
@@ -70,9 +70,9 @@ cases_mpd_pwr_data <- list(
   list(
     input = list(
       band             = "5g",
-      duration_low     = 3989,
-      duration_lowmed  = 4917,
-      duration_medhigh = 5651,
+      duration_low     = 3989.318141,
+      duration_lowmed  = 4916.971705,
+      duration_medhigh = 5650.714779,
       duration_high    = 0,
       urbanicity       = "suburban",
       travel_time      = 1850
@@ -84,7 +84,7 @@ cases_mpd_pwr_data <- list(
 test_that("mpd_pwr_data matches reference values", {
   for (case in cases_mpd_pwr_data) {
     result <- do.call(mpd_pwr_data, case$input)
-    expect_equal(result, case$output, tolerance = 1e-2)
+    expect_equal(result, case$output, tolerance = 1e-3)
   }
 })
 
@@ -146,29 +146,29 @@ cases_mpd_pwr_wifi <- list(
   list(
     input = list(
       band             = "2",
-      duration_low     = 3989,
-      duration_lowmed  = 4917,
-      duration_medhigh = 5651,
+      duration_low     = 3989.318141,
+      duration_lowmed  = 4916.971705,
+      duration_medhigh = 5650.714779,
       duration_high    = 0
     ),
-    output = 7.90
+    output = 6.33
   ),
   list(
     input = list(
       band             = "5",
-      duration_low     = 3989,
-      duration_lowmed  = 4917,
-      duration_medhigh = 5651,
+      duration_low     = 3989.318141,
+      duration_lowmed  = 4916.971705,
+      duration_medhigh = 5650.714779,
       duration_high    = 0
     ),
-    output = 10.17
+    output = 8.11
   )
 )
 
 test_that("mpd_pwr_wifi matches reference values", {
   for (case in cases_mpd_pwr_wifi) {
     result <- do.call(mpd_pwr_wifi, case$input)
-    expect_equal(result, case$output, tolerance = 1e-2)
+    expect_equal(result, case$output, tolerance = 1e-3)
   }
 })
 

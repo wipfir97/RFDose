@@ -8,7 +8,7 @@ cases_laptop_msar <- list(
       dur_medhigh = 1715,
       dur_high    = 0
     ),
-    output = 0.0002242
+    output = 0.0001791
   ),
   list(
     input = list(
@@ -18,14 +18,14 @@ cases_laptop_msar <- list(
       dur_medhigh = 1715,
       dur_high    = 0
     ),
-    output = 0.032084349
+    output = 0.025649982
   )
 )
 
 test_that("laptop_msar matches reference values", {
   for (case in cases_laptop_msar) {
     result <- do.call(laptop_msar, case$input)
-    expect_equal(result, case$output, tolerance = 1e-2)
+    expect_equal(result, case$output, tolerance = 1e-3)
   }
 })
 
@@ -39,7 +39,7 @@ cases_laptop_pwr <- list(
       dur_medhigh = 1715,
       dur_high    = 0
     ),
-    output = 8.60
+    output = 6.86
   ),
   list(
     input = list(
@@ -49,14 +49,14 @@ cases_laptop_pwr <- list(
       dur_medhigh = 1715,
       dur_high    = 0
     ),
-    output = 10.30
+    output = 8.26
   )
 )
 
 test_that("laptop_pwr matches reference values", {
   for (case in cases_laptop_pwr) {
     result <- do.call(laptop_pwr, case$input)
-    expect_equal(result, case$output, tolerance = 1e-2)
+    expect_equal(result, case$output, tolerance = 1e-3)
   }
 })
 
