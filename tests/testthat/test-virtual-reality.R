@@ -46,14 +46,14 @@ cases_vr_dose <- list(
       tissue = "brain",
       duration_vr = 600
     ),
-    output = 19.651207
+    output = 65.485124
   ),
   list(
     input = list(
       tissue = "body",
       duration_vr = 600
     ),
-    output = 13.566680
+    output = 32.872966
   ),
   list(
     input = list(

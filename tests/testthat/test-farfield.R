@@ -80,25 +80,25 @@ cases_farfield_dose <- list(
       tissue      = "brain",
       country     = "Other",
       urbanicity  = "suburban",
-      travel_time = 1800
+      travel_time = 1850
     ),
-    output = 160.9282589
+    output = 162.5784
     ),
   list(
     input = list(
       tissue      = "body",
       country     = "Other",
       urbanicity  = "suburban",
-      travel_time = 1800
+      travel_time = 1850
     ),
-    output = 137.7382324
+    output = 136.0205
   )
 )
 
 test_that("farfield_dose matches reference values", {
   for (case in cases_farfield_dose) {
     result <- do.call(farfield_dose, case$input)
-    expect_equal(result, case$output, tolerance = 1e-2)
+    expect_equal(result, case$output, tolerance = 1e-3)
   }
 })
 

@@ -44,23 +44,25 @@ reference_cases <- list(
   list(
     input = list(
       tissue           = "brain",
-      travel_time      = 1800,
+      travel_time      = 1850,
       wifi_prop_travel = 0.5),
-    output = 1.30295088
+    output = 1.3402
+
   ),
   list(
     input = list(
       tissue           = "body",
-      travel_time      = 1800,
+      travel_time      = 1850,
       wifi_prop_travel = 0.5),
-    output = 5.426242418
+    output = 5.4168
+
   )
 )
 
 test_that("wifi_dose matches reference calculations", {
   for (case in reference_cases) {
     result <- do.call(wifi_dose, case$input)
-    expect_equal(result, case$output, tolerance = 1e-2) # tolerance due to rounding inconsistencies
+    expect_equal(result, case$output, tolerance = 1e-3) # tolerance due to rounding inconsistencies
   }
 })
 

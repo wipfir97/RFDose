@@ -16,13 +16,13 @@ devices:
       dect_speaker_sar: 0.002088857
   tblt:
     wifi_2_low_dutycycle: 0.009
-    wifi_2_lowmed_dutycycle: 0.025
-    wifi_2_medhigh_dutycycle: 0.176
-    wifi_2_high_dutycycle: 0.669
-    wifi_5_low_dutycycle: 0.03055
-    wifi_5_lowmed_dutycycle: 0.052275
-    wifi_5_medhigh_dutycycle: 0.064
-    wifi_5_high_dutycycle: 0.14515
+    wifi_2_lowmed_dutycycle: 0.022
+    wifi_2_medhigh_dutycycle: 0.138
+    wifi_2_high_dutycycle: 0.671
+    wifi_5_low_dutycycle: 0.024
+    wifi_5_lowmed_dutycycle: 0.039
+    wifi_5_medhigh_dutycycle: 0.054
+    wifi_5_high_dutycycle: 0.495
     wifi_2_pwr: 100
     wifi_5_pwr: 200
     brain:
@@ -33,13 +33,13 @@ devices:
       tblt_5_sar: 0.000553633
   lptp:
     wifi_2_low_dutycycle: 0.009
-    wifi_2_lowmed_dutycycle: 0.025
-    wifi_2_medhigh_dutycycle: 0.176
-    wifi_2_high_dutycycle: 0.669
-    wifi_5_low_dutycycle: 0.03055
-    wifi_5_lowmed_dutycycle: 0.052275
-    wifi_5_medhigh_dutycycle: 0.064
-    wifi_5_high_dutycycle: 0.14515
+    wifi_2_lowmed_dutycycle: 0.022
+    wifi_2_medhigh_dutycycle: 0.138
+    wifi_2_high_dutycycle: 0.671
+    wifi_5_low_dutycycle: 0.024
+    wifi_5_lowmed_dutycycle: 0.039
+    wifi_5_medhigh_dutycycle: 0.054
+    wifi_5_high_dutycycle: 0.495
     wifi_2_pwr: 100
     wifi_5_pwr: 200
     legs_prop: 0.2
@@ -437,19 +437,19 @@ devices:
     work_rur_pwr_UK: 0.05
     travel_pwr_UK: 0.75
     brain:
-      sar: 0.005439141
+      sar: 0.005491315
     body:
-      sar: 0.004655352
+      sar: 0.004594286
   smartwatch:
     watch_pwr_active: 1
     watch_pwr_passive: 0.002
     watch_phone_pwr: 0.002
     brain:
-      watch_sar: 0.000024
-      watch_phone_sar: 0.000370
+      watch_sar: 0.00002359
+      watch_phone_sar: 0.00036953
     body:
-      watch_sar: 0.010634
-      watch_phone_sar: 0.0023566
+      watch_sar: 0.01063377
+      watch_phone_sar: 0.00235662
   headphones:
     headp_pwr: 0.002
     headp_phone_pwr: 0.16
@@ -460,7 +460,7 @@ devices:
       headp_sar: 0.014058
       headp_phone_sar: 0.002357
   hotspot:
-    hotspot_pwr: 5.22
+    hotspot_pwr: 5.1755728
     brain:
       hotspot_sar: 0.000370
     body:
@@ -468,19 +468,19 @@ devices:
   vr:
     vr_2_pwr: 100
     vr_5_pwr: 200
-    vr_2_dutycycle: 0.05
-    vr_5_dutycycle: 0.05
-    vr_online_prop: 0.4
+    vr_2_dutycycle: 0.138
+    vr_5_dutycycle: 0.054
+    vr_online_prop: 0.5
     brain:
-      vr_2_sar: 0.026728
-      vr_5_sar: 0.001040
+      vr_2_sar: 0.02672775
+      vr_5_sar: 0.00104037
     body:
-      vr_2_sar: 0.010023
-      vr_5_sar: 0.006539
+      vr_2_sar: 0.01002277
+      vr_5_sar: 0.00653852
   gaming:
-    gaming_online_prop: 0.25
-    gaming_2_dutycycle: 0.0195
-    gaming_5_dutycycle: 0.0276
+    gaming_online_prop: 0.5
+    gaming_2_dutycycle: 0.022
+    gaming_5_dutycycle: 0.028
     gaming_2_pwr: 100
     gaming_5_pwr: 200
     brain:

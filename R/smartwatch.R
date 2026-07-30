@@ -34,10 +34,6 @@ smartwatch_dose <- function(
     duration_smartwatch,
     params = load_params()) {
 
-  # Check input ===============================================================
-  check_tissue(tissue, "smartwatch", params)
-  check_duration(duration_smartwatch)
-
   # From watch ================================================================
   dose_watch <- smartwatch_watch_dose(
     tissue              = tissue,

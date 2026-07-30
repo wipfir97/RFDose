@@ -70,7 +70,7 @@ cases_cordless_dose <- list(
       duration    = 69,
       ear_prop    = 0.35
     ),
-    output = 64.655
+    output = 12.4847
   ),
   list(
     input = list(
@@ -78,7 +78,7 @@ cases_cordless_dose <- list(
       duration    = 69,
       ear_prop    = 0.35
     ),
-    output = 13.331
+    output = 3.5810
   )
 )
 

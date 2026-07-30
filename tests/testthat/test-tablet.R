@@ -88,22 +88,22 @@ cases_tablet_dose <- list(
   list(
     input = list(
       tissue      = "brain",
-      dur_low     = 728,
-      dur_lowmed  = 81,
-      dur_medhigh = 728,
-      dur_high    = 81
+      dur_low     = 313,
+      dur_lowmed  = 458,
+      dur_medhigh = 612,
+      dur_high    = 0
     ),
-    output = 12.19
+    output = 7.8700
   ),
   list(
     input = list(
       tissue      = "body",
-      dur_low     = 728,
-      dur_lowmed  = 81,
-      dur_medhigh = 728,
-      dur_high    = 81
+      dur_low     = 313,
+      dur_lowmed  = 458,
+      dur_medhigh = 612,
+      dur_high    = 0
     ),
-    output = 13.68
+    output = 7.5665
   )
 )
 

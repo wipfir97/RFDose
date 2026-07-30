@@ -70,10 +70,10 @@ test_that("laptop_dose warns if sum of durations exceeds 86400 seconds", {
   expect_warning(
     laptop_dose(
       tissue      = "brain",
-      dur_low     = 20000,
-      dur_lowmed  = 20000,
-      dur_medhigh = 20000,
-      dur_high    = 30000)
+      dur_low     = 40000,
+      dur_lowmed  = 40000,
+      dur_medhigh = 40000,
+      dur_high    = 40000)
   )
 })
 
@@ -81,22 +81,22 @@ cases_laptop_dose <- list(
   list(
     input = list(
       tissue      = "brain",
-      dur_low     = 1967,
-      dur_lowmed  = 218,
-      dur_medhigh = 1967,
-      dur_high    = 218
+      dur_low     = 1069,
+      dur_lowmed  = 1168,
+      dur_medhigh = 1715,
+      dur_high    = 0
     ),
-    output = 2.12
+    output = 0.71
   ),
   list(
     input = list(
       tissue      = "body",
-      dur_low     = 1967,
-      dur_lowmed  = 218,
-      dur_medhigh = 1967,
-      dur_high    = 218
+      dur_low     = 1069,
+      dur_lowmed  = 1168,
+      dur_medhigh = 1715,
+      dur_high    = 0
     ),
-    output = 86.18
+    output = 101.38
   )
 )
 
