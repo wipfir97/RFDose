@@ -91,7 +91,7 @@ farfield_sar <- function(
     tissue,
     params = load_params()) {
   # Load tissue-specific parameters
-  tissue_params <- load_tissue_params(params, "farf", tissue)
+  tissue_params <- load_tissue_params_old(params, "farf", tissue)
   # Get sar and return result
   sar <- tissue_params[["sar"]]
   return(sar)

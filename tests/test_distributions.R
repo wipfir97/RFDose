@@ -2,13 +2,12 @@
 
 
 
-test_params <-simulate_params(country = "Italy",
-                              simulation = "_sim1")
+one_sim <-simulate_params(simulation = "_template")
 
 
 
 params_template = yaml::read_yaml(system.file("extdata", paste0("params_template.yaml"), package = "RFDose"))
-
+params_stochastic = yaml::read_yaml(system.file("extdata", paste0("params_stochastic.yaml"), package = "RFDose"))
 
 #plot replicates_______________________________________________________
 
@@ -19,14 +18,13 @@ params_template = yaml::read_yaml(system.file("extdata", paste0("params_template
 
 x <- replicate(
   1000,
-  simulate_params(country = "Italy",
-                  simulation = "_sim1"),
+  simulate_params(simulation = "_template"),
   simplify = FALSE
 )
 
 duration <- sapply(x, \(z) z$global$input_stoch$duration$mpc_duration)
 
-hist(duration, probability = TRUE, breaks = 30,
+hist(duration, probability = TRUE, breaks = 100,
      col = "lightblue", border = "white",
      main = "Duration", xlab = "Duration")
 lines(density(duration), col = "red", lwd = 2)
@@ -38,7 +36,7 @@ abline(v = params_template$global$input_stoch$duration$mpc_duration, col = "dark
 
 ear_prop <- sapply(x, \(z) z$global$input_stoch$call_mode_prop$mpc_ear_prop)
 
-hist(ear_prop, probability = TRUE, breaks = 30,
+hist(ear_prop, probability = TRUE, breaks = 100,
      col = "lightblue", border = "white",
      main = "Ear proportion", xlab = "Ear proportion")
 lines(density(ear_prop), col = "red", lwd = 2)
@@ -48,7 +46,7 @@ abline(v = params_template$global$input_stoch$call_mode_prop$mpc_ear_prop, col =
 
 headp_prop <- sapply(x, \(z) z$global$input_stoch$call_mode_prop$mpc_headp_prop)
 
-hist(headp_prop, probability = TRUE, breaks = 30,
+hist(headp_prop, probability = TRUE, breaks = 100,
      col = "lightblue", border = "white",
      main = "Headphone proportion", xlab = "Headphone proportion")
 lines(density(headp_prop), col = "red", lwd = 2)
@@ -58,7 +56,7 @@ abline(v = params_template$global$input_stoch$call_mode_prop$mpc_headp_prop, col
 
 speaker_prop <- sapply(x, \(z) z$global$input_stoch$call_mode_prop$speaker_prop)
 
-hist(speaker_prop, probability = TRUE, breaks = 30,
+hist(speaker_prop, probability = TRUE, breaks = 100,
      col = "lightblue", border = "white",
      main = "Speaker proportion", xlab = "Speaker proportion")
 lines(density(speaker_prop), col = "red", lwd = 2)
@@ -68,7 +66,7 @@ abline(v = params_template$global$input_stoch$call_mode_prop$speaker_prop, col =
 
 urb_prop <- sapply(x, \(z) z$global$input_stoch$urbanicity$urb_prop)
 
-hist(urb_prop, probability = TRUE, breaks = 30,
+hist(urb_prop, probability = TRUE, breaks = 100,
      col = "lightblue", border = "white",
      main = "Urban proportion", xlab = "Urban proportion")
 lines(density(urb_prop), col = "red", lwd = 2)
@@ -78,7 +76,7 @@ abline(v = params_template$global$input_stoch$urbanicity$urb_prop, col = "darkgr
 
 sub_prop <- sapply(x, \(z) z$global$input_stoch$urbanicity$sub_prop)
 
-hist(sub_prop, probability = TRUE, breaks = 30,
+hist(sub_prop, probability = TRUE, breaks = 100,
      col = "lightblue", border = "white",
      main = "Suburban proportion", xlab = "Suburban proportion")
 lines(density(sub_prop), col = "red", lwd = 2)
@@ -88,7 +86,7 @@ abline(v = params_template$global$input_stoch$urbanicity$sub_prop, col = "darkgr
 
 rur_prop <- sapply(x, \(z) z$global$input_stoch$urbanicity$rur_prop)
 
-hist(rur_prop, probability = TRUE, breaks = 30,
+hist(rur_prop, probability = TRUE, breaks = 100,
      col = "lightblue", border = "white",
      main = "Rural proportion", xlab = "Rural proportion")
 lines(density(rur_prop), col = "red", lwd = 2)
@@ -97,9 +95,9 @@ abline(v = params_template$global$input_stoch$urbanicity$rur_prop, col = "darkgr
 
 
 
-headp_num <- sapply(x, \(z) z$global$input_stoch$headp_num)
+headp_num <- sapply(x, \(z) z$global$input_stoch$headp_num$headp_ear_num)
 
-hist(headp_num, probability = TRUE, breaks = seq(0.5, 2.5, 1),
+hist(headp_num, probability = TRUE, breaks = seq(0.5, 2.5, 0.1),
      col = "lightblue", border = "white",
      main = "Headphone number", xlab = "Headphone number")
 
@@ -107,7 +105,7 @@ hist(headp_num, probability = TRUE, breaks = seq(0.5, 2.5, 1),
 
 home_prop <- sapply(x, \(z) z$global$environment_prop$home_prop)
 
-hist(home_prop, probability = TRUE, breaks = 30,
+hist(home_prop, probability = TRUE, breaks = 100,
      col = "lightblue", border = "white",
      main = "Home proportion", xlab = "Home proportion")
 lines(density(home_prop), col = "red", lwd = 2)
@@ -118,7 +116,7 @@ abline(v = params_template$global$environment_prop$home_prop, col = "darkgreen",
 outd_prop <- sapply(x, \(z) z$global$environment_prop$outd_prop)
 
 
-hist(outd_prop, probability = TRUE, breaks = 30,
+hist(outd_prop, probability = TRUE, breaks = 100,
      col = "lightblue", border = "white",
      main = "Outdoor proportion", xlab = "Outdoor proportion")
 lines(density(outd_prop), col = "red", lwd = 2)
@@ -128,7 +126,7 @@ abline(v = params_template$global$environment_prop$outd_prop, col = "darkgreen",
 
 work_prop <- sapply(x, \(z) z$global$environment_prop$work_prop)
 
-hist(work_prop, probability = TRUE, breaks = 30,
+hist(work_prop, probability = TRUE, breaks = 100,
      col = "lightblue", border = "white",
      main = "Work proportion", xlab = "Work proportion")
 lines(density(work_prop), col = "red", lwd = 2)
@@ -139,7 +137,7 @@ abline(v = params_template$global$environment_prop$work_prop, col = "darkgreen",
 
 travel_prop <- sapply(x, \(z) z$global$environment_prop$travel_prop)
 
-hist(travel_prop, probability = TRUE, breaks = 30,
+hist(travel_prop, probability = TRUE, breaks = 100,
      col = "lightblue", border = "white",
      main = "Travel proportion", xlab = "Travel proportion")
 lines(density(travel_prop), col = "red", lwd = 2)
@@ -150,7 +148,7 @@ abline(v = params_template$global$environment_prop$travel_prop, col = "darkgreen
 
 wifi_home <- sapply(x, \(z) z$global$input_stoch$wifi_environment_probs$mpd_wifi_prop_home)
 
-hist(wifi_home, probability = TRUE, breaks = 30,
+hist(wifi_home, probability = TRUE, breaks = 100,
      col = "lightblue", border = "white",
      main = "WiFi proportion at home", xlab = "Proportion")
 lines(density(wifi_home), col = "red", lwd = 2)
@@ -161,7 +159,7 @@ abline(v = params_template$global$input_stoch$wifi_environment_probs$mpd_wifi_pr
 
 wifi_work <- sapply(x, \(z) z$global$input_stoch$wifi_environment_probs$mpd_wifi_prop_work)
 
-hist(wifi_work, probability = TRUE, breaks = 30,
+hist(wifi_work, probability = TRUE, breaks = 100,
      col = "lightblue", border = "white",
      main = "WiFi proportion at work", xlab = "Proportion")
 lines(density(wifi_work), col = "red", lwd = 2)
@@ -171,7 +169,7 @@ abline(v = params_template$global$input_stoch$wifi_environment_probs$mpd_wifi_pr
 
 wifi_travel <- sapply(x, \(z) z$global$input_stoch$wifi_environment_probs$mpd_wifi_prop_travel)
 
-hist(wifi_travel, probability = TRUE, breaks = 30,
+hist(wifi_travel, probability = TRUE, breaks = 100,
      col = "lightblue", border = "white",
      main = "WiFi proportion during travel", xlab = "Proportion")
 lines(density(wifi_travel), col = "red", lwd = 2)
@@ -184,7 +182,7 @@ abline(v = params_template$global$input_stoch$wifi_environment_probs$mpd_wifi_pr
 #=========================
 native_prop <- sapply(x, \(z) z$devices$call$call_type$native_prop)
 
-hist(native_prop, probability = TRUE, breaks = 30,
+hist(native_prop, probability = TRUE, breaks = 100,
      col = "lightblue", border = "white",
      main = "Native proportion", xlab = "Proportion")
 lines(density(native_prop), col = "red", lwd = 2)
@@ -193,7 +191,7 @@ abline(v = params_template$devices$call$call_type$native_prop, col = "darkgreen"
 
 wifi_prop <- sapply(x, \(z) z$devices$call$call_type$wifi_prop)
 
-hist(wifi_prop, probability = TRUE, breaks = 30,
+hist(wifi_prop, probability = TRUE, breaks = 100,
      col = "lightblue", border = "white",
      main = "Wifi proportion", xlab = "Proportion")
 lines(density(wifi_prop), col = "red", lwd = 2)
@@ -202,7 +200,7 @@ abline(v = params_template$devices$call$call_type$wifi_prop, col = "darkgreen", 
 
 data_prop <- sapply(x, \(z) z$devices$call$call_type$data_prop)
 
-hist(data_prop, probability = TRUE, breaks = 30,
+hist(data_prop, probability = TRUE, breaks = 100,
      col = "lightblue", border = "white",
      main = "data proportion", xlab = "Proportion")
 lines(density(data_prop), col = "red", lwd = 2)
@@ -219,7 +217,7 @@ abline(v = params_template$devices$call$call_type$data_prop, col = "darkgreen", 
 
 native_2g_prop <- sapply(x, \(z) z$devices$call$native_band_props$native_2g_prop)
 
-hist(native_2g_prop, probability = TRUE, breaks = 30,
+hist(native_2g_prop, probability = TRUE, breaks = 100,
      col = "lightblue", border = "white",
      main = "Native 2G proportion", xlab = "Proportion")
 lines(density(native_2g_prop), col = "red", lwd = 2)
@@ -229,7 +227,7 @@ abline(v = params_template$devices$call$native_band_props$native_2g_prop, col = 
 
 native_3g_prop <- sapply(x, \(z) z$devices$call$native_band_props$native_3g_prop)
 
-hist(native_3g_prop, probability = TRUE, breaks = 30,
+hist(native_3g_prop, probability = TRUE, breaks = 100,
      col = "lightblue", border = "white",
      main = "Native 3G proportion", xlab = "Proportion")
 lines(density(native_3g_prop), col = "red", lwd = 2)
@@ -239,7 +237,7 @@ abline(v = params_template$devices$call$native_band_props$native_3g_prop, col = 
 
 native_4g_prop <- sapply(x, \(z) z$devices$call$native_band_props$native_4g_prop)
 
-hist(native_4g_prop, probability = TRUE, breaks = 30,
+hist(native_4g_prop, probability = TRUE, breaks = 100,
      col = "lightblue", border = "white",
      main = "Native 4G proportion", xlab = "Proportion")
 lines(density(native_4g_prop), col = "red", lwd = 2)
@@ -249,7 +247,7 @@ abline(v = params_template$devices$call$native_band_props$native_4g_prop, col = 
 
 native_5g_prop <- sapply(x, \(z) z$devices$call$native_band_props$native_5g_prop)
 
-hist(native_5g_prop, probability = TRUE, breaks = 30,
+hist(native_5g_prop, probability = TRUE, breaks = 100,
      col = "lightblue", border = "white",
      main = "Native 5G proportion", xlab = "Proportion")
 lines(density(native_5g_prop), col = "red", lwd = 2)
@@ -263,7 +261,7 @@ abline(v = params_template$devices$call$native_band_props$native_5g_prop, col = 
 
 native_2g_dutycycle <- sapply(x, \(z) z$devices$call$native_dutycycle$native_2g_dutycycle)
 
-hist(native_2g_dutycycle, probability = TRUE, breaks = 30,
+hist(native_2g_dutycycle, probability = TRUE, breaks = 100,
      col = "lightblue", border = "white",
      main = "Native 2G duty cycle", xlab = "Duty cycle")
 lines(density(native_2g_dutycycle), col = "red", lwd = 2)
@@ -273,7 +271,7 @@ abline(v = params_template$devices$call$native_dutycycle$native_2g_dutycycle, co
 
 native_3g_dutycycle <- sapply(x, \(z) z$devices$call$native_dutycycle$native_3g_dutycycle)
 
-hist(native_3g_dutycycle, probability = TRUE, breaks = 30,
+hist(native_3g_dutycycle, probability = TRUE, breaks = 100,
      col = "lightblue", border = "white",
      main = "Native 3G duty cycle", xlab = "Duty cycle")
 lines(density(native_3g_dutycycle), col = "red", lwd = 2)
@@ -283,7 +281,7 @@ abline(v = params_template$devices$call$native_dutycycle$native_3g_dutycycle, co
 
 native_4g_dutycycle <- sapply(x, \(z) z$devices$call$native_dutycycle$native_4g_dutycycle)
 
-hist(native_4g_dutycycle, probability = TRUE, breaks = 30,
+hist(native_4g_dutycycle, probability = TRUE, breaks = 100,
      col = "lightblue", border = "white",
      main = "Native 4G duty cycle", xlab = "Duty cycle")
 lines(density(native_4g_dutycycle), col = "red", lwd = 2)
@@ -297,7 +295,7 @@ abline(v = params_template$devices$call$native_dutycycle$native_4g_dutycycle, co
 
 native_2g_sub_ind_pwr <- sapply(x, \(z) z$devices$call$native_pwr$native_2g_sub_ind_pwr)
 
-hist(native_2g_sub_ind_pwr, probability = TRUE, breaks = 30,
+hist(native_2g_sub_ind_pwr, probability = TRUE, breaks = 100,
      col = "lightblue", border = "white",
      main = "Native 2G suburban indoor power", xlab = "Power")
 lines(density(native_2g_sub_ind_pwr), col = "red", lwd = 2)
@@ -307,7 +305,7 @@ abline(v = params_template$devices$call$native_pwr$native_2g_sub_ind_pwr, col = 
 
 native_3g_rur_ind_pwr <- sapply(x, \(z) z$devices$call$native_pwr$native_3g_rur_ind_pwr)
 
-hist(native_3g_rur_ind_pwr, probability = TRUE, breaks = 30,
+hist(native_3g_rur_ind_pwr, probability = TRUE, breaks = 100,
      col = "lightblue", border = "white",
      main = "Native 3G rural indoor power", xlab = "Power")
 lines(density(native_3g_rur_ind_pwr), col = "red", lwd = 2)
@@ -316,7 +314,7 @@ abline(v = params_template$devices$call$native_pwr$native_3g_rur_ind_pwr, col = 
 
 native_4g_travel_pwr <- sapply(x, \(z) z$devices$call$native_pwr$native_4g_travel_pwr)
 
-hist(native_4g_travel_pwr, probability = TRUE, breaks = 30,
+hist(native_4g_travel_pwr, probability = TRUE, breaks = 100,
      col = "lightblue", border = "white",
      main = "Native 4G travel power", xlab = "Power")
 lines(density(native_4g_travel_pwr), col = "red", lwd = 2)
@@ -330,7 +328,7 @@ abline(v = params_template$devices$call$native_pwr$native_4g_travel_pwr, col = "
 
 headp_face_prop <- sapply(x, \(z) z$devices$call$position_props$headp_face_prop)
 
-hist(headp_face_prop, probability = TRUE, breaks = 30,
+hist(headp_face_prop, probability = TRUE, breaks = 100,
      col = "lightblue", border = "white",
      main = "Headphone face proportion", xlab = "Proportion")
 lines(density(headp_face_prop), col = "red", lwd = 2)
@@ -340,7 +338,7 @@ abline(v = params_template$devices$call$position_props$headp_face_prop, col = "d
 
 headp_pock_prop <- sapply(x, \(z) z$devices$call$position_props$headp_pock_prop)
 
-hist(headp_pock_prop, probability = TRUE, breaks = 30,
+hist(headp_pock_prop, probability = TRUE, breaks = 100,
      col = "lightblue", border = "white",
      main = "Headphone pocket proportion", xlab = "Proportion")
 lines(density(headp_pock_prop), col = "red", lwd = 2)
@@ -350,7 +348,7 @@ abline(v = params_template$devices$call$position_props$headp_pock_prop, col = "d
 
 headp_else_prop <- sapply(x, \(z) z$devices$call$position_props$headp_else_prop)
 
-hist(headp_else_prop, probability = TRUE, breaks = 30,
+hist(headp_else_prop, probability = TRUE, breaks = 100,
      col = "lightblue", border = "white",
      main = "Headphone other position proportion", xlab = "Proportion")
 lines(density(headp_else_prop), col = "red", lwd = 2)
@@ -364,7 +362,7 @@ abline(v = params_template$devices$call$position_props$headp_else_prop, col = "d
 
 mpc_dist_ear <- sapply(x, \(z) z$devices$call$mpc_distance$mpc_dist_ear)
 
-hist(mpc_dist_ear, probability = TRUE, breaks = 30,
+hist(mpc_dist_ear, probability = TRUE, breaks = 100,
      col = "lightblue", border = "white",
      main = "MPC ear distance", xlab = "Distance (mm)")
 lines(density(mpc_dist_ear), col = "red", lwd = 2)
@@ -374,7 +372,7 @@ abline(v = params_template$devices$call$mpc_distance$mpc_dist_ear, col = "darkgr
 
 mpc_dist_speaker <- sapply(x, \(z) z$devices$call$mpc_distance$mpc_dist_speaker)
 
-hist(mpc_dist_speaker, probability = TRUE, breaks = 30,
+hist(mpc_dist_speaker, probability = TRUE, breaks = 100,
      col = "lightblue", border = "white",
      main = "MPC speaker distance", xlab = "Distance (mm)")
 lines(density(mpc_dist_speaker), col = "red", lwd = 2)
@@ -399,7 +397,7 @@ x <- replicate(
 
 hist(
   x,
-  breaks = 30,
+  breaks = 100,
   probability = TRUE,
   col = "lightblue",
   border = "white",
@@ -430,7 +428,7 @@ x <- replicate(
 
 hist(
   x,
-  breaks = 30,
+  breaks = 100,
   probability = TRUE,
   col = "lightblue",
   border = "white",
@@ -512,7 +510,7 @@ par(
 
 hist(
   x[, 1],
-  breaks = 30,
+  breaks = 100,
   probability = TRUE,
   main = "Urban",
   xlab = "Proportion",
@@ -522,7 +520,7 @@ abline(v = mean(x[, 1]), col = "red", lwd = 2)
 
 hist(
   x[, 2],
-  breaks = 30,
+  breaks = 100,
   probability = TRUE,
   main = "Suburban",
   xlab = "Proportion",
@@ -532,7 +530,7 @@ abline(v = mean(x[, 2]), col = "red", lwd = 2)
 
 hist(
   x[, 3],
-  breaks = 30,
+  breaks = 100,
   probability = TRUE,
   main = "Rural",
   xlab = "Proportion",
@@ -614,7 +612,7 @@ x <- replicate(
 
 hist(
   x,
-  breaks = 30,
+  breaks = 100,
   probability = TRUE,
   col = "lightblue",
   border = "white",

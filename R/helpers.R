@@ -3,6 +3,47 @@
 #'
 #'@param path Name of parameter file to load (must be in yaml format)
 #'@returns List of parameters loaded from yaml input file
+load_params_old <- function(path = NULL) {
+  if (is.null(path)) {
+    path <- system.file("extdata", "params.yaml", package = "RFDose")
+  }
+  params  <- yaml::read_yaml(path)
+  return(params)
+}
+
+# =============================================================================
+#' Load tissue-specific parameters
+#'
+#' @param params Device-specific parameter list
+#' @param device_type Name of device
+#' @param tissue_name Name of tissue
+#' @returns Parameter list specific to selected device and tissue
+load_tissue_params_old <- function(params, device_type, tissue_name) {
+  # Check if device name exists in parameter file
+  if (!(device_type %in% names(params$devices))) {
+    stop("Invalid device type. Choose from: ",
+         paste(names(params$devices), collapse = ", "))
+  }
+
+  # Extract tissue parameters while keeping device/global parameters
+  tissue_params        <- params$devices[[device_type]][[tissue_name]]
+  # Flatten list and edit parameter names
+  tissue_params        <- unlist(tissue_params)
+  names(tissue_params) <- sub("^.*\\.", "", names(tissue_params))
+  tissue_params        <- as.list(tissue_params)
+  return(tissue_params)
+}
+
+
+
+
+
+
+# =============================================================================
+#' Loading parameters
+#'
+#'@param path Name of parameter file to load (must be in yaml format)
+#'@returns List of parameters loaded from yaml input file
 load_params <- function(path = NULL,version = "") {
   if (is.null(path)) {
     path <- system.file("extdata", paste0("params",version,".yaml"), package = "RFDose")

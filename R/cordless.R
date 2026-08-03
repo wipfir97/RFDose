@@ -65,7 +65,7 @@ dect_sar <- function(
     ear_prop,
     params = load_params()) {
   ## Load tissue params
-  tissue_params <- load_tissue_params(params, "dect", tissue)
+  tissue_params <- load_tissue_params_old(params, "dect", tissue)
   ## ear
   ear_sar <- ear_prop * tissue_params$dect_ear_sar
   ## speaker

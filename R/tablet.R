@@ -256,7 +256,7 @@ tablet_sar <- function(
     tissue,
     band,
     params = load_params()) {
-  tissue_params <- load_tissue_params(params, "tblt", tissue)
+  tissue_params <- load_tissue_params_old(params, "tblt", tissue)
   sar <- tissue_params[[paste("tblt", band, "sar", sep ="_")]]
   return(sar)
 }

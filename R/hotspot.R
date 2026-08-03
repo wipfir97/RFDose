@@ -6,7 +6,7 @@ hotspot_dose <- function(
   # Input check
   ## TODO add input checks
   # Load tissue params
-  tissue_params <- load_tissue_params(params, "hotspot", tissue)
+  tissue_params <- load_tissue_params_old(params, "hotspot", tissue)
   # Output power
   pwr <- params$devices$hotspot[["hotspot_pwr"]]
   # SAR

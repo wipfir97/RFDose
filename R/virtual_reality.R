@@ -7,7 +7,7 @@ vr_dose <- function(
   ## TODO input check
 
   # Load tissue params
-  tissue_params <- load_tissue_params(params, "vr", tissue)
+  tissue_params <- load_tissue_params_old(params, "vr", tissue)
 
   # Output power
   pwr_2 <- params$devices$vr[["vr_2_pwr"]] * params$devices$vr[["vr_2_dutycycle"]]

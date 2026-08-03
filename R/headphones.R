@@ -24,7 +24,7 @@ headphones_earset_dose <- function(
     tissue,
     duration_headphones,
     params = load_params()) {
-  tissue_params <- load_tissue_params(params, "headphones", tissue)
+  tissue_params <- load_tissue_params_old(params, "headphones", tissue)
   pwr <- params$devices$headphones[["headp_pwr"]]
   sar <- tissue_params[["headp_sar"]]
   dose <- pwr*sar*duration_headphones*2 # times 2: assumption 2 headphones
@@ -35,7 +35,7 @@ headphones_phone_dose <- function(
     tissue,
     duration_headphones,
     params = load_params()) {
-  tissue_params <- load_tissue_params(params, "headphones", tissue)
+  tissue_params <- load_tissue_params_old(params, "headphones", tissue)
   pwr <- params$devices$headphones[["headp_phone_pwr"]]
   sar <- tissue_params[["headp_phone_sar"]]
   dose <- pwr*sar*duration_headphones

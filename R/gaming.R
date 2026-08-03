@@ -7,7 +7,7 @@ gaming_dose <- function(
   ## TODO input check
 
   # Load tissue params
-  tissue_params <- load_tissue_params(params, "gaming", tissue)
+  tissue_params <- load_tissue_params_old(params, "gaming", tissue)
 
   # Output power
   pwr_2 <- params$devices$gaming[["gaming_2_pwr"]] * params$devices$gaming[["gaming_2_dutycycle"]]

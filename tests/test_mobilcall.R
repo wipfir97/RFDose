@@ -2,22 +2,11 @@
 
 
 
-
-
-params <- load_params(version = "_template")
-
-
-
-
-
-
-
 # simulate n parameter files
-n <- 10000
+n <- 1000
 param_simulations <- lapply(seq_len(n), function(i) {
 
-  out <- simulate_params(country = "Italy",
-                         sex = "male",
+  out <- simulate_params(sex = "male",
                          age = "adult",
                          simulation = "_template")
   out$global$sim <- paste0("sim", i)
@@ -93,7 +82,7 @@ par(mfrow = c(2, 2),
 
 hist(stochastic_mobilecall_dose_df$body_call_dose,
      probability = TRUE,
-     breaks = 30,
+     breaks = 100,
      col = "lightblue",
      border = "white",
      main = "Body call dose",
@@ -128,7 +117,7 @@ stripchart(stochastic_mobilecall_dose_df$body_call_dose,
 
 hist(stochastic_mobilecall_dose_df$brain_call_dose,
      probability = TRUE,
-     breaks = 30,
+     breaks = 100,
      col = "lightblue",
      border = "white",
      main = "Brain call dose",
@@ -179,7 +168,5 @@ mobilecall_dose(
   wifi_prop_travel = 0.5,
   simulation = "_template"
 )
-
-
 
 

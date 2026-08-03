@@ -100,11 +100,16 @@ simulate_params <- function(duration,
   }
 
   #pick duration
+  # correct duration mean to pZero values:
+  pzero <- params_stochastic$global$input_stoch$duration$mpc_duration_pzero
+  duration <- duration/(1-pzero)
+
   params$global$input_stoch$duration$mpc_duration <- evaluate_distribution(
         dist_name = params_stochastic$global$input_stoch$duration$distribution,
         mean = duration,
         sd = params_stochastic$global$input_stoch$duration$mpc_duration_sd,
-        p_zero = params_stochastic$global$input_stoch$duration$mpc_duration_pzero,
+        p_zero = pzero,
+        min = params_stochastic$global$input_stoch$duration$mpc_duration_min,
         max = params_stochastic$global$input_stoch$duration$mpc_duration_max
       )
 
@@ -615,6 +620,7 @@ simulate_params <- function(duration,
     dist_name = params_stochastic$devices$call$mpc_distance$distribution,
     mean = params_stochastic$devices$call$mpc_distance$mpc_dist_ear_mean,
     sd   = params_stochastic$devices$call$mpc_distance$mpc_dist_ear_sd,
+    min = params_stochastic$devices$call$mpc_distance$mpc_dist_ear_min,
     max  = params_stochastic$devices$call$mpc_distance$mpc_dist_ear_max
   )
 
@@ -622,6 +628,7 @@ simulate_params <- function(duration,
     dist_name = params_stochastic$devices$call$mpc_distance$distribution,
     mean = params_stochastic$devices$call$mpc_distance$mpc_dist_speaker_mean,
     sd   = params_stochastic$devices$call$mpc_distance$mpc_dist_speaker_sd,
+    min = params_stochastic$devices$call$mpc_distance$mpc_dist_speaker_min,
     max  = params_stochastic$devices$call$mpc_distance$mpc_dist_speaker_max
   )
   # pick
@@ -656,7 +663,7 @@ evaluate_distribution <- function(dist_name,
                                   mean,
                                   sd,
                                   p_zero,
-                                  min = NULL,
+                                  min = 0,
                                   max = NULL,
                                   a0,
                                   p_categorie1,
@@ -691,6 +698,7 @@ evaluate_distribution <- function(dist_name,
       r_trunc_gamma(
         mean = mean,
         sd = sd,
+        min = min,
         max = max
       )
     )
@@ -701,6 +709,7 @@ evaluate_distribution <- function(dist_name,
         mean = mean,
         sd = sd,
         p_zero = p_zero,
+        min = min,
         max = max
       )
     )
@@ -724,7 +733,7 @@ evaluate_distribution <- function(dist_name,
 
   } else if (dist_name == "trunc_lognormal"){
     return(
-      r_trunc_lognormal(mean, sd, max = max)
+      r_trunc_lognormal(mean, sd, min = min, max = max)
     )
 
   } else {
@@ -800,16 +809,19 @@ r_gamma <- function(mean, sd) {
 #'
 #' @return A single random draw from the truncated Gamma distribution.
 #' @export
-r_trunc_gamma <- function(mean, sd, max = Inf) {
+r_trunc_gamma <- function(mean, sd, min = 0, max = Inf) {
   if (mean <= 0) stop("mean must be greater than 0.")
   if (sd <= 0) stop("sd must be greater than 0.")
+  if (min < 0) stop("min must be non-negative.")
+  if (min >= max) stop("min must be smaller than max.")
 
   shape <- (mean / sd)^2
   scale <- sd^2 / mean
 
+  p_min <- pgamma(min, shape = shape, scale = scale  )
   p_max <- pgamma(max, shape = shape, scale = scale)
 
-  u <- runif(1, 0, p_max)
+  u <- runif(1, p_min, p_max)
 
   qgamma(u, shape = shape, scale = scale)
 }
@@ -828,7 +840,7 @@ r_trunc_gamma <- function(mean, sd, max = Inf) {
 #'
 #' @return A single random draw from the truncated hurdle Gamma distribution.
 #' @export
-r_trunc_hurdle_gamma <- function(mean, sd, p_zero, max = Inf) {
+r_trunc_hurdle_gamma <- function(mean, sd, p_zero, min = 0, max = Inf) {
   if (mean <= 0) stop("mean must be greater than 0.")
   if (sd <= 0) stop("sd must be greater than 0.")
 
@@ -838,7 +850,7 @@ r_trunc_hurdle_gamma <- function(mean, sd, p_zero, max = Inf) {
     return(0)
   }
 
-  r_trunc_gamma(mean, sd, max)
+  r_trunc_gamma(mean, sd, min, max)
 }
 
 
@@ -900,7 +912,7 @@ r_bernoulli <- function(p_categorie1,categorie1,categorie2) {
 #'
 #' @return A single random draw from the truncated Lognormal distribution.
 #' @export
-r_trunc_lognormal <- function(mean, sd, max = Inf) {
+r_trunc_lognormal <- function(mean, sd, min = 0, max = Inf) {
 
   if (mean <= 0) stop("mean must be greater than 0.")
   if (sd <= 0) stop("sd must be greater than 0.")
@@ -913,15 +925,12 @@ r_trunc_lognormal <- function(mean, sd, max = Inf) {
   mu <- log(mean) - sigma2 / 2
 
 
-  # Upper truncation probability
-  p_max <- plnorm(
-    max,
-    meanlog = mu,
-    sdlog = sigma
-  )
+  # Truncation probabilities
+  p_min <- plnorm(min, meanlog = mu, sdlog = sigma)
+  p_max <- plnorm(max, meanlog = mu, sdlog = sigma)
 
-  # Draw only below max
-  u <- runif(1, 0, p_max)
+  # Draw only between min and max
+  u <- runif(1, p_min, p_max)
 
   qlnorm(
     u,

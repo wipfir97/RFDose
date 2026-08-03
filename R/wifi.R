@@ -86,7 +86,7 @@ wifi_sar <- function(
     band,
     params = load_params()) {
   # Load tissue-specific parameters
-  tissue_params <- load_tissue_params(params, "wifi", tissue)
+  tissue_params <- load_tissue_params_old(params, "wifi", tissue)
   # Parameter name based on input
   param_name    <- paste("wifi", band, "sar", sep = "_")
   # Get parameter value and return result

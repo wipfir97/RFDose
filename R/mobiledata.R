@@ -77,7 +77,7 @@ mobiledata_dose <- function(
     travel_time,
     params = load_params()) {
   # Check input ===============================================================
-  check_tissue(tissue, "data", params)
+  # check_tissue(tissue, "data", params)
   check_duration(c(duration_low, duration_lowmed, duration_medhigh, duration_high))
   check_boolean_not_na(use_5g)
   check_proportions(wifi_prop_home)
@@ -322,7 +322,7 @@ mpd_pwr_data <- function(
     travel_time,
     params = load_params()) {
 
-  # Calculate location proportions ============================================
+  # Calculate location proportions (is not needed anymore in the stochastic model) ============================================
   loc_props <- location_props(
     travel_time = travel_time,
     home_prop   = params$global$home_prop,
@@ -471,7 +471,7 @@ mpd_sar_data <- function(
     tissue,
     params = load_params()) {
   # Load tissue-specific params
-  tissue_params <- load_tissue_params(params, "data", tissue)
+  tissue_params <- load_tissue_params_old(params, "data", tissue)
   # Get SAR value, return result
   sar <- tissue_params[[paste("data", band, "sar", sep = "_")]]
   return(sar)
@@ -506,7 +506,7 @@ mpd_sar_wifi <- function(
     tissue,
     params = load_params()) {
   # Load tissue-specific params
-  tissue_params <- load_tissue_params(params, "data", tissue)
+  tissue_params <- load_tissue_params_old(params, "data", tissue)
   # Get SAR value, return result
   sar <- tissue_params[[paste("wifi", band, "sar", sep = "_")]]
   return(sar)

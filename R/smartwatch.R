@@ -28,7 +28,7 @@ smartwatch_watch_dose <- function(
     duration_smartwatch,
     params = load_params()) {
   # Load tissue-specific dose
-  tissue_params <- load_tissue_params(params, "smartwatch", tissue)
+  tissue_params <- load_tissue_params_old(params, "smartwatch", tissue)
 
   # Calculate active and passive use duration =================================
   mode_dur <- list(
@@ -57,7 +57,7 @@ smartwatch_phone_dose <- function(
     duration_smartwatch,
     params = load_params()) {
   # Load tissue specific parameters ===========================================
-  tissue_params <- load_tissue_params(params, "smartwatch", tissue)
+  tissue_params <- load_tissue_params_old(params, "smartwatch", tissue)
   # Output power ==============================================================
   pwr <- params$devices$smartwatch[["watch_phone_pwr"]]
   # SAR =======================================================================

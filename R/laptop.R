@@ -57,7 +57,7 @@ laptop_dose <- function(
 
   # Check input ===============================================================
   check_duration(c(dur_low, dur_lowmed, dur_medhigh, dur_high))
-  check_tissue(tissue, "lptp", params)
+  # check_tissue(tissue, "lptp", params)
 
   # Calculate total duration ==================================================
   duration <- sum(
@@ -264,7 +264,7 @@ laptop_sar <- function(
     band,
     params = load_params()) {
 
-  tissue_params <- load_tissue_params(params, "lptp", tissue)
+  tissue_params <- load_tissue_params_old(params, "lptp", tissue)
   ## Lap
   lap_prop <- params$devices$lptp$legs_prop
   sar_lap <- lap_prop*tissue_params[[paste("wifi", band, "legs_sar", sep = "_")]]

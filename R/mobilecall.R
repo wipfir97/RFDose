@@ -100,7 +100,6 @@ mobilecall_dose <- function(
 
   #############################################################################
   # Input checks ==============================================================
-
   #find name of simulation dummy
   dummy <- determine_dummy(params$global$input_stoch$sex,
                            params$global$input_stoch$age)
@@ -149,7 +148,7 @@ mobilecall_dose <- function(
   # print(paste0("bt_dose: ",dose_bt))
 
   # Add doses from different sources and return result ========================
-  dose <- sum(dose_phone, dose_bt)
+  dose <- sum(dose_phone, dose_bt)/1000 #divide by 1000: mW -> W
   # print(paste0(" "))
   # print(paste0("dose: ",dose))
 
@@ -489,6 +488,7 @@ mpc_sar_native <- function(
   prefix <- paste0(dummy,"_",tissue,"_", freq,"_")
   # load tissue-specific parameters (SAR values)
   tissue_params <- load_tissue_params(params, "call", tissue,dummy)
+
   # phone on ear
   mpc_sar_ear <- sum(
     vapply(
@@ -516,7 +516,7 @@ mpc_sar_native <- function(
       \(positions) {
         frontal_sar <- paste0(prefix,positions,"_sar")
         frontal_prop <- paste0(positions,"_prop")
-        return(tissue_params[[frontal_sar]]*params$device$call$phone_positions[[frontal_prop]]) #here also distance shift has to be added
+        return(tissue_params[[frontal_sar]]*params$device$call$phone_positions[[frontal_prop]])
       },
       numeric(1)
     )
@@ -535,7 +535,7 @@ mpc_sar_native <- function(
       \(positions) {
         belly_sar <- paste0(prefix,positions,"_sar")
         belly_prop <- paste0(positions,"_prop")
-        return(tissue_params[[belly_sar]]*params$device$call$phone_positions[[belly_prop]]) #here also distance shift has to be added
+        return(tissue_params[[belly_sar]]*params$device$call$phone_positions[[belly_prop]])
       },
       numeric(1)
     )
@@ -577,7 +577,7 @@ mpc_sar_native <- function(
       \(positions) {
         frontal_sar <- paste0(prefix,positions,"_sar")
         frontal_prop <- paste0(positions,"_prop")
-        return(tissue_params[[frontal_sar]]*params$device$call$phone_positions[[frontal_prop]]) #here also distance shift has to be added
+        return(tissue_params[[frontal_sar]]*params$device$call$phone_positions[[frontal_prop]])
       },
       numeric(1)
     )
@@ -893,19 +893,18 @@ mpc_bt_sar <- function(
   #find name of simulation dummy
   dummy <- determine_dummy(params$global$input_stoch$sex,
                            params$global$input_stoch$age)
-  # define prefix for finding correct tissue parameter
+  # define prefix for finding correct tissue parameter 2400 = BT
   prefix <- paste0(dummy,"_",tissue,"_2400_")
   # load tissue-specific parameters (SAR values)
   tissue_params <- load_tissue_params(params, "call", tissue,dummy)
 
   # headphone on ear (prop weighted mean sar of all positions)
-  bt_sar_headp <- sum(
+  bt_sar_headp <- mean(
     vapply(
       ear_position,
       \(positions) {
         ear_sar <- paste0(prefix,positions,"_sar")
-        ear_props <- paste0(positions,"_prop")
-        return(tissue_params[[ear_sar]]*params$device$call$phone_positions[[ear_props]]) #here also distance shift has to be added
+        return(tissue_params[[ear_sar]])
       },
       numeric(1)
     )
@@ -973,7 +972,7 @@ mpc_bt_phone_sar <- function(
       \(positions) {
         frontal_sar <- paste0(prefix,positions,"_sar")
         frontal_prop <- paste0(positions,"_prop")
-        return(tissue_params[[frontal_sar]]*params$device$call$phone_positions[[frontal_prop]]) #here also distance shift has to be added
+        return(tissue_params[[frontal_sar]]*params$device$call$phone_positions[[frontal_prop]])
       },
       numeric(1)
     )
@@ -992,7 +991,7 @@ mpc_bt_phone_sar <- function(
       \(positions) {
         belly_sar <- paste0(prefix,positions,"_sar")
         belly_prop <- paste0(positions,"_prop")
-        return(tissue_params[[belly_sar]]*params$device$call$phone_positions[[belly_prop]]) #here also distance shift has to be added
+        return(tissue_params[[belly_sar]]*params$device$call$phone_positions[[belly_prop]])
       },
       numeric(1)
     )

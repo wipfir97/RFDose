@@ -1,3 +1,4 @@
+dist_correction: TRUE
 country: "Other"
 mpd_dur_low: 4860
 mpd_dur_lowtomed: 540
@@ -19,6 +20,17 @@ tracker_duration: 0
 vr_duration: 0
 headphone_duration: 0
 gaming_duration: 600
-
-
-
+sex: "male"
+age: "adult"
+use_5g: TRUE
+urb_prop: 0.4
+sub_prop: 0.5
+rur_prop: 0.1
+mpc_duration: 653.00
+mpc_ear_prop: 0.45
+speaker_prop: 0.32
+mpc_headp_prop: 0.23
+headp_ear_num: 2
+mpd_wifi_prop_home: 0.70
+mpd_wifi_prop_work: 0.47
+mpd_wifi_prop_travel: 0.31

@@ -21,8 +21,8 @@ global:
     duration:
       distribution: "trunc_hurdle_gamma"
       mpc_duration_mean: 653.00
-      mpc_duration_sd: 1940
-      mpc_duration_min: 0
+      mpc_duration_sd: 388 # = 1940/5
+      mpc_duration_min: 5
       mpc_duration_max: 14400
       mpc_duration_pzero: 0.35
     call_mode_prop:
