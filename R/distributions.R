@@ -78,6 +78,7 @@ simulate_params <- function(duration,
   #:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
   # set stochastic input
 
+  ####### mobile call
   params_stochastic = yaml::read_yaml(system.file("extdata", paste0("params_stochastic.yaml"), package = "RFDose"))
 
   # use defaults if missing
@@ -219,12 +220,43 @@ simulate_params <- function(duration,
     params$global$input_stoch$urbanicity$rur_prop <- 1*(urbanicity=="rural")
   }
 
+  ####### mobile data
+  # country
 
+  # mpd_dur_low, mpd_dur_lowmed, mpd_dur_medhigh, mpd_dur_high
+  levels <- c("low","lowmed","medhigh","high")
+  for (l in levels) {
+    params$global$input_stoch$mpd_duration[[paste0("mpd_dur_",l)]] <- evaluate_distribution(
+      dist_name = params_stochastic$global$input_stoch$mpd_duration$distribution,
+      mean =  params_stochastic$global$input_stoch$mpd_duration[[paste0("mpd_dur_",l, "_mean")]],
+      sd   = params_stochastic$global$input_stoch$mpd_duration[[paste0("mpd_dur_",l, "_sd")]],
+      max  = params_stochastic$global$input_stoch$mpd_duration[[paste0("mpd_dur_",l, "_max")]]
+    )
+  }
 
+  # dect_duration
+  # dect_ear_prop
+  # lptp_dur_low
+  # lptp_dur_lowtomed
+  # lptp_dur_medtohigh
+  # lptp_dur_high
+  # tblt_dur_low
+  # tblt_dur_lowtomed
+  # tblt_dur_medtohigh
+  # tblt_dur_high
+  # hotspot_duration
+  # smartwatch_duration
+  # tracker_duration
+  # vr_duration
+  # headphone_duration
+  # gaming_duration
+
+  # country
 
   #:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
   # set stochastic parameters
 
+  ####### mobile call
   # pick wifi_probs_____________________________________________________________
   wifi_p <- evaluate_distribution(
     dist_name = params_stochastic$global$wifi_probs$distribution,
@@ -631,7 +663,94 @@ simulate_params <- function(duration,
     min = params_stochastic$devices$call$mpc_distance$mpc_dist_speaker_min,
     max  = params_stochastic$devices$call$mpc_distance$mpc_dist_speaker_max
   )
-  # pick
+
+  ####### mobile call
+
+  # pick dutycicle
+  dutycycle_vars <- c(
+    "data_3g_low_dutycycle",
+    "data_3g_lowmed_dutycycle",
+    "data_3g_medhigh_dutycycle",
+    "data_3g_high_dutycycle",
+    "data_4g_low_dutycycle",
+    "data_4g_lowmed_dutycycle",
+    "data_4g_medhigh_dutycycle",
+    "data_4g_high_dutycycle",
+    "data_5g_low_dutycycle",
+    "data_5g_lowmed_dutycycle",
+    "data_5g_medhigh_dutycycle",
+    "data_5g_high_dutycycle",
+    "data_6g_low_dutycycle",
+    "data_6g_lowmed_dutycycle",
+    "data_6g_medhigh_dutycycle",
+    "data_6g_high_dutycycle",
+    "wifi_2400_low_dutycycle",
+    "wifi_2400_lowmed_dutycycle",
+    "wifi_2400_medhigh_dutycycle",
+    "wifi_2400_high_dutycycle",
+    "wifi_5000_low_dutycycle",
+    "wifi_5000_lowmed_dutycycle",
+    "wifi_5000_medhigh_dutycycle",
+    "wifi_5000_high_dutycycle")
+
+  for (dc in dutycycle_vars){
+    params$devices$data$dutycycle[[dc]] <- evaluate_distribution(
+      dist_name = params_stochastic$devices$data$dutycycle$distribution,
+      mean = c(params_stochastic$devices$data$dutycycle[[paste0(dc,"_mean")]],
+               1-params_stochastic$devices$data$dutycycle[[paste0(dc,"_mean")]]),
+      a0 = params_stochastic$devices$data$dutycycle[[paste0(dc,"_a0")]])[1]
+  }
+
+  # pick pwr
+  power_vars <- c(
+    "data_3g_sub_ind_pwr",
+    "data_3g_urb_ind_pwr",
+    "data_3g_rur_ind_pwr",
+    "data_3g_sub_out_pwr",
+    "data_3g_urb_out_pwr",
+    "data_3g_rur_out_pwr",
+    "data_3g_travel_pwr",
+    "data_4g_sub_ind_pwr",
+    "data_4g_urb_ind_pwr",
+    "data_4g_rur_ind_pwr",
+    "data_4g_sub_out_pwr",
+    "data_4g_urb_out_pwr",
+    "data_4g_rur_out_pwr",
+    "data_4g_travel_pwr",
+    "data_5g_sub_ind_pwr",
+    "data_5g_urb_ind_pwr",
+    "data_5g_rur_ind_pwr",
+    "data_5g_sub_out_pwr",
+    "data_5g_urb_out_pwr",
+    "data_5g_rur_out_pwr",
+    "data_5g_travel_pwr",
+    "data_6g_sub_ind_pwr",
+    "data_6g_urb_ind_pwr",
+    "data_6g_rur_ind_pwr",
+    "data_6g_sub_out_pwr",
+    "data_6g_urb_out_pwr",
+    "data_6g_rur_out_pwr",
+    "data_6g_travel_pwr",
+    "wifi_2400_pwr",
+    "wifi_5000_pwr")
+  for (pw in power_vars){
+    params$devices$data$pwr[[pw]] <- evaluate_distribution(
+      dist_name = params_stochastic$devices$data$pwr$distribution,
+      mean = params_stochastic$devices$data$pwr[[paste0(pw, "_mean")]],
+      sd   = params_stochastic$devices$data$pwr[[paste0(pw, "_sd")]],
+      max  = params_stochastic$devices$data$pwr[[paste0(pw, "_max")]]
+    )
+  }
+
+  # pick mpd_distance
+  params$devices$data$mpd_distance$mpd_dist_belly <- evaluate_distribution(
+    dist_name = params_stochastic$devices$data$mpd_distance$distribution,
+    mean = params_stochastic$devices$data$mpd_distance$mpd_dist_belly_mean,
+    sd   = params_stochastic$devices$data$mpd_distance$mpd_dist_belly_sd,
+    min = params_stochastic$devices$data$mpd_distance$mpd_dist_belly_min,
+    max  = params_stochastic$devices$data$mpd_distance$mpd_dist_belly_max
+  )
+
 
 
   return(params)
@@ -732,9 +851,8 @@ evaluate_distribution <- function(dist_name,
     )
 
   } else if (dist_name == "trunc_lognormal"){
-    return(
-      r_trunc_lognormal(mean, sd, min = min, max = max)
-    )
+      if (mean == 0){return(0)}
+      else{return(r_trunc_lognormal(mean, sd, min = min, max = max))}
 
   } else {
 

@@ -20,7 +20,7 @@ calculate_emf_doses <- function(
     params = load_params(version = "_template"),
     old_params = load_params(),
     default_value_file = NULL,
-    n_sim = 100, save = FALSE, save_path = "",save_tag ="") {
+    n_sim = 100, save = FALSE, save_path = "",save_tag ="", distance_correction = TRUE) {
   # Default values ============================================================
   ## Load internal default value file if no default_value_file is supplied ----
   defaultvars <- if (is.null(default_value_file)) {
@@ -83,7 +83,6 @@ calculate_emf_doses <- function(
     data           = data,
     defaults       = yaml::read_yaml(system.file("extdata","defaultvariables_SDM.yaml", package = "RFDose")))$data
   ## Return output as data frame
-
   if (save){
     print(paste0("save in path: ",save_path))
     #save defaults and inputs
@@ -130,7 +129,7 @@ get_total_dose <- function(
   }
 
   stochastic_dose <- lapply(seq_len(length(param_simulations)), function(i) {
-    # set mobilecall default values
+    # set default values
     sim_params = param_simulations[[i]]
     duration = sim_params$global$input_stoch$duration$mpc_duration
     ear_prop = sim_params$global$input_stoch$call_mode_prop$mpc_ear_prop
@@ -141,6 +140,11 @@ get_total_dose <- function(
     wifi_prop_home = sim_params$global$input_stoc$wifi_environment_probs$mpd_wifi_prop_home
     wifi_prop_work = sim_params$global$input_stoc$wifi_environment_probs$mpd_wifi_prop_work
     wifi_prop_travel = sim_params$global$input_stoc$wifi_environment_probs$mpd_wifi_prop_travel
+    duration_low = sim_params$global$input_stoch$mpd_duration$mpd_dur_low
+    duration_lowmed = sim_params$global$input_stoch$mpd_duration$mpd_dur_lowmed
+    duration_medhigh = sim_params$global$input_stoch$mpd_duration$mpd_dur_medhigh
+    duration_high = sim_params$global$input_stoch$mpd_duration$mpd_dur_high
+    duration = sim_params$global$input_stoch$duration$mpc_duration
 
 
     # Calculate contribution of each exposure source ============================
@@ -167,17 +171,16 @@ get_total_dose <- function(
     ## Calculate mobile data contribution DETERMINISTIC---------------------------------------
     data_dose <- mobiledata_dose(
       tissue           = tissue,
-      duration_low     = sample$mpd_dur_low,
-      duration_lowmed  = sample$mpd_dur_lowtomed,
-      duration_medhigh = sample$mpd_dur_medtohigh,
-      duration_high    = sample$mpd_dur_high,
-      use_5g           = sample$use_5g,
-      urbanicity       = sample$urbanicity,
-      travel_time      = sample$travel_time,
-      wifi_prop_home   = sample$mpd_wifi_prop_home,
-      wifi_prop_work   = sample$mpd_wifi_prop_work,
-      wifi_prop_travel = sample$mpd_wifi_prop_travel,
-      params           = old_params
+      duration_low     = duration_low,
+      duration_lowmed  = duration_lowmed,
+      duration_medhigh = duration_medhigh,
+      duration_high    = duration_high,
+      use_5g           = use_5g,
+      travel_time      = travel_time,
+      wifi_prop_home   = wifi_prop_home,
+      wifi_prop_work   = wifi_prop_work,
+      wifi_prop_travel = wifi_prop_travel,
+      params           = sim_params
       )
 
     ## Calculate far-field contribution DETERMINISTIC-----------------------------------------

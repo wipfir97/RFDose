@@ -408,3 +408,5 @@ dist_law <- function(sar_ref,dist,dist_ref,delta){
   return(sar_ref*((dist_ref+delta)/(dist + delta))^2)
 }
 
+
+

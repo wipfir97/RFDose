@@ -43,6 +43,11 @@ global:
       mpd_wifi_prop_home: 0.70
       mpd_wifi_prop_work: 0.47
       mpd_wifi_prop_travel: 0.31
+    mpd_duration:
+      mpd_dur_low: 3989.32
+      mpd_dur_lowmed: 4916.97
+      mpd_dur_medhigh: 5650.71
+      mpd_dur_high: 0.0
   wifi_probs:
     wifi_2400_prop: 0.58
     wifi_5000_prop: 0.42
@@ -2605,69 +2610,65 @@ devices:
 
 
   data:
-    data_2g_prop: 0
-    data_3g_prop: 0.02
-    data_4g_prop: 0.66
-    data_5g_prop: 0.315
-    data_2g_prop_no5g: 0
-    data_3g_prop_no5g: 0.02
-    data_4g_prop_no5g: 0.98
-    data_5g_prop_no5g: 0
-    data_3g_low_dutycycle: 0.438
-    data_3g_lowmed_dutycycle: 0.544566667
-    data_3g_medhigh_dutycycle: 0.592
-    data_3g_high_dutycycle: 0.810866667
-    data_3g_sub_ind_pwr: 114.02
-    data_3g_sub_out_pwr: 48.64
-    data_3g_urb_ind_pwr: 1.84
-    data_3g_urb_out_pwr: 0.78
-    data_3g_rur_ind_pwr: 167.11
-    data_3g_rur_out_pwr: 71.29
-    data_3g_travel_pwr: 48.64
-    data_4g_low_dutycycle: 0.006
-    data_4g_lowmed_dutycycle: 0.056
-    data_4g_medhigh_dutycycle: 0.134
-    data_4g_high_dutycycle: 1
-    data_4g_sub_ind_pwr: 77.899
-    data_4g_sub_out_pwr: 68.406
-    data_4g_urb_ind_pwr: 64.106
-    data_4g_urb_out_pwr: 54.479
-    data_4g_rur_ind_pwr: 91.691
-    data_4g_rur_out_pwr: 82.332
-    data_4g_travel_pwr: 74.300
-    data_5g_low_dutycycle: 0.005
-    data_5g_lowmed_dutycycle: 0.051
-    data_5g_medhigh_dutycycle: 0.216
-    data_5g_high_dutycycle: 1
-    data_5g_sub_ind_pwr: 49.130
-    data_5g_sub_out_pwr: 40.045
-    data_5g_urb_ind_pwr: 46.350
-    data_5g_urb_out_pwr: 36.920
-    data_5g_rur_ind_pwr: 51.910
-    data_5g_rur_out_pwr: 43.170
-    data_5g_travel_pwr: 31.520
-    wifi_2_low_dutycycle: 0.009
-    wifi_2_lowmed_dutycycle: 0.025
-    wifi_2_medhigh_dutycycle: 0.176
-    wifi_2_high_dutycycle: 0.669
-    wifi_2_pwr: 100.00
-    wifi_5_low_dutycycle: 0.03055
-    wifi_5_lowmed_dutycycle: 0.052275
-    wifi_5_medhigh_dutycycle: 0.064
-    wifi_5_high_dutycycle: 0.14515
-    wifi_5_pwr: 200.00
-    brain:
-      data_3g_sar: 0.003629446
-      data_4g_sar: 0.003234564
-      data_5g_sar: 0.000505446
-      wifi_2_sar: 0.000999468
-      wifi_5_sar: 0.000163091
-    body:
-      data_3g_sar: 0.001066043
-      data_4g_sar: 0.001031137
-      data_5g_sar: 0.000706621
-      wifi_2_sar: 0.000860849
-      wifi_5_sar: 0.000586175
+    dutycycle:
+      data_3g_low_dutycycle: 0.438
+      data_3g_lowmed_dutycycle: 0.505
+      data_3g_medhigh_dutycycle: 0.542
+      data_3g_high_dutycycle: 0.783
+      data_4g_low_dutycycle: 0.006
+      data_4g_lowmed_dutycycle: 0.056
+      data_4g_medhigh_dutycycle: 0.134
+      data_4g_high_dutycycle: 1
+      data_5g_low_dutycycle: 0.005
+      data_5g_lowmed_dutycycle: 0.051
+      data_5g_medhigh_dutycycle: 0.216
+      data_5g_high_dutycycle: 1
+      data_6g_low_dutycycle: 0
+      data_6g_lowmed_dutycycle: 0
+      data_6g_medhigh_dutycycle: 0
+      data_6g_high_dutycycle: 0
+      wifi_2400_low_dutycycle: 0.009
+      wifi_2400_lowmed_dutycycle: 0.022
+      wifi_2400_medhigh_dutycycle: 0.138
+      wifi_2400_high_dutycycle: 0.670
+      wifi_5000_low_dutycycle: 0.024
+      wifi_5000_lowmed_dutycycle: 0.039
+      wifi_5000_medhigh_dutycycle: 0.054
+      wifi_5000_high_dutycycle: 0.495
+    pwr:
+      data_3g_sub_ind_pwr: 114.02
+      data_3g_sub_out_pwr: 48.64
+      data_3g_urb_ind_pwr: 1.84
+      data_3g_urb_out_pwr: 0.78
+      data_3g_rur_ind_pwr: 167.11
+      data_3g_rur_out_pwr: 71.29
+      data_3g_travel_pwr: 48.64
+      data_4g_sub_ind_pwr: 77.899
+      data_4g_sub_out_pwr: 68.406
+      data_4g_urb_ind_pwr: 64.106
+      data_4g_urb_out_pwr: 54.479
+      data_4g_rur_ind_pwr: 91.691
+      data_4g_rur_out_pwr: 82.332
+      data_4g_travel_pwr: 74.300
+      data_5g_sub_ind_pwr: 49.130
+      data_5g_sub_out_pwr: 40.045
+      data_5g_urb_ind_pwr: 46.350
+      data_5g_urb_out_pwr: 36.920
+      data_5g_rur_ind_pwr: 51.910
+      data_5g_rur_out_pwr: 43.170
+      data_5g_travel_pwr: 31.520
+      data_6g_sub_ind_pwr: 0
+      data_6g_sub_out_pwr: 0
+      data_6g_urb_ind_pwr: 0
+      data_6g_urb_out_pwr: 0
+      data_6g_rur_ind_pwr: 0
+      data_6g_rur_out_pwr: 0
+      data_6g_travel_pwr: 0
+      wifi_2400_pwr: 100.00
+      wifi_5000_pwr: 200.00
+    mpd_distance:
+      mpd_dist_belly: 200
+
   farf:
     home_urb_pwr_Other: 0.45
     out_urb_pwr_Other: 1.29
