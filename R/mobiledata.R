@@ -39,7 +39,6 @@
 #' at school / work
 #' @param wifi_prop_travel Proportion of time connected to WiFi (vs mobile data)
 #' while commuting
-#' @param urbanicity Urbanicity of home / workplace (rural, suburban, or urban)
 #' @param travel_time Time spent commuting in seconds per day
 #' @param params Parameter list (optional). If not specified, calculations use
 #' default parameters.
@@ -57,7 +56,6 @@
 #' wifi_prop_home   = 0.5,
 #' wifi_prop_work   = 0.5,
 #' wifi_prop_travel = 0.5,
-#' urbanicity       = "suburban",
 #' travel_time      = 1800,
 #' params           = load_params())
 #'
@@ -73,7 +71,6 @@ mobiledata_dose <- function(
     wifi_prop_home,
     wifi_prop_work,
     wifi_prop_travel,
-    urbanicity,
     travel_time,
     simulation,
     params = load_params(version = simulation)) {
@@ -84,7 +81,6 @@ mobiledata_dose <- function(
   check_proportions(wifi_prop_home)
   check_proportions(wifi_prop_work)
   check_proportions(wifi_prop_travel)
-  # check_urbanicity(urbanicity)
   check_duration(travel_time)
 
   # Calculate mSAR ============================================================
@@ -98,7 +94,6 @@ mobiledata_dose <- function(
     wifi_prop_home   = wifi_prop_home,
     wifi_prop_work   = wifi_prop_work,
     wifi_prop_travel = wifi_prop_travel,
-    urbanicity       = urbanicity,
     travel_time      = travel_time,
     params           = params
   )
@@ -149,7 +144,6 @@ mobiledata_dose <- function(
 #' at school / work
 #' @param wifi_prop_travel Proportion of time connected to WiFi (vs mobile data)
 #' while commuting
-#' @param urbanicity Urbanicity of home / workplace (rural, suburban, or urban)
 #' @param travel_time Time spent commuting in seconds per day
 #' @param params Parameter list (optional). If not specified, calculations use
 #' default parameters.
@@ -167,7 +161,6 @@ mobiledata_dose <- function(
 #' wifi_prop_home   = 0.5,
 #' wifi_prop_work   = 0.5,
 #' wifi_prop_travel = 0.5,
-#' urbanicity       = "suburban",
 #' travel_time      = 1800,
 #' params           = load_params())
 #'
@@ -183,7 +176,6 @@ mpd_msar <- function(
     wifi_prop_home,
     wifi_prop_work,
     wifi_prop_travel,
-    urbanicity,
     travel_time,
     params) {
 
@@ -217,7 +209,6 @@ mpd_msar <- function(
           duration_lowmed  = duration_lowmed,
           duration_medhigh = duration_medhigh,
           duration_high    = duration_high,
-          urbanicity       = urbanicity,
           travel_time      = travel_time,
           params           = params
         )
@@ -304,7 +295,6 @@ mpd_msar <- function(
 #' @param duration_lowmed Duration (in seconds per day) of low-medium output power activities
 #' @param duration_medhigh Duration (in seconds per day) of medium-high output power activities
 #' @param duration_high Duration (in seconds per day) of high output power activities
-#' @param urbanicity Urbanicity of home / workplace (rural, suburban, or urban)
 #' @param travel_time Time spent commuting in seconds per day
 #' @param params Parameter list (optional). If not specified, calculations use
 #' default parameters.
@@ -318,7 +308,6 @@ mpd_msar <- function(
 #' duration_lowmed  = 540,
 #' duration_medhigh = 4860,
 #' duration_high    = 540,
-#' urbanicity       = "rural",
 #' travel_time      = 1800,
 #' params           = load_params())
 #'
@@ -329,7 +318,6 @@ mpd_pwr_data <- function(
     duration_lowmed,
     duration_medhigh,
     duration_high,
-    urbanicity,
     travel_time,
     params) {
 
@@ -381,7 +369,6 @@ mpd_pwr_data <- function(
             ))
 
         # calculate prower prop of environment
-        #print(paste0(urbanicity, "power", pwr_loc_total))
         return(pwr_loc_total*params$global$input_stoch$urbanicity[[paste0(urbanicity,"_prop")]])
       },
       numeric(1)

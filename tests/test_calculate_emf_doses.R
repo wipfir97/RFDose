@@ -62,7 +62,7 @@ test_params <- yaml::read_yaml("C:/Users/ardigi/Documents/Videos/Dose_model/dose
 
 
 
-dose <- calculate_emf_doses(df,tissue = "body", n_sim = 100, save=FALSE,save_path ="C:/Users/ardigi/Documents/Videos/Dose_model/dose_model/test_save/")
+dose <- calculate_emf_doses(df,tissue = "body", n_sim = 1000, save=FALSE,save_path ="C:/Users/ardigi/Documents/Videos/Dose_model/dose_model/test_save/")
 
 
 

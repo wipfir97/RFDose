@@ -3,10 +3,6 @@ global:
   dist_correction: TRUE
   input_default:
     country: "Other"
-    mpd_dur_low: 4860
-    mpd_dur_lowtomed: 540
-    mpd_dur_medtohigh: 4860
-    mpd_dur_high: 540
     dect_duration: 204
     dect_ear_prop: 0.9
     lptp_dur_low: 1967

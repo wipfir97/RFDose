@@ -35,7 +35,6 @@
 #' @param ear_prop Proportion of call performed with phone held against ear
 #' @param headp_prop Proportion of call performed with active Bluetooth connection
 #' to headphones
-#' @param urbanicity Urbanicity of home / workplace (rural, suburban, or urban)
 #' @param use_5g TRUE if 5g services are used for calls, FALSE if not
 #' @param travel_time Time spent commuting in seconds per day (not used in SDM)
 #' @param headp_ear_num Number of Bluetooth headphones used during call
@@ -57,7 +56,6 @@
 #' duration         = 400,
 #' ear_prop         = 0.67,
 #' headp_prop       = 0.17,
-#' urbanicity       = "suburban",
 #' use_5g           = TRUE,
 #' travel_time      = 1800,
 #' headp_ear_num    = 2,
@@ -73,7 +71,6 @@ mobilecall_dose <- function(
     duration,
     ear_prop,
     headp_prop,
-    urbanicity,
     use_5g,
     travel_time,
     headp_ear_num,
@@ -106,7 +103,6 @@ mobilecall_dose <- function(
   check_tissue(tissue, "call", params,dummy)
   check_duration(duration)
   check_proportions(c(ear_prop, headp_prop, speaker_prop))
-  # check_urbanicity(urbanicity)
   check_boolean_not_na(use_5g)
   check_duration(travel_time)
   # check_headp_num(headp_ear_num)
@@ -128,7 +124,6 @@ mobilecall_dose <- function(
     headp_prop   = headp_prop,
     ear_prop     = ear_prop,
     speaker_prop = speaker_prop,
-    urbanicity   = urbanicity,
     use_5g       = use_5g,
     travel_time  = travel_time,
     params       = params)
@@ -184,7 +179,6 @@ mobilecall_dose <- function(
 #' to headphones
 #' @param ear_prop Proportion of call performed with phone held against ear
 #' @param speaker_prop Proportion of call performed in speaker mode
-#' @param urbanicity Urbanicity of home / workplace (rural, suburban, or urban)
 #' @param use_5g TRUE if 5g services are used for calls, FALSE if not
 #' @param travel_time Time spent commuting in seconds per day
 #' @param params Parameter list (optional). If not specified, calculations use
@@ -200,7 +194,6 @@ mobilecall_dose <- function(
 #' headp_prop       = 0.17,
 #' ear_prop         = 0.67,
 #' speaker_prop     = 0.17,
-#' urbanicity       = "suburban",
 #' use_5g           = TRUE,
 #' travel_time      = 1800,
 #' params           = load_params(version = "_template"))
@@ -215,7 +208,6 @@ mpc_msar <- function(
     headp_prop,
     ear_prop,
     speaker_prop,
-    urbanicity,
     use_5g,
     travel_time,
     params = load_params(version = simulation)) {
@@ -234,7 +226,6 @@ mpc_msar <- function(
 
         pwr <- mpc_pwr_native(
           band        = band,
-          urbanicity  = urbanicity,
           travel_time = travel_time,
           params      = params
         )
@@ -283,7 +274,6 @@ mpc_msar <- function(
 
         pwr <- mpc_pwr_data(
           band             = band,
-          urbanicity       = urbanicity,
           travel_time      = travel_time,
           params           = params
         )
@@ -369,7 +359,6 @@ mpc_msar <- function(
 #'
 #'
 #' @param band Technology (2G, 3g, 4g, or 5g) used for the call
-#' @param urbanicity Urbanicity of home / workplace (rural, suburban, or urban)
 #' @param travel_time Time spent commuting in seconds per day
 #' @param params Parameter list (optional). If not specified, calculations use
 #' default parameters.
@@ -379,14 +368,12 @@ mpc_msar <- function(
 #' @examples
 #' mpc_pwr_native(
 #' band        = "4g",
-#' urbanicity  = "suburban",
 #' travel_time = 1800,
 #' params      = load_params(version = "_template"))
 #'
 #' @export
 mpc_pwr_native <- function(
     band,
-    urbanicity,
     travel_time,
     params = load_params(version = simulation)) {
 
@@ -614,7 +601,6 @@ mpc_sar_native <- function(
 #'
 #'
 #' @param band Technology (3g, 4g, or 5g) used for the call
-#' @param urbanicity Urbanicity of home / workplace (rural, suburban, or urban)
 #' @param travel_time Time spent commuting in seconds per day
 #' @param params Parameter list (optional). If not specified, calculations use
 #' default parameters.
@@ -624,14 +610,12 @@ mpc_sar_native <- function(
 #' @examples
 #' mpc_pwr_data(
 #' band        = "4g",
-#' urbanicity  = "suburban",
 #' travel_time = 1800,
 #' params      = load_params(version = "_template"))
 #'
 #' @export
 mpc_pwr_data <- function(
     band,
-    urbanicity,
     travel_time,
     params) {
 

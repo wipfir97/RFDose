@@ -100,6 +100,7 @@ simulate_params <- function(duration,
                 travel_prop
   }
 
+
   #pick duration
   # correct duration mean to pZero values:
   pzero <- params_stochastic$global$input_stoch$duration$mpc_duration_pzero
@@ -221,14 +222,23 @@ simulate_params <- function(duration,
   }
 
   ####### mobile data
-  # country
 
   # mpd_dur_low, mpd_dur_lowmed, mpd_dur_medhigh, mpd_dur_high
+  mpd_durations <- list()
+  if (missing(mpd_dur_low)) {mpd_durations$low <- params_stochastic$global$input_stoch$mpd_duration[[paste0("mpd_dur_low_mean")]]}
+  else{mpd_durations$low <- mpd_dur_low}
+  if (missing(mpd_dur_lowtomed)) {mpd_durations$lowmed <- params_stochastic$global$input_stoch$mpd_duration[[paste0("mpd_dur_lowmed_mean")]]}
+  else{mpd_durations$lowmed <- mpd_dur_lowtomed}
+  if (missing(mpd_dur_medtohigh)) {mpd_durations$medhigh <- params_stochastic$global$input_stoch$mpd_duration[[paste0("mpd_dur_medhigh_mean")]]}
+  else{mpd_durations$medhigh <- mpd_dur_medtohigh}
+  if (missing(mpd_dur_high)) {mpd_durations$high <- params_stochastic$global$input_stoch$mpd_duration[[paste0("mpd_dur_high_mean")]]}
+  else{mpd_durations$high <- mpd_dur_high}
+
   levels <- c("low","lowmed","medhigh","high")
   for (l in levels) {
     params$global$input_stoch$mpd_duration[[paste0("mpd_dur_",l)]] <- evaluate_distribution(
       dist_name = params_stochastic$global$input_stoch$mpd_duration$distribution,
-      mean =  params_stochastic$global$input_stoch$mpd_duration[[paste0("mpd_dur_",l, "_mean")]],
+      mean =  mpd_durations[[l]],
       sd   = params_stochastic$global$input_stoch$mpd_duration[[paste0("mpd_dur_",l, "_sd")]],
       max  = params_stochastic$global$input_stoch$mpd_duration[[paste0("mpd_dur_",l, "_max")]]
     )
