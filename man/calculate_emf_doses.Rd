@@ -4,12 +4,7 @@
 \alias{calculate_emf_doses}
 \title{Calculate Total RF-EMF Doses for ALL samples}
 \usage{
-calculate_emf_doses(
-  data,
-  tissue,
-  params = load_params(),
-  default_value_file = NULL
-)
+calculate_emf_doses(data, tissue, params = NULL, default_value_file = NULL)
 }
 \arguments{
 \item{data}{A data frame. Must have the exact same columns as the provided example dataset.
@@ -17,10 +12,11 @@ Columns must not be missing. Missing values will be replaced with default values
 
 \item{tissue}{Tissue for which to calculate dose (default: "brain" or "body")}
 
-\item{params}{Parameter list (optional). If not specified, calculations use
+\item{params}{(experimental) Path to a parameter file in .yaml format. Must match the structure
+of the internal parameter file. Optional; if not specified, calculations use
 default parameters.}
 
-\item{default_value_file}{List of default values (optional).}
+\item{default_value_file}{List of default values to replace missing values (optional).}
 }
 \value{
 A data frame. Columns contain the calculated RF-EMF dose

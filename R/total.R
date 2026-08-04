@@ -12,9 +12,9 @@
 #' Columns must not be missing. Missing values will be replaced with default values.
 #' @param tissue Tissue for which to calculate dose (default: "brain" or "body")
 #' @param params (experimental) Path to a parameter file in .yaml format. Must match the structure
-#' of the internal parameter file. If not specified, calculations use
+#' of the internal parameter file. Optional; if not specified, calculations use
 #' default parameters.
-#' @param default_value_file List of default values (optional).
+#' @param default_value_file List of default values to replace missing values (optional).
 #'
 #' @returns A data frame. Columns contain the calculated RF-EMF dose
 #' of each row in mJ/kg/day, for each exposure source and each tissue.

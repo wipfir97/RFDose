@@ -2,16 +2,21 @@
 % Please edit documentation in R/helpers.R
 \name{load_params}
 \alias{load_params}
-\title{Loading parameters}
+\title{Load dose calculation parameters}
 \usage{
 load_params(path = NULL)
 }
 \arguments{
-\item{path}{Name of parameter file to load (must be in yaml format)}
+\item{path}{Name of parameter file to load (must be in yaml format). If null,
+default parameters are loaded.}
 }
 \value{
 List of parameters loaded from yaml input file
 }
 \description{
-Loading parameters
+Loads default parameters or parameters from external source and returns them
+as a nested list.
+}
+\seealso{
+\code{\link[=load_tissue_params]{load_tissue_params()}}
 }
