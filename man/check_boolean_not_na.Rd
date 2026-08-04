@@ -2,15 +2,18 @@
 % Please edit documentation in R/helpers.R
 \name{check_boolean_not_na}
 \alias{check_boolean_not_na}
-\title{Check if value is boolean and non-NA}
+\title{Check if value is logical/Boolean and non-NA}
 \usage{
 check_boolean_not_na(x)
 }
 \arguments{
-\item{x}{number}
-
-\item{name}{name of value}
+\item{x}{Single value to be checked: should be a logical/Boolean, atomic, and not NA
+to pass check}
+}
+\value{
+Returns invisible TRUE if check passes. Side effect of stopping
+calculation if check fails.
 }
 \description{
-Check if value is boolean and non-NA
+Check if value is logical/Boolean and non-NA
 }

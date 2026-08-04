@@ -2,16 +2,18 @@
 % Please edit documentation in R/helpers.R
 \name{check_duration}
 \alias{check_duration}
-\title{Check input values - duration}
+\title{Check input duration(s)}
 \usage{
 check_duration(duration)
 }
 \arguments{
-\item{duration}{single duration value or vector}
+\item{duration}{single duration (numeric) or vector of durations}
 }
 \value{
-TRUE if duration is valid, FALSE if duration is not valid
+Returns invisible TRUE if all checks pass. Side effects of stopping
+or showing warning message if any check fails
 }
 \description{
-Check input values - duration
+Checks supplied input duration or vector of durations; needed to stop
+calculation or raise warning in case of irregular input values.
 }

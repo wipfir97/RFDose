@@ -33,7 +33,7 @@ load_params <- function(path = NULL) {
 #' tissue.
 #'
 #' @export
-#' @seealso [RFDOSE::load_params()]
+#' @seealso [RFDose::load_params()]
 load_tissue_params <- function(params, device_type, tissue_name) {
   # Check if device name exists in parameter file
   if (!(device_type %in% names(params$devices))) {
@@ -235,7 +235,7 @@ check_urbanicity <- function(urbanicity) {
 #'
 #' @param tissue Name of tissue to be checked (character, length 1)
 #' @param device Device for which to check tissue (character, length 1)
-#' @param params Parameter list, as returned by [RFDOSE::load_params()]
+#' @param params Parameter list, as returned by [RFDose::load_params()]
 #'
 #' @returns Returns invisible TRUE if all checks pass. Side effect of stopping
 #' calculations if any check fails.

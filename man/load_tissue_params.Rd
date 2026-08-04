@@ -7,15 +7,21 @@
 load_tissue_params(params, device_type, tissue_name)
 }
 \arguments{
-\item{params}{Device-specific parameter list}
+\item{params}{List of parameters (default parameter file or custom YAML that
+matches default's structure)}
 
-\item{device_type}{Name of device}
+\item{device_type}{Name of device (default: )}
 
-\item{tissue_name}{Name of tissue}
+\item{tissue_name}{Name of tissue (default: "brain" or "body")}
 }
 \value{
-Parameter list specific to selected device and tissue
+List of parameters (SAR values) specific to selected device type and
+tissue.
 }
 \description{
-Load tissue-specific parameters
+Loads device- and tissue-specific parameters (SAR values) and returns them as
+a list.
+}
+\seealso{
+\code{\link[=load_params]{load_params()}}
 }

@@ -16,9 +16,14 @@ location_props(travel_time, home_prop, work_prop, outd_prop)
 \item{outd_prop}{proportion of time spent outside WITHOUT considering commute}
 }
 \value{
-list with proportions
+List with following elements: "travel", "home", "work", "out", corresponding
+value is the proportion of time spent in each location.
 }
 \description{
-Based on travel time (input variable by user), assuming a fixed ration for
-time spent at home vs work vs outdoors
+Based on travel time (input variable by user). Assumes a fixed ratio of time
+spent at home vs at work vs outdoors.
+}
+\details{
+We assume that the time spent commuting takes away from time spent
+at home, but not the time spent at work or outdoors.
 }

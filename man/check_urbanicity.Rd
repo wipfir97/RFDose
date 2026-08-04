@@ -2,13 +2,18 @@
 % Please edit documentation in R/helpers.R
 \name{check_urbanicity}
 \alias{check_urbanicity}
-\title{Check input value s- urbanicity}
+\title{Check if input urbanicity is valid}
 \usage{
 check_urbanicity(urbanicity)
 }
 \arguments{
-\item{urbanicity}{urbanicity}
+\item{urbanicity}{Single urbanicity value (must be one of these: "urban", "rural", "suburban")}
+}
+\value{
+Returns invisible TRUE if checks pass. Side effect of stopping
+calculation if any check fails.
 }
 \description{
-Check input value s- urbanicity
+Checks if a supplied urbanicity value is valid (must be "urban", "rural",
+or "suburban").
 }

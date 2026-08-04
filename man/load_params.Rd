@@ -7,7 +7,7 @@
 load_params(path = NULL)
 }
 \arguments{
-\item{path}{Name of parameter file to load (must be in yaml format). If null,
+\item{path}{Path of parameter file to load (must be a YAML file). If null,
 default parameters are loaded.}
 }
 \value{

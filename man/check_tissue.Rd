@@ -2,17 +2,22 @@
 % Please edit documentation in R/helpers.R
 \name{check_tissue}
 \alias{check_tissue}
-\title{Check tissue}
+\title{Check if tissue is valid}
 \usage{
 check_tissue(tissue, device, params)
 }
 \arguments{
-\item{tissue}{Tissue}
+\item{tissue}{Name of tissue to be checked (character, length 1)}
 
-\item{device}{Device}
+\item{device}{Device for which to check tissue (character, length 1)}
 
-\item{params}{Params}
+\item{params}{Parameter list, as returned by \code{\link[=load_params]{load_params()}}}
+}
+\value{
+Returns invisible TRUE if all checks pass. Side effect of stopping
+calculations if any check fails.
 }
 \description{
-Check tissue
+Check if tissue with this name can be found in YAML file, and if it has any
+nested parameters. Parameters themselves are NOT checked for validity.
 }
