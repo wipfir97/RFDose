@@ -226,7 +226,118 @@ test_that("check_headp_num errors for invalid input", {
 
 
 # Filling missing values ######################################################
+test_that("fill_missing_variables fills NA values in an existing column", {
+  data <- data.frame(age = c(25, NA, 30), stringsAsFactors = FALSE)
+  result <- fill_missing_variables(data, defaults = list(age = 0))
 
+  expect_equal(result$data$age, c(25, 0, 30))
+  expect_equal(result$replaced$age, 1)
+})
+
+test_that("fill_missing_variables fills an entirely missing column with the default for every row", {
+  data <- data.frame(age = c(25, 30, 40))
+  result <- fill_missing_variables(data, defaults = list(height = 170))
+
+  expect_equal(result$data$height, rep(170, 3))
+  expect_equal(result$replaced$height, 3)
+})
+
+test_that("fill_missing_variables treats empty strings as missing for character columns", {
+  data <- data.frame(city = c("Basel", "", "Zurich"), stringsAsFactors = FALSE)
+  result <- fill_missing_variables(data, defaults = list(city = "Unknown"))
+
+  expect_equal(result$data$city, c("Basel", "Unknown", "Zurich"))
+  expect_equal(result$replaced$city, 1)
+})
+
+test_that("fill_missing_variables does not modify columns outside of `defaults`", {
+  data <- data.frame(
+    age  = c(25, NA, 30),
+    note = c("fine", "", "ok"),
+    stringsAsFactors = FALSE
+  )
+  result <- fill_missing_variables(data, defaults = list(age = 0))
+  expect_equal(result$data$note, c("fine", "", "ok"))
+})
+
+test_that("fill_missing_variables warns when missing proportion exceeds threshold", {
+  data <- data.frame(age = c(NA, NA, NA, 40))  # 75% missing
+  expect_warning(
+    fill_missing_variables(data, defaults = list(age = 0), warn_threshold = 0.1),
+    "75.0% missing"
+  )
+})
+
+test_that("fill_missing_variables warns when an entirely missing column is filled", {
+  data <- data.frame(age = c(25, 30, 40))
+  expect_warning(
+    fill_missing_variables(data, defaults = list(height = 170)),
+    "entirely missing"
+  )
+})
+
+test_that("fill_missing_variables handles a data frame with zero rows without error", {
+  data <- data.frame(age = numeric(0))
+  expect_no_error(
+    result <- fill_missing_variables(data, defaults = list(age = 0))
+  )
+  expect_equal(nrow(result$data), 0)
+  expect_equal(result$replaced$age, 0)
+})
+
+test_that("fill_missing_variables errors clearly when default is not a valid factor level", {
+  data <- data.frame(grp = factor(c("a", NA, "b")))
+  expect_error(
+    fill_missing_variables(data, defaults = list(grp = "c")),  # "c" not in levels("a","b")
+    "not among its existing factor levels"
+  )
+})
+
+test_that("fill_missing_variables fills factor column correctly when default is a valid level", {
+  data <- data.frame(grp = factor(c("a", NA, "b"), levels = c("a", "b", "unknown")))
+  result <- fill_missing_variables(data, defaults = list(grp = "unknown"))
+
+  expect_equal(as.character(result$data$grp), c("a", "unknown", "b"))
+})
+
+test_that("fill_missing_variables errors when data is not a data frame", {
+  expect_error(fill_missing_variables(list(age = c(1, NA)), defaults = list(age = 0)))
+})
+
+test_that("fill_missing_variables errors when defaults is not a named list", {
+  data <- data.frame(age = c(25, NA))
+  expect_error(fill_missing_variables(data, defaults = list(0)))       # unnamed
+  expect_error(fill_missing_variables(data, defaults = c(age = 0)))    # not a list
+})
+
+test_that("fill_missing_variables errors when warn_threshold is out of range", {
+  data <- data.frame(age = c(25, NA))
+  expect_error(fill_missing_variables(data, defaults = list(age = 0), warn_threshold = 1.5))
+  expect_error(fill_missing_variables(data, defaults = list(age = 0), warn_threshold = -0.1))
+})
+
+test_that("fill_missing_variables preserves numeric column type after filling", {
+  data <- data.frame(age = c(25, NA, 30))
+  result <- fill_missing_variables(data, defaults = list(age = 0))
+  expect_type(result$data$age, "double")
+})
+
+test_that("fill_missing_variables handles multiple variables in one call", {
+  data <- data.frame(
+    age  = c(25, NA, 30),
+    city = c("Basel", "", "Zurich"),
+    stringsAsFactors = FALSE
+  )
+  result <- fill_missing_variables(
+    data,
+    defaults = list(age = 0, city = "Unknown", country = "CH")  # country entirely missing
+  )
+
+  expect_equal(result$data$age, c(25, 0, 30))
+  expect_equal(result$data$city, c("Basel", "Unknown", "Zurich"))
+  expect_equal(result$data$country, rep("CH", 3))
+  expect_equal(result$replaced, list(age = 1, city = 1, country = 3))
+})
 
 # Calculating proportions #####################################################
 ## Location proportions =======================================================
@@ -297,9 +408,6 @@ test_that("location_props preserves proportional relationships regardless of tra
   expect_equal(result_a$work, result_b$work)
   expect_equal(result_a$out, result_b$out)
 })
-
-
-## Network proportions ========================================================
 
 ## Activity proportions =======================================================
 test_that("act_pwr_props computes correct proportions for typical valid input", {

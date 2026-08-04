@@ -315,39 +315,78 @@ check_headp_num <- function(headp_num) {
 
 
 # =============================================================================
-#' Fill missing variables
+#' Fill missing values in input data frame with missing values
 #'
-#' @param data data
-#' @param defaults defaults
-#' @param warn_threshold threshold proportion of missing data to raise warning
-#' @returns data frame with missing data replaced with default values
+#' Replaces missing values in input data frame with values specified as default
+#' values. In case a column is completely missing, it is added to the data frame,
+#' with all values being the default value.
+#'
+#' @param data Input data frame
+#' @param defaults Named list (key = column name, value = default value to replace
+#' missing values in this column)
+#' @param warn_threshold threshold proportion of missing data per column to
+#' raise warning
+#'
+#' @returns data frame with missing data replaced with default values. Side effect
+#' of raising warning if proportion of missing data exceeds warn_threshold for at
+#' least one column.
 fill_missing_variables <- function(data, defaults, warn_threshold = 0.1) {
-  # List that stores number of replacements for each variable
-  replaced <- list()
-  # Count number of rows
-  n_rows <- nrow(data)
-  # Replace empty strings with NA for character variables
-  data[data==""]<-NA
+  # Input checks --------------------------------------------------------------
+  ## Check that data is a data frame
+  if (!is.data.frame(data)) {
+    stop("`data` must be a data frame.")
+  }
+  ## Check that defaults is a named list
+  if (!is.list(defaults) || is.null(names(defaults)) || any(names(defaults) == "")) {
+    stop("`defaults` must be a named list.")
+  }
+  ## check that warn threshold is a value between 0 and 1
+  if (!is.numeric(warn_threshold) || warn_threshold < 0 || warn_threshold > 1) {
+    stop("`warn_threshold` must be a numeric value between 0 and 1.")
+  }
 
-  for (var in names(defaults)) {
+  replaced <- list()
+  n_rows <- nrow(data)
+
+
+  for (var in names(defaults)) { # go through all columns with defined default values
+
     if (!var %in% colnames(data)) {
-      # Entirely missing column → fill with default
+      # Entirely missing column -> fill with default for every row
       data[[var]] <- rep(defaults[[var]], n_rows)
       replaced[[var]] <- n_rows
-    } else {
-      # Count NAs
-      n_missing <- sum(is.na(data[[var]]))
-      replaced[[var]] <- n_missing
-
-      if (n_missing > 0) {
-        data[[var]][is.na(data[[var]])] <- defaults[[var]]
+      if (n_rows > 0) {
+        warning(sprintf(
+          "Variable '%s' was entirely missing from `data` and filled with the default value.",
+          var))
       }
+      next
+    }
 
-      # Warn if proportion missing exceeds threshold
-      if (n_missing / n_rows > warn_threshold) {
-        warning(sprintf("Variable '%s' had %.1f%% missing values replaced (threshold %.0f%%)",
-                        var, 100 * n_missing / n_rows, 100 * warn_threshold))
+    # Treat empty strings as missing, but only for this column
+    col <- data[[var]]
+    if (is.character(col)) {
+      col[col == ""] <- NA
+    }
+
+    n_missing <- sum(is.na(col))
+    replaced[[var]] <- n_missing
+
+    if (n_missing > 0) {
+      if (is.factor(col) && !(defaults[[var]] %in% levels(col))) {
+        stop(sprintf(
+          "Default value for '%s' ('%s') is not among its existing factor levels: %s",
+          var, defaults[[var]], paste(levels(col), collapse = ", ")))
       }
+      col[is.na(col)] <- defaults[[var]]
+    }
+
+    data[[var]] <- col
+
+    if (n_rows > 0 && (n_missing / n_rows) > warn_threshold) {
+      warning(sprintf(
+        "Variable '%s' had %.1f%% missing values replaced (threshold %.0f%%)",
+        var, 100 * n_missing / n_rows, 100 * warn_threshold))
     }
   }
 
@@ -410,38 +449,16 @@ location_props <- function(
 }
 
 # =============================================================================
-#' Get mobile data technology use proportions
-#'
-#' Based on user variable use_5g that indicates if participant uses 5G on mobile
-#' phone or not.
-#' @param use_5g boolean variable (TRUE if participant uses 5G, FALSE otherwise)
-#' @param params parameter list
-#' @returns list with technology use proportions
-calculate_data_tech_proportions <- function(use_5g,
-                                            params) {
-  ## Scale by 3G/4G/5G proportions for 5G users or 5G non-users
-  if (use_5g) {
-    data_3g <- params$tech_3g_prop
-    data_4g <- params$tech_4g_prop
-    data_5g <- params$tech_5g_prop
-  } else {
-    data_3g <- params$tech_3g_prop_5gno
-    data_4g <- params$tech_4g_prop_5gno
-    data_5g <- params$tech_5g_prop_5gno
-  }
-  output <- list("prop_3g" = data_3g,
-                 "prop_4g" = data_4g,
-                 "prop_5g" = data_5g)
-  return(output)
-}
-
-# =============================================================================
 #' Get low/lowmed/medhigh/high activity power proportions
 #'
-#' @param low_dur ...
-#' @param lowmed_dur ...
-#' @param medhigh_dur ...
-#' @param high_dur ...
+#' Converts activity durations to proportions.
+#'
+#' @param duration_low Duration (in seconds per day) of low output power activities
+#' @param duration_lowmed Duration (in seconds per day) of low-medium output power activities
+#' @param duration_medhigh Duration (in seconds per day) of medium-high output power activities
+#' @param duration_high Duration (in seconds per day) of high output power activities
+#'
+#' @returns Named list with the use proportion of each activity.
 act_pwr_props <- function(
     low_dur,
     lowmed_dur,
