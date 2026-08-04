@@ -4,7 +4,7 @@
 
 RFDose implements the deterministic RF-EMF dose calculations developed in Jalilian et al. (publication in writing stage).
 
-This package is a work in progress and is continuously updated. We are currently testing the calculations and adding documentation, and there may still be errors and bugs. To switch to the latest development version 0.4.0, switch the branch from "main" to "dev/0.4.0". Please also refer to the [package manual](doc/RFDose_0.4.0.pdf) (continuously updated).
+This package is a work in progress and is continuously updated. We are currently testing the calculations and adding documentation, and there may still be errors and bugs. To switch to the latest development version 0.4.0, switch the branch from "main" to "dev/0.4.0". Please also refer to the [package manual](./doc/RFDose_0.4.0.pdf) (continuously updated).
 
 IMPORTANT information for test users switching from 0.2.0 to 0.3.0/0.4.0: 
 
@@ -181,14 +181,14 @@ Detailed info to be added here.
 
 ### Parameters
 
-Parameters are specified in [this YAML file](inst/extdata/params.yaml)
+Parameters are specified in [this YAML file](./inst/extdata/params.yaml)
 
 More detailed descriptions of each parameter, including units, sources, and assumptions, can be found in the dose calculator paper. I will link it HERE as soon as it is published.
 
 
 ### Missing data and default values
 
-Default values are specified in [this YAML file](inst/extdata/defaultvariables.yaml)
+Default values are specified in [this YAML file](./inst/extdata/defaultvariables.yaml)
 
 Missing values in the dataset supplied by the user will be replaced with the values in this file.
 
