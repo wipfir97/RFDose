@@ -36,7 +36,7 @@
 #   mpd_wifi_prop_travel= 0.31,
 #   lptp_dur_low = 1967
 # )
-
+#test
 
 df <- data.frame( country= "Other",
                   duration = 100,
