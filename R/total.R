@@ -20,8 +20,10 @@ calculate_emf_doses <- function(
     params = load_params(version = "_template"),
     old_params = load_params(),
     default_value_file = NULL,
-    n_sim = 100, save = FALSE, save_path = "",save_tag ="", distance_correction = TRUE) {
+    n_sim = 100, save = FALSE, save_path = "",save_tag ="") {
   # Default values ============================================================
+
+  # load irinas default values
   ## Load internal default value file if no default_value_file is supplied ----
   defaultvars <- if (is.null(default_value_file)) {
     yaml::read_yaml(
@@ -62,6 +64,8 @@ calculate_emf_doses <- function(
   # simulate n parameter files
   param_simulations <- lapply(seq_len(n_sim), function(i) {
 
+    #calls simulate_params(input_args)
+
     one_sim <- do.call(simulate_params, input_args)
     one_sim$global$sim <- paste0("sim", i)
     if (i%%10==0){print(paste0("Create simulation: ",i))}
@@ -70,7 +74,7 @@ calculate_emf_doses <- function(
   })
 
 
-  #Gianni: giving sample as input is not needed anymore when every function is stochastic
+  # calls n times one singel dose calculation
   output <- get_total_dose(results$data,
             tissue = tissue,
             param_simulations,
@@ -110,7 +114,7 @@ calculate_emf_doses <- function(
 
 
 ###############################################################################
-#' Calculate Total RF-EMF Dose for Brain and Body from All Sources
+#' takes 100 parameter files and calculets 100 doses.
 #'
 #' @param sample A list with input values for a single sample
 #' @param param_file parameter file
@@ -144,7 +148,6 @@ get_total_dose <- function(
     duration_lowmed = sim_params$global$input_stoch$mpd_duration$mpd_dur_lowmed
     duration_medhigh = sim_params$global$input_stoch$mpd_duration$mpd_dur_medhigh
     duration_high = sim_params$global$input_stoch$mpd_duration$mpd_dur_high
-    duration = sim_params$global$input_stoch$duration$mpc_duration
 
 
     # Calculate contribution of each exposure source ============================
@@ -182,6 +185,7 @@ get_total_dose <- function(
       wifi_prop_travel = wifi_prop_travel,
       params           = sim_params
       )
+
 
     ## Calculate far-field contribution DETERMINISTIC-----------------------------------------
     farf_dose <- farfield_dose(
@@ -249,6 +253,7 @@ get_total_dose <- function(
       "other_dose" = othe_dose)
   })
 
+
   # Return output =============================================================
   stochastic_dose_df <- data.frame(
     call_dose = sapply(stochastic_dose, \(x) x$call_dose),
@@ -260,7 +265,7 @@ get_total_dose <- function(
     dect_dose = sapply(stochastic_dose, \(x) x$dect_dose),
     other_dose = sapply(stochastic_dose, \(x) x$other_dose)
   )
-
+  browser()
   return(stochastic_dose_df)
 }
 

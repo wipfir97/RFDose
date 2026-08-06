@@ -100,6 +100,7 @@ mobilecall_dose <- function(
   #find name of simulation dummy
   dummy <- determine_dummy(params$global$input_stoch$sex,
                            params$global$input_stoch$age)
+  browser()
   check_tissue(tissue, "call", params,dummy)
   check_duration(duration)
   check_proportions(c(ear_prop, headp_prop, speaker_prop))
@@ -229,6 +230,7 @@ mpc_msar <- function(
           travel_time = travel_time,
           params      = params
         )
+        #for 2g this code for ecample creates the list c(900,1800)
         band_freq_names <- names(params$devices$call[[paste0(band, "_freq_props")]])
         band_freq_names <- sub("^f", "", band_freq_names)
         band_freq_names <-sub(paste0("_",band,"_prop$"), "", band_freq_names)

@@ -202,7 +202,7 @@ simulate_params <- function(duration,
   )
   }
   params$global$input_stoch$use_5g <- use_5g
-
+  #pick urbanicity
   if (missing(urbanicity)) {
     urban_props <- evaluate_distribution(
       dist_name = params_stochastic$global$input_stoch$urbanicity$distribution,
