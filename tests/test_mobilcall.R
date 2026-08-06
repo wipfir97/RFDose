@@ -3,7 +3,7 @@
 
 
 # simulate n parameter files
-n <- 1000
+n <- 100
 param_simulations <- lapply(seq_len(n), function(i) {
 
   out <- simulate_params(sex = "male",
