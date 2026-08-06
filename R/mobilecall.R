@@ -100,7 +100,6 @@ mobilecall_dose <- function(
   #find name of simulation dummy
   dummy <- determine_dummy(params$global$input_stoch$sex,
                            params$global$input_stoch$age)
-  browser()
   check_tissue(tissue, "call", params,dummy)
   check_duration(duration)
   check_proportions(c(ear_prop, headp_prop, speaker_prop))

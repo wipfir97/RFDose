@@ -265,7 +265,6 @@ get_total_dose <- function(
     dect_dose = sapply(stochastic_dose, \(x) x$dect_dose),
     other_dose = sapply(stochastic_dose, \(x) x$other_dose)
   )
-  browser()
   return(stochastic_dose_df)
 }
 
