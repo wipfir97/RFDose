@@ -192,6 +192,15 @@ mpd_msar <- function(
 
   data_prop_overall <- 1-wifi_prop_overall
 
+
+  # Calculate activity proportions ============================================
+  act_props <- act_pwr_props(
+    duration_low,
+    duration_lowmed,
+    duration_medhigh,
+    duration_high)
+
+
   # Apply mSAR calculation to all data frequency bands ========================
   msar_data <- sum(
     vapply(
@@ -226,6 +235,7 @@ mpd_msar <- function(
               freq_sar <- mpd_sar_data(
                 tissue       = tissue,
                 freq         = freq,
+                medhigh_prob = act_props$medhigh,
                 params       = params
               )
               return(freq_prop*freq_sar)
@@ -260,6 +270,7 @@ mpd_msar <- function(
       sar <- mpd_sar_wifi(
         tissue       = tissue,
         freq         = freq,
+        medhigh_prob = act_props$medhigh,
         params       = params
       )
       prop*sar*pwr
@@ -467,12 +478,18 @@ mpd_pwr_wifi <- function(
 mpd_sar_data <- function(
     freq,
     tissue,
+    medhigh_prob,
     params) {
 
   belly_position <- c("belly_center_vertical","belly_center_horizontal",
                       "belly_left_vertical","belly_left_horizontal",
                       "belly_right_vertical","belly_right_horizontal",
                       "belly_up_vertical","belly_up_horizontal")
+  frontal_position <- c("front_of_eyes_center_vertical","front_of_eyes_center_horizontal",
+                        "front_of_eyes_left_vertical","front_of_eyes_left_horizontal",
+                        "front_of_eyes_right_vertical","front_of_eyes_right_horizontal",
+                        "front_of_eyes_down_vertical","front_of_eyes_down_horizontal")
+
 
   #find name of simulation dummy
   dummy <- determine_dummy(params$global$input_stoch$sex,
@@ -515,7 +532,34 @@ mpd_sar_data <- function(
                                    delta = 6)
     }
   }
-  return(sar_belly)
+
+  # when phone is held in front of the face, for example during videocall
+  sar_front_of_face <-  sum(
+    vapply(
+      frontal_position,
+      \(positions) {
+        frontal_sar <- paste0(prefix,positions,"_sar")
+        frontal_prop <- paste0(positions,"_prop")
+        return(tissue_params[[frontal_sar]]*params$device$call$phone_positions[[frontal_prop]])
+      },
+      numeric(1)
+    )
+  )
+  if (params$global$dist_correction) {
+    # adjust distance with distance law (in mm).
+    sar_front_of_face <- dist_law(sar = sar_front_of_face,
+                                dist = params$devices$call$mpc_distance$mpc_dist_speaker,
+                                dist_ref = 200,
+                                delta = 6)
+  }
+
+
+  # we assume that for more or less the percentage of time, with med to high
+  # data usage, the phone is held in front of face.
+  #NOTE: this implementation is not completely proper, it would probably be better
+  #to use front of multiply pwr_medhigh, also here. Then the sar front of face,
+  #would actually only count for these power values
+  return(sar_belly*(1-medhigh_prob) + sar_front_of_face*medhigh_prob)
 }
 
 # Calculate SAR (wifi) ========================================================
@@ -545,11 +589,13 @@ mpd_sar_data <- function(
 mpd_sar_wifi <- function(
     freq,
     tissue,
+    medhigh_prob,
     params) {
 
   sar_wifi <- mpd_sar_data(
     freq,
     tissue,
+    medhigh_prob,
     params = params)
 
   return(sar_wifi)

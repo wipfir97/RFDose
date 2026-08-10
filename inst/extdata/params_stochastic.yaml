@@ -3043,6 +3043,10 @@ devices:
       mpd_dist_belly_sd: 100
       mpd_dist_belly_min: 80
       mpd_dist_belly_max: 300
+      mpd_dist_face_mean: 200
+      mpd_dist_face_sd: 100
+      mpd_dist_face_min: 80
+      mpd_dist_face_max: 300
 
   farf:
     home_urb_pwr_Other: 0.45

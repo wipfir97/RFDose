@@ -1,5 +1,8 @@
 # Calculate total RF-EMF dose (for brain and body) from WiFi
 
+
+#here we have to add the distance correction, and use location proportions form params directily _> delete loc_probs
+
 ###############################################################################
 # =============================================================================
 #' @export

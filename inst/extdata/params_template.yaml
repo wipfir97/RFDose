@@ -2664,6 +2664,7 @@ devices:
       wifi_5000_pwr: 200.00
     mpd_distance:
       mpd_dist_belly: 200
+      mpd_dist_face: 200
 
   farf:
     home_urb_pwr_Other: 0.45

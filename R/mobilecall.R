@@ -495,7 +495,7 @@ mpc_sar_native <- function(
   if (params$global$dist_correction) {
     mpc_sar_ear <- dist_law(sar = mpc_sar_ear,
                             dist = params$devices$call$mpc_distance$mpc_dist_ear,
-                            dist_ref = 8,
+                            dist_ref = 8,# because eye simulations ware at 8 mm
                             delta = 6)
   }
 
