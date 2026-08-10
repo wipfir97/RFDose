@@ -39,7 +39,6 @@
 #test
 
 df <- data.frame( country= "Other",
-                  duration = 100,
   lptp_dur_low= 1967,
   lptp_dur_lowtomed= 219,
   lptp_dur_medtohigh= 1967,

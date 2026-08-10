@@ -3221,8 +3221,16 @@ devices:
     gaming_online_prop: 0.25
     gaming_2_dutycycle: 0.020
     gaming_5_dutycycle: 0.028
-    gaming_2_pwr: 100
-    gaming_5_pwr: 200
+    pwr:
+      distribution: "trunc_lognormal"
+      gaming_2_pwr_mean: 100
+      gaming_2_pwr_sd: 30
+      gaming_2_pwr_min: 0.001
+      gaming_2_pwr_max: 100
+      gaming_5_pwr_mean: 200
+      gaming_5_pwr_sd: 60
+      gaming_5_pwr_min: 0.001
+      gaming_5_pwr_max: 200
     brain:
       gaming_2_sar: 0.000999468
       gaming_5_sar: 0.000163091
