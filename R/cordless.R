@@ -1,5 +1,7 @@
 # Calculate total RF-EMF dose (for brain and body) from cordless calls
 
+# here we have to add positions and distances, and change sar to freq of dect (from hameds simulations)
+
 # =============================================================================
 #' Calculate Dose from Cordless Calling
 #'

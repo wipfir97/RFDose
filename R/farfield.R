@@ -1,5 +1,7 @@
 # Calculate total RF-EMF dose (for brain and body) from far-field exposure
 
+#here urbanicity has to be changed to proportion format, and locprobs can be deleted, -> directly use location proportions
+
 ###############################################################################
 # =============================================================================
 #' @export

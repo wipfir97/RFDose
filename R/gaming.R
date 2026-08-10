@@ -1,4 +1,5 @@
 #' @export
+# #here we have to set stochastic distance, + introduce probably belly position sar (take the mean or something)
 gaming_dose <- function(
     tissue,
     duration_gaming,

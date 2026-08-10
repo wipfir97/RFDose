@@ -1,3 +1,4 @@
+# here we have to add position distinction (front of eyes), and add stochastic distances
 #' @export
 vr_dose <- function(
     tissue,

@@ -107,11 +107,11 @@ devices:
     wifi_2_pwr: 0.018
     wifi_5_pwr: 0.013
     brain:
-      wifi_2_sar: 0.00133
-      wifi_5_sar: 0.00047
+      wifi_2_sar: 0.00261819
+      wifi_5_sar: 0.00055618
     body:
-      wifi_2_sar: 0.005295
-      wifi_5_sar: 0.002423693
+      wifi_2_sar: 0.003556
+      wifi_5_sar: 0.0024018
   call:
     call_type:
       native_prop: 0.7

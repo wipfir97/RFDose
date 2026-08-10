@@ -1,3 +1,5 @@
+# here we have to add position distinction (belly), and add stochastic distances
+
 # =============================================================================
 #' Calculate RF-EMF Dose from Laptop Use
 #'
