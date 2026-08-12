@@ -32,7 +32,7 @@ cordless_dose <- function(
   )
 
   # Calculate dose and return result ==========================================
-  dose <- msar * duration
+  dose <- msar * duration/1000 # mW->W
 
   return(dose)
 }
@@ -57,21 +57,76 @@ dect_msar <- function(
 }
 
 dect_pwr <- function(
-    params = load_params()) {
-  pwr <- params$devices$dect$dect_pwr * params$devices$dect$dect_dutycycle
+    params) {
+  pwr <- params$devices$dect$pwr$dect_pwr * params$devices$dect$dutycycle$dect_dutycycle
   return(pwr)
 }
 
 dect_sar <- function(
     tissue,
     ear_prop,
-    params = load_params()) {
-  ## Load tissue params
-  tissue_params <- load_tissue_params_old(params, "dect", tissue)
+    params) {
+
   ## ear
-  ear_sar <- ear_prop * tissue_params$dect_ear_sar
+
+  #find name of simulation dummy
+  dummy <- determine_dummy(params$global$input_stoch$sex,
+                           params$global$input_stoch$age)
+  # define prefix for finding correct tissue parameter
+  prefix <- paste0(dummy,"_",tissue,"_1800_")
+  # load tissue-specific parameters (SAR values)
+
+  tissue_params <- load_tissue_params(params, "call", tissue,dummy)
+  ear_position <- c("cheek1","cheek2","cheek3",
+                    "tilt1","tilt2","tilt3")
+
+
+  dect_ear_sar <- sum(
+    vapply(
+      ear_position,
+      \(positions) {
+        ear_sar <- paste0(prefix,positions,"_sar")
+        ear_props <- paste0(positions,"_prop")
+        return(tissue_params[[ear_sar]]*params$device$call$phone_positions[[ear_props]])
+      },
+      numeric(1)
+    )
+  )
+  #adjust distance with distance law (in mm).
+  if (params$global$dist_correction) {
+    dect_ear_sar <- dist_law(sar = dect_ear_sar,
+                            dist = params$devices$dect$dect_distance$dect_distance_ear,
+                            dist_ref = 8,# because eye simulations ware at 8 mm
+                            delta = 6)
+  }
+
+  ear_sar <- ear_prop * dect_ear_sar
+
+
   ## speaker
-  speaker_sar <- (1-ear_prop) * tissue_params$dect_speaker_sar
+  frontal_position <- c("front_of_eyes_center_vertical","front_of_eyes_center_horizontal",
+                        "front_of_eyes_left_vertical","front_of_eyes_left_horizontal",
+                        "front_of_eyes_right_vertical","front_of_eyes_right_horizontal",
+                        "front_of_eyes_down_vertical","front_of_eyes_down_horizontal")
+  dect_speaker_sar <-  sum(
+      vapply(
+        frontal_position,
+        \(positions) {
+          frontal_sar <- paste0(prefix,positions,"_sar")
+          frontal_prop <- paste0(positions,"_prop")
+          return(tissue_params[[frontal_sar]]*params$device$call$phone_positions[[frontal_prop]])
+        },
+        numeric(1)
+      )
+    )
+  if (params$global$dist_correction) {
+    # adjust distance with distance law (in mm).
+    dect_speaker_sar <- dist_law(sar = dect_speaker_sar,
+                                dist = params$devices$dect$dect_distance$dect_distance_speaker,
+                                dist_ref = 200,
+                                delta = 6)
+  }
+  speaker_sar <- (1-ear_prop) * dect_speaker_sar
   ## total sar
   sar <- ear_sar + speaker_sar
   return(sar)

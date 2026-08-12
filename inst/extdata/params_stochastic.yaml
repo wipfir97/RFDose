@@ -64,6 +64,17 @@ global:
       mpd_dur_high_sd: 0.00
       mpd_dur_high_min: 0.00
       mpd_dur_high_max: 0.0
+    dect_duration:
+      distribution: "trunc_hurdle_gamma"
+      dect_duration_mean: 204
+      dect_duration_sd: 100
+      dect_duration_min: 5
+      dect_duration_max: 14400
+      dect_duration_pzero: 0.8
+    dect_position:
+      distribution: "beta"
+      dect_ear_prop_mean: 0.9
+      dect_ear_prop_a0: 100
 
 
   wifi_probs:
@@ -80,8 +91,27 @@ global:
     environment_prop_a0: 100
 devices:
   dect:
-    dect_pwr: 250
-    dect_dutycycle: 0.04
+    pwr:
+      distribution: "trunc_lognormal"
+      dect_pwr_mean: 250
+      dect_pwr_sd: 25
+      dect_pwr_max: 300
+      dect_pwr_min: 0
+    dutycycle:
+      distribution: "beta"
+      dect_dutycycle_mean: 0.04
+      dect_dutycycle_a0: 100
+    dect_distance:
+      distribution: "trunc_lognormal"
+      dect_distance_ear_mean: 8.0
+      dect_distance_ear_sd: 0.8
+      dect_distance_ear_min: 6
+      dect_distance_ear_max: 50
+      dect_distance_speaker_mean: 100
+      dect_distance_speaker_sd: 80
+      dect_distance_speaker_min: 50
+      dect_distance_speaker_max: 150
+
     brain:
       dect_ear_sar: 0.034926
       dect_speaker_sar: 0.002603877

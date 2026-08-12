@@ -101,6 +101,7 @@ simulate_params <- function(duration,
   }
 
 
+
   #pick duration
   # correct duration mean to pZero values:
   pzero <- params_stochastic$global$input_stoch$duration$mpc_duration_pzero
@@ -221,6 +222,10 @@ simulate_params <- function(duration,
     params$global$input_stoch$urbanicity$rur_prop <- 1*(urbanicity=="rural")
   }
 
+
+
+
+
   ####### mobile data
 
   # mpd_dur_low, mpd_dur_lowmed, mpd_dur_medhigh, mpd_dur_high
@@ -243,9 +248,30 @@ simulate_params <- function(duration,
       max  = params_stochastic$global$input_stoch$mpd_duration[[paste0("mpd_dur_",l, "_max")]]
     )
   }
+  ####### cordless
+  if (missing(dect_duration)) {dect_duration <- params_stochastic$global$input_stoch$dect_duration$dect_duration_mean
+  }
+  if (missing(dect_ear_prop)) {dect_ear_prop <- params_stochastic$global$input_stoch$dect_ear_prop$dect_ear_prop_mean}
+  # pick dect_duration
+  pzero <- params_stochastic$global$input_stoch$dect_duration$dect_duration_pzero
+  dect_duration <- dect_duration/(1-pzero)
 
-  # dect_duration
+  params$global$input_stoch$dect_duration$dect_duration <- evaluate_distribution(
+    dist_name = params_stochastic$global$input_stoch$dect_duration$distribution,
+    mean = dect_duration,
+    sd = params_stochastic$global$input_stoch$dect_duration$dect_duration_sd,
+    p_zero = pzero,
+    min = params_stochastic$global$input_stoch$dect_duration$dect_duration_min,
+    max = params_stochastic$global$input_stoch$dect_duration$dect_duration_max
+  )
   # dect_ear_prop
+  params$global$input_stoch$dect_position$dect_ear_prop <- evaluate_distribution(
+    dist_name = params_stochastic$global$input_stoch$dect_position$distribution,
+    mean = c(params_stochastic$global$input_stoch$dect_position$dect_ear_prop_mean,
+             1-params_stochastic$global$input_stoch$dect_position$dect_ear_prop_mean),
+    a0 = params_stochastic$global$input_stoch$dect_position$dect_ear_prop_a0
+  )[1]
+
   # lptp_dur_low
   # lptp_dur_lowtomed
   # lptp_dur_medtohigh
@@ -760,6 +786,46 @@ simulate_params <- function(duration,
     min = params_stochastic$devices$data$mpd_distance$mpd_dist_belly_min,
     max  = params_stochastic$devices$data$mpd_distance$mpd_dist_belly_max
   )
+
+  ####### cordless
+
+  # pick pwr
+  params$devices$dect$pwr$dect_pwr <- evaluate_distribution(
+    dist_name = params_stochastic$devices$dect$pwr$distribution,
+    mean = params_stochastic$devices$dect$pwr$dect_pwr_mean,
+    sd   = params_stochastic$devices$dect$pwr$dect_pwr_sd,
+    max  = params_stochastic$devices$dect$pwr$dect_pwr_max
+  )
+
+
+  # pick dc (dutycycle)
+  params$devices$dect$dutycycle$dect_dutycycle <- evaluate_distribution(
+    dist_name = params_stochastic$devices$dect$dutycycle$distribution,
+    mean = c(params_stochastic$devices$dect$dutycycle$dect_dutycycle_mean,
+             1-params_stochastic$devices$dect$dutycycle$dect_dutycycle_mean),
+    a0 = params_stochastic$devices$dect$dutycycle$dect_dutycycle_a0)[1]
+
+
+
+  # pick distance
+  params$devices$dect$dect_distance$dect_distance_ear <- evaluate_distribution(
+    dist_name = params_stochastic$devices$dect$dect_distance$distribution,
+    mean = params_stochastic$devices$dect$dect_distance$dect_distance_ear_mean,
+    sd   = params_stochastic$devices$dect$dect_distance$dect_distance_ear_sd,
+    min = params_stochastic$devices$dect$dect_distance$dect_distance_ear_min,
+    max  = params_stochastic$devices$dect$dect_distance$dect_distance_ear_max
+  )
+
+  params$devices$dect$dect_distance$dect_distance_speaker <- evaluate_distribution(
+    dist_name = params_stochastic$devices$dect$dect_distance$distribution,
+    mean = params_stochastic$devices$dect$dect_distance$dect_distance_speaker_mean,
+    sd   = params_stochastic$devices$dect$dect_distance$dect_distance_speaker_sd,
+    min = params_stochastic$devices$dect$dect_distance$dect_distance_speaker_min,
+    max  = params_stochastic$devices$dect$dect_distance$dect_distance_speaker_max
+  )
+
+
+
 
 
 

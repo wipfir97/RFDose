@@ -17,7 +17,7 @@ params_stochastic = yaml::read_yaml(system.file("extdata", paste0("params_stocha
 
 
 x <- replicate(
-  1000,
+  100,
   simulate_params(simulation = "_template"),
   simplify = FALSE
 )

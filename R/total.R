@@ -73,7 +73,6 @@ calculate_emf_doses <- function(
 
   })
 
-
   # calls n times one singel dose calculation
   output <- get_total_dose(results$data,
             tissue = tissue,
@@ -148,6 +147,8 @@ get_total_dose <- function(
     duration_lowmed = sim_params$global$input_stoch$mpd_duration$mpd_dur_lowmed
     duration_medhigh = sim_params$global$input_stoch$mpd_duration$mpd_dur_medhigh
     duration_high = sim_params$global$input_stoch$mpd_duration$mpd_dur_high
+    dect_duration = sim_params$global$input_stoch$dect_duration$dect_duration
+    dect_ear_prop = sim_params$global$input_stoch$dect_position$dect_ear_prop
 
 
     # Calculate contribution of each exposure source ============================
@@ -191,7 +192,7 @@ get_total_dose <- function(
     farf_dose <- farfield_dose(
       tissue           = tissue,
       country      = sample$country,
-      urbanicity   = sample$urbanicity,
+      urbanicity   = sample$urbanicity, # dont forget to update to proportions
       travel_time  = sample$travel_time,
       params       = old_params
       )
@@ -227,9 +228,9 @@ get_total_dose <- function(
     ## Calculate cordless contribution DETERMINISTIC------------------------------------------
     dect_dose <- cordless_dose(
       tissue         = tissue,
-      duration       = sample$dect_duration,
-      ear_prop       = sample$dect_ear_prop,
-      params         = old_params
+      duration       = dect_duration,
+      ear_prop       = dect_ear_prop,
+      params         = sim_params
       )
 
     ## Calculate contribution of other sources DETERMINISTIC-----------------------------------

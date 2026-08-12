@@ -44,6 +44,10 @@ global:
       mpd_dur_lowmed: 4916.97
       mpd_dur_medhigh: 5650.71
       mpd_dur_high: 0.0
+    dect_duration:
+      dect_duration: 204
+    dect_position:
+      dect_ear_prop: 0.9
   wifi_probs:
     wifi_2400_prop: 0.58
     wifi_5000_prop: 0.42
@@ -55,8 +59,13 @@ global:
 
 devices:
   dect:
-    dect_pwr: 250
-    dect_dutycycle: 0.04
+    pwr:
+      dect_pwr: 250
+    dutycycle:
+      dect_dutycycle: 0.04
+    dect_distance:
+      dect_distance_ear: 8.0
+      dect_distance_speaker: 100
     brain:
       dect_ear_sar: 0.034926
       dect_speaker_sar: 0.002603877
