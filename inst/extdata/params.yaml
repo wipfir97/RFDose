@@ -58,11 +58,12 @@ devices:
     wifi_2_pwr: 0.018
     wifi_5_pwr: 0.013
     brain:
-      wifi_2_sar: 0.001330
-      wifi_5_sar: 0.000556
+      wifi_2_sar: 0.002618
+      wifi_5_sar: 0.00055618
     body:
-      wifi_2_sar: 0.005295
+      wifi_2_sar: 0.003559655
       wifi_5_sar: 0.002402
+
   call:
     native_prop: 0.7
     data_prop: 0.115394
