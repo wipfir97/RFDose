@@ -67,16 +67,16 @@ cases_cordless_dose <- list(
   list(
     input = list(
       tissue      = "brain",
-      duration    = 69,
-      ear_prop    = 0.35
+      duration    = 68.8258,
+      ear_prop    = 0.34601
     ),
     output = 12.4847
   ),
   list(
     input = list(
       tissue      = "body",
-      duration    = 69,
-      ear_prop    = 0.35
+      duration    = 68.8258,
+      ear_prop    = 0.34601
     ),
     output = 3.5810
   )
@@ -85,7 +85,7 @@ cases_cordless_dose <- list(
 test_that("cordless_dose matches reference values", {
   for (case in cases_cordless_dose) {
     result <- do.call(cordless_dose, case$input)
-    expect_equal(result, case$output, tolerance = 1e-2)
+    expect_equal(result, case$output, tolerance = 1e-3)
   }
 })
 

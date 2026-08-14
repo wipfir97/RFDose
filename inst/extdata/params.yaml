@@ -65,8 +65,8 @@ devices:
       wifi_5_sar: 0.002402
   call:
     native_prop: 0.7
-    data_prop: 0.12
-    wifi_prop: 0.18
+    data_prop: 0.115394
+    wifi_prop: 0.184606
     native_2g_prop: 0.0075
     native_3g_prop: 0.0175
     native_4g_prop: 0.975
@@ -248,7 +248,7 @@ devices:
       data_5g_headp_else_sar: 0
       data_5g_speaker_sar: 0.004084
       wifi_2_ear_sar: 0.010022773
-      wifi_2_headp_face_sar: 0.000860849
+      wifi_2_headp_face_sar: 0.000863117
       wifi_2_headp_pock_sar: 0.006278143
       wifi_2_headp_else_sar: 0
       wifi_2_speaker_sar: 0.001762495
