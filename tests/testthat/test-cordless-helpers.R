@@ -16,6 +16,8 @@ cases_dect_msar <- list(
   )
 )
 
+#test push nico
+
 test_that("dect_msar matches reference values", {
   for (case in cases_dect_msar) {
     result <- do.call(dect_msar, case$input)
