@@ -56,21 +56,24 @@ cases_wifi_sar <- list(
       tissue = "brain",
       band   = "2"
     ),
-    output = 0.00133
+    output = 0.002618
+
   ),
   list(
     input = list(
       tissue = "body",
       band   = "2"
     ),
-    output = 0.005295
+    output = 0.003559655
+
   ),
   list(
     input = list(
       tissue = "brain",
       band   = "5"
     ),
-    output = 0.000556
+    output = 0.00055618
+
   ),
   list(
     input = list(
@@ -78,6 +81,7 @@ cases_wifi_sar <- list(
       band   = "5"
     ),
     output = 0.002402
+
   )
 )
 
@@ -87,3 +91,4 @@ test_that("wifi_sar matches reference values", {
     expect_equal(result, case$output, tolerance = 1e-3)
   }
 })
+

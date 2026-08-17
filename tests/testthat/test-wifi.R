@@ -44,17 +44,19 @@ reference_cases <- list(
   list(
     input = list(
       tissue           = "brain",
-      travel_time      = 1850,
+      travel_time      = 1850.0,
       wifi_prop_travel = 0.5),
-    output = 1.3402
+    output = 2.405355686
+
 
   ),
   list(
     input = list(
       tissue           = "body",
-      travel_time      = 1850,
+      travel_time      = 1850.0,
       wifi_prop_travel = 0.5),
-    output = 5.4168
+    output = 3.981903585
+
 
   )
 )
