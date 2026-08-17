@@ -98,6 +98,17 @@ cases_laptop_dose <- list(
     ),
     output = 101.378797
 
+  ), 
+  list(
+    input = list(
+      tissue      = "body",
+      dur_low     = 1069,
+      dur_lowmed  = 1168,
+      dur_medhigh = 1715,
+      dur_high    = 80000
+    ),
+    output = 21898.866802
+
   )
 )
 
