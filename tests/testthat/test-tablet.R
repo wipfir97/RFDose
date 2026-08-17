@@ -104,13 +104,34 @@ cases_tablet_dose <- list(
       dur_high    = 0
     ),
     output = 7.5665
+  ), 
+
+  list(
+    input = list(
+      tissue      = "body",
+      dur_low     = 0,
+      dur_lowmed  = 0,
+      dur_medhigh = 0,
+      dur_high    = 0
+    ),
+    output = 0
+  ), 
+  list(
+    input = list(
+      tissue      = "body",
+      dur_low     = 0,
+      dur_lowmed  = 0,
+      dur_medhigh = 0,
+      dur_high    = 80000
+    ),
+    output = 4526.5895
   )
 )
 
 test_that("tablet_dose matches reference values", {
   for (case in cases_tablet_dose) {
     result <- do.call(tablet_dose, case$input)
-    expect_equal(result, case$output, tolerance = 1e-2)
+    expect_equal(result, case$output, tolerance = 1e-3)
   }
 })
 

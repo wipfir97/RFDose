@@ -16,14 +16,14 @@ devices:
       dect_ear_sar: 0.011088893
       dect_speaker_sar: 0.002088857
   tblt:
-    wifi_2_low_dutycycle: 0.009
-    wifi_2_lowmed_dutycycle: 0.022
-    wifi_2_medhigh_dutycycle: 0.138
-    wifi_2_high_dutycycle: 0.671
-    wifi_5_low_dutycycle: 0.024
-    wifi_5_lowmed_dutycycle: 0.039
-    wifi_5_medhigh_dutycycle: 0.054
-    wifi_5_high_dutycycle: 0.495
+    wifi_2_low_dutycycle: 0.0086
+    wifi_2_lowmed_dutycycle: 0.022010
+    wifi_2_medhigh_dutycycle: 0.137783
+    wifi_2_high_dutycycle: 0.670640
+    wifi_5_low_dutycycle: 0.024275
+    wifi_5_lowmed_dutycycle: 0.038625
+    wifi_5_medhigh_dutycycle: 0.053675
+    wifi_5_high_dutycycle: 0.494775
     wifi_2_pwr: 100
     wifi_5_pwr: 200
     brain:
