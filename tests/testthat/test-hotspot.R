@@ -77,3 +77,4 @@ test_that("hotspot_dose matches reference values", {
     expect_equal(result, case$output, tolerance = 1e-3)
   }
 })
+
