@@ -458,14 +458,14 @@ devices:
     headp_phone_pwr: 0.16
     brain:
       headp_sar: 0.020049
-      headp_phone_sar: 0.000370
+      headp_phone_sar: 0.000369531
     body:
       headp_sar: 0.014058
       headp_phone_sar: 0.002357
   hotspot:
     hotspot_pwr: 5.1755728
     brain:
-      hotspot_sar: 0.000370
+      hotspot_sar: 0.00036953
     body:
       hotspot_sar: 0.002357
   vr:
