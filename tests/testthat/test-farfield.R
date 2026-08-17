@@ -80,18 +80,59 @@ cases_farfield_dose <- list(
       tissue      = "brain",
       country     = "Other",
       urbanicity  = "suburban",
-      travel_time = 1850
+      travel_time = 1850.00
     ),
-    output = 162.5784
+    output = 162.5783
     ),
   list(
     input = list(
       tissue      = "body",
       country     = "Other",
       urbanicity  = "suburban",
+      travel_time = 1850.00
+    ),
+    output = 136.0204
+
+  ), 
+    list(
+    input = list(
+      tissue      = "brain",
+      country     = "CH",
+      urbanicity  = "suburban",
+      travel_time = 1850.05
+    ),
+    output = 52.3991
+    ),
+  list(
+    input = list(
+      tissue      = "body",
+      country     = "CH",
+      urbanicity  = "suburban",
       travel_time = 1850
     ),
-    output = 136.0205
+    output = 43.8395
+  ), 
+  list(
+    input = list(
+      tissue      = "body",
+      country     = "Other",
+      urbanicity  = "urban",
+      travel_time = 1850
+    ),
+    output = 223.4457
+
+  ), 
+  list(
+    input = list(
+      tissue      = "body",
+      country     = "AT",
+      urbanicity  = "suburban",
+      travel_time = 1850
+    ),
+    output = 164.4655
+
+
+
   )
 )
 

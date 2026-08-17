@@ -4,6 +4,7 @@ global:
   home_prop: 0.708333333
   outd_prop: 0.083333333
   work_prop: 0.208333333
+
 devices:
   dect:
     dect_pwr: 250
@@ -327,9 +328,9 @@ devices:
       wifi_2_sar: 0.000863117
       wifi_5_sar: 0.000553633
   farf:
-    home_urb_pwr_Other: 0.44846
-    out_urb_pwr_Other: 1.29337
-    work_urb_pwr_Other: 0.63857
+    home_urb_pwr_Other: 0.4484592
+    out_urb_pwr_Other: 1.29337059
+    work_urb_pwr_Other: 0.6385730
     home_sub_pwr_Other: 0.26832
     out_sub_pwr_Other: 0.77384
     work_sub_pwr_Other: 0.38317
