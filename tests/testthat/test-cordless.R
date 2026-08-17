@@ -79,8 +79,45 @@ cases_cordless_dose <- list(
       ear_prop    = 0.34601
     ),
     output = 3.5810
+  ),
+
+  list(
+    input = list(
+      tissue      = "brain",
+      duration    = 0,
+      ear_prop    = 0.34601
+    ),
+    output = 0
+  ),
+  list(
+    input = list(
+      tissue      = "body",
+      duration    = 0,
+      ear_prop    = 0.34601
+    ),
+    output = 0
+  ), 
+
+    list(
+    input = list(
+      tissue      = "brain",
+      duration    = 68.8258,
+      ear_prop    = 0.5
+    ),
+    output = 17.05749983
+  ),
+  list(
+    input = list(
+      tissue      = "body",
+      duration    = 68.8258,
+      ear_prop    = 0.5
+    ),
+    output = 4.534844839
+
   )
 )
+
+# play with duration, e.g. 0 or max
 
 test_that("cordless_dose matches reference values", {
   for (case in cases_cordless_dose) {
