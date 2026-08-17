@@ -234,6 +234,6 @@ cases_smartwatch_phone_dose <- list(
 test_that("smartwatch_phone_dose matches reference values", {
   for (case in cases_smartwatch_phone_dose) {
     result <- do.call(smartwatch_phone_dose, case$input)
-    expect_equal(result, case$output, tolerance = 1e-3)
+    expect_equal(result, case$output, tolerance = 1e-5)
   }
 })
