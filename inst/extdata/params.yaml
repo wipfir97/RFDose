@@ -482,16 +482,23 @@ devices:
       vr_5_sar: 0.00653852
   gaming:
     gaming_online_prop: 0.5
-    gaming_2_dutycycle: 0.022
-    gaming_5_dutycycle: 0.028
+    gaming_2_dutycycle: 0.02201
+    gaming_5_dutycycle: 0.0276
     gaming_2_pwr: 100
     gaming_5_pwr: 200
     brain:
-      gaming_2_sar: 0.001119
-      gaming_5_sar: 0.000320
+      gaming_2_sar: 0.001119463
+
+      gaming_5_sar: 0.000320072
+
     body:
-      gaming_2_sar: 0.000863
-      gaming_5_sar: 0.000554
+      gaming_2_sar: 0.000863117
+
+
+
+      gaming_5_sar: 0.000553633
+
+
 
 
 

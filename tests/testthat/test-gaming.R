@@ -60,14 +60,22 @@ cases_gaming_dose <- list(
       tissue = "brain",
       duration_gaming = 3600
     ),
-    output = 3.91
+    output = 3.90804898
   ),
   list(
     input = list(
       tissue = "body",
       duration_gaming = 3600
     ),
-    output = 4.29
+    output = 4.29368542
+  ),
+  
+  list(
+    input = list(
+      tissue = "body",
+      duration_gaming = 80000
+    ),
+    output = 95.41523160
   )
 )
 
