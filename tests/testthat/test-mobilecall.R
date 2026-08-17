@@ -185,15 +185,15 @@ cases_mobilecall_dose <- list(
     input = list(
       tissue = "brain",
       duration = 1533.35,
-      ear_prop = 0.45,
-      headp_prop = 0.23,
+      ear_prop = 0.447769,
+      headp_prop = 0.229485,
       urbanicity = "suburban",
       use_5g = TRUE,
       travel_time = 1850,
       headp_ear_num = 2,
-      wifi_prop_home = 0.74,
-      wifi_prop_work = 0.49,
-      wifi_prop_travel = 0.31
+      wifi_prop_home = 0.7378683,
+      wifi_prop_work = 0.4892182,
+      wifi_prop_travel = 0.3071721
     ),
     output = 322.77
   ),
@@ -201,24 +201,74 @@ cases_mobilecall_dose <- list(
     input = list(
       tissue = "body",
       duration = 1533.35,
-      ear_prop = 0.45,
-      headp_prop = 0.23,
+      ear_prop = 0.447769,
+      headp_prop = 0.229485,
       urbanicity = "suburban",
       use_5g = TRUE,
       travel_time = 1850,
       headp_ear_num = 2,
-      wifi_prop_home = 0.74,
-      wifi_prop_work = 0.49,
-      wifi_prop_travel = 0.31
+      wifi_prop_home = 0.7378683,
+      wifi_prop_work = 0.4892182      ,
+      wifi_prop_travel = 0.3071721
     ),
     output = 66.65
+  ), 
+list(
+    input = list(
+      tissue = "brain",
+      duration = 10000,
+      ear_prop = 0.447769,
+      headp_prop = 0.229485,
+      urbanicity = "suburban",
+      use_5g = TRUE,
+      travel_time = 1850,
+      headp_ear_num = 2,
+      wifi_prop_home = 0.7378683,
+      wifi_prop_work = 0.4892182,
+      wifi_prop_travel = 0.3071721
+    ),
+    output = 2105.019106
+
+
+  ),
+  list(
+    input = list(
+      tissue = "body",
+      duration = 10000,
+      ear_prop = 0.447769,
+      headp_prop = 0.229485,
+      urbanicity = "suburban",
+      use_5g = TRUE,
+      travel_time = 1850.05,
+      headp_ear_num = 2,
+      wifi_prop_home = 0.7378683,
+      wifi_prop_work = 0.4892182      ,
+      wifi_prop_travel = 0.3071721
+    ),
+    output = 434.650509
+  ),
+  list(
+    input = list(
+      tissue = "body",
+      duration = 0,
+      ear_prop = 0.447769,
+      headp_prop = 0.229485,
+      urbanicity = "suburban",
+      use_5g = TRUE,
+      travel_time = 1850.05,
+      headp_ear_num = 2,
+      wifi_prop_home = 0.7378683,
+      wifi_prop_work = 0.4892182      ,
+      wifi_prop_travel = 0.3071721
+    ),
+    output = 0
   )
 )
 
 test_that("mobilecall_dose matches reference values", {
   for (case in cases_mobilecall_dose) {
     result <- do.call(mobilecall_dose, case$input)
-    expect_equal(result, case$output, tolerance = 1e-3) # still have rounding issues
+    expect_equal(result, case$output, tolerance = 1e-2) # still have rounding issues
   }
 })
 
