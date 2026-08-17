@@ -86,7 +86,7 @@ cases_laptop_dose <- list(
       dur_medhigh = 1715,
       dur_high    = 0
     ),
-    output = 0.71
+    output = 0.707738
   ),
   list(
     input = list(
@@ -96,14 +96,15 @@ cases_laptop_dose <- list(
       dur_medhigh = 1715,
       dur_high    = 0
     ),
-    output = 101.38
+    output = 101.378797
+
   )
 )
 
 test_that("laptop_dose matches reference values", {
   for (case in cases_laptop_dose) {
     result <- do.call(laptop_dose, case$input)
-    expect_equal(result, case$output, tolerance = 1e-2)
+    expect_equal(result, case$output, tolerance = 1e-3)
   }
 })
 
