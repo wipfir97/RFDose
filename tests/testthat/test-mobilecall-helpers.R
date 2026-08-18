@@ -181,7 +181,7 @@ cases_mpc_sar_native <- list(
 test_that("mpc_sar_native matches reference values", {
   for (case in cases_mpc_sar_native) {
     result <- do.call(mpc_sar_native, case$input)
-    expect_equal(result, case$output, tolerance = 1e-3)
+    expect_equal(result, case$output, tolerance = 1e-5)
   }
 })
 
@@ -216,7 +216,7 @@ cases_mpc_pwr_data <- list(
 test_that("mpc_pwr_data matches reference values", {
   for (case in cases_mpc_pwr_data) {
     result <- do.call(mpc_pwr_data, case$input)
-    expect_equal(result, case$output, tolerance = 1e-3)
+    expect_equal(result, case$output, tolerance = 1e-4)
   }
 })
 ## mpc_sar_data ===============================================================
@@ -229,7 +229,7 @@ cases_mpc_sar_data <- list(
       ear_prop     = 0.447769,
       speaker_prop = 0.322746
     ),
-    output = 3.89E-02
+    output = 0.038915611
   ),
   list(
     input = list(
@@ -239,7 +239,7 @@ cases_mpc_sar_data <- list(
       ear_prop     = 0.447769,
       speaker_prop = 0.322746
     ),
-    output = 6.64E-03
+    output = 0.00663549
   ),
   list(
     input = list(
@@ -249,7 +249,7 @@ cases_mpc_sar_data <- list(
       ear_prop     = 0.447769,
       speaker_prop = 0.322746
     ),
-    output = 3.60E-02
+    output = 0.035978107
   ),
   list(
     input = list(
@@ -259,14 +259,15 @@ cases_mpc_sar_data <- list(
       ear_prop     = 0.447769,
       speaker_prop = 0.322746
     ),
-    output = 5.85E-03
+    output = 0.00585367
+
   )
 )
 
 test_that("mpc_sar_data matches reference values", {
   for (case in cases_mpc_sar_data) {
     result <- do.call(mpc_sar_data, case$input)
-    expect_equal(result, case$output, tolerance = 1e-3)
+    expect_equal(result, case$output, tolerance = 1e-4)
   }
 })
 
@@ -342,6 +343,6 @@ test_that("mpc_sar_wifi matches reference values", {
   for (case in cases_mpc_sar_wifi) {
     result <- do.call(mpc_sar_wifi, case$input)
     # tolerance due to rounded values in reference calculations
-    expect_equal(result, case$output, tolerance = 1e-3)
+    expect_equal(result, case$output, tolerance = 1e-6)
   }
 })

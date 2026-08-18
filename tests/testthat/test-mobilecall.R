@@ -189,7 +189,7 @@ cases_mobilecall_dose <- list(
       headp_prop = 0.229485,
       urbanicity = "suburban",
       use_5g = TRUE,
-      travel_time = 1850,
+      travel_time = 1800,
       headp_ear_num = 2,
       wifi_prop_home = 0.7378683,
       wifi_prop_work = 0.4892182,
@@ -239,7 +239,7 @@ list(
       headp_prop = 0.229485,
       urbanicity = "suburban",
       use_5g = TRUE,
-      travel_time = 1850.05,
+      travel_time = 1850,
       headp_ear_num = 2,
       wifi_prop_home = 0.7378683,
       wifi_prop_work = 0.4892182      ,
@@ -255,10 +255,10 @@ list(
       headp_prop = 0.229485,
       urbanicity = "suburban",
       use_5g = TRUE,
-      travel_time = 1850.05,
+      travel_time = 1850,
       headp_ear_num = 2,
       wifi_prop_home = 0.7378683,
-      wifi_prop_work = 0.4892182      ,
+      wifi_prop_work = 0.4892182 ,
       wifi_prop_travel = 0.3071721
     ),
     output = 0
@@ -268,7 +268,7 @@ list(
 test_that("mobilecall_dose matches reference values", {
   for (case in cases_mobilecall_dose) {
     result <- do.call(mobilecall_dose, case$input)
-    expect_equal(result, case$output, tolerance = 1e-2) # still have rounding issues
+    expect_equal(result, case$output, tolerance = 1e-2) #test passed but with some rounding issue at from the 3rd significant number
   }
 })
 

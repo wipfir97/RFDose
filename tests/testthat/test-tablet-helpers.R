@@ -25,7 +25,7 @@ cases_tablet_msar <- list(
 test_that("tablet_msar matches reference values", {
   for (case in cases_tablet_msar) {
     result <- do.call(tablet_msar, case$input)
-    expect_equal(result, case$output, tolerance = 1e-3)
+    expect_equal(result, case$output, tolerance = 1e-5)
   }
 })
 

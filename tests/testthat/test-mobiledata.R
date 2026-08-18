@@ -228,7 +228,7 @@ cases_mobiledata_dose <- list(
 test_that("mobiledata_dose matches reference values", {
   for (case in cases_mobiledata_dose) {
     result <- do.call(mobiledata_dose, case$input)
-    expect_equal(result, case$output, tolerance = 1e-3) # still have rounding issues
+    expect_equal(result, case$output, tolerance = 1e-3) 
   }
 })
 
