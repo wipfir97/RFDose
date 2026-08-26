@@ -86,5 +86,5 @@ travel_time      = 1800)
 
 }
 \seealso{
-\code{\link[=mpd_pwr_data(), mpd_pwr_wifi(), mpd_sar_data(), mpd_sar_wifi]{mpd_pwr_data(), mpd_pwr_wifi(), mpd_sar_data(), mpd_sar_wifi()}}
+\code{\link[=mpd_pwr_data]{mpd_pwr_data()}}, \code{\link[=mpd_pwr_wifi]{mpd_pwr_wifi()}}, \code{\link[=mpd_sar_data]{mpd_sar_data()}}, \code{\link[=mpd_sar_wifi]{mpd_sar_wifi()}}
 }

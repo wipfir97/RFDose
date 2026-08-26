@@ -64,5 +64,5 @@ other_dose_wrapper(
 
 }
 \seealso{
-\code{\link[=hotspot_dose(), smartwatch_dose(), vr_dose(), headphones_dose(), gaming_dose]{hotspot_dose(), smartwatch_dose(), vr_dose(), headphones_dose(), gaming_dose()}}
+\code{\link[=hotspot_dose]{hotspot_dose()}}, \code{\link[=smartwatch_dose]{smartwatch_dose()}}, \code{\link[=vr_dose]{vr_dose()}}, \code{\link[=headphones_dose]{headphones_dose()}}, \code{\link[=gaming_dose]{gaming_dose()}}
 }

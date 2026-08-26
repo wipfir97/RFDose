@@ -55,5 +55,6 @@ vr_dose <- function(
   # dose
   dose <- msar*duration_vr*params$devices$vr[["vr_online_prop"]]
 
+
   return(dose)
 }

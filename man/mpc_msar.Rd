@@ -81,5 +81,5 @@ travel_time      = 1800)
 
 }
 \seealso{
-\code{\link[=mpc_pwr_native(), mpc_pwr_data(), mpc_pwr_wifi(), mpc_sar_native(), mpc_sar_data(), mpc_sar_wifi]{mpc_pwr_native(), mpc_pwr_data(), mpc_pwr_wifi(), mpc_sar_native(), mpc_sar_data(), mpc_sar_wifi()}}
+\code{\link[=mpc_pwr_native]{mpc_pwr_native()}}, \code{\link[=mpc_pwr_data]{mpc_pwr_data()}}, \code{\link[=mpc_pwr_wifi]{mpc_pwr_wifi()}}, \code{\link[=mpc_sar_native]{mpc_sar_native()}}, \code{\link[=mpc_sar_data]{mpc_sar_data()}}, \code{\link[=mpc_sar_wifi]{mpc_sar_wifi()}}
 }

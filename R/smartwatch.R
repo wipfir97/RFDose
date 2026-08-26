@@ -26,17 +26,13 @@
 #'   tissue              = "body",
 #'   duration_smartwatch = 6000)
 #'
-#' @seealso [smartwatch_watch_dose(), smartwatch_phone_dose()]
+#' @seealso [smartwatch_watch_dose()], [smartwatch_phone_dose()]
 #'
 #' @export
 smartwatch_dose <- function(
     tissue,
     duration_smartwatch,
     params = load_params()) {
-
-  # Check input ===============================================================
-  check_tissue(tissue, "smartwatch", params)
-  check_duration(duration_smartwatch)
 
   # From watch ================================================================
   dose_watch <- smartwatch_watch_dose(
@@ -97,10 +93,13 @@ smartwatch_watch_dose <- function(
   tissue_params <- load_tissue_params(params, "smartwatch", tissue)
 
   # Calculate active and passive use duration =================================
+  file_dur    <- (duration_smartwatch*120)/86400
+  active_dur  <- file_dur/2
+  passive_dur <- duration_smartwatch-(file_dur/2)
   mode_dur <- list(
-    active = duration_smartwatch*(1/1440),
-    passive = 86400 - duration_smartwatch*(1/1440))
-
+    active  = active_dur,
+    passive = passive_dur
+    )
   modes <- c("active", "passive")
 
   dose <- sum(

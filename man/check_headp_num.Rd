@@ -2,13 +2,18 @@
 % Please edit documentation in R/helpers.R
 \name{check_headp_num}
 \alias{check_headp_num}
-\title{Check input values - number of headphones}
+\title{Check if number of headphones (earbuds) is valid}
 \usage{
 check_headp_num(headp_num)
 }
 \arguments{
-\item{headp_num}{Number of headphones}
+\item{headp_num}{Number of headphones (earbuds) worn during mobile phone call.}
+}
+\value{
+Returns invisible TRUE if all checks pass. Side effect of stopping
+calculations if any check fails.
 }
 \description{
-Check input values - number of headphones
+Checks if the number of headphones (earbuds) worn during mobile phone
+calls is either 0, 1, or 2.
 }

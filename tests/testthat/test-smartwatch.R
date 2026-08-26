@@ -46,14 +46,28 @@ cases_smartwatch_dose <- list(
       tissue = "brain",
       duration_smartwatch = 86400
     ),
-    output = 0.0574
+    output = 0.069345
   ),
   list(
     input = list(
       tissue = "body",
       duration_smartwatch = 86400
     ),
-    output = 3.80
+    output = 2.881490
+  ),
+  list(
+    input = list(
+      tissue = "brain",
+      duration_smartwatch = 0
+    ),
+    output = 0
+  ),
+  list(
+    input = list(
+      tissue = "body",
+      duration_smartwatch = 0
+    ),
+    output = 0
   )
 )
 
@@ -112,21 +126,35 @@ cases_smartwatch_watch_dose <- list(
       tissue = "brain",
       duration_smartwatch = 86400
     ),
-    output = 0.0004
+    output = 0.001416+0.004074
   ),
   list(
     input = list(
       tissue = "body",
       duration_smartwatch = 86400
     ),
-    output = 3.18
+    output = 0.638026+1.836240
+  ),
+  list(
+    input = list(
+      tissue = "brain",
+      duration_smartwatch = 0
+    ),
+    output = 0
+  ),
+  list(
+    input = list(
+      tissue = "body",
+      duration_smartwatch = 0
+    ),
+    output = 0
   )
 )
 
 test_that("smartwatch_watch_dose matches reference values", {
   for (case in cases_smartwatch_watch_dose) {
     result <- do.call(smartwatch_watch_dose, case$input)
-    expect_equal(result, case$output, tolerance = 1e-2)
+    expect_equal(result, case$output, tolerance = 1e-3)
   }
 })
 
@@ -178,20 +206,34 @@ cases_smartwatch_phone_dose <- list(
       tissue = "brain",
       duration_smartwatch = 86400
     ),
-    output = 0.057
+    output = 0.063855
   ),
   list(
     input = list(
       tissue = "body",
       duration_smartwatch = 86400
     ),
-    output = 0.628
+    output = 0.407223
+  ),
+  list(
+    input = list(
+      tissue = "brain",
+      duration_smartwatch = 0
+    ),
+    output = 0
+  ),
+  list(
+    input = list(
+      tissue = "body",
+      duration_smartwatch = 0
+    ),
+    output = 0
   )
 )
 
 test_that("smartwatch_phone_dose matches reference values", {
   for (case in cases_smartwatch_phone_dose) {
     result <- do.call(smartwatch_phone_dose, case$input)
-    expect_equal(result, case$output, tolerance = 1e-2)
+    expect_equal(result, case$output, tolerance = 1e-5)
   }
 })

@@ -66,5 +66,5 @@ laptop_msar(
 
 }
 \seealso{
-\code{\link[=laptop_pwr(), laptop_sar]{laptop_pwr(), laptop_sar()}}
+\code{\link[=laptop_pwr]{laptop_pwr()}}, \code{\link[=laptop_sar]{laptop_sar()}}
 }

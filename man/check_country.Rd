@@ -2,13 +2,22 @@
 % Please edit documentation in R/helpers.R
 \name{check_country}
 \alias{check_country}
-\title{Check input values - country}
+\title{Check if country is valid}
 \usage{
 check_country(country)
 }
 \arguments{
-\item{country}{Country}
+\item{country}{Country to check. Must be one of these: "AT" (Austria),
+"BE" (Belgium), "FR" (France), "HU" (Hungary), "IT" (Italy), "NL" (Netherlands),
+"PL" (Poland), "ES" (Spain), "CH" (Switzerland), "UK" (United Kingdom), or
+"Other" (for any other country; calculations use averaged values from countries
+with available measurements)}
+}
+\value{
+Returns invisible TRUE if all checks pass. Side effect of stopping
+calculations if any check fails.
 }
 \description{
-Check input values - country
+Checks if country code matches a country for which measurement data is available.
+Use "Other" for any other country.
 }

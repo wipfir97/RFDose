@@ -7,9 +7,12 @@
 check_character_not_na(x)
 }
 \arguments{
-\item{x}{number}
-
-\item{name}{name of value}
+\item{x}{Single value to be checked: should be character, atomic, and not NA
+to pass check}
+}
+\value{
+Returns invisible TRUE if check passes. Side effect of stopping
+calculation if check fails.
 }
 \description{
 Check if value is character and non-NA

@@ -100,6 +100,7 @@ mobilecall_dose <- function(
 
   data_prop <- 1-native_prop-wifi_prop
 
+
   #############################################################################
   # Input checks ==============================================================
   check_tissue(tissue, "call", params)
@@ -131,16 +132,23 @@ mobilecall_dose <- function(
 
   dose_phone <- msar_phone * duration
 
-
   # Calculate dose for bluetooth headphones ===================================
-  ## Brain --------------------------------------------------------------------
-  msar_bt <- mpc_bt_msar(
+  ## Contribution of headphones/earset
+  msar_bt_earset <- mpc_bt_earset_msar(
     tissue = tissue,
-    params = params)
-  dose_bt <- msar_bt * headp_prop * headp_ear_num
+    params = params
+  )
+  dose_bt_earset <-msar_bt_earset * headp_prop * headp_ear_num * duration
+
+  ## Contribution of phone
+  msar_bt_phone <- mpc_bt_phone_msar(
+    tissue = tissue,
+    params = params
+  )
+  dose_bt_phone <-msar_bt_phone * headp_prop * duration
 
   # Add doses from different sources and return result ========================
-  dose <- sum(dose_phone, dose_bt)
+  dose <- sum(dose_phone, dose_bt_earset, dose_bt_phone)
 
   return(dose)
 }
@@ -194,7 +202,7 @@ mobilecall_dose <- function(
 #' use_5g           = TRUE,
 #' travel_time      = 1800)
 #'
-#' @seealso [mpc_pwr_native(), mpc_pwr_data(), mpc_pwr_wifi(), mpc_sar_native(), mpc_sar_data(), mpc_sar_wifi()]
+#' @seealso [mpc_pwr_native()], [mpc_pwr_data()], [mpc_pwr_wifi()], [mpc_sar_native()], [mpc_sar_data()], [mpc_sar_wifi()]
 #' @export
 mpc_msar <- function(
     tissue,
@@ -269,6 +277,7 @@ mpc_msar <- function(
           speaker_prop = speaker_prop,
           params       = params
         )
+
         return(prop*sar*pwr)
       },
       numeric(1)
@@ -296,6 +305,7 @@ mpc_msar <- function(
           speaker_prop = speaker_prop,
           params       = params
         )
+
         prop*sar*pwr
       },
       numeric(1)
@@ -485,10 +495,13 @@ mpc_pwr_data <- function(
   # commuting/traveling
   pwr_travel <- loc_props$travel * params$devices$call[[paste0("data_",band, "_travel_pwr")]]
 
-  # combine, multiply with duty cycle, and return resul
+  # combine, multiply with duty cycle, and return result
   dutycycle <- params$devices$call[[paste0("data_", band, "_dutycycle")]]
 
+
   pwr_total <- sum(pwr_indoor, pwr_outdoor, pwr_travel) * dutycycle
+
+
 
   return(pwr_total)
 }
@@ -658,121 +671,85 @@ mpc_sar_wifi <- function(
   return(mpc_sar)
 }
 
-
 ###############################################################################
-# Contributions from bluetooth heapdhones =====================================
-#' Calculate mobile call mSAR from Bluetooth headphones
+# Contributions from Bluetooth headphones =====================================
+#' Calculate mobile call mSAR for Bluetooth headphones (headphones only)
 #'
-#' Calculates mSAR from mobile calling using bluetooth headphones (both the
-#' contribution from the headphones and the contribution of the mobile phone
-#' establishing a connection to the headphones)
-#'
-#' @details
-#' The mSAR is calculated as:
-#' \deqn{mSAR_{bt} = mSAR_{bt_phone} + mSAR_{bt_headphones}}
-#'
-#' where the mSAR (of bt_phone and bt_headphones) is calculated as:
-#'
-#' \deqn{mSAR = nSAR * output_power}
+#' Calculates the mSAR for mobile calling using Bluetooth headphones
+#' (headphone/earset only; the contribution of the mobile phone is calculated
+#' separately).
 #'
 #' @param tissue Tissue for which to calculate mSAR (default: "brain" or "body")
+#' @param headp_ear_num Number of Bluetooth earphones worn during call (0, 1, or 2)
 #' @param params Parameter list (optional). If not specified, calculations use
 #' default parameters.
 #'
-#' @returns mSAR from Bluetooth calls in mW/kg
+#' @returns mSAR from Bluetooth calls (headphones/earset only) in mJ/kg/day)
 #'
-#' @seealso [mpc_bt_pwr(), mpc_bt_sar(), mpc_bt_phone_pwr(), mpc_bt_phone_pwr()]
+#' @seealso [mpc_bt_phone_msar()]
 #'
 #' @examples
-#' mpc_bt_msar(
+#' mpc_bt_earset_msar(
+#'   tissue = "brain"
+#' )
+#'
+#' @export
+mpc_bt_earset_msar <- function(
+    tissue,
+    headp_ear_num,
+    params = load_params()) {
+  # Load tissue params ========================================================
+  tissue_params <- load_tissue_params(params, "call", tissue)
+
+  # Output power ==============================================================
+  pwr <- params$devices$call$bt_pwr
+
+  # nSAR ======================================================================
+  sar <- tissue_params$bt_headp_sar
+
+  # Calculate mSAR and return result
+  msar <- pwr*sar
+  return(msar)
+}
+
+#' Calculate mobile call dose from Bluetooth headphones (phone only)
+#'
+#' Calculates the RF-EMF dose from mobile calling using Bluetooth headphones
+#' (phone contribution only; the contribution of the headphones/earset is calculated
+#' separately).
+#'
+#' @param tissue Tissue for which to calculate mSAR (default: "brain" or "body")
+#' @param headp_ear_num Number of Bluetooth earphones worn during call (0, 1, or 2)
+#' @param params Parameter list (optional). If not specified, calculations use
+#' default parameters.
+#'
+#' @returns Dose from Bluetooth calls (phone contribution only) in mW/kg)
+#'
+#' @seealso [mpc_bt_earset_msar()]
+#'
+#' @examples
+#' mpc_bt_phone_msar(
 #' tissue = "brain"
 #' )
 #'
 #' @export
-mpc_bt_msar <- function(
+mpc_bt_phone_msar <- function(
     tissue,
+    headp_ear_num,
     params = load_params()) {
-
-  # from bluetooth headphones
-  pwr_bt <- mpc_bt_pwr(params = params)
-  sar_bt <- mpc_bt_sar(tissue = tissue, params = params)
-  msar_bt <- pwr_bt * sar_bt
-
-  # from phone
-  pwr_p  <- mpc_bt_phone_pwr(params = params)
-  sar_p  <- mpc_bt_phone_sar(tissue = tissue, params = params)
-  msar_bt_phone <- pwr_p * sar_p
-
-  return(msar_bt + msar_bt_phone)
-}
-
-#' Calculate call output power (Bluetooth contribution only, headphones only)
-#'
-#' Returns the output power of Bluetooth headphones during mobile phone calls.
-#'
-#' @param params Parameter list (optional). If not specified, calculations use
-#' default parameters.
-#'
-#' @returns Output power bluetooth headphones (headphones only) in mJ
-mpc_bt_pwr <- function(
-    params = load_params()) {
-  pwr <- params$devices$call$bt_pwr
-  return(pwr)
-}
-
-#' Calculate call sar (bluetooth contribution only, headphones only)
-#'
-#' Returns the tissue-specific nSAR value from Bluetooth headphones during mobile
-#' phone calls.
-#'
-#' @param tissue Tissue for which to calculate nSAR (default: "brain" or "body")
-#' @param params Parameter list (optional). If not specified, calculations use
-#' default parameters.
-#'
-#' @returns nSAR in W/kg/W
-mpc_bt_sar <- function(
-    tissue,
-    params = load_params()) {
+  # Load tissue params ========================================================
   tissue_params <- load_tissue_params(params, "call", tissue)
-  sar <- tissue_params$bt_headp_sar
-  return(sar)
-}
 
-#' Calculate call output power (bluetooth contribution only, phone only)
-#'
-#' Returns the output power of the mobile phone during mobile calls when connected
-#' to Bluetooth headphones (Bluetooth contribution only!)
-#'
-#' @param params Parameter list (optional). If not specified, calculations use
-#' default parameters.
-#'
-#' @returns Output power bluetooth headphones (phone only) in mJ
-mpc_bt_phone_pwr <- function(
-    params = load_params()) {
+  # Output power ==============================================================
   pwr <- params$devices$call$bt_pwr
-  return(pwr)
-}
 
-#' Calculate call output power (bluetooth contribution only, headphones only)
-#'
-#' Returns the tissue-speficic nSAR from the mobile phones during calls when
-#' connected to Bluetooth headphones (Bluetooth contribution only!)
-#'
-#' @param tissue Tissue for which to calculate nSAR (default: "brain" or "body")
-#' @param params Parameter list (optional). If not specified, calculations use
-#' default parameters.
-#'
-#' @returns nSAR in W/kg/W
-mpc_bt_phone_sar <- function(
-    tissue,
-    params = load_params()) {
-  tissue_params <- load_tissue_params(params, "call", tissue)
+  # nSAR ======================================================================
   sar_face <- params$devices$call$headp_face_prop * tissue_params$bt_phone_face_sar
   sar_pock <- params$devices$call$headp_pock_prop * tissue_params$bt_phone_pock_sar
   sar_else <- params$devices$call$headp_else_prop * tissue_params$bt_phone_else_sar
-  return(sar_face + sar_pock + sar_else)
+  sar <- sum(sar_face, sar_pock, sar_else)
+
+  # Calculate mSAR and return result ==========================================
+  msar <- pwr*sar
+  return(msar)
 }
-
-
-
-

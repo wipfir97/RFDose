@@ -38,5 +38,5 @@ farfield_msar(
 
 }
 \seealso{
-\code{\link[=farfield_pwr(), farfield_sar]{farfield_pwr(), farfield_sar()}}
+\code{\link[=farfield_pwr]{farfield_pwr()}}, \code{\link[=farfield_sar]{farfield_sar()}}
 }

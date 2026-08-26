@@ -169,7 +169,7 @@ mobiledata_dose <- function(
 #' urbanicity       = "suburban",
 #' travel_time      = 1800)
 #'
-#' @seealso [mpd_pwr_data(), mpd_pwr_wifi(), mpd_sar_data(), mpd_sar_wifi()]
+#' @seealso [mpd_pwr_data()], [mpd_pwr_wifi()], [mpd_sar_data()], [mpd_sar_wifi()]
 #' @export
 mpd_msar <- function(
     tissue,

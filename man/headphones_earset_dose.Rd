@@ -9,10 +9,10 @@ headphones_earset_dose(tissue, duration_headphones, params = load_params())
 \arguments{
 \item{tissue}{Tissue for which to calculate dose (default: "brain" or "body")}
 
+\item{duration_headphones}{duration of time Bluetooth headphones were worn in s/day}
+
 \item{params}{Parameter list (optional). If not specified, calculations use
 default parameters.}
-
-\item{duration_smartwatch}{duration of time Bluetooth headphones were worn in s/day}
 }
 \value{
 Tissue-specific RF-EMF dose from Bluetooth headphone use (earset contribution only) in mJ/kg/day

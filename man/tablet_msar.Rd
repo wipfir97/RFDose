@@ -66,5 +66,5 @@ tablet_msar(
 
 }
 \seealso{
-\code{\link[=tablet_pwr(), tablet_sar]{tablet_pwr(), tablet_sar()}}
+\code{\link[=tablet_pwr]{tablet_pwr()}}, \code{\link[=tablet_sar]{tablet_sar()}}
 }

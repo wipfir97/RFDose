@@ -2,16 +2,19 @@
 % Please edit documentation in R/helpers.R
 \name{check_proportions}
 \alias{check_proportions}
-\title{Check input values - proportions}
+\title{Check input proportion(s)}
 \usage{
 check_proportions(proportions)
 }
 \arguments{
-\item{proportions}{Single proportion avlue or vector with proportions to check}
+\item{proportions}{Single proportion value (between 0 and 1 ) or vector
+with multiple proportions to check}
 }
 \value{
-TRUE if proportions are valid, FALSE if invalid
+Returns invisible TRUE if all checks pass. Side effects of stopping
+or showing warning message if any check fails.
 }
 \description{
-Check input values - proportions
+Checks supplied input proportion or vector of proportions; needed to stop
+calculation or raise warning in case of irregular input values.
 }

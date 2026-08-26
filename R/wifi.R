@@ -49,10 +49,19 @@ wifi_dose <- function(
     outd_prop   = params$global$outd_prop,
     work_prop   = params$global$work_prop)
 
+  # assumption: always WiFi exposure at home and at work
+  # assumption: no WiFi exposure outdoors
+  # assumption: if wifi_prop_travel > 0, always WiFi exposure while commuting,
+  #             else no WiFi exposure
+  if (wifi_prop_travel == 0) {
+    wifi_on_commute <- 0
+  } else {
+    wifi_on_commute <- 1
+  }
   duration <- 86400 * sum(
     loc_props$home, # assumption: always WiFi exposure at home and work
     loc_props$work, # assumption: no WiFi exposure outdoors
-    loc_props$travel * wifi_prop_travel)
+    loc_props$travel * wifi_on_commute)
 
   # Calculate mSAR ============================================================
   ## Brain --------------------------------------------------------------------
@@ -93,7 +102,7 @@ wifi_dose <- function(
 #'   wifi_prop_travel = 0.5)
 #'
 #' @export
-#' @seealso [wifi_pwr(), wifi_sar()]
+#' @seealso [wifi_pwr()], [wifi_sar()]
 wifi_msar <- function(
     tissue,
     travel_time,

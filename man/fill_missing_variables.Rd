@@ -2,20 +2,26 @@
 % Please edit documentation in R/helpers.R
 \name{fill_missing_variables}
 \alias{fill_missing_variables}
-\title{Fill missing variables}
+\title{Fill missing values in input data frame with missing values}
 \usage{
 fill_missing_variables(data, defaults, warn_threshold = 0.1)
 }
 \arguments{
-\item{data}{data}
+\item{data}{Input data frame}
 
-\item{defaults}{defaults}
+\item{defaults}{Named list (key = column name, value = default value to replace
+missing values in this column)}
 
-\item{warn_threshold}{threshold proportion of missing data to raise warning}
+\item{warn_threshold}{threshold proportion of missing data per column to
+raise warning}
 }
 \value{
-data frame with missing data replaced with default values
+data frame with missing data replaced with default values. Side effect
+of raising warning if proportion of missing data exceeds warn_threshold for at
+least one column.
 }
 \description{
-Fill missing variables
+Replaces missing values in input data frame with values specified as default
+values. In case a column is completely missing, it is added to the data frame,
+with all values being the default value.
 }

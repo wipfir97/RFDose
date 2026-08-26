@@ -126,7 +126,7 @@ tablet_dose <- function(
 #'   dur_high    = 0)
 #'
 #' @export
-#' @seealso [tablet_pwr(), tablet_sar()]
+#' @seealso [tablet_pwr()], [tablet_sar()]
 tablet_msar <- function(
     tissue,
     dur_low,

@@ -90,7 +90,7 @@ farfield_dose <- function(
 #'   travel_time = 1800)
 #'
 #' @export
-#' @seealso [farfield_pwr(), farfield_sar()]
+#' @seealso [farfield_pwr()], [farfield_sar()]
 farfield_msar <- function(
     tissue,
     country,

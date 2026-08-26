@@ -3,41 +3,41 @@ cases_mpd_msar <- list(
   list(
     input = list(
       tissue           = "brain",
-      duration_low     = 4860,
-      duration_lowmed  = 540,
-      duration_medhigh = 4860,
-      duration_high    = 540,
+      duration_low     = 3989.318141,
+      duration_lowmed  = 4916.971705,
+      duration_medhigh = 5650.714779,
+      duration_high    = 0,
       use_5g           = TRUE,
-      wifi_prop_home   = 0.5,
-      wifi_prop_work   = 0.5,
-      wifi_prop_travel = 0.5,
+      wifi_prop_home   = 0.7378683,
+      wifi_prop_work   = 0.4892182,
+      wifi_prop_travel = 0.3071721,
       urbanicity       = "suburban",
-      travel_time      = 1800
+      travel_time      = 1850
     ),
-    output = 0.016419195
+    output = 0.0100946
   ),
   list(
     input = list(
       tissue           = "body",
-      duration_low     = 4860,
-      duration_lowmed  = 540,
-      duration_medhigh = 4860,
-      duration_high    = 540,
+      duration_low     = 3989.318141,
+      duration_lowmed  = 4916.971705,
+      duration_medhigh = 5650.714779,
+      duration_high    = 0,
       use_5g           = TRUE,
-      wifi_prop_home   = 0.5,
-      wifi_prop_work   = 0.5,
-      wifi_prop_travel = 0.5,
+      wifi_prop_home   = 0.7378683,
+      wifi_prop_work   = 0.4892182,
+      wifi_prop_travel = 0.3071721,
       urbanicity       = "suburban",
-      travel_time      = 1800
+      travel_time      = 1850
     ),
-    output = 0.008660705
+    output = 0.0054054
   )
 )
 
 test_that("mpd_msar matches reference values", {
   for (case in cases_mpd_msar) {
     result <- do.call(mpd_msar, case$input)
-    expect_equal(result, case$output, tolerance = 1e-1) # still have rounding issues
+    expect_equal(result, case$output, tolerance = 1e-3) # still have rounding issues
   }
 })
 
@@ -46,45 +46,45 @@ cases_mpd_pwr_data <- list(
   list(
     input = list(
       band             = "3g",
-      duration_low     = 4860,
-      duration_lowmed  = 540,
-      duration_medhigh = 4860,
-      duration_high    = 540,
+      duration_low     = 3989.318141,
+      duration_lowmed  = 4916.971705,
+      duration_medhigh = 5650.714779,
+      duration_high    = 0,
       urbanicity       = "suburban",
-      travel_time      = 1800
+      travel_time      = 1850
     ),
-    output = 56.96
+    output = 53.70
   ),
   list(
     input = list(
       band             = "4g",
-      duration_low     = 4860,
-      duration_lowmed  = 540,
-      duration_medhigh = 4860,
-      duration_high    = 540,
+      duration_low     = 3989.318141,
+      duration_lowmed  = 4916.971705,
+      duration_medhigh = 5650.714779,
+      duration_high    = 0,
       urbanicity       = "suburban",
-      travel_time      = 1800
+      travel_time      = 1850
     ),
-    output = 8.92
+    output = 5.58
   ),
   list(
     input = list(
       band             = "5g",
-      duration_low     = 4860,
-      duration_lowmed  = 540,
-      duration_medhigh = 4860,
-      duration_high    = 540,
+      duration_low     = 3989.318141,
+      duration_lowmed  = 4916.971705,
+      duration_medhigh = 5650.714779,
+      duration_high    = 0,
       urbanicity       = "suburban",
-      travel_time      = 1800
+      travel_time      = 1850
     ),
-    output = 7.30
+    output = 4.93
   )
 )
 
 test_that("mpd_pwr_data matches reference values", {
   for (case in cases_mpd_pwr_data) {
     result <- do.call(mpd_pwr_data, case$input)
-    expect_equal(result, case$output, tolerance = 1e-2)
+    expect_equal(result, case$output, tolerance = 1e-3)
   }
 })
 
@@ -95,42 +95,42 @@ cases_mpd_sar_data <- list(
       band   = "3g",
       tissue = "brain"
     ),
-    output = 0.003629
+    output = 0.003828
   ),
   list(
     input = list(
       band   = "3g",
       tissue = "body"
     ),
-    output = 0.001066
+    output = 0.001062
   ),
   list(
     input = list(
       band   = "4g",
       tissue = "brain"
     ),
-    output = 0.003235
+    output = 0.003599
   ),
   list(
     input = list(
       band   = "4g",
       tissue = "body"
     ),
-    output = 0.001031
+    output = 0.001036
   ),
   list(
     input = list(
       band   = "5g",
       tissue = "brain"
     ),
-    output = 0.000505
+    output = 0.000671
   ),
   list(
     input = list(
       band   = "5g",
       tissue = "body"
     ),
-    output = 0.000707
+    output = 0.000726
   )
 )
 
@@ -146,29 +146,29 @@ cases_mpd_pwr_wifi <- list(
   list(
     input = list(
       band             = "2",
-      duration_low     = 4860,
-      duration_lowmed  = 540,
-      duration_medhigh = 4860,
-      duration_high    = 540
+      duration_low     = 3989.318141,
+      duration_lowmed  = 4916.971705,
+      duration_medhigh = 5650.714779,
+      duration_high    = 0
     ),
-    output = 11.76
+    output = 6.33
   ),
   list(
     input = list(
       band             = "5",
-      duration_low     = 4860,
-      duration_lowmed  = 540,
-      duration_medhigh = 4860,
-      duration_high    = 540
+      duration_low     = 3989.318141,
+      duration_lowmed  = 4916.971705,
+      duration_medhigh = 5650.714779,
+      duration_high    = 0
     ),
-    output = 10.48
+    output = 8.11
   )
 )
 
 test_that("mpd_pwr_wifi matches reference values", {
   for (case in cases_mpd_pwr_wifi) {
     result <- do.call(mpd_pwr_wifi, case$input)
-    expect_equal(result, case$output, tolerance = 1e-2)
+    expect_equal(result, case$output, tolerance = 1e-3)
   }
 })
 
@@ -179,28 +179,28 @@ cases_mpd_sar_wifi <- list(
       band   = "2",
       tissue = "brain"
     ),
-    output = 0.000999
+    output = 0.001119
   ),
   list(
     input = list(
       band   = "2",
       tissue = "body"
     ),
-    output = 0.000861
+    output = 0.000863
   ),
   list(
     input = list(
       band   = "5",
       tissue = "brain"
     ),
-    output = 0.000163
+    output = 0.000320
   ),
   list(
     input = list(
       band   = "5",
       tissue = "body"
     ),
-    output = 0.000586
+    output = 0.000554
   )
 )
 

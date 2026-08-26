@@ -2,36 +2,21 @@
 
 ## About
 
-RFDose implements the deterministic RF-EMF dose calculations developed in
-Jalilian et al. (publication in writing stage).
+RFDose implements the deterministic RF-EMF dose calculations developed in Jalilian et al. (publication in writing stage).
 
-This package is a work in progress and is continuously updated. We are currently testing the calculations and adding documentation, and there may still be errors and bugs. 
+This package is a work in progress and is continuously updated. We are currently testing the calculations and adding documentation, and there may still be errors and bugs. To switch to the latest development version 0.4.0, switch the branch from "main" to "dev/0.4.0". Please also refer to the [package manual](./doc/RFDose_0.4.0.pdf) (continuously updated).
 
-IMPORTANT information for users switching from 0.2.0 to 0.3.0: 
+IMPORTANT information for test users switching from 0.2.0 to 0.3.0/0.4.0: 
 
 * The definition of the headp\_prop input variable changed from version 0.2.0 to 0.3.0.
 * The calculate_emf_doses() function changed: From version 0.3.0, the tissue (default: "brain" or "body") needs to be specified when using the `calculate_emf_doses` function! In addition, the output structure changed and the total_dose output column was removed. Please refer to the function documentation.
-
-
+* Dose functions from different devices/sources can now be used individually.
 
 
 \---
 
-## Development Status
 
-### Version overview
-
-|Version|Name|Status|
-|-|-|-|
-|0.0.1|Basic test version (not on Github)|Completed|
-|0.1.0|Initial draft version for internal use|Completed|
-|0.2.0|Revised draft version with updated calculations, variables, and unit tests. Based on dose calculator version 7.3|Completed|
-|0.3.0|Updated version with major changes in dose calculations (based on dose calculator 7.6). Based on dose calculator version 7.6|Completed|
-|0.4.0|Expected to be a smaller update (based on dose calculator version 7.7), with updated parameter values and additional helper functions for overwriting parameters and default values |In development|
-
-
-
-## 🛠️ Installation
+## Installation
 
 ### Prerequisites
 
@@ -86,15 +71,37 @@ calculate_emf_doses(example_data, tissue = "brain") # brain dose
 calculate_emf_doses(example_data, tissue = "body")  # body dose
 ```
 
+From version 0.4.0, it is possible to supply your own parameter file to the calculations. This file must be in YAML format and follow the same structure and contain the same values as the [inbuilt parameter file](inst/extdata/params.yaml). Note that the structure of the custom YAML file is not evaluated yet in the code- mismatched in structures may cause the calculations to return incorrect results. 
+
+```{r}
+# Calculate example doses with own parameter file
+calculate_emf_doses(
+example_data, 
+tissue = "brain", 
+params = "path_to_my_file/my_params.yaml")
+```
+
 \---
 
+## Development Status
+
+### Version overview
+
+|Version|Name|Status|
+|-|-|-|
+|0.0.1|Basic test version (not on Github)|Completed|
+|0.1.0|Initial draft version for internal use|Completed|
+|0.2.0|Revised draft version with updated calculations, variables, and unit tests. Based on dose calculator version 7.3|Completed|
+|0.3.0|Updated version with major changes in dose calculations (based on dose calculator 7.6). Based on dose calculator version 7.6|Completed|
+|0.4.0|Smaller update (based on dose calculator version 7.7), with updated parameter values and additional helper functions for overwriting parameters and default values |In development - currently in testing phase|
 
 
 ## Documentation
 
+
 ### Exposure sources
 
-We consider the following exposure sources in the dose calculations:
+We consider the following exposure sources/devices in the dose calculations:
 
 |Exposure|Abbreviation|Description|
 |-|-|-|
@@ -105,9 +112,28 @@ We consider the following exposure sources in the dose calculations:
 |Laptop|lptp|Laptop use|
 |Tablet|tblt|Tablet use|
 |Far-field|farf|Far-field exposure|
-|Other|othe|Other devices: smart watch, tracker, VR headset, hotspot, bluetooth headphones, smart home|
+|Other|other|Other devices: smart watch, tracker, VR headset, hotspot, bluetooth headphones, smart home|
 
-#### Variable overview (version 0.2.0)
+### Calculation
+
+```bash
+total_dose()
+├── mobilecall_dose()     
+│    └── mobilecall_dose()
+│         ├── mobilecall_nsar()
+│         └── mobilecall_pwr()
+├── mobiledata_dose()   
+├── cordless_dose() 
+├── laptop_dose()
+├── tablet_dose()
+├── other_dose_wrapper()
+├── wifi_dose()
+└── farfield_dose()
+```
+
+#### Variable overview (version 0.4.0)
+
+This overview is not yet complete - I will update it soon.
 
 |Name|Unit|Type|Description|Notes|
 |-|-|-|-|-|
@@ -155,18 +181,18 @@ Detailed info to be added here.
 
 ### Parameters
 
-Parameters are specified in [this YAML file](inst/extdata/params.yaml)
+Parameters are specified in [this YAML file](./inst/extdata/params.yaml)
 
-More detailed descriptions of each parameter, including units, can be found in the [parameter reference file](doc/params_reference.csv). **Note: this parameter reference file is continuously updated and not yet completed.**
+More detailed descriptions of each parameter, including units, sources, and assumptions, can be found in the dose calculator paper. I will link it HERE as soon as it is published.
 
 
 ### Missing data and default values
 
-Default values are specified in [this YAML file](inst/extdata/defaultvariables.yaml)
+Default values are specified in [this YAML file](./inst/extdata/defaultvariables.yaml)
 
 Missing values in the dataset supplied by the user will be replaced with the values in this file.
 
-At the moment, there is no limit to how much missing data is allowed. **However, variables with more than 10% missing data will raise a warning message.**
+At the moment, there is no limit to how much missing data is allowed. However, variables with more than 10% missing data will raise a warning message.
 
 
 
