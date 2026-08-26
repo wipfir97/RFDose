@@ -122,7 +122,7 @@ For the activity variables (mpd, laptop, tablet)
 |travel\_time|s|numeric|>=0 and <=59350|Time spent commuting (public transport or car) per day|mpc, mpd, far-field, wifi|
 |country|-|character|must exactly match one of the listed options|Austria:"AT", Belgium:"BE", France:"FR", Hungary:"HU", Italy:"IT", Netherlands:"NL", Poland:"PL", Spain:"ES", Switzerland:"CH", United Kingdom:"UK", unknown/other: "Other"|farfield|
 |urbanicity|-|character|"rural", "suburban" or "urban"|Urbanicity of participant's home ("rural", "suburban", "urban")|mpd, farfield|
-|headp\_ear\_num|-|numeric|0, 1 or 2Number of earphones worn during call|mpc|
+|headp\_ear\_num|-|numeric|0, 1 or 2|Number of earphones worn during call|mpc|
 |mpc\_duration|s|numeric|>=0 and <= 86400|Daily duration of mobile phone calls (with or without app)|mpc|
 |mpc\_ear\_prop|-|numeric|>=0 and <=1|Proportion of time the mobile phone is held against head during mobile calls|mpc|
 |mpc\_headp\_prop|-|proportion|>=0 and <=1|Proportion of time headphones are used during mobile phone calls|mpc|
