@@ -2,68 +2,45 @@
 
 ## About
 
-RFDose implements the deterministic RF-EMF dose calculations developed in Jalilian et al. (publication in writing stage).
+RFDose implements the deterministic RF-EMF dose calculations developed in Jalilian et al. (publication in writing stage). Version 1.0.0 is based on the most up-to-date dose calculations (August 2026).
 
-This package is a work in progress and is continuously updated. We are currently testing the calculations and adding documentation, and there may still be errors and bugs. To switch to the latest development version 0.4.0, switch the branch from "main" to "dev/0.4.0". Please also refer to the [package manual](./doc/RFDose_0.4.0.pdf) (continuously updated).
+Please also refer to the [package manual](./doc/RFDose_1.0.0.pdf)
 
-IMPORTANT information for test users switching from 0.2.0 to 0.3.0/0.4.0: 
 
 * The definition of the headp\_prop input variable changed from version 0.2.0 to 0.3.0.
 * The calculate_emf_doses() function changed: From version 0.3.0, the tissue (default: "brain" or "body") needs to be specified when using the `calculate_emf_doses` function! In addition, the output structure changed and the total_dose output column was removed. Please refer to the function documentation.
 * Dose functions from different devices/sources can now be used individually.
 
-
 \---
 
 
-## Installation
-
-### Prerequisites
-
-The `remotes` R package should be installed and loaded.
-
-```{r}
-library(remotes)
-```
+## Installation and Use Example
 
 ### Install RFDose
 
-To install the R package:
+Install `RFDose` using the `remotes` R package.
 
 ```{r}
+# Install package
 remotes::install_github("wipfir97/RFDose")
-```
-
-To install the current development version:
-
-```{r}
-remotes::install_github("wipfir97/RFDose@dev/0.4.0")
-```
-
-To install an older version of the package (example v.0.2.0):
-
-```{r}
-# Install RFDose using your PAT
-remotes::install_github("wipfir97/RFDose@v0.2.0")
-```
-
-\---
-
-
-## Quick Start
-
-For a quick start, you can load the in-build example data set. This contains 3 samples of hypothetical data.
-
-```{r}
 # Load package
 library(RFDose)
+```
+
+### Use Example
+
+Load the example data set, which contains data from 3 hypothetical samples.
+
+For a quick start, you can load the in-build example data set. Each row corresponds to one person, with 3 hypothetical data points. 
+
+```{r}
 # Load example data
 data(example_data)
 # View example data
 head(example_data)
 ```
 
-To calculate the RF-EMF doses for each participant, run the following code:
+Calculate RF-EMF doses in mJ/kg/day for each row by using the `calculate_emf_doses()` function and specifying a tissue (currently supported: "brain" and "body"(=overall exposure of the whole body)).
 
 ```{r}
 # Calculate example doses
@@ -71,48 +48,44 @@ calculate_emf_doses(example_data, tissue = "brain") # brain dose
 calculate_emf_doses(example_data, tissue = "body")  # body dose
 ```
 
-From version 0.4.0, it is possible to supply your own parameter file to the calculations. This file must be in YAML format and follow the same structure and contain the same values as the [inbuilt parameter file](inst/extdata/params.yaml). Note that the structure of the custom YAML file is not evaluated yet in the code- mismatched in structures may cause the calculations to return incorrect results. 
+Use your own parameters by providing a custom file. This file must be in YAML format and follow the same structure as the [inbuilt parameter file](inst/extdata/params.yaml).
+
+*Note that the R package does not currently check the structure of custom parameter files, so mismatches may result in faulty calculations.*
 
 ```{r}
 # Calculate example doses with own parameter file
 calculate_emf_doses(
-example_data, 
-tissue = "brain", 
-params = "path_to_my_file/my_params.yaml")
+  example_data, 
+  tissue = "brain", 
+  params = "path_to_my_file/my_params.yaml")
 ```
+
+Behind the scenes, `calculate_emf_doses()` calls various source-specific dose functions, which calculate the individual contributions of different sources (e.g. mobile phone calls). These functions may be used individually. 
 
 \---
 
-## Development Status
+## How can I contribute to `RFDose`?
 
-### Version overview
+Informations on how to contribute to `RFDose` will be added here. 
 
-|Version|Name|Status|
-|-|-|-|
-|0.0.1|Basic test version (not on Github)|Completed|
-|0.1.0|Initial draft version for internal use|Completed|
-|0.2.0|Revised draft version with updated calculations, variables, and unit tests. Based on dose calculator version 7.3|Completed|
-|0.3.0|Updated version with major changes in dose calculations (based on dose calculator 7.6). Based on dose calculator version 7.6|Completed|
-|0.4.0|Smaller update (based on dose calculator version 7.7), with updated parameter values and additional helper functions for overwriting parameters and default values |In development - currently in testing phase|
+## Background
 
-
-## Documentation
-
+For detailed information and scientific background, please refer to the manuscript by Jalilian et al. (manuscript in preparation, will be linked here once published).
 
 ### Exposure sources
 
-We consider the following exposure sources/devices in the dose calculations:
+We consider the following RF-EMF exposure sources:
 
 |Exposure|Abbreviation|Description|
 |-|-|-|
 |Mobile calling|mpc|Voice calling using mobile phone, with or without App|
-|Mobile data|mpd|WiFi and mobile data use during mobile phone use|
+|Mobile data|mpd|WiFi and mobile data use on mobile phone|
 |WiFi|wifi|WiFi router|
-|Cordless Phone|dect|Cordless phone use|
+|Cordless Phone|dect|Cordless phone (=DECT phone) use|
 |Laptop|lptp|Laptop use|
 |Tablet|tblt|Tablet use|
-|Far-field|farf|Far-field exposure|
-|Other|other|Other devices: smart watch, tracker, VR headset, hotspot, bluetooth headphones, smart home|
+|Far-field|farf|Far-field exposure from mobile phone base stations and broadcast stations|
+|Other|other|Other devices: smartwatch, VR headset, hotspot, bluetooth headphones, and gaming consoles|
 
 ### Calculation
 
@@ -131,9 +104,9 @@ total_dose()
 └── farfield_dose()
 ```
 
-#### Variable overview (version 0.4.0)
+### Variables
 
-This overview is not yet complete - I will update it soon.
+Input variables are described in ...
 
 |Name|Unit|Type|Description|Notes|
 |-|-|-|-|-|
@@ -171,30 +144,19 @@ This overview is not yet complete - I will update it soon.
 
 \---
 
-### Input/user variables
-
-Detailed info to be added here.
-
-### Generated output variables
-
-Detailed info to be added here.
-
 ### Parameters
 
-Parameters are specified in [this YAML file](./inst/extdata/params.yaml)
-
-More detailed descriptions of each parameter, including units, sources, and assumptions, can be found in the dose calculator paper. I will link it HERE as soon as it is published.
-
+Parameters are specified in [this YAML file](./inst/extdata/params.yaml). Parameters are obtained from measurements, dosimetric simulations, and literature- more detailed descriptions of each parameter, including units and data sources, will be included in Jalilian et al. (manuscript in preparation).
 
 ### Missing data and default values
 
+`RFDose` currently handles missing values by replacing them with default values, which are derived from survey responses of the ongoing [GOLIAT consortium studies](https://projectgoliat.eu/).
+
 Default values are specified in [this YAML file](./inst/extdata/defaultvariables.yaml)
 
-Missing values in the dataset supplied by the user will be replaced with the values in this file.
+### Output
 
-At the moment, there is no limit to how much missing data is allowed. However, variables with more than 10% missing data will raise a warning message.
-
-
+Detailed info to be added here.
 
 ## License and Citation
 
@@ -214,9 +176,24 @@ Contributors will be listed here.
 
 \---
 
+## Version History
+
+|Version|Description|
+|-|-|-|
+|1.0.0|Updated version based on finalized dose calculations in Jalilian et al. (manuscript in preparation)|
+|0.3.0|Updated version with major changes in dose calculations (based on dose calculator 7.6). Based on dose calculator version 7.6|
+|0.2.0|Revised draft version with updated calculations, variables, and unit tests. Based on dose calculator version 7.3|
+|0.1.0|Initial draft version for internal use|
+|0.0.1|Basic test version (not on Github)|
+
+\---
+
 ## References and Further Resources
 
-Additional resources and references will be added here.
+* [GOLIAT project website](https://projectgoliat.eu/)
+* [ETAIN project website](https://www.etainproject.eu/)
+* Will be added here: link to publication by Jalilian et al.
+* Will be added here: link to Shiny interface of `RFDose`
 
 \---
 
