@@ -4,7 +4,7 @@
 
 RFDose implements the deterministic RF-EMF dose calculations developed in Jalilian et al. (publication in writing stage). Version 1.0.0 is based on the most up-to-date dose calculations (August 2026).
 
-Please also refer to the [package manual](./doc/RFDose_1.0.0.pdf)
+For detailed information about the package functions, please refer to the [package manual](./doc/RFDose_1.0.0.pdf). We are also preparing a short publication on `RFDose`, which will contain further background information. 
 
 
 * The definition of the headp\_prop input variable changed from version 0.2.0 to 0.3.0.
@@ -66,7 +66,7 @@ Behind the scenes, `calculate_emf_doses()` calls various source-specific dose fu
 
 ## How can I contribute to `RFDose`?
 
-Informations on how to contribute to `RFDose` will be added here. 
+Information on how to contribute to `RFDose` will be added here. 
 
 ## Background
 
@@ -106,41 +106,47 @@ total_dose()
 
 ### Variables
 
-Input variables are described in ...
+An overview of the included variables is shown below.
 
-|Name|Unit|Type|Description|Notes|
-|-|-|-|-|-|
-|use\_5g|-|binary|Use of 5G|🆕|
-|travel\_time|s|numeric|Time spent commuting (public transport or car) per day|🆕|
-|country|-|categorical|Austria:"AT", Belgium:"BE", France:"FR", Hungary:"HU", Italy:"IT", Netherlands:"NL", Poland:"PL", Spain:"ES", Switzerland:"CH", United Kingdom:"UK", unknown/other: "Other"|🆕|
-|urbanicity|-|categorical|Urbanicity||
-|headp\_ear\_num|-|numeric|Number of earphones worn during call (1 or 2)|🆕|
-|mpc\_duration|s|numeric|Duration of daily mobile phone call||
-|mpc\_ear\_prop|-|proportion|Proportion of time mobile phone is held against ear during call||
-|mpc\_headp\_prop|-|proportion|Proportion of time Bluetooth headphones are used during call||
-|dect\_duration|s|numeric|...||
-|dect\_ear\_prop|-|proportion|...||
-|mpd\_wifi\_prop\_home|---|---|Proportion of WiFi vs mobile data (3G, 4G, 5G) while using mobile phone AT HOME|🆕|
-|mpd\_wifi\_prop\_work|---|---|Proportion of WiFi vs mobile data (3G, 4G, 5G) while using mobile phone AT WORK/SCHOOL|🆕|
-|mpd\_wifi\_prop\_travel|---|---|Proportion of WiFi vs mobile data (3G, 4G, 5G) while using mobile phone WHILE COMMUTING|🆕|
-|mpd\_dur\_low|s|numeric|Daily duration of low output power activities on mobile phone|🆕|
-|mpd\_dur\_lowtomed|s|numeric|Daily duration of low-medium output power activities on mobile phone|🆕|
-|mpd\_dur\_medtohigh|s|numeric|Daily duration of medium-high output power activities on mobile phone|🆕|
-|mpd\_dur\_high|s|numeric|Daily duration of high output power activities on mobile phone|🆕|
-|lptp\_dur\_low|s|numeric|Daily duration of low output power activities on laptop|🆕|
-|lptp\_dur\_lowtomed|s|numeric|Daily duration of low-medium output power activities on laptop|🆕|
-|lptp\_dur\_medtohigh|s|numeric|Daily duration of medium-high output power activities on laptop|🆕|
-|lptp\_dur\_high|s|numeric|Daily duration of high output power activities on laptop|🆕|
-|tblt\_dur\_low|s|numeric|Daily duration of low output power activities on tablet|🆕|
-|tblt\_dur\_lowtomed|s|numeric|Daily duration of low-medium output power activities on tablet|🆕|
-|tblt\_dur\_medtohigh|s|numeric|Daily duration of medium-high output power activities on tablet|🆕|
-|tblt\_dur\_high|s|numeric|Daily duration of high output power activities on tablet|🆕|
-|hotspot\_duration|s||||
-|smartwatch\_duration|s||||
-|tracker\_duration|s||||
-|vr\_duration|s||||
-|headphone\_duration|s||||
-|gaming\_duration|s||||
+For the activity variables (mpd, laptop, tablet)
+
+* low output power activities: sending e-mails, browsing intenet, scrolling/chatting on social media
+* low-medium output power activities: online gaming, music streaming, voice messaging
+* medium-high output power activities: watching or uploading videos on social media, video calls, video streaming
+* high output power activities: uploading large files
+
+|Name|Unit|Type|Contraints|Description|Used for source(s)|
+|-|-|-|-|-|-|
+|use\_5g|-|logical|TRUE or FALSE|Use of 5g (mobile phone only)|mpc, mpd|
+|travel\_time|s|numeric|>=0 and <=59350|Time spent commuting (public transport or car) per day|mpc, mpd, far-field, wifi|
+|country|-|character|must exactly match one of the listed options|Austria:"AT", Belgium:"BE", France:"FR", Hungary:"HU", Italy:"IT", Netherlands:"NL", Poland:"PL", Spain:"ES", Switzerland:"CH", United Kingdom:"UK", unknown/other: "Other"|farfield|
+|urbanicity|-|character|"rural", "suburban" or "urban"|Urbanicity of participant's home ("rural", "suburban", "urban")|mpd, farfield|
+|headp\_ear\_num|-|numeric|0, 1 or 2Number of earphones worn during call|mpc|
+|mpc\_duration|s|numeric|>=0 and <= 86400|Daily duration of mobile phone calls (with or without app)|mpc|
+|mpc\_ear\_prop|-|numeric|>=0 and <=1|Proportion of time the mobile phone is held against head during mobile calls|mpc|
+|mpc\_headp\_prop|-|proportion|>=0 and <=1|Proportion of time headphones are used during mobile phone calls|mpc|
+|dect\_duration|s|numeric|>=0 and <= 86400|Daily call duration of DECT/cordless phone calls|dect|
+|dect\_ear\_prop|-|numeric|>=0 and <=1|Proportion of time DECT/cordless phone is held against ear during call|dect|
+|mpd\_wifi\_prop\_home|-|numeric|>=0 and <=1|Proportion of WiFi vs mobile data (3G, 4G, 5G) while using mobile phone AT HOME|mpc, mpd|
+|mpd\_wifi\_prop\_work|-|numeric|>=0 and <=1|Proportion of WiFi vs mobile data (3G, 4G, 5G) while using mobile phone AT WORK/SCHOOL|mpc, mpd|
+|mpd\_wifi\_prop\_travel|-|numeric|>=0 and <=1|Proportion of WiFi vs mobile data (3G, 4G, 5G) while using mobile phone WHILE COMMUTING|mpc, mpd, wifi|
+|mpd\_dur\_low|s|numeric|>=0 and <= 86400|Daily duration of low output power activities on mobile phone|mpd|
+|mpd\_dur\_lowtomed|s|numeric|>=0 and <= 86400|Daily duration of low-medium output power activities on mobile phone|mpd|
+|mpd\_dur\_medtohigh|s|numeric|>=0 and <= 86400|Daily duration of medium-high output power activities on mobile phone|mpd|
+|mpd\_dur\_high|s|numeric|>=0 and <= 86400|Daily duration of high output power activities on mobile phone|mpd|
+|lptp\_dur\_low|s|numeric|>=0 and <= 86400|Daily duration of low output power activities on laptop|lptp|
+|lptp\_dur\_lowtomed|s|numeric|>=0 and <= 86400|Daily duration of low-medium output power activities on laptop|lptp|
+|lptp\_dur\_medtohigh|s|numeric|>=0 and <= 86400|Daily duration of medium-high output power activities on laptop|lptp|
+|lptp\_dur\_high|s|numeric|>=0 and <= 86400|Daily duration of high output power activities on laptop|lptp|
+|tblt\_dur\_low|s|numeric|>=0 and <= 86400|Daily duration of low output power activities on tablet|tblt|
+|tblt\_dur\_lowtomed|s|numeric|>=0 and <= 86400|Daily duration of low-medium output power activities on tablet|tblt|
+|tblt\_dur\_medtohigh|s|numeric|>=0 and <= 86400|Daily duration of medium-high output power activities on tablet|tblt|
+|tblt\_dur\_high|s|numeric|>=0 and <= 86400|Daily duration of high output power activities on tablet|tblt|
+|hotspot\_duration|s|numeric|>=0 and <= 86400|Daily duration of using mobile phone as hotspot|other|
+|smartwatch\_duration|s|numeric|>=0 and <= 86400|Daily duration of wearing smartwatch on wrist|other|
+|vr\_duration|s|numeric|>=0 and <= 86400|Daily durarion of virtual reality headset use|other|
+|headphone\_duration|s|numeric|>=0 and <= 86400|Daily duration of using bluetooth headphones (all types of usage except for mobile phone call)|other|
+|gaming\_duration|s|numeric|>=0 and <= 86400|Daily duration of using portable gaming devices (eg. Nintendo Switch, Steamdeck, etc.)|other|
 
 \---
 
@@ -162,13 +168,7 @@ Detailed info to be added here.
 
 License: [MIT license](http://opensource.org/licenses/MIT)
 
-The author list is not complete yet and may be expanded.
-If you use this package in academic works, please cite it:
-
-```{r}
-citation("RFDose")
-```
-\---
+The author list is not complete yet. Citation will be added here. 
 
 ## Contributors and Acknowledgements
 
@@ -179,7 +179,7 @@ Contributors will be listed here.
 ## Version History
 
 |Version|Description|
-|-|-|-|
+|-|-|
 |1.0.0|Updated version based on finalized dose calculations in Jalilian et al. (manuscript in preparation)|
 |0.3.0|Updated version with major changes in dose calculations (based on dose calculator 7.6). Based on dose calculator version 7.6|
 |0.2.0|Revised draft version with updated calculations, variables, and unit tests. Based on dose calculator version 7.3|
@@ -190,10 +190,12 @@ Contributors will be listed here.
 
 ## References and Further Resources
 
+* Will be added here: research paper on `RFDOSE`
+* Will be added here: link to Shiny interface of `RFDose`
+* Will be added here: link to publication by Jalilian et al.
 * [GOLIAT project website](https://projectgoliat.eu/)
 * [ETAIN project website](https://www.etainproject.eu/)
-* Will be added here: link to publication by Jalilian et al.
-* Will be added here: link to Shiny interface of `RFDose`
+
 
 \---
 
