@@ -6,10 +6,11 @@ RFDose implements the deterministic RF-EMF dose calculations developed in Jalili
 
 For detailed information about the package functions, please refer to the [package manual](./doc/RFDose_1.0.0.pdf). We are also preparing a short publication on `RFDose`, which will contain further background information. 
 
+**Information for users of previous test versions (0.2.0, 0.3.0)**
 
-* The definition of the headp\_prop input variable changed from version 0.2.0 to 0.3.0.
-* The calculate_emf_doses() function changed: From version 0.3.0, the tissue (default: "brain" or "body") needs to be specified when using the `calculate_emf_doses` function! In addition, the output structure changed and the total_dose output column was removed. Please refer to the function documentation.
-* Dose functions from different devices/sources can now be used individually.
+* The definition of the mpc\_headp\_prop input variable changed- please refer to the variable overview below
+* `calculate_emf_doses` no longer returns a total dose, only source-specific doses
+* `calculate_emf_doses` is now tissue-specific and has the additional required input variable "tissue"
 
 \---
 
@@ -162,7 +163,7 @@ Default values are specified in [this YAML file](./inst/extdata/defaultvariables
 
 ### Output
 
-Detailed info to be added here.
+`calculate_emf_doses` returns a data frame containing the original data columns, as well as an additional column with the dose contribution of each source in mJ/kg/day.
 
 ## License and Citation
 
