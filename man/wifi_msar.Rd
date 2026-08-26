@@ -35,5 +35,5 @@ wifi_msar(
 
 }
 \seealso{
-\code{\link[=wifi_pwr(), wifi_sar]{wifi_pwr(), wifi_sar()}}
+\code{\link[=wifi_pwr]{wifi_pwr()}}, \code{\link[=wifi_sar]{wifi_sar()}}
 }

@@ -9,6 +9,8 @@ mpc_bt_earset_msar(tissue, headp_ear_num, params = load_params())
 \arguments{
 \item{tissue}{Tissue for which to calculate mSAR (default: "brain" or "body")}
 
+\item{headp_ear_num}{Number of Bluetooth earphones worn during call (0, 1, or 2)}
+
 \item{params}{Parameter list (optional). If not specified, calculations use
 default parameters.}
 }
@@ -27,5 +29,5 @@ mpc_bt_earset_msar(
 
 }
 \seealso{
-\code{\link[=mpc_bt_phone_sar]{mpc_bt_phone_sar()}}
+\code{\link[=mpc_bt_phone_msar]{mpc_bt_phone_msar()}}
 }

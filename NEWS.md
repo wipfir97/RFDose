@@ -1,9 +1,9 @@
-# Version 0.4.0
+# Version 1.0.0
 
-* Currently in development
+* First official (not preliminary) version
 * Minor update to specific parameter values
-* Re-factoring and testing of top-level (total dose) functions
-* Helper functions for overwriting parameters and default values
+* Re-factoring and testing of top-level and helper functions functions
+* Added helper functions for overwriting parameters and default values
 
 # Version 0.3.0
 

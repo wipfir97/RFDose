@@ -40,7 +40,7 @@
 #'   duration_headphones = 8280,
 #'   duration_gaming     = 3600)
 #'
-#' @seealso [hotspot_dose(), smartwatch_dose(), vr_dose(), headphones_dose(), gaming_dose()]
+#' @seealso [hotspot_dose()], [smartwatch_dose()], [vr_dose()], [headphones_dose()], [gaming_dose()]
 #'
 #' @export
 other_dose_wrapper <- function(
@@ -77,6 +77,7 @@ other_dose_wrapper <- function(
     tissue          = tissue,
     duration_gaming = duration_gaming,
     params          = params)
+
   # Sum by tissue and return result
   dose <- sum(
     dose_smartwatch,

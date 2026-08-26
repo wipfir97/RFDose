@@ -102,7 +102,7 @@ wifi_dose <- function(
 #'   wifi_prop_travel = 0.5)
 #'
 #' @export
-#' @seealso [wifi_pwr(), wifi_sar()]
+#' @seealso [wifi_pwr()], [wifi_sar()]
 wifi_msar <- function(
     tissue,
     travel_time,

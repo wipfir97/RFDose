@@ -15,7 +15,7 @@
 #' * \eqn{Dose_{phone}} is the dose contribution from the phone connection to the headphones
 #'
 #' @param tissue Tissue for which to calculate dose (default: "brain" or "body")
-#' @param duration_smartwatch duration of time Bluetooth headphones were used in s/day
+#' @param duration_headphones duration of time Bluetooth headphones were used in s/day
 #' @param params Parameter list (optional). If not specified, calculations use
 #' default parameters.
 #'
@@ -26,7 +26,7 @@
 #'   tissue              = "body",
 #'   duration_headphones = 6000)
 #'
-#' @seealso [headphones_earset_dose(), headphones_phone_dose()]
+#' @seealso [headphones_earset_dose()], [headphones_phone_dose()]
 #'
 #' @export
 headphones_dose <- function(
@@ -73,7 +73,7 @@ headphones_dose <- function(
 #' * \eqn{duration_{earset}} is the use duration in s/day
 #'
 #' @param tissue Tissue for which to calculate dose (default: "brain" or "body")
-#' @param duration_smartwatch duration of time Bluetooth headphones were worn in s/day
+#' @param duration_headphones duration of time Bluetooth headphones were worn in s/day
 #' @param params Parameter list (optional). If not specified, calculations use
 #' default parameters.
 #'
@@ -122,7 +122,7 @@ headphones_earset_dose <- function(
 #' * \eqn{duration_{phone}} is the use duration in s/day
 #'
 #' @param tissue Tissue for which to calculate dose (default: "brain" or "body")
-#' @param duration_smartwatch duration of time Bluetooth headphones were worn in s/day
+#' @param duration_headphones duration of time Bluetooth headphones were worn in s/day
 #' @param params Parameter list (optional). If not specified, calculations use
 #' default parameters.
 #'

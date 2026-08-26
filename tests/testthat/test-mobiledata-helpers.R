@@ -3,14 +3,14 @@ cases_mpd_msar <- list(
   list(
     input = list(
       tissue           = "brain",
-      duration_low     = 3989,
-      duration_lowmed  = 4917,
-      duration_medhigh = 5651,
+      duration_low     = 3989.318141,
+      duration_lowmed  = 4916.971705,
+      duration_medhigh = 5650.714779,
       duration_high    = 0,
       use_5g           = TRUE,
-      wifi_prop_home   = 0.74,
-      wifi_prop_work   = 0.49,
-      wifi_prop_travel = 0.31,
+      wifi_prop_home   = 0.7378683,
+      wifi_prop_work   = 0.4892182,
+      wifi_prop_travel = 0.3071721,
       urbanicity       = "suburban",
       travel_time      = 1850
     ),
@@ -19,14 +19,14 @@ cases_mpd_msar <- list(
   list(
     input = list(
       tissue           = "body",
-      duration_low     = 3989,
-      duration_lowmed  = 4917,
-      duration_medhigh = 5651,
+      duration_low     = 3989.318141,
+      duration_lowmed  = 4916.971705,
+      duration_medhigh = 5650.714779,
       duration_high    = 0,
       use_5g           = TRUE,
-      wifi_prop_home   = 0.74,
-      wifi_prop_work   = 0.49,
-      wifi_prop_travel = 0.31,
+      wifi_prop_home   = 0.7378683,
+      wifi_prop_work   = 0.4892182,
+      wifi_prop_travel = 0.3071721,
       urbanicity       = "suburban",
       travel_time      = 1850
     ),

@@ -88,7 +88,7 @@ cordless_dose <- function(
 #'   tissue      = "brain",
 #'   ear_prop    = 0.9)
 #'
-#' @seealso [dect_pwr(), dect_sar()]
+#' @seealso [dect_pwr()], [dect_sar()]
 #'
 #' @export
 dect_msar <- function(

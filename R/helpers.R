@@ -453,10 +453,10 @@ location_props <- function(
 #'
 #' Converts activity durations to proportions.
 #'
-#' @param duration_low Duration (in seconds per day) of low output power activities
-#' @param duration_lowmed Duration (in seconds per day) of low-medium output power activities
-#' @param duration_medhigh Duration (in seconds per day) of medium-high output power activities
-#' @param duration_high Duration (in seconds per day) of high output power activities
+#' @param low_dur Duration (in seconds per day) of low output power activities
+#' @param lowmed_dur Duration (in seconds per day) of low-medium output power activities
+#' @param medhigh_dur Duration (in seconds per day) of medium-high output power activities
+#' @param high_dur Duration (in seconds per day) of high output power activities
 #'
 #' @returns Named list with the use proportion of each activity.
 act_pwr_props <- function(

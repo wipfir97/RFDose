@@ -3,9 +3,9 @@ cases_tablet_msar <- list(
   list(
     input = list(
       tissue      = "brain",
-      dur_low     = 313,
-      dur_lowmed  = 458,
-      dur_medhigh = 612,
+      dur_low     = 312.744,
+      dur_lowmed  = 457.79,
+      dur_medhigh = 612.333,
       dur_high    = 0
     ),
     output = 0.0056911
@@ -13,9 +13,9 @@ cases_tablet_msar <- list(
   list(
     input = list(
       tissue      = "body",
-      dur_low     = 313,
-      dur_lowmed  = 458,
-      dur_medhigh = 612,
+      dur_low     = 312.744,
+      dur_lowmed  = 457.79,
+      dur_medhigh = 612.333,
       dur_high    = 0
     ),
     output = 0.005471607

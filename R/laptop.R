@@ -135,7 +135,7 @@ laptop_dose <- function(
 #'   dur_high    = 0)
 #'
 #' @export
-#' @seealso [laptop_pwr(), laptop_sar()]
+#' @seealso [laptop_pwr()], [laptop_sar()]
 laptop_msar <- function(
     tissue,
     dur_low,

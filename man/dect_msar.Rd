@@ -41,5 +41,5 @@ dect_msar(
 
 }
 \seealso{
-\code{\link[=dect_pwr(), dect_sar]{dect_pwr(), dect_sar()}}
+\code{\link[=dect_pwr]{dect_pwr()}}, \code{\link[=dect_sar]{dect_sar()}}
 }

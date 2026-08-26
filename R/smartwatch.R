@@ -26,7 +26,7 @@
 #'   tissue              = "body",
 #'   duration_smartwatch = 6000)
 #'
-#' @seealso [smartwatch_watch_dose(), smartwatch_phone_dose()]
+#' @seealso [smartwatch_watch_dose()], [smartwatch_phone_dose()]
 #'
 #' @export
 smartwatch_dose <- function(

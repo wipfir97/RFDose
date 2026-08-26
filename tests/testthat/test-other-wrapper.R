@@ -69,7 +69,7 @@ cases_other_dose_wrapper <- list(
       duration_headphones = 8411.14305,
       duration_gaming     = 3600
     ),
-    output = 13.34
+    output = 12.034376
   ),
   list(
     input = list(
@@ -80,7 +80,7 @@ cases_other_dose_wrapper <- list(
       duration_headphones = 8411.14305,
       duration_gaming     = 3600
     ),
-    output = 59.94
+    output = 54.728254
   )
 )
 

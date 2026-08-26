@@ -202,7 +202,7 @@ mobilecall_dose <- function(
 #' use_5g           = TRUE,
 #' travel_time      = 1800)
 #'
-#' @seealso [mpc_pwr_native(), mpc_pwr_data(), mpc_pwr_wifi(), mpc_sar_native(), mpc_sar_data(), mpc_sar_wifi()]
+#' @seealso [mpc_pwr_native()], [mpc_pwr_data()], [mpc_pwr_wifi()], [mpc_sar_native()], [mpc_sar_data()], [mpc_sar_wifi()]
 #' @export
 mpc_msar <- function(
     tissue,
@@ -680,12 +680,13 @@ mpc_sar_wifi <- function(
 #' separately).
 #'
 #' @param tissue Tissue for which to calculate mSAR (default: "brain" or "body")
+#' @param headp_ear_num Number of Bluetooth earphones worn during call (0, 1, or 2)
 #' @param params Parameter list (optional). If not specified, calculations use
 #' default parameters.
 #'
 #' @returns mSAR from Bluetooth calls (headphones/earset only) in mJ/kg/day)
 #'
-#' @seealso [mpc_bt_phone_sar()]
+#' @seealso [mpc_bt_phone_msar()]
 #'
 #' @examples
 #' mpc_bt_earset_msar(
@@ -718,6 +719,7 @@ mpc_bt_earset_msar <- function(
 #' separately).
 #'
 #' @param tissue Tissue for which to calculate mSAR (default: "brain" or "body")
+#' @param headp_ear_num Number of Bluetooth earphones worn during call (0, 1, or 2)
 #' @param params Parameter list (optional). If not specified, calculations use
 #' default parameters.
 #'

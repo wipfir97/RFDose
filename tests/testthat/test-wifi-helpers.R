@@ -56,7 +56,7 @@ cases_wifi_sar <- list(
       tissue = "brain",
       band   = "2"
     ),
-    output = 0.002618
+    output = 0.001330
 
   ),
   list(
@@ -64,7 +64,7 @@ cases_wifi_sar <- list(
       tissue = "body",
       band   = "2"
     ),
-    output = 0.003559655
+    output = 0.005295
 
   ),
   list(
@@ -72,7 +72,7 @@ cases_wifi_sar <- list(
       tissue = "brain",
       band   = "5"
     ),
-    output = 0.00055618
+    output = 0.000556
 
   ),
   list(

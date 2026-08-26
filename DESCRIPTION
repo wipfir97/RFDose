@@ -1,14 +1,13 @@
 Package: RFDose
 Type: Package
 Title: Deterministic radiofrequency electromagnetic field (RF-EMF) dose calculator
-Version: 0.4.0
+Version: 1.0.0
 Authors@R:
     person("Irina", "Wipf", , "irina.wipf@swisstph.ch", role = c("aut", "cre"))
 Description: Package for calculating RF-EMF doses for cohorts.
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 7.3.2
 Roxygen: list(markdown = TRUE)
 Imports: 
     dplyr,
@@ -23,3 +22,4 @@ VignetteBuilder: knitr
 Depends: 
     R (>= 3.5)
 Config/testthat/edition: 3
+Config/roxygen2/version: 8.1.0

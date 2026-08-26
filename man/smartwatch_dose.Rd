@@ -38,5 +38,5 @@ smartwatch_dose(
 
 }
 \seealso{
-\code{\link[=smartwatch_watch_dose(), smartwatch_phone_dose]{smartwatch_watch_dose(), smartwatch_phone_dose()}}
+\code{\link[=smartwatch_watch_dose]{smartwatch_watch_dose()}}, \code{\link[=smartwatch_phone_dose]{smartwatch_phone_dose()}}
 }

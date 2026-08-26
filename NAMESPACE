@@ -52,5 +52,7 @@ export(wifi_pwr)
 export(wifi_sar)
 import(dplyr)
 import(yaml)
-importFrom(tidyr,unnest)
-importFrom(tidyr,unnest_wider)
+importFrom(tidyr,
+  unnest,
+  unnest_wider
+)

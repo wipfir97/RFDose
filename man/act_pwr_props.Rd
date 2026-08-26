@@ -7,13 +7,13 @@
 act_pwr_props(low_dur, lowmed_dur, medhigh_dur, high_dur)
 }
 \arguments{
-\item{duration_low}{Duration (in seconds per day) of low output power activities}
+\item{low_dur}{Duration (in seconds per day) of low output power activities}
 
-\item{duration_lowmed}{Duration (in seconds per day) of low-medium output power activities}
+\item{lowmed_dur}{Duration (in seconds per day) of low-medium output power activities}
 
-\item{duration_medhigh}{Duration (in seconds per day) of medium-high output power activities}
+\item{medhigh_dur}{Duration (in seconds per day) of medium-high output power activities}
 
-\item{duration_high}{Duration (in seconds per day) of high output power activities}
+\item{high_dur}{Duration (in seconds per day) of high output power activities}
 }
 \value{
 Named list with the use proportion of each activity.
