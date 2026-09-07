@@ -149,6 +149,7 @@ get_total_dose <- function(
     duration_high = sim_params$global$input_stoch$mpd_duration$mpd_dur_high
     dect_duration = sim_params$global$input_stoch$dect_duration$dect_duration
     dect_ear_prop = sim_params$global$input_stoch$dect_position$dect_ear_prop
+    gaming_duration = sim_params$global$input_stoch$gaming_duration$gaming_duration
 
 
     # Calculate contribution of each exposure source ============================
@@ -233,6 +234,13 @@ get_total_dose <- function(
       params         = sim_params
       )
 
+    ## Calculate gaming contribution STOCHASTIC-----------------------------------------------
+    gami_dose <- gaming_dose(
+      tissue          = tissue,
+      duration_gaming = gaming_duration,
+      params          = sim_params
+      )
+
     ## Calculate contribution of other sources DETERMINISTIC-----------------------------------
     othe_dose <- other_dose_wrapper(
       tissue              = tissue,
@@ -240,7 +248,6 @@ get_total_dose <- function(
       duration_smartwatch = sample$smartwatch_duration,
       duration_vr         = sample$vr_duration,
       duration_headphones = sample$headphone_duration,
-      duration_gaming     = sample$gaming_duration,
       params              = old_params
       )
     list(
@@ -251,6 +258,7 @@ get_total_dose <- function(
       "wifi_dose"  = wifi_dose,
       "lptp_dose"  = lptp_dose,
       "tblt_dose"  = tblt_dose,
+      "gami_dose"  = gami_dose,
       "other_dose" = othe_dose)
   })
 
@@ -264,6 +272,7 @@ get_total_dose <- function(
     lptp_dose = sapply(stochastic_dose, \(x) x$lptp_dose),
     tblt_dose = sapply(stochastic_dose, \(x) x$tblt_dose),
     dect_dose = sapply(stochastic_dose, \(x) x$dect_dose),
+    gami_dose = sapply(stochastic_dose, \(x) x$gami_dose),
     other_dose = sapply(stochastic_dose, \(x) x$other_dose)
   )
   return(stochastic_dose_df)

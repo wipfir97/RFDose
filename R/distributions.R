@@ -57,8 +57,7 @@ simulate_params <- function(duration,
     "smartwatch_duration",
     "tracker_duration",
     "vr_duration",
-    "headphone_duration",
-    "gaming_duration"
+    "headphone_duration"
   )
 
   for (nm in non_stochastic_inputs) {
@@ -272,6 +271,22 @@ simulate_params <- function(duration,
     a0 = params_stochastic$global$input_stoch$dect_position$dect_ear_prop_a0
   )[1]
 
+  ####### gaming
+  if (missing(gaming_duration)) {gaming_duration <- params_stochastic$global$input_stoch$gaming_duration$gaming_duration_mean
+  }
+  # pick gaming_duration
+  pzero <- params_stochastic$global$input_stoch$gaming_duration$gaming_duration_pzero
+  gaming_duration <- gaming_duration/(1-pzero)
+
+  params$global$input_stoch$gaming_duration$gaming_duration <- evaluate_distribution(
+    dist_name = params_stochastic$global$input_stoch$gaming_duration$distribution,
+    mean = gaming_duration,
+    sd = params_stochastic$global$input_stoch$gaming_duration$gaming_duration_sd,
+    p_zero = pzero,
+    min = params_stochastic$global$input_stoch$gaming_duration$gaming_duration_min,
+    max = params_stochastic$global$input_stoch$gaming_duration$gaming_duration_max
+  )
+
   # lptp_dur_low
   # lptp_dur_lowtomed
   # lptp_dur_medtohigh
@@ -285,7 +300,6 @@ simulate_params <- function(duration,
   # tracker_duration
   # vr_duration
   # headphone_duration
-  # gaming_duration
 
   # country
 
@@ -825,6 +839,44 @@ simulate_params <- function(duration,
   )
 
 
+  ####### gaming
+
+  # pick online_prop (proportion of gaming time the device actually transmits)
+  params$devices$gaming$online_prop$gaming_online_prop <- evaluate_distribution(
+    dist_name = params_stochastic$devices$gaming$online_prop$distribution,
+    mean = c(params_stochastic$devices$gaming$online_prop$gaming_online_prop_mean,
+             1-params_stochastic$devices$gaming$online_prop$gaming_online_prop_mean),
+    a0 = params_stochastic$devices$gaming$online_prop$gaming_online_prop_a0)[1]
+
+  # pick pwr
+  gaming_freqs <- c("2400", "5000") # 2.4 GHz and 5.0 GHz
+  for (freq in gaming_freqs) {
+    params$devices$gaming$pwr[[paste0("gaming_", freq, "_pwr")]] <- evaluate_distribution(
+      dist_name = params_stochastic$devices$gaming$pwr$distribution,
+      mean = params_stochastic$devices$gaming$pwr[[paste0("gaming_", freq, "_pwr_mean")]],
+      sd   = params_stochastic$devices$gaming$pwr[[paste0("gaming_", freq, "_pwr_sd")]],
+      min  = params_stochastic$devices$gaming$pwr[[paste0("gaming_", freq, "_pwr_min")]],
+      max  = params_stochastic$devices$gaming$pwr[[paste0("gaming_", freq, "_pwr_max")]]
+    )
+  }
+
+  # pick dc (dutycycle)
+  for (freq in gaming_freqs) {
+    dc_mean <- params_stochastic$devices$gaming$dutycycle[[paste0("gaming_", freq, "_dutycycle_mean")]]
+    params$devices$gaming$dutycycle[[paste0("gaming_", freq, "_dutycycle")]] <- evaluate_distribution(
+      dist_name = params_stochastic$devices$gaming$dutycycle$distribution,
+      mean = c(dc_mean, 1-dc_mean),
+      a0 = params_stochastic$devices$gaming$dutycycle$gaming_dutycycle_a0)[1]
+  }
+
+  # pick distance (pc to body, in mm)
+  params$devices$gaming$gaming_distance$gaming_dist_pc <- evaluate_distribution(
+    dist_name = params_stochastic$devices$gaming$gaming_distance$distribution,
+    mean = params_stochastic$devices$gaming$gaming_distance$gaming_dist_pc_mean,
+    sd   = params_stochastic$devices$gaming$gaming_distance$gaming_dist_pc_sd,
+    min = params_stochastic$devices$gaming$gaming_distance$gaming_dist_pc_min,
+    max  = params_stochastic$devices$gaming$gaming_distance$gaming_dist_pc_max
+  )
 
 
 

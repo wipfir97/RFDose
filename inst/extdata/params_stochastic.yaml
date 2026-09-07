@@ -75,6 +75,13 @@ global:
       distribution: "beta"
       dect_ear_prop_mean: 0.9
       dect_ear_prop_a0: 100
+    gaming_duration:
+      distribution: "trunc_hurdle_gamma"
+      gaming_duration_mean: 600
+      gaming_duration_sd: 2400
+      gaming_duration_min: 5
+      gaming_duration_max: 28800
+      gaming_duration_pzero: 0.8
 
 
   wifi_probs:
@@ -3248,25 +3255,34 @@ devices:
     body:
       smarthome_sar: 0.009862
   gaming:
-    gaming_online_prop: 0.25
-    gaming_2_dutycycle: 0.020
-    gaming_5_dutycycle: 0.028
+    # No gaming-specific SAR simulation exists. gaming_sar() uses the mean of the
+    # eight belly positions from the call SAR tables (2400/5000 MHz) instead, and
+    # rescales it from the 200 mm belly reference to gaming_dist_pc.
+    online_prop:
+      distribution: "beta"
+      gaming_online_prop_mean: 0.25
+      gaming_online_prop_a0: 10
     pwr:
       distribution: "trunc_lognormal"
-      gaming_2_pwr_mean: 100
-      gaming_2_pwr_sd: 30
-      gaming_2_pwr_min: 0.001
-      gaming_2_pwr_max: 100
-      gaming_5_pwr_mean: 200
-      gaming_5_pwr_sd: 60
-      gaming_5_pwr_min: 0.001
-      gaming_5_pwr_max: 200
-    brain:
-      gaming_2_sar: 0.000999468
-      gaming_5_sar: 0.000163091
-    body:
-      gaming_2_sar: 0.000860849
-      gaming_5_sar: 0.000586175
+      gaming_2400_pwr_mean: 100
+      gaming_2400_pwr_sd: 30
+      gaming_2400_pwr_min: 0.001
+      gaming_2400_pwr_max: 100
+      gaming_5000_pwr_mean: 200
+      gaming_5000_pwr_sd: 60
+      gaming_5000_pwr_min: 0.001
+      gaming_5000_pwr_max: 200
+    dutycycle:
+      distribution: "beta"
+      gaming_2400_dutycycle_mean: 0.020
+      gaming_5000_dutycycle_mean: 0.028
+      gaming_dutycycle_a0: 100
+    gaming_distance:
+      distribution: "trunc_lognormal"
+      gaming_dist_pc_mean: 600
+      gaming_dist_pc_sd: 200
+      gaming_dist_pc_min: 200
+      gaming_dist_pc_max: 1500
 
 
 

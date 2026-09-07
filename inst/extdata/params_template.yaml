@@ -48,6 +48,8 @@ global:
       dect_duration: 204
     dect_position:
       dect_ear_prop: 0.9
+    gaming_duration:
+      gaming_duration: 600
   wifi_probs:
     wifi_2400_prop: 0.58
     wifi_5000_prop: 0.42
@@ -2845,17 +2847,19 @@ devices:
     body:
       smarthome_sar: 0.009862
   gaming:
-    gaming_online_prop: 0.25
-    gaming_2_dutycycle: 0.020
-    gaming_5_dutycycle: 0.028
-    gaming_2_pwr: 100
-    gaming_5_pwr: 200
-    brain:
-      gaming_2_sar: 0.000999468
-      gaming_5_sar: 0.000163091
-    body:
-      gaming_2_sar: 0.000860849
-      gaming_5_sar: 0.000586175
+    # No gaming-specific SAR simulation exists. gaming_sar() uses the mean of the
+    # eight belly positions from the call SAR tables (2400/5000 MHz) instead, and
+    # rescales it from the 200 mm belly reference to gaming_dist_pc.
+    online_prop:
+      gaming_online_prop: 0.25
+    pwr:
+      gaming_2400_pwr: 100
+      gaming_5000_pwr: 200
+    dutycycle:
+      gaming_2400_dutycycle: 0.020
+      gaming_5000_dutycycle: 0.028
+    gaming_distance:
+      gaming_dist_pc: 600
 
 
 
