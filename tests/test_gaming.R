@@ -2,8 +2,9 @@
 # Run with devtools::load_all(): simulate_params() and load_tissue_params() are
 # internal functions.
 #
-# sex and age are fixed to male/adult because so far only Duke has simulated sar
-# values (Ella, Thelonious and Eartha are still zero-filled).
+# sex and age are fixed to male/adult so that this script always tests the same
+# phantom (Duke) and the deterministic cross check below stays comparable.
+# All four phantoms carry real sar values since the 2026-09-14 import.
 
 # simulate n parameter files
 # n = 1000 and not 100: with gaming_duration_pzero = 0.8 only about a fifth of the
@@ -50,7 +51,7 @@ stochastic_gaming_dose <- lapply(seq_len(length(param_simulations)), function(i)
     # keep the drivers, so a surprising dose can be traced back to its input
     gaming_duration    = gaming_duration,
     gaming_online_prop = sim_params$devices$gaming$online_prop$gaming_online_prop,
-    gaming_dist_pc     = sim_params$devices$gaming$gaming_distance$gaming_dist_pc,
+    gaming_dist_device     = sim_params$devices$gaming$gaming_distance$gaming_dist_device,
     gaming_2400_pwr    = sim_params$devices$gaming$pwr$gaming_2400_pwr,
     gaming_5000_pwr    = sim_params$devices$gaming$pwr$gaming_5000_pwr
   )
@@ -61,7 +62,7 @@ stochastic_gaming_dose_df <- data.frame(
   brain_gaming_dose  = sapply(stochastic_gaming_dose, \(x) x$brain_gaming_dose),
   gaming_duration    = sapply(stochastic_gaming_dose, \(x) x$gaming_duration),
   gaming_online_prop = sapply(stochastic_gaming_dose, \(x) x$gaming_online_prop),
-  gaming_dist_pc     = sapply(stochastic_gaming_dose, \(x) x$gaming_dist_pc),
+  gaming_dist_device     = sapply(stochastic_gaming_dose, \(x) x$gaming_dist_device),
   gaming_2400_pwr    = sapply(stochastic_gaming_dose, \(x) x$gaming_2400_pwr),
   gaming_5000_pwr    = sapply(stochastic_gaming_dose, \(x) x$gaming_5000_pwr)
 )
@@ -152,8 +153,8 @@ par(mfrow = c(1, 1))
 par(mfrow = c(2, 2), mar = c(4, 4, 3, 1))
 hist(stochastic_gaming_dose_df$gaming_duration, breaks = 100, col = "lightblue",
      border = "white", main = "Gaming duration", xlab = "s")
-hist(stochastic_gaming_dose_df$gaming_dist_pc, breaks = 100, col = "lightblue",
-     border = "white", main = "PC distance", xlab = "mm")
+hist(stochastic_gaming_dose_df$gaming_dist_device, breaks = 100, col = "lightblue",
+     border = "white", main = "Console distance", xlab = "mm")
 hist(stochastic_gaming_dose_df$gaming_2400_pwr, breaks = 100, col = "lightblue",
      border = "white", main = "2.4 GHz power", xlab = "mW")
 hist(stochastic_gaming_dose_df$gaming_5000_pwr, breaks = 100, col = "lightblue",
@@ -165,7 +166,7 @@ cat("share of simulations with zero dose:",
     " (expected ~0.80, from gaming_duration_pzero)\n")
 cat("mean body dose :", mean(stochastic_gaming_dose_df$body_gaming_dose), "mJ/kg/day\n")
 cat("mean brain dose:", mean(stochastic_gaming_dose_df$brain_gaming_dose), "mJ/kg/day\n")
-cat("mean PC distance:", mean(stochastic_gaming_dose_df$gaming_dist_pc), " (expected ~600)\n")
+cat("mean device distance:", mean(stochastic_gaming_dose_df$gaming_dist_device), " (expected ~300)\n")
 cat("mean online prop:", mean(stochastic_gaming_dose_df$gaming_online_prop), " (expected ~0.25)\n")
 cat("mean power 2.4 / 5 GHz:", mean(stochastic_gaming_dose_df$gaming_2400_pwr), "/",
     mean(stochastic_gaming_dose_df$gaming_5000_pwr),
@@ -202,7 +203,7 @@ mean_belly_sar <- function(tissue, freq) {
               numeric(1)))
 }
 
-d  <- template_params$devices$gaming$gaming_distance$gaming_dist_pc  # 600
+d  <- template_params$devices$gaming$gaming_distance$gaming_dist_device  # 300
 h  <- template_params$devices$call$Duke$height/2                     # 885
 f_body  <- ((200 + 6)/(d + 6))^2
 f_brain <- ((sqrt(h^2 + 200^2) + 6)/(sqrt(h^2 + d^2) + 6))^2

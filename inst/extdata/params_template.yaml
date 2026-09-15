@@ -2847,9 +2847,10 @@ devices:
     body:
       smarthome_sar: 0.009862
   gaming:
+    # Portable (handheld) gaming consoles connected over WiFi.
     # No gaming-specific SAR simulation exists. gaming_sar() uses the mean of the
     # eight belly positions from the call SAR tables (2400/5000 MHz) instead, and
-    # rescales it from the 200 mm belly reference to gaming_dist_pc.
+    # rescales it from the 200 mm belly reference to gaming_dist_device.
     online_prop:
       gaming_online_prop: 0.25
     pwr:
@@ -2859,7 +2860,7 @@ devices:
       gaming_2400_dutycycle: 0.020
       gaming_5000_dutycycle: 0.028
     gaming_distance:
-      gaming_dist_pc: 600
+      gaming_dist_device: 300
 
 
 

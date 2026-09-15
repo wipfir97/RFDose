@@ -1,12 +1,13 @@
-# Calculate total RF-EMF dose (for brain and body) from PC gaming over WiFi
+# Calculate total RF-EMF dose (for brain and body) from portable gaming consoles
+# connected over WiFi
 
 # There is no gaming-specific sar simulation. We therefore use the mean of the
-# eight belly positions (stored under the call device) as a proxy for a pc
-# standing in front of the body, and rescale it from the 200 mm belly reference
-# distance to the stochastic pc-to-body distance.
+# eight belly positions (stored under the call device) as a proxy for a handheld
+# console held in front of the body, and rescale it from the 200 mm belly
+# reference distance to the stochastic device-to-body distance.
 
 # =============================================================================
-#' Calculate Dose from PC Gaming over WiFi
+#' Calculate Dose from Portable Gaming Consoles over WiFi
 #'
 #' @param tissue Tissue for which to calculate dose (default: "brain" or "body")
 #' @param duration_gaming Duration of gaming in seconds. >= 0 and <= 86400
@@ -108,7 +109,8 @@ gaming_sar <- function(
     )
   )
 
-  # so far only Duke has simulated sar values, the other dummies are still zero
+  # tripwire: a dummy whose sar table has not been filled in would silently give a
+  # dose of zero, which is indistinguishable from "this person does not game"
   if (sar_belly == 0) {
     warning("No SAR values for dummy ", dummy, " (", tissue, ", ", freq,
             " MHz). Gaming dose will be 0.")
@@ -116,21 +118,21 @@ gaming_sar <- function(
 
   #distance stochastics
   if (params$global$dist_correction) {
-    dist_pc <- params$devices$gaming$gaming_distance$gaming_dist_pc
+    dist_device <- params$devices$gaming$gaming_distance$gaming_dist_device
     if (tissue == "body"){
       #adjust distance with distance law (in mm), reference is 200 because that
       #is the distance the belly simulations were done at
       sar_belly <- dist_law(sar = sar_belly,
-                            dist = dist_pc,
+                            dist = dist_device,
                             dist_ref = 200,
                             delta = 6)
     } else if (tissue == "brain"){
-      #the pc stands in front of the trunk, so it is further away from the head
-      #than from the body. Same geometry as for the phone at belly height.
+      #the console is held in front of the trunk, so it is further away from the
+      #head than from the body. Same geometry as for the phone at belly height.
       dummy_chest_height <- params$devices$call[[dummy]]$height/2
 
       sar_belly <- dist_law(sar = sar_belly,
-                            dist = sqrt(dummy_chest_height^2 + dist_pc^2),
+                            dist = sqrt(dummy_chest_height^2 + dist_device^2),
                             dist_ref = sqrt(dummy_chest_height^2 + 200^2),
                             delta = 6)
     }

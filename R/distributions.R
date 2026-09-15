@@ -869,13 +869,13 @@ simulate_params <- function(duration,
       a0 = params_stochastic$devices$gaming$dutycycle$gaming_dutycycle_a0)[1]
   }
 
-  # pick distance (pc to body, in mm)
-  params$devices$gaming$gaming_distance$gaming_dist_pc <- evaluate_distribution(
+  # pick distance (handheld console to body, in mm)
+  params$devices$gaming$gaming_distance$gaming_dist_device <- evaluate_distribution(
     dist_name = params_stochastic$devices$gaming$gaming_distance$distribution,
-    mean = params_stochastic$devices$gaming$gaming_distance$gaming_dist_pc_mean,
-    sd   = params_stochastic$devices$gaming$gaming_distance$gaming_dist_pc_sd,
-    min = params_stochastic$devices$gaming$gaming_distance$gaming_dist_pc_min,
-    max  = params_stochastic$devices$gaming$gaming_distance$gaming_dist_pc_max
+    mean = params_stochastic$devices$gaming$gaming_distance$gaming_dist_device_mean,
+    sd   = params_stochastic$devices$gaming$gaming_distance$gaming_dist_device_sd,
+    min = params_stochastic$devices$gaming$gaming_distance$gaming_dist_device_min,
+    max  = params_stochastic$devices$gaming$gaming_distance$gaming_dist_device_max
   )
 
 
