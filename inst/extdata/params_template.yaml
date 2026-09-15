@@ -586,7 +586,7 @@ devices:
 
       brain:
         Duke_brain_headp_else_sar: 0
-        Duke_brain_700_front_of_eyes_center_horizontal_sar: 0.564089064783121
+        Duke_brain_700_front_of_eyes_center_horizontal_sar: 0.56408906478312
         Duke_brain_800_front_of_eyes_center_horizontal_sar: 0.42781721933309
         Duke_brain_900_front_of_eyes_center_horizontal_sar: 0.552504066882252
         Duke_brain_1450_front_of_eyes_center_horizontal_sar: 2.01112093459255
@@ -696,7 +696,7 @@ devices:
         Duke_brain_1450_cheek1_sar: 51.176433377418
         Duke_brain_1800_cheek1_sar: 65.3068332053292
         Duke_brain_2100_cheek1_sar: 77.4186044863959
-        Duke_brain_2400_cheek1_sar: 59.809139545341
+        Duke_brain_2400_cheek1_sar: 59.8091395453411
         Duke_brain_2600_cheek1_sar: 51.5898274703438
         Duke_brain_3500_cheek1_sar: 24.4559178417414
         Duke_brain_5000_cheek1_sar: 5.72257529377378
@@ -736,12 +736,12 @@ devices:
         Duke_brain_1800_tilt1_sar: 72.8471245336247
         Duke_brain_2100_tilt1_sar: 64.5021299003779
         Duke_brain_2400_tilt1_sar: 54.5096996295187
-        Duke_brain_2600_tilt1_sar: 48.3711636956711
-        Duke_brain_3500_tilt1_sar: 21.78583
+        Duke_brain_2600_tilt1_sar: 48.3711640221811
+        Duke_brain_3500_tilt1_sar: 21.7858322855703
+        Duke_brain_5000_tilt1_sar: 5.54090650822836
         Duke_brain_xxxx_tilt1_sar: 0
         Duke_brain_yyyy_tilt1_sar: 0
         Duke_brain_zzzz_tilt1_sar: 0
-        Duke_brain_5000_tilt1_sar: 5.54090623933774
         Duke_brain_700_tilt2_sar: 7.8774084426321
         Duke_brain_800_tilt2_sar: 13.3941075034983
         Duke_brain_900_tilt2_sar: 22.2543942258421
@@ -749,9 +749,9 @@ devices:
         Duke_brain_1800_tilt2_sar: 73.8085806928252
         Duke_brain_2100_tilt2_sar: 67.7403915800542
         Duke_brain_2400_tilt2_sar: 55.216938833609
-        Duke_brain_2600_tilt2_sar: 48.8380203961579
-        Duke_brain_3500_tilt2_sar: 24.08108
-        Duke_brain_5000_tilt2_sar: 6.25280324119847
+        Duke_brain_2600_tilt2_sar: 48.8380206496674
+        Duke_brain_3500_tilt2_sar: 24.0810817745663
+        Duke_brain_5000_tilt2_sar: 6.25280344997098
         Duke_brain_xxxx_tilt2_sar: 0
         Duke_brain_yyyy_tilt2_sar: 0
         Duke_brain_zzzz_tilt2_sar: 0
@@ -877,289 +877,289 @@ devices:
       height: 1630
       body:
         Ella_body_headp_else_sar: 0
-        Ella_body_700_front_of_eyes_center_horizontal_sar: 0
-        Ella_body_800_front_of_eyes_center_horizontal_sar: 0
-        Ella_body_900_front_of_eyes_center_horizontal_sar: 0
-        Ella_body_1450_front_of_eyes_center_horizontal_sar: 0
-        Ella_body_1800_front_of_eyes_center_horizontal_sar: 0
-        Ella_body_2100_front_of_eyes_center_horizontal_sar: 0
-        Ella_body_2400_front_of_eyes_center_horizontal_sar: 0
-        Ella_body_2600_front_of_eyes_center_horizontal_sar: 0
-        Ella_body_3500_front_of_eyes_center_horizontal_sar: 0
-        Ella_body_5000_front_of_eyes_center_horizontal_sar: 0
+        Ella_body_700_front_of_eyes_center_horizontal_sar: 0.365682656826568
+        Ella_body_800_front_of_eyes_center_horizontal_sar: 0.36230601867436
+        Ella_body_900_front_of_eyes_center_horizontal_sar: 0.436672791551171
+        Ella_body_1450_front_of_eyes_center_horizontal_sar: 1.07593014426727
+        Ella_body_1800_front_of_eyes_center_horizontal_sar: 0.987520794878374
+        Ella_body_2100_front_of_eyes_center_horizontal_sar: 0.911741352545031
+        Ella_body_2400_front_of_eyes_center_horizontal_sar: 1.04614174293725
+        Ella_body_2600_front_of_eyes_center_horizontal_sar: 1.09735960591133
+        Ella_body_3500_front_of_eyes_center_horizontal_sar: 1.23793103448276
+        Ella_body_5000_front_of_eyes_center_horizontal_sar: 1.0148591914713
         Ella_body_xxxx_front_of_eyes_center_horizontal_sar: 0
         Ella_body_yyyy_front_of_eyes_center_horizontal_sar: 0
         Ella_body_zzzz_front_of_eyes_center_horizontal_sar: 0
-        Ella_body_700_front_of_eyes_center_vertical_sar: 0
-        Ella_body_800_front_of_eyes_center_vertical_sar: 0
-        Ella_body_900_front_of_eyes_center_vertical_sar: 0
-        Ella_body_1450_front_of_eyes_center_vertical_sar: 0
-        Ella_body_1800_front_of_eyes_center_vertical_sar: 0
-        Ella_body_2100_front_of_eyes_center_vertical_sar: 0
-        Ella_body_2400_front_of_eyes_center_vertical_sar: 0
-        Ella_body_2600_front_of_eyes_center_vertical_sar: 0
-        Ella_body_3500_front_of_eyes_center_vertical_sar: 0
-        Ella_body_5000_front_of_eyes_center_vertical_sar: 0
+        Ella_body_700_front_of_eyes_center_vertical_sar: 0.390036900369004
+        Ella_body_800_front_of_eyes_center_vertical_sar: 0.393043940435741
+        Ella_body_900_front_of_eyes_center_vertical_sar: 0.514712213110541
+        Ella_body_1450_front_of_eyes_center_vertical_sar: 1.53530751708428
+        Ella_body_1800_front_of_eyes_center_vertical_sar: 1.36937688823867
+        Ella_body_2100_front_of_eyes_center_vertical_sar: 1.22715063494242
+        Ella_body_2400_front_of_eyes_center_vertical_sar: 1.65480215183863
+        Ella_body_2600_front_of_eyes_center_vertical_sar: 1.6935960591133
+        Ella_body_3500_front_of_eyes_center_vertical_sar: 1.41103448275862
+        Ella_body_5000_front_of_eyes_center_vertical_sar: 1.01689324968159
         Ella_body_xxxx_front_of_eyes_center_vertical_sar: 0
         Ella_body_yyyy_front_of_eyes_center_vertical_sar: 0
         Ella_body_zzzz_front_of_eyes_center_vertical_sar: 0
-        Ella_body_700_front_of_eyes_down_horizontal_sar: 0
-        Ella_body_800_front_of_eyes_down_horizontal_sar: 0
-        Ella_body_900_front_of_eyes_down_horizontal_sar: 0
-        Ella_body_1450_front_of_eyes_down_horizontal_sar: 0
-        Ella_body_1800_front_of_eyes_down_horizontal_sar: 0
-        Ella_body_2100_front_of_eyes_down_horizontal_sar: 0
-        Ella_body_2400_front_of_eyes_down_horizontal_sar: 0
-        Ella_body_2600_front_of_eyes_down_horizontal_sar: 0
-        Ella_body_3500_front_of_eyes_down_horizontal_sar: 0
-        Ella_body_5000_front_of_eyes_down_horizontal_sar: 0
+        Ella_body_700_front_of_eyes_down_horizontal_sar: 0.436039360393604
+        Ella_body_800_front_of_eyes_down_horizontal_sar: 0.425556327840454
+        Ella_body_900_front_of_eyes_down_horizontal_sar: 0.499841400387401
+        Ella_body_1450_front_of_eyes_down_horizontal_sar: 1.15945330296128
+        Ella_body_1800_front_of_eyes_down_horizontal_sar: 1.08675832726645
+        Ella_body_2100_front_of_eyes_down_horizontal_sar: 1.02444834809946
+        Ella_body_2400_front_of_eyes_down_horizontal_sar: 1.12175789863981
+        Ella_body_2600_front_of_eyes_down_horizontal_sar: 1.16549261083744
+        Ella_body_3500_front_of_eyes_down_horizontal_sar: 1.30603448275862
+        Ella_body_5000_front_of_eyes_down_horizontal_sar: 1.05625029482523
         Ella_body_xxxx_front_of_eyes_down_horizontal_sar: 0
         Ella_body_yyyy_front_of_eyes_down_horizontal_sar: 0
         Ella_body_zzzz_front_of_eyes_down_horizontal_sar: 0
-        Ella_body_700_front_of_eyes_down_vertical_sar: 0
-        Ella_body_800_front_of_eyes_down_vertical_sar: 0
-        Ella_body_900_front_of_eyes_down_vertical_sar: 0
-        Ella_body_1450_front_of_eyes_down_vertical_sar: 0
-        Ella_body_1800_front_of_eyes_down_vertical_sar: 0
-        Ella_body_2100_front_of_eyes_down_vertical_sar: 0
-        Ella_body_2400_front_of_eyes_down_vertical_sar: 0
-        Ella_body_2600_front_of_eyes_down_vertical_sar: 0
-        Ella_body_3500_front_of_eyes_down_vertical_sar: 0
-        Ella_body_5000_front_of_eyes_down_vertical_sar: 0
+        Ella_body_700_front_of_eyes_down_vertical_sar: 0.432964329643296
+        Ella_body_800_front_of_eyes_down_vertical_sar: 0.452090558483436
+        Ella_body_900_front_of_eyes_down_vertical_sar: 0.585644542460508
+        Ella_body_1450_front_of_eyes_down_vertical_sar: 1.65907365223994
+        Ella_body_1800_front_of_eyes_down_vertical_sar: 1.49443632630926
+        Ella_body_2100_front_of_eyes_down_vertical_sar: 1.35331861836869
+        Ella_body_2400_front_of_eyes_down_vertical_sar: 1.76656610008521
+        Ella_body_2600_front_of_eyes_down_vertical_sar: 1.78618226600985
+        Ella_body_3500_front_of_eyes_down_vertical_sar: 1.40534482758621
+        Ella_body_5000_front_of_eyes_down_vertical_sar: 1.05452757205529
         Ella_body_xxxx_front_of_eyes_down_vertical_sar: 0
         Ella_body_yyyy_front_of_eyes_down_vertical_sar: 0
         Ella_body_zzzz_front_of_eyes_down_vertical_sar: 0
-        Ella_body_700_front_of_eyes_left_horizontal_sar: 0
-        Ella_body_800_front_of_eyes_left_horizontal_sar: 0
-        Ella_body_900_front_of_eyes_left_horizontal_sar: 0
-        Ella_body_1450_front_of_eyes_left_horizontal_sar: 0
-        Ella_body_1800_front_of_eyes_left_horizontal_sar: 0
-        Ella_body_2100_front_of_eyes_left_horizontal_sar: 0
-        Ella_body_2400_front_of_eyes_left_horizontal_sar: 0
-        Ella_body_2600_front_of_eyes_left_horizontal_sar: 0
-        Ella_body_3500_front_of_eyes_left_horizontal_sar: 0
-        Ella_body_5000_front_of_eyes_left_horizontal_sar: 0
+        Ella_body_700_front_of_eyes_left_horizontal_sar: 0.373923739237392
+        Ella_body_800_front_of_eyes_left_horizontal_sar: 0.374328443132655
+        Ella_body_900_front_of_eyes_left_horizontal_sar: 0.44804638446139
+        Ella_body_1450_front_of_eyes_left_horizontal_sar: 1.07061503416856
+        Ella_body_1800_front_of_eyes_left_horizontal_sar: 1.00258121948098
+        Ella_body_2100_front_of_eyes_left_horizontal_sar: 0.944266521177328
+        Ella_body_2400_front_of_eyes_left_horizontal_sar: 1.05639068750854
+        Ella_body_2600_front_of_eyes_left_horizontal_sar: 1.1058078817734
+        Ella_body_3500_front_of_eyes_left_horizontal_sar: 1.26396551724138
+        Ella_body_5000_front_of_eyes_left_horizontal_sar: 1.01997405537997
         Ella_body_xxxx_front_of_eyes_left_horizontal_sar: 0
         Ella_body_yyyy_front_of_eyes_left_horizontal_sar: 0
         Ella_body_zzzz_front_of_eyes_left_horizontal_sar: 0
-        Ella_body_700_front_of_eyes_left_vertical_sar: 0
-        Ella_body_800_front_of_eyes_left_vertical_sar: 0
-        Ella_body_900_front_of_eyes_left_vertical_sar: 0
-        Ella_body_1450_front_of_eyes_left_vertical_sar: 0
-        Ella_body_1800_front_of_eyes_left_vertical_sar: 0
-        Ella_body_2100_front_of_eyes_left_vertical_sar: 0
-        Ella_body_2400_front_of_eyes_left_vertical_sar: 0
-        Ella_body_2600_front_of_eyes_left_vertical_sar: 0
-        Ella_body_3500_front_of_eyes_left_vertical_sar: 0
-        Ella_body_5000_front_of_eyes_left_vertical_sar: 0
+        Ella_body_700_front_of_eyes_left_vertical_sar: 0.391512915129151
+        Ella_body_800_front_of_eyes_left_vertical_sar: 0.399358119451295
+        Ella_body_900_front_of_eyes_left_vertical_sar: 0.523719206174795
+        Ella_body_1450_front_of_eyes_left_vertical_sar: 1.55277145026576
+        Ella_body_1800_front_of_eyes_left_vertical_sar: 1.36493035103357
+        Ella_body_2100_front_of_eyes_left_vertical_sar: 1.20392369454884
+        Ella_body_2400_front_of_eyes_left_vertical_sar: 1.64139726401655
+        Ella_body_2600_front_of_eyes_left_vertical_sar: 1.67221674876847
+        Ella_body_3500_front_of_eyes_left_vertical_sar: 1.32758620689655
+        Ella_body_5000_front_of_eyes_left_vertical_sar: 0.983819991509034
         Ella_body_xxxx_front_of_eyes_left_vertical_sar: 0
         Ella_body_yyyy_front_of_eyes_left_vertical_sar: 0
         Ella_body_zzzz_front_of_eyes_left_vertical_sar: 0
-        Ella_body_700_front_of_eyes_right_horizontal_sar: 0
-        Ella_body_800_front_of_eyes_right_horizontal_sar: 0
-        Ella_body_900_front_of_eyes_right_horizontal_sar: 0
-        Ella_body_1450_front_of_eyes_right_horizontal_sar: 0
-        Ella_body_1800_front_of_eyes_right_horizontal_sar: 0
-        Ella_body_2100_front_of_eyes_right_horizontal_sar: 0
-        Ella_body_2400_front_of_eyes_right_horizontal_sar: 0
-        Ella_body_2600_front_of_eyes_right_horizontal_sar: 0
-        Ella_body_3500_front_of_eyes_right_horizontal_sar: 0
-        Ella_body_5000_front_of_eyes_right_horizontal_sar: 0
+        Ella_body_700_front_of_eyes_right_horizontal_sar: 0.353505535055351
+        Ella_body_800_front_of_eyes_right_horizontal_sar: 0.345192496463615
+        Ella_body_900_front_of_eyes_right_horizontal_sar: 0.420625395839333
+        Ella_body_1450_front_of_eyes_right_horizontal_sar: 1.083523158694
+        Ella_body_1800_front_of_eyes_right_horizontal_sar: 0.974591375934141
+        Ella_body_2100_front_of_eyes_right_horizontal_sar: 0.881221276425688
+        Ella_body_2400_front_of_eyes_right_horizontal_sar: 1.04211338133989
+        Ella_body_2600_front_of_eyes_right_horizontal_sar: 1.0945960591133
+        Ella_body_3500_front_of_eyes_right_horizontal_sar: 1.20948275862069
+        Ella_body_5000_front_of_eyes_right_horizontal_sar: 0.999610830699561
         Ella_body_xxxx_front_of_eyes_right_horizontal_sar: 0
         Ella_body_yyyy_front_of_eyes_right_horizontal_sar: 0
         Ella_body_zzzz_front_of_eyes_right_horizontal_sar: 0
-        Ella_body_700_front_of_eyes_right_vertical_sar: 0
-        Ella_body_800_front_of_eyes_right_vertical_sar: 0
-        Ella_body_900_front_of_eyes_right_vertical_sar: 0
-        Ella_body_1450_front_of_eyes_right_vertical_sar: 0
-        Ella_body_1800_front_of_eyes_right_vertical_sar: 0
-        Ella_body_2100_front_of_eyes_right_vertical_sar: 0
-        Ella_body_2400_front_of_eyes_right_vertical_sar: 0
-        Ella_body_2600_front_of_eyes_right_vertical_sar: 0
-        Ella_body_3500_front_of_eyes_right_vertical_sar: 0
-        Ella_body_5000_front_of_eyes_right_vertical_sar: 0
+        Ella_body_700_front_of_eyes_right_vertical_sar: 0.385977859778598
+        Ella_body_800_front_of_eyes_right_vertical_sar: 0.400947011406577
+        Ella_body_900_front_of_eyes_right_vertical_sar: 0.523116697169545
+        Ella_body_1450_front_of_eyes_right_vertical_sar: 1.5125284738041
+        Ella_body_1800_front_of_eyes_right_vertical_sar: 1.35399953781651
+        Ella_body_2100_front_of_eyes_right_vertical_sar: 1.2181175926843
+        Ella_body_2400_front_of_eyes_right_vertical_sar: 1.64654060066741
+        Ella_body_2600_front_of_eyes_right_vertical_sar: 1.6957881773399
+        Ella_body_3500_front_of_eyes_right_vertical_sar: 1.47603448275862
+        Ella_body_5000_front_of_eyes_right_vertical_sar: 1.00935562998255
         Ella_body_xxxx_front_of_eyes_right_vertical_sar: 0
         Ella_body_yyyy_front_of_eyes_right_vertical_sar: 0
         Ella_body_zzzz_front_of_eyes_right_vertical_sar: 0
-        Ella_body_700_cheek1_sar: 0
-        Ella_body_800_cheek1_sar: 0
-        Ella_body_900_cheek1_sar: 0
-        Ella_body_1450_cheek1_sar: 0
-        Ella_body_1800_cheek1_sar: 0
-        Ella_body_2100_cheek1_sar: 0
-        Ella_body_2400_cheek1_sar: 0
-        Ella_body_2600_cheek1_sar: 0
-        Ella_body_3500_cheek1_sar: 0
-        Ella_body_5000_cheek1_sar: 0
+        Ella_body_700_cheek1_sar: 3.22263222632226
+        Ella_body_800_cheek1_sar: 3.50002391529646
+        Ella_body_900_cheek1_sar: 4.30112457792464
+        Ella_body_1450_cheek1_sar: 10.2581624905087
+        Ella_body_1800_cheek1_sar: 11.2366265547773
+        Ella_body_2100_cheek1_sar: 12.0753100384361
+        Ella_body_2400_cheek1_sar: 12.1481807596485
+        Ella_body_2600_cheek1_sar: 12.0028571428571
+        Ella_body_3500_cheek1_sar: 11.1758620689655
+        Ella_body_5000_cheek1_sar: 8.98785791782631
         Ella_body_xxxx_cheek1_sar: 0
         Ella_body_yyyy_cheek1_sar: 0
         Ella_body_zzzz_cheek1_sar: 0
-        Ella_body_700_cheek2_sar: 0
-        Ella_body_800_cheek2_sar: 0
-        Ella_body_900_cheek2_sar: 0
-        Ella_body_1450_cheek2_sar: 0
-        Ella_body_1800_cheek2_sar: 0
-        Ella_body_2100_cheek2_sar: 0
-        Ella_body_2400_cheek2_sar: 0
-        Ella_body_2600_cheek2_sar: 0
-        Ella_body_3500_cheek2_sar: 0
-        Ella_body_5000_cheek2_sar: 0
+        Ella_body_700_cheek2_sar: 3.11808118081181
+        Ella_body_800_cheek2_sar: 2.8134739059224
+        Ella_body_900_cheek2_sar: 3.3356359623766
+        Ella_body_1450_cheek2_sar: 8.65603644646925
+        Ella_body_1800_cheek2_sar: 10.5183656157108
+        Ella_body_2100_cheek2_sar: 12.1146477607751
+        Ella_body_2400_cheek2_sar: 11.9255677198186
+        Ella_body_2600_cheek2_sar: 11.6369458128079
+        Ella_body_3500_cheek2_sar: 10.3689655172414
+        Ella_body_5000_cheek2_sar: 7.67952261899146
         Ella_body_xxxx_cheek2_sar: 0
         Ella_body_yyyy_cheek2_sar: 0
         Ella_body_zzzz_cheek2_sar: 0
-        Ella_body_700_cheek3_sar: 0
-        Ella_body_800_cheek3_sar: 0
-        Ella_body_900_cheek3_sar: 0
-        Ella_body_1450_cheek3_sar: 0
-        Ella_body_1800_cheek3_sar: 0
-        Ella_body_2100_cheek3_sar: 0
-        Ella_body_2400_cheek3_sar: 0
-        Ella_body_2600_cheek3_sar: 0
-        Ella_body_3500_cheek3_sar: 0
-        Ella_body_5000_cheek3_sar: 0
+        Ella_body_700_cheek3_sar: 3.46494464944649
+        Ella_body_800_cheek3_sar: 3.88268189846812
+        Ella_body_900_cheek3_sar: 4.49466504295975
+        Ella_body_1450_cheek3_sar: 8.43583902809415
+        Ella_body_1800_cheek3_sar: 10.4691896016052
+        Ella_body_2100_cheek3_sar: 12.2120615217575
+        Ella_body_2400_cheek3_sar: 11.8634532196267
+        Ella_body_2600_cheek3_sar: 11.4413793103448
+        Ella_body_3500_cheek3_sar: 9.57931034482759
+        Ella_body_5000_cheek3_sar: 6.64681352894004
         Ella_body_xxxx_cheek3_sar: 0
         Ella_body_yyyy_cheek3_sar: 0
         Ella_body_zzzz_cheek3_sar: 0
-        Ella_body_700_tilt1_sar: 0
-        Ella_body_800_tilt1_sar: 0
-        Ella_body_900_tilt1_sar: 0
-        Ella_body_1450_tilt1_sar: 0
-        Ella_body_1800_tilt1_sar: 0
-        Ella_body_2100_tilt1_sar: 0
-        Ella_body_2400_tilt1_sar: 0
-        Ella_body_2600_tilt1_sar: 0
-        Ella_body_3500_tilt1_sar: 0
-        Ella_body_5000_tilt1_sar: 0
+        Ella_body_700_tilt1_sar: 3.40836408364084
+        Ella_body_800_tilt1_sar: 2.78987396091577
+        Ella_body_900_tilt1_sar: 2.62852138878182
+        Ella_body_1450_tilt1_sar: 3.09491268033409
+        Ella_body_1800_tilt1_sar: 4.96125284544982
+        Ella_body_2100_tilt1_sar: 6.56097298697758
+        Ella_body_2400_tilt1_sar: 5.26303560161063
+        Ella_body_2600_tilt1_sar: 4.79679802955665
+        Ella_body_3500_tilt1_sar: 3.74310344827586
+        Ella_body_5000_tilt1_sar: 3.00124062455776
         Ella_body_xxxx_tilt1_sar: 0
         Ella_body_yyyy_tilt1_sar: 0
         Ella_body_zzzz_tilt1_sar: 0
-        Ella_body_700_tilt2_sar: 0
-        Ella_body_800_tilt2_sar: 0
-        Ella_body_900_tilt2_sar: 0
-        Ella_body_1450_tilt2_sar: 0
-        Ella_body_1800_tilt2_sar: 0
-        Ella_body_2100_tilt2_sar: 0
-        Ella_body_2400_tilt2_sar: 0
-        Ella_body_2600_tilt2_sar: 0
-        Ella_body_3500_tilt2_sar: 0
-        Ella_body_5000_tilt2_sar: 0
+        Ella_body_700_tilt2_sar: 2.94341943419434
+        Ella_body_800_tilt2_sar: 2.49022445895156
+        Ella_body_900_tilt2_sar: 2.20434957958229
+        Ella_body_1450_tilt2_sar: 1.12756264236902
+        Ella_body_1800_tilt2_sar: 5.83037962562365
+        Ella_body_2100_tilt2_sar: 9.86136561127048
+        Ella_body_2400_tilt2_sar: 8.51069011051916
+        Ella_body_2600_tilt2_sar: 8.17059113300493
+        Ella_body_3500_tilt2_sar: 8.30862068965517
+        Ella_body_5000_tilt2_sar: 6.82290202368036
         Ella_body_xxxx_tilt2_sar: 0
         Ella_body_yyyy_tilt2_sar: 0
         Ella_body_zzzz_tilt2_sar: 0
-        Ella_body_700_tilt3_sar: 0
-        Ella_body_800_tilt3_sar: 0
-        Ella_body_900_tilt3_sar: 0
-        Ella_body_1450_tilt3_sar: 0
-        Ella_body_1800_tilt3_sar: 0
-        Ella_body_2100_tilt3_sar: 0
-        Ella_body_2400_tilt3_sar: 0
-        Ella_body_2600_tilt3_sar: 0
-        Ella_body_3500_tilt3_sar: 0
-        Ella_body_5000_tilt3_sar: 0
+        Ella_body_700_tilt3_sar: 3.16728167281673
+        Ella_body_800_tilt3_sar: 2.65409953780283
+        Ella_body_900_tilt3_sar: 2.33565911980717
+        Ella_body_1450_tilt3_sar: 1.16097190584662
+        Ella_body_1800_tilt3_sar: 6.30603361815342
+        Ella_body_2100_tilt3_sar: 10.7160865144164
+        Ella_body_2400_tilt3_sar: 10.4983910647958
+        Ella_body_2600_tilt3_sar: 10.1421674876847
+        Ella_body_3500_tilt3_sar: 8.93448275862069
+        Ella_body_5000_tilt3_sar: 6.0688994763904
         Ella_body_xxxx_tilt3_sar: 0
         Ella_body_yyyy_tilt3_sar: 0
         Ella_body_zzzz_tilt3_sar: 0
-        Ella_body_700_belly_center_horizontal_sar: 0
-        Ella_body_800_belly_center_horizontal_sar: 0
-        Ella_body_900_belly_center_horizontal_sar: 0
-        Ella_body_1450_belly_center_horizontal_sar: 0
-        Ella_body_1800_belly_center_horizontal_sar: 0
-        Ella_body_2100_belly_center_horizontal_sar: 0
-        Ella_body_2400_belly_center_horizontal_sar: 0
-        Ella_body_2600_belly_center_horizontal_sar: 0
-        Ella_body_3500_belly_center_horizontal_sar: 0
-        Ella_body_5000_belly_center_horizontal_sar: 0
+        Ella_body_700_belly_center_horizontal_sar: 0.5460024600246
+        Ella_body_800_belly_center_horizontal_sar: 0.701792988464244
+        Ella_body_900_belly_center_horizontal_sar: 0.878215648326653
+        Ella_body_1450_belly_center_horizontal_sar: 1.90964312832194
+        Ella_body_1800_belly_center_horizontal_sar: 1.70392958285141
+        Ella_body_2100_belly_center_horizontal_sar: 1.52760368673381
+        Ella_body_2400_belly_center_horizontal_sar: 1.93389718270463
+        Ella_body_2600_belly_center_horizontal_sar: 1.97179802955665
+        Ella_body_3500_belly_center_horizontal_sar: 1.70327586206897
+        Ella_body_5000_belly_center_horizontal_sar: 1.44853861031181
         Ella_body_xxxx_belly_center_horizontal_sar: 0
         Ella_body_yyyy_belly_center_horizontal_sar: 0
         Ella_body_zzzz_belly_center_horizontal_sar: 0
-        Ella_body_700_belly_center_vertical_sar: 0
-        Ella_body_800_belly_center_vertical_sar: 0
-        Ella_body_900_belly_center_vertical_sar: 0
-        Ella_body_1450_belly_center_vertical_sar: 0
-        Ella_body_1800_belly_center_vertical_sar: 0
-        Ella_body_2100_belly_center_vertical_sar: 0
-        Ella_body_2400_belly_center_vertical_sar: 0
-        Ella_body_2600_belly_center_vertical_sar: 0
-        Ella_body_3500_belly_center_vertical_sar: 0
-        Ella_body_5000_belly_center_vertical_sar: 0
+        Ella_body_700_belly_center_vertical_sar: 0.499261992619926
+        Ella_body_800_belly_center_vertical_sar: 0.670484914876887
+        Ella_body_900_belly_center_vertical_sar: 0.922538426701439
+        Ella_body_1450_belly_center_vertical_sar: 2.54821564160972
+        Ella_body_1800_belly_center_vertical_sar: 2.2333524654902
+        Ella_body_2100_belly_center_vertical_sar: 1.96346974310205
+        Ella_body_2400_belly_center_vertical_sar: 2.5227646052469
+        Ella_body_2600_belly_center_vertical_sar: 2.54891625615764
+        Ella_body_3500_belly_center_vertical_sar: 2.01896551724138
+        Ella_body_5000_belly_center_vertical_sar: 1.63697815934714
         Ella_body_xxxx_belly_center_vertical_sar: 0
         Ella_body_yyyy_belly_center_vertical_sar: 0
         Ella_body_zzzz_belly_center_vertical_sar: 0
-        Ella_body_700_belly_left_horizontal_sar: 0
-        Ella_body_800_belly_left_horizontal_sar: 0
-        Ella_body_900_belly_left_horizontal_sar: 0
-        Ella_body_1450_belly_left_horizontal_sar: 0
-        Ella_body_1800_belly_left_horizontal_sar: 0
-        Ella_body_2100_belly_left_horizontal_sar: 0
-        Ella_body_2400_belly_left_horizontal_sar: 0
-        Ella_body_2600_belly_left_horizontal_sar: 0
-        Ella_body_3500_belly_left_horizontal_sar: 0
-        Ella_body_5000_belly_left_horizontal_sar: 0
+        Ella_body_700_belly_left_horizontal_sar: 0.571832718327183
+        Ella_body_800_belly_left_horizontal_sar: 0.75884939249246
+        Ella_body_900_belly_left_horizontal_sar: 0.95803531335442
+        Ella_body_1450_belly_left_horizontal_sar: 2.08959757023538
+        Ella_body_1800_belly_left_horizontal_sar: 1.9587185586362
+        Ella_body_2100_belly_left_horizontal_sar: 1.84653654869404
+        Ella_body_2400_belly_left_horizontal_sar: 1.93928692699491
+        Ella_body_2600_belly_left_horizontal_sar: 1.94847290640394
+        Ella_body_3500_belly_left_horizontal_sar: 1.87931034482759
+        Ella_body_5000_belly_left_horizontal_sar: 1.50372187367329
         Ella_body_xxxx_belly_left_horizontal_sar: 0
         Ella_body_yyyy_belly_left_horizontal_sar: 0
         Ella_body_zzzz_belly_left_horizontal_sar: 0
-        Ella_body_700_belly_left_vertical_sar: 0
-        Ella_body_800_belly_left_vertical_sar: 0
-        Ella_body_900_belly_left_vertical_sar: 0
-        Ella_body_1450_belly_left_vertical_sar: 0
-        Ella_body_1800_belly_left_vertical_sar: 0
-        Ella_body_2100_belly_left_vertical_sar: 0
-        Ella_body_2400_belly_left_vertical_sar: 0
-        Ella_body_2600_belly_left_vertical_sar: 0
-        Ella_body_3500_belly_left_vertical_sar: 0
-        Ella_body_5000_belly_left_vertical_sar: 0
+        Ella_body_700_belly_left_vertical_sar: 0.497047970479705
+        Ella_body_800_belly_left_vertical_sar: 0.575588293225268
+        Ella_body_900_belly_left_vertical_sar: 0.762115326371199
+        Ella_body_1450_belly_left_vertical_sar: 2.10782080485953
+        Ella_body_1800_belly_left_vertical_sar: 1.90481143821115
+        Ella_body_2100_belly_left_vertical_sar: 1.73080340965539
+        Ella_body_2400_belly_left_vertical_sar: 2.10322840843302
+        Ella_body_2600_belly_left_vertical_sar: 2.06689655172414
+        Ella_body_3500_belly_left_vertical_sar: 1.39241379310345
+        Ella_body_5000_belly_left_vertical_sar: 1.14192556252653
         Ella_body_xxxx_belly_left_vertical_sar: 0
         Ella_body_yyyy_belly_left_vertical_sar: 0
         Ella_body_zzzz_belly_left_vertical_sar: 0
-        Ella_body_700_belly_right_horizontal_sar: 0
-        Ella_body_800_belly_right_horizontal_sar: 0
-        Ella_body_900_belly_right_horizontal_sar: 0
-        Ella_body_1450_belly_right_horizontal_sar: 0
-        Ella_body_1800_belly_right_horizontal_sar: 0
-        Ella_body_2100_belly_right_horizontal_sar: 0
-        Ella_body_2400_belly_right_horizontal_sar: 0
-        Ella_body_2600_belly_right_horizontal_sar: 0
-        Ella_body_3500_belly_right_horizontal_sar: 0
-        Ella_body_5000_belly_right_horizontal_sar: 0
+        Ella_body_700_belly_right_horizontal_sar: 0.453628536285363
+        Ella_body_800_belly_right_horizontal_sar: 0.459425114898032
+        Ella_body_900_belly_right_horizontal_sar: 0.591883678818848
+        Ella_body_1450_belly_right_horizontal_sar: 1.69552012148823
+        Ella_body_1800_belly_right_horizontal_sar: 1.58002830632533
+        Ella_body_2100_belly_right_horizontal_sar: 1.48103532189999
+        Ella_body_2400_belly_right_horizontal_sar: 1.53819383460505
+        Ella_body_2600_belly_right_horizontal_sar: 1.53711822660099
+        Ella_body_3500_belly_right_horizontal_sar: 1.44948275862069
+        Ella_body_5000_belly_right_horizontal_sar: 1.18899523562432
         Ella_body_xxxx_belly_right_horizontal_sar: 0
         Ella_body_yyyy_belly_right_horizontal_sar: 0
         Ella_body_zzzz_belly_right_horizontal_sar: 0
-        Ella_body_700_belly_right_vertical_sar: 0
-        Ella_body_800_belly_right_vertical_sar: 0
-        Ella_body_900_belly_right_vertical_sar: 0
-        Ella_body_1450_belly_right_vertical_sar: 0
-        Ella_body_1800_belly_right_vertical_sar: 0
-        Ella_body_2100_belly_right_vertical_sar: 0
-        Ella_body_2400_belly_right_vertical_sar: 0
-        Ella_body_2600_belly_right_vertical_sar: 0
-        Ella_body_3500_belly_right_vertical_sar: 0
-        Ella_body_5000_belly_right_vertical_sar: 0
+        Ella_body_700_belly_right_vertical_sar: 0.473677736777368
+        Ella_body_800_belly_right_vertical_sar: 0.583951050741993
+        Ella_body_900_belly_right_vertical_sar: 0.81628202782199
+        Ella_body_1450_belly_right_vertical_sar: 2.45558086560365
+        Ella_body_1800_belly_right_vertical_sar: 2.19304577952535
+        Ella_body_2100_belly_right_vertical_sar: 1.96801570574395
+        Ella_body_2400_belly_right_vertical_sar: 2.35093625796044
+        Ella_body_2600_belly_right_vertical_sar: 2.39374384236453
+        Ella_body_3500_belly_right_vertical_sar: 2.17413793103448
+        Ella_body_5000_belly_right_vertical_sar: 1.74552101514222
         Ella_body_xxxx_belly_right_vertical_sar: 0
         Ella_body_yyyy_belly_right_vertical_sar: 0
         Ella_body_zzzz_belly_right_vertical_sar: 0
-        Ella_body_700_belly_up_horizontal_sar: 0
-        Ella_body_800_belly_up_horizontal_sar: 0
-        Ella_body_900_belly_up_horizontal_sar: 0
-        Ella_body_1450_belly_up_horizontal_sar: 0
-        Ella_body_1800_belly_up_horizontal_sar: 0
-        Ella_body_2100_belly_up_horizontal_sar: 0
-        Ella_body_2400_belly_up_horizontal_sar: 0
-        Ella_body_2600_belly_up_horizontal_sar: 0
-        Ella_body_3500_belly_up_horizontal_sar: 0
-        Ella_body_5000_belly_up_horizontal_sar: 0
+        Ella_body_700_belly_up_horizontal_sar: 0.545141451414514
+        Ella_body_800_belly_up_horizontal_sar: 0.65876985937913
+        Ella_body_900_belly_up_horizontal_sar: 0.81988172886084
+        Ella_body_1450_belly_up_horizontal_sar: 1.84662110858011
+        Ella_body_1800_belly_up_horizontal_sar: 1.68296085475758
+        Ella_body_2100_belly_up_horizontal_sar: 1.54268063719542
+        Ella_body_2400_belly_up_horizontal_sar: 1.87810523713808
+        Ella_body_2600_belly_up_horizontal_sar: 1.91337438423645
+        Ella_body_3500_belly_up_horizontal_sar: 1.71637931034483
+        Ella_body_5000_belly_up_horizontal_sar: 1.45842492570404
         Ella_body_xxxx_belly_up_horizontal_sar: 0
         Ella_body_yyyy_belly_up_horizontal_sar: 0
         Ella_body_zzzz_belly_up_horizontal_sar: 0
-        Ella_body_700_belly_up_vertical_sar: 0
-        Ella_body_800_belly_up_vertical_sar: 0
-        Ella_body_900_belly_up_vertical_sar: 0
-        Ella_body_1450_belly_up_vertical_sar: 0
-        Ella_body_1800_belly_up_vertical_sar: 0
-        Ella_body_2100_belly_up_vertical_sar: 0
-        Ella_body_2400_belly_up_vertical_sar: 0
-        Ella_body_2600_belly_up_vertical_sar: 0
-        Ella_body_3500_belly_up_vertical_sar: 0
-        Ella_body_5000_belly_up_vertical_sar: 0
+        Ella_body_700_belly_up_vertical_sar: 0.461008610086101
+        Ella_body_800_belly_up_vertical_sar: 0.62300115061652
+        Ella_body_900_belly_up_vertical_sar: 0.857361998266199
+        Ella_body_1450_belly_up_vertical_sar: 2.36066818526955
+        Ella_body_1800_belly_up_vertical_sar: 2.17475420197959
+        Ella_body_2100_belly_up_vertical_sar: 2.01539935915962
+        Ella_body_2400_belly_up_vertical_sar: 2.53467413435331
+        Ella_body_2600_belly_up_vertical_sar: 2.56389162561576
+        Ella_body_3500_belly_up_vertical_sar: 2.11551724137931
+        Ella_body_5000_belly_up_vertical_sar: 1.63328930609934
         Ella_body_xxxx_belly_up_vertical_sar: 0
         Ella_body_yyyy_belly_up_vertical_sar: 0
         Ella_body_zzzz_belly_up_vertical_sar: 0
@@ -1167,289 +1167,289 @@ devices:
 
       brain:
         Ella_brain_headp_else_sar: 0
-        Ella_brain_700_front_of_eyes_center_horizontal_sar: 0
-        Ella_brain_800_front_of_eyes_center_horizontal_sar: 0
-        Ella_brain_900_front_of_eyes_center_horizontal_sar: 0
-        Ella_brain_1450_front_of_eyes_center_horizontal_sar: 0
-        Ella_brain_1800_front_of_eyes_center_horizontal_sar: 0
-        Ella_brain_2100_front_of_eyes_center_horizontal_sar: 0
-        Ella_brain_2400_front_of_eyes_center_horizontal_sar: 0
-        Ella_brain_2600_front_of_eyes_center_horizontal_sar: 0
-        Ella_brain_3500_front_of_eyes_center_horizontal_sar: 0
-        Ella_brain_5000_front_of_eyes_center_horizontal_sar: 0
+        Ella_brain_700_front_of_eyes_center_horizontal_sar: 1.30954172908065
+        Ella_brain_800_front_of_eyes_center_horizontal_sar: 1.26338169599811
+        Ella_brain_900_front_of_eyes_center_horizontal_sar: 1.39113326938646
+        Ella_brain_1450_front_of_eyes_center_horizontal_sar: 2.60881283449383
+        Ella_brain_1800_front_of_eyes_center_horizontal_sar: 1.96308619317617
+        Ella_brain_2100_front_of_eyes_center_horizontal_sar: 1.40960621490389
+        Ella_brain_2400_front_of_eyes_center_horizontal_sar: 1.1521769568033
+        Ella_brain_2600_front_of_eyes_center_horizontal_sar: 0.989658772034046
+        Ella_brain_3500_front_of_eyes_center_horizontal_sar: 0.226432656877303
+        Ella_brain_5000_front_of_eyes_center_horizontal_sar: 0.098988726857487
         Ella_brain_xxxx_front_of_eyes_center_horizontal_sar: 0
         Ella_brain_yyyy_front_of_eyes_center_horizontal_sar: 0
         Ella_brain_zzzz_front_of_eyes_center_horizontal_sar: 0
-        Ella_brain_700_front_of_eyes_center_vertical_sar: 0
-        Ella_brain_800_front_of_eyes_center_vertical_sar: 0
-        Ella_brain_900_front_of_eyes_center_vertical_sar: 0
-        Ella_brain_1450_front_of_eyes_center_vertical_sar: 0
-        Ella_brain_1800_front_of_eyes_center_vertical_sar: 0
-        Ella_brain_2100_front_of_eyes_center_vertical_sar: 0
-        Ella_brain_2400_front_of_eyes_center_vertical_sar: 0
-        Ella_brain_2600_front_of_eyes_center_vertical_sar: 0
-        Ella_brain_3500_front_of_eyes_center_vertical_sar: 0
-        Ella_brain_5000_front_of_eyes_center_vertical_sar: 0
+        Ella_brain_700_front_of_eyes_center_vertical_sar: 0.553461651321501
+        Ella_brain_800_front_of_eyes_center_vertical_sar: 0.683072642190952
+        Ella_brain_900_front_of_eyes_center_vertical_sar: 1.03132720728218
+        Ella_brain_1450_front_of_eyes_center_vertical_sar: 3.59424866970992
+        Ella_brain_1800_front_of_eyes_center_vertical_sar: 2.48900273454496
+        Ella_brain_2100_front_of_eyes_center_vertical_sar: 1.54164907583214
+        Ella_brain_2400_front_of_eyes_center_vertical_sar: 1.72919501507265
+        Ella_brain_2600_front_of_eyes_center_vertical_sar: 1.61016181306863
+        Ella_brain_3500_front_of_eyes_center_vertical_sar: 0.533816723657288
+        Ella_brain_5000_front_of_eyes_center_vertical_sar: 0.112623137378515
         Ella_brain_xxxx_front_of_eyes_center_vertical_sar: 0
         Ella_brain_yyyy_front_of_eyes_center_vertical_sar: 0
         Ella_brain_zzzz_front_of_eyes_center_vertical_sar: 0
-        Ella_brain_700_front_of_eyes_down_horizontal_sar: 0
-        Ella_brain_800_front_of_eyes_down_horizontal_sar: 0
-        Ella_brain_900_front_of_eyes_down_horizontal_sar: 0
-        Ella_brain_1450_front_of_eyes_down_horizontal_sar: 0
-        Ella_brain_1800_front_of_eyes_down_horizontal_sar: 0
-        Ella_brain_2100_front_of_eyes_down_horizontal_sar: 0
-        Ella_brain_2400_front_of_eyes_down_horizontal_sar: 0
-        Ella_brain_2600_front_of_eyes_down_horizontal_sar: 0
-        Ella_brain_3500_front_of_eyes_down_horizontal_sar: 0
-        Ella_brain_5000_front_of_eyes_down_horizontal_sar: 0
+        Ella_brain_700_front_of_eyes_down_horizontal_sar: 1.14350240889582
+        Ella_brain_800_front_of_eyes_down_horizontal_sar: 1.06997119301363
+        Ella_brain_900_front_of_eyes_down_horizontal_sar: 1.12497096047187
+        Ella_brain_1450_front_of_eyes_down_horizontal_sar: 1.80811913215421
+        Ella_brain_1800_front_of_eyes_down_horizontal_sar: 1.35976246303779
+        Ella_brain_2100_front_of_eyes_down_horizontal_sar: 0.975456746652287
+        Ella_brain_2400_front_of_eyes_down_horizontal_sar: 0.758340957447967
+        Ella_brain_2600_front_of_eyes_down_horizontal_sar: 0.644539180067517
+        Ella_brain_3500_front_of_eyes_down_horizontal_sar: 0.153122777730491
+        Ella_brain_5000_front_of_eyes_down_horizontal_sar: 0.0579263066870998
         Ella_brain_xxxx_front_of_eyes_down_horizontal_sar: 0
         Ella_brain_yyyy_front_of_eyes_down_horizontal_sar: 0
         Ella_brain_zzzz_front_of_eyes_down_horizontal_sar: 0
-        Ella_brain_700_front_of_eyes_down_vertical_sar: 0
-        Ella_brain_800_front_of_eyes_down_vertical_sar: 0
-        Ella_brain_900_front_of_eyes_down_vertical_sar: 0
-        Ella_brain_1450_front_of_eyes_down_vertical_sar: 0
-        Ella_brain_1800_front_of_eyes_down_vertical_sar: 0
-        Ella_brain_2100_front_of_eyes_down_vertical_sar: 0
-        Ella_brain_2400_front_of_eyes_down_vertical_sar: 0
-        Ella_brain_2600_front_of_eyes_down_vertical_sar: 0
-        Ella_brain_3500_front_of_eyes_down_vertical_sar: 0
-        Ella_brain_5000_front_of_eyes_down_vertical_sar: 0
+        Ella_brain_700_front_of_eyes_down_vertical_sar: 0.266376000261904
+        Ella_brain_800_front_of_eyes_down_vertical_sar: 0.359122601262698
+        Ella_brain_900_front_of_eyes_down_vertical_sar: 0.621817022398601
+        Ella_brain_1450_front_of_eyes_down_vertical_sar: 2.56994334443082
+        Ella_brain_1800_front_of_eyes_down_vertical_sar: 1.85084645732431
+        Ella_brain_2100_front_of_eyes_down_vertical_sar: 1.2344776969473
+        Ella_brain_2400_front_of_eyes_down_vertical_sar: 1.33144627012507
+        Ella_brain_2600_front_of_eyes_down_vertical_sar: 1.22110252115639
+        Ella_brain_3500_front_of_eyes_down_vertical_sar: 0.352327249004221
+        Ella_brain_5000_front_of_eyes_down_vertical_sar: 0.09236210442045
         Ella_brain_xxxx_front_of_eyes_down_vertical_sar: 0
         Ella_brain_yyyy_front_of_eyes_down_vertical_sar: 0
         Ella_brain_zzzz_front_of_eyes_down_vertical_sar: 0
-        Ella_brain_700_front_of_eyes_left_horizontal_sar: 0
-        Ella_brain_800_front_of_eyes_left_horizontal_sar: 0
-        Ella_brain_900_front_of_eyes_left_horizontal_sar: 0
-        Ella_brain_1450_front_of_eyes_left_horizontal_sar: 0
-        Ella_brain_1800_front_of_eyes_left_horizontal_sar: 0
-        Ella_brain_2100_front_of_eyes_left_horizontal_sar: 0
-        Ella_brain_2400_front_of_eyes_left_horizontal_sar: 0
-        Ella_brain_2600_front_of_eyes_left_horizontal_sar: 0
-        Ella_brain_3500_front_of_eyes_left_horizontal_sar: 0
-        Ella_brain_5000_front_of_eyes_left_horizontal_sar: 0
+        Ella_brain_700_front_of_eyes_left_horizontal_sar: 1.37744214197871
+        Ella_brain_800_front_of_eyes_left_horizontal_sar: 1.33310938476566
+        Ella_brain_900_front_of_eyes_left_horizontal_sar: 1.45333614310433
+        Ella_brain_1450_front_of_eyes_left_horizontal_sar: 2.60193264848555
+        Ella_brain_1800_front_of_eyes_left_horizontal_sar: 2.00014374630575
+        Ella_brain_2100_front_of_eyes_left_horizontal_sar: 1.48432468729448
+        Ella_brain_2400_front_of_eyes_left_horizontal_sar: 1.21267123481095
+        Ella_brain_2600_front_of_eyes_left_horizontal_sar: 1.04687307498118
+        Ella_brain_3500_front_of_eyes_left_horizontal_sar: 0.286173629020284
+        Ella_brain_5000_front_of_eyes_left_horizontal_sar: 0.111990613268668
         Ella_brain_xxxx_front_of_eyes_left_horizontal_sar: 0
         Ella_brain_yyyy_front_of_eyes_left_horizontal_sar: 0
         Ella_brain_zzzz_front_of_eyes_left_horizontal_sar: 0
-        Ella_brain_700_front_of_eyes_left_vertical_sar: 0
-        Ella_brain_800_front_of_eyes_left_vertical_sar: 0
-        Ella_brain_900_front_of_eyes_left_vertical_sar: 0
-        Ella_brain_1450_front_of_eyes_left_vertical_sar: 0
-        Ella_brain_1800_front_of_eyes_left_vertical_sar: 0
-        Ella_brain_2100_front_of_eyes_left_vertical_sar: 0
-        Ella_brain_2400_front_of_eyes_left_vertical_sar: 0
-        Ella_brain_2600_front_of_eyes_left_vertical_sar: 0
-        Ella_brain_3500_front_of_eyes_left_vertical_sar: 0
-        Ella_brain_5000_front_of_eyes_left_vertical_sar: 0
+        Ella_brain_700_front_of_eyes_left_vertical_sar: 0.534104571631899
+        Ella_brain_800_front_of_eyes_left_vertical_sar: 0.680605821382648
+        Ella_brain_900_front_of_eyes_left_vertical_sar: 1.04581411249207
+        Ella_brain_1450_front_of_eyes_left_vertical_sar: 3.70216902838684
+        Ella_brain_1800_front_of_eyes_left_vertical_sar: 2.53820601370897
+        Ella_brain_2100_front_of_eyes_left_vertical_sar: 1.54052342969936
+        Ella_brain_2400_front_of_eyes_left_vertical_sar: 1.70682063971523
+        Ella_brain_2600_front_of_eyes_left_vertical_sar: 1.57915794919061
+        Ella_brain_3500_front_of_eyes_left_vertical_sar: 0.467810781561585
+        Ella_brain_5000_front_of_eyes_left_vertical_sar: 0.117634456018742
         Ella_brain_xxxx_front_of_eyes_left_vertical_sar: 0
         Ella_brain_yyyy_front_of_eyes_left_vertical_sar: 0
         Ella_brain_zzzz_front_of_eyes_left_vertical_sar: 0
-        Ella_brain_700_front_of_eyes_right_horizontal_sar: 0
-        Ella_brain_800_front_of_eyes_right_horizontal_sar: 0
-        Ella_brain_900_front_of_eyes_right_horizontal_sar: 0
-        Ella_brain_1450_front_of_eyes_right_horizontal_sar: 0
-        Ella_brain_1800_front_of_eyes_right_horizontal_sar: 0
-        Ella_brain_2100_front_of_eyes_right_horizontal_sar: 0
-        Ella_brain_2400_front_of_eyes_right_horizontal_sar: 0
-        Ella_brain_2600_front_of_eyes_right_horizontal_sar: 0
-        Ella_brain_3500_front_of_eyes_right_horizontal_sar: 0
-        Ella_brain_5000_front_of_eyes_right_horizontal_sar: 0
+        Ella_brain_700_front_of_eyes_right_horizontal_sar: 1.23157211599064
+        Ella_brain_800_front_of_eyes_right_horizontal_sar: 1.18133998076622
+        Ella_brain_900_front_of_eyes_right_horizontal_sar: 1.31439757272264
+        Ella_brain_1450_front_of_eyes_right_horizontal_sar: 2.5890339051338
+        Ella_brain_1800_front_of_eyes_right_horizontal_sar: 1.910547831782
+        Ella_brain_2100_front_of_eyes_right_horizontal_sar: 1.32898834033759
+        Ella_brain_2400_front_of_eyes_right_horizontal_sar: 1.07311863664767
+        Ella_brain_2600_front_of_eyes_right_horizontal_sar: 0.919927768929168
+        Ella_brain_3500_front_of_eyes_right_horizontal_sar: 0.206546145115057
+        Ella_brain_5000_front_of_eyes_right_horizontal_sar: 0.0986259342592499
         Ella_brain_xxxx_front_of_eyes_right_horizontal_sar: 0
         Ella_brain_yyyy_front_of_eyes_right_horizontal_sar: 0
         Ella_brain_zzzz_front_of_eyes_right_horizontal_sar: 0
-        Ella_brain_700_front_of_eyes_right_vertical_sar: 0
-        Ella_brain_800_front_of_eyes_right_vertical_sar: 0
-        Ella_brain_900_front_of_eyes_right_vertical_sar: 0
-        Ella_brain_1450_front_of_eyes_right_vertical_sar: 0
-        Ella_brain_1800_front_of_eyes_right_vertical_sar: 0
-        Ella_brain_2100_front_of_eyes_right_vertical_sar: 0
-        Ella_brain_2400_front_of_eyes_right_vertical_sar: 0
-        Ella_brain_2600_front_of_eyes_right_vertical_sar: 0
-        Ella_brain_3500_front_of_eyes_right_vertical_sar: 0
-        Ella_brain_5000_front_of_eyes_right_vertical_sar: 0
+        Ella_brain_700_front_of_eyes_right_vertical_sar: 0.57087630909529
+        Ella_brain_800_front_of_eyes_right_vertical_sar: 0.712600907799374
+        Ella_brain_900_front_of_eyes_right_vertical_sar: 1.04489408025003
+        Ella_brain_1450_front_of_eyes_right_vertical_sar: 3.43688268943966
+        Ella_brain_1800_front_of_eyes_right_vertical_sar: 2.39838105008675
+        Ella_brain_2100_front_of_eyes_right_vertical_sar: 1.50823678778426
+        Ella_brain_2400_front_of_eyes_right_vertical_sar: 1.72594080340256
+        Ella_brain_2600_front_of_eyes_right_vertical_sar: 1.61823665100531
+        Ella_brain_3500_front_of_eyes_right_vertical_sar: 0.583869524400353
+        Ella_brain_5000_front_of_eyes_right_vertical_sar: 0.160180817077199
         Ella_brain_xxxx_front_of_eyes_right_vertical_sar: 0
         Ella_brain_yyyy_front_of_eyes_right_vertical_sar: 0
         Ella_brain_zzzz_front_of_eyes_right_vertical_sar: 0
-        Ella_brain_700_cheek1_sar: 0
-        Ella_brain_800_cheek1_sar: 0
-        Ella_brain_900_cheek1_sar: 0
-        Ella_brain_1450_cheek1_sar: 0
-        Ella_brain_1800_cheek1_sar: 0
-        Ella_brain_2100_cheek1_sar: 0
-        Ella_brain_2400_cheek1_sar: 0
-        Ella_brain_2600_cheek1_sar: 0
-        Ella_brain_3500_cheek1_sar: 0
-        Ella_brain_5000_cheek1_sar: 0
+        Ella_brain_700_cheek1_sar: 11.5230517763193
+        Ella_brain_800_cheek1_sar: 12.930607165057
+        Ella_brain_900_cheek1_sar: 17.0483387201055
+        Ella_brain_1450_cheek1_sar: 47.7221532269463
+        Ella_brain_1800_cheek1_sar: 49.5148243244661
+        Ella_brain_2100_cheek1_sar: 51.0513995509116
+        Ella_brain_2400_cheek1_sar: 42.7453568615467
+        Ella_brain_2600_cheek1_sar: 37.0590199896977
+        Ella_brain_3500_cheek1_sar: 12.7612903580934
+        Ella_brain_5000_cheek1_sar: 3.61461104402425
         Ella_brain_xxxx_cheek1_sar: 0
         Ella_brain_yyyy_cheek1_sar: 0
         Ella_brain_zzzz_cheek1_sar: 0
-        Ella_brain_700_cheek2_sar: 0
-        Ella_brain_800_cheek2_sar: 0
-        Ella_brain_900_cheek2_sar: 0
-        Ella_brain_1450_cheek2_sar: 0
-        Ella_brain_1800_cheek2_sar: 0
-        Ella_brain_2100_cheek2_sar: 0
-        Ella_brain_2400_cheek2_sar: 0
-        Ella_brain_2600_cheek2_sar: 0
-        Ella_brain_3500_cheek2_sar: 0
-        Ella_brain_5000_cheek2_sar: 0
+        Ella_brain_700_cheek2_sar: 8.17876530780572
+        Ella_brain_800_cheek2_sar: 8.19857183757005
+        Ella_brain_900_cheek2_sar: 11.7293636902674
+        Ella_brain_1450_cheek2_sar: 41.5466369518658
+        Ella_brain_1800_cheek2_sar: 45.1516319275133
+        Ella_brain_2100_cheek2_sar: 48.2416276209254
+        Ella_brain_2400_cheek2_sar: 39.2606582735465
+        Ella_brain_2600_cheek2_sar: 33.7036547126403
+        Ella_brain_3500_cheek2_sar: 11.1996742393186
+        Ella_brain_5000_cheek2_sar: 3.42634503845897
         Ella_brain_xxxx_cheek2_sar: 0
         Ella_brain_yyyy_cheek2_sar: 0
         Ella_brain_zzzz_cheek2_sar: 0
-        Ella_brain_700_cheek3_sar: 0
-        Ella_brain_800_cheek3_sar: 0
-        Ella_brain_900_cheek3_sar: 0
-        Ella_brain_1450_cheek3_sar: 0
-        Ella_brain_1800_cheek3_sar: 0
-        Ella_brain_2100_cheek3_sar: 0
-        Ella_brain_2400_cheek3_sar: 0
-        Ella_brain_2600_cheek3_sar: 0
-        Ella_brain_3500_cheek3_sar: 0
-        Ella_brain_5000_cheek3_sar: 0
+        Ella_brain_700_cheek3_sar: 6.85398773822317
+        Ella_brain_800_cheek3_sar: 9.48667154403389
+        Ella_brain_900_cheek3_sar: 14.2953083243658
+        Ella_brain_1450_cheek3_sar: 47.1869790407351
+        Ella_brain_1800_cheek3_sar: 44.5816436239891
+        Ella_brain_2100_cheek3_sar: 42.348498981064
+        Ella_brain_2400_cheek3_sar: 33.1664731693572
+        Ella_brain_2600_cheek3_sar: 28.3700706064817
+        Ella_brain_3500_cheek3_sar: 9.84273968228626
+        Ella_brain_5000_cheek3_sar: 3.09718776868544
         Ella_brain_xxxx_cheek3_sar: 0
         Ella_brain_yyyy_cheek3_sar: 0
         Ella_brain_zzzz_cheek3_sar: 0
-        Ella_brain_700_tilt1_sar: 0
-        Ella_brain_800_tilt1_sar: 0
-        Ella_brain_900_tilt1_sar: 0
-        Ella_brain_1450_tilt1_sar: 0
-        Ella_brain_1800_tilt1_sar: 0
-        Ella_brain_2100_tilt1_sar: 0
-        Ella_brain_2400_tilt1_sar: 0
-        Ella_brain_2600_tilt1_sar: 0
-        Ella_brain_3500_tilt1_sar: 0
-        Ella_brain_5000_tilt1_sar: 0
+        Ella_brain_700_tilt1_sar: 9.63229702160471
+        Ella_brain_800_tilt1_sar: 9.06039991312356
+        Ella_brain_900_tilt1_sar: 8.52539811192139
+        Ella_brain_1450_tilt1_sar: 5.69215507686639
+        Ella_brain_1800_tilt1_sar: 15.0410660956463
+        Ella_brain_2100_tilt1_sar: 23.0544183974577
+        Ella_brain_2400_tilt1_sar: 15.4907694680141
+        Ella_brain_2600_tilt1_sar: 12.4378725885293
+        Ella_brain_3500_tilt1_sar: 4.08060196894928
+        Ella_brain_5000_tilt1_sar: 0.810448963574287
         Ella_brain_xxxx_tilt1_sar: 0
         Ella_brain_yyyy_tilt1_sar: 0
         Ella_brain_zzzz_tilt1_sar: 0
-        Ella_brain_700_tilt2_sar: 0
-        Ella_brain_800_tilt2_sar: 0
-        Ella_brain_900_tilt2_sar: 0
-        Ella_brain_1450_tilt2_sar: 0
-        Ella_brain_1800_tilt2_sar: 0
-        Ella_brain_2100_tilt2_sar: 0
-        Ella_brain_2400_tilt2_sar: 0
-        Ella_brain_2600_tilt2_sar: 0
-        Ella_brain_3500_tilt2_sar: 0
-        Ella_brain_5000_tilt2_sar: 0
+        Ella_brain_700_tilt2_sar: 7.39434444566951
+        Ella_brain_800_tilt2_sar: 7.52092083826837
+        Ella_brain_900_tilt2_sar: 7.01258976899338
+        Ella_brain_1450_tilt2_sar: 2.33646602012376
+        Ella_brain_1800_tilt2_sar: 20.1762076257475
+        Ella_brain_2100_tilt2_sar: 35.4674147162822
+        Ella_brain_2400_tilt2_sar: 25.6817139531881
+        Ella_brain_2600_tilt2_sar: 21.4107854196745
+        Ella_brain_3500_tilt2_sar: 9.42890080532222
+        Ella_brain_5000_tilt2_sar: 2.78088822581225
         Ella_brain_xxxx_tilt2_sar: 0
         Ella_brain_yyyy_tilt2_sar: 0
         Ella_brain_zzzz_tilt2_sar: 0
-        Ella_brain_700_tilt3_sar: 0
-        Ella_brain_800_tilt3_sar: 0
-        Ella_brain_900_tilt3_sar: 0
-        Ella_brain_1450_tilt3_sar: 0
-        Ella_brain_1800_tilt3_sar: 0
-        Ella_brain_2100_tilt3_sar: 0
-        Ella_brain_2400_tilt3_sar: 0
-        Ella_brain_2600_tilt3_sar: 0
-        Ella_brain_3500_tilt3_sar: 0
-        Ella_brain_5000_tilt3_sar: 0
+        Ella_brain_700_tilt3_sar: 7.44970082869854
+        Ella_brain_800_tilt3_sar: 8.68892750011473
+        Ella_brain_900_tilt3_sar: 8.4764168822174
+        Ella_brain_1450_tilt3_sar: 3.00823266543052
+        Ella_brain_1800_tilt3_sar: 20.7636125702867
+        Ella_brain_2100_tilt3_sar: 35.982509631592
+        Ella_brain_2400_tilt3_sar: 30.9836103880256
+        Ella_brain_2600_tilt3_sar: 26.8973347266691
+        Ella_brain_3500_tilt3_sar: 10.4890102028462
+        Ella_brain_5000_tilt3_sar: 2.8637618562884
         Ella_brain_xxxx_tilt3_sar: 0
         Ella_brain_yyyy_tilt3_sar: 0
         Ella_brain_zzzz_tilt3_sar: 0
-        Ella_brain_700_belly_center_horizontal_sar: 0
-        Ella_brain_800_belly_center_horizontal_sar: 0
-        Ella_brain_900_belly_center_horizontal_sar: 0
-        Ella_brain_1450_belly_center_horizontal_sar: 0
-        Ella_brain_1800_belly_center_horizontal_sar: 0
-        Ella_brain_2100_belly_center_horizontal_sar: 0
-        Ella_brain_2400_belly_center_horizontal_sar: 0
-        Ella_brain_2600_belly_center_horizontal_sar: 0
-        Ella_brain_3500_belly_center_horizontal_sar: 0
-        Ella_brain_5000_belly_center_horizontal_sar: 0
+        Ella_brain_700_belly_center_horizontal_sar: 0.0502832149653773
+        Ella_brain_800_belly_center_horizontal_sar: 0.051129535793631
+        Ella_brain_900_belly_center_horizontal_sar: 0.0596028981450316
+        Ella_brain_1450_belly_center_horizontal_sar: 0.128794167896285
+        Ella_brain_1800_belly_center_horizontal_sar: 0.0790703043586777
+        Ella_brain_2100_belly_center_horizontal_sar: 0.0364498498978717
+        Ella_brain_2400_belly_center_horizontal_sar: 0.0697260616154803
+        Ella_brain_2600_belly_center_horizontal_sar: 0.070980048062266
+        Ella_brain_3500_belly_center_horizontal_sar: 0.0335513448440772
+        Ella_brain_5000_belly_center_horizontal_sar: 0.0076213351367745
         Ella_brain_xxxx_belly_center_horizontal_sar: 0
         Ella_brain_yyyy_belly_center_horizontal_sar: 0
         Ella_brain_zzzz_belly_center_horizontal_sar: 0
-        Ella_brain_700_belly_center_vertical_sar: 0
-        Ella_brain_800_belly_center_vertical_sar: 0
-        Ella_brain_900_belly_center_vertical_sar: 0
-        Ella_brain_1450_belly_center_vertical_sar: 0
-        Ella_brain_1800_belly_center_vertical_sar: 0
-        Ella_brain_2100_belly_center_vertical_sar: 0
-        Ella_brain_2400_belly_center_vertical_sar: 0
-        Ella_brain_2600_belly_center_vertical_sar: 0
-        Ella_brain_3500_belly_center_vertical_sar: 0
-        Ella_brain_5000_belly_center_vertical_sar: 0
+        Ella_brain_700_belly_center_vertical_sar: 0.00980289612872376
+        Ella_brain_800_belly_center_vertical_sar: 0.0173040245506774
+        Ella_brain_900_belly_center_vertical_sar: 0.0434482109955191
+        Ella_brain_1450_belly_center_vertical_sar: 0.242453369817625
+        Ella_brain_1800_belly_center_vertical_sar: 0.158821076321977
+        Ella_brain_2100_belly_center_vertical_sar: 0.0871362533257068
+        Ella_brain_2400_belly_center_vertical_sar: 0.179021286386378
+        Ella_brain_2600_belly_center_vertical_sar: 0.176932764324392
+        Ella_brain_3500_belly_center_vertical_sar: 0.0473520056522803
+        Ella_brain_5000_belly_center_vertical_sar: 0.0169327248156855
         Ella_brain_xxxx_belly_center_vertical_sar: 0
         Ella_brain_yyyy_belly_center_vertical_sar: 0
         Ella_brain_zzzz_belly_center_vertical_sar: 0
-        Ella_brain_700_belly_left_horizontal_sar: 0
-        Ella_brain_800_belly_left_horizontal_sar: 0
-        Ella_brain_900_belly_left_horizontal_sar: 0
-        Ella_brain_1450_belly_left_horizontal_sar: 0
-        Ella_brain_1800_belly_left_horizontal_sar: 0
-        Ella_brain_2100_belly_left_horizontal_sar: 0
-        Ella_brain_2400_belly_left_horizontal_sar: 0
-        Ella_brain_2600_belly_left_horizontal_sar: 0
-        Ella_brain_3500_belly_left_horizontal_sar: 0
-        Ella_brain_5000_belly_left_horizontal_sar: 0
+        Ella_brain_700_belly_left_horizontal_sar: 0.0545635326483135
+        Ella_brain_800_belly_left_horizontal_sar: 0.0588456945451828
+        Ella_brain_900_belly_left_horizontal_sar: 0.0635264262922812
+        Ella_brain_1450_belly_left_horizontal_sar: 0.0904508308423865
+        Ella_brain_1800_belly_left_horizontal_sar: 0.0590219863089768
+        Ella_brain_2100_belly_left_horizontal_sar: 0.0320829767089114
+        Ella_brain_2400_belly_left_horizontal_sar: 0.0514103676185677
+        Ella_brain_2600_belly_left_horizontal_sar: 0.0525215140709476
+        Ella_brain_3500_belly_left_horizontal_sar: 0.0327430941048443
+        Ella_brain_5000_belly_left_horizontal_sar: 0.00842225658180357
         Ella_brain_xxxx_belly_left_horizontal_sar: 0
         Ella_brain_yyyy_belly_left_horizontal_sar: 0
         Ella_brain_zzzz_belly_left_horizontal_sar: 0
-        Ella_brain_700_belly_left_vertical_sar: 0
-        Ella_brain_800_belly_left_vertical_sar: 0
-        Ella_brain_900_belly_left_vertical_sar: 0
-        Ella_brain_1450_belly_left_vertical_sar: 0
-        Ella_brain_1800_belly_left_vertical_sar: 0
-        Ella_brain_2100_belly_left_vertical_sar: 0
-        Ella_brain_2400_belly_left_vertical_sar: 0
-        Ella_brain_2600_belly_left_vertical_sar: 0
-        Ella_brain_3500_belly_left_vertical_sar: 0
-        Ella_brain_5000_belly_left_vertical_sar: 0
+        Ella_brain_700_belly_left_vertical_sar: 0.0135909788065036
+        Ella_brain_800_belly_left_vertical_sar: 0.0222356452858735
+        Ella_brain_900_belly_left_vertical_sar: 0.0468224933606694
+        Ella_brain_1450_belly_left_vertical_sar: 0.229263541727731
+        Ella_brain_1800_belly_left_vertical_sar: 0.128638193529514
+        Ella_brain_2100_belly_left_vertical_sar: 0.0423878950738997
+        Ella_brain_2400_belly_left_vertical_sar: 0.128515964704937
+        Ella_brain_2600_belly_left_vertical_sar: 0.130098587774032
+        Ella_brain_3500_belly_left_vertical_sar: 0.0269465076211595
+        Ella_brain_5000_belly_left_vertical_sar: 0.015381188452714
         Ella_brain_xxxx_belly_left_vertical_sar: 0
         Ella_brain_yyyy_belly_left_vertical_sar: 0
         Ella_brain_zzzz_belly_left_vertical_sar: 0
-        Ella_brain_700_belly_right_horizontal_sar: 0
-        Ella_brain_800_belly_right_horizontal_sar: 0
-        Ella_brain_900_belly_right_horizontal_sar: 0
-        Ella_brain_1450_belly_right_horizontal_sar: 0
-        Ella_brain_1800_belly_right_horizontal_sar: 0
-        Ella_brain_2100_belly_right_horizontal_sar: 0
-        Ella_brain_2400_belly_right_horizontal_sar: 0
-        Ella_brain_2600_belly_right_horizontal_sar: 0
-        Ella_brain_3500_belly_right_horizontal_sar: 0
-        Ella_brain_5000_belly_right_horizontal_sar: 0
+        Ella_brain_700_belly_right_horizontal_sar: 0.062239498532698
+        Ella_brain_800_belly_right_horizontal_sar: 0.0490581889070602
+        Ella_brain_900_belly_right_horizontal_sar: 0.0566848289047413
+        Ella_brain_1450_belly_right_horizontal_sar: 0.160254892007201
+        Ella_brain_1800_belly_right_horizontal_sar: 0.0928213570059386
+        Ella_brain_2100_belly_right_horizontal_sar: 0.0350211841477135
+        Ella_brain_2400_belly_right_horizontal_sar: 0.0490758325505788
+        Ella_brain_2600_belly_right_horizontal_sar: 0.0508789328003418
+        Ella_brain_3500_belly_right_horizontal_sar: 0.0365882980097329
+        Ella_brain_5000_belly_right_horizontal_sar: 0.00716874704218571
         Ella_brain_xxxx_belly_right_horizontal_sar: 0
         Ella_brain_yyyy_belly_right_horizontal_sar: 0
         Ella_brain_zzzz_belly_right_horizontal_sar: 0
-        Ella_brain_700_belly_right_vertical_sar: 0
-        Ella_brain_800_belly_right_vertical_sar: 0
-        Ella_brain_900_belly_right_vertical_sar: 0
-        Ella_brain_1450_belly_right_vertical_sar: 0
-        Ella_brain_1800_belly_right_vertical_sar: 0
-        Ella_brain_2100_belly_right_vertical_sar: 0
-        Ella_brain_2400_belly_right_vertical_sar: 0
-        Ella_brain_2600_belly_right_vertical_sar: 0
-        Ella_brain_3500_belly_right_vertical_sar: 0
-        Ella_brain_5000_belly_right_vertical_sar: 0
+        Ella_brain_700_belly_right_vertical_sar: 0.0115403608315238
+        Ella_brain_800_belly_right_vertical_sar: 0.0136097528029485
+        Ella_brain_900_belly_right_vertical_sar: 0.0456159179642212
+        Ella_brain_1450_belly_right_vertical_sar: 0.310308731567309
+        Ella_brain_1800_belly_right_vertical_sar: 0.188777798842457
+        Ella_brain_2100_belly_right_vertical_sar: 0.0846084279354413
+        Ella_brain_2400_belly_right_vertical_sar: 0.200400032004112
+        Ella_brain_2600_belly_right_vertical_sar: 0.207093265474364
+        Ella_brain_3500_belly_right_vertical_sar: 0.0976209122309512
+        Ella_brain_5000_belly_right_vertical_sar: 0.0201730753255625
         Ella_brain_xxxx_belly_right_vertical_sar: 0
         Ella_brain_yyyy_belly_right_vertical_sar: 0
         Ella_brain_zzzz_belly_right_vertical_sar: 0
-        Ella_brain_700_belly_up_horizontal_sar: 0
-        Ella_brain_800_belly_up_horizontal_sar: 0
-        Ella_brain_900_belly_up_horizontal_sar: 0
-        Ella_brain_1450_belly_up_horizontal_sar: 0
-        Ella_brain_1800_belly_up_horizontal_sar: 0
-        Ella_brain_2100_belly_up_horizontal_sar: 0
-        Ella_brain_2400_belly_up_horizontal_sar: 0
-        Ella_brain_2600_belly_up_horizontal_sar: 0
-        Ella_brain_3500_belly_up_horizontal_sar: 0
-        Ella_brain_5000_belly_up_horizontal_sar: 0
+        Ella_brain_700_belly_up_horizontal_sar: 0.0834340460771776
+        Ella_brain_800_belly_up_horizontal_sar: 0.0861277927683516
+        Ella_brain_900_belly_up_horizontal_sar: 0.106231762205128
+        Ella_brain_1450_belly_up_horizontal_sar: 0.268364638392454
+        Ella_brain_1800_belly_up_horizontal_sar: 0.184535490598266
+        Ella_brain_2100_belly_up_horizontal_sar: 0.112681935346104
+        Ella_brain_2400_belly_up_horizontal_sar: 0.119252879150135
+        Ella_brain_2600_belly_up_horizontal_sar: 0.111073089089432
+        Ella_brain_3500_belly_up_horizontal_sar: 0.0433580973740772
+        Ella_brain_5000_belly_up_horizontal_sar: 0.00871264655074468
         Ella_brain_xxxx_belly_up_horizontal_sar: 0
         Ella_brain_yyyy_belly_up_horizontal_sar: 0
         Ella_brain_zzzz_belly_up_horizontal_sar: 0
-        Ella_brain_700_belly_up_vertical_sar: 0
-        Ella_brain_800_belly_up_vertical_sar: 0
-        Ella_brain_900_belly_up_vertical_sar: 0
-        Ella_brain_1450_belly_up_vertical_sar: 0
-        Ella_brain_1800_belly_up_vertical_sar: 0
-        Ella_brain_2100_belly_up_vertical_sar: 0
-        Ella_brain_2400_belly_up_vertical_sar: 0
-        Ella_brain_2600_belly_up_vertical_sar: 0
-        Ella_brain_3500_belly_up_vertical_sar: 0
-        Ella_brain_5000_belly_up_vertical_sar: 0
+        Ella_brain_700_belly_up_vertical_sar: 0.0194941854406668
+        Ella_brain_800_belly_up_vertical_sar: 0.0352367380729982
+        Ella_brain_900_belly_up_vertical_sar: 0.093284211530625
+        Ella_brain_1450_belly_up_vertical_sar: 0.537832965684024
+        Ella_brain_1800_belly_up_vertical_sar: 0.398761154910764
+        Ella_brain_2100_belly_up_vertical_sar: 0.279556745676541
+        Ella_brain_2400_belly_up_vertical_sar: 0.386520280257184
+        Ella_brain_2600_belly_up_vertical_sar: 0.363305292183352
+        Ella_brain_3500_belly_up_vertical_sar: 0.0822567608805021
+        Ella_brain_5000_belly_up_vertical_sar: 0.0229997473187044
         Ella_brain_xxxx_belly_up_vertical_sar: 0
         Ella_brain_yyyy_belly_up_vertical_sar: 0
         Ella_brain_zzzz_belly_up_vertical_sar: 0
@@ -1458,578 +1458,578 @@ devices:
       height: 1160
       body:
         Thelonious_body_headp_else_sar: 0
-        Thelonious_body_700_front_of_eyes_center_horizontal_sar: 0
-        Thelonious_body_800_front_of_eyes_center_horizontal_sar: 0
-        Thelonious_body_900_front_of_eyes_center_horizontal_sar: 0
-        Thelonious_body_1450_front_of_eyes_center_horizontal_sar: 0
-        Thelonious_body_1800_front_of_eyes_center_horizontal_sar: 0
-        Thelonious_body_2100_front_of_eyes_center_horizontal_sar: 0
-        Thelonious_body_2400_front_of_eyes_center_horizontal_sar: 0
-        Thelonious_body_2600_front_of_eyes_center_horizontal_sar: 0
-        Thelonious_body_3500_front_of_eyes_center_horizontal_sar: 0
-        Thelonious_body_5000_front_of_eyes_center_horizontal_sar: 0
+        Thelonious_body_700_front_of_eyes_center_horizontal_sar: 2.00027691317228
+        Thelonious_body_800_front_of_eyes_center_horizontal_sar: 3.74778494866487
+        Thelonious_body_900_front_of_eyes_center_horizontal_sar: 4.12624695240783
+        Thelonious_body_1450_front_of_eyes_center_horizontal_sar: 2.15330549435094
+        Thelonious_body_1800_front_of_eyes_center_horizontal_sar: 2.72087502777624
+        Thelonious_body_2100_front_of_eyes_center_horizontal_sar: 3.20736319928363
+        Thelonious_body_2400_front_of_eyes_center_horizontal_sar: 3.37840727050935
+        Thelonious_body_2600_front_of_eyes_center_horizontal_sar: 3.19919376553636
+        Thelonious_body_3500_front_of_eyes_center_horizontal_sar: 2.00139852605455
+        Thelonious_body_5000_front_of_eyes_center_horizontal_sar: 1.87362353852652
         Thelonious_body_xxxx_front_of_eyes_center_horizontal_sar: 0
         Thelonious_body_yyyy_front_of_eyes_center_horizontal_sar: 0
         Thelonious_body_zzzz_front_of_eyes_center_horizontal_sar: 0
-        Thelonious_body_700_front_of_eyes_center_vertical_sar: 0
-        Thelonious_body_800_front_of_eyes_center_vertical_sar: 0
-        Thelonious_body_900_front_of_eyes_center_vertical_sar: 0
-        Thelonious_body_1450_front_of_eyes_center_vertical_sar: 0
-        Thelonious_body_1800_front_of_eyes_center_vertical_sar: 0
-        Thelonious_body_2100_front_of_eyes_center_vertical_sar: 0
-        Thelonious_body_2400_front_of_eyes_center_vertical_sar: 0
-        Thelonious_body_2600_front_of_eyes_center_vertical_sar: 0
-        Thelonious_body_3500_front_of_eyes_center_vertical_sar: 0
-        Thelonious_body_5000_front_of_eyes_center_vertical_sar: 0
+        Thelonious_body_700_front_of_eyes_center_vertical_sar: 1.73142266649663
+        Thelonious_body_800_front_of_eyes_center_vertical_sar: 3.82210198146046
+        Thelonious_body_900_front_of_eyes_center_vertical_sar: 4.41519126006442
+        Thelonious_body_1450_front_of_eyes_center_vertical_sar: 3.24201180008962
+        Thelonious_body_1800_front_of_eyes_center_vertical_sar: 3.85426599842971
+        Thelonious_body_2100_front_of_eyes_center_vertical_sar: 4.37905531129264
+        Thelonious_body_2400_front_of_eyes_center_vertical_sar: 4.96289574309177
+        Thelonious_body_2600_front_of_eyes_center_vertical_sar: 4.91554759547899
+        Thelonious_body_3500_front_of_eyes_center_vertical_sar: 4.03853349047455
+        Thelonious_body_5000_front_of_eyes_center_vertical_sar: 2.70348554886049
         Thelonious_body_xxxx_front_of_eyes_center_vertical_sar: 0
         Thelonious_body_yyyy_front_of_eyes_center_vertical_sar: 0
         Thelonious_body_zzzz_front_of_eyes_center_vertical_sar: 0
-        Thelonious_body_700_front_of_eyes_down_horizontal_sar: 0
-        Thelonious_body_800_front_of_eyes_down_horizontal_sar: 0
-        Thelonious_body_900_front_of_eyes_down_horizontal_sar: 0
-        Thelonious_body_1450_front_of_eyes_down_horizontal_sar: 0
-        Thelonious_body_1800_front_of_eyes_down_horizontal_sar: 0
-        Thelonious_body_2100_front_of_eyes_down_horizontal_sar: 0
-        Thelonious_body_2400_front_of_eyes_down_horizontal_sar: 0
-        Thelonious_body_2600_front_of_eyes_down_horizontal_sar: 0
-        Thelonious_body_3500_front_of_eyes_down_horizontal_sar: 0
-        Thelonious_body_5000_front_of_eyes_down_horizontal_sar: 0
+        Thelonious_body_700_front_of_eyes_down_horizontal_sar: 2.20088271423596
+        Thelonious_body_800_front_of_eyes_down_horizontal_sar: 4.05756432973791
+        Thelonious_body_900_front_of_eyes_down_horizontal_sar: 4.48283567233349
+        Thelonious_body_1450_front_of_eyes_down_horizontal_sar: 2.58265147915566
+        Thelonious_body_1800_front_of_eyes_down_horizontal_sar: 3.18326011914341
+        Thelonious_body_2100_front_of_eyes_down_horizontal_sar: 3.69806752484719
+        Thelonious_body_2400_front_of_eyes_down_horizontal_sar: 3.84558460292586
+        Thelonious_body_2600_front_of_eyes_down_horizontal_sar: 3.65478280239379
+        Thelonious_body_3500_front_of_eyes_down_horizontal_sar: 2.41896112537273
+        Thelonious_body_5000_front_of_eyes_down_horizontal_sar: 2.23099483439124
         Thelonious_body_xxxx_front_of_eyes_down_horizontal_sar: 0
         Thelonious_body_yyyy_front_of_eyes_down_horizontal_sar: 0
         Thelonious_body_zzzz_front_of_eyes_down_horizontal_sar: 0
-        Thelonious_body_700_front_of_eyes_down_vertical_sar: 0
-        Thelonious_body_800_front_of_eyes_down_vertical_sar: 0
-        Thelonious_body_900_front_of_eyes_down_vertical_sar: 0
-        Thelonious_body_1450_front_of_eyes_down_vertical_sar: 0
-        Thelonious_body_1800_front_of_eyes_down_vertical_sar: 0
-        Thelonious_body_2100_front_of_eyes_down_vertical_sar: 0
-        Thelonious_body_2400_front_of_eyes_down_vertical_sar: 0
-        Thelonious_body_2600_front_of_eyes_down_vertical_sar: 0
-        Thelonious_body_3500_front_of_eyes_down_vertical_sar: 0
-        Thelonious_body_5000_front_of_eyes_down_vertical_sar: 0
+        Thelonious_body_700_front_of_eyes_down_vertical_sar: 1.74261902534644
+        Thelonious_body_800_front_of_eyes_down_vertical_sar: 3.87729036570028
+        Thelonious_body_900_front_of_eyes_down_vertical_sar: 4.53234128800531
+        Thelonious_body_1450_front_of_eyes_down_vertical_sar: 3.75316858415377
+        Thelonious_body_1800_front_of_eyes_down_vertical_sar: 4.4737293003738
+        Thelonious_body_2100_front_of_eyes_down_vertical_sar: 5.09135277141954
+        Thelonious_body_2400_front_of_eyes_down_vertical_sar: 5.47733377804029
+        Thelonious_body_2600_front_of_eyes_down_vertical_sar: 5.32053262228072
+        Thelonious_body_3500_front_of_eyes_down_vertical_sar: 4.02938198332182
+        Thelonious_body_5000_front_of_eyes_down_vertical_sar: 2.86916843747626
         Thelonious_body_xxxx_front_of_eyes_down_vertical_sar: 0
         Thelonious_body_yyyy_front_of_eyes_down_vertical_sar: 0
         Thelonious_body_zzzz_front_of_eyes_down_vertical_sar: 0
-        Thelonious_body_700_front_of_eyes_left_horizontal_sar: 0
-        Thelonious_body_800_front_of_eyes_left_horizontal_sar: 0
-        Thelonious_body_900_front_of_eyes_left_horizontal_sar: 0
-        Thelonious_body_1450_front_of_eyes_left_horizontal_sar: 0
-        Thelonious_body_1800_front_of_eyes_left_horizontal_sar: 0
-        Thelonious_body_2100_front_of_eyes_left_horizontal_sar: 0
-        Thelonious_body_2400_front_of_eyes_left_horizontal_sar: 0
-        Thelonious_body_2600_front_of_eyes_left_horizontal_sar: 0
-        Thelonious_body_3500_front_of_eyes_left_horizontal_sar: 0
-        Thelonious_body_5000_front_of_eyes_left_horizontal_sar: 0
+        Thelonious_body_700_front_of_eyes_left_horizontal_sar: 0.65993487396779
+        Thelonious_body_800_front_of_eyes_left_horizontal_sar: 1.9407528615563
+        Thelonious_body_900_front_of_eyes_left_horizontal_sar: 2.35792535265158
+        Thelonious_body_1450_front_of_eyes_left_horizontal_sar: 2.09465469867642
+        Thelonious_body_1800_front_of_eyes_left_horizontal_sar: 2.68448118532318
+        Thelonious_body_2100_front_of_eyes_left_horizontal_sar: 3.19004674530612
+        Thelonious_body_2400_front_of_eyes_left_horizontal_sar: 3.31781976947958
+        Thelonious_body_2600_front_of_eyes_left_horizontal_sar: 3.13454700365524
+        Thelonious_body_3500_front_of_eyes_left_horizontal_sar: 1.96525931312182
+        Thelonious_body_5000_front_of_eyes_left_horizontal_sar: 1.80937597922754
         Thelonious_body_xxxx_front_of_eyes_left_horizontal_sar: 0
         Thelonious_body_yyyy_front_of_eyes_left_horizontal_sar: 0
         Thelonious_body_zzzz_front_of_eyes_left_horizontal_sar: 0
-        Thelonious_body_700_front_of_eyes_left_vertical_sar: 0
-        Thelonious_body_800_front_of_eyes_left_vertical_sar: 0
-        Thelonious_body_900_front_of_eyes_left_vertical_sar: 0
-        Thelonious_body_1450_front_of_eyes_left_vertical_sar: 0
-        Thelonious_body_1800_front_of_eyes_left_vertical_sar: 0
-        Thelonious_body_2100_front_of_eyes_left_vertical_sar: 0
-        Thelonious_body_2400_front_of_eyes_left_vertical_sar: 0
-        Thelonious_body_2600_front_of_eyes_left_vertical_sar: 0
-        Thelonious_body_3500_front_of_eyes_left_vertical_sar: 0
-        Thelonious_body_5000_front_of_eyes_left_vertical_sar: 0
+        Thelonious_body_700_front_of_eyes_left_vertical_sar: 1.63984043758989
+        Thelonious_body_800_front_of_eyes_left_vertical_sar: 3.74730921961947
+        Thelonious_body_900_front_of_eyes_left_vertical_sar: 4.34895644032598
+        Thelonious_body_1450_front_of_eyes_left_vertical_sar: 3.19846768413962
+        Thelonious_body_1800_front_of_eyes_left_vertical_sar: 3.83115635738764
+        Thelonious_body_2100_front_of_eyes_left_vertical_sar: 4.37346093445737
+        Thelonious_body_2400_front_of_eyes_left_vertical_sar: 4.99698862307402
+        Thelonious_body_2600_front_of_eyes_left_vertical_sar: 4.90357767103107
+        Thelonious_body_3500_front_of_eyes_left_vertical_sar: 3.70708840684182
+        Thelonious_body_5000_front_of_eyes_left_vertical_sar: 2.67075909003355
         Thelonious_body_xxxx_front_of_eyes_left_vertical_sar: 0
         Thelonious_body_yyyy_front_of_eyes_left_vertical_sar: 0
         Thelonious_body_zzzz_front_of_eyes_left_vertical_sar: 0
-        Thelonious_body_700_front_of_eyes_right_horizontal_sar: 0
-        Thelonious_body_800_front_of_eyes_right_horizontal_sar: 0
-        Thelonious_body_900_front_of_eyes_right_horizontal_sar: 0
-        Thelonious_body_1450_front_of_eyes_right_horizontal_sar: 0
-        Thelonious_body_1800_front_of_eyes_right_horizontal_sar: 0
-        Thelonious_body_2100_front_of_eyes_right_horizontal_sar: 0
-        Thelonious_body_2400_front_of_eyes_right_horizontal_sar: 0
-        Thelonious_body_2600_front_of_eyes_right_horizontal_sar: 0
-        Thelonious_body_3500_front_of_eyes_right_horizontal_sar: 0
-        Thelonious_body_5000_front_of_eyes_right_horizontal_sar: 0
+        Thelonious_body_700_front_of_eyes_right_horizontal_sar: 1.94405514972659
+        Thelonious_body_800_front_of_eyes_right_horizontal_sar: 3.72337868901781
+        Thelonious_body_900_front_of_eyes_right_horizontal_sar: 4.11231269129991
+        Thelonious_body_1450_front_of_eyes_right_horizontal_sar: 2.1337576134783
+        Thelonious_body_1800_front_of_eyes_right_horizontal_sar: 2.72012570018115
+        Thelonious_body_2100_front_of_eyes_right_horizontal_sar: 3.22272691735502
+        Thelonious_body_2400_front_of_eyes_right_horizontal_sar: 3.40047979583859
+        Thelonious_body_2600_front_of_eyes_right_horizontal_sar: 3.22869643941646
+        Thelonious_body_3500_front_of_eyes_right_horizontal_sar: 2.07022008989091
+        Thelonious_body_5000_front_of_eyes_right_horizontal_sar: 1.9351189449289
         Thelonious_body_xxxx_front_of_eyes_right_horizontal_sar: 0
         Thelonious_body_yyyy_front_of_eyes_right_horizontal_sar: 0
         Thelonious_body_zzzz_front_of_eyes_right_horizontal_sar: 0
-        Thelonious_body_700_front_of_eyes_right_vertical_sar: 0
-        Thelonious_body_800_front_of_eyes_right_vertical_sar: 0
-        Thelonious_body_900_front_of_eyes_right_vertical_sar: 0
-        Thelonious_body_1450_front_of_eyes_right_vertical_sar: 0
-        Thelonious_body_1800_front_of_eyes_right_vertical_sar: 0
-        Thelonious_body_2100_front_of_eyes_right_vertical_sar: 0
-        Thelonious_body_2400_front_of_eyes_right_vertical_sar: 0
-        Thelonious_body_2600_front_of_eyes_right_vertical_sar: 0
-        Thelonious_body_3500_front_of_eyes_right_vertical_sar: 0
-        Thelonious_body_5000_front_of_eyes_right_vertical_sar: 0
+        Thelonious_body_700_front_of_eyes_right_vertical_sar: 1.72962303565805
+        Thelonious_body_800_front_of_eyes_right_vertical_sar: 3.77153966181128
+        Thelonious_body_900_front_of_eyes_right_vertical_sar: 4.35559661181438
+        Thelonious_body_1450_front_of_eyes_right_vertical_sar: 3.25040233438679
+        Thelonious_body_1800_front_of_eyes_right_vertical_sar: 3.81928042829808
+        Thelonious_body_2100_front_of_eyes_right_vertical_sar: 4.30689022307919
+        Thelonious_body_2400_front_of_eyes_right_vertical_sar: 4.91563602187665
+        Thelonious_body_2600_front_of_eyes_right_vertical_sar: 4.92648997785407
+        Thelonious_body_3500_front_of_eyes_right_vertical_sar: 4.36423160661091
+        Thelonious_body_5000_front_of_eyes_right_vertical_sar: 2.77155454511072
         Thelonious_body_xxxx_front_of_eyes_right_vertical_sar: 0
         Thelonious_body_yyyy_front_of_eyes_right_vertical_sar: 0
         Thelonious_body_zzzz_front_of_eyes_right_vertical_sar: 0
-        Thelonious_body_700_cheek1_sar: 0
-        Thelonious_body_800_cheek1_sar: 0
-        Thelonious_body_900_cheek1_sar: 0
-        Thelonious_body_1450_cheek1_sar: 0
-        Thelonious_body_1800_cheek1_sar: 0
-        Thelonious_body_2100_cheek1_sar: 0
-        Thelonious_body_2400_cheek1_sar: 0
-        Thelonious_body_2600_cheek1_sar: 0
-        Thelonious_body_3500_cheek1_sar: 0
-        Thelonious_body_5000_cheek1_sar: 0
+        Thelonious_body_700_cheek1_sar: 30.0595656482689
+        Thelonious_body_800_cheek1_sar: 34.4425636517253
+        Thelonious_body_900_cheek1_sar: 36.401916896872
+        Thelonious_body_1450_cheek1_sar: 40.0006425763377
+        Thelonious_body_1800_cheek1_sar: 37.7721448355538
+        Thelonious_body_2100_cheek1_sar: 35.8620039148819
+        Thelonious_body_2400_cheek1_sar: 33.2446630491358
+        Thelonious_body_2600_cheek1_sar: 31.8167738598689
+        Thelonious_body_3500_cheek1_sar: 25.9755795815636
+        Thelonious_body_5000_cheek1_sar: 21.1387516153399
         Thelonious_body_xxxx_cheek1_sar: 0
         Thelonious_body_yyyy_cheek1_sar: 0
         Thelonious_body_zzzz_cheek1_sar: 0
-        Thelonious_body_700_cheek2_sar: 0
-        Thelonious_body_800_cheek2_sar: 0
-        Thelonious_body_900_cheek2_sar: 0
-        Thelonious_body_1450_cheek2_sar: 0
-        Thelonious_body_1800_cheek2_sar: 0
-        Thelonious_body_2100_cheek2_sar: 0
-        Thelonious_body_2400_cheek2_sar: 0
-        Thelonious_body_2600_cheek2_sar: 0
-        Thelonious_body_3500_cheek2_sar: 0
-        Thelonious_body_5000_cheek2_sar: 0
+        Thelonious_body_700_cheek2_sar: 29.971820007842
+        Thelonious_body_800_cheek2_sar: 34.0489807697699
+        Thelonious_body_900_cheek2_sar: 35.9033993141492
+        Thelonious_body_1450_cheek2_sar: 39.5199647408792
+        Thelonious_body_1800_cheek2_sar: 37.2693077119376
+        Thelonious_body_2100_cheek2_sar: 35.3401731157019
+        Thelonious_body_2400_cheek2_sar: 32.7017162766093
+        Thelonious_body_2600_cheek2_sar: 31.2031883220847
+        Thelonious_body_3500_cheek2_sar: 24.9596039329309
+        Thelonious_body_5000_cheek2_sar: 19.6460902334458
         Thelonious_body_xxxx_cheek2_sar: 0
         Thelonious_body_yyyy_cheek2_sar: 0
         Thelonious_body_zzzz_cheek2_sar: 0
-        Thelonious_body_700_cheek3_sar: 0
-        Thelonious_body_800_cheek3_sar: 0
-        Thelonious_body_900_cheek3_sar: 0
-        Thelonious_body_1450_cheek3_sar: 0
-        Thelonious_body_1800_cheek3_sar: 0
-        Thelonious_body_2100_cheek3_sar: 0
-        Thelonious_body_2400_cheek3_sar: 0
-        Thelonious_body_2600_cheek3_sar: 0
-        Thelonious_body_3500_cheek3_sar: 0
-        Thelonious_body_5000_cheek3_sar: 0
+        Thelonious_body_700_cheek3_sar: 28.6457413350753
+        Thelonious_body_800_cheek3_sar: 32.8318627044669
+        Thelonious_body_900_cheek3_sar: 34.9998816821744
+        Thelonious_body_1450_cheek3_sar: 40.9472982072708
+        Thelonious_body_1800_cheek3_sar: 38.8072038273193
+        Thelonious_body_2100_cheek3_sar: 36.9728372159324
+        Thelonious_body_2400_cheek3_sar: 34.5056102146882
+        Thelonious_body_2600_cheek3_sar: 33.1248153181099
+        Thelonious_body_3500_cheek3_sar: 27.4046360767855
+        Thelonious_body_5000_cheek3_sar: 22.5864563633399
         Thelonious_body_xxxx_cheek3_sar: 0
         Thelonious_body_yyyy_cheek3_sar: 0
         Thelonious_body_zzzz_cheek3_sar: 0
-        Thelonious_body_700_tilt1_sar: 0
-        Thelonious_body_800_tilt1_sar: 0
-        Thelonious_body_900_tilt1_sar: 0
-        Thelonious_body_1450_tilt1_sar: 0
-        Thelonious_body_1800_tilt1_sar: 0
-        Thelonious_body_2100_tilt1_sar: 0
-        Thelonious_body_2400_tilt1_sar: 0
-        Thelonious_body_2600_tilt1_sar: 0
-        Thelonious_body_3500_tilt1_sar: 0
-        Thelonious_body_5000_tilt1_sar: 0
+        Thelonious_body_700_tilt1_sar: 19.6666006069195
+        Thelonious_body_800_tilt1_sar: 20.7625680702212
+        Thelonious_body_900_tilt1_sar: 21.3743824935062
+        Thelonious_body_1450_tilt1_sar: 23.3055239722934
+        Thelonious_body_1800_tilt1_sar: 21.463683537134
+        Thelonious_body_2100_tilt1_sar: 19.8849631641402
+        Thelonious_body_2400_tilt1_sar: 18.4033485230653
+        Thelonious_body_2600_tilt1_sar: 17.785548201533
+        Thelonious_body_3500_tilt1_sar: 15.5454215700418
+        Thelonious_body_5000_tilt1_sar: 14.3195702258873
         Thelonious_body_xxxx_tilt1_sar: 0
         Thelonious_body_yyyy_tilt1_sar: 0
         Thelonious_body_zzzz_tilt1_sar: 0
-        Thelonious_body_700_tilt2_sar: 0
-        Thelonious_body_800_tilt2_sar: 0
-        Thelonious_body_900_tilt2_sar: 0
-        Thelonious_body_1450_tilt2_sar: 0
-        Thelonious_body_1800_tilt2_sar: 0
-        Thelonious_body_2100_tilt2_sar: 0
-        Thelonious_body_2400_tilt2_sar: 0
-        Thelonious_body_2600_tilt2_sar: 0
-        Thelonious_body_3500_tilt2_sar: 0
-        Thelonious_body_5000_tilt2_sar: 0
+        Thelonious_body_700_tilt2_sar: 19.4137305367914
+        Thelonious_body_800_tilt2_sar: 19.9321241249316
+        Thelonious_body_900_tilt2_sar: 20.413489111952
+        Thelonious_body_1450_tilt2_sar: 22.9513349141708
+        Thelonious_body_1800_tilt2_sar: 20.9629864572252
+        Thelonious_body_2100_tilt2_sar: 19.2586877798432
+        Thelonious_body_2400_tilt2_sar: 17.8370992907283
+        Thelonious_body_2600_tilt2_sar: 17.3050642408426
+        Thelonious_body_3500_tilt2_sar: 15.4909485555255
+        Thelonious_body_5000_tilt2_sar: 14.1113604642483
         Thelonious_body_xxxx_tilt2_sar: 0
         Thelonious_body_yyyy_tilt2_sar: 0
         Thelonious_body_zzzz_tilt2_sar: 0
-        Thelonious_body_700_tilt3_sar: 0
-        Thelonious_body_800_tilt3_sar: 0
-        Thelonious_body_900_tilt3_sar: 0
-        Thelonious_body_1450_tilt3_sar: 0
-        Thelonious_body_1800_tilt3_sar: 0
-        Thelonious_body_2100_tilt3_sar: 0
-        Thelonious_body_2400_tilt3_sar: 0
-        Thelonious_body_2600_tilt3_sar: 0
-        Thelonious_body_3500_tilt3_sar: 0
-        Thelonious_body_5000_tilt3_sar: 0
+        Thelonious_body_700_tilt3_sar: 20.6043243341419
+        Thelonious_body_800_tilt3_sar: 21.9034695274094
+        Thelonious_body_900_tilt3_sar: 22.5979916234119
+        Thelonious_body_1450_tilt3_sar: 24.6272485941406
+        Thelonious_body_1800_tilt3_sar: 22.733561986885
+        Thelonious_body_2100_tilt3_sar: 21.1104020378089
+        Thelonious_body_2400_tilt3_sar: 19.6542501648429
+        Thelonious_body_2600_tilt3_sar: 18.9552023306071
+        Thelonious_body_3500_tilt3_sar: 16.1913736479873
+        Thelonious_body_5000_tilt3_sar: 14.8831823508526
         Thelonious_body_xxxx_tilt3_sar: 0
         Thelonious_body_yyyy_tilt3_sar: 0
         Thelonious_body_zzzz_tilt3_sar: 0
-        Thelonious_body_700_belly_center_horizontal_sar: 0
-        Thelonious_body_800_belly_center_horizontal_sar: 0
-        Thelonious_body_900_belly_center_horizontal_sar: 0
-        Thelonious_body_1450_belly_center_horizontal_sar: 0
-        Thelonious_body_1800_belly_center_horizontal_sar: 0
-        Thelonious_body_2100_belly_center_horizontal_sar: 0
-        Thelonious_body_2400_belly_center_horizontal_sar: 0
-        Thelonious_body_2600_belly_center_horizontal_sar: 0
-        Thelonious_body_3500_belly_center_horizontal_sar: 0
-        Thelonious_body_5000_belly_center_horizontal_sar: 0
+        Thelonious_body_700_belly_center_horizontal_sar: 2.55575997269738
+        Thelonious_body_800_belly_center_horizontal_sar: 4.74185585744883
+        Thelonious_body_900_belly_center_horizontal_sar: 5.30446992423698
+        Thelonious_body_1450_belly_center_horizontal_sar: 3.59084344606509
+        Thelonious_body_1800_belly_center_horizontal_sar: 4.62089161760073
+        Thelonious_body_2100_belly_center_horizontal_sar: 5.50379005034556
+        Thelonious_body_2400_belly_center_horizontal_sar: 5.36006041025908
+        Thelonious_body_2600_belly_center_horizontal_sar: 5.17070522755243
+        Thelonious_body_3500_belly_center_horizontal_sar: 4.33624655183455
+        Thelonious_body_5000_belly_center_horizontal_sar: 3.46023580418753
         Thelonious_body_xxxx_belly_center_horizontal_sar: 0
         Thelonious_body_yyyy_belly_center_horizontal_sar: 0
         Thelonious_body_zzzz_belly_center_horizontal_sar: 0
-        Thelonious_body_700_belly_center_vertical_sar: 0
-        Thelonious_body_800_belly_center_vertical_sar: 0
-        Thelonious_body_900_belly_center_vertical_sar: 0
-        Thelonious_body_1450_belly_center_vertical_sar: 0
-        Thelonious_body_1800_belly_center_vertical_sar: 0
-        Thelonious_body_2100_belly_center_vertical_sar: 0
-        Thelonious_body_2400_belly_center_vertical_sar: 0
-        Thelonious_body_2600_belly_center_vertical_sar: 0
-        Thelonious_body_3500_belly_center_vertical_sar: 0
-        Thelonious_body_5000_belly_center_vertical_sar: 0
+        Thelonious_body_700_belly_center_vertical_sar: 1.84491990624419
+        Thelonious_body_800_belly_center_vertical_sar: 4.4386911702498
+        Thelonious_body_900_belly_center_vertical_sar: 5.2568662028428
+        Thelonious_body_1450_belly_center_vertical_sar: 4.49833235061321
+        Thelonious_body_1800_belly_center_vertical_sar: 5.64989456158932
+        Thelonious_body_2100_belly_center_vertical_sar: 6.63694788528313
+        Thelonious_body_2400_belly_center_vertical_sar: 6.55223292086814
+        Thelonious_body_2600_belly_center_vertical_sar: 6.30658837945733
+        Thelonious_body_3500_belly_center_vertical_sar: 5.08232352434727
+        Thelonious_body_5000_belly_center_vertical_sar: 3.37089240312021
         Thelonious_body_xxxx_belly_center_vertical_sar: 0
         Thelonious_body_yyyy_belly_center_vertical_sar: 0
         Thelonious_body_zzzz_belly_center_vertical_sar: 0
-        Thelonious_body_700_belly_left_horizontal_sar: 0
-        Thelonious_body_800_belly_left_horizontal_sar: 0
-        Thelonious_body_900_belly_left_horizontal_sar: 0
-        Thelonious_body_1450_belly_left_horizontal_sar: 0
-        Thelonious_body_1800_belly_left_horizontal_sar: 0
-        Thelonious_body_2100_belly_left_horizontal_sar: 0
-        Thelonious_body_2400_belly_left_horizontal_sar: 0
-        Thelonious_body_2600_belly_left_horizontal_sar: 0
-        Thelonious_body_3500_belly_left_horizontal_sar: 0
-        Thelonious_body_5000_belly_left_horizontal_sar: 0
+        Thelonious_body_700_belly_left_horizontal_sar: 0.497911371005992
+        Thelonious_body_800_belly_left_horizontal_sar: 1.77574241374977
+        Thelonious_body_900_belly_left_horizontal_sar: 2.28444114129027
+        Thelonious_body_1450_belly_left_horizontal_sar: 2.80446920927641
+        Thelonious_body_1800_belly_left_horizontal_sar: 3.37172693609672
+        Thelonious_body_2100_belly_left_horizontal_sar: 3.85794784479984
+        Thelonious_body_2400_belly_left_horizontal_sar: 4.20938178276278
+        Thelonious_body_2600_belly_left_horizontal_sar: 4.1543999950435
+        Thelonious_body_3500_belly_left_horizontal_sar: 3.49381178780182
+        Thelonious_body_5000_belly_left_horizontal_sar: 2.73658205136736
         Thelonious_body_xxxx_belly_left_horizontal_sar: 0
         Thelonious_body_yyyy_belly_left_horizontal_sar: 0
         Thelonious_body_zzzz_belly_left_horizontal_sar: 0
-        Thelonious_body_700_belly_left_vertical_sar: 0
-        Thelonious_body_800_belly_left_vertical_sar: 0
-        Thelonious_body_900_belly_left_vertical_sar: 0
-        Thelonious_body_1450_belly_left_vertical_sar: 0
-        Thelonious_body_1800_belly_left_vertical_sar: 0
-        Thelonious_body_2100_belly_left_vertical_sar: 0
-        Thelonious_body_2400_belly_left_vertical_sar: 0
-        Thelonious_body_2600_belly_left_vertical_sar: 0
-        Thelonious_body_3500_belly_left_vertical_sar: 0
-        Thelonious_body_5000_belly_left_vertical_sar: 0
+        Thelonious_body_700_belly_left_vertical_sar: 0.0690872710400414
+        Thelonious_body_800_belly_left_vertical_sar: 0.0798203473109129
+        Thelonious_body_900_belly_left_vertical_sar: 0.343230964259064
+        Thelonious_body_1450_belly_left_vertical_sar: 2.5403036125566
+        Thelonious_body_1800_belly_left_vertical_sar: 2.69921363508614
+        Thelonious_body_2100_belly_left_vertical_sar: 2.83542222582575
+        Thelonious_body_2400_belly_left_vertical_sar: 3.47191387525726
+        Thelonious_body_2600_belly_left_vertical_sar: 3.47530576583846
+        Thelonious_body_3500_belly_left_vertical_sar: 2.78219883548
+        Thelonious_body_5000_belly_left_vertical_sar: 2.27490071693383
         Thelonious_body_xxxx_belly_left_vertical_sar: 0
         Thelonious_body_yyyy_belly_left_vertical_sar: 0
         Thelonious_body_zzzz_belly_left_vertical_sar: 0
-        Thelonious_body_700_belly_right_horizontal_sar: 0
-        Thelonious_body_800_belly_right_horizontal_sar: 0
-        Thelonious_body_900_belly_right_horizontal_sar: 0
-        Thelonious_body_1450_belly_right_horizontal_sar: 0
-        Thelonious_body_1800_belly_right_horizontal_sar: 0
-        Thelonious_body_2100_belly_right_horizontal_sar: 0
-        Thelonious_body_2400_belly_right_horizontal_sar: 0
-        Thelonious_body_2600_belly_right_horizontal_sar: 0
-        Thelonious_body_3500_belly_right_horizontal_sar: 0
-        Thelonious_body_5000_belly_right_horizontal_sar: 0
+        Thelonious_body_700_belly_right_horizontal_sar: 2.27424408078502
+        Thelonious_body_800_belly_right_horizontal_sar: 4.89048123626623
+        Thelonious_body_900_belly_right_horizontal_sar: 5.56327545526481
+        Thelonious_body_1450_belly_right_horizontal_sar: 3.50806265555849
+        Thelonious_body_1800_belly_right_horizontal_sar: 4.12151325109237
+        Thelonious_body_2100_belly_right_horizontal_sar: 4.64732804726426
+        Thelonious_body_2400_belly_right_horizontal_sar: 5.17953697048453
+        Thelonious_body_2600_belly_right_horizontal_sar: 5.12040115980976
+        Thelonious_body_3500_belly_right_horizontal_sar: 4.23239366068727
+        Thelonious_body_5000_belly_right_horizontal_sar: 3.27308314886055
         Thelonious_body_xxxx_belly_right_horizontal_sar: 0
         Thelonious_body_yyyy_belly_right_horizontal_sar: 0
         Thelonious_body_zzzz_belly_right_horizontal_sar: 0
-        Thelonious_body_700_belly_right_vertical_sar: 0
-        Thelonious_body_800_belly_right_vertical_sar: 0
-        Thelonious_body_900_belly_right_vertical_sar: 0
-        Thelonious_body_1450_belly_right_vertical_sar: 0
-        Thelonious_body_1800_belly_right_vertical_sar: 0
-        Thelonious_body_2100_belly_right_vertical_sar: 0
-        Thelonious_body_2400_belly_right_vertical_sar: 0
-        Thelonious_body_2600_belly_right_vertical_sar: 0
-        Thelonious_body_3500_belly_right_vertical_sar: 0
-        Thelonious_body_5000_belly_right_vertical_sar: 0
+        Thelonious_body_700_belly_right_vertical_sar: 1.75418918681985
+        Thelonious_body_800_belly_right_vertical_sar: 3.43574728016544
+        Thelonious_body_900_belly_right_vertical_sar: 4.06054314837566
+        Thelonious_body_1450_belly_right_vertical_sar: 4.36727844909245
+        Thelonious_body_1800_belly_right_vertical_sar: 4.92927829229314
+        Thelonious_body_2100_belly_right_vertical_sar: 5.41099244360802
+        Thelonious_body_2400_belly_right_vertical_sar: 5.98035980915395
+        Thelonious_body_2600_belly_right_vertical_sar: 6.0260715959785
+        Thelonious_body_3500_belly_right_vertical_sar: 5.71748984149818
+        Thelonious_body_5000_belly_right_vertical_sar: 3.97011739325228
         Thelonious_body_xxxx_belly_right_vertical_sar: 0
         Thelonious_body_yyyy_belly_right_vertical_sar: 0
         Thelonious_body_zzzz_belly_right_vertical_sar: 0
-        Thelonious_body_700_belly_up_horizontal_sar: 0
-        Thelonious_body_800_belly_up_horizontal_sar: 0
-        Thelonious_body_900_belly_up_horizontal_sar: 0
-        Thelonious_body_1450_belly_up_horizontal_sar: 0
-        Thelonious_body_1800_belly_up_horizontal_sar: 0
-        Thelonious_body_2100_belly_up_horizontal_sar: 0
-        Thelonious_body_2400_belly_up_horizontal_sar: 0
-        Thelonious_body_2600_belly_up_horizontal_sar: 0
-        Thelonious_body_3500_belly_up_horizontal_sar: 0
-        Thelonious_body_5000_belly_up_horizontal_sar: 0
+        Thelonious_body_700_belly_up_horizontal_sar: 2.55995282162022
+        Thelonious_body_800_belly_up_horizontal_sar: 4.85478493395677
+        Thelonious_body_900_belly_up_horizontal_sar: 5.40001498577947
+        Thelonious_body_1450_belly_up_horizontal_sar: 3.21726647620566
+        Thelonious_body_1800_belly_up_horizontal_sar: 4.24568001706966
+        Thelonious_body_2100_belly_up_horizontal_sar: 5.12717733781023
+        Thelonious_body_2400_belly_up_horizontal_sar: 5.26030063463867
+        Thelonious_body_2600_belly_up_horizontal_sar: 5.05575372059968
+        Thelonious_body_3500_belly_up_horizontal_sar: 3.81048340475455
+        Thelonious_body_5000_belly_up_horizontal_sar: 3.38916582800886
         Thelonious_body_xxxx_belly_up_horizontal_sar: 0
         Thelonious_body_yyyy_belly_up_horizontal_sar: 0
         Thelonious_body_zzzz_belly_up_horizontal_sar: 0
-        Thelonious_body_700_belly_up_vertical_sar: 0
-        Thelonious_body_800_belly_up_vertical_sar: 0
-        Thelonious_body_900_belly_up_vertical_sar: 0
-        Thelonious_body_1450_belly_up_vertical_sar: 0
-        Thelonious_body_1800_belly_up_vertical_sar: 0
-        Thelonious_body_2100_belly_up_vertical_sar: 0
-        Thelonious_body_2400_belly_up_vertical_sar: 0
-        Thelonious_body_2600_belly_up_vertical_sar: 0
-        Thelonious_body_3500_belly_up_vertical_sar: 0
-        Thelonious_body_5000_belly_up_vertical_sar: 0
+        Thelonious_body_700_belly_up_vertical_sar: 1.83167978571685
+        Thelonious_body_800_belly_up_vertical_sar: 4.47194446089573
+        Thelonious_body_900_belly_up_vertical_sar: 5.28479692717091
+        Thelonious_body_1450_belly_up_vertical_sar: 4.34353394993113
+        Thelonious_body_1800_belly_up_vertical_sar: 5.3836489950585
+        Thelonious_body_2100_belly_up_vertical_sar: 6.27517617659625
+        Thelonious_body_2400_belly_up_vertical_sar: 6.81556530583598
+        Thelonious_body_2600_belly_up_vertical_sar: 6.61839218087307
+        Thelonious_body_3500_belly_up_vertical_sar: 4.94898554067091
+        Thelonious_body_5000_belly_up_vertical_sar: 3.63288151014996
         Thelonious_body_xxxx_belly_up_vertical_sar: 0
         Thelonious_body_yyyy_belly_up_vertical_sar: 0
         Thelonious_body_zzzz_belly_up_vertical_sar: 0
 
       brain:
         Thelonious_brain_headp_else_sar: 0
-        Thelonious_brain_700_front_of_eyes_center_horizontal_sar: 0
-        Thelonious_brain_800_front_of_eyes_center_horizontal_sar: 0
-        Thelonious_brain_900_front_of_eyes_center_horizontal_sar: 0
-        Thelonious_brain_1450_front_of_eyes_center_horizontal_sar: 0
-        Thelonious_brain_1800_front_of_eyes_center_horizontal_sar: 0
-        Thelonious_brain_2100_front_of_eyes_center_horizontal_sar: 0
-        Thelonious_brain_2400_front_of_eyes_center_horizontal_sar: 0
-        Thelonious_brain_2600_front_of_eyes_center_horizontal_sar: 0
-        Thelonious_brain_3500_front_of_eyes_center_horizontal_sar: 0
-        Thelonious_brain_5000_front_of_eyes_center_horizontal_sar: 0
+        Thelonious_brain_700_front_of_eyes_center_horizontal_sar: 3.14390098075693
+        Thelonious_brain_800_front_of_eyes_center_horizontal_sar: 6.28214199267512
+        Thelonious_brain_900_front_of_eyes_center_horizontal_sar: 7.02351179364254
+        Thelonious_brain_1450_front_of_eyes_center_horizontal_sar: 4.0026194203783
+        Thelonious_brain_1800_front_of_eyes_center_horizontal_sar: 3.99171744254873
+        Thelonious_brain_2100_front_of_eyes_center_horizontal_sar: 3.98237289012338
+        Thelonious_brain_2400_front_of_eyes_center_horizontal_sar: 4.02990723632389
+        Thelonious_brain_2600_front_of_eyes_center_horizontal_sar: 3.90832800811476
+        Thelonious_brain_3500_front_of_eyes_center_horizontal_sar: 3.12256769287091
+        Thelonious_brain_5000_front_of_eyes_center_horizontal_sar: 1.19127797115605
         Thelonious_brain_xxxx_front_of_eyes_center_horizontal_sar: 0
         Thelonious_brain_yyyy_front_of_eyes_center_horizontal_sar: 0
         Thelonious_brain_zzzz_front_of_eyes_center_horizontal_sar: 0
-        Thelonious_brain_700_front_of_eyes_center_vertical_sar: 0
-        Thelonious_brain_800_front_of_eyes_center_vertical_sar: 0
-        Thelonious_brain_900_front_of_eyes_center_vertical_sar: 0
-        Thelonious_brain_1450_front_of_eyes_center_vertical_sar: 0
-        Thelonious_brain_1800_front_of_eyes_center_vertical_sar: 0
-        Thelonious_brain_2100_front_of_eyes_center_vertical_sar: 0
-        Thelonious_brain_2400_front_of_eyes_center_vertical_sar: 0
-        Thelonious_brain_2600_front_of_eyes_center_vertical_sar: 0
-        Thelonious_brain_3500_front_of_eyes_center_vertical_sar: 0
-        Thelonious_brain_5000_front_of_eyes_center_vertical_sar: 0
+        Thelonious_brain_700_front_of_eyes_center_vertical_sar: 1.45963165334981
+        Thelonious_brain_800_front_of_eyes_center_vertical_sar: 3.84749675691753
+        Thelonious_brain_900_front_of_eyes_center_vertical_sar: 4.77873831097402
+        Thelonious_brain_1450_front_of_eyes_center_vertical_sar: 5.58672019242453
+        Thelonious_brain_1800_front_of_eyes_center_vertical_sar: 5.56282590925601
+        Thelonious_brain_2100_front_of_eyes_center_vertical_sar: 5.54234509511157
+        Thelonious_brain_2400_front_of_eyes_center_vertical_sar: 5.82598982421872
+        Thelonious_brain_2600_front_of_eyes_center_vertical_sar: 5.34618196206268
+        Thelonious_brain_3500_front_of_eyes_center_vertical_sar: 2.13690151490364
+        Thelonious_brain_5000_front_of_eyes_center_vertical_sar: 0.786843764092226
         Thelonious_brain_xxxx_front_of_eyes_center_vertical_sar: 0
         Thelonious_brain_yyyy_front_of_eyes_center_vertical_sar: 0
         Thelonious_brain_zzzz_front_of_eyes_center_vertical_sar: 0
-        Thelonious_brain_700_front_of_eyes_down_horizontal_sar: 0
-        Thelonious_brain_800_front_of_eyes_down_horizontal_sar: 0
-        Thelonious_brain_900_front_of_eyes_down_horizontal_sar: 0
-        Thelonious_brain_1450_front_of_eyes_down_horizontal_sar: 0
-        Thelonious_brain_1800_front_of_eyes_down_horizontal_sar: 0
-        Thelonious_brain_2100_front_of_eyes_down_horizontal_sar: 0
-        Thelonious_brain_2400_front_of_eyes_down_horizontal_sar: 0
-        Thelonious_brain_2600_front_of_eyes_down_horizontal_sar: 0
-        Thelonious_brain_3500_front_of_eyes_down_horizontal_sar: 0
-        Thelonious_brain_5000_front_of_eyes_down_horizontal_sar: 0
+        Thelonious_brain_700_front_of_eyes_down_horizontal_sar: 2.99220979301199
+        Thelonious_brain_800_front_of_eyes_down_horizontal_sar: 4.9048326913046
+        Thelonious_brain_900_front_of_eyes_down_horizontal_sar: 5.36024327524353
+        Thelonious_brain_1450_front_of_eyes_down_horizontal_sar: 3.5494111713217
+        Thelonious_brain_1800_front_of_eyes_down_horizontal_sar: 3.05985443884702
+        Thelonious_brain_2100_front_of_eyes_down_horizontal_sar: 2.64023438244015
+        Thelonious_brain_2400_front_of_eyes_down_horizontal_sar: 2.6760412269782
+        Thelonious_brain_2600_front_of_eyes_down_horizontal_sar: 2.59985591848302
+        Thelonious_brain_3500_front_of_eyes_down_horizontal_sar: 2.03687154590545
+        Thelonious_brain_5000_front_of_eyes_down_horizontal_sar: 1.19718504362197
         Thelonious_brain_xxxx_front_of_eyes_down_horizontal_sar: 0
         Thelonious_brain_yyyy_front_of_eyes_down_horizontal_sar: 0
         Thelonious_brain_zzzz_front_of_eyes_down_horizontal_sar: 0
-        Thelonious_brain_700_front_of_eyes_down_vertical_sar: 0
-        Thelonious_brain_800_front_of_eyes_down_vertical_sar: 0
-        Thelonious_brain_900_front_of_eyes_down_vertical_sar: 0
-        Thelonious_brain_1450_front_of_eyes_down_vertical_sar: 0
-        Thelonious_brain_1800_front_of_eyes_down_vertical_sar: 0
-        Thelonious_brain_2100_front_of_eyes_down_vertical_sar: 0
-        Thelonious_brain_2400_front_of_eyes_down_vertical_sar: 0
-        Thelonious_brain_2600_front_of_eyes_down_vertical_sar: 0
-        Thelonious_brain_3500_front_of_eyes_down_vertical_sar: 0
-        Thelonious_brain_5000_front_of_eyes_down_vertical_sar: 0
+        Thelonious_brain_700_front_of_eyes_down_vertical_sar: 0.863524260730337
+        Thelonious_brain_800_front_of_eyes_down_vertical_sar: 2.2271840992631
+        Thelonious_brain_900_front_of_eyes_down_vertical_sar: 2.91073305368737
+        Thelonious_brain_1450_front_of_eyes_down_vertical_sar: 4.65607776162264
+        Thelonious_brain_1800_front_of_eyes_down_vertical_sar: 4.6858337303305
+        Thelonious_brain_2100_front_of_eyes_down_vertical_sar: 4.7113388463658
+        Thelonious_brain_2400_front_of_eyes_down_vertical_sar: 4.49757301274256
+        Thelonious_brain_2600_front_of_eyes_down_vertical_sar: 4.05677620143207
+        Thelonious_brain_3500_front_of_eyes_down_vertical_sar: 1.66257208252449
+        Thelonious_brain_5000_front_of_eyes_down_vertical_sar: 0.589474882562036
         Thelonious_brain_xxxx_front_of_eyes_down_vertical_sar: 0
         Thelonious_brain_yyyy_front_of_eyes_down_vertical_sar: 0
         Thelonious_brain_zzzz_front_of_eyes_down_vertical_sar: 0
-        Thelonious_brain_700_front_of_eyes_left_horizontal_sar: 0
-        Thelonious_brain_800_front_of_eyes_left_horizontal_sar: 0
-        Thelonious_brain_900_front_of_eyes_left_horizontal_sar: 0
-        Thelonious_brain_1450_front_of_eyes_left_horizontal_sar: 0
-        Thelonious_brain_1800_front_of_eyes_left_horizontal_sar: 0
-        Thelonious_brain_2100_front_of_eyes_left_horizontal_sar: 0
-        Thelonious_brain_2400_front_of_eyes_left_horizontal_sar: 0
-        Thelonious_brain_2600_front_of_eyes_left_horizontal_sar: 0
-        Thelonious_brain_3500_front_of_eyes_left_horizontal_sar: 0
-        Thelonious_brain_5000_front_of_eyes_left_horizontal_sar: 0
+        Thelonious_brain_700_front_of_eyes_left_horizontal_sar: 0.974758014883521
+        Thelonious_brain_800_front_of_eyes_left_horizontal_sar: 3.23285630780443
+        Thelonious_brain_900_front_of_eyes_left_horizontal_sar: 4.0634904741079
+        Thelonious_brain_1450_front_of_eyes_left_horizontal_sar: 4.40448847533302
+        Thelonious_brain_1800_front_of_eyes_left_horizontal_sar: 4.32264412142673
+        Thelonious_brain_2100_front_of_eyes_left_horizontal_sar: 4.25249181807848
+        Thelonious_brain_2400_front_of_eyes_left_horizontal_sar: 4.11825133242784
+        Thelonious_brain_2600_front_of_eyes_left_horizontal_sar: 3.98566224739408
+        Thelonious_brain_3500_front_of_eyes_left_horizontal_sar: 3.33422794319636
+        Thelonious_brain_5000_front_of_eyes_left_horizontal_sar: 1.20620135597992
         Thelonious_brain_xxxx_front_of_eyes_left_horizontal_sar: 0
         Thelonious_brain_yyyy_front_of_eyes_left_horizontal_sar: 0
         Thelonious_brain_zzzz_front_of_eyes_left_horizontal_sar: 0
-        Thelonious_brain_700_front_of_eyes_left_vertical_sar: 0
-        Thelonious_brain_800_front_of_eyes_left_vertical_sar: 0
-        Thelonious_brain_900_front_of_eyes_left_vertical_sar: 0
-        Thelonious_brain_1450_front_of_eyes_left_vertical_sar: 0
-        Thelonious_brain_1800_front_of_eyes_left_vertical_sar: 0
-        Thelonious_brain_2100_front_of_eyes_left_vertical_sar: 0
-        Thelonious_brain_2400_front_of_eyes_left_vertical_sar: 0
-        Thelonious_brain_2600_front_of_eyes_left_vertical_sar: 0
-        Thelonious_brain_3500_front_of_eyes_left_vertical_sar: 0
-        Thelonious_brain_5000_front_of_eyes_left_vertical_sar: 0
+        Thelonious_brain_700_front_of_eyes_left_vertical_sar: 1.46489486028614
+        Thelonious_brain_800_front_of_eyes_left_vertical_sar: 3.9125058225927
+        Thelonious_brain_900_front_of_eyes_left_vertical_sar: 4.83464517729272
+        Thelonious_brain_1450_front_of_eyes_left_vertical_sar: 5.38866879023113
+        Thelonious_brain_1800_front_of_eyes_left_vertical_sar: 5.40859958093032
+        Thelonious_brain_2100_front_of_eyes_left_vertical_sar: 5.42568311581533
+        Thelonious_brain_2400_front_of_eyes_left_vertical_sar: 5.60870846153656
+        Thelonious_brain_2600_front_of_eyes_left_vertical_sar: 5.09373950420833
+        Thelonious_brain_3500_front_of_eyes_left_vertical_sar: 1.79537090515828
+        Thelonious_brain_5000_front_of_eyes_left_vertical_sar: 0.730190659358012
         Thelonious_brain_xxxx_front_of_eyes_left_vertical_sar: 0
         Thelonious_brain_yyyy_front_of_eyes_left_vertical_sar: 0
         Thelonious_brain_zzzz_front_of_eyes_left_vertical_sar: 0
-        Thelonious_brain_700_front_of_eyes_right_horizontal_sar: 0
-        Thelonious_brain_800_front_of_eyes_right_horizontal_sar: 0
-        Thelonious_brain_900_front_of_eyes_right_horizontal_sar: 0
-        Thelonious_brain_1450_front_of_eyes_right_horizontal_sar: 0
-        Thelonious_brain_1800_front_of_eyes_right_horizontal_sar: 0
-        Thelonious_brain_2100_front_of_eyes_right_horizontal_sar: 0
-        Thelonious_brain_2400_front_of_eyes_right_horizontal_sar: 0
-        Thelonious_brain_2600_front_of_eyes_right_horizontal_sar: 0
-        Thelonious_brain_3500_front_of_eyes_right_horizontal_sar: 0
-        Thelonious_brain_5000_front_of_eyes_right_horizontal_sar: 0
+        Thelonious_brain_700_front_of_eyes_right_horizontal_sar: 3.20009858581798
+        Thelonious_brain_800_front_of_eyes_right_horizontal_sar: 6.45301256752363
+        Thelonious_brain_900_front_of_eyes_right_horizontal_sar: 7.21918063976201
+        Thelonious_brain_1450_front_of_eyes_right_horizontal_sar: 4.06851138211226
+        Thelonious_brain_1800_front_of_eyes_right_horizontal_sar: 3.94850721067488
+        Thelonious_brain_2100_front_of_eyes_right_horizontal_sar: 3.84564649229999
+        Thelonious_brain_2400_front_of_eyes_right_horizontal_sar: 3.76826137189804
+        Thelonious_brain_2600_front_of_eyes_right_horizontal_sar: 3.67933785888318
+        Thelonious_brain_3500_front_of_eyes_right_horizontal_sar: 3.21926257843091
+        Thelonious_brain_5000_front_of_eyes_right_horizontal_sar: 1.32042419847203
         Thelonious_brain_xxxx_front_of_eyes_right_horizontal_sar: 0
         Thelonious_brain_yyyy_front_of_eyes_right_horizontal_sar: 0
         Thelonious_brain_zzzz_front_of_eyes_right_horizontal_sar: 0
-        Thelonious_brain_700_front_of_eyes_right_vertical_sar: 0
-        Thelonious_brain_800_front_of_eyes_right_vertical_sar: 0
-        Thelonious_brain_900_front_of_eyes_right_vertical_sar: 0
-        Thelonious_brain_1450_front_of_eyes_right_vertical_sar: 0
-        Thelonious_brain_1800_front_of_eyes_right_vertical_sar: 0
-        Thelonious_brain_2100_front_of_eyes_right_vertical_sar: 0
-        Thelonious_brain_2400_front_of_eyes_right_vertical_sar: 0
-        Thelonious_brain_2600_front_of_eyes_right_vertical_sar: 0
-        Thelonious_brain_3500_front_of_eyes_right_vertical_sar: 0
-        Thelonious_brain_5000_front_of_eyes_right_vertical_sar: 0
+        Thelonious_brain_700_front_of_eyes_right_vertical_sar: 1.35989994269326
+        Thelonious_brain_800_front_of_eyes_right_vertical_sar: 3.59381465211865
+        Thelonious_brain_900_front_of_eyes_right_vertical_sar: 4.50562109188652
+        Thelonious_brain_1450_front_of_eyes_right_vertical_sar: 5.60508201970094
+        Thelonious_brain_1800_front_of_eyes_right_vertical_sar: 5.49506551726327
+        Thelonious_brain_2100_front_of_eyes_right_vertical_sar: 5.40076565803097
+        Thelonious_brain_2400_front_of_eyes_right_vertical_sar: 5.73427785609436
+        Thelonious_brain_2600_front_of_eyes_right_vertical_sar: 5.3101695090931
+        Thelonious_brain_3500_front_of_eyes_right_vertical_sar: 2.36618998943818
+        Thelonious_brain_5000_front_of_eyes_right_vertical_sar: 0.870984421764487
         Thelonious_brain_xxxx_front_of_eyes_right_vertical_sar: 0
         Thelonious_brain_yyyy_front_of_eyes_right_vertical_sar: 0
         Thelonious_brain_zzzz_front_of_eyes_right_vertical_sar: 0
-        Thelonious_brain_700_cheek1_sar: 0
-        Thelonious_brain_800_cheek1_sar: 0
-        Thelonious_brain_900_cheek1_sar: 0
-        Thelonious_brain_1450_cheek1_sar: 0
-        Thelonious_brain_1800_cheek1_sar: 0
-        Thelonious_brain_2100_cheek1_sar: 0
-        Thelonious_brain_2400_cheek1_sar: 0
-        Thelonious_brain_2600_cheek1_sar: 0
-        Thelonious_brain_3500_cheek1_sar: 0
-        Thelonious_brain_5000_cheek1_sar: 0
+        Thelonious_brain_700_cheek1_sar: 59.7961148279618
+        Thelonious_brain_800_cheek1_sar: 74.5247481685102
+        Thelonious_brain_900_cheek1_sar: 81.4761614309381
+        Thelonious_brain_1450_cheek1_sar: 96.6763979890877
+        Thelonious_brain_1800_cheek1_sar: 70.2308036172434
+        Thelonious_brain_2100_cheek1_sar: 47.5631512985196
+        Thelonious_brain_2400_cheek1_sar: 33.6026386903054
+        Thelonious_brain_2600_cheek1_sar: 28.7007899348126
+        Thelonious_brain_3500_cheek1_sar: 11.9106500546073
+        Thelonious_brain_5000_cheek1_sar: 4.12165841122849
         Thelonious_brain_xxxx_cheek1_sar: 0
         Thelonious_brain_yyyy_cheek1_sar: 0
         Thelonious_brain_zzzz_cheek1_sar: 0
-        Thelonious_brain_700_cheek2_sar: 0
-        Thelonious_brain_800_cheek2_sar: 0
-        Thelonious_brain_900_cheek2_sar: 0
-        Thelonious_brain_1450_cheek2_sar: 0
-        Thelonious_brain_1800_cheek2_sar: 0
-        Thelonious_brain_2100_cheek2_sar: 0
-        Thelonious_brain_2400_cheek2_sar: 0
-        Thelonious_brain_2600_cheek2_sar: 0
-        Thelonious_brain_3500_cheek2_sar: 0
-        Thelonious_brain_5000_cheek2_sar: 0
+        Thelonious_brain_700_cheek2_sar: 72.756110417676
+        Thelonious_brain_800_cheek2_sar: 85.970904994224
+        Thelonious_brain_900_cheek2_sar: 90.868920589472
+        Thelonious_brain_1450_cheek2_sar: 93.1775455341019
+        Thelonious_brain_1800_cheek2_sar: 68.3332599323676
+        Thelonious_brain_2100_cheek2_sar: 47.038157988024
+        Thelonious_brain_2400_cheek2_sar: 33.426544171717
+        Thelonious_brain_2600_cheek2_sar: 28.589022266354
+        Thelonious_brain_3500_cheek2_sar: 11.9934295538618
+        Thelonious_brain_5000_cheek2_sar: 4.37226771841715
         Thelonious_brain_xxxx_cheek2_sar: 0
         Thelonious_brain_yyyy_cheek2_sar: 0
         Thelonious_brain_zzzz_cheek2_sar: 0
-        Thelonious_brain_700_cheek3_sar: 0
-        Thelonious_brain_800_cheek3_sar: 0
-        Thelonious_brain_900_cheek3_sar: 0
-        Thelonious_brain_1450_cheek3_sar: 0
-        Thelonious_brain_1800_cheek3_sar: 0
-        Thelonious_brain_2100_cheek3_sar: 0
-        Thelonious_brain_2400_cheek3_sar: 0
-        Thelonious_brain_2600_cheek3_sar: 0
-        Thelonious_brain_3500_cheek3_sar: 0
-        Thelonious_brain_5000_cheek3_sar: 0
+        Thelonious_brain_700_cheek3_sar: 43.9854054051786
+        Thelonious_brain_800_cheek3_sar: 57.4372589961311
+        Thelonious_brain_900_cheek3_sar: 66.2854670747402
+        Thelonious_brain_1450_cheek3_sar: 101.316738258996
+        Thelonious_brain_1800_cheek3_sar: 72.6879870008436
+        Thelonious_brain_2100_cheek3_sar: 48.1490573509986
+        Thelonious_brain_2400_cheek3_sar: 33.6050347174494
+        Thelonious_brain_2600_cheek3_sar: 28.5938354083186
+        Thelonious_brain_3500_cheek3_sar: 11.5329841845764
+        Thelonious_brain_5000_cheek3_sar: 3.65346467036137
         Thelonious_brain_xxxx_cheek3_sar: 0
         Thelonious_brain_yyyy_cheek3_sar: 0
         Thelonious_brain_zzzz_cheek3_sar: 0
-        Thelonious_brain_700_tilt1_sar: 0
-        Thelonious_brain_800_tilt1_sar: 0
-        Thelonious_brain_900_tilt1_sar: 0
-        Thelonious_brain_1450_tilt1_sar: 0
-        Thelonious_brain_1800_tilt1_sar: 0
-        Thelonious_brain_2100_tilt1_sar: 0
-        Thelonious_brain_2400_tilt1_sar: 0
-        Thelonious_brain_2600_tilt1_sar: 0
-        Thelonious_brain_3500_tilt1_sar: 0
-        Thelonious_brain_5000_tilt1_sar: 0
+        Thelonious_brain_700_tilt1_sar: 34.4003938860404
+        Thelonious_brain_800_tilt1_sar: 42.6272787206798
+        Thelonious_brain_900_tilt1_sar: 46.9651163481086
+        Thelonious_brain_1450_tilt1_sar: 59.3056604160745
+        Thelonious_brain_1800_tilt1_sar: 44.5211803854512
+        Thelonious_brain_2100_tilt1_sar: 31.8487689306311
+        Thelonious_brain_2400_tilt1_sar: 26.9242223073061
+        Thelonious_brain_2600_tilt1_sar: 24.7349009977562
+        Thelonious_brain_3500_tilt1_sar: 15.3315405589364
+        Thelonious_brain_5000_tilt1_sar: 6.42477429499085
         Thelonious_brain_xxxx_tilt1_sar: 0
         Thelonious_brain_yyyy_tilt1_sar: 0
         Thelonious_brain_zzzz_tilt1_sar: 0
-        Thelonious_brain_700_tilt2_sar: 0
-        Thelonious_brain_800_tilt2_sar: 0
-        Thelonious_brain_900_tilt2_sar: 0
-        Thelonious_brain_1450_tilt2_sar: 0
-        Thelonious_brain_1800_tilt2_sar: 0
-        Thelonious_brain_2100_tilt2_sar: 0
-        Thelonious_brain_2400_tilt2_sar: 0
-        Thelonious_brain_2600_tilt2_sar: 0
-        Thelonious_brain_3500_tilt2_sar: 0
-        Thelonious_brain_5000_tilt2_sar: 0
+        Thelonious_brain_700_tilt2_sar: 41.275298404409
+        Thelonious_brain_800_tilt2_sar: 48.2120348874433
+        Thelonious_brain_900_tilt2_sar: 51.9379071935953
+        Thelonious_brain_1450_tilt2_sar: 62.9211071228189
+        Thelonious_brain_1800_tilt2_sar: 47.2930884118274
+        Thelonious_brain_2100_tilt2_sar: 33.8976438024062
+        Thelonious_brain_2400_tilt2_sar: 29.5501024471415
+        Thelonious_brain_2600_tilt2_sar: 27.2860133862121
+        Thelonious_brain_3500_tilt2_sar: 16.6570352598764
+        Thelonious_brain_5000_tilt2_sar: 6.64916673705482
         Thelonious_brain_xxxx_tilt2_sar: 0
         Thelonious_brain_yyyy_tilt2_sar: 0
         Thelonious_brain_zzzz_tilt2_sar: 0
-        Thelonious_brain_700_tilt3_sar: 0
-        Thelonious_brain_800_tilt3_sar: 0
-        Thelonious_brain_900_tilt3_sar: 0
-        Thelonious_brain_1450_tilt3_sar: 0
-        Thelonious_brain_1800_tilt3_sar: 0
-        Thelonious_brain_2100_tilt3_sar: 0
-        Thelonious_brain_2400_tilt3_sar: 0
-        Thelonious_brain_2600_tilt3_sar: 0
-        Thelonious_brain_3500_tilt3_sar: 0
-        Thelonious_brain_5000_tilt3_sar: 0
+        Thelonious_brain_700_tilt3_sar: 29.3438810474427
+        Thelonious_brain_800_tilt3_sar: 38.5784518722834
+        Thelonious_brain_900_tilt3_sar: 43.3515627032349
+        Thelonious_brain_1450_tilt3_sar: 56.39088690695
+        Thelonious_brain_1800_tilt3_sar: 42.2358686958535
+        Thelonious_brain_2100_tilt3_sar: 30.102995943485
+        Thelonious_brain_2400_tilt3_sar: 24.3156700782427
+        Thelonious_brain_2600_tilt3_sar: 22.2121938569524
+        Thelonious_brain_3500_tilt3_sar: 14.4024244118182
+        Thelonious_brain_5000_tilt3_sar: 6.0221674820391
         Thelonious_brain_xxxx_tilt3_sar: 0
         Thelonious_brain_yyyy_tilt3_sar: 0
         Thelonious_brain_zzzz_tilt3_sar: 0
-        Thelonious_brain_700_belly_center_horizontal_sar: 0
-        Thelonious_brain_800_belly_center_horizontal_sar: 0
-        Thelonious_brain_900_belly_center_horizontal_sar: 0
-        Thelonious_brain_1450_belly_center_horizontal_sar: 0
-        Thelonious_brain_1800_belly_center_horizontal_sar: 0
-        Thelonious_brain_2100_belly_center_horizontal_sar: 0
-        Thelonious_brain_2400_belly_center_horizontal_sar: 0
-        Thelonious_brain_2600_belly_center_horizontal_sar: 0
-        Thelonious_brain_3500_belly_center_horizontal_sar: 0
-        Thelonious_brain_5000_belly_center_horizontal_sar: 0
+        Thelonious_brain_700_belly_center_horizontal_sar: 1.18018146433296
+        Thelonious_brain_800_belly_center_horizontal_sar: 0.982145244157798
+        Thelonious_brain_900_belly_center_horizontal_sar: 0.887739059408884
+        Thelonious_brain_1450_belly_center_horizontal_sar: 0.675409378975284
+        Thelonious_brain_1800_belly_center_horizontal_sar: 0.638374057715233
+        Thelonious_brain_2100_belly_center_horizontal_sar: 0.60662949663519
+        Thelonious_brain_2400_belly_center_horizontal_sar: 0.604937877349028
+        Thelonious_brain_2600_belly_center_horizontal_sar: 0.57413528347714
+        Thelonious_brain_3500_belly_center_horizontal_sar: 0.386387810025223
+        Thelonious_brain_5000_belly_center_horizontal_sar: 0.173426783224373
         Thelonious_brain_xxxx_belly_center_horizontal_sar: 0
         Thelonious_brain_yyyy_belly_center_horizontal_sar: 0
         Thelonious_brain_zzzz_belly_center_horizontal_sar: 0
-        Thelonious_brain_700_belly_center_vertical_sar: 0
-        Thelonious_brain_800_belly_center_vertical_sar: 0
-        Thelonious_brain_900_belly_center_vertical_sar: 0
-        Thelonious_brain_1450_belly_center_vertical_sar: 0
-        Thelonious_brain_1800_belly_center_vertical_sar: 0
-        Thelonious_brain_2100_belly_center_vertical_sar: 0
-        Thelonious_brain_2400_belly_center_vertical_sar: 0
-        Thelonious_brain_2600_belly_center_vertical_sar: 0
-        Thelonious_brain_3500_belly_center_vertical_sar: 0
-        Thelonious_brain_5000_belly_center_vertical_sar: 0
+        Thelonious_brain_700_belly_center_vertical_sar: 0.145045098031507
+        Thelonious_brain_800_belly_center_vertical_sar: 0.195457941512596
+        Thelonious_brain_900_belly_center_vertical_sar: 0.267972415120643
+        Thelonious_brain_1450_belly_center_vertical_sar: 0.732256847648582
+        Thelonious_brain_1800_belly_center_vertical_sar: 0.972596553294049
+        Thelonious_brain_2100_belly_center_vertical_sar: 1.17860201527588
+        Thelonious_brain_2400_belly_center_vertical_sar: 0.975757888342175
+        Thelonious_brain_2600_belly_center_vertical_sar: 0.854679757044703
+        Thelonious_brain_3500_belly_center_vertical_sar: 0.393955032949811
+        Thelonious_brain_5000_belly_center_vertical_sar: 0.131216895550581
         Thelonious_brain_xxxx_belly_center_vertical_sar: 0
         Thelonious_brain_yyyy_belly_center_vertical_sar: 0
         Thelonious_brain_zzzz_belly_center_vertical_sar: 0
-        Thelonious_brain_700_belly_left_horizontal_sar: 0
-        Thelonious_brain_800_belly_left_horizontal_sar: 0
-        Thelonious_brain_900_belly_left_horizontal_sar: 0
-        Thelonious_brain_1450_belly_left_horizontal_sar: 0
-        Thelonious_brain_1800_belly_left_horizontal_sar: 0
-        Thelonious_brain_2100_belly_left_horizontal_sar: 0
-        Thelonious_brain_2400_belly_left_horizontal_sar: 0
-        Thelonious_brain_2600_belly_left_horizontal_sar: 0
-        Thelonious_brain_3500_belly_left_horizontal_sar: 0
-        Thelonious_brain_5000_belly_left_horizontal_sar: 0
+        Thelonious_brain_700_belly_left_horizontal_sar: 0.0663408474598148
+        Thelonious_brain_800_belly_left_horizontal_sar: 0.149808174338507
+        Thelonious_brain_900_belly_left_horizontal_sar: 0.23839095402211
+        Thelonious_brain_1450_belly_left_horizontal_sar: 0.740745852511851
+        Thelonious_brain_1800_belly_left_horizontal_sar: 0.613930143717693
+        Thelonious_brain_2100_belly_left_horizontal_sar: 0.505230964751272
+        Thelonious_brain_2400_belly_left_horizontal_sar: 0.572412448520505
+        Thelonious_brain_2600_belly_left_horizontal_sar: 0.552887411619147
+        Thelonious_brain_3500_belly_left_horizontal_sar: 0.341497142943974
+        Thelonious_brain_5000_belly_left_horizontal_sar: 0.244897094411437
         Thelonious_brain_xxxx_belly_left_horizontal_sar: 0
         Thelonious_brain_yyyy_belly_left_horizontal_sar: 0
         Thelonious_brain_zzzz_belly_left_horizontal_sar: 0
-        Thelonious_brain_700_belly_left_vertical_sar: 0
-        Thelonious_brain_800_belly_left_vertical_sar: 0
-        Thelonious_brain_900_belly_left_vertical_sar: 0
-        Thelonious_brain_1450_belly_left_vertical_sar: 0
-        Thelonious_brain_1800_belly_left_vertical_sar: 0
-        Thelonious_brain_2100_belly_left_vertical_sar: 0
-        Thelonious_brain_2400_belly_left_vertical_sar: 0
-        Thelonious_brain_2600_belly_left_vertical_sar: 0
-        Thelonious_brain_3500_belly_left_vertical_sar: 0
-        Thelonious_brain_5000_belly_left_vertical_sar: 0
+        Thelonious_brain_700_belly_left_vertical_sar: 0.007270233064635
+        Thelonious_brain_800_belly_left_vertical_sar: 0.00939265942052779
+        Thelonious_brain_900_belly_left_vertical_sar: 0.0858495769129519
+        Thelonious_brain_1450_belly_left_vertical_sar: 0.726507077641012
+        Thelonious_brain_1800_belly_left_vertical_sar: 0.696706253128786
+        Thelonious_brain_2100_belly_left_vertical_sar: 0.671162689261162
+        Thelonious_brain_2400_belly_left_vertical_sar: 0.626970093865031
+        Thelonious_brain_2600_belly_left_vertical_sar: 0.559560995791198
+        Thelonious_brain_3500_belly_left_vertical_sar: 0.202168084517951
+        Thelonious_brain_5000_belly_left_vertical_sar: 0.0901110599876283
         Thelonious_brain_xxxx_belly_left_vertical_sar: 0
         Thelonious_brain_yyyy_belly_left_vertical_sar: 0
         Thelonious_brain_zzzz_belly_left_vertical_sar: 0
-        Thelonious_brain_700_belly_right_horizontal_sar: 0
-        Thelonious_brain_800_belly_right_horizontal_sar: 0
-        Thelonious_brain_900_belly_right_horizontal_sar: 0
-        Thelonious_brain_1450_belly_right_horizontal_sar: 0
-        Thelonious_brain_1800_belly_right_horizontal_sar: 0
-        Thelonious_brain_2100_belly_right_horizontal_sar: 0
-        Thelonious_brain_2400_belly_right_horizontal_sar: 0
-        Thelonious_brain_2600_belly_right_horizontal_sar: 0
-        Thelonious_brain_3500_belly_right_horizontal_sar: 0
-        Thelonious_brain_5000_belly_right_horizontal_sar: 0
+        Thelonious_brain_700_belly_right_horizontal_sar: 0.646617206242322
+        Thelonious_brain_800_belly_right_horizontal_sar: 0.70131801653261
+        Thelonious_brain_900_belly_right_horizontal_sar: 0.761699697678232
+        Thelonious_brain_1450_belly_right_horizontal_sar: 1.11062306151226
+        Thelonious_brain_1800_belly_right_horizontal_sar: 0.881664029125354
+        Thelonious_brain_2100_belly_right_horizontal_sar: 0.685413429936574
+        Thelonious_brain_2400_belly_right_horizontal_sar: 0.633564945731859
+        Thelonious_brain_2600_belly_right_horizontal_sar: 0.595087126210799
+        Thelonious_brain_3500_belly_right_horizontal_sar: 0.393852983291603
+        Thelonious_brain_5000_belly_right_horizontal_sar: 0.171933498582346
         Thelonious_brain_xxxx_belly_right_horizontal_sar: 0
         Thelonious_brain_yyyy_belly_right_horizontal_sar: 0
         Thelonious_brain_zzzz_belly_right_horizontal_sar: 0
-        Thelonious_brain_700_belly_right_vertical_sar: 0
-        Thelonious_brain_800_belly_right_vertical_sar: 0
-        Thelonious_brain_900_belly_right_vertical_sar: 0
-        Thelonious_brain_1450_belly_right_vertical_sar: 0
-        Thelonious_brain_1800_belly_right_vertical_sar: 0
-        Thelonious_brain_2100_belly_right_vertical_sar: 0
-        Thelonious_brain_2400_belly_right_vertical_sar: 0
-        Thelonious_brain_2600_belly_right_vertical_sar: 0
-        Thelonious_brain_3500_belly_right_vertical_sar: 0
-        Thelonious_brain_5000_belly_right_vertical_sar: 0
+        Thelonious_brain_700_belly_right_vertical_sar: 0.152077036478293
+        Thelonious_brain_800_belly_right_vertical_sar: 0.306258754025507
+        Thelonious_brain_900_belly_right_vertical_sar: 0.429334120425984
+        Thelonious_brain_1450_belly_right_vertical_sar: 1.01412598030943
+        Thelonious_brain_1800_belly_right_vertical_sar: 1.25379168323646
+        Thelonious_brain_2100_belly_right_vertical_sar: 1.45921942860248
+        Thelonious_brain_2400_belly_right_vertical_sar: 1.27945526001603
+        Thelonious_brain_2600_belly_right_vertical_sar: 1.13721884077939
+        Thelonious_brain_3500_belly_right_vertical_sar: 0.522824788400259
+        Thelonious_brain_5000_belly_right_vertical_sar: 0.16562701371236
         Thelonious_brain_xxxx_belly_right_vertical_sar: 0
         Thelonious_brain_yyyy_belly_right_vertical_sar: 0
         Thelonious_brain_zzzz_belly_right_vertical_sar: 0
-        Thelonious_brain_700_belly_up_horizontal_sar: 0
-        Thelonious_brain_800_belly_up_horizontal_sar: 0
-        Thelonious_brain_900_belly_up_horizontal_sar: 0
-        Thelonious_brain_1450_belly_up_horizontal_sar: 0
-        Thelonious_brain_1800_belly_up_horizontal_sar: 0
-        Thelonious_brain_2100_belly_up_horizontal_sar: 0
-        Thelonious_brain_2400_belly_up_horizontal_sar: 0
-        Thelonious_brain_2600_belly_up_horizontal_sar: 0
-        Thelonious_brain_3500_belly_up_horizontal_sar: 0
-        Thelonious_brain_5000_belly_up_horizontal_sar: 0
+        Thelonious_brain_700_belly_up_horizontal_sar: 1.22816391701723
+        Thelonious_brain_800_belly_up_horizontal_sar: 1.2807210728966
+        Thelonious_brain_900_belly_up_horizontal_sar: 1.29324000239851
+        Thelonious_brain_1450_belly_up_horizontal_sar: 1.24351936731038
+        Thelonious_brain_1800_belly_up_horizontal_sar: 1.12409629566256
+        Thelonious_brain_2100_belly_up_horizontal_sar: 1.02173366282158
+        Thelonious_brain_2400_belly_up_horizontal_sar: 0.987518971921258
+        Thelonious_brain_2600_belly_up_horizontal_sar: 0.922244029161326
+        Thelonious_brain_3500_belly_up_horizontal_sar: 0.554324764741951
+        Thelonious_brain_5000_belly_up_horizontal_sar: 0.329624570562854
         Thelonious_brain_xxxx_belly_up_horizontal_sar: 0
         Thelonious_brain_yyyy_belly_up_horizontal_sar: 0
         Thelonious_brain_zzzz_belly_up_horizontal_sar: 0
-        Thelonious_brain_700_belly_up_vertical_sar: 0
-        Thelonious_brain_800_belly_up_vertical_sar: 0
-        Thelonious_brain_900_belly_up_vertical_sar: 0
-        Thelonious_brain_1450_belly_up_vertical_sar: 0
-        Thelonious_brain_1800_belly_up_vertical_sar: 0
-        Thelonious_brain_2100_belly_up_vertical_sar: 0
-        Thelonious_brain_2400_belly_up_vertical_sar: 0
-        Thelonious_brain_2600_belly_up_vertical_sar: 0
-        Thelonious_brain_3500_belly_up_vertical_sar: 0
-        Thelonious_brain_5000_belly_up_vertical_sar: 0
+        Thelonious_brain_700_belly_up_vertical_sar: 0.257798001772396
+        Thelonious_brain_800_belly_up_vertical_sar: 0.537990858753207
+        Thelonious_brain_900_belly_up_vertical_sar: 0.739483193556311
+        Thelonious_brain_1450_belly_up_vertical_sar: 1.61461641160094
+        Thelonious_brain_1800_belly_up_vertical_sar: 1.90079112025357
+        Thelonious_brain_2100_belly_up_vertical_sar: 2.1460837276701
+        Thelonious_brain_2400_belly_up_vertical_sar: 1.67855460592337
+        Thelonious_brain_2600_belly_up_vertical_sar: 1.44403249124466
+        Thelonious_brain_3500_belly_up_vertical_sar: 0.614093806328855
+        Thelonious_brain_5000_belly_up_vertical_sar: 0.233431316165185
         Thelonious_brain_xxxx_belly_up_vertical_sar: 0
         Thelonious_brain_yyyy_belly_up_vertical_sar: 0
         Thelonious_brain_zzzz_belly_up_vertical_sar: 0
@@ -2038,578 +2038,578 @@ devices:
       height: 1360
       body:
         Eartha_body_headp_else_sar: 0
-        Eartha_body_700_front_of_eyes_center_horizontal_sar: 0
-        Eartha_body_800_front_of_eyes_center_horizontal_sar: 0
-        Eartha_body_900_front_of_eyes_center_horizontal_sar: 0
-        Eartha_body_1450_front_of_eyes_center_horizontal_sar: 0
-        Eartha_body_1800_front_of_eyes_center_horizontal_sar: 0
-        Eartha_body_2100_front_of_eyes_center_horizontal_sar: 0
-        Eartha_body_2400_front_of_eyes_center_horizontal_sar: 0
-        Eartha_body_2600_front_of_eyes_center_horizontal_sar: 0
-        Eartha_body_3500_front_of_eyes_center_horizontal_sar: 0
-        Eartha_body_5000_front_of_eyes_center_horizontal_sar: 0
+        Eartha_body_700_front_of_eyes_center_horizontal_sar: 2.7811346750176
+        Eartha_body_800_front_of_eyes_center_horizontal_sar: 2.38228226971671
+        Eartha_body_900_front_of_eyes_center_horizontal_sar: 2.16613442552066
+        Eartha_body_1450_front_of_eyes_center_horizontal_sar: 1.51840786725283
+        Eartha_body_1800_front_of_eyes_center_horizontal_sar: 1.89114800167159
+        Eartha_body_2100_front_of_eyes_center_horizontal_sar: 2.2106395454591
+        Eartha_body_2400_front_of_eyes_center_horizontal_sar: 2.19628040930502
+        Eartha_body_2600_front_of_eyes_center_horizontal_sar: 2.04603713535168
+        Eartha_body_3500_front_of_eyes_center_horizontal_sar: 1.21029827085365
+        Eartha_body_5000_front_of_eyes_center_horizontal_sar: 1.18483008167677
         Eartha_body_xxxx_front_of_eyes_center_horizontal_sar: 0
         Eartha_body_yyyy_front_of_eyes_center_horizontal_sar: 0
         Eartha_body_zzzz_front_of_eyes_center_horizontal_sar: 0
-        Eartha_body_700_front_of_eyes_center_vertical_sar: 0
-        Eartha_body_800_front_of_eyes_center_vertical_sar: 0
-        Eartha_body_900_front_of_eyes_center_vertical_sar: 0
-        Eartha_body_1450_front_of_eyes_center_vertical_sar: 0
-        Eartha_body_1800_front_of_eyes_center_vertical_sar: 0
-        Eartha_body_2100_front_of_eyes_center_vertical_sar: 0
-        Eartha_body_2400_front_of_eyes_center_vertical_sar: 0
-        Eartha_body_2600_front_of_eyes_center_vertical_sar: 0
-        Eartha_body_3500_front_of_eyes_center_vertical_sar: 0
-        Eartha_body_5000_front_of_eyes_center_vertical_sar: 0
+        Eartha_body_700_front_of_eyes_center_vertical_sar: 2.92260990389176
+        Eartha_body_800_front_of_eyes_center_vertical_sar: 2.47117926234783
+        Eartha_body_900_front_of_eyes_center_vertical_sar: 2.31854896754683
+        Eartha_body_1450_front_of_eyes_center_vertical_sar: 2.36399106534151
+        Eartha_body_1800_front_of_eyes_center_vertical_sar: 2.67416737175208
+        Eartha_body_2100_front_of_eyes_center_vertical_sar: 2.94003277724685
+        Eartha_body_2400_front_of_eyes_center_vertical_sar: 3.26003314553287
+        Eartha_body_2600_front_of_eyes_center_vertical_sar: 3.19494104042065
+        Eartha_body_3500_front_of_eyes_center_vertical_sar: 2.47605958564727
+        Eartha_body_5000_front_of_eyes_center_vertical_sar: 1.84231758808409
         Eartha_body_xxxx_front_of_eyes_center_vertical_sar: 0
         Eartha_body_yyyy_front_of_eyes_center_vertical_sar: 0
         Eartha_body_zzzz_front_of_eyes_center_vertical_sar: 0
-        Eartha_body_700_front_of_eyes_down_horizontal_sar: 0
-        Eartha_body_800_front_of_eyes_down_horizontal_sar: 0
-        Eartha_body_900_front_of_eyes_down_horizontal_sar: 0
-        Eartha_body_1450_front_of_eyes_down_horizontal_sar: 0
-        Eartha_body_1800_front_of_eyes_down_horizontal_sar: 0
-        Eartha_body_2100_front_of_eyes_down_horizontal_sar: 0
-        Eartha_body_2400_front_of_eyes_down_horizontal_sar: 0
-        Eartha_body_2600_front_of_eyes_down_horizontal_sar: 0
-        Eartha_body_3500_front_of_eyes_down_horizontal_sar: 0
-        Eartha_body_5000_front_of_eyes_down_horizontal_sar: 0
+        Eartha_body_700_front_of_eyes_down_horizontal_sar: 2.95425189986292
+        Eartha_body_800_front_of_eyes_down_horizontal_sar: 2.61120541665452
+        Eartha_body_900_front_of_eyes_down_horizontal_sar: 2.41510653266605
+        Eartha_body_1450_front_of_eyes_down_horizontal_sar: 1.77175363765
+        Eartha_body_1800_front_of_eyes_down_horizontal_sar: 2.17949516175684
+        Eartha_body_2100_front_of_eyes_down_horizontal_sar: 2.52898789670556
+        Eartha_body_2400_front_of_eyes_down_horizontal_sar: 2.52328073264118
+        Eartha_body_2600_front_of_eyes_down_horizontal_sar: 2.38079374497805
+        Eartha_body_3500_front_of_eyes_down_horizontal_sar: 1.58622512137335
+        Eartha_body_5000_front_of_eyes_down_horizontal_sar: 1.51606155819118
         Eartha_body_xxxx_front_of_eyes_down_horizontal_sar: 0
         Eartha_body_yyyy_front_of_eyes_down_horizontal_sar: 0
         Eartha_body_zzzz_front_of_eyes_down_horizontal_sar: 0
-        Eartha_body_700_front_of_eyes_down_vertical_sar: 0
-        Eartha_body_800_front_of_eyes_down_vertical_sar: 0
-        Eartha_body_900_front_of_eyes_down_vertical_sar: 0
-        Eartha_body_1450_front_of_eyes_down_vertical_sar: 0
-        Eartha_body_1800_front_of_eyes_down_vertical_sar: 0
-        Eartha_body_2100_front_of_eyes_down_vertical_sar: 0
-        Eartha_body_2400_front_of_eyes_down_vertical_sar: 0
-        Eartha_body_2600_front_of_eyes_down_vertical_sar: 0
-        Eartha_body_3500_front_of_eyes_down_vertical_sar: 0
-        Eartha_body_5000_front_of_eyes_down_vertical_sar: 0
+        Eartha_body_700_front_of_eyes_down_vertical_sar: 2.90143536602172
+        Eartha_body_800_front_of_eyes_down_vertical_sar: 2.53204957712519
+        Eartha_body_900_front_of_eyes_down_vertical_sar: 2.42786673256069
+        Eartha_body_1450_front_of_eyes_down_vertical_sar: 2.64026980720849
+        Eartha_body_1800_front_of_eyes_down_vertical_sar: 2.99720306814352
+        Eartha_body_2100_front_of_eyes_down_vertical_sar: 3.30314586323069
+        Eartha_body_2400_front_of_eyes_down_vertical_sar: 3.74515006903432
+        Eartha_body_2600_front_of_eyes_down_vertical_sar: 3.65275260389879
+        Eartha_body_3500_front_of_eyes_down_vertical_sar: 2.63543108255636
+        Eartha_body_5000_front_of_eyes_down_vertical_sar: 1.95975505775645
         Eartha_body_xxxx_front_of_eyes_down_vertical_sar: 0
         Eartha_body_yyyy_front_of_eyes_down_vertical_sar: 0
         Eartha_body_zzzz_front_of_eyes_down_vertical_sar: 0
-        Eartha_body_700_front_of_eyes_left_horizontal_sar: 0
-        Eartha_body_800_front_of_eyes_left_horizontal_sar: 0
-        Eartha_body_900_front_of_eyes_left_horizontal_sar: 0
-        Eartha_body_1450_front_of_eyes_left_horizontal_sar: 0
-        Eartha_body_1800_front_of_eyes_left_horizontal_sar: 0
-        Eartha_body_2100_front_of_eyes_left_horizontal_sar: 0
-        Eartha_body_2400_front_of_eyes_left_horizontal_sar: 0
-        Eartha_body_2600_front_of_eyes_left_horizontal_sar: 0
-        Eartha_body_3500_front_of_eyes_left_horizontal_sar: 0
-        Eartha_body_5000_front_of_eyes_left_horizontal_sar: 0
+        Eartha_body_700_front_of_eyes_left_horizontal_sar: 2.82656513886592
+        Eartha_body_800_front_of_eyes_left_horizontal_sar: 2.42154091565465
+        Eartha_body_900_front_of_eyes_left_horizontal_sar: 2.20347232604812
+        Eartha_body_1450_front_of_eyes_left_horizontal_sar: 1.55777138273396
+        Eartha_body_1800_front_of_eyes_left_horizontal_sar: 1.90984256972175
+        Eartha_body_2100_front_of_eyes_left_horizontal_sar: 2.21161787285414
+        Eartha_body_2400_front_of_eyes_left_horizontal_sar: 2.17557295446104
+        Eartha_body_2600_front_of_eyes_left_horizontal_sar: 2.01773789413017
+        Eartha_body_3500_front_of_eyes_left_horizontal_sar: 1.15874479231118
+        Eartha_body_5000_front_of_eyes_left_horizontal_sar: 1.18691039464822
         Eartha_body_xxxx_front_of_eyes_left_horizontal_sar: 0
         Eartha_body_yyyy_front_of_eyes_left_horizontal_sar: 0
         Eartha_body_zzzz_front_of_eyes_left_horizontal_sar: 0
-        Eartha_body_700_front_of_eyes_left_vertical_sar: 0
-        Eartha_body_800_front_of_eyes_left_vertical_sar: 0
-        Eartha_body_900_front_of_eyes_left_vertical_sar: 0
-        Eartha_body_1450_front_of_eyes_left_vertical_sar: 0
-        Eartha_body_1800_front_of_eyes_left_vertical_sar: 0
-        Eartha_body_2100_front_of_eyes_left_vertical_sar: 0
-        Eartha_body_2400_front_of_eyes_left_vertical_sar: 0
-        Eartha_body_2600_front_of_eyes_left_vertical_sar: 0
-        Eartha_body_3500_front_of_eyes_left_vertical_sar: 0
-        Eartha_body_5000_front_of_eyes_left_vertical_sar: 0
+        Eartha_body_700_front_of_eyes_left_vertical_sar: 2.88824730405056
+        Eartha_body_800_front_of_eyes_left_vertical_sar: 2.44696865871584
+        Eartha_body_900_front_of_eyes_left_vertical_sar: 2.29524002471017
+        Eartha_body_1450_front_of_eyes_left_vertical_sar: 2.31824603276887
+        Eartha_body_1800_front_of_eyes_left_vertical_sar: 2.65271376338202
+        Eartha_body_2100_front_of_eyes_left_vertical_sar: 2.93940038962187
+        Eartha_body_2400_front_of_eyes_left_vertical_sar: 3.24989000404847
+        Eartha_body_2600_front_of_eyes_left_vertical_sar: 3.15410946796779
+        Eartha_body_3500_front_of_eyes_left_vertical_sar: 2.26527463887455
+        Eartha_body_5000_front_of_eyes_left_vertical_sar: 1.80601444993992
         Eartha_body_xxxx_front_of_eyes_left_vertical_sar: 0
         Eartha_body_yyyy_front_of_eyes_left_vertical_sar: 0
         Eartha_body_zzzz_front_of_eyes_left_vertical_sar: 0
-        Eartha_body_700_front_of_eyes_right_horizontal_sar: 0
-        Eartha_body_800_front_of_eyes_right_horizontal_sar: 0
-        Eartha_body_900_front_of_eyes_right_horizontal_sar: 0
-        Eartha_body_1450_front_of_eyes_right_horizontal_sar: 0
-        Eartha_body_1800_front_of_eyes_right_horizontal_sar: 0
-        Eartha_body_2100_front_of_eyes_right_horizontal_sar: 0
-        Eartha_body_2400_front_of_eyes_right_horizontal_sar: 0
-        Eartha_body_2600_front_of_eyes_right_horizontal_sar: 0
-        Eartha_body_3500_front_of_eyes_right_horizontal_sar: 0
-        Eartha_body_5000_front_of_eyes_right_horizontal_sar: 0
+        Eartha_body_700_front_of_eyes_right_horizontal_sar: 2.77233935016105
+        Eartha_body_800_front_of_eyes_right_horizontal_sar: 2.36363224345793
+        Eartha_body_900_front_of_eyes_right_horizontal_sar: 2.14490631374455
+        Eartha_body_1450_front_of_eyes_right_horizontal_sar: 1.50455026294434
+        Eartha_body_1800_front_of_eyes_right_horizontal_sar: 1.88680255198539
+        Eartha_body_2100_front_of_eyes_right_horizontal_sar: 2.21444737116344
+        Eartha_body_2400_front_of_eyes_right_horizontal_sar: 2.21251700993161
+        Eartha_body_2600_front_of_eyes_right_horizontal_sar: 2.0699366441759
+        Eartha_body_3500_front_of_eyes_right_horizontal_sar: 1.26708868478266
+        Eartha_body_5000_front_of_eyes_right_horizontal_sar: 1.19818805749494
         Eartha_body_xxxx_front_of_eyes_right_horizontal_sar: 0
         Eartha_body_yyyy_front_of_eyes_right_horizontal_sar: 0
         Eartha_body_zzzz_front_of_eyes_right_horizontal_sar: 0
-        Eartha_body_700_front_of_eyes_right_vertical_sar: 0
-        Eartha_body_800_front_of_eyes_right_vertical_sar: 0
-        Eartha_body_900_front_of_eyes_right_vertical_sar: 0
-        Eartha_body_1450_front_of_eyes_right_vertical_sar: 0
-        Eartha_body_1800_front_of_eyes_right_vertical_sar: 0
-        Eartha_body_2100_front_of_eyes_right_vertical_sar: 0
-        Eartha_body_2400_front_of_eyes_right_vertical_sar: 0
-        Eartha_body_2600_front_of_eyes_right_vertical_sar: 0
-        Eartha_body_3500_front_of_eyes_right_vertical_sar: 0
-        Eartha_body_5000_front_of_eyes_right_vertical_sar: 0
+        Eartha_body_700_front_of_eyes_right_vertical_sar: 2.90377229824906
+        Eartha_body_800_front_of_eyes_right_vertical_sar: 2.4763218639866
+        Eartha_body_900_front_of_eyes_right_vertical_sar: 2.33262858182672
+        Eartha_body_1450_front_of_eyes_right_vertical_sar: 2.38267324963585
+        Eartha_body_1800_front_of_eyes_right_vertical_sar: 2.65633155703238
+        Eartha_body_2100_front_of_eyes_right_vertical_sar: 2.89089582051512
+        Eartha_body_2400_front_of_eyes_right_vertical_sar: 3.230140697271
+        Eartha_body_2600_front_of_eyes_right_vertical_sar: 3.1979084202605
+        Eartha_body_3500_front_of_eyes_right_vertical_sar: 2.64916517170727
+        Eartha_body_5000_front_of_eyes_right_vertical_sar: 1.87816395201588
         Eartha_body_xxxx_front_of_eyes_right_vertical_sar: 0
         Eartha_body_yyyy_front_of_eyes_right_vertical_sar: 0
         Eartha_body_zzzz_front_of_eyes_right_vertical_sar: 0
-        Eartha_body_700_cheek1_sar: 0
-        Eartha_body_800_cheek1_sar: 0
-        Eartha_body_900_cheek1_sar: 0
-        Eartha_body_1450_cheek1_sar: 0
-        Eartha_body_1800_cheek1_sar: 0
-        Eartha_body_2100_cheek1_sar: 0
-        Eartha_body_2400_cheek1_sar: 0
-        Eartha_body_2600_cheek1_sar: 0
-        Eartha_body_3500_cheek1_sar: 0
-        Eartha_body_5000_cheek1_sar: 0
+        Eartha_body_700_cheek1_sar: 22.8432389294933
+        Eartha_body_800_cheek1_sar: 25.270230040649
+        Eartha_body_900_cheek1_sar: 26.2437240805185
+        Eartha_body_1450_cheek1_sar: 27.2933538194528
+        Eartha_body_1800_cheek1_sar: 26.6381597202121
+        Eartha_body_2100_cheek1_sar: 26.0765647780057
+        Eartha_body_2400_cheek1_sar: 25.8838860392199
+        Eartha_body_2600_cheek1_sar: 25.5949152412984
+        Eartha_body_3500_cheek1_sar: 23.9970128535673
+        Eartha_body_5000_cheek1_sar: 17.4506232408009
         Eartha_body_xxxx_cheek1_sar: 0
         Eartha_body_yyyy_cheek1_sar: 0
         Eartha_body_zzzz_cheek1_sar: 0
-        Eartha_body_700_cheek2_sar: 0
-        Eartha_body_800_cheek2_sar: 0
-        Eartha_body_900_cheek2_sar: 0
-        Eartha_body_1450_cheek2_sar: 0
-        Eartha_body_1800_cheek2_sar: 0
-        Eartha_body_2100_cheek2_sar: 0
-        Eartha_body_2400_cheek2_sar: 0
-        Eartha_body_2600_cheek2_sar: 0
-        Eartha_body_3500_cheek2_sar: 0
-        Eartha_body_5000_cheek2_sar: 0
+        Eartha_body_700_cheek2_sar: 22.9454255813288
+        Eartha_body_800_cheek2_sar: 25.1655169259101
+        Eartha_body_900_cheek2_sar: 26.1028027114079
+        Eartha_body_1450_cheek2_sar: 27.4587965297443
+        Eartha_body_1800_cheek2_sar: 26.8802953071512
+        Eartha_body_2100_cheek2_sar: 26.3844371163572
+        Eartha_body_2400_cheek2_sar: 26.2409283505777
+        Eartha_body_2600_cheek2_sar: 26.0256309292806
+        Eartha_body_3500_cheek2_sar: 24.8231475634291
+        Eartha_body_5000_cheek2_sar: 18.7027761119506
         Eartha_body_xxxx_cheek2_sar: 0
         Eartha_body_yyyy_cheek2_sar: 0
         Eartha_body_zzzz_cheek2_sar: 0
-        Eartha_body_700_cheek3_sar: 0
-        Eartha_body_800_cheek3_sar: 0
-        Eartha_body_900_cheek3_sar: 0
-        Eartha_body_1450_cheek3_sar: 0
-        Eartha_body_1800_cheek3_sar: 0
-        Eartha_body_2100_cheek3_sar: 0
-        Eartha_body_2400_cheek3_sar: 0
-        Eartha_body_2600_cheek3_sar: 0
-        Eartha_body_3500_cheek3_sar: 0
-        Eartha_body_5000_cheek3_sar: 0
+        Eartha_body_700_cheek3_sar: 25.5584558410191
+        Eartha_body_800_cheek3_sar: 25.8688422197304
+        Eartha_body_900_cheek3_sar: 26.1094213540858
+        Eartha_body_1450_cheek3_sar: 27.2258697539858
+        Eartha_body_1800_cheek3_sar: 26.5233386297438
+        Eartha_body_2100_cheek3_sar: 25.9211690946791
+        Eartha_body_2400_cheek3_sar: 25.6681755857906
+        Eartha_body_2600_cheek3_sar: 25.3016858576495
+        Eartha_body_3500_cheek3_sar: 23.3020216090491
+        Eartha_body_5000_cheek3_sar: 16.6947172854109
         Eartha_body_xxxx_cheek3_sar: 0
         Eartha_body_yyyy_cheek3_sar: 0
         Eartha_body_zzzz_cheek3_sar: 0
-        Eartha_body_700_tilt1_sar: 0
-        Eartha_body_800_tilt1_sar: 0
-        Eartha_body_900_tilt1_sar: 0
-        Eartha_body_1450_tilt1_sar: 0
-        Eartha_body_1800_tilt1_sar: 0
-        Eartha_body_2100_tilt1_sar: 0
-        Eartha_body_2400_tilt1_sar: 0
-        Eartha_body_2600_tilt1_sar: 0
-        Eartha_body_3500_tilt1_sar: 0
-        Eartha_body_5000_tilt1_sar: 0
+        Eartha_body_700_tilt1_sar: 12.6796365910315
+        Eartha_body_800_tilt1_sar: 10.0308354707229
+        Eartha_body_900_tilt1_sar: 9.9120955167933
+        Eartha_body_1450_tilt1_sar: 16.7518992244566
+        Eartha_body_1800_tilt1_sar: 15.9159015725287
+        Eartha_body_2100_tilt1_sar: 15.1993321565905
+        Eartha_body_2400_tilt1_sar: 14.4161115314687
+        Eartha_body_2600_tilt1_sar: 13.8419437464219
+        Eartha_body_3500_tilt1_sar: 11.1904116934455
+        Eartha_body_5000_tilt1_sar: 8.30913921341867
         Eartha_body_xxxx_tilt1_sar: 0
         Eartha_body_yyyy_tilt1_sar: 0
         Eartha_body_zzzz_tilt1_sar: 0
-        Eartha_body_700_tilt2_sar: 0
-        Eartha_body_800_tilt2_sar: 0
-        Eartha_body_900_tilt2_sar: 0
-        Eartha_body_1450_tilt2_sar: 0
-        Eartha_body_1800_tilt2_sar: 0
-        Eartha_body_2100_tilt2_sar: 0
-        Eartha_body_2400_tilt2_sar: 0
-        Eartha_body_2600_tilt2_sar: 0
-        Eartha_body_3500_tilt2_sar: 0
-        Eartha_body_5000_tilt2_sar: 0
+        Eartha_body_700_tilt2_sar: 12.6177373509165
+        Eartha_body_800_tilt2_sar: 9.7890490782519
+        Eartha_body_900_tilt2_sar: 9.62011888902097
+        Eartha_body_1450_tilt2_sar: 16.5679787107274
+        Eartha_body_1800_tilt2_sar: 15.6164665983282
+        Eartha_body_2100_tilt2_sar: 14.8008847877004
+        Eartha_body_2400_tilt2_sar: 13.9792846962583
+        Eartha_body_2600_tilt2_sar: 13.4342514551105
+        Eartha_body_3500_tilt2_sar: 10.9865779890218
+        Eartha_body_5000_tilt2_sar: 8.12451651618237
         Eartha_body_xxxx_tilt2_sar: 0
         Eartha_body_yyyy_tilt2_sar: 0
         Eartha_body_zzzz_tilt2_sar: 0
-        Eartha_body_700_tilt3_sar: 0
-        Eartha_body_800_tilt3_sar: 0
-        Eartha_body_900_tilt3_sar: 0
-        Eartha_body_1450_tilt3_sar: 0
-        Eartha_body_1800_tilt3_sar: 0
-        Eartha_body_2100_tilt3_sar: 0
-        Eartha_body_2400_tilt3_sar: 0
-        Eartha_body_2600_tilt3_sar: 0
-        Eartha_body_3500_tilt3_sar: 0
-        Eartha_body_5000_tilt3_sar: 0
+        Eartha_body_700_tilt3_sar: 12.7145115142873
+        Eartha_body_800_tilt3_sar: 10.0222877936625
+        Eartha_body_900_tilt3_sar: 9.93128172890922
+        Eartha_body_1450_tilt3_sar: 17.1343545074623
+        Eartha_body_1800_tilt3_sar: 16.3016008135921
+        Eartha_body_2100_tilt3_sar: 15.5878119331319
+        Eartha_body_2400_tilt3_sar: 14.8414385950394
+        Eartha_body_2600_tilt3_sar: 14.2492038991115
+        Eartha_body_3500_tilt3_sar: 11.4471820551182
+        Eartha_body_5000_tilt3_sar: 8.37347812526418
         Eartha_body_xxxx_tilt3_sar: 0
         Eartha_body_yyyy_tilt3_sar: 0
         Eartha_body_zzzz_tilt3_sar: 0
-        Eartha_body_700_belly_center_horizontal_sar: 0
-        Eartha_body_800_belly_center_horizontal_sar: 0
-        Eartha_body_900_belly_center_horizontal_sar: 0
-        Eartha_body_1450_belly_center_horizontal_sar: 0
-        Eartha_body_1800_belly_center_horizontal_sar: 0
-        Eartha_body_2100_belly_center_horizontal_sar: 0
-        Eartha_body_2400_belly_center_horizontal_sar: 0
-        Eartha_body_2600_belly_center_horizontal_sar: 0
-        Eartha_body_3500_belly_center_horizontal_sar: 0
-        Eartha_body_5000_belly_center_horizontal_sar: 0
+        Eartha_body_700_belly_center_horizontal_sar: 3.77205237444794
+        Eartha_body_800_belly_center_horizontal_sar: 3.32062937942932
+        Eartha_body_900_belly_center_horizontal_sar: 3.14033989011852
+        Eartha_body_1450_belly_center_horizontal_sar: 2.95172000427453
+        Eartha_body_1800_belly_center_horizontal_sar: 3.29705637907136
+        Eartha_body_2100_belly_center_horizontal_sar: 3.59305898604007
+        Eartha_body_2400_belly_center_horizontal_sar: 3.66884593360303
+        Eartha_body_2600_belly_center_horizontal_sar: 3.52456600176849
+        Eartha_body_3500_belly_center_horizontal_sar: 2.61697879541455
+        Eartha_body_5000_belly_center_horizontal_sar: 2.36215368294888
         Eartha_body_xxxx_belly_center_horizontal_sar: 0
         Eartha_body_yyyy_belly_center_horizontal_sar: 0
         Eartha_body_zzzz_belly_center_horizontal_sar: 0
-        Eartha_body_700_belly_center_vertical_sar: 0
-        Eartha_body_800_belly_center_vertical_sar: 0
-        Eartha_body_900_belly_center_vertical_sar: 0
-        Eartha_body_1450_belly_center_vertical_sar: 0
-        Eartha_body_1800_belly_center_vertical_sar: 0
-        Eartha_body_2100_belly_center_vertical_sar: 0
-        Eartha_body_2400_belly_center_vertical_sar: 0
-        Eartha_body_2600_belly_center_vertical_sar: 0
-        Eartha_body_3500_belly_center_vertical_sar: 0
-        Eartha_body_5000_belly_center_vertical_sar: 0
+        Eartha_body_700_belly_center_vertical_sar: 3.50070691637004
+        Eartha_body_800_belly_center_vertical_sar: 3.10516962870185
+        Eartha_body_900_belly_center_vertical_sar: 3.04893919171837
+        Eartha_body_1450_belly_center_vertical_sar: 3.74454207687547
+        Eartha_body_1800_belly_center_vertical_sar: 4.13621479853089
+        Eartha_body_2100_belly_center_vertical_sar: 4.47193427423554
+        Eartha_body_2400_belly_center_vertical_sar: 4.87290303069859
+        Eartha_body_2600_belly_center_vertical_sar: 4.72813452657514
+        Eartha_body_3500_belly_center_vertical_sar: 3.44851639448545
+        Eartha_body_5000_belly_center_vertical_sar: 2.64499856685123
         Eartha_body_xxxx_belly_center_vertical_sar: 0
         Eartha_body_yyyy_belly_center_vertical_sar: 0
         Eartha_body_zzzz_belly_center_vertical_sar: 0
-        Eartha_body_700_belly_left_horizontal_sar: 0
-        Eartha_body_800_belly_left_horizontal_sar: 0
-        Eartha_body_900_belly_left_horizontal_sar: 0
-        Eartha_body_1450_belly_left_horizontal_sar: 0
-        Eartha_body_1800_belly_left_horizontal_sar: 0
-        Eartha_body_2100_belly_left_horizontal_sar: 0
-        Eartha_body_2400_belly_left_horizontal_sar: 0
-        Eartha_body_2600_belly_left_horizontal_sar: 0
-        Eartha_body_3500_belly_left_horizontal_sar: 0
-        Eartha_body_5000_belly_left_horizontal_sar: 0
+        Eartha_body_700_belly_left_horizontal_sar: 1.12816387428801
+        Eartha_body_800_belly_left_horizontal_sar: 0.965772817912552
+        Eartha_body_900_belly_left_horizontal_sar: 1.05071559467232
+        Eartha_body_1450_belly_left_horizontal_sar: 2.25038952652075
+        Eartha_body_1800_belly_left_horizontal_sar: 2.72416960856402
+        Eartha_body_2100_belly_left_horizontal_sar: 3.13026682174396
+        Eartha_body_2400_belly_left_horizontal_sar: 2.99000042901936
+        Eartha_body_2600_belly_left_horizontal_sar: 2.86272633407685
+        Eartha_body_3500_belly_left_horizontal_sar: 2.32340409651636
+        Eartha_body_5000_belly_left_horizontal_sar: 1.92556729110973
         Eartha_body_xxxx_belly_left_horizontal_sar: 0
         Eartha_body_yyyy_belly_left_horizontal_sar: 0
         Eartha_body_zzzz_belly_left_horizontal_sar: 0
-        Eartha_body_700_belly_left_vertical_sar: 0
-        Eartha_body_800_belly_left_vertical_sar: 0
-        Eartha_body_900_belly_left_vertical_sar: 0
-        Eartha_body_1450_belly_left_vertical_sar: 0
-        Eartha_body_1800_belly_left_vertical_sar: 0
-        Eartha_body_2100_belly_left_vertical_sar: 0
-        Eartha_body_2400_belly_left_vertical_sar: 0
-        Eartha_body_2600_belly_left_vertical_sar: 0
-        Eartha_body_3500_belly_left_vertical_sar: 0
-        Eartha_body_5000_belly_left_vertical_sar: 0
+        Eartha_body_700_belly_left_vertical_sar: 2.6026730379015
+        Eartha_body_800_belly_left_vertical_sar: 2.3893047467922
+        Eartha_body_900_belly_left_vertical_sar: 2.36242253638008
+        Eartha_body_1450_belly_left_vertical_sar: 2.76685607963962
+        Eartha_body_1800_belly_left_vertical_sar: 3.5143132854405
+        Eartha_body_2100_belly_left_vertical_sar: 4.15499089041268
+        Eartha_body_2400_belly_left_vertical_sar: 4.1146165487251
+        Eartha_body_2600_belly_left_vertical_sar: 3.81817110976
+        Eartha_body_3500_belly_left_vertical_sar: 2.18465004022
+        Eartha_body_5000_belly_left_vertical_sar: 1.87216936708099
         Eartha_body_xxxx_belly_left_vertical_sar: 0
         Eartha_body_yyyy_belly_left_vertical_sar: 0
         Eartha_body_zzzz_belly_left_vertical_sar: 0
-        Eartha_body_700_belly_right_horizontal_sar: 0
-        Eartha_body_800_belly_right_horizontal_sar: 0
-        Eartha_body_900_belly_right_horizontal_sar: 0
-        Eartha_body_1450_belly_right_horizontal_sar: 0
-        Eartha_body_1800_belly_right_horizontal_sar: 0
-        Eartha_body_2100_belly_right_horizontal_sar: 0
-        Eartha_body_2400_belly_right_horizontal_sar: 0
-        Eartha_body_2600_belly_right_horizontal_sar: 0
-        Eartha_body_3500_belly_right_horizontal_sar: 0
-        Eartha_body_5000_belly_right_horizontal_sar: 0
+        Eartha_body_700_belly_right_horizontal_sar: 3.94603552937528
+        Eartha_body_800_belly_right_horizontal_sar: 3.32470435464603
+        Eartha_body_900_belly_right_horizontal_sar: 3.09016947199195
+        Eartha_body_1450_belly_right_horizontal_sar: 2.94573971315566
+        Eartha_body_1800_belly_right_horizontal_sar: 3.3973384229563
+        Eartha_body_2100_belly_right_horizontal_sar: 3.78442303135685
+        Eartha_body_2400_belly_right_horizontal_sar: 3.4442221739703
+        Eartha_body_2600_belly_right_horizontal_sar: 3.25265389104899
+        Eartha_body_3500_belly_right_horizontal_sar: 2.55533512256727
+        Eartha_body_5000_belly_right_horizontal_sar: 2.21490653731147
         Eartha_body_xxxx_belly_right_horizontal_sar: 0
         Eartha_body_yyyy_belly_right_horizontal_sar: 0
         Eartha_body_zzzz_belly_right_horizontal_sar: 0
-        Eartha_body_700_belly_right_vertical_sar: 0
-        Eartha_body_800_belly_right_vertical_sar: 0
-        Eartha_body_900_belly_right_vertical_sar: 0
-        Eartha_body_1450_belly_right_vertical_sar: 0
-        Eartha_body_1800_belly_right_vertical_sar: 0
-        Eartha_body_2100_belly_right_vertical_sar: 0
-        Eartha_body_2400_belly_right_vertical_sar: 0
-        Eartha_body_2600_belly_right_vertical_sar: 0
-        Eartha_body_3500_belly_right_vertical_sar: 0
-        Eartha_body_5000_belly_right_vertical_sar: 0
+        Eartha_body_700_belly_right_vertical_sar: 2.70029634123895
+        Eartha_body_800_belly_right_vertical_sar: 2.34609668272244
+        Eartha_body_900_belly_right_vertical_sar: 2.35007842350676
+        Eartha_body_1450_belly_right_vertical_sar: 3.43274598805755
+        Eartha_body_1800_belly_right_vertical_sar: 3.59069227278709
+        Eartha_body_2100_belly_right_vertical_sar: 3.72607480255527
+        Eartha_body_2400_belly_right_vertical_sar: 3.84283207533087
+        Eartha_body_2600_belly_right_vertical_sar: 3.85128306299752
+        Eartha_body_3500_belly_right_vertical_sar: 3.78809714037454
+        Eartha_body_5000_belly_right_vertical_sar: 2.80843527318113
         Eartha_body_xxxx_belly_right_vertical_sar: 0
         Eartha_body_yyyy_belly_right_vertical_sar: 0
         Eartha_body_zzzz_belly_right_vertical_sar: 0
-        Eartha_body_700_belly_up_horizontal_sar: 0
-        Eartha_body_800_belly_up_horizontal_sar: 0
-        Eartha_body_900_belly_up_horizontal_sar: 0
-        Eartha_body_1450_belly_up_horizontal_sar: 0
-        Eartha_body_1800_belly_up_horizontal_sar: 0
-        Eartha_body_2100_belly_up_horizontal_sar: 0
-        Eartha_body_2400_belly_up_horizontal_sar: 0
-        Eartha_body_2600_belly_up_horizontal_sar: 0
-        Eartha_body_3500_belly_up_horizontal_sar: 0
-        Eartha_body_5000_belly_up_horizontal_sar: 0
+        Eartha_body_700_belly_up_horizontal_sar: 3.83335393848652
+        Eartha_body_800_belly_up_horizontal_sar: 3.28739949592633
+        Eartha_body_900_belly_up_horizontal_sar: 3.05273173119918
+        Eartha_body_1450_belly_up_horizontal_sar: 2.68394649416698
+        Eartha_body_1800_belly_up_horizontal_sar: 3.11958004863356
+        Eartha_body_2100_belly_up_horizontal_sar: 3.49298023817635
+        Eartha_body_2400_belly_up_horizontal_sar: 3.71614162786116
+        Eartha_body_2600_belly_up_horizontal_sar: 3.57415533804346
+        Eartha_body_3500_belly_up_horizontal_sar: 2.52218987096909
+        Eartha_body_5000_belly_up_horizontal_sar: 2.25413496108349
         Eartha_body_xxxx_belly_up_horizontal_sar: 0
         Eartha_body_yyyy_belly_up_horizontal_sar: 0
         Eartha_body_zzzz_belly_up_horizontal_sar: 0
-        Eartha_body_700_belly_up_vertical_sar: 0
-        Eartha_body_800_belly_up_vertical_sar: 0
-        Eartha_body_900_belly_up_vertical_sar: 0
-        Eartha_body_1450_belly_up_vertical_sar: 0
-        Eartha_body_1800_belly_up_vertical_sar: 0
-        Eartha_body_2100_belly_up_vertical_sar: 0
-        Eartha_body_2400_belly_up_vertical_sar: 0
-        Eartha_body_2600_belly_up_vertical_sar: 0
-        Eartha_body_3500_belly_up_vertical_sar: 0
-        Eartha_body_5000_belly_up_vertical_sar: 0
+        Eartha_body_700_belly_up_vertical_sar: 3.38239973238315
+        Eartha_body_800_belly_up_vertical_sar: 2.93894732450869
+        Eartha_body_900_belly_up_vertical_sar: 2.85770489495468
+        Eartha_body_1450_belly_up_vertical_sar: 3.4835703143566
+        Eartha_body_1800_belly_up_vertical_sar: 4.02003390187583
+        Eartha_body_2100_belly_up_vertical_sar: 4.47985983403517
+        Eartha_body_2400_belly_up_vertical_sar: 4.89572873689806
+        Eartha_body_2600_belly_up_vertical_sar: 4.73897017017187
+        Eartha_body_3500_belly_up_vertical_sar: 3.38931248684364
+        Eartha_body_5000_belly_up_vertical_sar: 2.66874046680458
         Eartha_body_xxxx_belly_up_vertical_sar: 0
         Eartha_body_yyyy_belly_up_vertical_sar: 0
         Eartha_body_zzzz_belly_up_vertical_sar: 0
 
       brain:
         Eartha_brain_headp_else_sar: 0
-        Eartha_brain_700_front_of_eyes_center_horizontal_sar: 0
-        Eartha_brain_800_front_of_eyes_center_horizontal_sar: 0
-        Eartha_brain_900_front_of_eyes_center_horizontal_sar: 0
-        Eartha_brain_1450_front_of_eyes_center_horizontal_sar: 0
-        Eartha_brain_1800_front_of_eyes_center_horizontal_sar: 0
-        Eartha_brain_2100_front_of_eyes_center_horizontal_sar: 0
-        Eartha_brain_2400_front_of_eyes_center_horizontal_sar: 0
-        Eartha_brain_2600_front_of_eyes_center_horizontal_sar: 0
-        Eartha_brain_3500_front_of_eyes_center_horizontal_sar: 0
-        Eartha_brain_5000_front_of_eyes_center_horizontal_sar: 0
+        Eartha_brain_700_front_of_eyes_center_horizontal_sar: 5.9182800603839
+        Eartha_brain_800_front_of_eyes_center_horizontal_sar: 5.35151450670219
+        Eartha_brain_900_front_of_eyes_center_horizontal_sar: 4.95737515796945
+        Eartha_brain_1450_front_of_eyes_center_horizontal_sar: 3.30084788536509
+        Eartha_brain_1800_front_of_eyes_center_horizontal_sar: 2.96234150002643
+        Eartha_brain_2100_front_of_eyes_center_horizontal_sar: 2.67219316973614
+        Eartha_brain_2400_front_of_eyes_center_horizontal_sar: 2.49726054812452
+        Eartha_brain_2600_front_of_eyes_center_horizontal_sar: 2.39176748791977
+        Eartha_brain_3500_front_of_eyes_center_horizontal_sar: 1.91601625466
+        Eartha_brain_5000_front_of_eyes_center_horizontal_sar: 0.740788874020233
         Eartha_brain_xxxx_front_of_eyes_center_horizontal_sar: 0
         Eartha_brain_yyyy_front_of_eyes_center_horizontal_sar: 0
         Eartha_brain_zzzz_front_of_eyes_center_horizontal_sar: 0
-        Eartha_brain_700_front_of_eyes_center_vertical_sar: 0
-        Eartha_brain_800_front_of_eyes_center_vertical_sar: 0
-        Eartha_brain_900_front_of_eyes_center_vertical_sar: 0
-        Eartha_brain_1450_front_of_eyes_center_vertical_sar: 0
-        Eartha_brain_1800_front_of_eyes_center_vertical_sar: 0
-        Eartha_brain_2100_front_of_eyes_center_vertical_sar: 0
-        Eartha_brain_2400_front_of_eyes_center_vertical_sar: 0
-        Eartha_brain_2600_front_of_eyes_center_vertical_sar: 0
-        Eartha_brain_3500_front_of_eyes_center_vertical_sar: 0
-        Eartha_brain_5000_front_of_eyes_center_vertical_sar: 0
+        Eartha_brain_700_front_of_eyes_center_vertical_sar: 3.61302408059288
+        Eartha_brain_800_front_of_eyes_center_vertical_sar: 3.88551034183955
+        Eartha_brain_900_front_of_eyes_center_vertical_sar: 4.12610952150667
+        Eartha_brain_1450_front_of_eyes_center_vertical_sar: 5.35497019115189
+        Eartha_brain_1800_front_of_eyes_center_vertical_sar: 4.63111594542546
+        Eartha_brain_2100_front_of_eyes_center_vertical_sar: 4.01066944908851
+        Eartha_brain_2400_front_of_eyes_center_vertical_sar: 3.79415130835609
+        Eartha_brain_2600_front_of_eyes_center_vertical_sar: 3.41835206222162
+        Eartha_brain_3500_front_of_eyes_center_vertical_sar: 1.31793190220813
+        Eartha_brain_5000_front_of_eyes_center_vertical_sar: 0.553955594931285
         Eartha_brain_xxxx_front_of_eyes_center_vertical_sar: 0
         Eartha_brain_yyyy_front_of_eyes_center_vertical_sar: 0
         Eartha_brain_zzzz_front_of_eyes_center_vertical_sar: 0
-        Eartha_brain_700_front_of_eyes_down_horizontal_sar: 0
-        Eartha_brain_800_front_of_eyes_down_horizontal_sar: 0
-        Eartha_brain_900_front_of_eyes_down_horizontal_sar: 0
-        Eartha_brain_1450_front_of_eyes_down_horizontal_sar: 0
-        Eartha_brain_1800_front_of_eyes_down_horizontal_sar: 0
-        Eartha_brain_2100_front_of_eyes_down_horizontal_sar: 0
-        Eartha_brain_2400_front_of_eyes_down_horizontal_sar: 0
-        Eartha_brain_2600_front_of_eyes_down_horizontal_sar: 0
-        Eartha_brain_3500_front_of_eyes_down_horizontal_sar: 0
-        Eartha_brain_5000_front_of_eyes_down_horizontal_sar: 0
+        Eartha_brain_700_front_of_eyes_down_horizontal_sar: 4.33564001757753
+        Eartha_brain_800_front_of_eyes_down_horizontal_sar: 4.4380191755932
+        Eartha_brain_900_front_of_eyes_down_horizontal_sar: 4.27296730961195
+        Eartha_brain_1450_front_of_eyes_down_horizontal_sar: 2.57317478333962
+        Eartha_brain_1800_front_of_eyes_down_horizontal_sar: 2.18431927334405
+        Eartha_brain_2100_front_of_eyes_down_horizontal_sar: 1.8510145504907
+        Eartha_brain_2400_front_of_eyes_down_horizontal_sar: 1.59652444894336
+        Eartha_brain_2600_front_of_eyes_down_horizontal_sar: 1.53271659748394
+        Eartha_brain_3500_front_of_eyes_down_horizontal_sar: 1.39223426391999
+        Eartha_brain_5000_front_of_eyes_down_horizontal_sar: 0.785110101734011
         Eartha_brain_xxxx_front_of_eyes_down_horizontal_sar: 0
         Eartha_brain_yyyy_front_of_eyes_down_horizontal_sar: 0
         Eartha_brain_zzzz_front_of_eyes_down_horizontal_sar: 0
-        Eartha_brain_700_front_of_eyes_down_vertical_sar: 0
-        Eartha_brain_800_front_of_eyes_down_vertical_sar: 0
-        Eartha_brain_900_front_of_eyes_down_vertical_sar: 0
-        Eartha_brain_1450_front_of_eyes_down_vertical_sar: 0
-        Eartha_brain_1800_front_of_eyes_down_vertical_sar: 0
-        Eartha_brain_2100_front_of_eyes_down_vertical_sar: 0
-        Eartha_brain_2400_front_of_eyes_down_vertical_sar: 0
-        Eartha_brain_2600_front_of_eyes_down_vertical_sar: 0
-        Eartha_brain_3500_front_of_eyes_down_vertical_sar: 0
-        Eartha_brain_5000_front_of_eyes_down_vertical_sar: 0
+        Eartha_brain_700_front_of_eyes_down_vertical_sar: 1.73729028572472
+        Eartha_brain_800_front_of_eyes_down_vertical_sar: 2.27036305634838
+        Eartha_brain_900_front_of_eyes_down_vertical_sar: 2.60625428152118
+        Eartha_brain_1450_front_of_eyes_down_vertical_sar: 3.86969528921321
+        Eartha_brain_1800_front_of_eyes_down_vertical_sar: 3.51375504129319
+        Eartha_brain_2100_front_of_eyes_down_vertical_sar: 3.20866340021888
+        Eartha_brain_2400_front_of_eyes_down_vertical_sar: 2.74006656329523
+        Eartha_brain_2600_front_of_eyes_down_vertical_sar: 2.41794251699655
+        Eartha_brain_3500_front_of_eyes_down_vertical_sar: 0.978949721643449
+        Eartha_brain_5000_front_of_eyes_down_vertical_sar: 0.363249044784974
         Eartha_brain_xxxx_front_of_eyes_down_vertical_sar: 0
         Eartha_brain_yyyy_front_of_eyes_down_vertical_sar: 0
         Eartha_brain_zzzz_front_of_eyes_down_vertical_sar: 0
-        Eartha_brain_700_front_of_eyes_left_horizontal_sar: 0
-        Eartha_brain_800_front_of_eyes_left_horizontal_sar: 0
-        Eartha_brain_900_front_of_eyes_left_horizontal_sar: 0
-        Eartha_brain_1450_front_of_eyes_left_horizontal_sar: 0
-        Eartha_brain_1800_front_of_eyes_left_horizontal_sar: 0
-        Eartha_brain_2100_front_of_eyes_left_horizontal_sar: 0
-        Eartha_brain_2400_front_of_eyes_left_horizontal_sar: 0
-        Eartha_brain_2600_front_of_eyes_left_horizontal_sar: 0
-        Eartha_brain_3500_front_of_eyes_left_horizontal_sar: 0
-        Eartha_brain_5000_front_of_eyes_left_horizontal_sar: 0
+        Eartha_brain_700_front_of_eyes_left_horizontal_sar: 5.5971496367794
+        Eartha_brain_800_front_of_eyes_left_horizontal_sar: 5.24906049697465
+        Eartha_brain_900_front_of_eyes_left_horizontal_sar: 4.95097708097727
+        Eartha_brain_1450_front_of_eyes_left_horizontal_sar: 3.45961216734434
+        Eartha_brain_1800_front_of_eyes_left_horizontal_sar: 3.13559407141429
+        Eartha_brain_2100_front_of_eyes_left_horizontal_sar: 2.85786427490281
+        Eartha_brain_2400_front_of_eyes_left_horizontal_sar: 2.67104679610826
+        Eartha_brain_2600_front_of_eyes_left_horizontal_sar: 2.52954257805978
+        Eartha_brain_3500_front_of_eyes_left_horizontal_sar: 1.85334823814545
+        Eartha_brain_5000_front_of_eyes_left_horizontal_sar: 0.699140974721086
         Eartha_brain_xxxx_front_of_eyes_left_horizontal_sar: 0
         Eartha_brain_yyyy_front_of_eyes_left_horizontal_sar: 0
         Eartha_brain_zzzz_front_of_eyes_left_horizontal_sar: 0
-        Eartha_brain_700_front_of_eyes_left_vertical_sar: 0
-        Eartha_brain_800_front_of_eyes_left_vertical_sar: 0
-        Eartha_brain_900_front_of_eyes_left_vertical_sar: 0
-        Eartha_brain_1450_front_of_eyes_left_vertical_sar: 0
-        Eartha_brain_1800_front_of_eyes_left_vertical_sar: 0
-        Eartha_brain_2100_front_of_eyes_left_vertical_sar: 0
-        Eartha_brain_2400_front_of_eyes_left_vertical_sar: 0
-        Eartha_brain_2600_front_of_eyes_left_vertical_sar: 0
-        Eartha_brain_3500_front_of_eyes_left_vertical_sar: 0
-        Eartha_brain_5000_front_of_eyes_left_vertical_sar: 0
+        Eartha_brain_700_front_of_eyes_left_vertical_sar: 3.7136675399015
+        Eartha_brain_800_front_of_eyes_left_vertical_sar: 3.97004934859857
+        Eartha_brain_900_front_of_eyes_left_vertical_sar: 4.16044555804962
+        Eartha_brain_1450_front_of_eyes_left_vertical_sar: 5.01220581995566
+        Eartha_brain_1800_front_of_eyes_left_vertical_sar: 4.45054815858833
+        Eartha_brain_2100_front_of_eyes_left_vertical_sar: 3.96912730598777
+        Eartha_brain_2400_front_of_eyes_left_vertical_sar: 3.660272845033
+        Eartha_brain_2600_front_of_eyes_left_vertical_sar: 3.25624192374466
+        Eartha_brain_3500_front_of_eyes_left_vertical_sar: 1.11436218133155
+        Eartha_brain_5000_front_of_eyes_left_vertical_sar: 0.514902557137574
         Eartha_brain_xxxx_front_of_eyes_left_vertical_sar: 0
         Eartha_brain_yyyy_front_of_eyes_left_vertical_sar: 0
         Eartha_brain_zzzz_front_of_eyes_left_vertical_sar: 0
-        Eartha_brain_700_front_of_eyes_right_horizontal_sar: 0
-        Eartha_brain_800_front_of_eyes_right_horizontal_sar: 0
-        Eartha_brain_900_front_of_eyes_right_horizontal_sar: 0
-        Eartha_brain_1450_front_of_eyes_right_horizontal_sar: 0
-        Eartha_brain_1800_front_of_eyes_right_horizontal_sar: 0
-        Eartha_brain_2100_front_of_eyes_right_horizontal_sar: 0
-        Eartha_brain_2400_front_of_eyes_right_horizontal_sar: 0
-        Eartha_brain_2600_front_of_eyes_right_horizontal_sar: 0
-        Eartha_brain_3500_front_of_eyes_right_horizontal_sar: 0
-        Eartha_brain_5000_front_of_eyes_right_horizontal_sar: 0
+        Eartha_brain_700_front_of_eyes_right_horizontal_sar: 6.31979853343296
+        Eartha_brain_800_front_of_eyes_right_horizontal_sar: 5.48871417626819
+        Eartha_brain_900_front_of_eyes_right_horizontal_sar: 4.99726036545022
+        Eartha_brain_1450_front_of_eyes_right_horizontal_sar: 3.30009333167075
+        Eartha_brain_1800_front_of_eyes_right_horizontal_sar: 2.89220099002561
+        Eartha_brain_2100_front_of_eyes_right_horizontal_sar: 2.5425789829012
+        Eartha_brain_2400_front_of_eyes_right_horizontal_sar: 2.27584056366805
+        Eartha_brain_2600_front_of_eyes_right_horizontal_sar: 2.20574002771794
+        Eartha_brain_3500_front_of_eyes_right_horizontal_sar: 2.03912391003636
+        Eartha_brain_5000_front_of_eyes_right_horizontal_sar: 0.818020432466662
         Eartha_brain_xxxx_front_of_eyes_right_horizontal_sar: 0
         Eartha_brain_yyyy_front_of_eyes_right_horizontal_sar: 0
         Eartha_brain_zzzz_front_of_eyes_right_horizontal_sar: 0
-        Eartha_brain_700_front_of_eyes_right_vertical_sar: 0
-        Eartha_brain_800_front_of_eyes_right_vertical_sar: 0
-        Eartha_brain_900_front_of_eyes_right_vertical_sar: 0
-        Eartha_brain_1450_front_of_eyes_right_vertical_sar: 0
-        Eartha_brain_1800_front_of_eyes_right_vertical_sar: 0
-        Eartha_brain_2100_front_of_eyes_right_vertical_sar: 0
-        Eartha_brain_2400_front_of_eyes_right_vertical_sar: 0
-        Eartha_brain_2600_front_of_eyes_right_vertical_sar: 0
-        Eartha_brain_3500_front_of_eyes_right_vertical_sar: 0
-        Eartha_brain_5000_front_of_eyes_right_vertical_sar: 0
+        Eartha_brain_700_front_of_eyes_right_vertical_sar: 3.41609716438577
+        Eartha_brain_800_front_of_eyes_right_vertical_sar: 3.71164147561073
+        Eartha_brain_900_front_of_eyes_right_vertical_sar: 3.99212529087815
+        Eartha_brain_1450_front_of_eyes_right_vertical_sar: 5.49018403682075
+        Eartha_brain_1800_front_of_eyes_right_vertical_sar: 4.6560393019545
+        Eartha_brain_2100_front_of_eyes_right_vertical_sar: 3.94105810064058
+        Eartha_brain_2400_front_of_eyes_right_vertical_sar: 3.72999794518436
+        Eartha_brain_2600_front_of_eyes_right_vertical_sar: 3.39100647808909
+        Eartha_brain_3500_front_of_eyes_right_vertical_sar: 1.49059151622636
+        Eartha_brain_5000_front_of_eyes_right_vertical_sar: 0.581456535957669
         Eartha_brain_xxxx_front_of_eyes_right_vertical_sar: 0
         Eartha_brain_yyyy_front_of_eyes_right_vertical_sar: 0
         Eartha_brain_zzzz_front_of_eyes_right_vertical_sar: 0
-        Eartha_brain_700_cheek1_sar: 0
-        Eartha_brain_800_cheek1_sar: 0
-        Eartha_brain_900_cheek1_sar: 0
-        Eartha_brain_1450_cheek1_sar: 0
-        Eartha_brain_1800_cheek1_sar: 0
-        Eartha_brain_2100_cheek1_sar: 0
-        Eartha_brain_2400_cheek1_sar: 0
-        Eartha_brain_2600_cheek1_sar: 0
-        Eartha_brain_3500_cheek1_sar: 0
-        Eartha_brain_5000_cheek1_sar: 0
+        Eartha_brain_700_cheek1_sar: 38.1278859804172
+        Eartha_brain_800_cheek1_sar: 47.2877678603167
+        Eartha_brain_900_cheek1_sar: 49.4064209512541
+        Eartha_brain_1450_cheek1_sar: 40.2061430764066
+        Eartha_brain_1800_cheek1_sar: 31.4167310244557
+        Eartha_brain_2100_cheek1_sar: 23.8829492656407
+        Eartha_brain_2400_cheek1_sar: 17.4389899295924
+        Eartha_brain_2600_cheek1_sar: 14.4861946665004
+        Eartha_brain_3500_cheek1_sar: 3.04571743587818
+        Eartha_brain_5000_cheek1_sar: 0.740888935869726
         Eartha_brain_xxxx_cheek1_sar: 0
         Eartha_brain_yyyy_cheek1_sar: 0
         Eartha_brain_zzzz_cheek1_sar: 0
-        Eartha_brain_700_cheek2_sar: 0
-        Eartha_brain_800_cheek2_sar: 0
-        Eartha_brain_900_cheek2_sar: 0
-        Eartha_brain_1450_cheek2_sar: 0
-        Eartha_brain_1800_cheek2_sar: 0
-        Eartha_brain_2100_cheek2_sar: 0
-        Eartha_brain_2400_cheek2_sar: 0
-        Eartha_brain_2600_cheek2_sar: 0
-        Eartha_brain_3500_cheek2_sar: 0
-        Eartha_brain_5000_cheek2_sar: 0
+        Eartha_brain_700_cheek2_sar: 47.4049245683884
+        Eartha_brain_800_cheek2_sar: 53.7093452653863
+        Eartha_brain_900_cheek2_sar: 53.9970152824185
+        Eartha_brain_1450_cheek2_sar: 37.7603618238896
+        Eartha_brain_1800_cheek2_sar: 28.7620968741102
+        Eartha_brain_2100_cheek2_sar: 21.0492983457279
+        Eartha_brain_2400_cheek2_sar: 15.2727174959514
+        Eartha_brain_2600_cheek2_sar: 12.66572597078
+        Eartha_brain_3500_cheek2_sar: 2.50247802666545
+        Eartha_brain_5000_cheek2_sar: 0.666400893152938
         Eartha_brain_xxxx_cheek2_sar: 0
         Eartha_brain_yyyy_cheek2_sar: 0
         Eartha_brain_zzzz_cheek2_sar: 0
-        Eartha_brain_700_cheek3_sar: 0
-        Eartha_brain_800_cheek3_sar: 0
-        Eartha_brain_900_cheek3_sar: 0
-        Eartha_brain_1450_cheek3_sar: 0
-        Eartha_brain_1800_cheek3_sar: 0
-        Eartha_brain_2100_cheek3_sar: 0
-        Eartha_brain_2400_cheek3_sar: 0
-        Eartha_brain_2600_cheek3_sar: 0
-        Eartha_brain_3500_cheek3_sar: 0
-        Eartha_brain_5000_cheek3_sar: 0
+        Eartha_brain_700_cheek3_sar: 28.4709316808985
+        Eartha_brain_800_cheek3_sar: 40.4595912847144
+        Eartha_brain_900_cheek3_sar: 44.5369328013182
+        Eartha_brain_1450_cheek3_sar: 43.5326383458953
+        Eartha_brain_1800_cheek3_sar: 34.5998455253859
+        Eartha_brain_2100_cheek3_sar: 26.9431659649492
+        Eartha_brain_2400_cheek3_sar: 19.8517072786741
+        Eartha_brain_2600_cheek3_sar: 16.551014179761
+        Eartha_brain_3500_cheek3_sar: 3.75135721499455
+        Eartha_brain_5000_cheek3_sar: 0.826727016956445
         Eartha_brain_xxxx_cheek3_sar: 0
         Eartha_brain_yyyy_cheek3_sar: 0
         Eartha_brain_zzzz_cheek3_sar: 0
-        Eartha_brain_700_tilt1_sar: 0
-        Eartha_brain_800_tilt1_sar: 0
-        Eartha_brain_900_tilt1_sar: 0
-        Eartha_brain_1450_tilt1_sar: 0
-        Eartha_brain_1800_tilt1_sar: 0
-        Eartha_brain_2100_tilt1_sar: 0
-        Eartha_brain_2400_tilt1_sar: 0
-        Eartha_brain_2600_tilt1_sar: 0
-        Eartha_brain_3500_tilt1_sar: 0
-        Eartha_brain_5000_tilt1_sar: 0
+        Eartha_brain_700_tilt1_sar: 24.9070855779787
+        Eartha_brain_800_tilt1_sar: 22.5558525682024
+        Eartha_brain_900_tilt1_sar: 23.288254282272
+        Eartha_brain_1450_tilt1_sar: 36.4487665456594
+        Eartha_brain_1800_tilt1_sar: 27.2945280054324
+        Eartha_brain_2100_tilt1_sar: 19.448037828095
+        Eartha_brain_2400_tilt1_sar: 15.4035825185062
+        Eartha_brain_2600_tilt1_sar: 13.6210017751692
+        Eartha_brain_3500_tilt1_sar: 6.38504418354364
+        Eartha_brain_5000_tilt1_sar: 1.95263983072188
         Eartha_brain_xxxx_tilt1_sar: 0
         Eartha_brain_yyyy_tilt1_sar: 0
         Eartha_brain_zzzz_tilt1_sar: 0
-        Eartha_brain_700_tilt2_sar: 0
-        Eartha_brain_800_tilt2_sar: 0
-        Eartha_brain_900_tilt2_sar: 0
-        Eartha_brain_1450_tilt2_sar: 0
-        Eartha_brain_1800_tilt2_sar: 0
-        Eartha_brain_2100_tilt2_sar: 0
-        Eartha_brain_2400_tilt2_sar: 0
-        Eartha_brain_2600_tilt2_sar: 0
-        Eartha_brain_3500_tilt2_sar: 0
-        Eartha_brain_5000_tilt2_sar: 0
+        Eartha_brain_700_tilt2_sar: 31.2555380648595
+        Eartha_brain_800_tilt2_sar: 26.3745078814269
+        Eartha_brain_900_tilt2_sar: 26.2370621592509
+        Eartha_brain_1450_tilt2_sar: 39.5294185148509
+        Eartha_brain_1800_tilt2_sar: 29.3351340408024
+        Eartha_brain_2100_tilt2_sar: 20.5971759201894
+        Eartha_brain_2400_tilt2_sar: 16.2055196502254
+        Eartha_brain_2600_tilt2_sar: 14.3935578801004
+        Eartha_brain_3500_tilt2_sar: 7.24478170613818
+        Eartha_brain_5000_tilt2_sar: 2.33003277874006
         Eartha_brain_xxxx_tilt2_sar: 0
         Eartha_brain_yyyy_tilt2_sar: 0
         Eartha_brain_zzzz_tilt2_sar: 0
-        Eartha_brain_700_tilt3_sar: 0
-        Eartha_brain_800_tilt3_sar: 0
-        Eartha_brain_900_tilt3_sar: 0
-        Eartha_brain_1450_tilt3_sar: 0
-        Eartha_brain_1800_tilt3_sar: 0
-        Eartha_brain_2100_tilt3_sar: 0
-        Eartha_brain_2400_tilt3_sar: 0
-        Eartha_brain_2600_tilt3_sar: 0
-        Eartha_brain_3500_tilt3_sar: 0
-        Eartha_brain_5000_tilt3_sar: 0
+        Eartha_brain_700_tilt3_sar: 20.3223182738479
+        Eartha_brain_800_tilt3_sar: 19.9102003626675
+        Eartha_brain_900_tilt3_sar: 21.3037510431147
+        Eartha_brain_1450_tilt3_sar: 34.3158367684708
+        Eartha_brain_1800_tilt3_sar: 25.7894530101402
+        Eartha_brain_2100_tilt3_sar: 18.4811240744283
+        Eartha_brain_2400_tilt3_sar: 14.6201175533655
+        Eartha_brain_2600_tilt3_sar: 12.8496655696962
+        Eartha_brain_3500_tilt3_sar: 5.55760289418182
+        Eartha_brain_5000_tilt3_sar: 1.59823105367278
         Eartha_brain_xxxx_tilt3_sar: 0
         Eartha_brain_yyyy_tilt3_sar: 0
         Eartha_brain_zzzz_tilt3_sar: 0
-        Eartha_brain_700_belly_center_horizontal_sar: 0
-        Eartha_brain_800_belly_center_horizontal_sar: 0
-        Eartha_brain_900_belly_center_horizontal_sar: 0
-        Eartha_brain_1450_belly_center_horizontal_sar: 0
-        Eartha_brain_1800_belly_center_horizontal_sar: 0
-        Eartha_brain_2100_belly_center_horizontal_sar: 0
-        Eartha_brain_2400_belly_center_horizontal_sar: 0
-        Eartha_brain_2600_belly_center_horizontal_sar: 0
-        Eartha_brain_3500_belly_center_horizontal_sar: 0
-        Eartha_brain_5000_belly_center_horizontal_sar: 0
+        Eartha_brain_700_belly_center_horizontal_sar: 0.431276332298127
+        Eartha_brain_800_belly_center_horizontal_sar: 0.456533170214719
+        Eartha_brain_900_belly_center_horizontal_sar: 0.478815007489521
+        Eartha_brain_1450_belly_center_horizontal_sar: 0.59255453367717
+        Eartha_brain_1800_belly_center_horizontal_sar: 0.502391360700294
+        Eartha_brain_2100_belly_center_horizontal_sar: 0.425108641005829
+        Eartha_brain_2400_belly_center_horizontal_sar: 0.377399454442236
+        Eartha_brain_2600_belly_center_horizontal_sar: 0.332890622406752
+        Eartha_brain_3500_belly_center_horizontal_sar: 0.108997042429611
+        Eartha_brain_5000_belly_center_horizontal_sar: 0.0698510623260086
         Eartha_brain_xxxx_belly_center_horizontal_sar: 0
         Eartha_brain_yyyy_belly_center_horizontal_sar: 0
         Eartha_brain_zzzz_belly_center_horizontal_sar: 0
-        Eartha_brain_700_belly_center_vertical_sar: 0
-        Eartha_brain_800_belly_center_vertical_sar: 0
-        Eartha_brain_900_belly_center_vertical_sar: 0
-        Eartha_brain_1450_belly_center_vertical_sar: 0
-        Eartha_brain_1800_belly_center_vertical_sar: 0
-        Eartha_brain_2100_belly_center_vertical_sar: 0
-        Eartha_brain_2400_belly_center_vertical_sar: 0
-        Eartha_brain_2600_belly_center_vertical_sar: 0
-        Eartha_brain_3500_belly_center_vertical_sar: 0
-        Eartha_brain_5000_belly_center_vertical_sar: 0
+        Eartha_brain_700_belly_center_vertical_sar: 0.109161497033566
+        Eartha_brain_800_belly_center_vertical_sar: 0.233836981602369
+        Eartha_brain_900_belly_center_vertical_sar: 0.312577469119933
+        Eartha_brain_1450_belly_center_vertical_sar: 0.609611889968645
+        Eartha_brain_1800_belly_center_vertical_sar: 0.741044522684072
+        Eartha_brain_2100_belly_center_vertical_sar: 0.853701065011581
+        Eartha_brain_2400_belly_center_vertical_sar: 0.595305590157019
+        Eartha_brain_2600_belly_center_vertical_sar: 0.480826325807084
+        Eartha_brain_3500_belly_center_vertical_sar: 0.10943114028235
+        Eartha_brain_5000_belly_center_vertical_sar: 0.0518894578155203
         Eartha_brain_xxxx_belly_center_vertical_sar: 0
         Eartha_brain_yyyy_belly_center_vertical_sar: 0
         Eartha_brain_zzzz_belly_center_vertical_sar: 0
-        Eartha_brain_700_belly_left_horizontal_sar: 0
-        Eartha_brain_800_belly_left_horizontal_sar: 0
-        Eartha_brain_900_belly_left_horizontal_sar: 0
-        Eartha_brain_1450_belly_left_horizontal_sar: 0
-        Eartha_brain_1800_belly_left_horizontal_sar: 0
-        Eartha_brain_2100_belly_left_horizontal_sar: 0
-        Eartha_brain_2400_belly_left_horizontal_sar: 0
-        Eartha_brain_2600_belly_left_horizontal_sar: 0
-        Eartha_brain_3500_belly_left_horizontal_sar: 0
-        Eartha_brain_5000_belly_left_horizontal_sar: 0
+        Eartha_brain_700_belly_left_horizontal_sar: 0.127276647692099
+        Eartha_brain_800_belly_left_horizontal_sar: 0.159458349172351
+        Eartha_brain_900_belly_left_horizontal_sar: 0.215160775973381
+        Eartha_brain_1450_belly_left_horizontal_sar: 0.591181656059813
+        Eartha_brain_1800_belly_left_horizontal_sar: 0.455004542106828
+        Eartha_brain_2100_belly_left_horizontal_sar: 0.338281301575698
+        Eartha_brain_2400_belly_left_horizontal_sar: 0.347872887243181
+        Eartha_brain_2600_belly_left_horizontal_sar: 0.324936571588339
+        Eartha_brain_3500_belly_left_horizontal_sar: 0.158294041807397
+        Eartha_brain_5000_belly_left_horizontal_sar: 0.118243469569738
         Eartha_brain_xxxx_belly_left_horizontal_sar: 0
         Eartha_brain_yyyy_belly_left_horizontal_sar: 0
         Eartha_brain_zzzz_belly_left_horizontal_sar: 0
-        Eartha_brain_700_belly_left_vertical_sar: 0
-        Eartha_brain_800_belly_left_vertical_sar: 0
-        Eartha_brain_900_belly_left_vertical_sar: 0
-        Eartha_brain_1450_belly_left_vertical_sar: 0
-        Eartha_brain_1800_belly_left_vertical_sar: 0
-        Eartha_brain_2100_belly_left_vertical_sar: 0
-        Eartha_brain_2400_belly_left_vertical_sar: 0
-        Eartha_brain_2600_belly_left_vertical_sar: 0
-        Eartha_brain_3500_belly_left_vertical_sar: 0
-        Eartha_brain_5000_belly_left_vertical_sar: 0
+        Eartha_brain_700_belly_left_vertical_sar: 0.0967471198440047
+        Eartha_brain_800_belly_left_vertical_sar: 0.268291731259211
+        Eartha_brain_900_belly_left_vertical_sar: 0.349054297662984
+        Eartha_brain_1450_belly_left_vertical_sar: 0.524393894965268
+        Eartha_brain_1800_belly_left_vertical_sar: 0.614243053252502
+        Eartha_brain_2100_belly_left_vertical_sar: 0.691256617498702
+        Eartha_brain_2400_belly_left_vertical_sar: 0.475761604389588
+        Eartha_brain_2600_belly_left_vertical_sar: 0.378343058010594
+        Eartha_brain_3500_belly_left_vertical_sar: 0.0543281124388671
+        Eartha_brain_5000_belly_left_vertical_sar: 0.0721664617514941
         Eartha_brain_xxxx_belly_left_vertical_sar: 0
         Eartha_brain_yyyy_belly_left_vertical_sar: 0
         Eartha_brain_zzzz_belly_left_vertical_sar: 0
-        Eartha_brain_700_belly_right_horizontal_sar: 0
-        Eartha_brain_800_belly_right_horizontal_sar: 0
-        Eartha_brain_900_belly_right_horizontal_sar: 0
-        Eartha_brain_1450_belly_right_horizontal_sar: 0
-        Eartha_brain_1800_belly_right_horizontal_sar: 0
-        Eartha_brain_2100_belly_right_horizontal_sar: 0
-        Eartha_brain_2400_belly_right_horizontal_sar: 0
-        Eartha_brain_2600_belly_right_horizontal_sar: 0
-        Eartha_brain_3500_belly_right_horizontal_sar: 0
-        Eartha_brain_5000_belly_right_horizontal_sar: 0
+        Eartha_brain_700_belly_right_horizontal_sar: 0.447952090693258
+        Eartha_brain_800_belly_right_horizontal_sar: 0.516508831492599
+        Eartha_brain_900_belly_right_horizontal_sar: 0.56679265317864
+        Eartha_brain_1450_belly_right_horizontal_sar: 0.78923771969325
+        Eartha_brain_1800_belly_right_horizontal_sar: 0.538933142086795
+        Eartha_brain_2100_belly_right_horizontal_sar: 0.324386361281263
+        Eartha_brain_2400_belly_right_horizontal_sar: 0.265042478485887
+        Eartha_brain_2600_belly_right_horizontal_sar: 0.234502166006279
+        Eartha_brain_3500_belly_right_horizontal_sar: 0.0867268049993693
+        Eartha_brain_5000_belly_right_horizontal_sar: 0.0730964482344142
         Eartha_brain_xxxx_belly_right_horizontal_sar: 0
         Eartha_brain_yyyy_belly_right_horizontal_sar: 0
         Eartha_brain_zzzz_belly_right_horizontal_sar: 0
-        Eartha_brain_700_belly_right_vertical_sar: 0
-        Eartha_brain_800_belly_right_vertical_sar: 0
-        Eartha_brain_900_belly_right_vertical_sar: 0
-        Eartha_brain_1450_belly_right_vertical_sar: 0
-        Eartha_brain_1800_belly_right_vertical_sar: 0
-        Eartha_brain_2100_belly_right_vertical_sar: 0
-        Eartha_brain_2400_belly_right_vertical_sar: 0
-        Eartha_brain_2600_belly_right_vertical_sar: 0
-        Eartha_brain_3500_belly_right_vertical_sar: 0
-        Eartha_brain_5000_belly_right_vertical_sar: 0
+        Eartha_brain_700_belly_right_vertical_sar: 0.127267683077648
+        Eartha_brain_800_belly_right_vertical_sar: 0.248586743239983
+        Eartha_brain_900_belly_right_vertical_sar: 0.323054077582652
+        Eartha_brain_1450_belly_right_vertical_sar: 0.593871228462933
+        Eartha_brain_1800_belly_right_vertical_sar: 0.623967278125437
+        Eartha_brain_2100_belly_right_vertical_sar: 0.649763892121869
+        Eartha_brain_2400_belly_right_vertical_sar: 0.534735415114958
+        Eartha_brain_2600_belly_right_vertical_sar: 0.463349558656867
+        Eartha_brain_3500_belly_right_vertical_sar: 0.171728295531129
+        Eartha_brain_5000_belly_right_vertical_sar: 0.0599464374421552
         Eartha_brain_xxxx_belly_right_vertical_sar: 0
         Eartha_brain_yyyy_belly_right_vertical_sar: 0
         Eartha_brain_zzzz_belly_right_vertical_sar: 0
-        Eartha_brain_700_belly_up_horizontal_sar: 0
-        Eartha_brain_800_belly_up_horizontal_sar: 0
-        Eartha_brain_900_belly_up_horizontal_sar: 0
-        Eartha_brain_1450_belly_up_horizontal_sar: 0
-        Eartha_brain_1800_belly_up_horizontal_sar: 0
-        Eartha_brain_2100_belly_up_horizontal_sar: 0
-        Eartha_brain_2400_belly_up_horizontal_sar: 0
-        Eartha_brain_2600_belly_up_horizontal_sar: 0
-        Eartha_brain_3500_belly_up_horizontal_sar: 0
-        Eartha_brain_5000_belly_up_horizontal_sar: 0
+        Eartha_brain_700_belly_up_horizontal_sar: 1.00198777792547
+        Eartha_brain_800_belly_up_horizontal_sar: 0.945446834100885
+        Eartha_brain_900_belly_up_horizontal_sar: 0.939840478847706
+        Eartha_brain_1450_belly_up_horizontal_sar: 1.05985026803208
+        Eartha_brain_1800_belly_up_horizontal_sar: 0.82824431484491
+        Eartha_brain_2100_belly_up_horizontal_sar: 0.629724926398769
+        Eartha_brain_2400_belly_up_horizontal_sar: 0.521238950759829
+        Eartha_brain_2600_belly_up_horizontal_sar: 0.462317499894752
+        Eartha_brain_3500_belly_up_horizontal_sar: 0.203423476065195
+        Eartha_brain_5000_belly_up_horizontal_sar: 0.1318823813794
         Eartha_brain_xxxx_belly_up_horizontal_sar: 0
         Eartha_brain_yyyy_belly_up_horizontal_sar: 0
         Eartha_brain_zzzz_belly_up_horizontal_sar: 0
-        Eartha_brain_700_belly_up_vertical_sar: 0
-        Eartha_brain_800_belly_up_vertical_sar: 0
-        Eartha_brain_900_belly_up_vertical_sar: 0
-        Eartha_brain_1450_belly_up_vertical_sar: 0
-        Eartha_brain_1800_belly_up_vertical_sar: 0
-        Eartha_brain_2100_belly_up_vertical_sar: 0
-        Eartha_brain_2400_belly_up_vertical_sar: 0
-        Eartha_brain_2600_belly_up_vertical_sar: 0
-        Eartha_brain_3500_belly_up_vertical_sar: 0
-        Eartha_brain_5000_belly_up_vertical_sar: 0
+        Eartha_brain_700_belly_up_vertical_sar: 0.282264452041799
+        Eartha_brain_800_belly_up_vertical_sar: 0.510409392375359
+        Eartha_brain_900_belly_up_vertical_sar: 0.662888979631366
+        Eartha_brain_1450_belly_up_vertical_sar: 1.27744085619434
+        Eartha_brain_1800_belly_up_vertical_sar: 1.30655297640763
+        Eartha_brain_2100_belly_up_vertical_sar: 1.33150622230474
+        Eartha_brain_2400_belly_up_vertical_sar: 0.919839864859415
+        Eartha_brain_2600_belly_up_vertical_sar: 0.747043744780526
+        Eartha_brain_3500_belly_up_vertical_sar: 0.189105628420588
+        Eartha_brain_5000_belly_up_vertical_sar: 0.0862049549162154
         Eartha_brain_xxxx_belly_up_vertical_sar: 0
         Eartha_brain_yyyy_belly_up_vertical_sar: 0
         Eartha_brain_zzzz_belly_up_vertical_sar: 0

@@ -3,4 +3,6 @@ inst/doc
 /Meta/
 .Rhistory
 .Rdata
-/doc
+/doc/*
+!/doc/*.md
+~$*
