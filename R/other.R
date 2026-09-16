@@ -4,7 +4,6 @@ other_dose_wrapper <- function(
     tissue,
     duration_hotspot,
     duration_smartwatch,
-    duration_vr,
     duration_headphones,
     params = load_params()) {
   # Calculate doses from different sources
@@ -23,20 +22,15 @@ other_dose_wrapper <- function(
     tissue           = tissue,
     duration_hotspot = duration_hotspot,
     params           = params)
-  ## VR headset
-  dose_vr         <- vr_dose(
-    tissue      = tissue,
-    duration_vr = duration_vr,
-    params      = params)
   # Sum by tissue and return result
-  # NOTE: gaming has moved out of this wrapper. It is stochastic now, it needs the
-  # simulated parameter list, and it is divided by 1000 because it reads the
-  # dummy-resolved sar table. The sources left here still read the old table.
+  # NOTE: gaming and vr have moved out of this wrapper. They are stochastic now,
+  # they need the simulated parameter list, and they are divided by 1000 because
+  # they read the dummy-resolved sar table. The sources left here still read the
+  # old table and correctly omit the /1000.
   dose <- sum(
     dose_smartwatch,
     dose_headphones,
-    dose_hotspot,
-    dose_vr
+    dose_hotspot
   )
 
   return(dose)

@@ -56,7 +56,6 @@ simulate_params <- function(duration,
     "hotspot_duration",
     "smartwatch_duration",
     "tracker_duration",
-    "vr_duration",
     "headphone_duration"
   )
 
@@ -285,6 +284,22 @@ simulate_params <- function(duration,
     p_zero = pzero,
     min = params_stochastic$global$input_stoch$gaming_duration$gaming_duration_min,
     max = params_stochastic$global$input_stoch$gaming_duration$gaming_duration_max
+  )
+
+  ####### vr
+  if (missing(vr_duration)) {vr_duration <- params_stochastic$global$input_stoch$vr_duration$vr_duration_mean
+  }
+  # pick vr_duration
+  vr_pzero <- params_stochastic$global$input_stoch$vr_duration$vr_duration_pzero
+  vr_duration <- vr_duration/(1-vr_pzero)
+
+  params$global$input_stoch$vr_duration$vr_duration <- evaluate_distribution(
+    dist_name = params_stochastic$global$input_stoch$vr_duration$distribution,
+    mean = vr_duration,
+    sd = params_stochastic$global$input_stoch$vr_duration$vr_duration_sd,
+    p_zero = vr_pzero,
+    min = params_stochastic$global$input_stoch$vr_duration$vr_duration_min,
+    max = params_stochastic$global$input_stoch$vr_duration$vr_duration_max
   )
 
   # lptp_dur_low
@@ -876,6 +891,46 @@ simulate_params <- function(duration,
     sd   = params_stochastic$devices$gaming$gaming_distance$gaming_dist_device_sd,
     min = params_stochastic$devices$gaming$gaming_distance$gaming_dist_device_min,
     max  = params_stochastic$devices$gaming$gaming_distance$gaming_dist_device_max
+  )
+
+
+  ####### vr
+
+  # pick online_prop (share of headset-on time with actual WiFi traffic)
+  params$devices$vr$online_prop$vr_online_prop <- evaluate_distribution(
+    dist_name = params_stochastic$devices$vr$online_prop$distribution,
+    mean = c(params_stochastic$devices$vr$online_prop$vr_online_prop_mean,
+             1-params_stochastic$devices$vr$online_prop$vr_online_prop_mean),
+    a0 = params_stochastic$devices$vr$online_prop$vr_online_prop_a0)[1]
+
+  # pick pwr
+  vr_freqs <- c("2400", "5000") # 2.4 GHz and 5.0 GHz
+  for (freq in vr_freqs) {
+    params$devices$vr$pwr[[paste0("vr_", freq, "_pwr")]] <- evaluate_distribution(
+      dist_name = params_stochastic$devices$vr$pwr$distribution,
+      mean = params_stochastic$devices$vr$pwr[[paste0("vr_", freq, "_pwr_mean")]],
+      sd   = params_stochastic$devices$vr$pwr[[paste0("vr_", freq, "_pwr_sd")]],
+      min  = params_stochastic$devices$vr$pwr[[paste0("vr_", freq, "_pwr_min")]],
+      max  = params_stochastic$devices$vr$pwr[[paste0("vr_", freq, "_pwr_max")]]
+    )
+  }
+
+  # pick dc (dutycycle)
+  for (freq in vr_freqs) {
+    dc_mean <- params_stochastic$devices$vr$dutycycle[[paste0("vr_", freq, "_dutycycle_mean")]]
+    params$devices$vr$dutycycle[[paste0("vr_", freq, "_dutycycle")]] <- evaluate_distribution(
+      dist_name = params_stochastic$devices$vr$dutycycle$distribution,
+      mean = c(dc_mean, 1-dc_mean),
+      a0 = params_stochastic$devices$vr$dutycycle$vr_dutycycle_a0)[1]
+  }
+
+  # pick distance (headset antenna to head, in mm)
+  params$devices$vr$vr_distance$vr_dist_device <- evaluate_distribution(
+    dist_name = params_stochastic$devices$vr$vr_distance$distribution,
+    mean = params_stochastic$devices$vr$vr_distance$vr_dist_device_mean,
+    sd   = params_stochastic$devices$vr$vr_distance$vr_dist_device_sd,
+    min = params_stochastic$devices$vr$vr_distance$vr_dist_device_min,
+    max  = params_stochastic$devices$vr$vr_distance$vr_dist_device_max
   )
 
 

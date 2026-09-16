@@ -82,6 +82,18 @@ global:
       gaming_duration_min: 5
       gaming_duration_max: 28800
       gaming_duration_pzero: 0.8
+    vr_duration:
+      # PLACEHOLDER. vr_duration is 0 in every default file, so there is no
+      # observed VR usage in the pipeline to calibrate against. pzero 0.95 and a
+      # population mean of 100 s give a conditional mean of 2000 s (~33 min) on
+      # the days a headset is used. Replace as soon as the study has prevalence
+      # and duration figures.
+      distribution: "trunc_hurdle_gamma"
+      vr_duration_mean: 100
+      vr_duration_sd: 1500
+      vr_duration_min: 5
+      vr_duration_max: 28800
+      vr_duration_pzero: 0.95
 
 
   wifi_probs:
@@ -3236,17 +3248,62 @@ devices:
     body:
       hotspot_sar: 0.003634651
   vr:
-    vr_2_pwr: 100
-    vr_5_pwr: 200
-    vr_2_dutycycle: 0.05
-    vr_5_dutycycle: 0.05
-    vr_online_prop: 0.4
-    brain:
-      vr_2_sar: 0.016377585
-      vr_5_sar: 0.000606721
-    body:
-      vr_2_sar: 0.005180701
-      vr_5_sar: 0.0035162
+    # VR headset connected over WiFi.
+    # No headset-specific SAR simulation exists. vr_sar() uses the mean of the six
+    # ear positions (cheek1-3, tilt1-3) from the call SAR tables (2400/5000 MHz),
+    # rescaled from their 8 mm reference distance to vr_dist_device.
+    #
+    # WHY THE EAR AND NOT front_of_eyes, which is where a headset anatomically
+    # sits: the GOLIAT ear scenario was simulated at 0.8 cm, the only geometry in
+    # the right distance regime for a head-worn device. front_of_eyes was
+    # simulated at 20 cm; rescaling it down to a headset standoff overshoots the
+    # ear values by 11-16x for whole body even though it sits FURTHER from the
+    # head, and implies the phantom absorbs ~8x the radiated power. The
+    # deterministic model also derived VR from the ear SAR. See
+    # doc/vr_stochastification.md.
+    online_prop:
+      distribution: "beta"
+      vr_online_prop_mean: 0.4
+      vr_online_prop_a0: 10
+    pwr:
+      distribution: "trunc_lognormal"
+      vr_2400_pwr_mean: 100
+      vr_2400_pwr_sd: 30
+      vr_2400_pwr_min: 0.001
+      vr_2400_pwr_max: 100
+      vr_5000_pwr_mean: 200
+      vr_5000_pwr_sd: 60
+      vr_5000_pwr_min: 0.001
+      vr_5000_pwr_max: 200
+    dutycycle:
+      # PLACEHOLDER, carried over unchanged from the deterministic model.
+      # Two things are unresolved here and should be revisited once the whole
+      # model is stochastic:
+      #   - the means. 0.05 sits above the measured WiFi duty cycles used for a
+      #     mobile call (0.02738 / 0.04385) and below the medium-high activity
+      #     class of laptop/tablet/mobiledata. Whoever set it presumably allowed
+      #     for a headset being more data-intensive, but that is not documented.
+      #     A tethered headset streaming video would belong in the high class.
+      #   - the a0. The WiFi duty cycles elsewhere in this file carry fitted
+      #     concentration parameters (134.9, 4657.6, 355.76, 1.41, ...); the 100
+      #     here is a round default copied from cordless and gaming.
+      distribution: "beta"
+      vr_2400_dutycycle_mean: 0.05
+      vr_5000_dutycycle_mean: 0.05
+      vr_dutycycle_a0: 100
+    vr_distance:
+      # PLACEHOLDER mean. Antenna-to-head standoff, assumed from the geometry of
+      # the side housings; no measurement and no device list behind it.
+      # The bounds are not arbitrary though: 8 mm below because that is the
+      # simulated reference and we do not extrapolate closer, 30 mm above because
+      # the empirical falloff exponent between the two simulated anchors is ~0.75
+      # rather than the 2 that dist_law assumes, so a long extrapolation would be
+      # unreliable.
+      distribution: "trunc_lognormal"
+      vr_dist_device_mean: 15
+      vr_dist_device_sd: 5
+      vr_dist_device_min: 8
+      vr_dist_device_max: 30
   smarthome:
     smarthome_pwr: 1.64109
     smarthome_active_prop: 0.01

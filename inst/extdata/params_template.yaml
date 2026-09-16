@@ -50,6 +50,8 @@ global:
       dect_ear_prop: 0.9
     gaming_duration:
       gaming_duration: 600
+    vr_duration:
+      vr_duration: 100
   wifi_probs:
     wifi_2400_prop: 0.58
     wifi_5000_prop: 0.42
@@ -2828,17 +2830,20 @@ devices:
     body:
       hotspot_sar: 0.003634651
   vr:
-    vr_2_pwr: 100
-    vr_5_pwr: 200
-    vr_2_dutycycle: 0.05
-    vr_5_dutycycle: 0.05
-    vr_online_prop: 0.4
-    brain:
-      vr_2_sar: 0.016377585
-      vr_5_sar: 0.000606721
-    body:
-      vr_2_sar: 0.005180701
-      vr_5_sar: 0.0035162
+    # VR headset connected over WiFi. SAR comes from the six ear positions
+    # (cheek1-3, tilt1-3) of the call tables, rescaled from their 8 mm reference
+    # to vr_dist_device. See doc/vr_stochastification.md for why the ear rather
+    # than front_of_eyes, which is where a headset anatomically sits.
+    online_prop:
+      vr_online_prop: 0.4
+    pwr:
+      vr_2400_pwr: 100
+      vr_5000_pwr: 200
+    dutycycle:
+      vr_2400_dutycycle: 0.05
+      vr_5000_dutycycle: 0.05
+    vr_distance:
+      vr_dist_device: 15
   smarthome:
     smarthome_pwr: 1.64109
     smarthome_active_prop: 0.01
