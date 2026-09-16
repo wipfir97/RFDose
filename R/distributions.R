@@ -951,6 +951,11 @@ evaluate_distribution <- function(dist_name,
     )
 
   } else if (dist_name == "trunc_hurdle_gamma"){
+    # A duration of 0 means the person does not use the device at all, so the
+    # draw is 0 rather than an error. Without this, any participant with a zero
+    # duration aborts the whole simulation. Mirrors the guard in the
+    # trunc_lognormal branch below.
+    if (mean == 0) return(0)
     return(
       r_trunc_hurdle_gamma(
         mean = mean,
