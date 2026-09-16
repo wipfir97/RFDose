@@ -47,6 +47,40 @@ band (§5.0). Eartha and Duke are smooth across the whole range.
 
 ---
 
+## 1b. Where the simulations come from, and at what distance
+
+The stochastic model uses the **GOLIAT** SAR campaign; the deterministic model used **ETAIN**
+(Yoda database). The two differ in both scenarios and frequencies, which is why the values have to
+be interpolated (§3).
+
+GOLIAT simulated three antenna positions, at these separations from the body — this is the source
+of the `dist_ref` values used throughout the model:
+
+| scenario | separation | positions |
+|---|---|---|
+| Front of eyes | **20 cm** | center / left / right / down × vertical / horizontal |
+| Belly | **20 cm** | center / left / right / up × vertical / horizontal |
+| Ear | **0.8 cm** | cheek_1–3, tilt_1–3 |
+
+So `dist_ref = 200` (front_of_eyes, belly) and `dist_ref = 8` (ear) in `mobilecall.R`,
+`mobiledata.R`, `cordless.R` and `gaming.R` are correct. Note that the code comment at
+`cordless.R:99` and `mobilecall.R:498` reads "because **eye** simulations ware at 8 mm" — that is a
+typo for **ear**; the 8 mm belongs to the ear scenario, as the table above shows.
+
+Phantoms in the GOLIAT campaign: Duke (36), Ella (26), Eartha (8), Thelonious (6); SAR below 6 GHz,
+near- and far-field, whole-body and brain.
+
+**Consequence for any source that is not a phone.** GOLIAT provides only these three geometries.
+Every other exposure source therefore has to borrow one of them as a proxy — gaming uses the belly
+positions, and a VR headset will have to choose between front_of_eyes (right anatomy, but simulated
+at 20 cm) and ear (wrong anatomy, but the only scenario in the right distance regime at 0.8 cm).
+The same question will arise for laptop and tablet, which under ETAIN had dedicated lap and table
+scenarios that GOLIAT does not reproduce.
+
+**One discrepancy to keep in mind:** the GOLIAT frequency list on the source slide reads 700, 835,
+1450, 2140, 2450, 5200, 5800, but the delivered workbooks contain **3500 MHz as well**, for every
+phantom and position. The slide appears to be incomplete rather than the data being wrong.
+
 ## 2. Source files
 
 | Phantom | File | Provider | Sheets |

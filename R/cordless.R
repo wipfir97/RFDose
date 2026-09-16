@@ -96,7 +96,7 @@ dect_sar <- function(
   if (params$global$dist_correction) {
     dect_ear_sar <- dist_law(sar = dect_ear_sar,
                             dist = params$devices$dect$dect_distance$dect_distance_ear,
-                            dist_ref = 8,# because eye simulations ware at 8 mm
+                            dist_ref = 8, # GOLIAT simulated the ear positions at 0.8 cm
                             delta = 6)
   }
 
