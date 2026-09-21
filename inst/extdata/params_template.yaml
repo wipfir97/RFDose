@@ -44,6 +44,11 @@ global:
       mpd_dur_lowmed: 4916.97
       mpd_dur_medhigh: 5650.71
       mpd_dur_high: 0.0
+    tblt_duration:
+      tblt_dur_low: 728
+      tblt_dur_lowmed: 81
+      tblt_dur_medhigh: 728
+      tblt_dur_high: 81
     dect_duration:
       dect_duration: 204
     dect_position:
@@ -77,22 +82,23 @@ devices:
       dect_ear_sar: 0.007025455
       dect_speaker_sar: 0.002116649
   tblt:
-    wifi_2_low_dutycycle: 0.009
-    wifi_2_lowmed_dutycycle: 0.025
-    wifi_2_medhigh_dutycycle: 0.176
-    wifi_2_high_dutycycle: 0.669
-    wifi_5_low_dutycycle: 0.03055
-    wifi_5_lowmed_dutycycle: 0.052275
-    wifi_5_medhigh_dutycycle: 0.064
-    wifi_5_high_dutycycle: 0.14515
-    wifi_2_pwr: 100
-    wifi_5_pwr: 200
-    brain:
-      tblt_2_sar: 0.000999468
-      tblt_5_sar: 0.000163091
-    body:
-      tblt_2_sar: 0.000860849
-      tblt_5_sar: 0.000586175
+    # Tablet over WiFi. SAR comes from the eight front_of_eyes positions of the
+    # call tables, rescaled from their 200 mm reference to tblt_dist_device.
+    # See doc/tablet_stochastification.md.
+    pwr:
+      tblt_2400_pwr: 100
+      tblt_5000_pwr: 200
+    dutycycle:
+      tblt_2400_low_dutycycle: 0.009
+      tblt_2400_lowmed_dutycycle: 0.025
+      tblt_2400_medhigh_dutycycle: 0.176
+      tblt_2400_high_dutycycle: 0.669
+      tblt_5000_low_dutycycle: 0.03055
+      tblt_5000_lowmed_dutycycle: 0.052275
+      tblt_5000_medhigh_dutycycle: 0.064
+      tblt_5000_high_dutycycle: 0.14515
+    tblt_distance:
+      tblt_dist_device: 300
   lptp:
     wifi_2_low_dutycycle: 0.009
     wifi_2_lowmed_dutycycle: 0.025

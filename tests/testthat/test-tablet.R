@@ -1,3 +1,11 @@
+# The stochastic tablet implementation reads the nested tblt structure that only
+# params_stochastic.yaml and params_template.yaml carry, and it resolves the
+# simulation dummy from global$input_stoch$sex/age. The legacy params.yaml has
+# neither, so every case that is meant to reach the calculation passes the
+# template explicitly. The cases that are meant to error on input validation
+# still call without params -- check_duration() fires before params is touched.
+template_params <- load_params(version = "_template")
+
 # tablet_dose =================================================================
 test_that("tablet_dose errors if required argument is missing", {
   expect_error(
@@ -80,10 +88,16 @@ test_that("tablet_dose warns if sum of durations exceeds 86400 seconds", {
       dur_low     = 30000,
       dur_lowmed  = 30000,
       dur_medhigh = 30000,
-      dur_high    = 30000)
+      dur_high    = 30000,
+      params      = template_params)
   )
 })
 
+# Reference values recomputed for the stochastic implementation at the template
+# point values (dummy Duke, viewing distance 300 mm, distance correction on).
+# They replace the values of the deterministic version, which read a single
+# tblt_*_sar constant per band instead of the front_of_eyes positions and did
+# not divide the dose by 1000.
 cases_tablet_dose <- list(
   list(
     input = list(
@@ -91,9 +105,10 @@ cases_tablet_dose <- list(
       dur_low     = 728,
       dur_lowmed  = 81,
       dur_medhigh = 728,
-      dur_high    = 81
+      dur_high    = 81,
+      params      = template_params
     ),
-    output = 12.19
+    output = 5.919812
   ),
   list(
     input = list(
@@ -101,9 +116,10 @@ cases_tablet_dose <- list(
       dur_low     = 728,
       dur_lowmed  = 81,
       dur_medhigh = 728,
-      dur_high    = 81
+      dur_high    = 81,
+      params      = template_params
     ),
-    output = 13.68
+    output = 8.141920
   )
 )
 
@@ -122,9 +138,10 @@ cases_tablet_msar <- list(
       dur_low     = 728,
       dur_lowmed  = 81,
       dur_medhigh = 728,
-      dur_high    = 81
+      dur_high    = 81,
+      params      = template_params
     ),
-    output = 0.0075365
+    output = 3.658722
   ),
   list(
     input = list(
@@ -132,9 +149,10 @@ cases_tablet_msar <- list(
       dur_low     = 728,
       dur_lowmed  = 81,
       dur_medhigh = 728,
-      dur_high    = 81
+      dur_high    = 81,
+      params      = template_params
     ),
-    output = 0.008453997
+    output = 5.032089
   )
 )
 
@@ -149,23 +167,25 @@ test_that("tablet_msar matches reference values", {
 cases_tablet_pwr <- list(
   list(
     input = list(
-      band        = "2",
+      freq        = "2400",
       dur_low     = 728,
       dur_lowmed  = 81,
       dur_medhigh = 728,
-      dur_high    = 81
+      dur_high    = 81,
+      params      = template_params
     ),
-    output = 11.76
+    output = 11.79815
   ),
   list(
     input = list(
-      band        = "5",
+      freq        = "5000",
       dur_low     = 728,
       dur_lowmed  = 81,
       dur_medhigh = 728,
-      dur_high    = 81
+      dur_high    = 81,
+      params      = template_params
     ),
-    output = 10.49
+    output = 10.48502
   )
 )
 
@@ -181,30 +201,34 @@ cases_tablet_sar <- list(
   list(
     input = list(
       tissue = "brain",
-      band   = "2"
+      freq   = "2400",
+      params = template_params
     ),
-    output = 0.000999
+    output = 0.4973535
   ),
   list(
     input = list(
       tissue = "brain",
-      band   = "5"
+      freq   = "5000",
+      params = template_params
     ),
-    output = 0.000163
+    output = 0.05798965
   ),
   list(
     input = list(
       tissue = "body",
-      band   = "2"
+      freq   = "2400",
+      params = template_params
     ),
-    output = 0.000861
+    output = 0.5367537
   ),
   list(
     input = list(
       tissue = "body",
-      band   = "5"
+      freq   = "5000",
+      params = template_params
     ),
-    output = 0.000586
+    output = 0.3086316
   )
 )
 

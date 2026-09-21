@@ -82,6 +82,30 @@ global:
       gaming_duration_min: 5
       gaming_duration_max: 28800
       gaming_duration_pzero: 0.8
+    tblt_duration:
+      # PLACEHOLDER spreads. The means are the existing defaults from
+      # defaultvariables.yaml, unchanged. The sd values are ASSUMED: a
+      # coefficient of variation of 0.96, which is the top of the 0.90-0.96
+      # range that mobiledata's three non-zero duration spreads span. Nothing
+      # about tablet usage was measured for them.
+      # Replace when the study has tablet usage figures.
+      distribution: "trunc_lognormal"
+      tblt_dur_low_mean: 728
+      tblt_dur_low_sd: 700
+      tblt_dur_low_min: 0.00
+      tblt_dur_low_max: 28800.0
+      tblt_dur_lowmed_mean: 81
+      tblt_dur_lowmed_sd: 78
+      tblt_dur_lowmed_min: 0.00
+      tblt_dur_lowmed_max: 28800.0
+      tblt_dur_medhigh_mean: 728
+      tblt_dur_medhigh_sd: 700
+      tblt_dur_medhigh_min: 0.00
+      tblt_dur_medhigh_max: 28800.0
+      tblt_dur_high_mean: 81
+      tblt_dur_high_sd: 78
+      tblt_dur_high_min: 0.00
+      tblt_dur_high_max: 28800.0
     vr_duration:
       # PLACEHOLDER. vr_duration is 0 in every default file, so there is no
       # observed VR usage in the pipeline to calibrate against. pzero 0.95 and a
@@ -138,22 +162,62 @@ devices:
       dect_ear_sar: 0.007025455
       dect_speaker_sar: 0.002116649
   tblt:
-    wifi_2_low_dutycycle: 0.009
-    wifi_2_lowmed_dutycycle: 0.025
-    wifi_2_medhigh_dutycycle: 0.176
-    wifi_2_high_dutycycle: 0.669
-    wifi_5_low_dutycycle: 0.03055
-    wifi_5_lowmed_dutycycle: 0.052275
-    wifi_5_medhigh_dutycycle: 0.064
-    wifi_5_high_dutycycle: 0.14515
-    wifi_2_pwr: 100
-    wifi_5_pwr: 200
-    brain:
-      tblt_2_sar: 0.000999468
-      tblt_5_sar: 0.000163091
-    body:
-      tblt_2_sar: 0.000860849
-      tblt_5_sar: 0.000586175
+    # Tablet connected over WiFi.
+    # No tablet-specific SAR simulation exists in GOLIAT. tblt_sar() uses the mean
+    # of the eight front_of_eyes positions from the call SAR tables (2400/5000 MHz),
+    # rescaled from their 200 mm reference to tblt_dist_device.
+    #
+    # WHY front_of_eyes, and at one distance rather than mixed with belly: a tablet
+    # is held up to be looked at, so the front-of-face geometry applies throughout.
+    # The deterministic model made the same choice -- its tblt_*_sar values are the
+    # wifi_*_headp_face_sar values, i.e. a phone held in front of the face, not the
+    # lap/table scenarios that laptop uses. Unlike VR the distances also match well:
+    # simulated at 20 cm, modelled at 30 cm, so the rescaling is short and outward.
+    # See doc/tablet_stochastification.md.
+    pwr:
+      distribution: "trunc_lognormal"
+      tblt_2400_pwr_mean: 100
+      tblt_2400_pwr_sd: 30
+      tblt_2400_pwr_min: 0.001
+      tblt_2400_pwr_max: 100
+      tblt_5000_pwr_mean: 200
+      tblt_5000_pwr_sd: 60
+      tblt_5000_pwr_min: 0.001
+      tblt_5000_pwr_max: 200
+    dutycycle:
+      # Means unchanged from the deterministic model. The a0 values are taken from
+      # mobiledata's fitted WiFi duty cycles for the corresponding band and activity
+      # class -- the same physical quantity, and a better estimate of the spread
+      # than the round default of 100 used for cordless, gaming and VR. Note the
+      # means themselves differ slightly between the two sources, most of all at
+      # 5 GHz high (0.145 here against 0.495 for mobiledata), so this is borrowed
+      # spread rather than a matched fit.
+      distribution: "beta"
+      tblt_2400_low_dutycycle_mean: 0.009
+      tblt_2400_low_dutycycle_a0: 355.76
+      tblt_2400_lowmed_dutycycle_mean: 0.025
+      tblt_2400_lowmed_dutycycle_a0: 176.8182
+      tblt_2400_medhigh_dutycycle_mean: 0.176
+      tblt_2400_medhigh_dutycycle_a0: 1.413684
+      tblt_2400_high_dutycycle_mean: 0.669
+      tblt_2400_high_dutycycle_a0: 7.636719
+      tblt_5000_low_dutycycle_mean: 0.03055
+      tblt_5000_low_dutycycle_a0: 80.0519
+      tblt_5000_lowmed_dutycycle_mean: 0.052275
+      tblt_5000_lowmed_dutycycle_a0: 38
+      tblt_5000_medhigh_dutycycle_mean: 0.064
+      tblt_5000_medhigh_dutycycle_a0: 26.62791
+      tblt_5000_high_dutycycle_mean: 0.14515
+      tblt_5000_high_dutycycle_a0: 0.4584646
+    tblt_distance:
+      # 30 cm viewing distance, as decided for this source. The mean is the
+      # instruction; the spread and bounds are assumed, covering a tablet held
+      # close to reading a propped-up one at arm's length.
+      distribution: "trunc_lognormal"
+      tblt_dist_device_mean: 300
+      tblt_dist_device_sd: 80
+      tblt_dist_device_min: 200
+      tblt_dist_device_max: 500
   lptp:
     wifi_2_low_dutycycle: 0.009
     wifi_2_lowmed_dutycycle: 0.025

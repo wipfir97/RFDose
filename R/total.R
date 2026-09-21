@@ -151,6 +151,10 @@ get_total_dose <- function(
     dect_ear_prop = sim_params$global$input_stoch$dect_position$dect_ear_prop
     gaming_duration = sim_params$global$input_stoch$gaming_duration$gaming_duration
     vr_duration = sim_params$global$input_stoch$vr_duration$vr_duration
+    tblt_dur_low = sim_params$global$input_stoch$tblt_duration$tblt_dur_low
+    tblt_dur_lowmed = sim_params$global$input_stoch$tblt_duration$tblt_dur_lowmed
+    tblt_dur_medhigh = sim_params$global$input_stoch$tblt_duration$tblt_dur_medhigh
+    tblt_dur_high = sim_params$global$input_stoch$tblt_duration$tblt_dur_high
 
 
     # Calculate contribution of each exposure source ============================
@@ -217,14 +221,14 @@ get_total_dose <- function(
       params      = old_params
       )
 
-    ## Calculate tablet contribution DETERMINISTIC--------------------------------------------
+    ## Calculate tablet contribution STOCHASTIC-----------------------------------------------
     tblt_dose <- tablet_dose(
       tissue      = tissue,
-      dur_low     = sample$tblt_dur_low,
-      dur_lowmed  = sample$tblt_dur_lowtomed,
-      dur_medhigh = sample$tblt_dur_medtohigh,
-      dur_high    = sample$tblt_dur_high,
-      params      = old_params
+      dur_low     = tblt_dur_low,
+      dur_lowmed  = tblt_dur_lowmed,
+      dur_medhigh = tblt_dur_medhigh,
+      dur_high    = tblt_dur_high,
+      params      = sim_params
       )
 
     ## Calculate cordless contribution DETERMINISTIC------------------------------------------

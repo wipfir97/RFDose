@@ -49,10 +49,6 @@ simulate_params <- function(duration,
     "lptp_dur_lowtomed",
     "lptp_dur_medtohigh",
     "lptp_dur_high",
-    "tblt_dur_low",
-    "tblt_dur_lowtomed",
-    "tblt_dur_medtohigh",
-    "tblt_dur_high",
     "hotspot_duration",
     "smartwatch_duration",
     "tracker_duration",
@@ -302,14 +298,34 @@ simulate_params <- function(duration,
     max = params_stochastic$global$input_stoch$vr_duration$vr_duration_max
   )
 
+  ####### tablet
+
+  # tblt_dur_low, tblt_dur_lowtomed, tblt_dur_medtohigh, tblt_dur_high
+  # Four durations, one per usage-intensity class, exactly as for mobile data.
+  tblt_durations <- list()
+  if (missing(tblt_dur_low)) {tblt_durations$low <- params_stochastic$global$input_stoch$tblt_duration[[paste0("tblt_dur_low_mean")]]}
+  else{tblt_durations$low <- tblt_dur_low}
+  if (missing(tblt_dur_lowtomed)) {tblt_durations$lowmed <- params_stochastic$global$input_stoch$tblt_duration[[paste0("tblt_dur_lowmed_mean")]]}
+  else{tblt_durations$lowmed <- tblt_dur_lowtomed}
+  if (missing(tblt_dur_medtohigh)) {tblt_durations$medhigh <- params_stochastic$global$input_stoch$tblt_duration[[paste0("tblt_dur_medhigh_mean")]]}
+  else{tblt_durations$medhigh <- tblt_dur_medtohigh}
+  if (missing(tblt_dur_high)) {tblt_durations$high <- params_stochastic$global$input_stoch$tblt_duration[[paste0("tblt_dur_high_mean")]]}
+  else{tblt_durations$high <- tblt_dur_high}
+
+  levels <- c("low","lowmed","medhigh","high")
+  for (l in levels) {
+    params$global$input_stoch$tblt_duration[[paste0("tblt_dur_",l)]] <- evaluate_distribution(
+      dist_name = params_stochastic$global$input_stoch$tblt_duration$distribution,
+      mean =  tblt_durations[[l]],
+      sd   = params_stochastic$global$input_stoch$tblt_duration[[paste0("tblt_dur_",l, "_sd")]],
+      max  = params_stochastic$global$input_stoch$tblt_duration[[paste0("tblt_dur_",l, "_max")]]
+    )
+  }
+
   # lptp_dur_low
   # lptp_dur_lowtomed
   # lptp_dur_medtohigh
   # lptp_dur_high
-  # tblt_dur_low
-  # tblt_dur_lowtomed
-  # tblt_dur_medtohigh
-  # tblt_dur_high
   # hotspot_duration
   # smartwatch_duration
   # tracker_duration
@@ -931,6 +947,50 @@ simulate_params <- function(duration,
     sd   = params_stochastic$devices$vr$vr_distance$vr_dist_device_sd,
     min = params_stochastic$devices$vr$vr_distance$vr_dist_device_min,
     max  = params_stochastic$devices$vr$vr_distance$vr_dist_device_max
+  )
+
+
+  ####### tablet
+
+  # pick pwr
+  tblt_freqs <- c("2400", "5000") # 2.4 GHz and 5.0 GHz
+  for (freq in tblt_freqs) {
+    params$devices$tblt$pwr[[paste0("tblt_", freq, "_pwr")]] <- evaluate_distribution(
+      dist_name = params_stochastic$devices$tblt$pwr$distribution,
+      mean = params_stochastic$devices$tblt$pwr[[paste0("tblt_", freq, "_pwr_mean")]],
+      sd   = params_stochastic$devices$tblt$pwr[[paste0("tblt_", freq, "_pwr_sd")]],
+      min  = params_stochastic$devices$tblt$pwr[[paste0("tblt_", freq, "_pwr_min")]],
+      max  = params_stochastic$devices$tblt$pwr[[paste0("tblt_", freq, "_pwr_max")]]
+    )
+  }
+
+  # pick dc (dutycycle) -- one per band and usage-intensity class, as for mobile
+  # data. Each carries its own a0, so the loop reads the spread per entry.
+  tblt_dutycycle_vars <- c(
+    "tblt_2400_low_dutycycle",
+    "tblt_2400_lowmed_dutycycle",
+    "tblt_2400_medhigh_dutycycle",
+    "tblt_2400_high_dutycycle",
+    "tblt_5000_low_dutycycle",
+    "tblt_5000_lowmed_dutycycle",
+    "tblt_5000_medhigh_dutycycle",
+    "tblt_5000_high_dutycycle")
+
+  for (dc in tblt_dutycycle_vars) {
+    dc_mean <- params_stochastic$devices$tblt$dutycycle[[paste0(dc, "_mean")]]
+    params$devices$tblt$dutycycle[[dc]] <- evaluate_distribution(
+      dist_name = params_stochastic$devices$tblt$dutycycle$distribution,
+      mean = c(dc_mean, 1-dc_mean),
+      a0 = params_stochastic$devices$tblt$dutycycle[[paste0(dc, "_a0")]])[1]
+  }
+
+  # pick distance (tablet screen to face, in mm)
+  params$devices$tblt$tblt_distance$tblt_dist_device <- evaluate_distribution(
+    dist_name = params_stochastic$devices$tblt$tblt_distance$distribution,
+    mean = params_stochastic$devices$tblt$tblt_distance$tblt_dist_device_mean,
+    sd   = params_stochastic$devices$tblt$tblt_distance$tblt_dist_device_sd,
+    min  = params_stochastic$devices$tblt$tblt_distance$tblt_dist_device_min,
+    max  = params_stochastic$devices$tblt$tblt_distance$tblt_dist_device_max
   )
 
 
