@@ -7,7 +7,11 @@ large it is where we could measure it, and where it is documented in full.
 **Status of this file:** living document. Add to it whenever something is found; do not delete
 entries when they are resolved, mark them resolved instead.
 
-**Last updated:** 2026-09-15
+**Where the open decisions are:** this file records what the limitations *are*. Everything that is
+currently undecided or awaiting an answer — from supervisors or from the data providers — is
+collected in `doc/OPEN_QUESTIONS.md`, grouped by who can answer it.
+
+**Last updated:** 2026-09-17
 
 ---
 
@@ -19,10 +23,14 @@ entries when they are resolved, mark them resolved instead.
 `SAR(d) = SAR(d_ref) · ((d_ref + 6)/(d + 6))²`.
 
 Checked against the two simulated distances we have — the ear scenario at 0.8 cm and the
-front-of-eyes scenario at 20 cm — the whole-body SAR drops only by a factor of **6 to 11**, where
-an inverse-square law predicts **216**. This holds for all four phantoms and all ten frequencies
-(40 combinations checked, no exception). No plausible near-field offset rescues it: to make the
-inverse-square law fit, the `delta` term would have to be about 90 mm instead of 6 mm.
+front-of-eyes scenario at 20 cm — the whole-body SAR drops only by a factor of **2.5 to 14.5**,
+where an inverse-square law predicts **216**. Measured across all four phantoms and all ten model
+frequencies (40 combinations, no exception; per phantom: Duke 2.5–11.9, Ella 4.1–9.7,
+Thelonious 6.0–14.5, Eartha 6.4–11.0; median 7.6).
+
+No plausible near-field offset rescues it: to reproduce the median ratio the `delta` term would have
+to be about **100 mm** instead of 6 mm, and no single value fits the whole set — the 40 combinations
+individually require delta between 60 and 320 mm.
 
 **Likely explanation.** At 2.4 GHz the wavelength is 125 mm, so 8 mm is deep in the near field
 (λ/16) while 200 mm is already approaching the far field (1.6 λ). A single power law is not expected
@@ -35,22 +43,25 @@ the rescaling.
 **How much it matters per source.** Measured by switching `params$global$dist_correction` off at
 the template point values:
 
-| source | whole body | brain |
-|---|---|---|
-| mobile call | **× 8.7** | × 1.15 |
-| mobile data | × 1.8 | **× 3.6** |
-| VR | × 2.25 | × 2.25 |
-| gaming | × 2.2 | × 1.06 |
-| cordless | × 1.03 | × 1.01 |
+| source | whole body | brain | direction of the rescaling |
+|---|---|---|---|
+| mobile call | **× 8.71** | × 1.15 | 200 mm → 8 mm for the pocket (inward, large) |
+| mobile data | × 1.81 | **× 3.53** | belly neutral; face 200 mm → 100 mm (inward) |
+| cordless | × 1.04 | × 1.01 | 8 mm → 8 mm (essentially neutral) |
+| gaming | × 0.45 | × 0.94 | 200 mm → 300 mm (outward); brain uses the hypotenuse |
+| tablet | × 0.45 | × 0.45 | 200 mm → 300 mm (outward) |
+| VR | × 0.44 | × 0.44 | 8 mm → 15 mm (outward) |
 
-*(factor by which the dose changes when the correction is switched on, relative to off)*
+*(factor by which the dose changes when the correction is switched **on**, relative to off. Values
+below 1 mean the correction lowers the dose, which is what an outward rescaling must do.)*
 
 **What was NOT concluded.** The two anchors differ in antenna position as well as distance, so the
-comparison conflates the two effects — though the position effect alone is only about 1.5× for whole
-body (measured between belly and front-of-eyes, both simulated at 20 cm). For the **brain** channel
-the position effect is 4.9–16.9×, comparable to or larger than the distance effect, so the brain
-channel cannot be used as evidence here. Fitting a single replacement exponent is therefore not
-supported by the data either.
+comparison conflates the two effects. The position effect can be isolated by comparing belly against
+front-of-eyes, both simulated at 20 cm: for **whole body** the front-of-eyes mean is 0.55–1.02 of
+the belly mean (median 0.70), i.e. a position effect of at most about 1.5×, well below the distance
+effect. For the **brain** the same comparison gives 4.2–105.7 (median 8.9) — comparable to or far
+larger than the distance effect, so the brain channel cannot be used as evidence here. Fitting a
+single replacement exponent is therefore not supported by the data either.
 
 **Status:** open, acknowledged, no fix planned. Keep rescaling distances short where possible, and
 report results with the correction switched on and off as a sensitivity band.
@@ -112,10 +123,6 @@ wide gaps:
 | 3500 | — | — | simulated directly |
 | 5000 | 3500 – 5200 | **1700 MHz** | 88 % |
 
-SAR does not vary linearly with frequency — absorption has resonances and the body is electrically
-larger at higher frequencies — so a straight line across 1700 MHz (for 5000 MHz, the WiFi 5 GHz
-band) or 1050 MHz (for 2600 MHz, an LTE band) is a real approximation. 1800 MHz sits in the middle
-of a 690 MHz gap, which is the worst position of any of them even though the gap is not the widest.
 
 **Status:** unavoidable given that the simulation grid and the network grid differ. Worth knowing
 when a result leans on one of the widely-interpolated bands, in particular 5000 MHz — which is the
@@ -131,37 +138,71 @@ Detail: `doc/SAR_IMPORT_NOTES.md` §3, and the worked example in `data-raw/impor
 GOLIAT provides three antenna geometries only: front of eyes (20 cm), belly (20 cm), ear (0.8 cm).
 Every source that is not a phone has to borrow one.
 
-| source | proxy used | reference distance | rationale |
-|---|---|---|---|
-| gaming (handheld console) | mean of 8 belly positions | 20 cm | device held in front of the torso |
-| VR headset | mean of 6 ear positions | 0.8 cm | only geometry in the right distance regime for a head-worn device |
-| phone in pocket | mean of 8 belly positions | 20 cm | see A2 — the weakest of the three |
+| source | proxy used | reference distance | modelled distance | rationale |
+|---|---|---|---|---|
+| gaming (handheld console) | mean of 8 belly positions | 20 cm | 30 cm | device held in front of the torso |
+| tablet | mean of 8 front-of-eyes positions | 20 cm | 30 cm | device held up in front of the face — the mildest rescaling in the model |
+| VR headset | mean of 6 ear positions | 0.8 cm | 1.5 cm | only geometry in the right distance regime for a head-worn device |
+| phone in pocket | mean of 8 belly positions | 20 cm | 0.8 cm | see A2 — the weakest of the four |
 
 For VR the choice of the ear over the anatomically correct front-of-eyes is forced: rescaling
-front-of-eyes to a headset standoff implies the phantom absorbs about 500 % of the radiated power,
-which is impossible. The deterministic model also derived VR from the ear SAR. The cost is that the
-source sits beside the temple rather than at the forehead, so the SAR distribution inside the head
-differs from a real headset's by an amount we cannot bound.
+front-of-eyes down to a headset standoff makes the phantom absorb more than the radiated power,
+which is impossible. At 2.4 GHz the absorbed fraction comes out at **493–522 %** if the standoff is
+taken as 20 mm, and **756–800 %** at the 15 mm actually modelled. The proxy is non-physical at any
+standoff below about 52 mm. The deterministic model also derived VR from the ear SAR. The cost is
+that the source sits beside the temple rather than at the forehead, so the SAR distribution inside
+the head differs from a real headset's by an amount we cannot bound.
 
-**Still to come:** laptop and tablet will face the same problem. ETAIN had dedicated "on the lap"
-and "on the table" scenarios; GOLIAT does not reproduce them.
+The tablet is the counter-example worth noting: it uses the *same* front-of-eyes proxy that failed
+for VR, and passes the absorbed-power check comfortably (2–4 % across all four phantoms). The
+difference is purely the direction of the rescaling — outward from 20 to 30 cm instead of down to
+1.5 cm. The severity of a proxy substitution is driven by how far the distance law is stretched, not
+by which geometry is borrowed.
 
-Detail: `doc/gaming_stochastification.md`, `doc/vr_stochastification.md`.
+**Still to come:** laptop will face the same problem. ETAIN had dedicated "on the lap" and "on the
+table" scenarios; GOLIAT does not reproduce them.
+
+Detail: `doc/gaming_stochastification.md`, `doc/vr_stochastification.md`,
+`doc/tablet_stochastification.md`.
 
 ---
 
 ## C. Data quality in the delivered SAR simulations
 
-### C1. Large deviations at 700 and 835 MHz for Ella and Thelonious
+### C1. The phantoms disagree with each other far more at 700 and 835 MHz than above 1450 MHz
 
-Relative to their own 1450–5800 MHz plateau, Ella's whole-body SAR sits at 0.29 and 0.39 at the two
-lowest frequencies, and Thelonious's at 0.50 at 700 MHz. Duke and Eartha are smooth. Ella's stated
-input power also deviates at exactly those two frequencies (813 / 636.9 mW against 267 / 228 for
-everyone else).
+Whole-body SAR from the front-of-eyes geometry, mW/kg per 1 W, on the raw simulated grid:
+
+| MHz | Duke | Ella | Thelonious | Eartha | spread (max/min) |
+|---|---|---|---|---|---|
+| **700** | 2.64 | **0.39** | 1.71 | 2.87 | **7.3×** |
+| **835** | 2.34 | **0.40** | 4.24 | 2.32 | **10.7×** |
+| 1450 | 1.15 | 1.33 | 2.80 | 2.01 | 2.4× |
+| 2140 | 1.20 | 1.08 | 4.00 | 2.70 | 3.7× |
+| 2450 | 1.18 | 1.43 | 4.34 | 2.85 | 3.7× |
+| 3500 | 0.82 | 1.33 | 3.07 | 1.91 | 3.8× |
+| 5200 | 0.66 | 0.98 | 2.26 | 1.53 | 3.4× |
+| 5800 | 0.61 | 0.78 | 2.30 | 1.55 | 3.7× |
+
+From 1450 MHz upward the four phantoms stay within a factor of 2.4–3.8 of each other, which is the
+normal between-model variation for different body sizes. At the two lowest frequencies the spread
+widens to 7–11×, driven almost entirely by **Ella sitting 4–7× below the other three**. Thelonious
+adds a second symptom: his value jumps by +149 % from 700 to 835 MHz in the same geometry, where the
+others move by at most ±13 %. Duke and Eartha are well behaved in absolute terms.
+
+Ella's stated input power also deviates at exactly these two frequencies (813 / 636.9 mW against
+267 / 228 for everyone else).
+
+**A caution on how this is measured.** Normalising each phantom to its *own* high-frequency plateau
+instead — as an earlier version of this entry did — makes Duke look like the outlier (2.8× his own
+plateau at 700 MHz). That is an artefact: Duke's high-frequency values are simply the lowest of the
+four, so his plateau is low and everything is large relative to it. The absolute comparison above is
+the one that supports a conclusion.
 
 Investigated as a possible import or normalisation error and **ruled out** as such — the import
-reproduces Duke's existing values byte-for-byte. This is understood to be the well-known large
-uncertainty of SAR simulations at low frequencies. **No correction is applied.**
+reproduces Duke's existing values byte-for-byte, and for Duke, Thelonious and Eartha our
+normalisation matches the institutes' own to the bit (§C4). This is understood to be the well-known
+large uncertainty of SAR simulations at low frequencies. **No correction is applied.**
 
 Affects the 700, 800 and 900 MHz model frequencies, which carry about 44 % of 4G use and half of 2G
 and 3G each.
@@ -171,8 +212,10 @@ Detail: `doc/SAR_IMPORT_NOTES.md` §5.0–5.2.
 ### C2. One extreme value in the Thelonious belly data
 
 `Thelonious_body_700_belly_left_vertical_sar` is 2.7 % of the same position's 1450 MHz value, where
-neighbouring belly positions sit at 40–80 %. Consistently low at both 700 and 835 MHz, which argues
-for genuine weak coupling rather than a numerical artefact. Kept as delivered.
+the other seven belly positions sit at 18–80 % (center_vertical 41, center_horizontal 71,
+left_horizontal 18, right_vertical 40, right_horizontal 65, up_vertical 42, up_horizontal 80).
+It is the clear outlier, and consistently low at both 700 and 835 MHz, which argues for genuine weak
+coupling rather than a numerical artefact. Kept as delivered.
 
 Detail: `doc/SAR_IMPORT_NOTES.md` §5.2.
 
@@ -180,14 +223,34 @@ Detail: `doc/SAR_IMPORT_NOTES.md` §5.2.
 
 The WiFi power specifications use `trunc_lognormal` with `mean == max` (100 mW at 2.4 GHz, 200 mW at
 5 GHz — the EU EIRP limits). The realised mean therefore comes out about 21 % below the nominal
-value: 79 instead of 100, 158 instead of 200. This is consistent across mobile call, mobile data,
-gaming and VR, so it is a model-wide convention rather than a local slip, but it means the nominal
-means in the yaml are not the means that are actually drawn.
+value: 79.0 instead of 100, 158.0 instead of 200 (20 000 draws). This is consistent across mobile
+call, mobile data, gaming, VR and tablet, so it is a model-wide convention rather than a local slip,
+but it means the nominal means in the yaml are not the means that are actually drawn.
 
 **Status:** open, deliberately not changed. Correcting it would raise the WiFi contribution of
-several sources by about 26 %.
+several sources by about 27 %.
 
-### C4. Body masses are not stored in the model
+### C4. Ella's normalisation is the only one with no independent cross-check
+
+Each institute ships a `<sheet>_normalized` companion in which it performed the 1 W division
+itself, so our own normalisation can be checked against a second derivation. Since UGent's
+consolidated workbook arrived (2026-09-17) that check covers Duke, Thelonious and Eartha, and all
+three agree to the bit — except two known Duke cells at 1e-7, explained in
+`doc/SAR_IMPORT_NOTES.md` §5.5.
+
+**TP delivered Ella's `_normalized` sheets as empty placeholders** — every SAR column blank. Her
+values therefore rest entirely on our own division by the stated `Input Power (mW)` column, with
+nothing to compare against. This is uncomfortable precisely for Ella, because she is also the
+phantom whose stated input power is anomalous at the two lowest frequencies (813 and 636.9 mW
+against 267 and 228 for everyone else), which is the same place her whole-body SAR falls 4–7× below
+the other three phantoms (§C1). Since the normalisation is a division by exactly that stated power,
+a normalisation error and a genuine simulation property would look alike here, and we cannot
+currently separate them.
+
+**Status:** open. A question to TP is drafted in `doc/SAR_IMPORT_NOTES.md` §6. Low effort to close
+if they can supply filled normalized sheets or confirm the power convention.
+
+### C5. Body masses are not stored in the model
 
 Only `height` is in the yaml. Body mass is needed for the absorbed-power sanity check (whole-body
 SAR × mass ≤ radiated power), which is the check that ruled out the front-of-eyes proxy for VR.
@@ -210,6 +273,32 @@ revisited together once the whole model is stochastic.
 | `gaming_duration` | pzero 0.8, mean 600 s | invented, mirroring `dect_duration` |
 | `gaming_online_prop_a0` | 10 | judgement call between the house default of 100 and the ~0.8 used for behavioural proportions |
 | `gaming_dist_device` | 300 mm | assumed typical handheld viewing distance |
+| `tblt_dur_*_sd` | 700 / 78 / 700 / 78 s | assumed at CV = 0.96, the top of the 0.90–0.96 range mobiledata's three non-zero duration spreads span; the *means* are the unchanged defaults |
+| `tblt_dist_device` | 300 mm, sd 80, 200–500 | the 300 mm mean is a given; spread and bounds assumed. Also: it is *drawn*, and pinning it to a constant is a one-line change if that was the intent |
+| `tblt_*_dutycycle_a0` | borrowed from mobiledata | the same physical quantity, fitted — but see below |
+
+### D1. One borrowed Beta spread transplants badly: `tblt_5000_high_dutycycle`
+
+A Beta's concentration `a0` is not scale-free. The `a0` values for the eight tablet duty cycles were
+taken from mobiledata's fitted WiFi duty cycles, which is sound for seven of them because the means
+agree closely. For 5 GHz high-activity the means do not: 0.145 here against 0.495 for mobiledata.
+With `a0 = 0.4585` the shape parameters become *a* = 0.067 and *b* = 0.392, so the draws collapse
+towards zero — median 0.00015 over 2000 draws, 65 % below 0.01 — while the mean stays at 0.145
+because a thin tail reaches 1.
+
+The **mean** dose is unaffected (a Beta preserves its mean); the variance this injects is not
+physically motivated. Its weight is limited — the high-activity class is 5 % of modelled tablet time
+and the 5 GHz band 42 % of traffic, so about 14 % of the 5 GHz output power. Left as delivered.
+Candidate fixes: the house default `a0 = 100`, or floor `a0` where the distribution stays unimodal
+(`a0 > 1/min(m, 1−m)`, i.e. `> 6.9` at m = 0.145).
+
+**Update 2026-09-18 — a founded value now exists, but is not yet applied.** The parameter workbook
+`data-raw/SDM_parameters_26062026.xlsx` gives this duty cycle as mean 0.14515 with **sd 0.09**,
+which through `a0 = m(1−m)/sd² − 1` yields **`a0` = 14.32** — unimodal, and a measured spread rather
+than a borrowed one. The workbook supplies matching sd values for all eight tablet duty cycles. Left
+unchanged pending the discussion in `doc/PARAMETER_WORKBOOK_NOTES.md` §9.
+
+Detail: `doc/tablet_stochastification.md`, `doc/PARAMETER_WORKBOOK_NOTES.md` §6.3.
 
 ---
 
@@ -217,11 +306,20 @@ revisited together once the whole model is stochastic.
 
 - `R/mobilecall.R:82` contains a leftover `print(params$global$sim)` that floods the console on
   every call.
-- `R/mobilecall.R` reads `params$device$call$phone_positions` with `device` singular while the list
-  key is `devices`. It works only because R does partial matching on `$`; adding a real `device`
-  element would silently turn the position weights into NULL.
+- `params$device$call$phone_positions` is read with `device` singular while the list key is
+  `devices` — **10 occurrences** across three files: `R/mobilecall.R` (6, at lines 489, 509, 528,
+  570, 962, 981), `R/cordless.R` (2, at 90 and 117) and `R/mobiledata.R` (2, at 509 and 543). It
+  works only because R does partial matching on `$`; adding a real `device` element would silently
+  turn every position weight into NULL.
 - `tests/testthat/test-get-other-dose.R` calls `get_other_dose()`, a function that does not exist in
   the package, and passes a `duration_tracker` argument that `other_dose_wrapper()` never had. The
   file has been dead for some time.
 - `params.yaml` and `params_template.yaml` disagree on the legacy VR SAR values by a factor of
-  1.6–1.9 with nothing explaining it. Both are now retired by the stochastic VR implementation.
+  1.6–1.9 with nothing explaining it. The same applies to the legacy tablet SAR values (factor 1.12
+  at brain 2.4 GHz, 1.96 at brain 5 GHz). All are now retired by the stochastic implementations.
+- `tests/testthat/test-tablet.R` had reference values that no longer matched the code it tested: it
+  expected `tablet_dose(brain) = 12.19` where the deterministic implementation returned 14.68, and
+  its `tablet_sar` expectations were the `params_template.yaml` numbers while the calls ran against
+  `params.yaml`. Fixed as part of the tablet stochastification, but worth knowing that the shipped
+  testthat suite is not a reliable regression net — `test-get-cordless-dose.R` still calls
+  `get_cordless_dose()`, which no longer exists either.
