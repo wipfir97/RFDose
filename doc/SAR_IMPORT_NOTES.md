@@ -87,19 +87,25 @@ phantom and position. The slide appears to be incomplete rather than the data be
 |---|---|---|---|
 | Duke | `Duke_male_adult_NF.xlsx` | — | raw + `*_normalized` for fronteyes/belly/ear |
 | Ella | `Final_Data_TP_Ella_NF_normalized.xlsx` | TP | raw + `*_normalized` (**the normalized sheets are entirely empty — all NA**) |
-| Thelonious | `Final_Data_UGent_Thelonious_NF.xlsx` | UGent | raw only (`fronteyes`, `belly`, `cheek`) |
-| Eartha | `Final_Data_UGent_Eartha_NF.xlsx` | UGent | raw only (`fronteyes`, `belly`, `cheek`) |
+| Thelonious | `Final_Data_UGent_normalized.xlsx` | UGent | raw + `*_normalized` (`fronteyes`, `belly`, `ear`) |
+| Eartha | `Final_Data_UGent_normalized.xlsx` | UGent | raw + `*_normalized` (`fronteyes`, `belly`, `ear`) |
+
+Thelonious and Eartha now come from one consolidated UGent workbook. It replaced the two
+per-phantom files `Final_Data_UGent_{Thelonious,Eartha}_NF.xlsx` on 2026-09-17 — see §5.6 for what
+that correction did and did not change.
 
 The workbooks are not consistent with each other. Differences that had to be handled:
 
 - **Sheet names**: `Ella_front` vs `*_fronteyes`; `Ella_ ear` contains a stray space;
-  UGent uses `_cheek` where Duke uses `_ear`.
+  UGent's superseded files used `_cheek` where Duke uses `_ear` (the consolidated workbook uses
+  `_ear`).
 - **Column names**: `frequency_mhz` vs `frequency_MHz`; `Input Power (mW)` vs
   `Input power (mW)` (lowercase p, Duke's ear sheet) vs `Input Power  (mW)` (two spaces, Ella);
   `SAR_brain (mW/kg)` vs `SAR averagedbrain(mW/kg)` (Ella).
 - **Column order** differs between Ella and Duke, so columns are resolved by name, never by position.
-- **Placement names**: UGent uses `cheek_1_base`, `cheek_2_up`, `cheek_3_down`,
-  `tilt_1_base`, `tilt_2_up`, `tilt_3_down`; Duke and Ella use `cheek_1` … `tilt_3`.
+- **Placement names**: UGent's superseded files used `cheek_1_base`, `cheek_2_up`, `cheek_3_down`,
+  `tilt_1_base`, `tilt_2_up`, `tilt_3_down`; Duke, Ella and the consolidated UGent workbook use
+  `cheek_1` … `tilt_3`. The importer still strips the suffixes, so both spellings work.
 - **Data types**: Duke's `SAR_trunk` column is text because one cell contains `<<<`. The importer
   refuses non-numeric columns rather than silently coercing them to NA.
 
@@ -153,6 +159,32 @@ in the yaml:
 
 This confirms the interpolation, the placement renaming, the tissue mapping and the numeric
 formatting are exactly what produced Duke's existing numbers.
+
+**Normalisation cross-check against the institutes (validation C, added 2026-09-17).** Each
+workbook ships a `<sheet>_normalized` companion in which the institute did the 1 W division itself.
+The importer now compares its own per-row normalisation against those sheets:
+
+| phantom | fronteyes | belly | ear |
+|---|---|---|---|
+| Duke | 1.8e-15 | 0 | **1.1e-07** (2 cells) |
+| Ella | *empty sheet* | *empty sheet* | *empty sheet* |
+| Thelonious | 0 | 0 | 0 |
+| Eartha | 0 | 0 | 0 |
+
+*(max relative deviation between our normalisation and theirs)*
+
+Duke's two ear brain cells are the rounded constants described in §5.5 — expected, and the reason
+the run aborts only above 1e-6 rather than at exact equality. Everything else agrees to the bit.
+
+This check only became possible for Thelonious and Eartha with the consolidated workbook; before
+that, only Duke's normalisation was verifiable against an independent derivation. **Ella remains the
+one phantom with no cross-check at all**, because TP delivered her `_normalized` sheets as empty
+placeholders. Her values rest entirely on our own division by the stated input power — which is
+also the phantom with the anomalous 813 / 636.9 mW powers at 700 and 835 MHz (§5.1).
+
+**Idempotence.** Re-running the importer on an already-imported yaml reports `0 lines changed` and
+leaves both files byte-identical. A non-zero diff on a re-run therefore means the source data
+changed, not that the script is noisy.
 
 **Other checks:** both yaml files parse; each phantom has 220 non-zero values per tissue and 134
 zeros that are exactly the `xxxx`/`yyyy`/`zzzz` placeholder bands plus the two `headp_else` keys;
@@ -341,6 +373,46 @@ anomaly; the key set is unchanged.
 Nothing else moved: Duke's `body` block is byte-identical to before, and the gaming reference dose
 still reads exactly 0.3238162 mJ/kg/day.
 
+### 5.6 UGent head/trunk correction (2026-09-17) — no effect on the model
+
+UGent delivered `Final_Data_UGent_normalized.xlsx`, superseding the two per-phantom files. The
+covering mail: the earlier delivery *"had a mix-up for the head and trunk SAR data, which you had
+already received back in December."*
+
+Every column was compared against the superseded files, position by position and frequency by
+frequency, after stripping the placement suffixes:
+
+| column | status |
+|---|---|
+| `SAR_wholebody` | unchanged, max relative deviation **8.3e-13** |
+| `SAR_brain` | unchanged, deviation **exactly 0** |
+| input power, frequencies, placements | unchanged |
+| `SAR_head` | **recomputed**, factors 0.10× to 17× |
+| `SAR_trunk` | **recomputed**, factors 0.10× to 23× |
+| `psSAR10g_eyes`, `psSAR10g_skin`, `psSAR10g_brain` | **newly added** |
+
+The head and trunk factors vary per row, frequency and position, so this is a genuine
+recomputation rather than a rescaling or a swapped pair of columns. Two things were explicitly
+ruled out: the phantoms were **not** swapped with each other (cross-comparing new Thelonious against
+old Eartha gives deviations of 100–3600 %), and head/trunk were **not** simply exchanged.
+
+**`TISSUES` maps only `wholebody` → `body` and `brain` → `brain`, so the corrected columns are
+never read.** The import was re-run anyway, so that the yaml demonstrably derives from the
+authoritative file. The result:
+
+- 427 lines changed in each yaml, all of them `Thelonious_body_*` (219) and `Eartha_body_*` (208)
+- **no `brain` line changed**, and Duke and Ella were untouched
+- maximum relative change **8.3e-13**, median 8.3e-14, no line above 1e-9
+
+That is the floating-point noise from the last table above, surfacing in the 15-digit yaml output:
+the regenerated workbook stores the same numbers with marginally different binary rounding. It is
+twelve orders of magnitude below the uncertainty of the simulations themselves and changes no
+result. It was absorbed once so that future re-runs stay at a clean zero diff.
+
+The correction also removed the `_base`/`_up`/`_down` placement suffixes, which independently
+confirms the reading in §5.4: the ordinal number is the identifier and the suffixes were
+descriptive only.
+
 ---
 
 ## 6. Questions for the data providers
@@ -356,10 +428,11 @@ The low-frequency deviations are **not** raised as errors (§5.0), and the ear n
 > intended?
 
 **Optional, low priority (UGent):**
-> In `Final_Data_UGent_Thelonious_NF.xlsx` the whole-body SAR for `belly_level_left_vertical` at
-> 700 and 835 MHz is roughly 30× below the neighbouring belly positions. We assume this is genuine
-> weak coupling for that orientation rather than a run artefact, but a quick confirmation would let
-> us close the question.
+> In `Final_Data_UGent_normalized.xlsx`, sheet `Thelonious_belly`, the whole-body SAR for
+> `belly_level_left_vertical` at 700 and 835 MHz is roughly 30× below the neighbouring belly
+> positions. We assume this is genuine weak coupling for that orientation rather than a run
+> artefact, but a quick confirmation would let us close the question. (Unchanged by the
+> September 2026 head/trunk correction — see §5.6.)
 
 ---
 
@@ -372,8 +445,13 @@ The low-frequency deviations are **not** raised as errors (§5.0), and the ear n
 - **Decided:** the delivered values are kept as they are, including the low-frequency deviations
   (§5.0). No correction factors are applied to any phantom. Duke was regenerated through the same
   script for consistency (§5.5).
-- **Nothing substantive is open.** The ear naming is resolved (§5.4) and the low-frequency
-  deviations are understood as a property of the simulations (§5.0).
+- **Nothing substantive is open.** The ear naming is resolved (§5.4, independently confirmed by
+  UGent dropping the suffixes in §5.6) and the low-frequency deviations are understood as a
+  property of the simulations (§5.0).
+- **UGent's September 2026 correction touched only `SAR_head` and `SAR_trunk`**, which this import
+  does not read. The values the model uses are unchanged; see §5.6. The importer now also
+  cross-checks its own 1 W normalisation against the institutes' `_normalized` sheets for three of
+  the four phantoms (§4).
 - **Worth considering for the model itself:** the project's purpose is to propagate uncertainty, and
   SAR simulation uncertainty at 700–900 MHz is now known to be large. At present the SAR value is
   deterministic once the phantom is drawn — the only SAR-side variation comes from the position

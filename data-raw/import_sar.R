@@ -86,6 +86,29 @@ TISSUES <- c(body = "wholebody", brain = "brain")
 #    One entry per phantom. The sheet names are not consistent between the
 #    providing institutes, hence the explicit mapping. Note "Ella_ ear" really
 #    does contain a space after the underscore.
+#
+#    2026-09-17: Thelonious and Eartha switched to UGent's consolidated workbook
+#    Final_Data_UGent_normalized.xlsx, which supersedes the two per-phantom files
+#    Final_Data_UGent_{Thelonious,Eartha}_NF.xlsx. UGent's covering mail: the
+#    earlier delivery "had a mix-up for the head and trunk SAR data".
+#
+#    That mix-up does NOT affect this import. Verified column by column against
+#    the superseded files:
+#      SAR_wholebody  identical (max rel. deviation 8e-13, floating point noise)
+#      SAR_brain      identical (exactly 0)
+#      input power, frequencies, placements   identical
+#      SAR_head, SAR_trunk                    recomputed, factors 0.1x to 22x
+#      psSAR10g_eyes/skin/brain               newly added
+#    TISSUES below reads only wholebody and brain, so no yaml value changes.
+#    The switch is made anyway so the repo points at the authoritative file, and
+#    because the new workbook ships usable *_normalized sheets (validation C).
+#
+#    Naming changes that came with it, both absorbed by section 3b:
+#      sheet      Thelonious_cheek -> Thelonious_ear
+#      placement  cheek_1_base     -> cheek_1     (the descriptive suffixes are
+#                                                  gone; the ordinal number is
+#                                                  the identifier, as assumed in
+#                                                  doc/SAR_IMPORT_NOTES.md 5.4)
 # =============================================================================
 
 SOURCES <- list(
@@ -96,13 +119,13 @@ SOURCES <- list(
     file   = "Final_Data_TP_Ella_NF_normalized.xlsx",
     sheets = c(fronteyes = "Ella_front", belly = "Ella_belly", ear = "Ella_ ear")),
   Thelonious = list(
-    file   = "Final_Data_UGent_Thelonious_NF.xlsx",
+    file   = "Final_Data_UGent_normalized.xlsx",
     sheets = c(fronteyes = "Thelonious_fronteyes", belly = "Thelonious_belly",
-               ear = "Thelonious_cheek")),
+               ear = "Thelonious_ear")),
   Eartha = list(
-    file   = "Final_Data_UGent_Eartha_NF.xlsx",
+    file   = "Final_Data_UGent_normalized.xlsx",
     sheets = c(fronteyes = "Eartha_fronteyes", belly = "Eartha_belly",
-               ear = "Eartha_cheek"))
+               ear = "Eartha_ear"))
 )
 
 # The 22 position fragments as they appear in the yaml keys. Any placement that
@@ -439,11 +462,67 @@ if (any(!same)) {
   print(d[order(-d$rel), c("k","yaml","mine")], row.names = FALSE)
 }
 
+cat("\n--- 7. validation C: our 1 W normalisation vs the institutes' own ----\n")
+# Every workbook ships a "<sheet>_normalized" companion in which the institute
+# normalised to 1 W itself. Section 4 does that division independently, so the
+# two must agree. Until UGent's consolidated workbook arrived this check was only
+# possible for Duke; it now covers three of the four phantoms.
+#
+# Ella is the exception: TP shipped her _normalized sheets as empty placeholders
+# (every SAR column blank), so there is nothing to compare against and our own
+# normalisation is the only derivation of her values.
+#
+# Duke is expected to show ~1e-7 in exactly 2 of his ear brain cells. Those two
+# cells were typed into his workbook as rounded constants rather than formulas;
+# this script reads the RAW sheet and so bypasses them. See SAR_IMPORT_NOTES 5.5.
+NORM_TOL <- 1e-6   # above this the two derivations genuinely disagree
+norm_ok  <- TRUE
+for (ph in names(SOURCES)) {
+  for (grp in names(SOURCES[[ph]]$sheets)) {
+    raw_sheet <- SOURCES[[ph]]$sheets[[grp]]
+    nrm_sheet <- paste0(raw_sheet, "_normalized")
+    path      <- file.path(DATA, SOURCES[[ph]]$file)
+
+    if (!nrm_sheet %in% excel_sheets(path)) {
+      cat(sprintf("  %-11s %-9s no _normalized companion -- skipped\n", ph, grp))
+      next
+    }
+    d <- suppressMessages(read_excel(path, sheet = nrm_sheet))
+    cols <- vapply(names(COLPAT), function(k) pick_col(d, COLPAT[[k]], k, nrm_sheet),
+                   character(1))
+    theirs <- tibble(
+      placement     = rename_placement(d[[cols[["placement"]]]]),
+      frequency_mhz = as.numeric(d[[cols[["freq"]]]]),
+      wholebody     = suppressWarnings(as.numeric(d[[cols[["wholebody"]]]])),
+      brain         = suppressWarnings(as.numeric(d[[cols[["brain"]]]]))
+    ) %>% arrange(placement, frequency_mhz)
+
+    if (all(is.na(theirs$wholebody)) && all(is.na(theirs$brain))) {
+      cat(sprintf("  %-11s %-9s _normalized sheet is empty -- skipped\n", ph, grp))
+      next
+    }
+    ours <- read_and_normalise(ph, grp, verbose = FALSE) %>%
+      arrange(placement, frequency_mhz)
+    stopifnot(identical(ours$placement,     theirs$placement),
+              identical(ours$frequency_mhz, theirs$frequency_mhz))
+
+    dev  <- c(abs(ours$wholebody / theirs$wholebody - 1),
+              abs(ours$brain     / theirs$brain     - 1))
+    worst <- max(dev, na.rm = TRUE)
+    cat(sprintf("  %-11s %-9s %3d values  max rel. deviation %8.2e  (%d above 1e-12)  %s\n",
+                ph, grp, length(dev), worst, sum(dev > 1e-12, na.rm = TRUE),
+                if (worst < NORM_TOL) "ok" else "MISMATCH"))
+    norm_ok <- norm_ok && worst < NORM_TOL
+  }
+}
+if (!norm_ok)
+  stop("our 1 W normalisation disagrees with an institute's _normalized sheet")
+
 # =============================================================================
 # 10. WRITE
 # =============================================================================
 
-cat("\n--- 7. write ---------------------------------------------------------\n")
+cat("\n--- 8. write ---------------------------------------------------------\n")
 if (!WRITE_YAML) {
   cat("  WRITE_YAML is FALSE -- dry run, nothing written.\n")
   cat("  Set WRITE_YAML <- TRUE at the top to apply.\n")
