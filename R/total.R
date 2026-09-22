@@ -155,6 +155,10 @@ get_total_dose <- function(
     tblt_dur_lowmed = sim_params$global$input_stoch$tblt_duration$tblt_dur_lowmed
     tblt_dur_medhigh = sim_params$global$input_stoch$tblt_duration$tblt_dur_medhigh
     tblt_dur_high = sim_params$global$input_stoch$tblt_duration$tblt_dur_high
+    lptp_dur_low = sim_params$global$input_stoch$lptp_duration$lptp_dur_low
+    lptp_dur_lowmed = sim_params$global$input_stoch$lptp_duration$lptp_dur_lowmed
+    lptp_dur_medhigh = sim_params$global$input_stoch$lptp_duration$lptp_dur_medhigh
+    lptp_dur_high = sim_params$global$input_stoch$lptp_duration$lptp_dur_high
 
 
     # Calculate contribution of each exposure source ============================
@@ -211,14 +215,14 @@ get_total_dose <- function(
       params           = old_params
       )
 
-    ## Calculate laptop contribution DETERMINISTIC--------------------------------------------
+    ## Calculate laptop contribution STOCHASTIC-----------------------------------------------
     lptp_dose <- laptop_dose(
       tissue      = tissue,
-      dur_low     = sample$lptp_dur_low,
-      dur_lowmed  = sample$lptp_dur_lowtomed,
-      dur_medhigh = sample$lptp_dur_medtohigh,
-      dur_high    = sample$lptp_dur_high,
-      params      = old_params
+      dur_low     = lptp_dur_low,
+      dur_lowmed  = lptp_dur_lowmed,
+      dur_medhigh = lptp_dur_medhigh,
+      dur_high    = lptp_dur_high,
+      params      = sim_params
       )
 
     ## Calculate tablet contribution STOCHASTIC-----------------------------------------------

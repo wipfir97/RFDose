@@ -106,6 +106,36 @@ global:
       tblt_dur_high_sd: 78
       tblt_dur_high_min: 0.00
       tblt_dur_high_max: 28800.0
+    lptp_duration:
+      # PLACEHOLDER spreads, exactly as for tblt_duration above. The means are
+      # the existing defaults from defaultvariables.yaml, unchanged; they sum to
+      # 4372 s, which matches the parameter workbook's lptp_duration of 4371.
+      # The sd values are ASSUMED at a coefficient of variation of 0.96.
+      distribution: "trunc_lognormal"
+      lptp_dur_low_mean: 1967
+      lptp_dur_low_sd: 1888
+      lptp_dur_low_min: 0.00
+      lptp_dur_low_max: 28800.0
+      lptp_dur_lowmed_mean: 219
+      lptp_dur_lowmed_sd: 210
+      lptp_dur_lowmed_min: 0.00
+      lptp_dur_lowmed_max: 28800.0
+      lptp_dur_medhigh_mean: 1967
+      lptp_dur_medhigh_sd: 1888
+      lptp_dur_medhigh_min: 0.00
+      lptp_dur_medhigh_max: 28800.0
+      lptp_dur_high_mean: 219
+      lptp_dur_high_sd: 210
+      lptp_dur_high_min: 0.00
+      lptp_dur_high_max: 28800.0
+    lptp_position:
+      # Share of laptop time with the device on the lap rather than on a table.
+      # The mean is the existing deterministic value (legs_prop 0.2), which the
+      # parameter workbook confirms as lptp_lap_prop. a0 is the house default,
+      # as for dect_position. The table share is 1 - lap share.
+      distribution: "beta"
+      lptp_lap_prop_mean: 0.2
+      lptp_lap_prop_a0: 100
     vr_duration:
       # PLACEHOLDER. vr_duration is 0 in every default file, so there is no
       # observed VR usage in the pipeline to calibrate against. pzero 0.95 and a
@@ -219,28 +249,75 @@ devices:
       tblt_dist_device_min: 200
       tblt_dist_device_max: 500
   lptp:
-    wifi_2_low_dutycycle: 0.009
-    wifi_2_lowmed_dutycycle: 0.025
-    wifi_2_medhigh_dutycycle: 0.176
-    wifi_2_high_dutycycle: 0.669
-    wifi_5_low_dutycycle: 0.03055
-    wifi_5_lowmed_dutycycle: 0.052275
-    wifi_5_medhigh_dutycycle: 0.064
-    wifi_5_high_dutycycle: 0.14515
-    wifi_2_pwr: 100
-    wifi_5_pwr: 200
-    legs_prop: 0.2
-    tabl_prop: 0.8
-    brain:
-      wifi_2_legs_sar: 5.18942E-05
-      wifi_2_tabl_sar: 6.89201E-05
-      wifi_5_legs_sar: 6.75E-06
-      wifi_5_tabl_sar: 9.50E-06
-    body:
-      wifi_2_legs_sar: 0.005001918
-      wifi_2_tabl_sar: 0.001261547
-      wifi_5_legs_sar: 0.003303364
-      wifi_5_tabl_sar: 0.000883944
+    # Laptop connected over WiFi, in two positions: on the lap and on a table.
+    #
+    # No laptop-specific SAR simulation exists in GOLIAT. The deterministic model
+    # used dedicated ETAIN "on the lap" and "on the table" scenarios, and unlike
+    # tblt and gaming -- whose values were copies of wifi_*_headp_face_sar -- the
+    # laptop values were genuinely its own and are reused nowhere else. They are
+    # retired here.
+    #
+    # Both positions now use the mean of the eight belly positions from the call
+    # SAR tables, differing only in distance. The WiFi antennas sit in the screen
+    # bezel, so in both positions the source faces the torso at roughly sternum
+    # height -- front_of_eyes, which assumes a source at eye level in front of the
+    # face, does not describe a laptop.
+    #
+    # Deliberately kept simple: the seated posture of a real laptop user is NOT
+    # modelled, and the brain distance uses the same height/2 hypotenuse as
+    # mobiledata and gaming. See doc/laptop_stochastification.md.
+    pwr:
+      distribution: "trunc_lognormal"
+      lptp_2400_pwr_mean: 100
+      lptp_2400_pwr_sd: 30
+      lptp_2400_pwr_min: 0.001
+      lptp_2400_pwr_max: 100
+      lptp_5000_pwr_mean: 200
+      lptp_5000_pwr_sd: 60
+      lptp_5000_pwr_min: 0.001
+      lptp_5000_pwr_max: 200
+    dutycycle:
+      # Means unchanged from the deterministic model. The a0 values are computed
+      # from the sd values in the parameter workbook via a0 = m(1-m)/sd^2 - 1,
+      # for the same eight wifi_*_dutycycle entries. Unlike tblt, which borrowed
+      # its a0 from mobiledata's yaml, these come straight from the specification.
+      distribution: "beta"
+      lptp_2400_low_dutycycle_mean: 0.009
+      lptp_2400_low_dutycycle_a0: 355.76
+      lptp_2400_lowmed_dutycycle_mean: 0.025
+      lptp_2400_lowmed_dutycycle_a0: 200.446281
+      lptp_2400_medhigh_dutycycle_mean: 0.176
+      lptp_2400_medhigh_dutycycle_a0: 1.320384
+      lptp_2400_high_dutycycle_mean: 0.669
+      lptp_2400_high_dutycycle_a0: 7.649961
+      lptp_5000_low_dutycycle_mean: 0.03055
+      lptp_5000_low_dutycycle_a0: 31.907442
+      lptp_5000_lowmed_dutycycle_mean: 0.052275
+      lptp_5000_lowmed_dutycycle_a0: 29.963953
+      lptp_5000_medhigh_dutycycle_mean: 0.064
+      lptp_5000_medhigh_dutycycle_a0: 15.64
+      lptp_5000_high_dutycycle_mean: 0.14515
+      lptp_5000_high_dutycycle_a0: 14.318701
+    lptp_distance:
+      # Distance from the antenna to the torso, in mm, per position.
+      #
+      # lap  200 mm: the antenna sits 185 mm above the base plate, which rests on
+      #              the thighs -- almost exactly the 200 mm at which the belly
+      #              scenario was simulated, so this position needs no rescaling.
+      # desk 450 mm: 150 mm typing gap + 220 mm base depth + 70 mm lid setback at
+      #              about 105 degrees.
+      #
+      # The means are derived from device and seating geometry; the spreads and
+      # bounds are ASSUMED. Both positions stay in the far field at both bands.
+      distribution: "trunc_lognormal"
+      lptp_dist_lap_mean: 200
+      lptp_dist_lap_sd: 50
+      lptp_dist_lap_min: 120
+      lptp_dist_lap_max: 350
+      lptp_dist_desk_mean: 450
+      lptp_dist_desk_sd: 110
+      lptp_dist_desk_min: 250
+      lptp_dist_desk_max: 800
   wifi:
     wifi_2_pwr: 0.018
     wifi_5_pwr: 0.013

@@ -49,6 +49,13 @@ global:
       tblt_dur_lowmed: 81
       tblt_dur_medhigh: 728
       tblt_dur_high: 81
+    lptp_duration:
+      lptp_dur_low: 1967
+      lptp_dur_lowmed: 219
+      lptp_dur_medhigh: 1967
+      lptp_dur_high: 219
+    lptp_position:
+      lptp_lap_prop: 0.2
     dect_duration:
       dect_duration: 204
     dect_position:
@@ -100,28 +107,24 @@ devices:
     tblt_distance:
       tblt_dist_device: 300
   lptp:
-    wifi_2_low_dutycycle: 0.009
-    wifi_2_lowmed_dutycycle: 0.025
-    wifi_2_medhigh_dutycycle: 0.176
-    wifi_2_high_dutycycle: 0.669
-    wifi_5_low_dutycycle: 0.03055
-    wifi_5_lowmed_dutycycle: 0.052275
-    wifi_5_medhigh_dutycycle: 0.064
-    wifi_5_high_dutycycle: 0.14515
-    wifi_2_pwr: 100
-    wifi_5_pwr: 200
-    legs_prop: 0.2
-    tabl_prop: 0.8
-    brain:
-      wifi_2_legs_sar: 5.18942E-05
-      wifi_2_tabl_sar: 6.89201E-05
-      wifi_5_legs_sar: 6.75E-06
-      wifi_5_tabl_sar: 9.50E-06
-    body:
-      wifi_2_legs_sar: 0.005001918
-      wifi_2_tabl_sar: 0.001261547
-      wifi_5_legs_sar: 0.003303364
-      wifi_5_tabl_sar: 0.000883944
+    # Laptop over WiFi in two positions. SAR comes from the eight belly positions
+    # of the call tables for both, rescaled from their 200 mm reference to the
+    # position's distance. See doc/laptop_stochastification.md.
+    pwr:
+      lptp_2400_pwr: 100
+      lptp_5000_pwr: 200
+    dutycycle:
+      lptp_2400_low_dutycycle: 0.009
+      lptp_2400_lowmed_dutycycle: 0.025
+      lptp_2400_medhigh_dutycycle: 0.176
+      lptp_2400_high_dutycycle: 0.669
+      lptp_5000_low_dutycycle: 0.03055
+      lptp_5000_lowmed_dutycycle: 0.052275
+      lptp_5000_medhigh_dutycycle: 0.064
+      lptp_5000_high_dutycycle: 0.14515
+    lptp_distance:
+      lptp_dist_lap: 200
+      lptp_dist_desk: 450
   wifi:
     wifi_2_pwr: 0.018
     wifi_5_pwr: 0.013

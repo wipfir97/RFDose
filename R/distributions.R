@@ -45,10 +45,6 @@ simulate_params <- function(duration,
     "mpd_dur_high",
     "dect_duration",
     "dect_ear_prop",
-    "lptp_dur_low",
-    "lptp_dur_lowtomed",
-    "lptp_dur_medtohigh",
-    "lptp_dur_high",
     "hotspot_duration",
     "smartwatch_duration",
     "tracker_duration",
@@ -322,10 +318,39 @@ simulate_params <- function(duration,
     )
   }
 
-  # lptp_dur_low
-  # lptp_dur_lowtomed
-  # lptp_dur_medtohigh
-  # lptp_dur_high
+  ####### laptop
+
+  # lptp_dur_low, lptp_dur_lowtomed, lptp_dur_medtohigh, lptp_dur_high
+  # Four durations, one per usage-intensity class, exactly as for mobile data
+  # and tablet.
+  lptp_durations <- list()
+  if (missing(lptp_dur_low)) {lptp_durations$low <- params_stochastic$global$input_stoch$lptp_duration[[paste0("lptp_dur_low_mean")]]}
+  else{lptp_durations$low <- lptp_dur_low}
+  if (missing(lptp_dur_lowtomed)) {lptp_durations$lowmed <- params_stochastic$global$input_stoch$lptp_duration[[paste0("lptp_dur_lowmed_mean")]]}
+  else{lptp_durations$lowmed <- lptp_dur_lowtomed}
+  if (missing(lptp_dur_medtohigh)) {lptp_durations$medhigh <- params_stochastic$global$input_stoch$lptp_duration[[paste0("lptp_dur_medhigh_mean")]]}
+  else{lptp_durations$medhigh <- lptp_dur_medtohigh}
+  if (missing(lptp_dur_high)) {lptp_durations$high <- params_stochastic$global$input_stoch$lptp_duration[[paste0("lptp_dur_high_mean")]]}
+  else{lptp_durations$high <- lptp_dur_high}
+
+  levels <- c("low","lowmed","medhigh","high")
+  for (l in levels) {
+    params$global$input_stoch$lptp_duration[[paste0("lptp_dur_",l)]] <- evaluate_distribution(
+      dist_name = params_stochastic$global$input_stoch$lptp_duration$distribution,
+      mean =  lptp_durations[[l]],
+      sd   = params_stochastic$global$input_stoch$lptp_duration[[paste0("lptp_dur_",l, "_sd")]],
+      max  = params_stochastic$global$input_stoch$lptp_duration[[paste0("lptp_dur_",l, "_max")]]
+    )
+  }
+
+  # pick lptp_lap_prop (share of laptop time with the device on the lap; the
+  # table share is 1 - this). Behavioural, so it lives in input_stoch.
+  params$global$input_stoch$lptp_position$lptp_lap_prop <- evaluate_distribution(
+    dist_name = params_stochastic$global$input_stoch$lptp_position$distribution,
+    mean = c(params_stochastic$global$input_stoch$lptp_position$lptp_lap_prop_mean,
+             1-params_stochastic$global$input_stoch$lptp_position$lptp_lap_prop_mean),
+    a0 = params_stochastic$global$input_stoch$lptp_position$lptp_lap_prop_a0)[1]
+
   # hotspot_duration
   # smartwatch_duration
   # tracker_duration
@@ -992,6 +1017,52 @@ simulate_params <- function(duration,
     min  = params_stochastic$devices$tblt$tblt_distance$tblt_dist_device_min,
     max  = params_stochastic$devices$tblt$tblt_distance$tblt_dist_device_max
   )
+
+
+  ####### laptop
+
+  # pick pwr
+  lptp_freqs <- c("2400", "5000") # 2.4 GHz and 5.0 GHz
+  for (freq in lptp_freqs) {
+    params$devices$lptp$pwr[[paste0("lptp_", freq, "_pwr")]] <- evaluate_distribution(
+      dist_name = params_stochastic$devices$lptp$pwr$distribution,
+      mean = params_stochastic$devices$lptp$pwr[[paste0("lptp_", freq, "_pwr_mean")]],
+      sd   = params_stochastic$devices$lptp$pwr[[paste0("lptp_", freq, "_pwr_sd")]],
+      min  = params_stochastic$devices$lptp$pwr[[paste0("lptp_", freq, "_pwr_min")]],
+      max  = params_stochastic$devices$lptp$pwr[[paste0("lptp_", freq, "_pwr_max")]]
+    )
+  }
+
+  # pick dc (dutycycle) -- one per band and usage-intensity class, as for mobile
+  # data and tablet. Each carries its own a0.
+  lptp_dutycycle_vars <- c(
+    "lptp_2400_low_dutycycle",
+    "lptp_2400_lowmed_dutycycle",
+    "lptp_2400_medhigh_dutycycle",
+    "lptp_2400_high_dutycycle",
+    "lptp_5000_low_dutycycle",
+    "lptp_5000_lowmed_dutycycle",
+    "lptp_5000_medhigh_dutycycle",
+    "lptp_5000_high_dutycycle")
+
+  for (dc in lptp_dutycycle_vars) {
+    dc_mean <- params_stochastic$devices$lptp$dutycycle[[paste0(dc, "_mean")]]
+    params$devices$lptp$dutycycle[[dc]] <- evaluate_distribution(
+      dist_name = params_stochastic$devices$lptp$dutycycle$distribution,
+      mean = c(dc_mean, 1-dc_mean),
+      a0 = params_stochastic$devices$lptp$dutycycle[[paste0(dc, "_a0")]])[1]
+  }
+
+  # pick distance (antenna to torso, in mm), one per position
+  for (pos in c("lap", "desk")) {
+    params$devices$lptp$lptp_distance[[paste0("lptp_dist_", pos)]] <- evaluate_distribution(
+      dist_name = params_stochastic$devices$lptp$lptp_distance$distribution,
+      mean = params_stochastic$devices$lptp$lptp_distance[[paste0("lptp_dist_", pos, "_mean")]],
+      sd   = params_stochastic$devices$lptp$lptp_distance[[paste0("lptp_dist_", pos, "_sd")]],
+      min  = params_stochastic$devices$lptp$lptp_distance[[paste0("lptp_dist_", pos, "_min")]],
+      max  = params_stochastic$devices$lptp$lptp_distance[[paste0("lptp_dist_", pos, "_max")]]
+    )
+  }
 
 
 
