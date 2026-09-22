@@ -11,7 +11,7 @@ the per-source `doc/<source>_stochastification.md` files. Every entry points the
 **Status of this file:** living document. When an item is settled, move it to §F with the answer and
 the date; do not delete it.
 
-**Last updated:** 2026-09-18
+**Last updated:** 2026-09-22
 
 ---
 
@@ -19,54 +19,30 @@ the date; do not delete it.
 
 These stop current implementation until answered.
 
-### A1. Which SAR geometry should the laptop borrow? — *asked, awaiting reply*
+### A1. How far should the far-field rework go?
 
-GOLIAT simulated three geometries, all of them phone positions: front of eyes (20 cm), belly
-(20 cm), ear (0.8 cm). The deterministic model used two dedicated ETAIN scenarios, "on the lap" and
-"on the table", and unlike tablet and gaming — whose values turned out to be copies of the
-phone-in-front-of-face numbers — the laptop values are genuinely its own and are reused nowhere
-else. Neither remaining geometry describes a laptop.
+Far-field SAR for all four phantoms arrived 2026-09-17 (`data-raw/Final_Data_*_UGent_FF.xlsx`,
+9 frequencies x 12 incidence directions, normalised to 1 W/m2). Not imported; nothing reads them.
 
-A refinement emerged after the question was sent: the WiFi antennas sit in the screen bezel, so in
-**both** scenarios the source is at roughly sternum height with a nearly horizontal path to the
-body. That argues for the **belly** geometry in both cases, differing only in distance, rather than
-front-of-eyes for the table case. It also means every laptop distance (30–60 cm) and the 20 cm
-reference are all in the far field at both bands, so the distance law is on firmer ground here than
-anywhere else in the model.
+Two independent decisions: **axis 1**, make the existing inputs stochastic (exposure levels,
+time-at-location, country, urbanicity, travel time); **axis 2**, replace the single SAR scalar with
+the phantom-resolved tables. Neither needs the other.
 
-**Why it matters:** laptop is by a wide margin the largest whole-body contributor among the WiFi
-devices — 173 mJ/kg/day at the deterministic point values, against 13 for tablet on the same basis.
+**The case for doing both:** the model draws sex and age per person, but one SAR value for everyone
+means a simulated child gets the adult's far-field dose. Combining the ETAIN spectrum with the
+GOLIAT phantoms gives, at Other/suburban, body 125 (Duke) / 147 (Ella) / **240 (Thelonious)** /
+201 (Eartha) against today's 136 for all four. Far-field is the largest single contributor, so this
+is a correction, not a refinement.
 
-Detail: the plan and the candidate numbers are in the working notes; §B of
-`doc/MODEL_LIMITATIONS.md` records the general proxy problem.
+**No longer blocked.** B1 is resolved at EU level, so axis 2 is deliverable now. Seven of the ten
+bands need interpolating onto the ETAIN grid, the same mechanism as `import_sar.R`; the newly
+simulated 450 MHz fills the `<700` bucket that previously had to borrow the 700 MHz value.
 
-### A2. How far should the far-field rework go?
+Open sub-decisions: one spectrum or five (B1); average the 12 incidence directions or draw them
+(spread across directions is a factor 1.5-4.7, growing with frequency); and whether to convert
+`wifi.R` in the same release, since it shares the units and the SAR basis.
 
-Far-field SAR simulations for all four phantoms arrived on 2026-09-17 (four `*_FF.xlsx` files in
-`data-raw/`, 9 frequencies × 12 incidence directions, already normalised to 1 W/m²). They are **not
-imported** and nothing in the code reads them.
-
-This splits into two genuinely independent decisions:
-
-| | what | needs the new data? |
-|---|---|---|
-| axis 1 | make the existing inputs stochastic — ambient exposure levels, time-at-location proportions, country | no |
-| axis 2 | replace the single SAR scalar with phantom-, frequency- and direction-resolved tables | yes |
-
-**The argument for coupling them:** the model already draws sex and age per person, but with one SAR
-value for everyone a simulated child receives exactly the adult's far-field dose. The new data says
-a child absorbs 1.7–2.1× more per unit incident power. Far-field is the single largest contributor
-to the total dose, so this is a substantive correction rather than a refinement.
-
-**The complication:** using the frequency resolution requires the frequency composition of the
-ambient exposure, which is missing (see B1). Averaging over frequencies instead is possible but the
-frequency dependence is as strong as the phantom effect (factor 2.2 against 1.9), and a flat average
-would *lower* the adult doses by about 16 % as an artefact of the weighting. A conservative middle
-option is to apply only the phantom ratios and keep today's overall level as the Duke reference.
-
-Detail: `doc/farfield_notes.md` does not exist yet; the analysis is in the working notes.
-
-### A3. Tablet viewing distance — drawn or fixed? — *flagged, never answered*
+### A2. Tablet viewing distance — drawn or fixed? — *flagged, never answered*
 
 The instruction was "always 30 cm in front of the face". That was read as settling the *position*
 question (front of eyes rather than a belly mix), not as fixing the distance to a constant, so
@@ -79,13 +55,18 @@ Detail: `doc/tablet_stochastification.md`, "Assumptions to be revisited".
 
 ## B. Waiting on data from collaborators
 
-### B1. Frequency composition of the ambient far-field exposure — *Adriana*
+### B1. Frequency composition of the ambient exposure, per environment — *Adriana*
 
-The measured exposure levels are one number per country × environment (`home_sub_pwr_Other: 0.27`
-mW/m² and so on). To use the new frequency-resolved far-field SAR we need to know how that level
-splits across bands. The parameter workbook already defines the structure —
-`frq7/8/9/18/21/24/26/35/50_ff_<environment>_prop`, Dirichlet, attributed to Adriana — but **every
-value is empty**. This blocks the full version of A2.
+**Largely resolved.** The EU-level spectrum is in
+`data-raw/Input_dose_model_Final_ETAIN_nSAR.xlsx`, sheet `Farfield` row 5, attributed to
+"Adriana_2023_EU": 0.08 / 0.04 / 0.15 / 0.17 / 0.23 / 0.15 / 0.02 / 0.07 / 0.07 / 0.02 over
+<700 / 700 / 800 / 900 / 1800 / 2100 / 2450 / 2600 / 3500 / 5000 MHz, summing to 1. Verified: that
+spectrum times ETAIN's per-band SAR reproduces its aggregated nSAR to seven digits. The spectrum is
+markedly low-frequency — 1800 MHz alone carries 23 %, the two WiFi bands 4 % together.
+
+Still missing is the **per-environment refinement**. The SDM workbook defines one set per
+environment (indoor / outdoor_low / outdoor_high / trans_peak / trans_offpeak) and all 45 cells are
+empty; ETAIN has one set for everything. Work can start with the single set.
 
 ### B2. Spreads for every source except mobile call and mobile data — *Hamed*
 
@@ -184,7 +165,41 @@ The workbook gives mean 2 with bounds 0–2; its own comment says *"this can not
 0, 1 (14 %), or 2 (86 %)"*, which implies 1.86; the yaml draws it from a Beta with mean 0.95, which
 can only produce values in [0, 1]. A Beta cannot represent a count of earpieces.
 
-### C8. The far-field environment scheme does not match the code
+### C8. The belly-proxy brain geometry assumes a standing user, and `height/2` is too large
+
+Four sources rescale a belly SAR value to the brain through the hypotenuse
+`sqrt((height/2)² + d²)` against `sqrt((height/2)² + 200²)`: `mobilecall` (2 places),
+`mobiledata` (1), `gaming` (1) and now `laptop` (1). Two separate problems sit in that `height/2`.
+
+**It does not match the anatomy.** The navel sits at roughly 0.60 of stature and the brain centre at
+roughly 0.94, so the belly-to-brain offset is about `height/3`, not `height/2`. For Duke the
+convention says 885 mm where anatomy says about 600 mm — an overestimate of roughly 50 %, in every
+source that uses it.
+
+**It assumes the simulation and the modelled scenario share the same offset.** `height/2` appears in
+both numerator and denominator, so the formula only rescales the *horizontal* component. That is
+right when the modelled scenario matches the simulated one (phone at the belly, standing). It is not
+right for a laptop, where the antenna sits in the screen bezel about 20 cm above belly height, nor
+for a handheld console held at chest level. Deriving the antenna-to-brain distance directly for a
+seated laptop user gives 444–633 mm against the convention's 614–988 mm.
+
+**Size of the effect, measured on laptop:** the antenna-height correction alone is worth about +35 %
+on the brain dose; using directly derived distances is worth about ×2.8.
+
+**Why it was left alone.** The brain channel through a belly proxy is the least trustworthy part of
+the model — §A1 of `doc/MODEL_LIMITATIONS.md` measures the bare position effect for the brain at a
+factor of 4.2 to 105.7 — so a 2.8× refinement sits below the noise of the method that computes it.
+And a correct treatment needs the simulation's own geometry, which is documented nowhere; we infer a
+standing phantom with the antenna at belly height from the position names and the Virtual Population
+postures, but that is an inference.
+
+**The question:** keep the convention for all four sources, correct `height/2` to something
+anatomical for all four, or introduce separate simulation and scenario offsets? It should be decided
+once for all belly proxies, not per source.
+
+Detail: `doc/laptop_stochastification.md`, "What is deliberately not modelled".
+
+### C9. The far-field environment scheme does not match the code
 
 The workbook splits the day into *indoor / outdoor_low / outdoor_high / trans_peak / trans_offpeak /
 workplace*; `R/farfield.R` uses *home / work / out / travel*. The workbook merges home and work into
@@ -198,24 +213,34 @@ the frequency proportions of B1 are defined per workbook environment.
 These are documented and deliberately left as they are. Listed here only so a supervisor can
 reopen one if they disagree with the call.
 
-| | what | where |
+Section numbers in the last column refer to **`doc/MODEL_LIMITATIONS.md`**, not to this file.
+
+| | what | in MODEL_LIMITATIONS.md |
 |---|---|---|
-| D1 | The inverse-square distance law does not match the data between the two simulated distances (measured 2.5–14.5× where it predicts 216×) | `MODEL_LIMITATIONS.md` §A1 |
+| D1 | The inverse-square distance law does not match the data between the two simulated distances (measured 2.5–14.5× where it predicts 216×) | §A1 |
 | D2 | The phone-in-pocket case rescales the belly geometry from 20 cm to 8 mm — the largest rescaling in the model, applied to the largest whole-body source | §A2 |
 | D3 | Seven of the ten model frequencies are interpolated, two across gaps above 1000 MHz | §A3 |
 | D4 | Phantoms disagree 7–11× at 700 and 835 MHz, against 2.4–3.8× above 1450 MHz; no correction applied | §C1 |
 | D5 | WiFi output power distributions are truncated at their own mean, so the realised mean is 21 % below nominal | §C3 |
-| D6 | All placeholder parameters for VR, gaming and tablet — durations, duty cycles, distances, concentrations | §D |
+| D6 | All placeholder parameters for VR, gaming, tablet and laptop — durations, duty cycles, distances, concentrations | §D |
 
 ---
 
 ## E. Code issues — no decision needed, just work
 
-- **Three sources still read parameter keys that exist only in the legacy `params.yaml`** and error
-  out on a simulated parameter set: `R/laptop.R:156` (`global$wifi_2_prop`), `R/farfield.R:66-68`
-  and `R/wifi.R:18-20` (`global$home_prop` and siblings, which live under
-  `global$environment_prop` everywhere else). Harmless today because `total.R` calls them with
-  `old_params`; it falls due at stochastification.
+- **Two sources still read parameter keys that exist only in the legacy `params.yaml`** and error
+  out on a simulated parameter set: `R/farfield.R:66-68` and `R/wifi.R:18-20`
+  (`global$home_prop` and siblings, which live under `global$environment_prop` everywhere else).
+  Harmless today because `total.R` calls them with `old_params`; it falls due at stochastification.
+  (`R/laptop.R` was the third until 2026-09-21.)
+- **`delta` is hard-coded 18 times and appears in no yaml.** The near-field offset in `dist_law()`
+  is written as a literal `6` at every call site: `mobilecall` (9), `mobiledata` (3), `cordless` (2),
+  `gaming` (2), `tablet` (1), `virtual_reality` (1), plus laptop's two. It only bites below about
+  10 cm — it changes the result by 65 % at 8 mm, 6 % at 100 mm and nothing at the 200 mm reference —
+  so for tablet, laptop and gaming it is irrelevant, and for the ear, the VR standoff and the
+  pant-pocket case it is decisive. Since §A1 of `doc/MODEL_LIMITATIONS.md` identifies `delta` as the
+  most plausible lever for improving the distance law (the data would want about 100 mm, not 6),
+  testing any alternative currently means editing 18 lines. It belongs in the yaml.
 - `R/mobilecall.R:82` contains a leftover `print(params$global$sim)` that floods the console.
 - `params$device$call$phone_positions` is read with `device` singular at 10 places across
   `R/mobilecall.R`, `R/cordless.R` and `R/mobiledata.R`. It works only through partial matching.
@@ -235,6 +260,11 @@ reopen one if they disagree with the call.
 
 | date | question | answer |
 |---|---|---|
+| 2026-09-22 | Do `wifi.R` and `farfield.R` double-count WiFi? | No. Adriana's campaign measured outdoors and in public indoor spaces only, so it never captured a participant's own router. `farfield.R` covers other people's transmitters, `wifi.R` the person's own — disjoint sets, correctly additive. `MODEL_LIMITATIONS.md` §A4 |
+| 2026-09-22 | Are `wifi_2_pwr` 0.018 / `wifi_5_pwr` 0.013 a total already split 58/42, making the dose a factor 1.84 too low? | No. They are HERMES3 personal measurements, the mean of a home and a school value per band (0.01496/0.02167 and 0.00931/0.01653). The apparent 58/42 split is an artefact of rounding to two decimals — the unrounded ratio is 1.418, the band split 1.381. |
+| 2026-09-22 | Where do the far-field exposure levels and the WiFi SAR constants come from? | `data-raw/Input_dose_model_Final_ETAIN_nSAR.xlsx`. The per-country levels are in sheet `Farfield` verbatim; the WiFi SAR are that sheet's far-field per-band values at 2450 and 5000 MHz. The 0.017/0.016 predecessors were 0.08/0.077 V/m converted via E²/377. |
+| 2026-09-22 | Does `params.yaml` disagreeing with the other two on the WiFi SAR indicate an accident? | No — the reverse of what was assumed. `params_stochastic.yaml` and `params_template.yaml` carry the frequency-resolved far-field values at the actual WiFi bands; `params.yaml` still has the older band-independent ETAIN value. The newer files are the correct ones. |
+| 2026-09-21 | Which SAR geometry should the laptop borrow? | Both positions from the belly mean, distinguished only by distance — lap 200 mm, table 450 mm. Deliberately kept simple: the seated posture is not modelled and the brain keeps the `height/2` hypotenuse. `laptop_stochastification.md` |
 | 2026-09-18 | Do the corrected UGent SAR files change the model? | No. The correction was confined to `SAR_head` and `SAR_trunk`, which this model never reads; `SAR_wholebody` and `SAR_brain` are unchanged. `SAR_IMPORT_NOTES.md` §5.6 |
 | 2026-09-17 | Are the UGent ear positions mapped correctly by ordinal number? | Yes — confirmed independently when UGent dropped the `_base`/`_up`/`_down` suffixes. `SAR_IMPORT_NOTES.md` §5.4 |
 | 2026-09-16 | Which position should the tablet use? | Front of eyes throughout, at 30 cm. `tablet_stochastification.md` |

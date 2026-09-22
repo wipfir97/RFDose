@@ -11,7 +11,7 @@ entries when they are resolved, mark them resolved instead.
 currently undecided or awaiting an answer — from supervisors or from the data providers — is
 collected in `doc/OPEN_QUESTIONS.md`, grouped by who can answer it.
 
-**Last updated:** 2026-09-17
+**Last updated:** 2026-09-22
 
 ---
 
@@ -51,6 +51,7 @@ the template point values:
 | gaming | × 0.45 | × 0.94 | 200 mm → 300 mm (outward); brain uses the hypotenuse |
 | tablet | × 0.45 | × 0.45 | 200 mm → 300 mm (outward) |
 | VR | × 0.44 | × 0.44 | 8 mm → 15 mm (outward) |
+| laptop | × 0.36 | × 0.87 | lap 200 mm (neutral) and table 450 mm, mixed 0.2 / 0.8; brain uses the hypotenuse |
 
 *(factor by which the dose changes when the correction is switched **on**, relative to off. Values
 below 1 mean the correction lowers the dose, which is what an outward rescaling must do.)*
@@ -131,6 +132,39 @@ gaming, laptop and tablet.
 
 Detail: `doc/SAR_IMPORT_NOTES.md` §3, and the worked example in `data-raw/import_sar.R` section 5.
 
+### A4. The ambient exposure levels are partly derived, not measured
+
+`farfield.R` and `wifi.R` both multiply an incident power density in mW/m² by a SAR per unit power
+density. The levels come from `data-raw/Input_dose_model_Final_ETAIN_nSAR.xlsx`, sheet `Farfield`,
+which is also where the per-country values in `devices$farf` come from verbatim. Two of the three
+environments in that table are not measurements:
+
+- **Indoor levels are outdoor levels damped by 4.6 dB** — `P_indoor = P_outdoor × 10^(−DF/10)`,
+  attributed to Bürgi et al. Verified: the home/outdoor ratio is 0.345 across all eleven countries
+  and three urbanicities (sd 0.011), against the 0.3467 the formula predicts. Adriana's campaign
+  measured outdoors and in public indoor spaces only, so no home was ever measured.
+- **The "work" levels are school measurements.** The ETAIN column is headed `urban_school`, and the
+  country-specific school/outdoor ratios in the same sheet reproduce the yaml exactly (Austria
+  0.0707 against a measured 0.072). This explains why work/outdoor scatters from 0.07 to 1.32 while
+  home/outdoor is constant. Defensible for a child cohort, but the yaml calls the parameter
+  `work_*_pwr_*` and nothing records the substitution.
+
+**Status:** open, inherited, no fix planned. It bears on the largest single contributor to the total
+dose, and the damping factor is a single constant applied to 69 % of the modelled day.
+
+### A5. `wifi.R`'s SAR values mix two field regimes
+
+`wifi.R` models the person's own router at a few metres — an intermediate-field situation. The ETAIN
+source sheet records that no intermediate-field value existed for 5 GHz: *"At the moment 5 GHz
+intermediate is not avalible and we need to take far field value for it."* The four constants are
+therefore of mixed provenance, which matches what the data shows — the whole-body pair sits within
+1–3 % of Duke's plane-wave far-field SAR, the brain pair does not.
+
+GOLIAT delivered near field (0.8–20 cm) and plane-wave far field, nothing at two or three metres, so
+the gap cannot be closed from the current data.
+
+**Status:** open. Not a defect — a documented substitution with no available alternative.
+
 ---
 
 ## B. Proxy substitutions — sources with no dedicated simulation
@@ -140,10 +174,12 @@ Every source that is not a phone has to borrow one.
 
 | source | proxy used | reference distance | modelled distance | rationale |
 |---|---|---|---|---|
+| laptop on the lap | mean of 8 belly positions | 20 cm | **20 cm** | antenna 185 mm above the base plate on the thighs — *no rescaling at all* |
+| laptop on a table | mean of 8 belly positions | 20 cm | 45 cm | same geometry, further away: typing gap + base depth + lid setback |
 | gaming (handheld console) | mean of 8 belly positions | 20 cm | 30 cm | device held in front of the torso |
-| tablet | mean of 8 front-of-eyes positions | 20 cm | 30 cm | device held up in front of the face — the mildest rescaling in the model |
+| tablet | mean of 8 front-of-eyes positions | 20 cm | 30 cm | device held up in front of the face |
 | VR headset | mean of 6 ear positions | 0.8 cm | 1.5 cm | only geometry in the right distance regime for a head-worn device |
-| phone in pocket | mean of 8 belly positions | 20 cm | 0.8 cm | see A2 — the weakest of the four |
+| phone in pocket | mean of 8 belly positions | 20 cm | 0.8 cm | see A2 — the weakest of the five |
 
 For VR the choice of the ear over the anatomically correct front-of-eyes is forced: rescaling
 front-of-eyes down to a headset standoff makes the phantom absorb more than the radiated power,
@@ -159,8 +195,18 @@ difference is purely the direction of the rescaling — outward from 20 to 30 cm
 1.5 cm. The severity of a proxy substitution is driven by how far the distance law is stretched, not
 by which geometry is borrowed.
 
-**Still to come:** laptop will face the same problem. ETAIN had dedicated "on the lap" and "on the
-table" scenarios; GOLIAT does not reproduce them.
+The laptop is the case where most was given up. Gaming and tablet turned out to be reusing the
+phone-in-front-of-face values, so nothing specific was lost; the laptop's ETAIN "on the lap" and "on
+the table" values were genuinely its own and appear nowhere else. Against that, its *lap* position
+is the only place in the model where a proxy is used **at its own reference distance** — the antenna
+sits 185 mm above the base plate resting on the thighs, so the distance correction is exactly 1.
+
+**A cross-cutting caveat for the belly proxies.** Laptops, and arguably handheld consoles, are used
+seated, while the GOLIAT phantoms stand. Two consequences are known and deliberately not modelled:
+the antenna sits higher than the belly (about 20 cm for a laptop on a table, worth roughly +35 % on
+the brain), and `height/2` overstates the belly-to-brain offset by about 50 % against anthropometric
+norms (worth roughly ×2.8 on the brain). Both apply equally to `mobilecall`, `mobiledata`, `gaming`
+and `laptop`, and are recorded in `doc/OPEN_QUESTIONS.md` §C8 rather than fixed for one source.
 
 Detail: `doc/gaming_stochastification.md`, `doc/vr_stochastification.md`,
 `doc/tablet_stochastification.md`.
@@ -276,6 +322,15 @@ revisited together once the whole model is stochastic.
 | `tblt_dur_*_sd` | 700 / 78 / 700 / 78 s | assumed at CV = 0.96, the top of the 0.90–0.96 range mobiledata's three non-zero duration spreads span; the *means* are the unchanged defaults |
 | `tblt_dist_device` | 300 mm, sd 80, 200–500 | the 300 mm mean is a given; spread and bounds assumed. Also: it is *drawn*, and pinning it to a constant is a one-line change if that was the intent |
 | `tblt_*_dutycycle_a0` | borrowed from mobiledata | the same physical quantity, fitted — but see below |
+| `lptp_dur_*_sd` | 1888 / 210 / 1888 / 210 s | assumed at CV 0.96, as for tablet; the *means* are the unchanged defaults |
+| `lptp_dist_lap` | 200 mm, sd 50, 120–350 | the mean is derived from device geometry (antenna 185 mm above the base plate on the thighs); spread and bounds assumed |
+| `lptp_dist_desk` | 450 mm, sd 110, 250–800 | the mean is derived (150 mm typing gap + 220 mm base depth + 70 mm lid setback); spread and bounds assumed |
+| `lptp_lap_prop_a0` | 100 | house default; the mean 0.2 is the existing value and is confirmed by the parameter workbook |
+
+Laptop is the one non-phone source whose duty cycle spreads are **not** assumed: its eight `a0`
+values are computed from the sd values in `SDM_parameters_26062026.xlsx`. Two of them come out
+U-shaped, but that is what the specification's own (mean, sd) pairs say — unlike the tablet case
+below, it is not a transplant artefact.
 
 ### D1. One borrowed Beta spread transplants badly: `tblt_5000_high_dutycycle`
 
@@ -314,9 +369,12 @@ Detail: `doc/tablet_stochastification.md`, `doc/PARAMETER_WORKBOOK_NOTES.md` §6
 - `tests/testthat/test-get-other-dose.R` calls `get_other_dose()`, a function that does not exist in
   the package, and passes a `duration_tracker` argument that `other_dose_wrapper()` never had. The
   file has been dead for some time.
-- `params.yaml` and `params_template.yaml` disagree on the legacy VR SAR values by a factor of
-  1.6–1.9 with nothing explaining it. The same applies to the legacy tablet SAR values (factor 1.12
-  at brain 2.4 GHz, 1.96 at brain 5 GHz). All are now retired by the stochastic implementations.
+- `params.yaml` and `params_template.yaml` disagree on the legacy SAR values of VR (factor 1.6–1.9),
+  tablet (1.12 at brain 2.4 GHz, 1.96 at brain 5 GHz) and laptop (0.33–2.52, and in opposite
+  directions for brain and body) with nothing explaining it. All are retired as each source is
+  converted. The **wifi** block diverges too, but for a known reason and in the other direction:
+  the two newer files carry ETAIN's frequency-resolved far-field SAR at 2450 and 5000 MHz,
+  `params.yaml` the older band-independent value. Here the newer files are the correct ones.
 - `tests/testthat/test-tablet.R` had reference values that no longer matched the code it tested: it
   expected `tablet_dose(brain) = 12.19` where the deterministic implementation returned 14.68, and
   its `tablet_sar` expectations were the `params_template.yaml` numbers while the calls ran against
