@@ -1,44 +1,79 @@
-# SAR import notes — Ella, Thelonious, Eartha
+# SAR import notes
 
-**Date:** 2026-09-14
-**Scope:** import of the simulated SAR values for the three remaining phantoms into
-`inst/extdata/params_stochastic.yaml` and `inst/extdata/params_template.yaml`.
-**Status:** complete. All four phantoms are imported through one script,
-`data-raw/import_sar.R`. The low-frequency behaviour described in §5 is understood to be an
-inherent property of SAR simulations rather than a data or import error (§5.0), and the ear
-position naming is resolved (§5.4).
+**Date:** 2026-09-14, substantially extended 2026-09-28
+**Scope:** import of the simulated SAR values into `inst/extdata/params_stochastic.yaml` and
+`inst/extdata/params_template.yaml`, for both campaigns.
+**Status:** complete. Everything goes through one script, `data-raw/import_sar.R`. The
+low-frequency behaviour described in §5 is understood to be an inherent property of SAR
+simulations rather than a data or import error (§5.0), and the ear position naming is resolved
+(§5.4).
+
+Sections 1, 3 and 4 were rewritten on 2026-09-28, when the model frequency grid changed and the
+ETAIN campaign was added. §5 and §6 predate that and describe the GOLIAT delivery only; nothing
+in them was invalidated.
 
 ---
 
 ## 1. Summary
 
-Until now only Duke (adult male) had real SAR values; Ella, Thelonious and Eartha were
-zero-filled placeholders. The simulations for all three have now been delivered and imported.
+The yaml now carries **two** SAR campaigns side by side.
+
+| | GOLIAT | ETAIN |
+|---|---|---|
+| geometries | 3 (front of eyes, belly, ear), 22 antenna positions | 9 scenarios |
+| frequencies | 700, 835, 1450, 2140, 2450, 3500, 5200, 5800 | the nine model bands exactly |
+| phantoms | Duke, Ella, Thelonious, Eartha | Duke, Ella |
+| interpolated onto the model grid? | yes, 5 of 9 bands | **no, none** |
+
+Both are needed. GOLIAT covers `gaming`, `virtual_reality` and `hotspot`, for which ETAIN has no
+scenario, and supplies the child-to-adult ratios that will fill Thelonious and Eartha on the ETAIN
+side. ETAIN has dedicated simulations for the laptop, Bluetooth earbuds and a wrist device, which
+GOLIAT would otherwise have to approximate with a phone geometry. The reasoning is in
+`doc/SAR_REDESIGN.md`.
+
+### The campaign is part of the key
+
+```
+Duke_body_goliat_2450_belly_center_vertical_sar
+Duke_body_etain_2450_lap_sar
+```
+
+`<phantom>_<tissue>_<campaign>_<frequency>_<placement>_sar`.
+
+The campaign segment is not there to avoid name collisions — the placement names of the two
+campaigns are distinct anyway. It is there because **the two campaigns disagree**, by up to a
+factor of two, and the disagreement grows with frequency (`doc/SAR_REDESIGN.md` §3.1). Where a
+value came from has to be readable off the key rather than inferred from knowing which placement
+names belong to which campaign.
+
+`headp_else_sar` keeps its old shape without a campaign segment. It is a legacy placeholder,
+always zero, belonging to neither campaign.
 
 ### How the key count works
 
-Two different figures appear throughout this document — 574 and 220. They refer to different
-things:
-
 | | per tissue | per phantom (body + brain) |
 |---|---|---|
-| yaml keys | 287 | **574** |
-| of which real values | **220** | 440 |
-| of which deliberate zeros | 67 | 134 |
+| yaml keys | 346 | **692** |
+| real values, Duke and Ella | 257 | 514 |
+| real values, Thelonious and Eartha | 198 | 396 |
 
-- **287 keys per tissue** = 22 positions × 13 frequency tokens (286) + 1 `headp_else_sar` key.
-- **220 real values per tissue** = 22 positions × the **10 frequencies the model actually uses**
-  (700, 800, 900, 1450, 1800, 2100, 2400, 2600, 3500, 5000 MHz).
-- **67 zeros per tissue** = 22 positions × the 3 placeholder frequency tokens `xxxx`, `yyyy`,
-  `zzzz` (66), reserved for future 5G/6G bands, + the 1 `headp_else_sar` key. These are
-  intentionally 0 and are not produced from the xlsx files.
+- **346 keys per tissue** = 1 `headp_else_sar`
+  + 22 GOLIAT positions × 12 frequency tokens (9 model bands + 3 reserved) = 264
+  + 9 ETAIN scenarios × 9 model bands = 81
+- **198 GOLIAT values per tissue** = 22 positions × 9 model bands, the same for every phantom.
+- **59 ETAIN values per tissue**, Duke and Ella only = 6 scenarios × 9 bands, plus the two earbud
+  scenarios at 2450 and 5000 MHz only and the wrist at 2450 alone. Those three were simulated at
+  fewer frequencies; the unsimulated combinations stay 0 rather than being interpolated across the
+  gap (§3).
+- **Thelonious and Eartha have all 81 ETAIN keys set to 0.** ETAIN simulated only Duke and Ella.
+  Filling them from GOLIAT ratios is a separate step, still open — `doc/SAR_REDESIGN.md` Q3.
+- The 3 reserved frequency tokens `xxxx`, `yyyy`, `zzzz` exist in the GOLIAT block only. They
+  reserve a slot in the model's band list for future 5G/6G bands; duplicating them under both
+  campaigns would reserve the same slot twice.
 
-So "Duke has 574 existing values" counts every key of both tissues, while "220 real values per
-tissue" counts only the non-placeholder ones of a single tissue. All four phantoms now have the
-identical shape: 574 keys, 440 real, 134 zero.
-
-The import pipeline was validated by reproducing Duke's 574 existing values byte-for-byte, so
-the mechanics (normalisation, interpolation, naming, formatting) are demonstrably correct.
+The import pipeline is validated by reproducing every GOLIAT value already in the yaml
+byte-for-byte — 530 of 530 for Duke — so the mechanics (normalisation, interpolation, naming,
+formatting) are demonstrably correct.
 
 Ella and Thelonious both show pronounced deviations at the two lowest simulated frequencies
 (700 and 835 MHz). These were initially investigated as possible import or normalisation errors and
@@ -113,7 +148,7 @@ The workbooks are not consistent with each other. Differences that had to be han
 
 ## 3. What the import does
 
-One uniform pipeline for all four phantoms:
+### 3a. GOLIAT — one uniform pipeline for all four phantoms
 
 1. **Resolve columns by canonicalised name** (lowercase, runs of space/underscore collapsed).
    Exactly one match required per field, otherwise the run aborts.
@@ -125,11 +160,16 @@ One uniform pipeline for all four phantoms:
 
    This is per row, **not** per file: input power varies by frequency in every sheet of every
    workbook (see §5.1). Using a single scale factor would be wrong by up to 80 %.
-3. **Interpolate** linearly per position (`approx(rule = 1)`) onto the ten model frequencies
-   700, 800, 900, 1450, 1800, 2100, 2400, 2600, 3500, 5000 MHz. All ten lie inside the simulated
+3. **Interpolate** linearly per position (`approx(rule = 1)`) onto the nine model frequencies
+   700, 800, 900, 1800, 2100, 2450, 2600, 3500, 5000 MHz. All nine lie inside the simulated
    range 700–5800 MHz, so no extrapolation occurs and no NA are produced. If a future delivery had
    a narrower range, the importer aborts rather than writing 0 — 0 is the model's "no data yet"
    sentinel and must not be produced by accident.
+
+   GOLIAT hits only **three** of the nine bands exactly — 700, 2450 and 3500 — so six are
+   interpolated. Its node at 1450 MHz no longer lands on a model band. That conflicts with the
+   decision to stop interpolating, and is why GOLIAT is now the fallback rather than the primary
+   source: see `doc/SAR_REDESIGN.md` §4.
 4. **Rename placements** to the yaml key fragments: `belly_level_X` → `belly_X`;
    `cheek_1` and `cheek_1_base` → `cheek1`; `tilt_3_down` → `tilt3`; `front_of_eyes_*` unchanged.
    Any placement that does not map to one of the 22 known fragments aborts the run.
@@ -138,6 +178,68 @@ One uniform pipeline for all four phantoms:
    not used by the model.
 6. **Write both yaml files** with Duke's exact key naming, ordering, numeric format (`paste0`,
    15 significant digits, no scientific notation) and CRLF line endings.
+
+### 3b. ETAIN — read as simulated, nothing derived
+
+ETAIN needs a different reader: one row per (scenario, frequency) with the phantoms in *columns*,
+where GOLIAT has one row per (frequency, placement) per phantom, and the scenario number is written
+once per block and left blank below it. Two steps of 3a are deliberately **not** applied.
+
+**No normalisation.** The ETAIN columns are already per 1 W input power — the header says
+`[mW/kg/W]`. Dividing again would shrink every value by roughly a factor of 500 and nothing
+downstream would notice, which is what validation D exists to catch (§4).
+
+**No interpolation.** The nine ETAIN frequencies *are* the nine model bands, so there is nothing to
+interpolate. The script asserts that rather than assuming it: any ETAIN frequency that is not a
+model band aborts the run, because `build_block()` would otherwise drop it silently.
+
+Running ETAIN through the generic `interpolate()` would actively corrupt it. Its scenarios do not
+all cover the same frequencies — the earbuds were simulated at 2450 and 5000 MHz only, the wrist at
+2450 alone — so `complete()` would insert the other seven bands as NA and `approx()` would then
+*invent* an earbud value at 2600 and 3500 MHz by interpolating across the gap, and leave NA below
+2450. Those combinations were never simulated and stay 0.
+
+**Scenario numbering.** ETAIN's own, and confirmed by the data rather than taken on trust: scenario
+1 has a brain SAR of 40.8 mW/kg/W at 1800 MHz and scenario 4 has 0.0007, which can only be the ear
+and the hip respectively. The frequency coverage confirms the rest — 7 and 8 exist at two
+frequencies, 9 at one, exactly as the campaign specifies.
+
+| scenario | key fragment | model source it will serve |
+|---|---|---|
+| 1 — 45° tilted, 1 cm from the right ear | `ear` | `mobilecall` at ear, `cordless` |
+| 2 — vertical, 10 cm in front of the mouth | `mouth10` | `mobilecall` speaker mode |
+| 3 — vertical, 30 cm in front of the mouth | `mouth30` | `mobiledata` |
+| 4 — vertical on the right hip, 1 cm | `hip` | phone in pocket |
+| 5 — on the legs, phantom seated | `lap` | `laptop` on the lap |
+| 6 — 10 cm higher, 30 cm further than 5 | `table` | `laptop` on a table |
+| 7, 8 — next to the right / left ear, 1 mm | `earbud_r`, `earbud_l` | `headphones` |
+| 9 — horizontal on the right wrist, 1 mm | `wrist` | `smartwatch` |
+
+**No source reads these keys yet.** The values are in the yaml; switching the sources over is a
+later step and depends on three open questions — `doc/SAR_REDESIGN.md` Q1, Q2 and Q3.
+
+### 3c. Two traps worth knowing before editing the script
+
+**`splice()` no longer compares the two files line for line.** It used to, and that was valid while
+every re-import wrote the same number of keys. The grid change of 2026-09-28 breaks that assumption
+— 1450 vanishes, 2400 becomes 2450 — so the check is now the stronger statement it was standing in
+for: strip the SAR key lines of the phantoms being written from both the old and the new file, and
+the remainder must be identical and in the same order. That still guarantees nothing outside those
+key runs moved.
+
+**Scientific notation must never reach the yaml, and the guard against it is not cosmetic.**
+YAML 1.1 only recognises a float in exponent form if the mantissa carries a decimal point:
+
+```yaml
+k: 2e-06      # read back as the CHARACTER STRING "2e-06"
+k: 2.0e-06    # read back as a number
+```
+
+R's `paste0()` produces the first form. Five ETAIN brain values — hip, lap, table and wrist, down to
+about 1e-9 — would have been written that way and would have come back as text, with no error
+anywhere. `fmt()` therefore writes any such value in full decimal instead. It also formats **one
+value at a time**: given a vector, `format()` chooses a single layout for all of it and pads every
+element to the decimal places the smallest one needs, writing digits past what a double can carry.
 
 Script: **`data-raw/import_sar.R`**. It lives in `data-raw/` rather than `R/` because it is a
 data-preparation script, not package code — `data-raw` is already listed in `.Rbuildignore`.
@@ -149,16 +251,22 @@ do not have).
 
 ## 4. Validation
 
-**Duke round-trip.** Running Duke through the new pipeline and comparing against the values already
-in the yaml:
+**Duke round-trip.** Running Duke through the pipeline and comparing against the values already in
+the yaml. The figure was 574 / 574 when the grid had ten bands and the keys carried no campaign
+segment; it is **530 / 530** on the nine-band grid, and it stayed at 530 / 530 across the campaign
+rename, which is what showed the rename changed no value.
 
 - Reading Duke's delivered `*_normalized` sheets (the path the original script used):
-  **574 / 574 values byte-identical**, max relative deviation 4.7e-15.
-- Recomputing from Duke's **raw** sheets: 566 / 574 identical; the 8 differences are explained
-  in §5.5.
+  byte-identical, max relative deviation 4.7e-15.
+- Recomputing from Duke's **raw** sheets: 8 differences, explained in §5.5.
 
 This confirms the interpolation, the placement renaming, the tissue mapping and the numeric
 formatting are exactly what produced Duke's existing numbers.
+
+Because the check matches on key names, it has to survive a rename while one is in flight. It
+therefore strips the campaign segment from both sides before matching; keys that exist on only one
+side — the 1450 and 2400 keys that the grid change removed — simply do not merge and are skipped.
+Once the yaml carries the new names the stripping is a no-op and the check is exact again.
 
 **Normalisation cross-check against the institutes (validation C, added 2026-09-17).** Each
 workbook ships a `<sheet>_normalized` companion in which the institute did the 1 W division itself.
@@ -182,15 +290,33 @@ one phantom with no cross-check at all**, because TP delivered her `_normalized`
 placeholders. Her values rest entirely on our own division by the stated input power — which is
 also the phantom with the anomalous 813 / 636.9 mW powers at 700 and 835 MHz (§5.1).
 
+**ETAIN absorbed power (validation D, added 2026-09-28).** The check that ETAIN is not normalised
+a second time. It is physical: at 1 W of input power the body cannot absorb more than 1 W, so
+SAR [mW/kg/W] × mass [kg] / 1000 must stay below 1.
+
+| | Duke | Ella |
+|---|---|---|
+| absorbed fraction, across all scenarios and frequencies | 0.034 – 0.910 | 0.036 – 0.885 |
+
+The largest is the earbud in the ear, the smallest the antenna 30 cm in front of the mouth — the
+ordering a reader would predict. The run aborts if any value reaches 1 **or if the maximum falls
+below 0.01**: a wrongly divided value would come out around 0.0001, so the test catches the error
+by the values being far too small, not only by their exceeding 1.
+
+As an independent cross-check across campaigns, GOLIAT's ear geometry at 1800 MHz absorbs 75.8 %
+of the radiated power and ETAIN's ear scenario 78.8 %. Two separate campaigns landing within four
+percentage points is good evidence that both are on the same 1 W normalisation.
+
 **Idempotence.** Re-running the importer on an already-imported yaml reports `0 lines changed` and
 leaves both files byte-identical. A non-zero diff on a re-run therefore means the source data
 changed, not that the script is noisy.
 
-**Other checks:** both yaml files parse; each phantom has 220 non-zero values per tissue and 134
-zeros that are exactly the `xxxx`/`yyyy`/`zzzz` placeholder bands plus the two `headp_else` keys;
-no NA; no negative or zero SAR; heights preserved (Duke 1770, Ella 1630, Eartha 1360,
-Thelonious 1160 mm); no scientific notation; Monte Carlo runs with free sex/age now produce
-0 zero-doses out of 200 (previously ≈ 65 %).
+**Other checks:** both yaml files parse; the zeros are exactly the `xxxx`/`yyyy`/`zzzz` placeholder
+bands, the two `headp_else` keys, the ETAIN scenario/frequency combinations that were never
+simulated, and the whole ETAIN block for Thelonious and Eartha; no NA; no negative SAR; heights
+preserved (Duke 1770, Ella 1630, Eartha 1360, Thelonious 1160 mm); no scientific notation anywhere
+in either file; Monte Carlo runs with free sex/age produce 0 zero-doses out of 200 (before the
+phantoms were imported, ≈ 65 %).
 
 ---
 
@@ -259,10 +385,10 @@ of a scale factor rather than a simulation artefact:
 Concrete example (the cell that triggered this investigation):
 
 ```
-Duke_body_700_front_of_eyes_center_horizontal_sar: 2.62029276910084
-Ella_body_700_front_of_eyes_center_horizontal_sar: 0.365682656826568   <- 7.2x lower
-Thelonious_body_700_front_of_eyes_center_horizontal_sar: 2.00027691317228
-Eartha_body_700_front_of_eyes_center_horizontal_sar: 2.7811346750176
+Duke_body_goliat_700_front_of_eyes_center_horizontal_sar: 2.62029276910084
+Ella_body_goliat_700_front_of_eyes_center_horizontal_sar: 0.365682656826568   <- 7.2x lower
+Thelonious_body_goliat_700_front_of_eyes_center_horizontal_sar: 2.00027691317228
+Eartha_body_goliat_700_front_of_eyes_center_horizontal_sar: 2.7811346750176
 ```
 
 **Interpretation (see §5.0):** this is attributed to the low-frequency behaviour of TP's antenna
@@ -300,7 +426,7 @@ For comparison, Duke's positions within a group agree closely with each other (h
 **One value stands out particularly:**
 
 ```
-Thelonious_body_700_belly_left_vertical_sar:  0.0690872710400414
+Thelonious_body_goliat_700_belly_left_vertical_sar:  0.0690872710400414
 Thelonious_body_1450_belly_left_vertical_sar: 2.5403036125566
 ```
 
@@ -361,12 +487,12 @@ model frequency, the upper bracket for 2600 MHz and the lower bracket for 5000 M
 propagated into six keys: `Duke_brain_{2600,3500,5000}_{tilt1,tilt2}_sar`. Relative correction
 ≈ 1e-7; `SAR_wholebody` in the same sheet was unaffected, so `body` did not change at all.
 
-**(b) Two last-bit changes.** `Duke_brain_700_front_of_eyes_center_horizontal_sar` and
+**(b) Two last-bit changes.** `Duke_brain_goliat_700_front_of_eyes_center_horizontal_sar` and
 `Duke_brain_2400_cheek1_sar` differed by ≈ 2e-15 — one unit in the last place of a double, because
 Excel computed `raw/P` while the script computes `raw*1000/P`. Neither value was more correct;
 everything now takes the same computational path.
 
-**(c) Four lines of reordering.** `Duke_brain_5000_tilt1_sar` sat *after* the `xxxx`/`yyyy`/`zzzz`
+**(c) Four lines of reordering.** `Duke_brain_goliat_5000_tilt1_sar` sat *after* the `xxxx`/`yyyy`/`zzzz`
 placeholders instead of before them. Duke's brain block was the only one in the file with that
 anomaly; the key set is unchanged.
 

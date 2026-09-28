@@ -11,13 +11,22 @@ entries when they are resolved, mark them resolved instead.
 currently undecided or awaiting an answer — from supervisors or from the data providers — is
 collected in `doc/OPEN_QUESTIONS.md`, grouped by who can answer it.
 
-**Last updated:** 2026-09-22
+**Last updated:** 2026-09-28
+
+> **Four entries below are superseded in principle but still describe the code.** The meeting of
+> 2026-09-22 decided to remove the distance correction, take SAR from ETAIN wherever ETAIN
+> simulated the scenario, and stop interpolating onto unsimulated frequencies. That dissolves §A1,
+> §A2, §A3 and most of §B. They stay here, unchanged, until the rework lands — the model still
+> behaves as they describe. See `doc/SAR_REDESIGN.md`.
 
 ---
 
 ## A. Physics approximations
 
 ### A1. The distance correction uses an inverse-square law that does not match the data
+
+> Superseded by the decision of 2026-09-22 to remove `dist_law()`. This entry is the measurement
+> that motivated it. See `doc/SAR_REDESIGN.md` §D1.
 
 `dist_law()` in `R/helpers.R` rescales SAR between distances as
 `SAR(d) = SAR(d_ref) · ((d_ref + 6)/(d + 6))²`.
@@ -86,49 +95,56 @@ nothing to do together"*. Even with a perfect distance law the substitution woul
 the aggressive rescaling compounds it. This is the largest rescaling anywhere in the model, and it
 is applied to the source with the largest whole-body contribution.
 
-**Status:** open. Not introduced by the stochastification work — inherited — but it should be
-decided whether to keep it, drop the pocket sub-position, or request a hip simulation.
+**Status:** resolved in principle on 2026-09-22 — the model returns to ETAIN's hip simulation, the
+very one this entry names as missing. No request to GOLIAT is needed. See `doc/SAR_REDESIGN.md` §4,
+scenario 4.
 
-### A3. Seven of the ten model frequencies are interpolated, not simulated
+### A3. Six of the nine model frequencies are interpolated in GOLIAT, none in ETAIN
 
-The deterministic model used the **ETAIN** SAR campaign; the stochastic model uses **GOLIAT**. The
-two campaigns simulated different frequencies, and the model's own frequency grid matches neither
-exactly:
+> Rewritten 2026-09-28, when the model grid changed from ten bands to nine. The previous version
+> described a ten-band grid containing 1450 and 2400 MHz; both are gone.
+
+The deterministic model used the **ETAIN** SAR campaign, the stochastic model was built on
+**GOLIAT**, and the two simulated different frequencies. Since 2026-09-28 the model grid is chosen
+to match ETAIN exactly:
 
 ```
 GOLIAT simulated :  700,  835, 1450, 2140, 2450, 3500, 5200, 5800
 ETAIN  simulated :  700,  800,  900, 1800, 2100, 2450, 2600, 3500, 5000
-model computes in:  700,  800,  900, 1450, 1800, 2100, 2400, 2600, 3500, 5000
+model computes in:  700,  800,  900, 1800, 2100, 2450, 2600, 3500, 5000
 ```
 
-The model grid is close to ETAIN's (8 of 10 shared) but adds 1450 and 2400 and drops 2450. That grid
-is not an arbitrary inheritance from the old code — it reflects the **actual mobile network bands**
-that the band-proportion parameters refer to (`f700_4g_prop`, `f1800_2g_prop`, and so on). Phones
-transmit on 800 and 2600 MHz, not on 835 and 2450, so the SAR values have to be brought onto the
-network grid one way or another.
+The grid is not an arbitrary inheritance from the old code — it reflects the **actual mobile
+network bands** that the band-proportion parameters refer to (`f700_4g_prop`, `f1800_2g_prop`, and
+so on). Two of its former entries were not network bands in that sense and were removed: 2400 MHz
+is the lower edge of the 2.4 GHz WiFi band rather than a frequency anyone transmits on, and
+1450 MHz carried a 4G weight of exactly zero and had never been in the deterministic model.
 
-The consequence is that only **3 of the 10** frequencies the model computes in — 700, 1450 and
-3500 — are values GOLIAT actually simulated. The other seven are linearly interpolated, some across
-wide gaps:
+**For ETAIN, nothing is interpolated.** That was the point of the change, and the importer asserts
+it on every run.
+
+**For GOLIAT, six of the nine bands still are**, and the gaps are wide:
 
 | model freq | interpolated between | gap | position in the interval |
 |---|---|---|---|
 | 700 | — | — | simulated directly |
 | 800 | 700 – 835 | 135 MHz | 74 % |
 | 900 | 835 – 1450 | 615 MHz | 11 % |
-| 1450 | — | — | simulated directly |
 | 1800 | 1450 – 2140 | 690 MHz | 51 % |
 | 2100 | 1450 – 2140 | 690 MHz | 94 % |
-| 2400 | 2140 – 2450 | 310 MHz | 84 % |
+| 2450 | — | — | simulated directly |
 | 2600 | 2450 – 3500 | **1050 MHz** | 14 % |
 | 3500 | — | — | simulated directly |
 | 5000 | 3500 – 5200 | **1700 MHz** | 88 % |
 
+GOLIAT's node at 1450 MHz no longer lands on a model band and is now unused.
 
-**Status:** unavoidable given that the simulation grid and the network grid differ. Worth knowing
-when a result leans on one of the widely-interpolated bands, in particular 5000 MHz — which is the
-band that carries the WiFi 5 GHz contribution of every WiFi source in the model, including VR,
-gaming, laptop and tablet.
+**Status:** narrowed but not closed. It no longer affects any source that moves to ETAIN. It still
+affects `gaming`, `virtual_reality` and `hotspot`, which have no ETAIN scenario — though those
+need only the two WiFi bands, where GOLIAT hits 2450 exactly and its 5200 MHz node sits 200 MHz
+from the model's 5000, worth about 0.5 % on the SAR. And it affects the **child-to-adult ratios**,
+which can only come from GOLIAT and are needed at all nine bands. That is the open part:
+`doc/SAR_REDESIGN.md` Q3.
 
 Detail: `doc/SAR_IMPORT_NOTES.md` §3, and the worked example in `data-raw/import_sar.R` section 5.
 
@@ -168,6 +184,11 @@ the gap cannot be closed from the current data.
 ---
 
 ## B. Proxy substitutions — sources with no dedicated simulation
+
+> Mostly superseded by the decision of 2026-09-22. ETAIN has dedicated simulations for the laptop on
+> the lap and on a table, for Bluetooth earbuds and for a wrist device, so those rows disappear
+> rather than improve. What remains is `gaming`, `virtual_reality` and `hotspot`, which neither
+> campaign covers — A1/Q1. See `doc/SAR_REDESIGN.md` §4.
 
 GOLIAT provides three antenna geometries only: front of eyes (20 cm), belly (20 cm), ear (0.8 cm).
 Every source that is not a phone has to borrow one.
@@ -257,7 +278,7 @@ Detail: `doc/SAR_IMPORT_NOTES.md` §5.0–5.2.
 
 ### C2. One extreme value in the Thelonious belly data
 
-`Thelonious_body_700_belly_left_vertical_sar` is 2.7 % of the same position's 1450 MHz value, where
+`Thelonious_body_goliat_700_belly_left_vertical_sar` is 2.7 % of the same position's 1450 MHz value, where
 the other seven belly positions sit at 18–80 % (center_vertical 41, center_horizontal 71,
 left_horizontal 18, right_vertical 40, right_horizontal 65, up_vertical 42, up_horizontal 80).
 It is the clear outlier, and consistently low at both 700 and 835 MHz, which argues for genuine weak

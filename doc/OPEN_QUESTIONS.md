@@ -11,7 +11,7 @@ the per-source `doc/<source>_stochastification.md` files. Every entry points the
 **Status of this file:** living document. When an item is settled, move it to §F with the answer and
 the date; do not delete it.
 
-**Last updated:** 2026-09-22
+**Last updated:** 2026-09-28
 
 ---
 
@@ -19,7 +19,31 @@ the date; do not delete it.
 
 These stop current implementation until answered.
 
-### A1. How far should the far-field rework go?
+### A1. The SAR source redesign — four sub-questions still open
+
+The meeting of 2026-09-22 decided to drop the distance correction, take SAR from ETAIN wherever
+ETAIN simulated the scenario, derive the child phantoms through GOLIAT ratios, and stop
+interpolating onto unsimulated frequencies. The decisions, what they resolve and the measurements
+behind them are in **`doc/SAR_REDESIGN.md`**; only the questions are listed here.
+
+| | question | the choice |
+|---|---|---|
+| Q1 | What happens to `gaming`, `virtual_reality` and `hotspot`? | No ETAIN scenario matches them. Keep a GOLIAT geometry without rescaling, or keep the distance correction for three sources only? |
+| Q2 | Which geometry for the tablet? | ETAIN's lap/table scenarios, as the deterministic model used, or front of eyes as currently implemented? |
+| Q3 | At what resolution are the child ratios formed? | One scalar per phantom pair is ruled out by the data. At minimum per geometry, frequency and tissue — and which GOLIAT geometry pairs with which ETAIN scenario? |
+| ~~Q4~~ | 1450 and 2400 MHz | **Answered 2026-09-28:** 2400 moves to 2450, 1450 is dropped. The model grid is then identical to ETAIN's. |
+| ~~Q5~~ | Should GOLIAT and ETAIN values be pooled? | **Answered 2026-09-28:** only where both simulated the same scenario. That leaves almost no case; see `SAR_REDESIGN.md` Q5. |
+| Q6 | Far field: ETAIN or GOLIAT? | GOLIAT has all four phantoms and needs no ratios; ETAIN has three more frequencies but only two phantoms. |
+
+Three of the seven are settled. Q7, which of ETAIN's two deliveries to build on, went to the
+simulation database; Q4 fixed the frequency grid at nine bands identical to ETAIN's; Q5 restricted
+pooling to same-scenario pairs, which in practice leaves each source on the campaign that simulated
+it. All three are in §F and in `doc/SAR_REDESIGN.md`. The import is unblocked.
+
+This supersedes the old A2 on the tablet viewing distance: `tblt_dist_device` exists only to feed the
+distance correction, so the question dissolves with it.
+
+### A2. How far should the far-field rework go?
 
 Far-field SAR for all four phantoms arrived 2026-09-17 (`data-raw/Final_Data_*_UGent_FF.xlsx`,
 9 frequencies x 12 incidence directions, normalised to 1 W/m2). Not imported; nothing reads them.
@@ -34,22 +58,18 @@ GOLIAT phantoms gives, at Other/suburban, body 125 (Duke) / 147 (Ella) / **240 (
 201 (Eartha) against today's 136 for all four. Far-field is the largest single contributor, so this
 is a correction, not a refinement.
 
-**No longer blocked.** B1 is resolved at EU level, so axis 2 is deliverable now. Seven of the ten
-bands need interpolating onto the ETAIN grid, the same mechanism as `import_sar.R`; the newly
+**No longer blocked.** B1 is resolved at EU level, so axis 2 is deliverable now. Which campaign
+the far field draws on is A1/Q6; GOLIAT delivered all four phantoms at 9 frequencies x 12
+directions, ETAIN has 12 frequencies x 12 directions but only Duke and Ella. GOLIAT's newly
 simulated 450 MHz fills the `<700` bucket that previously had to borrow the 700 MHz value.
 
 Open sub-decisions: one spectrum or five (B1); average the 12 incidence directions or draw them
 (spread across directions is a factor 1.5-4.7, growing with frequency); and whether to convert
 `wifi.R` in the same release, since it shares the units and the SAR basis.
 
-### A2. Tablet viewing distance — drawn or fixed? — *flagged, never answered*
-
-The instruction was "always 30 cm in front of the face". That was read as settling the *position*
-question (front of eyes rather than a belly mix), not as fixing the distance to a constant, so
-`tblt_dist_device` is drawn around a mean of 300 mm (sd 80, bounds 200–500) like every other
-distance in the model. Pinning it to exactly 300 mm is a one-line change.
-
-Detail: `doc/tablet_stochastification.md`, "Assumptions to be revisited".
+**Answer A1/Q6 first.** ETAIN turns out to have far-field simulations of its own — 12 frequencies ×
+12 directions for Duke and Ella — so which dataset the far field draws on is no longer settled by
+default. See `doc/SAR_REDESIGN.md` §3 and §6.
 
 ---
 
@@ -98,7 +118,7 @@ Detail: `doc/MODEL_LIMITATIONS.md` §C4, `doc/SAR_IMPORT_NOTES.md` §6.
 
 ### B4. One extreme value in the Thelonious belly data — *UGent, low priority*
 
-`Thelonious_body_700_belly_left_vertical_sar` is 2.7 % of the same position's 1450 MHz value, where
+`Thelonious_body_goliat_700_belly_left_vertical_sar` is 2.7 % of the same position's 1450 MHz value, where
 the other seven belly positions sit at 18–80 %. We assume genuine weak coupling for that
 orientation rather than a run artefact; a confirmation would close the question. Unchanged by the
 September 2026 head/trunk correction.
@@ -219,7 +239,7 @@ Section numbers in the last column refer to **`doc/MODEL_LIMITATIONS.md`**, not 
 |---|---|---|
 | D1 | The inverse-square distance law does not match the data between the two simulated distances (measured 2.5–14.5× where it predicts 216×) | §A1 |
 | D2 | The phone-in-pocket case rescales the belly geometry from 20 cm to 8 mm — the largest rescaling in the model, applied to the largest whole-body source | §A2 |
-| D3 | Seven of the ten model frequencies are interpolated, two across gaps above 1000 MHz | §A3 |
+| D3 | Six of the nine model frequencies are interpolated in GOLIAT, two across gaps above 1000 MHz; none in ETAIN | §A3 |
 | D4 | Phantoms disagree 7–11× at 700 and 835 MHz, against 2.4–3.8× above 1450 MHz; no correction applied | §C1 |
 | D5 | WiFi output power distributions are truncated at their own mean, so the realised mean is 21 % below nominal | §C3 |
 | D6 | All placeholder parameters for VR, gaming, tablet and laptop — durations, duty cycles, distances, concentrations | §D |
@@ -260,6 +280,12 @@ Section numbers in the last column refer to **`doc/MODEL_LIMITATIONS.md`**, not 
 
 | date | question | answer |
 |---|---|---|
+| 2026-09-28 | Which frequencies should the model compute at? | Nine: 700, 800, 900, 1800, 2100, **2450**, 2600, 3500, 5000. 2400 moves to 2450, which both campaigns simulated and which lies inside the 2.4 GHz band; 1450 is dropped, was never in the DDM, and already had weight 0.0, so no dose changes. The grid is then identical to ETAIN's near-field grid. `SAR_REDESIGN.md` Q4 |
+| 2026-09-28 | May GOLIAT and ETAIN values be averaged into one SAR? | Only where both campaigns simulated the same scenario. Measured against the data that leaves only the phone at the ear, and there the two frequency grids barely overlap — so in practice each source uses the campaign that simulated it directly. `SAR_REDESIGN.md` Q5 |
+| 2026-09-28 | ETAIN delivered its SAR twice and the two disagree — which does the SDM use? | The simulation database, `NF_SARwb_LessThan6GHz_WholeBody.xlsx` and `NF_SARosa_LessThan6GHz_Brain.xlsx`. Not the distilled workbook the deterministic model uses, so the two models will not agree; the gap grows with frequency and is largest in the WiFi bands. Near field only — the far field is A1/Q6. `SAR_REDESIGN.md` §3.1 |
+| 2026-09-22 | Should the distance correction stay? | No. It is removed from the model entirely: the uncertainty it carries cannot be bounded from the available simulations. Sources move to ETAIN scenarios that match their geometry instead. `SAR_REDESIGN.md` §D1 |
+| 2026-09-22 | Which SAR geometry should each non-phone source borrow? | None — the question dissolves. ETAIN simulated the laptop on the lap and on a table, Bluetooth earbuds and a wrist device directly. Only `gaming`, `virtual_reality` and `hotspot` still have no matching scenario (A1/Q1). `SAR_REDESIGN.md` §4 |
+| 2026-09-22 | Tablet viewing distance — drawn or fixed? | Moot. `tblt_dist_device` exists only to feed the distance correction and goes with it. What replaces it is the geometry question A1/Q2. |
 | 2026-09-22 | Do `wifi.R` and `farfield.R` double-count WiFi? | No. Adriana's campaign measured outdoors and in public indoor spaces only, so it never captured a participant's own router. `farfield.R` covers other people's transmitters, `wifi.R` the person's own — disjoint sets, correctly additive. `MODEL_LIMITATIONS.md` §A4 |
 | 2026-09-22 | Are `wifi_2_pwr` 0.018 / `wifi_5_pwr` 0.013 a total already split 58/42, making the dose a factor 1.84 too low? | No. They are HERMES3 personal measurements, the mean of a home and a school value per band (0.01496/0.02167 and 0.00931/0.01653). The apparent 58/42 split is an artefact of rounding to two decimals — the unrounded ratio is 1.418, the band split 1.381. |
 | 2026-09-22 | Where do the far-field exposure levels and the WiFi SAR constants come from? | `data-raw/Input_dose_model_Final_ETAIN_nSAR.xlsx`. The per-country levels are in sheet `Farfield` verbatim; the WiFi SAR are that sheet's far-field per-band values at 2450 and 5000 MHz. The 0.017/0.016 predecessors were 0.08/0.077 V/m converted via E²/377. |
