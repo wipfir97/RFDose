@@ -52,7 +52,7 @@ stochastic_gaming_dose <- lapply(seq_len(length(param_simulations)), function(i)
     gaming_duration    = gaming_duration,
     gaming_online_prop = sim_params$devices$gaming$online_prop$gaming_online_prop,
     gaming_dist_device     = sim_params$devices$gaming$gaming_distance$gaming_dist_device,
-    gaming_2400_pwr    = sim_params$devices$gaming$pwr$gaming_2400_pwr,
+    gaming_2450_pwr    = sim_params$devices$gaming$pwr$gaming_2450_pwr,
     gaming_5000_pwr    = sim_params$devices$gaming$pwr$gaming_5000_pwr
   )
 })
@@ -63,7 +63,7 @@ stochastic_gaming_dose_df <- data.frame(
   gaming_duration    = sapply(stochastic_gaming_dose, \(x) x$gaming_duration),
   gaming_online_prop = sapply(stochastic_gaming_dose, \(x) x$gaming_online_prop),
   gaming_dist_device     = sapply(stochastic_gaming_dose, \(x) x$gaming_dist_device),
-  gaming_2400_pwr    = sapply(stochastic_gaming_dose, \(x) x$gaming_2400_pwr),
+  gaming_2450_pwr    = sapply(stochastic_gaming_dose, \(x) x$gaming_2450_pwr),
   gaming_5000_pwr    = sapply(stochastic_gaming_dose, \(x) x$gaming_5000_pwr)
 )
 
@@ -155,7 +155,7 @@ hist(stochastic_gaming_dose_df$gaming_duration, breaks = 100, col = "lightblue",
      border = "white", main = "Gaming duration", xlab = "s")
 hist(stochastic_gaming_dose_df$gaming_dist_device, breaks = 100, col = "lightblue",
      border = "white", main = "Console distance", xlab = "mm")
-hist(stochastic_gaming_dose_df$gaming_2400_pwr, breaks = 100, col = "lightblue",
+hist(stochastic_gaming_dose_df$gaming_2450_pwr, breaks = 100, col = "lightblue",
      border = "white", main = "2.4 GHz power", xlab = "mW")
 hist(stochastic_gaming_dose_df$gaming_5000_pwr, breaks = 100, col = "lightblue",
      border = "white", main = "5 GHz power", xlab = "mW")
@@ -168,7 +168,7 @@ cat("mean body dose :", mean(stochastic_gaming_dose_df$body_gaming_dose), "mJ/kg
 cat("mean brain dose:", mean(stochastic_gaming_dose_df$brain_gaming_dose), "mJ/kg/day\n")
 cat("mean device distance:", mean(stochastic_gaming_dose_df$gaming_dist_device), " (expected ~300)\n")
 cat("mean online prop:", mean(stochastic_gaming_dose_df$gaming_online_prop), " (expected ~0.25)\n")
-cat("mean power 2.4 / 5 GHz:", mean(stochastic_gaming_dose_df$gaming_2400_pwr), "/",
+cat("mean power 2.4 / 5 GHz:", mean(stochastic_gaming_dose_df$gaming_2450_pwr), "/",
     mean(stochastic_gaming_dose_df$gaming_5000_pwr),
     " (expected ~79 / ~158: the trunc_lognormal is cut off at its own mean)\n")
 
@@ -199,7 +199,7 @@ belly_position <- c("belly_center_vertical","belly_center_horizontal",
 mean_belly_sar <- function(tissue, freq) {
   tp <- load_tissue_params(template_params, "call", tissue, "Duke")
   mean(vapply(belly_position,
-              \(p) tp[[paste0("Duke_", tissue, "_", freq, "_", p, "_sar")]],
+              \(p) tp[[paste0("Duke_", tissue, "_goliat_", freq, "_", p, "_sar")]],
               numeric(1)))
 }
 
@@ -208,25 +208,25 @@ h  <- template_params$devices$call$Duke$height/2                     # 885
 f_body  <- ((200 + 6)/(d + 6))^2
 f_brain <- ((sqrt(h^2 + 200^2) + 6)/(sqrt(h^2 + d^2) + 6))^2
 
-pwr_2400 <- template_params$devices$gaming$pwr$gaming_2400_pwr *
-  template_params$devices$gaming$dutycycle$gaming_2400_dutycycle
+pwr_2450 <- template_params$devices$gaming$pwr$gaming_2450_pwr *
+  template_params$devices$gaming$dutycycle$gaming_2450_dutycycle
 pwr_5000 <- template_params$devices$gaming$pwr$gaming_5000_pwr *
   template_params$devices$gaming$dutycycle$gaming_5000_dutycycle
-w_2400 <- template_params$global$wifi_probs$wifi_2400_prop
+w_2450 <- template_params$global$wifi_probs$wifi_2450_prop
 w_5000 <- template_params$global$wifi_probs$wifi_5000_prop
 
 dur  <- template_params$global$input_stoch$gaming_duration$gaming_duration
 onln <- template_params$devices$gaming$online_prop$gaming_online_prop
 
-hand_body <- (w_2400*pwr_2400*mean_belly_sar("body", 2400)*f_body +
+hand_body <- (w_2450*pwr_2450*mean_belly_sar("body", 2450)*f_body +
               w_5000*pwr_5000*mean_belly_sar("body", 5000)*f_body) * dur * onln / 1000
-hand_brain <- (w_2400*pwr_2400*mean_belly_sar("brain", 2400)*f_brain +
+hand_brain <- (w_2450*pwr_2450*mean_belly_sar("brain", 2450)*f_brain +
                w_5000*pwr_5000*mean_belly_sar("brain", 5000)*f_brain) * dur * onln / 1000
 
 cat("\n--- deterministic cross check ---------------------------------------\n")
-cat("belly mean sar Duke body  2400 / 5000:", mean_belly_sar("body", 2400), "/",
+cat("belly mean sar Duke body  2450 / 5000:", mean_belly_sar("body", 2450), "/",
     mean_belly_sar("body", 5000), "\n")
-cat("belly mean sar Duke brain 2400 / 5000:", mean_belly_sar("brain", 2400), "/",
+cat("belly mean sar Duke brain 2450 / 5000:", mean_belly_sar("brain", 2450), "/",
     mean_belly_sar("brain", 5000), "\n")
 cat("distance factor body / brain:", f_body, "/", f_brain, "\n")
 cat("gaming_dose body :", ref_body,  " hand:", hand_body,  "\n")

@@ -162,7 +162,7 @@ tablet_msar <- function(
     dur_high,
     params = load_params()) {
 
-  freqs <- c("2400", "5000") # 2.4 GHz and 5.0 GHz
+  freqs <- c("2450", "5000") # 2.4 GHz and 5.0 GHz
 
   msar <- sum(
     vapply(
@@ -207,7 +207,7 @@ tablet_msar <- function(
 #' activity changes is the duty cycle, i.e. the share of the time the radio is
 #' actually transmitting.
 #'
-#' @param freq WiFi frequency band in MHz ("2400" or "5000")
+#' @param freq WiFi frequency band in MHz ("2450" or "5000")
 #' @param dur_low Duration (in seconds per day) of low output power activities on tablet
 #' @param dur_lowmed Duration (in seconds per day) of low-medium output power activities on tablet
 #' @param dur_medhigh Duration (in seconds per day) of medium-high output power activities on tablet
@@ -276,7 +276,7 @@ tablet_pwr <- function(
 #' increases the separation to the head and to the torso alike.
 #'
 #' @param tissue Tissue for which to calculate nSAR (default: "brain" or "body")
-#' @param freq WiFi frequency band in MHz ("2400" or "5000")
+#' @param freq WiFi frequency band in MHz ("2450" or "5000")
 #' @param params Parameter list (optional). If not specified, calculations use
 #' default parameters.
 #'
@@ -285,7 +285,7 @@ tablet_pwr <- function(
 #' @examples
 #' tablet_sar(
 #' tissue       = "brain",
-#' freq         = "2400",
+#' freq         = "2450",
 #' params       = load_params(version = "_template"))
 #'
 #' @export
@@ -303,7 +303,7 @@ tablet_sar <- function(
   dummy <- determine_dummy(params$global$input_stoch$sex,
                            params$global$input_stoch$age)
   # define prefix for finding correct tissue parameter
-  prefix <- paste0(dummy,"_",tissue,"_", freq,"_")
+  prefix <- paste0(dummy,"_",tissue,"_goliat_", freq,"_")
   # load tissue-specific parameters (SAR values)
   tissue_params <- load_tissue_params(params, "call", tissue,dummy) # here we still use call because at the moment all sar values are stored in call
 

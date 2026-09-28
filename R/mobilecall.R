@@ -215,7 +215,7 @@ mpc_msar <- function(
   ## Define frequency bands for each technology -------------------------------
   native_bands <- c("2g", "3g", "4g", "5g","6g")
   data_bands   <- c("3g", "4g", "5g","6g")
-  wifi_bands   <- c("2400", "5000") # 2.4 GHz and 5.0 GHz
+  wifi_bands   <- c("2450", "5000") # 2.4 GHz and 5.0 GHz
 
   # Native call ===============================================================
   msar_native <- sum(
@@ -475,7 +475,7 @@ mpc_sar_native <- function(
   dummy <- determine_dummy(params$global$input_stoch$sex,
                            params$global$input_stoch$age)
   # define prefix for finding correct tissue parameter
-  prefix <- paste0(dummy,"_",tissue,"_", freq,"_")
+  prefix <- paste0(dummy,"_",tissue,"_goliat_", freq,"_")
   # load tissue-specific parameters (SAR values)
   tissue_params <- load_tissue_params(params, "call", tissue,dummy)
 
@@ -880,8 +880,8 @@ mpc_bt_sar <- function(
   #find name of simulation dummy
   dummy <- determine_dummy(params$global$input_stoch$sex,
                            params$global$input_stoch$age)
-  # define prefix for finding correct tissue parameter 2400 = BT
-  prefix <- paste0(dummy,"_",tissue,"_2400_")
+  # define prefix for finding correct tissue parameter 2450 = BT
+  prefix <- paste0(dummy,"_",tissue,"_goliat_2450_")
   # load tissue-specific parameters (SAR values)
   tissue_params <- load_tissue_params(params, "call", tissue,dummy)
 
@@ -950,7 +950,7 @@ mpc_bt_phone_sar <- function(
   tissue_params <- load_tissue_params(params, "call", tissue,dummy)
 
   # define prefix for finding correct tissue parameter
-  prefix <- paste0(dummy,"_",tissue,"_2400_")
+  prefix <- paste0(dummy,"_",tissue,"_goliat_2450_")
 
   # phone with headphone
   headp_bt_sar_face <-  sum(

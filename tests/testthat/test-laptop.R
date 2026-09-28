@@ -101,7 +101,7 @@ cases_laptop_dose <- list(
       dur_high    = 219,
       params      = template_params
     ),
-    output = 1.708018
+    output = 1.579456
   ),
   list(
     input = list(
@@ -112,7 +112,7 @@ cases_laptop_dose <- list(
       dur_high    = 219,
       params      = template_params
     ),
-    output = 28.17316
+    output = 28.25244
   )
 )
 
@@ -134,7 +134,7 @@ cases_laptop_msar <- list(
       dur_high    = 219,
       params      = template_params
     ),
-    output = 0.3906719
+    output = 0.3612662
   ),
   list(
     input = list(
@@ -145,7 +145,7 @@ cases_laptop_msar <- list(
       dur_high    = 219,
       params      = template_params
     ),
-    output = 6.443997
+    output = 6.462131
   )
 )
 
@@ -160,7 +160,7 @@ test_that("laptop_msar matches reference values", {
 cases_laptop_pwr <- list(
   list(
     input = list(
-      freq        = "2400",
+      freq        = "2450",
       dur_low     = 1967,
       dur_lowmed  = 219,
       dur_medhigh = 1967,
@@ -194,10 +194,10 @@ cases_laptop_sar <- list(
   list(
     input = list(
       tissue = "brain",
-      freq   = "2400",
+      freq   = "2450",
       params = template_params
     ),
-    output = 0.05640707
+    output = 0.05211037
   ),
   list(
     input = list(
@@ -210,10 +210,10 @@ cases_laptop_sar <- list(
   list(
     input = list(
       tissue = "body",
-      freq   = "2400",
+      freq   = "2450",
       params = template_params
     ),
-    output = 0.6858173
+    output = 0.6884669
   ),
   list(
     input = list(

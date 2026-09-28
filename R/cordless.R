@@ -73,7 +73,7 @@ dect_sar <- function(
   dummy <- determine_dummy(params$global$input_stoch$sex,
                            params$global$input_stoch$age)
   # define prefix for finding correct tissue parameter
-  prefix <- paste0(dummy,"_",tissue,"_1800_")
+  prefix <- paste0(dummy,"_",tissue,"_goliat_1800_")
   # load tissue-specific parameters (SAR values)
 
   tissue_params <- load_tissue_params(params, "call", tissue,dummy)

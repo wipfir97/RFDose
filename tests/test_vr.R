@@ -51,7 +51,7 @@ stochastic_vr_dose <- lapply(seq_len(length(param_simulations)), function(i) {
     vr_duration    = vr_duration,
     vr_online_prop = sim_params$devices$vr$online_prop$vr_online_prop,
     vr_dist_device = sim_params$devices$vr$vr_distance$vr_dist_device,
-    vr_2400_pwr    = sim_params$devices$vr$pwr$vr_2400_pwr,
+    vr_2450_pwr    = sim_params$devices$vr$pwr$vr_2450_pwr,
     vr_5000_pwr    = sim_params$devices$vr$pwr$vr_5000_pwr
   )
 })
@@ -62,7 +62,7 @@ stochastic_vr_dose_df <- data.frame(
   vr_duration    = sapply(stochastic_vr_dose, \(x) x$vr_duration),
   vr_online_prop = sapply(stochastic_vr_dose, \(x) x$vr_online_prop),
   vr_dist_device = sapply(stochastic_vr_dose, \(x) x$vr_dist_device),
-  vr_2400_pwr    = sapply(stochastic_vr_dose, \(x) x$vr_2400_pwr),
+  vr_2450_pwr    = sapply(stochastic_vr_dose, \(x) x$vr_2450_pwr),
   vr_5000_pwr    = sapply(stochastic_vr_dose, \(x) x$vr_5000_pwr)
 )
 
@@ -154,7 +154,7 @@ hist(stochastic_vr_dose_df$vr_duration, breaks = 100, col = "lightblue",
      border = "white", main = "VR duration", xlab = "s")
 hist(stochastic_vr_dose_df$vr_dist_device, breaks = 100, col = "lightblue",
      border = "white", main = "Headset standoff", xlab = "mm")
-hist(stochastic_vr_dose_df$vr_2400_pwr, breaks = 100, col = "lightblue",
+hist(stochastic_vr_dose_df$vr_2450_pwr, breaks = 100, col = "lightblue",
      border = "white", main = "2.4 GHz power", xlab = "mW")
 hist(stochastic_vr_dose_df$vr_5000_pwr, breaks = 100, col = "lightblue",
      border = "white", main = "5 GHz power", xlab = "mW")
@@ -167,7 +167,7 @@ cat("mean body dose :", mean(stochastic_vr_dose_df$body_vr_dose), "mJ/kg/day\n")
 cat("mean brain dose:", mean(stochastic_vr_dose_df$brain_vr_dose), "mJ/kg/day\n")
 cat("mean standoff:", mean(stochastic_vr_dose_df$vr_dist_device), " (expected ~15)\n")
 cat("mean online prop:", mean(stochastic_vr_dose_df$vr_online_prop), " (expected ~0.4)\n")
-cat("mean power 2.4 / 5 GHz:", mean(stochastic_vr_dose_df$vr_2400_pwr), "/",
+cat("mean power 2.4 / 5 GHz:", mean(stochastic_vr_dose_df$vr_2450_pwr), "/",
     mean(stochastic_vr_dose_df$vr_5000_pwr),
     " (expected ~79 / ~158: the trunc_lognormal is cut off at its own mean)\n")
 
@@ -196,7 +196,7 @@ ear_position <- c("cheek1","cheek2","cheek3","tilt1","tilt2","tilt3")
 mean_ear_sar <- function(tissue, freq) {
   tp <- load_tissue_params(template_params, "call", tissue, "Duke")
   mean(vapply(ear_position,
-              \(p) tp[[paste0("Duke_", tissue, "_", freq, "_", p, "_sar")]],
+              \(p) tp[[paste0("Duke_", tissue, "_goliat_", freq, "_", p, "_sar")]],
               numeric(1)))
 }
 
@@ -205,23 +205,23 @@ d <- template_params$devices$vr$vr_distance$vr_dist_device
 # torso-to-head offset and therefore no hypotenuse as there is for gaming.
 f <- ((8 + 6)/(d + 6))^2
 
-pwr_2400 <- template_params$devices$vr$pwr$vr_2400_pwr *
-  template_params$devices$vr$dutycycle$vr_2400_dutycycle
+pwr_2450 <- template_params$devices$vr$pwr$vr_2450_pwr *
+  template_params$devices$vr$dutycycle$vr_2450_dutycycle
 pwr_5000 <- template_params$devices$vr$pwr$vr_5000_pwr *
   template_params$devices$vr$dutycycle$vr_5000_dutycycle
-w_2400 <- template_params$global$wifi_probs$wifi_2400_prop
+w_2450 <- template_params$global$wifi_probs$wifi_2450_prop
 w_5000 <- template_params$global$wifi_probs$wifi_5000_prop
 onln   <- template_params$devices$vr$online_prop$vr_online_prop
 
-hand_body <- (w_2400*pwr_2400*mean_ear_sar("body", 2400)*f +
+hand_body <- (w_2450*pwr_2450*mean_ear_sar("body", 2450)*f +
               w_5000*pwr_5000*mean_ear_sar("body", 5000)*f) * dur * onln / 1000
-hand_brain <- (w_2400*pwr_2400*mean_ear_sar("brain", 2400)*f +
+hand_brain <- (w_2450*pwr_2450*mean_ear_sar("brain", 2450)*f +
                w_5000*pwr_5000*mean_ear_sar("brain", 5000)*f) * dur * onln / 1000
 
 cat("\n--- deterministic cross check ---------------------------------------\n")
-cat("ear mean sar Duke body  2400 / 5000:", mean_ear_sar("body", 2400), "/",
+cat("ear mean sar Duke body  2450 / 5000:", mean_ear_sar("body", 2450), "/",
     mean_ear_sar("body", 5000), "\n")
-cat("ear mean sar Duke brain 2400 / 5000:", mean_ear_sar("brain", 2400), "/",
+cat("ear mean sar Duke brain 2450 / 5000:", mean_ear_sar("brain", 2450), "/",
     mean_ear_sar("brain", 5000), "\n")
 cat("distance factor (same for both tissues):", f, "\n")
 cat("vr_dose body :", ref_body,  " hand:", hand_body,  "\n")
@@ -259,7 +259,7 @@ for (dm in names(mass)) {
   p <- template_params
   p$global$input_stoch$sex <- if (dm %in% c("Duke","Thelonious")) "male" else "female"
   p$global$input_stoch$age <- if (dm %in% c("Duke","Ella")) "adult" else "child"
-  frac <- vr_sar("body", 2400, p) * mass[[dm]] / 1000
+  frac <- vr_sar("body", 2450, p) * mass[[dm]] / 1000
   cat(sprintf("  %-11s %.3f\n", dm, frac))
   stopifnot(frac < 1)
 }

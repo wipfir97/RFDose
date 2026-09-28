@@ -66,14 +66,23 @@ WRITE_YAML <- FALSE
 #     the RAW sheets (as this script does) bypasses them, so these are corrections.
 #   - 2 values in the last bit of a double, because Excel computed raw/P while
 #     this script computes raw*1000/P. Now everything takes the same path.
-#   - 4 lines of pure reordering: Duke_brain_5000_tilt1_sar sat after the
+#   - 4 lines of pure reordering: Duke_brain_goliat_5000_tilt1_sar sat after the
 #     xxxx/yyyy/zzzz placeholders instead of before them, the only block in the
 #     file where that was the case.
 # See doc/SAR_IMPORT_NOTES.md 5.5.
 PHANTOMS_TO_WRITE <- c("Duke", "Ella", "Thelonious", "Eartha")
 
-# The ten frequencies the model uses. Same vector as the original script.
-TARGET_FREQ <- c(700, 800, 900, 1450, 1800, 2100, 2400, 2600, 3500, 5000)
+# The nine frequencies the model uses. Changed from ten on 2026-09-28:
+#   - 2400 -> 2450. 2400 MHz is the lower edge of the 2.4 GHz band, and neither
+#     campaign simulated it; both simulated 2450, which lies inside the band.
+#     The GOLIAT values at this band therefore stop being interpolated and
+#     become native simulations.
+#   - 1450 dropped. It was never in the deterministic model, ETAIN has no node
+#     within 350 MHz of it, and f1450_4g_prop_mean was already 0.0, so it
+#     carried no exposure.
+# The result is identical to ETAIN's near-field grid, so the ETAIN import needs
+# no interpolation and no substitution rule. See doc/SAR_REDESIGN.md Q4.
+TARGET_FREQ <- c(700, 800, 900, 1800, 2100, 2450, 2600, 3500, 5000)
 
 # Reserved slots for future 5G/6G bands. They stay 0 and are not touched here.
 PLACEHOLDER_FREQ <- c("xxxx", "yyyy", "zzzz")
@@ -126,6 +135,51 @@ SOURCES <- list(
     file   = "Final_Data_UGent_normalized.xlsx",
     sheets = c(fronteyes = "Eartha_fronteyes", belly = "Eartha_belly",
                ear = "Eartha_ear"))
+)
+
+# =============================================================================
+# 2b. ETAIN SOURCE INVENTORY                                   (added 2026-09-28)
+#
+#    The second SAR campaign. Two files, whole body and brain, each holding all
+#    nine near-field scenarios for Duke and Ella side by side. Its frequencies
+#    are exactly TARGET_FREQ, so nothing is interpolated -- section 5 asserts
+#    that rather than assuming it.
+#
+#    Three differences from the GOLIAT workbooks:
+#      - values are ALREADY per 1 W (column header "[mW/kg/W]"), so the
+#        normalisation of section 4 must not be applied a second time. Verified
+#        by the absorbed-power check in section 9: 6.7 % at 30 cm up to 91 % for
+#        an earbud in the ear, and GOLIAT's ear at 1800 MHz agrees to within
+#        4 percentage points.
+#      - one row per (scenario, frequency) with the phantoms in COLUMNS, where
+#        GOLIAT has one row per (frequency, placement) per phantom.
+#      - the scenario column is written once per block and left blank below, so
+#        it has to be filled down.
+#
+#    Only Duke and Ella were simulated. Thelonious and Eartha get the same key
+#    grid filled with zeros; the child ratios that will populate them are a
+#    separate step, see doc/SAR_REDESIGN.md Q3.
+# =============================================================================
+
+ETAIN_FILES <- c(wholebody = "NF_SARwb_LessThan6GHz_WholeBody.xlsx",
+                 brain     = "NF_SARosa_LessThan6GHz_Brain.xlsx")
+
+ETAIN_PHANTOMS <- c("Duke", "Ella")
+
+# Scenario number -> yaml key fragment. The numbering is ETAIN's own and is
+# confirmed by the data itself: scenario 1 has a brain SAR of 40.8 mW/kg/W at
+# 1800 MHz and scenario 4 has 0.0007, which can only be the ear and the hip.
+# Scenarios 7-9 exist at fewer frequencies, exactly as the campaign specifies.
+ETAIN_POS_ORDER <- c(
+  "1" = "ear",       # 45 deg tilted, 1 cm from the right ear   -> phone call
+  "2" = "mouth10",   # vertical, 10 cm in front of the mouth    -> speaker mode
+  "3" = "mouth30",   # vertical, 30 cm in front of the mouth    -> phone data
+  "4" = "hip",       # vertical on the right hip, 1 cm          -> in pocket
+  "5" = "lap",       # on the legs, phantom seated              -> laptop/tablet
+  "6" = "table",     # 10 cm higher and 30 cm further than 5    -> laptop/tablet
+  "7" = "earbud_r",  # next to the right ear, 1 mm              -> Bluetooth
+  "8" = "earbud_l",  # next to the left ear, 1 mm               -> Bluetooth
+  "9" = "wrist"      # horizontal on the right wrist, 1 mm      -> smartwatch
 )
 
 # The 22 position fragments as they appear in the yaml keys. Any placement that
@@ -261,6 +315,68 @@ read_and_normalise <- function(phantom, group, verbose = TRUE) {
 }
 
 # =============================================================================
+# 4b. READ THE ETAIN CAMPAIGN                                  (added 2026-09-28)
+#
+#    Returns the same tidy shape as read_and_normalise() so that everything
+#    downstream -- interpolation, key building, splicing -- treats the two
+#    campaigns identically. No normalisation: see the note in section 2b.
+# =============================================================================
+
+read_etain <- function(verbose = TRUE) {
+  one <- function(tissue_col, file) {
+    df <- suppressMessages(read_excel(file.path(DATA, file), sheet = 1))
+    names(df)[1:4] <- c("scen", "freq", "Duke", "Ella")
+    # the scenario number is written once per block and blank below it
+    df$scen <- tidyr::fill(data.frame(s = df$scen), s)$s
+    df <- df[!is.na(df$freq), ]
+    for (nm in c("freq", ETAIN_PHANTOMS)) {
+      if (!is.numeric(df[[nm]]))
+        stop(sprintf("ETAIN file '%s': column '%s' is %s, not numeric",
+                     file, nm, class(df[[nm]])[1]))
+      if (anyNA(df[[nm]]))
+        stop(sprintf("ETAIN file '%s': column '%s' has %d NA",
+                     file, nm, sum(is.na(df[[nm]]))))
+    }
+    bad <- !as.character(df$scen) %in% names(ETAIN_POS_ORDER)
+    if (any(bad))
+      stop("ETAIN scenario(s) not in ETAIN_POS_ORDER: ",
+           paste(unique(df$scen[bad]), collapse = ", "))
+    if (any(duplicated(paste(df$scen, df$freq))))
+      stop(sprintf("ETAIN file '%s': duplicate (scenario, frequency)", file))
+    out <- tidyr::pivot_longer(df[, c("scen", "freq", ETAIN_PHANTOMS)],
+                               cols = all_of(ETAIN_PHANTOMS),
+                               names_to = "phantom", values_to = tissue_col)
+    out$placement <- unname(ETAIN_POS_ORDER[as.character(out$scen)])
+    out[, c("phantom", "freq", "placement", tissue_col)]
+  }
+  wb <- one("wholebody", ETAIN_FILES[["wholebody"]])
+  br <- one("brain",     ETAIN_FILES[["brain"]])
+  # the two files must describe exactly the same (phantom, frequency, scenario)
+  # grid, otherwise a join would silently drop or duplicate rows
+  k <- function(d) paste(d$phantom, d$freq, d$placement)
+  if (!setequal(k(wb), k(br)) || nrow(wb) != nrow(br))
+    stop("the ETAIN whole-body and brain files do not cover the same grid")
+  out <- merge(wb, br, by = c("phantom", "freq", "placement"))
+  out <- tibble(
+    phantom       = out$phantom,
+    group         = "etain",
+    frequency_mhz = as.numeric(out$freq),
+    placement     = out$placement,
+    power_mw      = NA_real_,        # already per 1 W, nothing to divide by
+    wholebody     = as.numeric(out$wholebody),
+    brain         = as.numeric(out$brain)
+  )
+  if (verbose)
+    for (ph in ETAIN_PHANTOMS) {
+      s <- out[out$phantom == ph, ]
+      cat(sprintf("  %-11s %-9s files=%-24s rows=%3d scenarios=%d freqs=%d\n",
+                  ph, "etain", "'NF_SARwb / NF_SARosa'", nrow(s),
+                  n_distinct(s$placement), n_distinct(s$frequency_mhz)))
+    }
+  out
+}
+
+# =============================================================================
 # 5. INTERPOLATION  --  the mechanism of R/sar_interpolation.R, unchanged
 #
 #    For each placement:
@@ -303,24 +419,64 @@ interpolate <- function(d) {
 #    in R 4.3 and it is no longer equivalent in general.
 # =============================================================================
 
+#    Since 2026-09-28 the campaign is part of the key:
+#      <phantom>_<tissue>_<campaign>_<frequency>_<placement>_sar
+#    The two campaigns disagree by up to a factor of two (doc/SAR_REDESIGN.md
+#    3.1), so which one a value came from has to be readable off the key rather
+#    than inferred from the placement name. headp_else keeps its old shape --
+#    it is a legacy placeholder belonging to neither campaign.
+#
+#    The three reserved 5G/6G placeholder bands exist in the GOLIAT block only.
+#    They are a slot reservation in the model's band list, not campaign data,
+#    and duplicating them under both campaigns would reserve the same slot twice.
+
 build_block <- function(interp, phantom, tissue) {
   col <- TISSUES[[tissue]]
 
-  # full key grid in canonical order: headp_else first, then position groups,
-  # frequencies ascending with the three placeholders last
+  grid <- function(campaign, positions, freqs)
+    as.vector(t(outer(positions, freqs,
+                      function(p, f) sprintf("%s_%s_%s_%s_%s_sar",
+                                             phantom, tissue, campaign, f, p))))
+
   keys <- c(
     sprintf("%s_%s_headp_else_sar", phantom, tissue),
-    as.vector(t(outer(POS_ORDER, FREQ_ORDER,
-                      function(p, f) sprintf("%s_%s_%s_%s_sar", phantom, tissue, f, p))))
+    grid("goliat", POS_ORDER, FREQ_ORDER),
+    grid("etain", unname(ETAIN_POS_ORDER), as.character(TARGET_FREQ))
   )
   v <- setNames(rep(0, length(keys)), keys)   # placeholders and headp_else stay 0
 
   src <- interp[interp$phantom == phantom, ]
-  k   <- sprintf("%s_%s_%s_%s_sar", phantom, tissue, src$frequency_mhz, src$placement)
+  camp <- ifelse(src$group == "etain", "etain", "goliat")
+  k <- sprintf("%s_%s_%s_%s_%s_sar",
+               phantom, tissue, camp, src$frequency_mhz, src$placement)
   stopifnot(!any(duplicated(k)), all(k %in% keys))
   v[k] <- src[[col]]
 
-  paste0("        ", names(v), ": ", paste0(unname(v)))
+  paste0("        ", names(v), ": ", fmt(unname(v)))
+}
+
+# Number formatting. paste0() is kept for every value it can render plainly,
+# because that is what produced all existing yaml values and validation B
+# reproduces them byte for byte.
+#
+# ETAIN's brain values for the hip, lap, table and wrist scenarios reach down to
+# about 1e-7, where paste0() switches to scientific notation -- and that cannot
+# go into the yaml. YAML 1.1 only recognises a float in exponent form if the
+# mantissa carries a decimal point, so "2e-06" is read back as the CHARACTER
+# STRING "2e-06" while "2.0e-06" is read as a number. A SAR value silently
+# turning into text is exactly the kind of failure the guard in splice() exists
+# to prevent, so the value is written in full decimal instead.
+# format() must be called one value at a time: given a vector it chooses a
+# single layout for all of it and pads every element to the decimal places the
+# smallest one needs, which writes digits past what a double can carry.
+fmt <- function(x) {
+  s   <- paste0(x)
+  sci <- grepl("[eE][+-]?[0-9]", s)
+  if (any(sci))
+    s[sci] <- vapply(x[sci],
+                     function(z) trimws(format(z, scientific = FALSE, digits = 15)),
+                     character(1))
+  s
 }
 
 # =============================================================================
@@ -344,15 +500,20 @@ splice <- function(path, blocks, phantoms) {
       keyre <- sprintf("^        %s_%s_[A-Za-z0-9_]+_sar: ", ph, tis)
       while (i <= length(ln) && grepl(keyre, ln[i])) i <- i + 1L
       new <- blocks[[paste(ph, tis)]]
-      stopifnot(i - th - 1L == length(new))          # same number of keys
       ln <- c(ln[seq_len(th)], new, if (i <= length(ln)) ln[i:length(ln)] else character(0))
     }
   }
-  stopifnot(length(old) == length(ln))
-  chg <- which(old != ln)
-  # nothing outside the phantoms we are writing may change
-  stopifnot(all(grepl(sprintf("^        (%s)_(body|brain)_[A-Za-z0-9_]+_sar: ",
-                              paste(phantoms, collapse = "|")), ln[chg])))
+  # Safety. Until 2026-09-28 this compared the two files line for line, which
+  # worked because every re-import wrote the same number of keys. The frequency
+  # grid change of that date drops 1450 MHz and renames 2400 to 2450, so the
+  # block length legitimately differs and that comparison no longer applies.
+  # The check below is the stronger statement it was standing in for: strip the
+  # SAR key lines of the phantoms being written from both files, and what is
+  # left must be identical and in the same order.
+  sarre <- sprintf("^        (%s)_(body|brain)_[A-Za-z0-9_]+_sar: ",
+                   paste(phantoms, collapse = "|"))
+  stopifnot(identical(old[!grepl(sarre, old)], ln[!grepl(sarre, ln)]))
+  chg <- which(grepl(sarre, ln))
   stopifnot(!any(grepl("[eE][+-][0-9]", ln[chg])))   # no scientific notation
   list(lines = ln, changed = chg)
 }
@@ -365,14 +526,39 @@ cat("\n--- 1-2. read and normalise ------------------------------------------\n"
 raw <- bind_rows(lapply(names(SOURCES), function(p)
   bind_rows(lapply(names(SOURCES[[p]]$sheets), function(g) read_and_normalise(p, g)))))
 
+etain <- read_etain()
+raw   <- bind_rows(raw, etain)
+
 cat("\ninput power per frequency (mW) -- note it is NOT constant:\n")
 print(as.data.frame(
-  raw %>% distinct(phantom, frequency_mhz, power_mw) %>%
+  raw %>% filter(group != "etain") %>%
+    distinct(phantom, frequency_mhz, power_mw) %>%
     tidyr::pivot_wider(names_from = frequency_mhz, values_from = power_mw)),
   row.names = FALSE)
 
 cat("\n--- 3. interpolate ---------------------------------------------------\n")
-interp <- interpolate(raw)
+
+# GOLIAT only. ETAIN must NOT go through interpolate(): its scenarios do not all
+# cover the same frequencies -- the earbuds were simulated at 2450 and 5000 MHz
+# only, the wrist at 2450 alone -- so complete() would insert the other target
+# frequencies as NA and approx() would then invent an earbud value at 2600 and
+# 3500 MHz by interpolating across the gap, and leave NA below 2450. Those
+# combinations were not simulated and stay 0, which build_block() does anyway.
+goliat <- raw %>% filter(group != "etain")
+etain  <- raw %>% filter(group == "etain")
+
+interp <- interpolate(goliat)
+
+# The claim that the model grid equals ETAIN's grid is checked, not assumed.
+# If ETAIN ever delivers a frequency the model does not carry, that value would
+# be silently dropped by build_block(), so refuse instead.
+extra <- setdiff(unique(etain$frequency_mhz), TARGET_FREQ)
+if (length(extra) > 0)
+  stop("ETAIN simulated frequencies that are not model bands: ",
+       paste(sort(extra), collapse = ", "),
+       ". Either the grid or ETAIN_POS_ORDER needs updating.")
+
+interp <- bind_rows(interp, etain)
 
 na_rows <- sum(is.na(interp$wholebody) | is.na(interp$brain))
 if (na_rows > 0)
@@ -380,19 +566,25 @@ if (na_rows > 0)
                na_rows),
        "simulated range. Refusing to continue: writing 0 would be indistinguishable ",
        "from 'this phantom has no data yet', which is what the model uses 0 for.")
-cat(sprintf("  %d values, 0 NA, all ten targets inside the simulated range [%g, %g]\n",
-            nrow(interp) * 2, min(raw$frequency_mhz), max(raw$frequency_mhz)))
+cat(sprintf("  GOLIAT %d values interpolated onto the %d model bands [%g, %g]\n",
+            sum(interp$group != "etain") * 2, length(TARGET_FREQ),
+            min(goliat$frequency_mhz), max(goliat$frequency_mhz)))
+cat(sprintf("  ETAIN  %d values taken as simulated, no interpolation needed\n",
+            nrow(etain) * 2))
 
 cat("\n--- 4. build yaml blocks ---------------------------------------------\n")
 blocks <- list()
 for (ph in names(SOURCES)) for (tis in names(TISSUES)) {
   blocks[[paste(ph, tis)]] <- build_block(interp, ph, tis)
 }
-# Key arithmetic per phantom, so the two figures in the docs are traceable:
-#   287 keys per tissue  = 1 headp_else + 22 positions x 13 frequency tokens
-#   220 real per tissue  = 22 positions x the 10 model frequencies
-#    67 zeros per tissue = 22 x 3 placeholder bands + 1 headp_else
-# and twice that per phantom, i.e. 574 keys / 440 real / 134 zero.
+# Key arithmetic per tissue, so the figures in the docs are traceable:
+#   346 keys  = 1 headp_else
+#             + 22 GOLIAT positions x 12 frequency tokens (9 bands + 3 reserved)
+#             +  9 ETAIN scenarios  x  9 bands
+#   real, Duke and Ella: 198 GOLIAT (22 x 9) + 59 ETAIN (6 scenarios x 9 bands,
+#   plus 2 earbud scenarios x 2 bands and the wrist at 2450 alone)
+#   Thelonious and Eartha have the same 81 ETAIN keys, all zero until the child
+#   ratios are applied -- see doc/SAR_REDESIGN.md Q3.
 for (ph in names(SOURCES)) {
   both  <- c(blocks[[paste(ph, "body")]], blocks[[paste(ph, "brain")]])
   zeros <- sum(grepl(": 0$", both))
@@ -445,13 +637,24 @@ if (!mechanism_ok)
   stop("the interpolation no longer matches the mechanism of R/sar_interpolation.R")
 
 cat("\n--- 6. validation B: reproduce Duke's existing yaml values -----------\n")
+# Compares this script's output against what already stands in the yaml, so it
+# only covers keys present in both. Two renames have happened since it was
+# written, and it must survive the transition run in each direction:
+#   2026-09-28a  the frequency grid changed, so the 1450 and 2400 keys vanish
+#                and 2450 appears -- those simply do not merge and are skipped
+#   2026-09-28b  the campaign segment was added, so every GOLIAT key changed
+#                name while keeping its value
+# The campaign segment is therefore stripped from both sides before matching.
+# Once the yaml carries the new names this is a no-op and the check is exact
+# again; while a rename is in flight it still compares the values.
 yl   <- readLines(YAML_FILES[1], warn = FALSE)
 duke <- grep("^        Duke_(body|brain)_[A-Za-z0-9_]+_sar: ", yl, value = TRUE)
 mine <- c(blocks[["Duke body"]], blocks[["Duke brain"]])
-key  <- function(x) sub("^\\s*([^:]+):.*$", "\\1", x)
-val  <- function(x) sub("^[^:]+:\\s*", "", x)
-cmp  <- merge(data.frame(k = key(duke), yaml = val(duke)),
-              data.frame(k = key(mine), mine = val(mine)), by = "k")
+key   <- function(x) sub("^\\s*([^:]+):.*$", "\\1", x)
+val   <- function(x) sub("^[^:]+:\\s*", "", x)
+strip <- function(k) sub("^(Duke_(body|brain))_(goliat|etain)_", "\\1_", k)
+cmp  <- merge(data.frame(k = strip(key(duke)), yaml = val(duke)),
+              data.frame(k = strip(key(mine)), mine = val(mine)), by = "k")
 same <- cmp$yaml == cmp$mine
 cat(sprintf("  %d of %d Duke values reproduced byte-identically\n", sum(same), nrow(cmp)))
 if (any(!same)) {
@@ -517,6 +720,40 @@ for (ph in names(SOURCES)) {
 }
 if (!norm_ok)
   stop("our 1 W normalisation disagrees with an institute's _normalized sheet")
+
+# =============================================================================
+# 9d. VALIDATION D: the ETAIN values are not normalised twice  (added 2026-09-28)
+#
+#    The GOLIAT sheets hold raw SAR and section 4 divides by the input power.
+#    The ETAIN files are already per 1 W, so section 4b must NOT divide again.
+#    A second division would shrink every value by a factor of roughly 500, and
+#    nothing else in the pipeline would notice.
+#
+#    The check is physical: at 1 W of input power the body cannot absorb more
+#    than 1 W, so SAR [mW/kg/W] * mass [kg] / 1000 must stay below 1. A wrongly
+#    divided value would come out around 0.0001 instead of the tenths seen for a
+#    device in contact with the body, so the test also catches the error by
+#    being far too small, not only by exceeding 1.
+#
+#    Masses are the IT'IS figures for the Virtual Population phantoms. They are
+#    not stored in the model -- see doc/MODEL_LIMITATIONS.md C5 -- so they are
+#    repeated here.
+# =============================================================================
+
+cat("\n--- 7d. validation D: ETAIN absorbed power is physical ---------------\n")
+PHANTOM_MASS_KG <- c(Duke = 70.2, Ella = 57.3, Thelonious = 18.6, Eartha = 29.0)
+et_ok <- TRUE
+for (ph in ETAIN_PHANTOMS) {
+  s <- etain[etain$phantom == ph, ]
+  fr <- s$wholebody * PHANTOM_MASS_KG[[ph]] / 1000
+  worst <- s$placement[which.max(fr)]
+  cat(sprintf("  %-11s absorbed fraction %.3f to %.3f  (largest: %s)\n",
+              ph, min(fr), max(fr), worst))
+  if (max(fr) >= 1 || max(fr) < 0.01) et_ok <- FALSE
+}
+if (!et_ok)
+  stop("ETAIN absorbed fractions are outside the plausible range -- the values ",
+       "are probably normalised twice, or not at all")
 
 # =============================================================================
 # 10. WRITE

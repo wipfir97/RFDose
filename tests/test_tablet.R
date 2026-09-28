@@ -61,7 +61,7 @@ stochastic_tblt_dose <- lapply(seq_len(length(param_simulations)), function(i) {
     # keep the drivers, so a surprising dose can be traced back to its input
     tblt_duration    = dur_low + dur_lowmed + dur_medhigh + dur_high,
     tblt_dist_device = sim_params$devices$tblt$tblt_distance$tblt_dist_device,
-    tblt_2400_pwr    = sim_params$devices$tblt$pwr$tblt_2400_pwr,
+    tblt_2450_pwr    = sim_params$devices$tblt$pwr$tblt_2450_pwr,
     tblt_5000_pwr    = sim_params$devices$tblt$pwr$tblt_5000_pwr,
     tblt_5000_high_dutycycle =
       sim_params$devices$tblt$dutycycle$tblt_5000_high_dutycycle
@@ -73,7 +73,7 @@ stochastic_tblt_dose_df <- data.frame(
   brain_tblt_dose  = sapply(stochastic_tblt_dose, \(x) x$brain_tblt_dose),
   tblt_duration    = sapply(stochastic_tblt_dose, \(x) x$tblt_duration),
   tblt_dist_device = sapply(stochastic_tblt_dose, \(x) x$tblt_dist_device),
-  tblt_2400_pwr    = sapply(stochastic_tblt_dose, \(x) x$tblt_2400_pwr),
+  tblt_2450_pwr    = sapply(stochastic_tblt_dose, \(x) x$tblt_2450_pwr),
   tblt_5000_pwr    = sapply(stochastic_tblt_dose, \(x) x$tblt_5000_pwr),
   tblt_5000_high_dutycycle =
     sapply(stochastic_tblt_dose, \(x) x$tblt_5000_high_dutycycle)
@@ -167,7 +167,7 @@ hist(stochastic_tblt_dose_df$tblt_duration, breaks = 100, col = "lightblue",
      border = "white", main = "Tablet duration (all four activities)", xlab = "s")
 hist(stochastic_tblt_dose_df$tblt_dist_device, breaks = 100, col = "lightblue",
      border = "white", main = "Viewing distance", xlab = "mm")
-hist(stochastic_tblt_dose_df$tblt_2400_pwr, breaks = 100, col = "lightblue",
+hist(stochastic_tblt_dose_df$tblt_2450_pwr, breaks = 100, col = "lightblue",
      border = "white", main = "2.4 GHz power", xlab = "mW")
 hist(stochastic_tblt_dose_df$tblt_5000_high_dutycycle, breaks = 100,
      col = "lightblue", border = "white",
@@ -180,7 +180,7 @@ cat("mean duration:", mean(stochastic_tblt_dose_df$tblt_duration),
     " (expected ~1618 = 728+81+728+81)\n")
 cat("mean viewing distance:", mean(stochastic_tblt_dose_df$tblt_dist_device),
     " (expected slightly above 300: the lognormal is truncated at 200 below)\n")
-cat("mean power 2.4 / 5 GHz:", mean(stochastic_tblt_dose_df$tblt_2400_pwr), "/",
+cat("mean power 2.4 / 5 GHz:", mean(stochastic_tblt_dose_df$tblt_2450_pwr), "/",
     mean(stochastic_tblt_dose_df$tblt_5000_pwr),
     " (expected ~79 / ~158: the trunc_lognormal is cut off at its own mean)\n")
 
@@ -228,7 +228,7 @@ frontal_position <- c("front_of_eyes_center_vertical","front_of_eyes_center_hori
 mean_frontal_sar <- function(tissue, freq) {
   tp <- load_tissue_params(template_params, "call", tissue, "Duke")
   mean(vapply(frontal_position,
-              \(p) tp[[paste0("Duke_", tissue, "_", freq, "_", p, "_sar")]],
+              \(p) tp[[paste0("Duke_", tissue, "_goliat_", freq, "_", p, "_sar")]],
               numeric(1)))
 }
 
@@ -249,20 +249,20 @@ hand_pwr <- function(freq) {
     numeric(1))) * template_params$devices$tblt$pwr[[paste0("tblt_", freq, "_pwr")]]
 }
 
-pwr_2400 <- hand_pwr(2400)
+pwr_2450 <- hand_pwr(2450)
 pwr_5000 <- hand_pwr(5000)
-w_2400 <- template_params$global$wifi_probs$wifi_2400_prop
+w_2450 <- template_params$global$wifi_probs$wifi_2450_prop
 w_5000 <- template_params$global$wifi_probs$wifi_5000_prop
 
-hand_body <- (w_2400*pwr_2400*mean_frontal_sar("body", 2400)*f +
+hand_body <- (w_2450*pwr_2450*mean_frontal_sar("body", 2450)*f +
               w_5000*pwr_5000*mean_frontal_sar("body", 5000)*f) * d_total / 1000
-hand_brain <- (w_2400*pwr_2400*mean_frontal_sar("brain", 2400)*f +
+hand_brain <- (w_2450*pwr_2450*mean_frontal_sar("brain", 2450)*f +
                w_5000*pwr_5000*mean_frontal_sar("brain", 5000)*f) * d_total / 1000
 
 cat("\n--- deterministic cross check ---------------------------------------\n")
-cat("frontal mean sar Duke body  2400 / 5000:", mean_frontal_sar("body", 2400), "/",
+cat("frontal mean sar Duke body  2450 / 5000:", mean_frontal_sar("body", 2450), "/",
     mean_frontal_sar("body", 5000), "\n")
-cat("frontal mean sar Duke brain 2400 / 5000:", mean_frontal_sar("brain", 2400), "/",
+cat("frontal mean sar Duke brain 2450 / 5000:", mean_frontal_sar("brain", 2450), "/",
     mean_frontal_sar("brain", 5000), "\n")
 cat("distance factor 200 -> ", dd, " mm (same for both tissues): ", f, "\n", sep = "")
 cat("tablet_dose body :", ref_body,  " hand:", hand_body,  "\n")
@@ -317,7 +317,7 @@ for (dm in names(mass)) {
   p <- template_params
   p$global$input_stoch$sex <- if (dm %in% c("Duke","Thelonious")) "male" else "female"
   p$global$input_stoch$age <- if (dm %in% c("Duke","Ella")) "adult" else "child"
-  frac <- tablet_sar("body", 2400, p) * mass[[dm]] / 1000
+  frac <- tablet_sar("body", 2450, p) * mass[[dm]] / 1000
   cat(sprintf("  %-11s %.4f\n", dm, frac))
   stopifnot(frac < 1)
 }

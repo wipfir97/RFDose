@@ -62,7 +62,7 @@ stochastic_lptp_dose <- lapply(seq_len(length(param_simulations)), function(i) {
     lptp_lap_prop  = sim_params$global$input_stoch$lptp_position$lptp_lap_prop,
     lptp_dist_lap  = sim_params$devices$lptp$lptp_distance$lptp_dist_lap,
     lptp_dist_desk = sim_params$devices$lptp$lptp_distance$lptp_dist_desk,
-    lptp_2400_pwr  = sim_params$devices$lptp$pwr$lptp_2400_pwr,
+    lptp_2450_pwr  = sim_params$devices$lptp$pwr$lptp_2450_pwr,
     lptp_5000_pwr  = sim_params$devices$lptp$pwr$lptp_5000_pwr
   )
 })
@@ -74,7 +74,7 @@ stochastic_lptp_dose_df <- data.frame(
   lptp_lap_prop   = sapply(stochastic_lptp_dose, \(x) x$lptp_lap_prop),
   lptp_dist_lap   = sapply(stochastic_lptp_dose, \(x) x$lptp_dist_lap),
   lptp_dist_desk  = sapply(stochastic_lptp_dose, \(x) x$lptp_dist_desk),
-  lptp_2400_pwr   = sapply(stochastic_lptp_dose, \(x) x$lptp_2400_pwr),
+  lptp_2450_pwr   = sapply(stochastic_lptp_dose, \(x) x$lptp_2450_pwr),
   lptp_5000_pwr   = sapply(stochastic_lptp_dose, \(x) x$lptp_5000_pwr)
 )
 
@@ -179,7 +179,7 @@ cat("mean duration:", mean(stochastic_lptp_dose_df$lptp_duration),
 cat("mean lap share:", mean(stochastic_lptp_dose_df$lptp_lap_prop), " (expected ~0.2)\n")
 cat("mean distances lap / desk:", mean(stochastic_lptp_dose_df$lptp_dist_lap), "/",
     mean(stochastic_lptp_dose_df$lptp_dist_desk), " (expected ~200 / ~450)\n")
-cat("mean power 2.4 / 5 GHz:", mean(stochastic_lptp_dose_df$lptp_2400_pwr), "/",
+cat("mean power 2.4 / 5 GHz:", mean(stochastic_lptp_dose_df$lptp_2450_pwr), "/",
     mean(stochastic_lptp_dose_df$lptp_5000_pwr),
     " (expected ~79 / ~158: the trunc_lognormal is cut off at its own mean)\n")
 
@@ -217,7 +217,7 @@ belly_position <- c("belly_center_vertical","belly_center_horizontal",
 mean_belly_sar <- function(tissue, freq) {
   tp <- load_tissue_params(template_params, "call", tissue, "Duke")
   mean(vapply(belly_position,
-              \(p) tp[[paste0("Duke_", tissue, "_", freq, "_", p, "_sar")]],
+              \(p) tp[[paste0("Duke_", tissue, "_goliat_", freq, "_", p, "_sar")]],
               numeric(1)))
 }
 
@@ -244,7 +244,7 @@ hand_pwr <- function(freq) {
 
 hand <- function(tissue) {
   f <- if (tissue == "body") f_body else f_brain
-  sum(vapply(c(2400, 5000), function(fr) {
+  sum(vapply(c(2450, 5000), function(fr) {
     s <- mean_belly_sar(tissue, fr)
     template_params$global$wifi_probs[[paste0("wifi_", fr, "_prop")]] * hand_pwr(fr) *
       (lap_p * s * f(d_lap) + (1 - lap_p) * s * f(d_desk))
@@ -252,9 +252,9 @@ hand <- function(tissue) {
 }
 
 cat("\n--- deterministic cross check ---------------------------------------\n")
-cat("belly mean sar Duke body  2400 / 5000:", mean_belly_sar("body", 2400), "/",
+cat("belly mean sar Duke body  2450 / 5000:", mean_belly_sar("body", 2450), "/",
     mean_belly_sar("body", 5000), "\n")
-cat("belly mean sar Duke brain 2400 / 5000:", mean_belly_sar("brain", 2400), "/",
+cat("belly mean sar Duke brain 2450 / 5000:", mean_belly_sar("brain", 2450), "/",
     mean_belly_sar("brain", 5000), "\n")
 cat("distance factors body  lap / desk:", f_body(d_lap),  "/", f_body(d_desk),  "\n")
 cat("distance factors brain lap / desk:", f_brain(d_lap), "/", f_brain(d_desk), "\n")
@@ -275,8 +275,8 @@ cat("lap at 200 mm is the simulation reference, factor exactly 1: OK\n")
 # mean, independent of the lap/table mix
 no_dist_params <- template_params
 no_dist_params$global$dist_correction <- FALSE
-stopifnot(isTRUE(all.equal(laptop_sar("body", 2400, no_dist_params),
-                           mean_belly_sar("body", 2400), tolerance = 1e-12)))
+stopifnot(isTRUE(all.equal(laptop_sar("body", 2450, no_dist_params),
+                           mean_belly_sar("body", 2450), tolerance = 1e-12)))
 cat("dist_correction = FALSE falls back to the uncorrected belly mean: OK\n")
 
 # INVARIANT: the output power depends on the activity MIX, the dose on the total
@@ -307,7 +307,7 @@ for (dm in names(mass)) {
   p <- template_params
   p$global$input_stoch$sex <- if (dm %in% c("Duke","Thelonious")) "male" else "female"
   p$global$input_stoch$age <- if (dm %in% c("Duke","Ella")) "adult" else "child"
-  frac <- laptop_sar("body", 2400, p) * mass[[dm]] / 1000
+  frac <- laptop_sar("body", 2450, p) * mass[[dm]] / 1000
   cat(sprintf("  %-11s %.4f\n", dm, frac))
   stopifnot(frac < 1)
 }

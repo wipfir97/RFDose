@@ -167,7 +167,7 @@ test_that("tablet_msar matches reference values", {
 cases_tablet_pwr <- list(
   list(
     input = list(
-      freq        = "2400",
+      freq        = "2450",
       dur_low     = 728,
       dur_lowmed  = 81,
       dur_medhigh = 728,
@@ -201,7 +201,7 @@ cases_tablet_sar <- list(
   list(
     input = list(
       tissue = "brain",
-      freq   = "2400",
+      freq   = "2450",
       params = template_params
     ),
     output = 0.4973535
@@ -217,7 +217,7 @@ cases_tablet_sar <- list(
   list(
     input = list(
       tissue = "body",
-      freq   = "2400",
+      freq   = "2450",
       params = template_params
     ),
     output = 0.5367537

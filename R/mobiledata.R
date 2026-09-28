@@ -182,7 +182,7 @@ mpd_msar <- function(
   # Setup =====================================================================
   ## Define frequency bands for each technology -------------------------------
   data_bands <- c("3g", "4g", "5g","6g")
-  wifi_freqs <- c("2400", "5000") # 2.4 GHz and 5.0 GHz
+  wifi_freqs <- c("2450", "5000") # 2.4 GHz and 5.0 GHz
 
   ## Calculate overall data vs wifi prop --------------------------------------
   wifi_prop_overall <- sum(
@@ -496,7 +496,7 @@ mpd_sar_data <- function(
                            params$global$input_stoch$age)
 
   # define prefix for finding correct tissue parameter
-  prefix <- paste0(dummy,"_",tissue,"_", freq,"_")
+  prefix <- paste0(dummy,"_",tissue,"_goliat_", freq,"_")
   # load tissue-specific parameters (SAR values)
   tissue_params <- load_tissue_params(params, "call", tissue,dummy) # here we still use call because at the moment all sar values are stored in call
 

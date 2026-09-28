@@ -42,7 +42,7 @@ gaming_msar <- function(
     tissue,
     params = load_params()) {
 
-  freqs <- c("2400", "5000") # 2.4 GHz and 5.0 GHz
+  freqs <- c("2450", "5000") # 2.4 GHz and 5.0 GHz
 
   msar <- sum(
     vapply(
@@ -92,7 +92,7 @@ gaming_sar <- function(
   dummy <- determine_dummy(params$global$input_stoch$sex,
                            params$global$input_stoch$age)
   # define prefix for finding correct tissue parameter
-  prefix <- paste0(dummy,"_",tissue,"_", freq,"_")
+  prefix <- paste0(dummy,"_",tissue,"_goliat_", freq,"_")
   # load tissue-specific parameters (SAR values)
   tissue_params <- load_tissue_params(params, "call", tissue,dummy) # here we still use call because at the moment all sar values are stored in call
 

@@ -366,11 +366,11 @@ simulate_params <- function(duration,
   # pick wifi_probs_____________________________________________________________
   wifi_p <- evaluate_distribution(
     dist_name = params_stochastic$global$wifi_probs$distribution,
-    mean = c(params_stochastic$global$wifi_probs$wifi_2400_prop,
+    mean = c(params_stochastic$global$wifi_probs$wifi_2450_prop,
              params_stochastic$global$wifi_probs$wifi_5000_prop),
     a0 = params_stochastic$global$wifi_probs$wifi_prop_a0
   )
-  params$global$wifi_probs$wifi_2400_prop <-  wifi_p[1]
+  params$global$wifi_probs$wifi_2450_prop <-  wifi_p[1]
   params$global$wifi_probs$wifi_5000_prop <-  wifi_p[2]
 
   # pick call_type______________________________________________________________
@@ -464,7 +464,6 @@ simulate_params <- function(duration,
     mean = c(params_stochastic$devices$call[["4g_freq_props"]]$f700_4g_prop_mean,
              params_stochastic$devices$call[["4g_freq_props"]]$f800_4g_prop_mean,
              params_stochastic$devices$call[["4g_freq_props"]]$f900_4g_prop_mean,
-             params_stochastic$devices$call[["4g_freq_props"]]$f1450_4g_prop_mean,
              params_stochastic$devices$call[["4g_freq_props"]]$f1800_4g_prop_mean,
              params_stochastic$devices$call[["4g_freq_props"]]$f2100_4g_prop_mean,
              params_stochastic$devices$call[["4g_freq_props"]]$f2600_4g_prop_mean),
@@ -473,10 +472,9 @@ simulate_params <- function(duration,
   params$devices$call[["4g_freq_props"]]$f700_4g_prop <-  prop_4g[1]
   params$devices$call[["4g_freq_props"]]$f800_4g_prop <-  prop_4g[2]
   params$devices$call[["4g_freq_props"]]$f900_4g_prop <-  prop_4g[3]
-  params$devices$call[["4g_freq_props"]]$f1450_4g_prop <-  prop_4g[4]
-  params$devices$call[["4g_freq_props"]]$f1800_4g_prop <-  prop_4g[5]
-  params$devices$call[["4g_freq_props"]]$f2100_4g_prop <-  prop_4g[6]
-  params$devices$call[["4g_freq_props"]]$f2600_4g_prop <-  prop_4g[7]
+  params$devices$call[["4g_freq_props"]]$f1800_4g_prop <-  prop_4g[4]
+  params$devices$call[["4g_freq_props"]]$f2100_4g_prop <-  prop_4g[5]
+  params$devices$call[["4g_freq_props"]]$f2600_4g_prop <-  prop_4g[6]
 
   # pick 5g_freq_props
   prop_5g <- evaluate_distribution(
@@ -626,7 +624,7 @@ simulate_params <- function(duration,
 
   # pick wifi_dutycycle
   ## wifi_2_dutycycle
-  params$devices$call$wifi_dutycycle$wifi_2400_dutycycle <- evaluate_distribution(
+  params$devices$call$wifi_dutycycle$wifi_2450_dutycycle <- evaluate_distribution(
     dist_name = params_stochastic$devices$call$wifi_dutycycle$distribution,
     mean = c(params_stochastic$devices$call$wifi_dutycycle$wifi_2_dutycycle_mean,
              1-params_stochastic$devices$call$wifi_dutycycle$wifi_2_dutycycle_mean),
@@ -725,7 +723,7 @@ simulate_params <- function(duration,
     "data_6g_urb_out_pwr",
     "data_6g_rur_out_pwr",
     "data_6g_travel_pwr",
-    "wifi_2400_pwr",
+    "wifi_2450_pwr",
     "wifi_5000_pwr",
     "bt_pwr"
   )
@@ -790,10 +788,10 @@ simulate_params <- function(duration,
     "data_6g_lowmed_dutycycle",
     "data_6g_medhigh_dutycycle",
     "data_6g_high_dutycycle",
-    "wifi_2400_low_dutycycle",
-    "wifi_2400_lowmed_dutycycle",
-    "wifi_2400_medhigh_dutycycle",
-    "wifi_2400_high_dutycycle",
+    "wifi_2450_low_dutycycle",
+    "wifi_2450_lowmed_dutycycle",
+    "wifi_2450_medhigh_dutycycle",
+    "wifi_2450_high_dutycycle",
     "wifi_5000_low_dutycycle",
     "wifi_5000_lowmed_dutycycle",
     "wifi_5000_medhigh_dutycycle",
@@ -837,7 +835,7 @@ simulate_params <- function(duration,
     "data_6g_urb_out_pwr",
     "data_6g_rur_out_pwr",
     "data_6g_travel_pwr",
-    "wifi_2400_pwr",
+    "wifi_2450_pwr",
     "wifi_5000_pwr")
   for (pw in power_vars){
     params$devices$data$pwr[[pw]] <- evaluate_distribution(
@@ -905,7 +903,7 @@ simulate_params <- function(duration,
     a0 = params_stochastic$devices$gaming$online_prop$gaming_online_prop_a0)[1]
 
   # pick pwr
-  gaming_freqs <- c("2400", "5000") # 2.4 GHz and 5.0 GHz
+  gaming_freqs <- c("2450", "5000") # 2.4 GHz and 5.0 GHz
   for (freq in gaming_freqs) {
     params$devices$gaming$pwr[[paste0("gaming_", freq, "_pwr")]] <- evaluate_distribution(
       dist_name = params_stochastic$devices$gaming$pwr$distribution,
@@ -945,7 +943,7 @@ simulate_params <- function(duration,
     a0 = params_stochastic$devices$vr$online_prop$vr_online_prop_a0)[1]
 
   # pick pwr
-  vr_freqs <- c("2400", "5000") # 2.4 GHz and 5.0 GHz
+  vr_freqs <- c("2450", "5000") # 2.4 GHz and 5.0 GHz
   for (freq in vr_freqs) {
     params$devices$vr$pwr[[paste0("vr_", freq, "_pwr")]] <- evaluate_distribution(
       dist_name = params_stochastic$devices$vr$pwr$distribution,
@@ -978,7 +976,7 @@ simulate_params <- function(duration,
   ####### tablet
 
   # pick pwr
-  tblt_freqs <- c("2400", "5000") # 2.4 GHz and 5.0 GHz
+  tblt_freqs <- c("2450", "5000") # 2.4 GHz and 5.0 GHz
   for (freq in tblt_freqs) {
     params$devices$tblt$pwr[[paste0("tblt_", freq, "_pwr")]] <- evaluate_distribution(
       dist_name = params_stochastic$devices$tblt$pwr$distribution,
@@ -992,10 +990,10 @@ simulate_params <- function(duration,
   # pick dc (dutycycle) -- one per band and usage-intensity class, as for mobile
   # data. Each carries its own a0, so the loop reads the spread per entry.
   tblt_dutycycle_vars <- c(
-    "tblt_2400_low_dutycycle",
-    "tblt_2400_lowmed_dutycycle",
-    "tblt_2400_medhigh_dutycycle",
-    "tblt_2400_high_dutycycle",
+    "tblt_2450_low_dutycycle",
+    "tblt_2450_lowmed_dutycycle",
+    "tblt_2450_medhigh_dutycycle",
+    "tblt_2450_high_dutycycle",
     "tblt_5000_low_dutycycle",
     "tblt_5000_lowmed_dutycycle",
     "tblt_5000_medhigh_dutycycle",
@@ -1022,7 +1020,7 @@ simulate_params <- function(duration,
   ####### laptop
 
   # pick pwr
-  lptp_freqs <- c("2400", "5000") # 2.4 GHz and 5.0 GHz
+  lptp_freqs <- c("2450", "5000") # 2.4 GHz and 5.0 GHz
   for (freq in lptp_freqs) {
     params$devices$lptp$pwr[[paste0("lptp_", freq, "_pwr")]] <- evaluate_distribution(
       dist_name = params_stochastic$devices$lptp$pwr$distribution,
@@ -1036,10 +1034,10 @@ simulate_params <- function(duration,
   # pick dc (dutycycle) -- one per band and usage-intensity class, as for mobile
   # data and tablet. Each carries its own a0.
   lptp_dutycycle_vars <- c(
-    "lptp_2400_low_dutycycle",
-    "lptp_2400_lowmed_dutycycle",
-    "lptp_2400_medhigh_dutycycle",
-    "lptp_2400_high_dutycycle",
+    "lptp_2450_low_dutycycle",
+    "lptp_2450_lowmed_dutycycle",
+    "lptp_2450_medhigh_dutycycle",
+    "lptp_2450_high_dutycycle",
     "lptp_5000_low_dutycycle",
     "lptp_5000_lowmed_dutycycle",
     "lptp_5000_medhigh_dutycycle",
