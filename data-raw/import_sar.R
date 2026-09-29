@@ -182,6 +182,38 @@ ETAIN_POS_ORDER <- c(
   "9" = "wrist"      # horizontal on the right wrist, 1 mm      -> smartwatch
 )
 
+# =============================================================================
+# 2c. GOLIAT FAR-FIELD INVENTORY                               (added 2026-09-29
+#
+#    A separate campaign product from the near-field tables: plane waves from 12
+#    incidence directions, normalised to an incident power density of 1 W/m2,
+#    for all four phantoms. One file each.
+#
+#    Two differences from the near field:
+#      - no input power to divide by. The values are already per 1 W/m2, so the
+#        normalisation of section 4 must not be applied.
+#      - the 12 directions are AVERAGED. The spread across directions is a
+#        factor of 1.5 to 4.7, but a person turns during the day, so drawing one
+#        direction would assert a fixed orientation over 24 hours.
+#
+#    The ambient exposure is not monochromatic, so the model weights these by a
+#    frequency spectrum at run time (devices$farf$ff_freq_props). The spectrum is
+#    Adriana's EU-level composition, which has ten buckets. Each bucket is filled
+#    here from the nearest simulated node, in keeping with the decision to stop
+#    interpolating. Three pairs of buckets therefore share a node, and the yaml
+#    shows that openly rather than hiding it behind an interpolation.
+#
+#    The lowest bucket is "below 700 MHz" and carries 8 % of the exposure. It is
+#    labelled 450 in the keys, which is both its representative frequency and the
+#    node GOLIAT simulated for it -- the near-field grid has no band down there.
+# =============================================================================
+
+FF_FILE <- function(phantom) sprintf("Final_Data_%s_UGent_FF.xlsx", phantom)
+
+# spectrum bucket -> the GOLIAT node that fills it
+FF_BANDS <- c(450, 700, 800, 900, 1800, 2100, 2450, 2600, 3500, 5000)
+FF_NODE  <- c(450, 700, 835, 835, 2140, 2140, 2450, 2450, 3500, 5200)
+
 # The 22 position fragments as they appear in the yaml keys. Any placement that
 # does not map into this set aborts the run.
 POS_ORDER <- c(
@@ -377,6 +409,54 @@ read_etain <- function(verbose = TRUE) {
 }
 
 # =============================================================================
+# 4c. READ THE GOLIAT FAR FIELD                                (added 2026-09-29)
+#
+#    Returns the same tidy shape as the other two readers, with `placement` set
+#    to "farfield" and `frequency_mhz` already carrying the spectrum bucket
+#    rather than the simulated node. See section 2c.
+# =============================================================================
+
+read_farfield <- function(verbose = TRUE) {
+  out <- do.call(rbind, lapply(PHANTOMS_TO_WRITE, function(ph) {
+    path <- file.path(DATA, FF_FILE(ph))
+    df <- suppressMessages(read_excel(path, sheet = 1))
+    names(df)[1:5] <- c("freq", "dir", "pd", "wholebody", "brain")
+    for (nm in c("freq", "pd", "wholebody", "brain")) {
+      if (!is.numeric(df[[nm]]))
+        stop(sprintf("far-field file '%s': column '%s' is %s, not numeric",
+                     FF_FILE(ph), nm, class(df[[nm]])[1]))
+      if (anyNA(df[[nm]]))
+        stop(sprintf("far-field file '%s': column '%s' has NA", FF_FILE(ph), nm))
+    }
+    # the values are quoted per this power density; anything else would need
+    # dividing through and the reader does not do that
+    if (any(df$pd != 1))
+      stop(sprintf("far-field file '%s': incident power density is not 1 W/m2 ",
+                   FF_FILE(ph)), "in every row -- the normalisation assumption fails")
+    ndir <- length(unique(df$dir))
+    miss <- setdiff(FF_NODE, unique(df$freq))
+    if (length(miss))
+      stop(sprintf("far-field file '%s' lacks the node(s) %s needed by FF_NODE",
+                   FF_FILE(ph), paste(sort(miss), collapse = ", ")))
+    if (verbose)
+      cat(sprintf("  %-11s %-9s file=%-24s rows=%3d directions=%d freqs=%d\n",
+                  ph, "farfield", paste0("'", FF_FILE(ph), "'"), nrow(df),
+                  ndir, length(unique(df$freq))))
+    # average the 12 directions, then place each spectrum bucket on its node
+    agg <- function(col) vapply(FF_NODE, function(f) mean(df[[col]][df$freq == f]),
+                                numeric(1))
+    tibble(phantom       = ph,
+           group         = "farfield",
+           frequency_mhz = FF_BANDS,
+           placement     = "farfield",
+           power_mw      = NA_real_,      # per 1 W/m2 already, nothing to divide
+           wholebody     = agg("wholebody"),
+           brain         = agg("brain"))
+  }))
+  out
+}
+
+# =============================================================================
 # 5. INTERPOLATION  --  the mechanism of R/sar_interpolation.R, unchanged
 #
 #    For each placement:
@@ -441,6 +521,7 @@ build_block <- function(interp, phantom, tissue) {
   keys <- c(
     sprintf("%s_%s_headp_else_sar", phantom, tissue),
     grid("goliat", POS_ORDER, FREQ_ORDER),
+    grid("goliat", "farfield", as.character(FF_BANDS)),
     grid("etain", unname(ETAIN_POS_ORDER), as.character(TARGET_FREQ))
   )
   v <- setNames(rep(0, length(keys)), keys)   # placeholders and headp_else stay 0
@@ -527,11 +608,12 @@ raw <- bind_rows(lapply(names(SOURCES), function(p)
   bind_rows(lapply(names(SOURCES[[p]]$sheets), function(g) read_and_normalise(p, g)))))
 
 etain <- read_etain()
-raw   <- bind_rows(raw, etain)
+farf  <- read_farfield()
+raw   <- bind_rows(raw, etain, farf)
 
 cat("\ninput power per frequency (mW) -- note it is NOT constant:\n")
 print(as.data.frame(
-  raw %>% filter(group != "etain") %>%
+  raw %>% filter(!group %in% c("etain", "farfield")) %>%
     distinct(phantom, frequency_mhz, power_mw) %>%
     tidyr::pivot_wider(names_from = frequency_mhz, values_from = power_mw)),
   row.names = FALSE)
@@ -544,8 +626,9 @@ cat("\n--- 3. interpolate ---------------------------------------------------\n"
 # frequencies as NA and approx() would then invent an earbud value at 2600 and
 # 3500 MHz by interpolating across the gap, and leave NA below 2450. Those
 # combinations were not simulated and stay 0, which build_block() does anyway.
-goliat <- raw %>% filter(group != "etain")
+goliat <- raw %>% filter(!group %in% c("etain", "farfield"))
 etain  <- raw %>% filter(group == "etain")
+farf   <- raw %>% filter(group == "farfield")
 
 interp <- interpolate(goliat)
 
@@ -558,7 +641,7 @@ if (length(extra) > 0)
        paste(sort(extra), collapse = ", "),
        ". Either the grid or ETAIN_POS_ORDER needs updating.")
 
-interp <- bind_rows(interp, etain)
+interp <- bind_rows(interp, etain, farf)
 
 na_rows <- sum(is.na(interp$wholebody) | is.na(interp$brain))
 if (na_rows > 0)
@@ -571,6 +654,8 @@ cat(sprintf("  GOLIAT %d values interpolated onto the %d model bands [%g, %g]\n"
             min(goliat$frequency_mhz), max(goliat$frequency_mhz)))
 cat(sprintf("  ETAIN  %d values taken as simulated, no interpolation needed\n",
             nrow(etain) * 2))
+cat(sprintf("  FARF   %d values, 12 directions averaged, each band on its nearest node\n",
+            nrow(farf) * 2))
 
 cat("\n--- 4. build yaml blocks ---------------------------------------------\n")
 blocks <- list()
@@ -754,6 +839,25 @@ for (ph in ETAIN_PHANTOMS) {
 if (!et_ok)
   stop("ETAIN absorbed fractions are outside the plausible range -- the values ",
        "are probably normalised twice, or not at all")
+
+# The far field is normalised to an incident power density, not to a radiated
+# power, so the < 1 argument does not apply: a body intercepts a cross-section
+# of the wave and the absorbed power depends on that area, not on a source
+# output. What the check does here is confirm the order of magnitude against
+# the scalar the deterministic model used, which came from ETAIN's own
+# far-field set: 4.655 mW/kg per W/m2 whole body, 5.439 brain.
+cat("\n--- 7e. validation E: far field against the value it replaces ----------\n")
+DDM_FF <- c(wholebody = 4.655352, brain = 5.439141)
+for (tis in c("wholebody", "brain")) {
+  v <- vapply(PHANTOMS_TO_WRITE,
+              function(p) mean(farf[[tis]][farf$phantom == p]), numeric(1))
+  cat(sprintf("  %-10s %s   | deterministic scalar %.3f\n", tis,
+              paste(sprintf("%s %.2f", names(v), v), collapse = "  "),
+              DDM_FF[[tis]]))
+  if (any(v <= 0) || max(v) / DDM_FF[[tis]] > 5 || min(v) / DDM_FF[[tis]] < 0.2)
+    stop("far-field SAR is more than a factor of 5 from the value it replaces ",
+         "-- check the normalisation")
+}
 
 # =============================================================================
 # 10. WRITE

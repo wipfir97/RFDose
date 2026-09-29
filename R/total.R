@@ -198,13 +198,14 @@ get_total_dose <- function(
       )
 
 
-    ## Calculate far-field contribution DETERMINISTIC-----------------------------------------
+    ## Calculate far-field contribution STOCHASTIC--------------------------------------------
+    ## urbanicity is no longer passed: farfield_pwr() weights over the three
+    ## urbanicity proportions that simulate_params() draws.
     farf_dose <- farfield_dose(
-      tissue           = tissue,
+      tissue       = tissue,
       country      = sample$country,
-      urbanicity   = sample$urbanicity, # dont forget to update to proportions
-      travel_time  = sample$travel_time,
-      params       = old_params
+      travel_time  = travel_time,
+      params       = sim_params
       )
 
     ## Calculate WiFi contribution DETERMINISTIC----------------------------------------------

@@ -571,6 +571,16 @@ devices:
         Duke_body_goliat_xxxx_belly_up_vertical_sar: 0
         Duke_body_goliat_yyyy_belly_up_vertical_sar: 0
         Duke_body_goliat_zzzz_belly_up_vertical_sar: 0
+        Duke_body_goliat_450_farfield_sar: 5.34423781859946
+        Duke_body_goliat_700_farfield_sar: 5.48399165239038
+        Duke_body_goliat_800_farfield_sar: 5.09050143094283
+        Duke_body_goliat_900_farfield_sar: 5.09050143094283
+        Duke_body_goliat_1800_farfield_sar: 3.69186835447253
+        Duke_body_goliat_2100_farfield_sar: 3.69186835447253
+        Duke_body_goliat_2450_farfield_sar: 3.47385045861024
+        Duke_body_goliat_2600_farfield_sar: 3.47385045861024
+        Duke_body_goliat_3500_farfield_sar: 2.89150079650173
+        Duke_body_goliat_5000_farfield_sar: 2.42960592978011
         Duke_body_etain_700_ear_sar: 11.1024513430442
         Duke_body_etain_800_ear_sar: 11.1219059662964
         Duke_body_etain_900_ear_sar: 11.2250876338154
@@ -919,6 +929,16 @@ devices:
         Duke_brain_goliat_xxxx_belly_up_vertical_sar: 0
         Duke_brain_goliat_yyyy_belly_up_vertical_sar: 0
         Duke_brain_goliat_zzzz_belly_up_vertical_sar: 0
+        Duke_brain_goliat_450_farfield_sar: 7.05297751871851
+        Duke_brain_goliat_700_farfield_sar: 7.96034594335261
+        Duke_brain_goliat_800_farfield_sar: 7.5464375037012
+        Duke_brain_goliat_900_farfield_sar: 7.5464375037012
+        Duke_brain_goliat_1800_farfield_sar: 2.25823867572978
+        Duke_brain_goliat_2100_farfield_sar: 2.25823867572978
+        Duke_brain_goliat_2450_farfield_sar: 1.95400485877738
+        Duke_brain_goliat_2600_farfield_sar: 1.95400485877738
+        Duke_brain_goliat_3500_farfield_sar: 0.866059432843621
+        Duke_brain_goliat_5000_farfield_sar: 0.187247362588364
         Duke_brain_etain_700_ear_sar: 120.027147479437
         Duke_brain_etain_800_ear_sar: 113.342744994384
         Duke_brain_etain_900_ear_sar: 105.507169569119
@@ -1269,6 +1289,16 @@ devices:
         Ella_body_goliat_xxxx_belly_up_vertical_sar: 0
         Ella_body_goliat_yyyy_belly_up_vertical_sar: 0
         Ella_body_goliat_zzzz_belly_up_vertical_sar: 0
+        Ella_body_goliat_450_farfield_sar: 6.32884773347809
+        Ella_body_goliat_700_farfield_sar: 6.48327555638022
+        Ella_body_goliat_800_farfield_sar: 6.15243242341809
+        Ella_body_goliat_900_farfield_sar: 6.15243242341809
+        Ella_body_goliat_1800_farfield_sar: 4.11644710761471
+        Ella_body_goliat_2100_farfield_sar: 4.11644710761471
+        Ella_body_goliat_2450_farfield_sar: 3.78014514510193
+        Ella_body_goliat_2600_farfield_sar: 3.78014514510193
+        Ella_body_goliat_3500_farfield_sar: 3.12079802309034
+        Ella_body_goliat_5000_farfield_sar: 2.75898741897038
         Ella_body_etain_700_ear_sar: 13.6175079492374
         Ella_body_etain_800_ear_sar: 13.5261827997371
         Ella_body_etain_900_ear_sar: 13.3833571293924
@@ -1618,6 +1648,16 @@ devices:
         Ella_brain_goliat_xxxx_belly_up_vertical_sar: 0
         Ella_brain_goliat_yyyy_belly_up_vertical_sar: 0
         Ella_brain_goliat_zzzz_belly_up_vertical_sar: 0
+        Ella_brain_goliat_450_farfield_sar: 6.65433235613855
+        Ella_brain_goliat_700_farfield_sar: 7.58134262883737
+        Ella_brain_goliat_800_farfield_sar: 7.81832137993178
+        Ella_brain_goliat_900_farfield_sar: 7.81832137993178
+        Ella_brain_goliat_1800_farfield_sar: 3.00090006319045
+        Ella_brain_goliat_2100_farfield_sar: 3.00090006319045
+        Ella_brain_goliat_2450_farfield_sar: 2.2790945611238
+        Ella_brain_goliat_2600_farfield_sar: 2.2790945611238
+        Ella_brain_goliat_3500_farfield_sar: 1.13984995587025
+        Ella_brain_goliat_5000_farfield_sar: 0.403974768120579
         Ella_brain_etain_700_ear_sar: 140.100953682746
         Ella_brain_etain_800_ear_sar: 134.529907025033
         Ella_brain_etain_900_ear_sar: 125.689522038783
@@ -1968,6 +2008,16 @@ devices:
         Thelonious_body_goliat_xxxx_belly_up_vertical_sar: 0
         Thelonious_body_goliat_yyyy_belly_up_vertical_sar: 0
         Thelonious_body_goliat_zzzz_belly_up_vertical_sar: 0
+        Thelonious_body_goliat_450_farfield_sar: 9.13770000917044
+        Thelonious_body_goliat_700_farfield_sar: 10.1282300723303
+        Thelonious_body_goliat_800_farfield_sar: 9.57954657000047
+        Thelonious_body_goliat_900_farfield_sar: 9.57954657000047
+        Thelonious_body_goliat_1800_farfield_sar: 7.48343053063995
+        Thelonious_body_goliat_2100_farfield_sar: 7.48343053063995
+        Thelonious_body_goliat_2450_farfield_sar: 7.14891517898597
+        Thelonious_body_goliat_2600_farfield_sar: 7.14891517898597
+        Thelonious_body_goliat_3500_farfield_sar: 5.84188559215863
+        Thelonious_body_goliat_5000_farfield_sar: 4.46933356601408
         Thelonious_body_etain_700_ear_sar: 0
         Thelonious_body_etain_800_ear_sar: 0
         Thelonious_body_etain_900_ear_sar: 0
@@ -2316,6 +2366,16 @@ devices:
         Thelonious_brain_goliat_xxxx_belly_up_vertical_sar: 0
         Thelonious_brain_goliat_yyyy_belly_up_vertical_sar: 0
         Thelonious_brain_goliat_zzzz_belly_up_vertical_sar: 0
+        Thelonious_brain_goliat_450_farfield_sar: 7.11582697216157
+        Thelonious_brain_goliat_700_farfield_sar: 8.00879716493153
+        Thelonious_brain_goliat_800_farfield_sar: 7.88211556752936
+        Thelonious_brain_goliat_900_farfield_sar: 7.88211556752936
+        Thelonious_brain_goliat_1800_farfield_sar: 5.46877938859566
+        Thelonious_brain_goliat_2100_farfield_sar: 5.46877938859566
+        Thelonious_brain_goliat_2450_farfield_sar: 4.64917819736957
+        Thelonious_brain_goliat_2600_farfield_sar: 4.64917819736957
+        Thelonious_brain_goliat_3500_farfield_sar: 2.58917133765007
+        Thelonious_brain_goliat_5000_farfield_sar: 1.14591988519753
         Thelonious_brain_etain_700_ear_sar: 0
         Thelonious_brain_etain_800_ear_sar: 0
         Thelonious_brain_etain_900_ear_sar: 0
@@ -2666,6 +2726,16 @@ devices:
         Eartha_body_goliat_xxxx_belly_up_vertical_sar: 0
         Eartha_body_goliat_yyyy_belly_up_vertical_sar: 0
         Eartha_body_goliat_zzzz_belly_up_vertical_sar: 0
+        Eartha_body_goliat_450_farfield_sar: 8.2546858369878
+        Eartha_body_goliat_700_farfield_sar: 8.66493275223172
+        Eartha_body_goliat_800_farfield_sar: 7.90963581936647
+        Eartha_body_goliat_900_farfield_sar: 7.90963581936647
+        Eartha_body_goliat_1800_farfield_sar: 6.16035600517086
+        Eartha_body_goliat_2100_farfield_sar: 6.16035600517086
+        Eartha_body_goliat_2450_farfield_sar: 5.89588946511318
+        Eartha_body_goliat_2600_farfield_sar: 5.89588946511318
+        Eartha_body_goliat_3500_farfield_sar: 4.91237590164345
+        Eartha_body_goliat_5000_farfield_sar: 3.92635225577278
         Eartha_body_etain_700_ear_sar: 0
         Eartha_body_etain_800_ear_sar: 0
         Eartha_body_etain_900_ear_sar: 0
@@ -3014,6 +3084,16 @@ devices:
         Eartha_brain_goliat_xxxx_belly_up_vertical_sar: 0
         Eartha_brain_goliat_yyyy_belly_up_vertical_sar: 0
         Eartha_brain_goliat_zzzz_belly_up_vertical_sar: 0
+        Eartha_brain_goliat_450_farfield_sar: 6.86582101863418
+        Eartha_brain_goliat_700_farfield_sar: 8.36035046388708
+        Eartha_brain_goliat_800_farfield_sar: 8.04509733974123
+        Eartha_brain_goliat_900_farfield_sar: 8.04509733974123
+        Eartha_brain_goliat_1800_farfield_sar: 4.50897292832657
+        Eartha_brain_goliat_2100_farfield_sar: 4.50897292832657
+        Eartha_brain_goliat_2450_farfield_sar: 3.55926085496653
+        Eartha_brain_goliat_2600_farfield_sar: 3.55926085496653
+        Eartha_brain_goliat_3500_farfield_sar: 1.81902248374906
+        Eartha_brain_goliat_5000_farfield_sar: 0.783010788157663
         Eartha_brain_etain_700_ear_sar: 0
         Eartha_brain_etain_800_ear_sar: 0
         Eartha_brain_etain_900_ear_sar: 0
@@ -3160,6 +3240,17 @@ devices:
       mpd_dist_face: 200
 
   farf:
+    ff_freq_props:
+      frq450_ff_prop: 0.08
+      frq700_ff_prop: 0.04
+      frq800_ff_prop: 0.15
+      frq900_ff_prop: 0.17
+      frq1800_ff_prop: 0.23
+      frq2100_ff_prop: 0.15
+      frq2450_ff_prop: 0.02
+      frq2600_ff_prop: 0.07
+      frq3500_ff_prop: 0.07
+      frq5000_ff_prop: 0.02
     home_urb_pwr_Other: 0.45
     out_urb_pwr_Other: 1.29
     work_urb_pwr_Other: 0.64

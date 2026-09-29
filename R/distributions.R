@@ -194,23 +194,30 @@ simulate_params <- function(duration,
   }
   params$global$input_stoch$use_5g <- use_5g
   #pick urbanicity
+  # The model describes the average day of ONE person, so urbanicity is a
+  # property of that person: they live in an urban, a suburban or a rural
+  # area, not in a mixture of the three. The three yaml values are the
+  # population shares the category is drawn from, not a time budget.
+  #
+  # Until 2026-09-29 this drew three proportions from a Dirichlet. Nothing
+  # read them, so it never showed, but a consumer that weighted the exposure
+  # levels by those proportions would have given every simulated person the
+  # population average and averaged away exactly the between-person spread
+  # the model exists to quantify -- urban and rural far-field levels differ by
+  # about a factor of two.
   if (missing(urbanicity)) {
-    urban_props <- evaluate_distribution(
-      dist_name = params_stochastic$global$input_stoch$urbanicity$distribution,
-      mean = c(params_stochastic$global$input_stoch$urbanicity$urb_prop,
+    urbanicity <- sample(
+      c("urban", "suburban", "rural"), size = 1,
+      prob = c(params_stochastic$global$input_stoch$urbanicity$urb_prop,
                params_stochastic$global$input_stoch$urbanicity$sub_prop,
-               params_stochastic$global$input_stoch$urbanicity$rur_prop),
-      a0 = params_stochastic$global$input_stoch$urbanicity$urbanicity_a0
-    )
-    params$global$input_stoch$urbanicity$urb_prop <- urban_props[1]
-    params$global$input_stoch$urbanicity$sub_prop <- urban_props[2]
-    params$global$input_stoch$urbanicity$rur_prop <- urban_props[3]
-
-  } else {
-    params$global$input_stoch$urbanicity$urb_prop <- 1*(urbanicity=="urban")
-    params$global$input_stoch$urbanicity$sub_prop <- 1*(urbanicity=="suburban")
-    params$global$input_stoch$urbanicity$rur_prop <- 1*(urbanicity=="rural")
+               params_stochastic$global$input_stoch$urbanicity$rur_prop))
   }
+  # kept in the three-proportion shape so a consumer can weight over them; for
+  # a drawn or supplied category exactly one of them is 1
+  params$global$input_stoch$urbanicity$urbanicity <- urbanicity
+  params$global$input_stoch$urbanicity$urb_prop <- 1*(urbanicity=="urban")
+  params$global$input_stoch$urbanicity$sub_prop <- 1*(urbanicity=="suburban")
+  params$global$input_stoch$urbanicity$rur_prop <- 1*(urbanicity=="rural")
 
 
 
@@ -1062,8 +1069,29 @@ simulate_params <- function(duration,
     )
   }
 
+  ####### farfield
 
-
+  # pick the frequency composition of the ambient exposure. Ten bands that must
+  # sum to 1, hence one Dirichlet draw rather than ten independent ones. The
+  # lowest band is "below 700 MHz", labelled 450 after the GOLIAT node that
+  # fills it.
+  #
+  # The exposure LEVELS are not drawn. The parameter workbook specifies Gamma
+  # distributions for them but leaves every mean empty, and its environment
+  # scheme does not match the one the code uses -- doc/OPEN_QUESTIONS.md C9.
+  # They stay the per-country point values measured by ETAIN.
+  ff_bands <- c("450", "700", "800", "900", "1800",
+                "2100", "2450", "2600", "3500", "5000")
+  ff_props <- evaluate_distribution(
+    dist_name = params_stochastic$devices$farf$ff_freq_props$distribution,
+    mean = vapply(ff_bands, function(b)
+      params_stochastic$devices$farf$ff_freq_props[[paste0("frq", b, "_ff_prop_mean")]],
+      numeric(1)),
+    a0 = params_stochastic$devices$farf$ff_freq_props$ff_freq_prop_a0
+  )
+  for (i in seq_along(ff_bands))
+    params$devices$farf$ff_freq_props[[paste0("frq", ff_bands[i], "_ff_prop")]] <-
+      ff_props[i]
 
   return(params)
 }
