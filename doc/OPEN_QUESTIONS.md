@@ -11,7 +11,7 @@ the per-source `doc/<source>_stochastification.md` files. Every entry points the
 **Status of this file:** living document. When an item is settled, move it to §F with the answer and
 the date; do not delete it.
 
-**Last updated:** 2026-09-28
+**Last updated:** 2026-09-29
 
 ---
 
@@ -221,10 +221,58 @@ Detail: `doc/laptop_stochastification.md`, "What is deliberately not modelled".
 
 ### C9. The far-field environment scheme does not match the code
 
-The workbook splits the day into *indoor / outdoor_low / outdoor_high / trans_peak / trans_offpeak /
-workplace*; `R/farfield.R` uses *home / work / out / travel*. The workbook merges home and work into
-"indoor" and splits outdoors and transport in two. The two schemes do not map onto each other, and
-the frequency proportions of B1 are defined per workbook environment.
+The workbook and the code divide the day into different categories, so the specified exposure
+levels cannot be transferred into the model even once Adriana fills them in.
+
+| workbook | share | | code | share |
+|---|---|---|---|---|
+| indoor | 0.69 | ↔ | home | 0.69 |
+| workplace | **0** | ↔ | work | **0.21** |
+| outdor_low | 0.02 | ↗ | out | 0.08 |
+| outdor_high | 0.10 | ↗ | | |
+| trans_peak | 0.02 | ↗ | travel | 0.02 |
+| trans_offpeak | 0.01 | ↗ | | |
+| **total** | **0.84** | | **total** | **1.00** |
+
+Three separate problems:
+
+**The workbook puts no time at a workplace at all**, where the code puts a fifth of the day. That
+is not a rounding difference. Either "workplace" means something else there, or one of the two is
+wrong.
+
+**Outdoors is split by different criteria.** The workbook splits it by exposure level, low and
+high; the code splits it by urbanicity, urban / suburban / rural. Both are subdivisions of "being
+outdoors", but by different variables, so they cannot be translated into each other.
+
+**The workbook's shares sum to 0.84.** Sixteen per cent of the day is in no environment.
+
+On top of that the code resolves by **country** — 11 countries × 10 location/urbanicity
+combinations = 110 exposure keys — and the workbook has no country dimension at all.
+
+The practical consequence, confirmed while converting `farfield` on 2026-09-29: `indoor_exp` could
+be mapped onto `home_*_pwr_*`, but `outdor_low_exp` and `outdor_high_exp` have no counterpart, and
+`workplace_exp` would serve a time share the workbook itself sets to zero. The exposure levels
+therefore stay as the per-country ETAIN measurements. The frequency proportions of B1 are defined
+per workbook environment and inherit the same problem.
+
+### C10. Loose ends left by the far-field conversion — *work, not decisions*
+
+Found while converting `farfield` on 2026-09-29. None of them blocks anything; they are listed so
+they are not rediscovered.
+
+- **`tests/testthat/test-get-farfield-dose.R` tests a function that no longer exists.** It calls
+  `get_farfield_dose()`, which was renamed long before this work, and it asserts on the
+  `urbanicity` argument, which the conversion removed. It needs rewriting against the new
+  signature `farfield_dose(tissue, country, travel_time, params)`.
+- **The 86400 s exposure duration is hard-coded** in `farfield_dose()`. The workbook carries it as
+  `ff_duration`, so it belongs in the yaml like every other parameter. Harmless but inconsistent.
+- **`wifi.R` still reads `params$global$home_prop`** and its siblings, the keys that exist only in
+  the legacy `params.yaml`. It is now the last source doing so — `farfield` was the other one until
+  this conversion. It shares the far field's units and SAR basis, so it is the natural next source
+  to convert.
+- **1800 MHz carries 23 % of the ambient spectrum and is the worst-covered band.** GOLIAT's nearest
+  far-field node is 340 MHz away, which leaves the value uncertain to roughly ±20 %. Documented
+  rather than fixed; closing it would need a simulation at 1800 MHz.
 
 ---
 

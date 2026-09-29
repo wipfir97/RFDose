@@ -16,20 +16,28 @@ in them was invalidated.
 
 ## 1. Summary
 
-The yaml now carries **two** SAR campaigns side by side.
+The yaml now carries **three** SAR sets side by side.
 
-| | GOLIAT | ETAIN |
-|---|---|---|
-| geometries | 3 (front of eyes, belly, ear), 22 antenna positions | 9 scenarios |
-| frequencies | 700, 835, 1450, 2140, 2450, 3500, 5200, 5800 | the nine model bands exactly |
-| phantoms | Duke, Ella, Thelonious, Eartha | Duke, Ella |
-| interpolated onto the model grid? | yes, 5 of 9 bands | **no, none** |
+| | GOLIAT near field | ETAIN near field | GOLIAT far field |
+|---|---|---|---|
+| geometries | 3 (front of eyes, belly, ear), 22 antenna positions | 9 scenarios | plane waves, 12 incidence directions |
+| frequencies | 700, 835, 1450, 2140, 2450, 3500, 5200, 5800 | the nine model bands exactly | 450, 700, 835, 1450, 2140, 2450, 3500, 5200, 5800 |
+| phantoms | all four | Duke, Ella | all four |
+| normalised to | 1 W input power | 1 W input power | 1 W/m² incident power density |
+| onto the model grid | interpolated, 6 of 9 bands | nothing to do | nearest node per band |
 
-Both are needed. GOLIAT covers `gaming`, `virtual_reality` and `hotspot`, for which ETAIN has no
-scenario, and supplies the child-to-adult ratios that will fill Thelonious and Eartha on the ETAIN
-side. ETAIN has dedicated simulations for the laptop, Bluetooth earbuds and a wrist device, which
-GOLIAT would otherwise have to approximate with a phone geometry. The reasoning is in
-`doc/SAR_REDESIGN.md`.
+All three are needed. In the **near field**, GOLIAT covers `gaming`, `virtual_reality` and
+`hotspot`, for which ETAIN has no scenario, and supplies the child-to-adult ratios that will fill
+Thelonious and Eartha on the ETAIN side; ETAIN has dedicated simulations for the laptop, Bluetooth
+earbuds and a wrist device, which GOLIAT would otherwise approximate with a phone geometry. The
+**far field** goes to GOLIAT outright, because it simulated all four phantoms there and so needs
+no ratios at all. The reasoning is in `doc/SAR_REDESIGN.md`.
+
+The far field is a different physical quantity from the other two. It is normalised to an incident
+**power density** rather than to a radiated power, so its values answer "how much does this body
+absorb from a field of 1 W/m²" while the near-field values answer "how much from a source
+radiating 1 W". They are not comparable and must never be mixed; the `_farfield_` fragment in the
+key marks the difference.
 
 ### The campaign is part of the key
 
@@ -53,14 +61,20 @@ always zero, belonging to neither campaign.
 
 | | per tissue | per phantom (body + brain) |
 |---|---|---|
-| yaml keys | 346 | **692** |
-| real values, Duke and Ella | 257 | 514 |
-| real values, Thelonious and Eartha | 198 | 396 |
+| yaml keys | 356 | **712** |
+| real values, Duke and Ella | 267 | 534 |
+| real values, Thelonious and Eartha | 208 | 416 |
 
-- **346 keys per tissue** = 1 `headp_else_sar`
-  + 22 GOLIAT positions × 12 frequency tokens (9 model bands + 3 reserved) = 264
+- **356 keys per tissue** = 1 `headp_else_sar`
+  + 22 GOLIAT near-field positions × 12 frequency tokens (9 model bands + 3 reserved) = 264
+  + 10 GOLIAT far-field bands = 10
   + 9 ETAIN scenarios × 9 model bands = 81
-- **198 GOLIAT values per tissue** = 22 positions × 9 model bands, the same for every phantom.
+- **198 GOLIAT near-field values per tissue** = 22 positions × 9 model bands, the same for every
+  phantom.
+- **10 GOLIAT far-field values per tissue**, for every phantom. Ten rather than nine because the
+  ambient spectrum has a "below 700 MHz" bucket that the near-field grid does not; it is labelled
+  450 after the node GOLIAT simulated for it. Three pairs of bands share a node, so three pairs of
+  keys hold the same number — see §3c.
 - **59 ETAIN values per tissue**, Duke and Ella only = 6 scenarios × 9 bands, plus the two earbud
   scenarios at 2450 and 5000 MHz only and the wrist at 2450 alone. Those three were simulated at
   fewer frequencies; the unsimulated combinations stay 0 rather than being interpolated across the
@@ -218,7 +232,34 @@ frequencies, 9 at one, exactly as the campaign specifies.
 **No source reads these keys yet.** The values are in the yaml; switching the sources over is a
 later step and depends on three open questions — `doc/SAR_REDESIGN.md` Q1, Q2 and Q3.
 
-### 3c. Two traps worth knowing before editing the script
+### 3c. GOLIAT far field — averaged over direction, mapped onto the spectrum
+
+A separate campaign product: plane waves from 12 incidence directions at 9 frequencies, for all
+four phantoms, one file each (`Final_Data_<phantom>_UGent_FF.xlsx`). Read by `read_farfield()`,
+section 4c.
+
+**Normalised to 1 W/m² of incident power density**, not to a radiated power, so section 4's
+division must not be applied. The reader refuses to continue if any row quotes a different power
+density.
+
+**The 12 directions are averaged.** The spread across them is a factor of 1.5 to 4.7, growing with
+frequency, but a person turns during the day; drawing one direction would assert a fixed
+orientation over 24 hours.
+
+**Each band takes its nearest simulated node**, since the model no longer interpolates:
+
+| band | 450 | 700 | 800 | 900 | 1800 | 2100 | 2450 | 2600 | 3500 | 5000 |
+|---|---|---|---|---|---|---|---|---|---|---|
+| node | 450 | 700 | 835 | 835 | 2140 | 2140 | 2450 | 2450 | 3500 | 5200 |
+
+Three pairs therefore share a node and the yaml holds the same number twice. That is deliberate:
+it shows where a band rests on a neighbour's simulation instead of hiding it behind an
+interpolated value. GOLIAT's nodes at 1450 and 5800 MHz go unused here.
+
+The weighting across bands happens at **run time**, in `farfield_sar()`, not at import — the
+spectrum stays a visible parameter. See `doc/farfield_stochastification.md`.
+
+### 3d. Two traps worth knowing before editing the script
 
 **`splice()` no longer compares the two files line for line.** It used to, and that was valid while
 every re-import wrote the same number of keys. The grid change of 2026-09-28 breaks that assumption
@@ -306,6 +347,15 @@ by the values being far too small, not only by their exceeding 1.
 As an independent cross-check across campaigns, GOLIAT's ear geometry at 1800 MHz absorbs 75.8 %
 of the radiated power and ETAIN's ear scenario 78.8 %. Two separate campaigns landing within four
 percentage points is good evidence that both are on the same 1 W normalisation.
+
+**Far field against the value it replaces (validation E, added 2026-09-29).** The far field is
+normalised to an incident power density, not to a radiated power, so the "absorbed fraction below
+1" argument of validation D does not apply — a body intercepts a cross-section of the wave, and
+how much that is depends on area, not on a source output. What the check does instead is compare
+the order of magnitude against the scalar the deterministic model used, which came from ETAIN's
+own far-field set (4.655 mW/kg per W/m² whole body, 5.439 brain), and abort beyond a factor of
+five. Duke lands within 10 % of it, which is the evidence that the units are right; the children
+come out 47 to 76 % higher, which is the correction the resolution exists to make.
 
 **Idempotence.** Re-running the importer on an already-imported yaml reports `0 lines changed` and
 leaves both files byte-identical. A non-zero diff on a re-run therefore means the source data

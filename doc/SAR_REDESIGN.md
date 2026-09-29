@@ -355,11 +355,23 @@ A separate concern survives whichever rule is chosen: a spread computed over poo
 values would mix variability across antenna positions within one study with disagreement between two
 studies, and would be reported as the former.
 
-**Q6 — Far field: ETAIN or GOLIAT?** This is the one place where the D2 logic does not apply.
-GOLIAT delivered far-field simulations for **all four phantoms** (9 frequencies × 12 directions),
-so no ratios are needed; ETAIN has 12 frequencies × 12 directions but only Duke and Ella. Using
-GOLIAT for the far field and ETAIN for the near field is defensible and avoids D3 entirely for the
-largest single contributor to the total dose.
+**Q6 — Far field: ETAIN or GOLIAT?** **Answered and implemented 2026-09-29: GOLIAT.** It is the
+one place where the D2 logic does not apply. GOLIAT delivered far-field simulations for **all four
+phantoms** (9 frequencies × 12 incidence directions), so no child ratios are needed and Q3 does
+not block it; ETAIN has three more frequencies but only Duke and Ella.
+
+`farfield` is therefore the first source converted under this redesign, while the near-field
+sources still wait on Q1, Q2 and Q3. The 12 directions are averaged, the nine simulated
+frequencies are weighted by Adriana's EU spectrum at run time, and each model band takes its
+nearest simulated node rather than an interpolation. Detail:
+`doc/farfield_stochastification.md`.
+
+One finding came out of it that reaches further than the far field. `simulate_params()` had always
+drawn **urbanicity** as three Dirichlet proportions, and nothing had ever read them. Read as a
+mixture they are wrong: the model describes one person's average day, and that person lives in one
+kind of area. Weighting the exposure levels by 0.4 / 0.5 / 0.1 gave every simulated person the
+population average and narrowed the dose spread from 25.5–58.6 to 37.1–50.8. The draw is now
+categorical.
 
 **Q7 — Which of the two ETAIN deliveries should the model be built on?** **Answered 2026-09-28:**
 the simulation database, `data-raw/NF_SARwb_LessThan6GHz_WholeBody.xlsx` and

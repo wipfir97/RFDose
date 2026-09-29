@@ -11,7 +11,7 @@ entries when they are resolved, mark them resolved instead.
 currently undecided or awaiting an answer — from supervisors or from the data providers — is
 collected in `doc/OPEN_QUESTIONS.md`, grouped by who can answer it.
 
-**Last updated:** 2026-09-28
+**Last updated:** 2026-09-29
 
 > **Four entries below are superseded in principle but still describe the code.** The meeting of
 > 2026-09-22 decided to remove the distance correction, take SAR from ETAIN wherever ETAIN
