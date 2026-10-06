@@ -1,5 +1,7 @@
 # =============================================================================
 #' Calculate Dose from Cordless Calls
+#' 
+#' test
 #'
 #' Calculates RF-EMF dose from making calls with cordless phone (also known as
 #' DECT phone).
