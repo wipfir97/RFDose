@@ -13,8 +13,12 @@
 #' @param tissue Tissue for which to calculate dose (default: "brain" or "body")
 #' @param params (experimental) Path to a parameter file in .yaml format. Must match the structure
 #' of the internal parameter file. Optional; if not specified, calculations use
-#' default parameters.
+#' default parameters. SAR values may be left out (see `sar_file`).
 #' @param default_value_file List of default values to replace missing values (optional).
+#' @param sar_file (experimental) Path to a .yaml file with SAR values only, matching
+#' the structure of the internal SAR file (`sar_etain.yaml`). Optional; its values
+#' replace the SAR values of `params`. If not specified, the SAR values of `params`
+#' are used, and the default (ETAIN) SAR values for any tissue `params` lacks.
 #'
 #' @returns A data frame. Columns contain the calculated RF-EMF dose
 #' of each row in mJ/kg/day, for each exposure source and each tissue.
@@ -29,13 +33,10 @@ calculate_emf_doses <- function(
     data,
     tissue,
     params = NULL,
-    default_value_file = NULL) {
-  # Parameter file ============================================================
-  params <- if (is.null(params)) {
-    load_params()
-  } else {
-    yaml::read_yaml(params)
-  }
+    default_value_file = NULL,
+    sar_file = NULL) {
+  # Parameter file(s) =========================================================
+  params <- load_params(path = params, sar_path = sar_file)
   # Default values ============================================================
   ## Load internal default value file if no default_value_file is supplied ----
   defaultvars <- if (is.null(default_value_file)) {

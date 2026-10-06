@@ -12,6 +12,7 @@ Roxygen: list(markdown = TRUE)
 Imports: 
     dplyr,
     tidyr,
+    utils,
     yaml
 Suggests: 
     knitr,

@@ -4,17 +4,43 @@
 #' Loads default parameters or parameters from external source and returns them
 #' as a nested list.
 #'
+#' @details Default parameters are split in two files: non-SAR parameters
+#' (`params_nosar.yaml`) and SAR values (`sar_etain.yaml`), which are merged
+#' into a single list.
+#'
+#' SAR values are taken from `sar_path` if given. Otherwise, SAR values of the
+#' parameter file are used, and default SAR values (`sar_etain.yaml`) are added
+#' for any device tissue (e.g. "brain") the parameter file does not contain.
+#'
 #' @param path Path of parameter file to load (must be a YAML file). If null,
-#' default parameters are loaded.
-#' @returns List of parameters loaded from yaml input file
+#' default non-SAR parameters are loaded. The file may contain SAR values or not.
+#' @param sar_path Path of a YAML file with SAR values only (optional), with the
+#' structure `devices > device > tissue > SAR values`. Its values replace the
+#' SAR values of the parameters loaded from `path`.
+#' @returns List of parameters loaded from yaml input file(s)
 #'
 #' @export
 #' @seealso [RFDose::load_tissue_params()]
-load_params <- function(path = NULL) {
+load_params <- function(path = NULL, sar_path = NULL) {
   if (is.null(path)) {
-    path <- system.file("extdata", "params.yaml", package = "RFDose")
+    path <- system.file("extdata", "params_nosar.yaml", package = "RFDose")
   }
   params  <- yaml::read_yaml(path)
+
+  if (!is.null(sar_path)) {
+    params <- utils::modifyList(params, yaml::read_yaml(sar_path))
+  } else {
+    # Add default SAR values for tissues missing from the parameter file
+    default_sar <- yaml::read_yaml(
+      system.file("extdata", "sar_etain.yaml", package = "RFDose"))$devices
+    for (device in intersect(names(default_sar), names(params$devices))) {
+      for (tissue in names(default_sar[[device]])) {
+        if (is.null(params$devices[[device]][[tissue]])) {
+          params$devices[[device]][[tissue]] <- default_sar[[device]][[tissue]]
+        }
+      }
+    }
+  }
   return(params)
 }
 

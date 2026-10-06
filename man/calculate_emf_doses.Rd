@@ -4,7 +4,13 @@
 \alias{calculate_emf_doses}
 \title{Calculate Total RF-EMF Doses for ALL samples}
 \usage{
-calculate_emf_doses(data, tissue, params = NULL, default_value_file = NULL)
+calculate_emf_doses(
+  data,
+  tissue,
+  params = NULL,
+  default_value_file = NULL,
+  sar_file = NULL
+)
 }
 \arguments{
 \item{data}{A data frame. Must have the exact same columns as the provided example dataset.
@@ -14,9 +20,14 @@ Columns must not be missing. Missing values will be replaced with default values
 
 \item{params}{(experimental) Path to a parameter file in .yaml format. Must match the structure
 of the internal parameter file. Optional; if not specified, calculations use
-default parameters.}
+default parameters. SAR values may be left out (see \code{sar_file}).}
 
 \item{default_value_file}{List of default values to replace missing values (optional).}
+
+\item{sar_file}{(experimental) Path to a .yaml file with SAR values only, matching
+the structure of the internal SAR file (\code{sar_etain.yaml}). Optional; its values
+replace the SAR values of \code{params}. If not specified, the SAR values of \code{params}
+are used, and the default (ETAIN) SAR values for any tissue \code{params} lacks.}
 }
 \value{
 A data frame. Columns contain the calculated RF-EMF dose

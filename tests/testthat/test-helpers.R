@@ -19,9 +19,41 @@ test_that("load_params errors when file does not exist", {
 
 test_that("load_params returns NULL path behavior consistent with explicit default path", {
   default_result  <- load_params()
-  explicit_result <- load_params(system.file("extdata", "params.yaml", package = "RFDose"))
+  explicit_result <- load_params(
+    system.file("extdata", "params_nosar.yaml", package = "RFDose"),
+    sar_path = system.file("extdata", "sar_etain.yaml", package = "RFDose"))
 
   expect_equal(default_result, explicit_result)
+})
+
+test_that("load_params adds default SAR values to a parameter file without SAR", {
+  result <- load_params(system.file("extdata", "params_nosar.yaml", package = "RFDose"))
+
+  expect_equal(result, load_params())
+})
+
+test_that("load_params keeps SAR values of the parameter file when sar_path is NULL", {
+  params <- load_params()
+  params$devices$dect$brain$dect_ear_sar <- 1
+  params$devices$dect$body <- NULL
+  params_file <- tempfile(fileext = ".yaml")
+  yaml::write_yaml(params, params_file, precision = 15)
+  result <- load_params(params_file)
+
+  expect_equal(result$devices$dect$brain$dect_ear_sar, 1)
+  expect_equal(result$devices$dect$body, load_params()$devices$dect$body)
+})
+
+test_that("load_params merges SAR values from sar_path into parameters", {
+  sar_file <- tempfile(fileext = ".yaml")
+  yaml::write_yaml(
+    list(devices = list(dect = list(brain = list(dect_ear_sar = 1, dect_speaker_sar = 2)))),
+    sar_file)
+  result <- load_params(sar_path = sar_file)
+
+  expect_equal(result$devices$dect$brain$dect_ear_sar, 1)
+  expect_equal(result$devices$dect$dect_pwr, 250)
+  expect_null(result$devices$dect$body)
 })
 
 ## load_tissue_params =========================================================

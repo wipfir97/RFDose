@@ -49,7 +49,7 @@ calculate_emf_doses(example_data, tissue = "brain") # brain dose
 calculate_emf_doses(example_data, tissue = "body")  # body dose
 ```
 
-Use your own parameters by providing a custom file. This file must be in YAML format and follow the same structure as the [inbuilt parameter file](inst/extdata/params.yaml).
+Use your own parameters by providing a custom file. This file must be in YAML format and follow the same structure as the [inbuilt parameter file](inst/extdata/params.yaml). SAR values may be left out (as in [this file](inst/extdata/params_nosar.yaml)), in which case the default SAR values are used.
 
 *Note that the R package does not currently check the structure of custom parameter files, so mismatches may result in faulty calculations.*
 
@@ -59,6 +59,16 @@ calculate_emf_doses(
   example_data, 
   tissue = "brain", 
   params = "path_to_my_file/my_params.yaml")
+```
+
+To change only the SAR values, provide a YAML file containing SAR values only, following the same structure as the [inbuilt SAR file](inst/extdata/sar_etain.yaml). All other parameters keep their default values (or the values of `params`, if supplied).
+
+```{r}
+# Calculate example doses with own SAR file
+calculate_emf_doses(
+  example_data, 
+  tissue = "brain", 
+  sar_file = "path_to_my_file/my_sar.yaml")
 ```
 
 Behind the scenes, `calculate_emf_doses()` calls various source-specific dose functions, which calculate the individual contributions of different sources (e.g. mobile phone calls). These functions may be used individually. 

@@ -4,18 +4,31 @@
 \alias{load_params}
 \title{Load dose calculation parameters}
 \usage{
-load_params(path = NULL)
+load_params(path = NULL, sar_path = NULL)
 }
 \arguments{
 \item{path}{Path of parameter file to load (must be a YAML file). If null,
-default parameters are loaded.}
+default non-SAR parameters are loaded. The file may contain SAR values or not.}
+
+\item{sar_path}{Path of a YAML file with SAR values only (optional), with the
+structure \verb{devices > device > tissue > SAR values}. Its values replace the
+SAR values of the parameters loaded from \code{path}.}
 }
 \value{
-List of parameters loaded from yaml input file
+List of parameters loaded from yaml input file(s)
 }
 \description{
 Loads default parameters or parameters from external source and returns them
 as a nested list.
+}
+\details{
+Default parameters are split in two files: non-SAR parameters
+(\code{params_nosar.yaml}) and SAR values (\code{sar_etain.yaml}), which are merged
+into a single list.
+
+SAR values are taken from \code{sar_path} if given. Otherwise, SAR values of the
+parameter file are used, and default SAR values (\code{sar_etain.yaml}) are added
+for any device tissue (e.g. "brain") the parameter file does not contain.
 }
 \seealso{
 \code{\link[=load_tissue_params]{load_tissue_params()}}
