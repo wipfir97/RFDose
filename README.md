@@ -2,9 +2,9 @@
 
 ## About
 
-RFDose implements the deterministic RF-EMF dose calculations developed in Jalilian et al. (publication in writing stage). Version 1.0.0 is based on the most up-to-date dose calculations (August 2026).
+RFDose implements the deterministic RF-EMF dose calculations developed in Jalilian et al. (publication in writing stage). Version 2.0.0 is based on the most up-to-date dose calculations (October 2026).
 
-For detailed information about the package functions, please refer to the [package manual](./doc/RFDose_1.0.0.pdf). We are also preparing a short publication on `RFDose`, which will contain further background information. 
+For detailed information about the package functions, please refer to the [package manual](./doc/RFDose_2.0.0.pdf). We are also preparing a short publication on `RFDose`, which will contain further background information. 
 
 **Information for users of previous test versions (0.2.0, 0.3.0)**
 
