@@ -10,9 +10,10 @@ load_params(path = NULL, sar_path = NULL)
 \item{path}{Path of parameter file to load (must be a YAML file). If null,
 default non-SAR parameters are loaded. The file may contain SAR values or not.}
 
-\item{sar_path}{Path of a YAML file with SAR values only (optional), with the
-structure \verb{devices > device > tissue > SAR values}. Its values replace the
-SAR values of the parameters loaded from \code{path}.}
+\item{sar_path}{Path of a YAML file with SAR values (optional), with the
+structure devices > device > tissue > SAR values. Its values replace those
+of the parameters loaded from \code{path}. Besides SAR values, it may set device
+parameters that go with them (e.g. placement proportions such as \code{legs_prop}).}
 }
 \value{
 List of parameters loaded from yaml input file(s)
@@ -23,12 +24,15 @@ as a nested list.
 }
 \details{
 Default parameters are split in two files: non-SAR parameters
-(\code{params_nosar.yaml}) and SAR values (\code{sar_etain.yaml}), which are merged
-into a single list.
+(\code{params.yaml}) and SAR values, which are merged into a single list.
+The default SAR values are those of GOLIAT, averaged over four phantoms
+(\code{sar_goliat_average.yaml}). The ETAIN SAR values are in \code{sar_etain.yaml}.
 
-SAR values are taken from \code{sar_path} if given. Otherwise, SAR values of the
-parameter file are used, and default SAR values (\code{sar_etain.yaml}) are added
-for any device tissue (e.g. "brain") the parameter file does not contain.
+SAR values are taken from \code{sar_path} if given. Otherwise, the SAR values of
+the parameter file are used, or the default SAR values if the parameter file
+has none. A SAR file may also set device parameters that go with its SAR
+values (e.g. placement proportions), which replace those of the parameter
+file.
 }
 \seealso{
 \code{\link[=load_tissue_params]{load_tissue_params()}}

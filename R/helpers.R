@@ -5,41 +5,43 @@
 #' as a nested list.
 #'
 #' @details Default parameters are split in two files: non-SAR parameters
-#' (`params_nosar.yaml`) and SAR values (`sar_etain.yaml`), which are merged
-#' into a single list.
+#' (`params.yaml`) and SAR values, which are merged into a single list.
+#' The default SAR values are those of GOLIAT, averaged over four phantoms
+#' (`sar_goliat_average.yaml`). The ETAIN SAR values are in `sar_etain.yaml`.
 #'
-#' SAR values are taken from `sar_path` if given. Otherwise, SAR values of the
-#' parameter file are used, and default SAR values (`sar_etain.yaml`) are added
-#' for any device tissue (e.g. "brain") the parameter file does not contain.
+#' SAR values are taken from `sar_path` if given. Otherwise, the SAR values of
+#' the parameter file are used, or the default SAR values if the parameter file
+#' has none. A SAR file may also set device parameters that go with its SAR
+#' values (e.g. placement proportions), which replace those of the parameter
+#' file.
 #'
 #' @param path Path of parameter file to load (must be a YAML file). If null,
 #' default non-SAR parameters are loaded. The file may contain SAR values or not.
-#' @param sar_path Path of a YAML file with SAR values only (optional), with the
-#' structure `devices > device > tissue > SAR values`. Its values replace the
-#' SAR values of the parameters loaded from `path`.
+#' @param sar_path Path of a YAML file with SAR values (optional), with the
+#' structure devices > device > tissue > SAR values. Its values replace those
+#' of the parameters loaded from `path`. Besides SAR values, it may set device
+#' parameters that go with them (e.g. placement proportions such as `legs_prop`).
 #' @returns List of parameters loaded from yaml input file(s)
 #'
 #' @export
 #' @seealso [RFDose::load_tissue_params()]
 load_params <- function(path = NULL, sar_path = NULL) {
   if (is.null(path)) {
-    path <- system.file("extdata", "params_nosar.yaml", package = "RFDose")
+    path <- system.file("extdata", "params.yaml", package = "RFDose")
   }
   params  <- yaml::read_yaml(path)
 
+  # Without SAR file, use the default SAR values if the parameter file has none
+  # (SAR values are the only nested lists within a device)
+  has_sar <- any(vapply(params$devices, function(device) {
+    any(vapply(device, is.list, logical(1)))
+  }, logical(1)))
+  if (is.null(sar_path) && !has_sar) {
+    sar_path <- system.file("extdata", "sar_goliat_average.yaml", package = "RFDose")
+  }
+
   if (!is.null(sar_path)) {
     params <- utils::modifyList(params, yaml::read_yaml(sar_path))
-  } else {
-    # Add default SAR values for tissues missing from the parameter file
-    default_sar <- yaml::read_yaml(
-      system.file("extdata", "sar_etain.yaml", package = "RFDose"))$devices
-    for (device in intersect(names(default_sar), names(params$devices))) {
-      for (tissue in names(default_sar[[device]])) {
-        if (is.null(params$devices[[device]][[tissue]])) {
-          params$devices[[device]][[tissue]] <- default_sar[[device]][[tissue]]
-        }
-      }
-    }
   }
   return(params)
 }

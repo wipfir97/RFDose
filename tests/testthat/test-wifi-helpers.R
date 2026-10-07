@@ -21,7 +21,7 @@ cases_wifi_msar <- list(
 
 test_that("wifi_msar matches reference values", {
   for (case in cases_wifi_msar) {
-    result <- do.call(wifi_msar, case$input)
+    result <- do.call(wifi_msar, c(case$input, params = list(etain_params)))
     expect_equal(result, case$output, tolerance = 1e-3)
   }
 })
@@ -44,7 +44,7 @@ cases_wifi_pwr <- list(
 
 test_that("wifi_pwr matches reference values", {
   for (case in cases_wifi_pwr) {
-    result <- do.call(wifi_pwr, case$input)
+    result <- do.call(wifi_pwr, c(case$input, params = list(etain_params)))
     expect_equal(result, case$output, tolerance = 1e-3)
   }
 })
@@ -87,7 +87,7 @@ cases_wifi_sar <- list(
 
 test_that("wifi_sar matches reference values", {
   for (case in cases_wifi_sar) {
-    result <- do.call(wifi_sar, case$input)
+    result <- do.call(wifi_sar, c(case$input, params = list(etain_params)))
     expect_equal(result, case$output, tolerance = 1e-3)
   }
 })

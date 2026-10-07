@@ -20,7 +20,7 @@ cases_dect_msar <- list(
 
 test_that("dect_msar matches reference values", {
   for (case in cases_dect_msar) {
-    result <- do.call(dect_msar, case$input)
+    result <- do.call(dect_msar, c(case$input, params = list(etain_params)))
     expect_equal(result, case$output, tolerance = 1e-3)
   }
 })
@@ -52,7 +52,7 @@ cases_dect_sar <- list(
 
 test_that("dect_sar matches reference values", {
   for (case in cases_dect_sar) {
-    result <- do.call(dect_sar, case$input)
+    result <- do.call(dect_sar, c(case$input, params = list(etain_params)))
     expect_equal(result, case$output, tolerance = 1e-2)
   }
 })

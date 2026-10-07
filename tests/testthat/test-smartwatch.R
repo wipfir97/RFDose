@@ -73,7 +73,7 @@ cases_smartwatch_dose <- list(
 
 test_that("smartwatch_dose matches reference values", {
   for (case in cases_smartwatch_dose) {
-    result <- do.call(smartwatch_dose, case$input)
+    result <- do.call(smartwatch_dose, c(case$input, params = list(etain_params)))
     expect_equal(result, case$output, tolerance = 1e-2)
   }
 })
@@ -153,7 +153,7 @@ cases_smartwatch_watch_dose <- list(
 
 test_that("smartwatch_watch_dose matches reference values", {
   for (case in cases_smartwatch_watch_dose) {
-    result <- do.call(smartwatch_watch_dose, case$input)
+    result <- do.call(smartwatch_watch_dose, c(case$input, params = list(etain_params)))
     expect_equal(result, case$output, tolerance = 1e-3)
   }
 })
@@ -233,7 +233,7 @@ cases_smartwatch_phone_dose <- list(
 
 test_that("smartwatch_phone_dose matches reference values", {
   for (case in cases_smartwatch_phone_dose) {
-    result <- do.call(smartwatch_phone_dose, case$input)
+    result <- do.call(smartwatch_phone_dose, c(case$input, params = list(etain_params)))
     expect_equal(result, case$output, tolerance = 1e-5)
   }
 })

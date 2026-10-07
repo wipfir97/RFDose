@@ -59,7 +59,7 @@ cases_headphones_dose <- list(
 
 test_that("headphones_dose matches reference values", {
   for (case in cases_headphones_dose) {
-    result <- do.call(headphones_dose, case$input)
+    result <- do.call(headphones_dose, c(case$input, params = list(etain_params)))
     expect_equal(result, case$output, tolerance = 1e-3)
   }
 })
@@ -125,7 +125,7 @@ cases_headphones_earset_dose <- list(
 
 test_that("headphones_earset_dose matches reference values", {
   for (case in cases_headphones_earset_dose) {
-    result <- do.call(headphones_earset_dose, case$input)
+    result <- do.call(headphones_earset_dose, c(case$input, params = list(etain_params)))
     expect_equal(result, case$output, tolerance = 1e-4)
   }
 })
@@ -198,7 +198,7 @@ cases_headphones_phone_dose <- list(
 
 test_that("headphones_phone_dose matches reference values", {
   for (case in cases_headphones_phone_dose) {
-    result <- do.call(headphones_phone_dose, case$input)
+    result <- do.call(headphones_phone_dose, c(case$input, params = list(etain_params)))
     expect_equal(result, case$output, tolerance = 1e-3)
   }
 })

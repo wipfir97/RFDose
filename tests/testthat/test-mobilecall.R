@@ -267,7 +267,7 @@ list(
 
 test_that("mobilecall_dose matches reference values", {
   for (case in cases_mobilecall_dose) {
-    result <- do.call(mobilecall_dose, case$input)
+    result <- do.call(mobilecall_dose, c(case$input, params = list(etain_params)))
     expect_equal(result, case$output, tolerance = 1e-2) #test passed but with some rounding issue at from the 3rd significant number
   }
 })

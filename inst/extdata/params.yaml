@@ -1,3 +1,8 @@
+# Non-SAR parameters (powers, duty cycles, proportions).
+# SAR values are kept in separate files (default: sar_goliat_average.yaml; also
+# sar_goliat_<phantom>.yaml and sar_etain.yaml) and merged by load_params().
+# The placement proportions here are the GOLIAT ones; the ETAIN SAR file
+# (sar_etain.yaml) replaces them with its own.
 global:
   wifi_2_prop: 0.58
   wifi_5_prop: 0.42
@@ -8,12 +13,6 @@ devices:
   dect:
     dect_pwr: 250
     dect_dutycycle: 0.04
-    brain:
-      dect_ear_sar: 0.046356407
-      dect_speaker_sar: 0.003210772
-    body:
-      dect_ear_sar: 0.011088893
-      dect_speaker_sar: 0.002088857
   tblt:
     wifi_2_low_dutycycle: 0.0086
     wifi_2_lowmed_dutycycle: 0.022010
@@ -25,12 +24,6 @@ devices:
     wifi_5_high_dutycycle: 0.494775
     wifi_2_pwr: 100
     wifi_5_pwr: 200
-    brain:
-      tblt_2_sar: 0.001119463
-      tblt_5_sar: 0.000320072
-    body:
-      tblt_2_sar: 0.000863117
-      tblt_5_sar: 0.000553633
   lptp:
     wifi_2_low_dutycycle: 0.0086
     wifi_2_lowmed_dutycycle: 0.0220
@@ -42,27 +35,11 @@ devices:
     wifi_5_high_dutycycle: 0.4948
     wifi_2_pwr: 100
     wifi_5_pwr: 200
-    legs_prop: 0.2
-    tabl_prop: 0.8
-    brain:
-      wifi_2_legs_sar: 0.000034320
-      wifi_2_tabl_sar: 0.000039139
-      wifi_5_legs_sar: 0.000002239
-      wifi_5_tabl_sar: 0.000009211
-    body:
-      wifi_2_legs_sar: 0.007105568
-      wifi_2_tabl_sar: 0.003184117
-      wifi_5_legs_sar: 0.005462274
-      wifi_5_tabl_sar: 0.002186701
+    legs_prop: 0 # laptop on the legs: not simulated in GOLIAT
+    tabl_prop: 1 # laptop on a table: GOLIAT has only one simulation (belly height, 20 cm)
   wifi:
     wifi_2_pwr: 0.018
     wifi_5_pwr: 0.013
-    brain:
-      wifi_2_sar: 0.001330
-      wifi_5_sar: 0.000556
-    body:
-      wifi_2_sar: 0.005295
-      wifi_5_sar: 0.002402
   call:
     native_prop: 0.7
     data_prop: 0.115394
@@ -147,120 +124,10 @@ devices:
     wifi_5_pwr: 200
     wifi_2_dutycycle: 0.02738
     wifi_5_dutycycle: 0.04930
-    headp_face_prop: 0.333
-    headp_pock_prop: 0.333
-    headp_else_prop: 0.333
+    headp_face_prop: 0 # phone at the face 30 cm: not simulated in GOLIAT
+    headp_pock_prop: 0 # phone in a pocket: not simulated in GOLIAT
+    headp_else_prop: 1 # phone elsewhere: GOLIAT has only one simulation (belly height, 20 cm)
     bt_pwr: 0.16
-    brain:
-      data_2g_ear_sar: 0.08097738
-      data_2g_headp_face_sar: 0.00410177
-      data_2g_headp_pock_sar: 0.00000365
-      data_2g_headp_else_sar: 0
-      data_2g_speaker_sar: 0.00725871
-      data_3g_ear_sar: 0.07617777
-      data_3g_headp_face_sar: 0.00382763
-      data_3g_headp_pock_sar: 0.00000355
-      data_3g_headp_else_sar: 0
-      data_3g_speaker_sar: 0.00679774
-      data_4g_ear_sar: 0.07501609
-      data_4g_headp_face_sar: 0.00359942
-      data_4g_headp_pock_sar: 0.00000438
-      data_4g_headp_else_sar: 0
-      data_4g_speaker_sar: 0.00654641
-      data_5g_ear_sar: 0.00553899
-      data_5g_headp_face_sar: 0.00067150
-      data_5g_headp_pock_sar: 0.00000023
-      data_5g_headp_else_sar: 0
-      data_5g_speaker_sar: 0.00095661
-      native_2g_ear_sar: 0.08097738
-      native_2g_headp_face_sar: 0.00410177
-      native_2g_headp_pock_sar: 0.00000365
-      native_2g_headp_else_sar: 0
-      native_2g_speaker_sar: 0.00725871
-      native_3g_ear_sar: 0.07617777
-      native_3g_headp_face_sar: 0.00382763
-      native_3g_headp_pock_sar: 0.00000355
-      native_3g_headp_else_sar: 0
-      native_3g_speaker_sar: 0.00679774
-      native_4g_ear_sar: 0.07501609
-      native_4g_headp_face_sar: 0.00359942
-      native_4g_headp_pock_sar: 0.00000438
-      native_4g_headp_else_sar: 0
-      native_4g_speaker_sar: 0.00654641
-      native_5g_ear_sar: 0.00553899
-      native_5g_headp_face_sar: 0.00067150
-      native_5g_headp_pock_sar: 0.00000023
-      native_5g_headp_else_sar: 0
-      native_5g_speaker_sar: 0.00095661
-      wifi_2_ear_sar: 0.026727749
-      wifi_2_headp_face_sar: 0.001119463
-      wifi_2_headp_pock_sar: 0.000000328
-      wifi_2_headp_else_sar: 0
-      wifi_2_speaker_sar: 0.001556721
-      wifi_5_ear_sar: 0.001040371
-      wifi_5_headp_face_sar: 0.000320072
-      wifi_5_headp_pock_sar: 0.000000000014
-      wifi_5_headp_else_sar: 0
-      wifi_5_speaker_sar: 0.000332549
-      bt_phone_face_sar: 0.000999468
-      bt_phone_pock_sar: 0.000000475
-      bt_phone_else_sar: 0
-      bt_headp_sar: 0.01699017
-    body:
-      native_2g_ear_sar: 0.01169656
-      native_2g_headp_face_sar: 0.00107262
-      native_2g_headp_pock_sar: 0.00988135
-      native_2g_headp_else_sar: 0
-      native_2g_speaker_sar: 0.00230813
-      native_3g_ear_sar: 0.01142397
-      native_3g_headp_face_sar: 0.00106172
-      native_3g_headp_pock_sar: 0.00943545
-      native_3g_headp_else_sar: 0
-      native_3g_speaker_sar: 0.00222471
-      native_4g_ear_sar: 0.01141645
-      native_4g_headp_face_sar: 0.00103615
-      native_4g_headp_pock_sar: 0.00939438
-      native_4g_headp_else_sar: 0
-      native_4g_speaker_sar: 0.00223140
-      native_5g_ear_sar: 0.00930791
-      native_5g_headp_face_sar: 0.00072628
-      native_5g_headp_pock_sar: 0.00408447
-      native_5g_headp_else_sar: 0
-      native_5g_speaker_sar: 0.00408447
-      data_2g_ear_sar: 0.01169656
-      data_2g_headp_face_sar: 0.00107262
-      data_2g_headp_pock_sar: 0.00988135
-      data_2g_headp_else_sar: 0
-      data_2g_speaker_sar: 0.00230813
-      data_3g_ear_sar: 0.01142397
-      data_3g_headp_face_sar: 0.00106172
-      data_3g_headp_pock_sar: 0.00943545
-      data_3g_headp_else_sar: 0
-      data_3g_speaker_sar: 0.00222471
-      data_4g_ear_sar: 0.01141645
-      data_4g_headp_face_sar: 0.00103615
-      data_4g_headp_pock_sar: 0.00939438
-      data_4g_headp_else_sar: 0
-      data_4g_speaker_sar: 0.00223140
-      data_5g_ear_sar: 0.00930791
-      data_5g_headp_face_sar: 0.00072628
-      data_5g_headp_pock_sar: 0.00408447
-      data_5g_headp_else_sar: 0
-      data_5g_speaker_sar: 0.00408447
-      wifi_2_ear_sar: 0.010022773
-      wifi_2_headp_face_sar: 0.000863117
-      wifi_2_headp_pock_sar: 0.006278143
-      wifi_2_headp_else_sar: 0
-      wifi_2_speaker_sar: 0.001762495
-      wifi_5_ear_sar: 0.006538522
-      wifi_5_headp_face_sar: 0.000553633
-      wifi_5_headp_pock_sar: 0.002473388
-      wifi_5_headp_else_sar: 0
-      wifi_5_speaker_sar: 0.00127148
-      bt_phone_face_sar: 0.000860849
-      bt_phone_pock_sar: 0.010153247
-      bt_phone_else_sar: 0
-      bt_headp_sar: 0.009862
   data:
     data_2g_prop: 0
     data_3g_prop: 0.0175
@@ -312,20 +179,7 @@ devices:
     wifi_5_lowmed_dutycycle: 0.0386
     wifi_5_medhigh_dutycycle: 0.0537
     wifi_5_high_dutycycle: 0.494775
-
     wifi_5_pwr: 200.00
-    brain:
-      data_3g_sar: 0.003827632
-      data_4g_sar: 0.003599419
-      data_5g_sar: 0.000671496
-      wifi_2_sar: 0.001119463
-      wifi_5_sar: 0.000320072
-    body:
-      data_3g_sar: 0.001061719
-      data_4g_sar: 0.001036151
-      data_5g_sar: 0.000726276
-      wifi_2_sar: 0.000863117
-      wifi_5_sar: 0.000553633
   farf:
     home_urb_pwr_Other: 0.4484592
     out_urb_pwr_Other: 1.29337059
@@ -437,69 +291,24 @@ devices:
     out_rur_pwr_UK: 0.13347
     work_rur_pwr_UK: 0.04626
     travel_pwr_UK: 0.74977
-    
-    brain:
-      sar: 0.005491315
-    body:
-      sar: 0.004594286
   smartwatch:
     watch_pwr_active: 1
     watch_pwr_passive: 0.002
     watch_phone_pwr: 0.002
-    brain:
-      watch_sar: 0.00002359
-      watch_phone_sar: 0.00036953
-    body:
-      watch_sar: 0.01063377
-      watch_phone_sar: 0.00235662
   headphones:
     headp_pwr: 0.002
     headp_phone_pwr: 0.16
-    brain:
-      headp_sar: 0.020049
-      headp_phone_sar: 0.000369531
-    body:
-      headp_sar: 0.014058
-      headp_phone_sar: 0.002357
   hotspot:
     hotspot_pwr: 5.1755728
-    brain:
-      hotspot_sar: 0.00036953
-    body:
-      hotspot_sar: 0.002357
   vr:
     vr_2_pwr: 100
     vr_5_pwr: 200
     vr_2_dutycycle: 0.137783
     vr_5_dutycycle: 0.053675
     vr_online_prop: 0.5
-    brain:
-      vr_2_sar: 0.02672775
-      vr_5_sar: 0.00104037
-    body:
-      vr_2_sar: 0.01002277
-      vr_5_sar: 0.00653852
   gaming:
     gaming_online_prop: 0.5
     gaming_2_dutycycle: 0.02201
     gaming_5_dutycycle: 0.0276
     gaming_2_pwr: 100
     gaming_5_pwr: 200
-    brain:
-      gaming_2_sar: 0.001119463
-
-      gaming_5_sar: 0.000320072
-
-    body:
-      gaming_2_sar: 0.000863117
-
-
-
-      gaming_5_sar: 0.000553633
-
-
-
-
-
-
-

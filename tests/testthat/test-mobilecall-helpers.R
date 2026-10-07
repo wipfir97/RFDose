@@ -18,7 +18,7 @@ cases_mpc_bt_earset_msar <- list(
 
 test_that("mpc_bt_earset_msar matches reference values", {
   for (case in cases_mpc_bt_earset_msar) {
-    result <- do.call(mpc_bt_earset_msar, case$input)
+    result <- do.call(mpc_bt_earset_msar, c(case$input, params = list(etain_params)))
     expect_equal(result, case$output, tolerance = 1e-3)
   }
 })
@@ -42,7 +42,7 @@ cases_mpc_bt_phone_msar <- list(
 
 test_that("mpc_bt_phone_msar matches reference values", {
   for (case in cases_mpc_bt_phone_msar) {
-    result <- do.call(mpc_bt_phone_msar, case$input)
+    result <- do.call(mpc_bt_phone_msar, c(case$input, params = list(etain_params)))
     expect_equal(result, case$output, tolerance = 1e-3)
   }
 })
@@ -86,7 +86,7 @@ cases_mpc_msar <- list(
 
 test_that("mpc_msar matches reference values", {
   for (case in cases_mpc_msar) {
-    result <- do.call(mpc_msar, case$input)
+    result <- do.call(mpc_msar, c(case$input, params = list(etain_params)))
     expect_equal(result, case$output, tolerance = 1e-3)
   }
 })
@@ -129,7 +129,7 @@ cases_mpc_pwr_native <- list(
 
 test_that("mpc_pwr_native matches reference values", {
   for (case in cases_mpc_pwr_native) {
-    result <- do.call(mpc_pwr_native, case$input)
+    result <- do.call(mpc_pwr_native, c(case$input, params = list(etain_params)))
     expect_equal(result, case$output, tolerance = 1e-3)
   }
 })
@@ -180,7 +180,7 @@ cases_mpc_sar_native <- list(
 
 test_that("mpc_sar_native matches reference values", {
   for (case in cases_mpc_sar_native) {
-    result <- do.call(mpc_sar_native, case$input)
+    result <- do.call(mpc_sar_native, c(case$input, params = list(etain_params)))
     expect_equal(result, case$output, tolerance = 1e-5)
   }
 })
@@ -215,7 +215,7 @@ cases_mpc_pwr_data <- list(
 
 test_that("mpc_pwr_data matches reference values", {
   for (case in cases_mpc_pwr_data) {
-    result <- do.call(mpc_pwr_data, case$input)
+    result <- do.call(mpc_pwr_data, c(case$input, params = list(etain_params)))
     expect_equal(result, case$output, tolerance = 1e-4)
   }
 })
@@ -266,7 +266,7 @@ cases_mpc_sar_data <- list(
 
 test_that("mpc_sar_data matches reference values", {
   for (case in cases_mpc_sar_data) {
-    result <- do.call(mpc_sar_data, case$input)
+    result <- do.call(mpc_sar_data, c(case$input, params = list(etain_params)))
     expect_equal(result, case$output, tolerance = 1e-4)
   }
 })
@@ -290,7 +290,7 @@ cases_mpc_pwr_wifi <- list(
 
 test_that("mpc_pwr_wifi matches reference values", {
   for (case in cases_mpc_pwr_wifi) {
-    result <- do.call(mpc_pwr_wifi, case$input)
+    result <- do.call(mpc_pwr_wifi, c(case$input, params = list(etain_params)))
     expect_equal(result, case$output, tolerance = 1e-3)
   }
 })
@@ -341,7 +341,7 @@ cases_mpc_sar_wifi <- list(
 
 test_that("mpc_sar_wifi matches reference values", {
   for (case in cases_mpc_sar_wifi) {
-    result <- do.call(mpc_sar_wifi, case$input)
+    result <- do.call(mpc_sar_wifi, c(case$input, params = list(etain_params)))
     # tolerance due to rounded values in reference calculations
     expect_equal(result, case$output, tolerance = 1e-6)
   }

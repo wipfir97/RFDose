@@ -36,7 +36,7 @@ cases_mpd_msar <- list(
 
 test_that("mpd_msar matches reference values", {
   for (case in cases_mpd_msar) {
-    result <- do.call(mpd_msar, case$input)
+    result <- do.call(mpd_msar, c(case$input, params = list(etain_params)))
     expect_equal(result, case$output, tolerance = 1e-3) # still have rounding issues
   }
 })
@@ -83,7 +83,7 @@ cases_mpd_pwr_data <- list(
 
 test_that("mpd_pwr_data matches reference values", {
   for (case in cases_mpd_pwr_data) {
-    result <- do.call(mpd_pwr_data, case$input)
+    result <- do.call(mpd_pwr_data, c(case$input, params = list(etain_params)))
     expect_equal(result, case$output, tolerance = 1e-3)
   }
 })
@@ -136,7 +136,7 @@ cases_mpd_sar_data <- list(
 
 test_that("mpd_sar_data matches reference values", {
   for (case in cases_mpd_sar_data) {
-    result <- do.call(mpd_sar_data, case$input)
+    result <- do.call(mpd_sar_data, c(case$input, params = list(etain_params)))
     expect_equal(result, case$output, tolerance = 1e-3)
   }
 })
@@ -167,7 +167,7 @@ cases_mpd_pwr_wifi <- list(
 
 test_that("mpd_pwr_wifi matches reference values", {
   for (case in cases_mpd_pwr_wifi) {
-    result <- do.call(mpd_pwr_wifi, case$input)
+    result <- do.call(mpd_pwr_wifi, c(case$input, params = list(etain_params)))
     expect_equal(result, case$output, tolerance = 1e-3)
   }
 })
@@ -206,7 +206,7 @@ cases_mpd_sar_wifi <- list(
 
 test_that("mpd_sar_wifi matches reference values", {
   for (case in cases_mpd_sar_wifi) {
-    result <- do.call(mpd_sar_wifi, case$input)
+    result <- do.call(mpd_sar_wifi, c(case$input, params = list(etain_params)))
     expect_equal(result, case$output, tolerance = 1e-3)
   }
 })

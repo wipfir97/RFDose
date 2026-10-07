@@ -121,7 +121,7 @@ cases_cordless_dose <- list(
 
 test_that("cordless_dose matches reference values", {
   for (case in cases_cordless_dose) {
-    result <- do.call(cordless_dose, case$input)
+    result <- do.call(cordless_dose, c(case$input, params = list(etain_params)))
     expect_equal(result, case$output, tolerance = 1e-3)
   }
 })

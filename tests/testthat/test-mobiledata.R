@@ -227,7 +227,7 @@ cases_mobiledata_dose <- list(
 
 test_that("mobiledata_dose matches reference values", {
   for (case in cases_mobiledata_dose) {
-    result <- do.call(mobiledata_dose, case$input)
+    result <- do.call(mobiledata_dose, c(case$input, params = list(etain_params)))
     expect_equal(result, case$output, tolerance = 1e-3) 
   }
 })

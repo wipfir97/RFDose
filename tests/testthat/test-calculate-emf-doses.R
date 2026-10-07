@@ -213,9 +213,9 @@ make_sar_test_input <- function() {
 dose_cols <- c("call_dose", "data_dose", "dect_dose", "farf_dose",
                "wifi_dose", "lptp_dose", "tblt_dose", "other_dose")
 
-test_that("calculate_emf_doses uses default SAR values when sar_file is NULL", {
+test_that("calculate_emf_doses uses the default (GOLIAT) SAR values when sar_file is NULL", {
   input    <- make_sar_test_input()
-  sar_file <- system.file("extdata", "sar_etain.yaml", package = "RFDose")
+  sar_file <- system.file("extdata", "sar_goliat_average.yaml", package = "RFDose")
 
   expect_equal(
     calculate_emf_doses(input, tissue = "brain"),
@@ -224,7 +224,7 @@ test_that("calculate_emf_doses uses default SAR values when sar_file is NULL", {
 
 test_that("calculate_emf_doses works with a parameter file without SAR values", {
   input       <- make_sar_test_input()
-  params_file <- system.file("extdata", "params_nosar.yaml", package = "RFDose")
+  params_file <- system.file("extdata", "params.yaml", package = "RFDose")
 
   expect_equal(
     calculate_emf_doses(input, tissue = "brain"),
@@ -233,18 +233,21 @@ test_that("calculate_emf_doses works with a parameter file without SAR values", 
 
 test_that("calculate_emf_doses applies SAR values from sar_file", {
   input <- make_sar_test_input()
-  # Double every SAR value: doses are linear in SAR, so they must double too
-  sar <- yaml::read_yaml(system.file("extdata", "sar_etain.yaml", package = "RFDose"))
-  sar <- rapply(sar, function(x) 2 * x, how = "replace")
+  # Double every ETAIN SAR value: doses are linear in SAR, so they must double too
+  etain_file <- system.file("extdata", "sar_etain.yaml", package = "RFDose")
+  sar <- yaml::read_yaml(etain_file)
+  sar$devices <- lapply(sar$devices, function(device) {
+    lapply(device, function(x) if (is.list(x)) rapply(x, function(v) 2 * v, how = "replace") else x)
+  })
   sar_file <- tempfile(fileext = ".yaml")
   yaml::write_yaml(sar, sar_file, precision = 15)
 
   for (tissue in c("brain", "body")) {
-    default <- calculate_emf_doses(input, tissue = tissue)
+    etain   <- calculate_emf_doses(input, tissue = tissue, sar_file = etain_file)
     doubled <- calculate_emf_doses(input, tissue = tissue, sar_file = sar_file)
 
-    expect_true(all(default[dose_cols] > 0))
-    expect_equal(doubled[dose_cols], 2 * default[dose_cols])
+    expect_true(all(etain[dose_cols] > 0))
+    expect_equal(doubled[dose_cols], 2 * etain[dose_cols])
   }
 })
 

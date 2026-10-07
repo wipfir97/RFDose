@@ -114,7 +114,7 @@ cases_laptop_dose <- list(
 
 test_that("laptop_dose matches reference values", {
   for (case in cases_laptop_dose) {
-    result <- do.call(laptop_dose, case$input)
+    result <- do.call(laptop_dose, c(case$input, params = list(etain_params)))
     expect_equal(result, case$output, tolerance = 1e-3)
   }
 })

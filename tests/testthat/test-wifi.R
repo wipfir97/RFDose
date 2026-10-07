@@ -59,7 +59,7 @@ reference_cases <- list(
 
 test_that("wifi_dose matches reference calculations", {
   for (case in reference_cases) {
-    result <- do.call(wifi_dose, case$input)
+    result <- do.call(wifi_dose, c(case$input, params = list(etain_params)))
     expect_equal(result, case$output, tolerance = 1e-3) # tolerance due to rounding inconsistencies
   }
 })

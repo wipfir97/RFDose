@@ -24,7 +24,7 @@ cases_farfield_msar <- list(
 
 test_that("farfield_msar matches reference values", {
   for (case in cases_farfield_msar) {
-    result <- do.call(farfield_msar, case$input)
+    result <- do.call(farfield_msar, c(case$input, params = list(etain_params)))
     expect_equal(result, case$output, tolerance = 1e-6)
   }
 })
@@ -61,7 +61,7 @@ cases_farfield_pwr <- list(
 
 test_that("farfield_pwr matches reference values", {
   for (case in cases_farfield_pwr) {
-    result <- do.call(farfield_pwr, case$input)
+    result <- do.call(farfield_pwr, c(case$input, params = list(etain_params)))
     expect_equal(result, case$output, tolerance = 1e-5)
   }
 })
@@ -84,7 +84,7 @@ cases_farfield_sar <- list(
 
 test_that("farfield_sar matches reference values", {
   for (case in cases_farfield_sar) {
-    result <- do.call(farfield_sar, case$input)
+    result <- do.call(farfield_sar, c(case$input, params = list(etain_params)))
     expect_equal(result, case$output, tolerance = 1e-6)
   }
 })

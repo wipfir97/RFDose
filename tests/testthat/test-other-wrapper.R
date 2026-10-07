@@ -86,7 +86,7 @@ cases_other_dose_wrapper <- list(
 
 test_that("other_dose_wrapper matches reference values", {
   for (case in cases_other_dose_wrapper) {
-    result <- do.call(other_dose_wrapper, case$input)
+    result <- do.call(other_dose_wrapper, c(case$input, params = list(etain_params)))
     expect_equal(result, case$output, tolerance = 1e-3)
   }
 })

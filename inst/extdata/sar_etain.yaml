@@ -1,5 +1,6 @@
 # SAR values (ETAIN), per device and tissue.
-# Merged into params_nosar.yaml by load_params().
+# Merged into params.yaml by load_params(). Also sets the ETAIN placement
+# proportions (lptp, call), which replace the GOLIAT ones of params.yaml.
 devices:
   dect:
     brain:
@@ -16,6 +17,8 @@ devices:
       tblt_2_sar: 0.000863117
       tblt_5_sar: 0.000553633
   lptp:
+    legs_prop: 0.2 # laptop on the legs
+    tabl_prop: 0.8 # laptop on a table
     brain:
       wifi_2_legs_sar: 0.000034320
       wifi_2_tabl_sar: 0.000039139
@@ -34,6 +37,9 @@ devices:
       wifi_2_sar: 0.005295
       wifi_5_sar: 0.002402
   call:
+    headp_face_prop: 0.333 # phone at the face (headphone and Bluetooth calls)
+    headp_pock_prop: 0.333 # phone in a pocket
+    headp_else_prop: 0.333 # phone elsewhere
     brain:
       data_2g_ear_sar: 0.08097738
       data_2g_headp_face_sar: 0.00410177

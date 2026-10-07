@@ -20,28 +20,43 @@ test_that("load_params errors when file does not exist", {
 test_that("load_params returns NULL path behavior consistent with explicit default path", {
   default_result  <- load_params()
   explicit_result <- load_params(
-    system.file("extdata", "params_nosar.yaml", package = "RFDose"),
-    sar_path = system.file("extdata", "sar_etain.yaml", package = "RFDose"))
+    system.file("extdata", "params.yaml", package = "RFDose"),
+    sar_path = system.file("extdata", "sar_goliat_average.yaml", package = "RFDose"))
 
   expect_equal(default_result, explicit_result)
 })
 
 test_that("load_params adds default SAR values to a parameter file without SAR", {
-  result <- load_params(system.file("extdata", "params_nosar.yaml", package = "RFDose"))
+  result <- load_params(system.file("extdata", "params.yaml", package = "RFDose"))
 
   expect_equal(result, load_params())
 })
 
-test_that("load_params keeps SAR values of the parameter file when sar_path is NULL", {
-  params <- load_params()
+test_that("load_params keeps SAR values and proportions of a parameter file with SAR values", {
+  params <- etain_params
   params$devices$dect$brain$dect_ear_sar <- 1
-  params$devices$dect$body <- NULL
   params_file <- tempfile(fileext = ".yaml")
   yaml::write_yaml(params, params_file, precision = 15)
   result <- load_params(params_file)
 
   expect_equal(result$devices$dect$brain$dect_ear_sar, 1)
-  expect_equal(result$devices$dect$body, load_params()$devices$dect$body)
+  expect_equal(result$devices$lptp$legs_prop, 0.2)
+  expect_equal(result, params)
+})
+
+test_that("GOLIAT SAR values are the default, ETAIN keeps its own placement proportions", {
+  goliat <- load_params(sar_path = system.file("extdata", "sar_goliat_average.yaml", package = "RFDose"))
+  etain  <- load_params(sar_path = system.file("extdata", "sar_etain.yaml", package = "RFDose"))
+
+  expect_equal(goliat$devices$lptp$legs_prop, 0)
+  expect_equal(goliat$devices$lptp$tabl_prop, 1)
+  expect_equal(goliat$devices$call$headp_face_prop, 0)
+  expect_equal(goliat$devices$call$headp_pock_prop, 0)
+  expect_equal(goliat$devices$call$headp_else_prop, 1)
+  expect_equal(etain$devices$lptp$legs_prop, 0.2)
+  expect_equal(etain$devices$lptp$tabl_prop, 0.8)
+  expect_equal(etain$devices$call$headp_else_prop, 0.333)
+  expect_equal(goliat, load_params())
 })
 
 test_that("load_params merges SAR values from sar_path into parameters", {

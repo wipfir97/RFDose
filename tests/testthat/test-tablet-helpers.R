@@ -24,7 +24,7 @@ cases_tablet_msar <- list(
 
 test_that("tablet_msar matches reference values", {
   for (case in cases_tablet_msar) {
-    result <- do.call(tablet_msar, case$input)
+    result <- do.call(tablet_msar, c(case$input, params = list(etain_params)))
     expect_equal(result, case$output, tolerance = 1e-5)
   }
 })
@@ -55,7 +55,7 @@ cases_tablet_pwr <- list(
 
 test_that("tablet_pwr matches reference values", {
   for (case in cases_tablet_pwr) {
-    result <- do.call(tablet_pwr, case$input)
+    result <- do.call(tablet_pwr, c(case$input, params = list(etain_params)))
     expect_equal(result, case$output, tolerance = 1e-3)
   }
 })
@@ -94,7 +94,7 @@ cases_tablet_sar <- list(
 
 test_that("tablet_sar matches reference values", {
   for (case in cases_tablet_sar) {
-    result <- do.call(tablet_sar, case$input)
+    result <- do.call(tablet_sar, c(case$input, params = list(etain_params)))
     expect_equal(result, case$output, tolerance = 1e-3)
   }
 })

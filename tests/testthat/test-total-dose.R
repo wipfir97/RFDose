@@ -132,7 +132,7 @@ cases_total_dose <- list(
 test_that("total_dose matches reference values", {
  for (case in cases_total_dose) {
     print(case)
-    result <- do.call(total_dose, case$input)
+    result <- do.call(total_dose, c(case$input, params = list(etain_params)))
     expect_equal(result, case$output, tolerance = 1e-3) 
   }
 })

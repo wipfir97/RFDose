@@ -24,7 +24,7 @@ cases_laptop_msar <- list(
 
 test_that("laptop_msar matches reference values", {
   for (case in cases_laptop_msar) {
-    result <- do.call(laptop_msar, case$input)
+    result <- do.call(laptop_msar, c(case$input, params = list(etain_params)))
     expect_equal(result, case$output, tolerance = 1e-3)
   }
 })
@@ -55,7 +55,7 @@ cases_laptop_pwr <- list(
 
 test_that("laptop_pwr matches reference values", {
   for (case in cases_laptop_pwr) {
-    result <- do.call(laptop_pwr, case$input)
+    result <- do.call(laptop_pwr, c(case$input, params = list(etain_params)))
     expect_equal(result, case$output, tolerance = 1e-3)
   }
 })
@@ -94,7 +94,7 @@ cases_laptop_sar <- list(
 
 test_that("laptop_sar matches reference values", {
   for (case in cases_laptop_sar) {
-    result <- do.call(laptop_sar, case$input)
+    result <- do.call(laptop_sar, c(case$input, params = list(etain_params)))
     expect_equal(result, case$output, tolerance = 1e-3)
   }
 })
