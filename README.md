@@ -6,6 +6,13 @@ RFDose implements the deterministic RF-EMF dose calculations developed in Jalili
 
 For detailed information about the package functions, please refer to the [package manual](./doc/RFDose_2.0.0.pdf). We are also preparing a short publication on `RFDose`, which will contain further background information. 
 
+**Information for users of version 1.0.0**
+
+* `calculate_emf_doses` now uses the GOLIAT SAR values (average of four phantoms) by default instead of the ETAIN SAR values, so the doses differ from version 1.0.0
+* To get the same doses as version 1.0.0, use the ETAIN SAR values: `calculate_emf_doses(data, tissue, sar_file = system.file("extdata", "sar_etain.yaml", package = "RFDose"))`
+* `calculate_emf_doses` has a new optional input variable "sar_file" to choose the SAR values (see the [use example](#use-example))
+* The inbuilt parameter file [`params.yaml`](inst/extdata/params.yaml) no longer contains SAR values: they are in separate SAR files
+
 **Information for users of previous test versions (0.2.0, 0.3.0)**
 
 * The definition of the mpc\_headp\_prop input variable changed- please refer to the variable overview below
@@ -187,7 +194,20 @@ Default values are specified in [this YAML file](./inst/extdata/defaultvariables
 
 ### Output
 
-`calculate_emf_doses` returns a data frame containing the original data columns, as well as an additional column with the dose contribution of each source in mJ/kg/day.
+`calculate_emf_doses` returns a data frame containing the original data columns, as well as one additional column per source with its dose contribution in mJ/kg/day for the chosen tissue:
+
+|Column|Source|
+|-|-|
+|call\_dose|Mobile phone calls (mpc)|
+|data\_dose|Mobile data (mpd)|
+|dect\_dose|Cordless phone (dect)|
+|farf\_dose|Far-field (farf)|
+|wifi\_dose|WiFi router (wifi)|
+|lptp\_dose|Laptop (lptp)|
+|tblt\_dose|Tablet (tblt)|
+|other\_dose|Other devices: smartwatch, VR headset, hotspot, Bluetooth headphones, and gaming consoles (other)|
+
+The doses depend on the SAR values used (GOLIAT by default, see [GOLIAT SAR values](#goliat-sar-values)).
 
 ## GOLIAT SAR values
 
