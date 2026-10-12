@@ -32,7 +32,6 @@
 #'   \item{tblt_dur_high}{test}
 #'   \item{hotspot_duration}{test}
 #'   \item{smartwatch_duration}{test}
-#'   \item{tracker_duration}{test}
 #'   \item{vr_duration}{test}
 #'   \item{headphone_duration}{test}
 #'   \item{gaming_duration}{test}

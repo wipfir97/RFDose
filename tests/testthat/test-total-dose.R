@@ -27,7 +27,6 @@ test_that("total_dose returns a numeric value", {
     tblt_dur_high        = 81,
     hotspot_duration     = 0,
     smartwatch_duration  = 0,
-    tracker_duration     = 0,
     vr_duration          = 0,
     headphone_duration   = 0,
     gaming_duration      = 600
@@ -68,7 +67,6 @@ test_that("total_dose fails on missing numbers", {
     tblt_dur_high        = 81,
     hotspot_duration     = 0,
     smartwatch_duration  = 0,
-    tracker_duration     = 0,
     vr_duration          = 0,
     headphone_duration   = 0,
     gaming_duration      = 600
@@ -109,7 +107,6 @@ cases_total_dose <- list(
         tblt_dur_high        = 0,
         hotspot_duration     = 0,
         smartwatch_duration  = 0,
-        tracker_duration     = 0,
         vr_duration          = 0,
         headphone_duration   = 0,
         gaming_duration      = 0
