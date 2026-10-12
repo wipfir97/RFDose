@@ -1,7 +1,7 @@
 ## code to prepare GOLIAT SAR data (`goliat_sar`) goes here
 
 # GOLIAT simulation results (outside this repository)
-goliat_file <- "C:/Users/loizni/OneDrive - Swiss TPH/Documents/Doctorat/goliat/dose_model/Final_Data_All_2026_LAST.xlsx"
+goliat_file <- "J:/EEH/EMF/GOLIAT/03_Work_Package_1/04_Task 1.6_Dose_model/SDM/SAR/Final_Data_All_2026_LAST.xlsx"
 
 # Frequencies (MHz) not simulated, linearly interpolated between the
 # neighbouring simulated frequencies
