@@ -126,14 +126,8 @@ devices:
       lptp_dist_lap: 200
       lptp_dist_desk: 450
   wifi:
-    wifi_2_pwr: 0.018
-    wifi_5_pwr: 0.013
-    brain:
-      wifi_2_sar: 0.00261819
-      wifi_5_sar: 0.00055618
-    body:
-      wifi_2_sar: 0.003556
-      wifi_5_sar: 0.0024018
+    wifi_2450_pwr: 0.018
+    wifi_5000_pwr: 0.013
   call:
     call_type:
       native_prop: 0.7

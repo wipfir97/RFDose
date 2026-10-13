@@ -322,14 +322,15 @@ devices:
       lptp_dist_desk_min: 250
       lptp_dist_desk_max: 800
   wifi:
-    wifi_2_pwr: 0.018
-    wifi_5_pwr: 0.013
-    brain:
-      wifi_2_sar: 0.00261819
-      wifi_5_sar: 0.00055618
-    body:
-      wifi_2_sar: 0.003556
-      wifi_5_sar: 0.0024018
+    # HERMES3 personal measurements, each the mean of a home and a school
+    # value. Point values: the parameter workbook lists no spread for them.
+    wifi_2450_pwr: 0.018
+    wifi_5000_pwr: 0.013
+    # The SAR values used to sit here as one scalar per tissue and band, the
+    # same for every phantom. Since 2026-09-29 wifi_sar() reads the
+    # phantom-resolved GOLIAT far-field tables under devices$call instead --
+    # <phantom>_<tissue>_goliat_{2450,5000}_farfield_sar. See
+    # doc/wifi_stochastification.md.
   call:
     call_type:
       distribution: "dirichlet"

@@ -140,9 +140,9 @@ get_total_dose <- function(
     use_5g = sim_params$global$input_stoch$use_5g
     headp_ear_num = sim_params$global$input_stoch$headp_num$headp_ear_num
     travel_time = sim_params$global$environment_prop$travel_prop*86400
-    wifi_prop_home = sim_params$global$input_stoc$wifi_environment_probs$mpd_wifi_prop_home
-    wifi_prop_work = sim_params$global$input_stoc$wifi_environment_probs$mpd_wifi_prop_work
-    wifi_prop_travel = sim_params$global$input_stoc$wifi_environment_probs$mpd_wifi_prop_travel
+    wifi_prop_home = sim_params$global$input_stoch$wifi_environment_probs$mpd_wifi_prop_home
+    wifi_prop_work = sim_params$global$input_stoch$wifi_environment_probs$mpd_wifi_prop_work
+    wifi_prop_travel = sim_params$global$input_stoch$wifi_environment_probs$mpd_wifi_prop_travel
     duration_low = sim_params$global$input_stoch$mpd_duration$mpd_dur_low
     duration_lowmed = sim_params$global$input_stoch$mpd_duration$mpd_dur_lowmed
     duration_medhigh = sim_params$global$input_stoch$mpd_duration$mpd_dur_medhigh
@@ -208,12 +208,12 @@ get_total_dose <- function(
       params       = sim_params
       )
 
-    ## Calculate WiFi contribution DETERMINISTIC----------------------------------------------
+    ## Calculate WiFi contribution STOCHASTIC-------------------------------------------------
     wifi_dose <- wifi_dose(
       tissue           = tissue,
-      travel_time      = sample$travel_time,
-      wifi_prop_travel = sample$mpd_wifi_prop_travel,
-      params           = old_params
+      travel_time      = travel_time,
+      wifi_prop_travel = wifi_prop_travel,
+      params           = sim_params
       )
 
     ## Calculate laptop contribution STOCHASTIC-----------------------------------------------
