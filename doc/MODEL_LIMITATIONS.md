@@ -168,18 +168,32 @@ environments in that table are not measurements:
 **Status:** open, inherited, no fix planned. It bears on the largest single contributor to the total
 dose, and the damping factor is a single constant applied to 69 % of the modelled day.
 
-### A5. `wifi.R`'s SAR values mix two field regimes
+### A5. `wifi.R` uses far-field SAR for a source in the room
 
-`wifi.R` models the person's own router at a few metres — an intermediate-field situation. The ETAIN
-source sheet records that no intermediate-field value existed for 5 GHz: *"At the moment 5 GHz
-intermediate is not avalible and we need to take far field value for it."* The four constants are
-therefore of mixed provenance, which matches what the data shows — the whole-body pair sits within
-1–3 % of Duke's plane-wave far-field SAR, the brain pair does not.
+> Rewritten 2026-09-29 with the conversion of `wifi.R`. The earlier version said the four constants
+> "mix two field regimes", which was true of the values then in the stochastic yaml but described
+> the situation less precisely than the data allows.
 
-GOLIAT delivered near field (0.8–20 cm) and plane-wave far field, nothing at two or three metres, so
-the gap cannot be closed from the current data.
+Since the conversion, all four values are plane-wave far-field SAR from GOLIAT — no longer mixed.
+The question is whether that is the right regime for a WiFi router.
 
-**Status:** open. Not a defect — a documented substitution with no available alternative.
+**It probably is.** A router sits one to five metres away. At 2.45 GHz that is 8 to 40 wavelengths,
+at 5 GHz twice as many; the intermediate field reaches only about two or three wavelengths, some
+30 cm at 2.45 GHz. A router is a far-field source for almost anyone almost all of the time.
+
+**What is given up is quantified.** ETAIN did simulate an *"Intermediate field / emulating an
+indoor WiFi router"* scenario, a 2.45 GHz dipole in front of Duke and Ella, and got a whole-body
+value about **50 % above** the far-field one. Its distance is not stated. If it is a few
+decimetres, it describes someone sitting beside the router rather than the usual case — and that
+50 % is then the error for such a person, not for the model as a whole.
+
+That scenario is not usable as the general value regardless: it exists at one frequency only, for
+two phantoms only, and only in the distilled workbook that `OPEN_QUESTIONS.md` A1/Q7 decided
+against. Using it would mean mixing regimes across the two bands and losing the child resolution.
+
+**Status:** open, but reframed. It is a distance assumption, not a regime error. Closing it would
+need a simulation at two to three metres, which neither campaign delivered. Detail:
+`doc/wifi_stochastification.md`.
 
 ---
 
@@ -393,9 +407,12 @@ Detail: `doc/tablet_stochastification.md`, `doc/PARAMETER_WORKBOOK_NOTES.md` §6
 - `params.yaml` and `params_template.yaml` disagree on the legacy SAR values of VR (factor 1.6–1.9),
   tablet (1.12 at brain 2.4 GHz, 1.96 at brain 5 GHz) and laptop (0.33–2.52, and in opposite
   directions for brain and body) with nothing explaining it. All are retired as each source is
-  converted. The **wifi** block diverges too, but for a known reason and in the other direction:
-  the two newer files carry ETAIN's frequency-resolved far-field SAR at 2450 and 5000 MHz,
-  `params.yaml` the older band-independent value. Here the newer files are the correct ones.
+  converted. The **wifi** block diverged too, and the explanation given here on 2026-09-22 was
+  wrong: `params.yaml` does not hold an "older band-independent value". Its 2.4 GHz entries are
+  ETAIN's *intermediate-field* simulation of an indoor router, which is what the deterministic
+  model was meant to use; the stochastic yaml had replaced them with far-field values. Both are
+  retired as of 2026-09-29, when `wifi.R` moved to the GOLIAT far-field tables. See
+  `doc/wifi_stochastification.md` for why the far field is the defensible choice here.
 - `tests/testthat/test-tablet.R` had reference values that no longer matched the code it tested: it
   expected `tablet_dose(brain) = 12.19` where the deterministic implementation returned 14.68, and
   its `tablet_sar` expectations were the `params_template.yaml` numbers while the calls ran against
