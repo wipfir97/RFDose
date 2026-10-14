@@ -42,7 +42,8 @@ test_that("parameter sets with the parameter values give the deterministic doses
 test_that("distributions without spread give the deterministic doses", {
   file <- degenerate_file()
   for (tissue in c("brain", "body")) {
-    result <- calculate_emf_doses_stochastic(input, tissue = tissue, n = 3, distributions = file)
+    result <- calculate_emf_doses_stochastic(input, tissue = tissue, n = 3, distributions = file,
+                                             sar_sd = 0)
 
     expect_equal(result$mean, result$deterministic, tolerance = 1e-12, label = tissue)
     expect_equal(result$q2.5, result$deterministic, tolerance = 1e-12, label = tissue)
@@ -75,7 +76,7 @@ test_that("calculate_emf_doses_stochastic summarises every row and dose", {
   expect_equal(nrow(summary), nrow(example_data) * (length(dose_cols) + 1))
   expect_equal(summary$dose[summary$row == 1], c(dose_cols, "total_dose"))
   expect_equal(dim(result$doses), c(nrow(example_data), 20, length(dose_cols)))
-  expect_equal(dim(result$params), c(20, length(specs)))
+  expect_equal(dim(result$params), c(20, length(specs) + nrow(list_sar(params))))
 
   # summary of the doses of every draw
   for (row in seq_len(nrow(example_data))) {
@@ -104,6 +105,18 @@ test_that("calculate_emf_doses_stochastic is reproducible with set.seed", {
   set.seed(24)
 
   expect_identical(calculate_emf_doses_stochastic(input, tissue = "body", n = 5), first)
+})
+
+test_that("drawing the SAR values widens the doses", {
+  for (tissue in c("brain", "body")) {
+    set.seed(30)
+    without <- calculate_emf_doses_stochastic(input, tissue = tissue, n = 300, sar_sd = 0)
+    set.seed(30)
+    with    <- calculate_emf_doses_stochastic(input, tissue = tissue, n = 300)
+
+    expect_equal(with$deterministic, without$deterministic)
+    expect_true(all(with$sd > without$sd), label = tissue)
+  }
 })
 
 test_that("the doses of a row do not depend on the other rows", {

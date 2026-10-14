@@ -7,9 +7,9 @@
 #'
 #' @details
 #' The parameter sets are drawn with [RFDose::simulate_params()]: parameters
-#' with a distribution (see [RFDose::load_distributions()]) vary around their
-#' value in the parameter file; all other parameters, the SAR values and the
-#' input data keep their values. Every row is calculated with the same
+#' with a distribution (see [RFDose::load_distributions()]) and the SAR values
+#' vary around their value in the parameter and SAR files; all other parameters
+#' and the input data keep their values. Every row is calculated with the same
 #' parameter sets, so the doses of a row do not depend on the other rows. Use
 #' [set.seed()] before for reproducible results.
 #'
@@ -26,6 +26,8 @@
 #' @param default_value_file List of default values to replace missing values (optional).
 #' @param sar_file (experimental) Path to a .yaml file with SAR values, as for
 #' [RFDose::calculate_emf_doses()].
+#' @param sar_sd Standard deviation of the SAR values, relative to their value
+#' (default: 25%). With 0, the SAR values are not drawn.
 #' @param probs Probabilities of the quantiles of the doses (default: median and
 #' 95% interval)
 #' @param keep_draws If TRUE, also return the doses and parameters of every draw.
@@ -41,7 +43,7 @@
 #'
 #' With `keep_draws = TRUE`, a list with this data frame (`summary`), the doses
 #' of every draw (`doses`, an array row x draw x exposure source) and the drawn
-#' parameters (`params`, a matrix draw x parameter).
+#' parameters and SAR values (`params`, a matrix draw x parameter).
 #'
 #' @export
 #' @seealso [RFDose::calculate_emf_doses()], [RFDose::simulate_params()]
@@ -53,6 +55,7 @@ calculate_emf_doses_stochastic <- function(
     distributions      = NULL,
     default_value_file = NULL,
     sar_file           = NULL,
+    sar_sd             = 0.25,
     probs              = c(0.025, 0.5, 0.975),
     keep_draws         = FALSE) {
   if (!is.numeric(probs) || anyNA(probs) || any(probs < 0 | probs > 1)) {
@@ -75,7 +78,7 @@ calculate_emf_doses_stochastic <- function(
     warning = function(w) raised <<- c(raised, conditionMessage(w)))
 
   # Doses with drawn parameter sets ===========================================
-  draws <- simulate_params(n, params = params, distributions = distributions)
+  draws <- simulate_params(n, params = params, distributions = distributions, sar_sd = sar_sd)
   doses <- stochastic_doses(samples, tissue = tissue, params = params, draws = draws,
                             known_warnings = raised)
 

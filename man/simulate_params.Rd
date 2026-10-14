@@ -7,7 +7,8 @@
 simulate_params(
   n,
   params = load_params(),
-  distributions = load_distributions()
+  distributions = load_distributions(),
+  sar_sd = 0.25
 )
 }
 \arguments{
@@ -18,11 +19,14 @@ values are the means of the distributions.}
 
 \item{distributions}{Nested list of distributions, as returned by
 \code{\link[=load_distributions]{load_distributions()}}}
+
+\item{sar_sd}{Standard deviation of the SAR values, relative to their value.
+With 0, the SAR values are not drawn.}
 }
 \value{
 Matrix with one row per parameter set and one column per drawn
-parameter, named by its path in the parameter list (sections separated by
-"."). Parameters that are not drawn keep their value in \code{params}.
+parameter and SAR value, named by its path in the parameter list (sections
+separated by "."). Parameters that are not drawn keep their value in \code{params}.
 }
 \description{
 Draws parameter sets for the stochastic dose calculation: each drawn
@@ -30,8 +34,16 @@ parameter from its distribution, around its value in the parameter list.
 }
 \details{
 The parameters of a Dirichlet group are drawn together, so that
-they sum to 1 in every draw. Use \code{\link[=set.seed]{set.seed()}} before for reproducible
-draws.
+they sum to 1 in every draw.
+
+The SAR values are drawn too, from a lognormal distribution around their
+value in the parameter list, with standard deviation \code{sar_sd} times the
+value. SAR values with the same value for the same tissue come from the same
+simulation and are drawn together; SAR values of 0 stay 0.
+
+The SAR values are drawn after the other parameters, so the draws of the
+other parameters do not depend on \code{sar_sd}. Use \code{\link[=set.seed]{set.seed()}} before for
+reproducible draws.
 }
 \seealso{
 \code{\link[=load_distributions]{load_distributions()}}
