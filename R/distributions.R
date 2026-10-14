@@ -111,27 +111,41 @@ set_params <- function(params, values, keys = strsplit(names(values), ".", fixed
 #' parameter from its distribution, around its value in the parameter list.
 #'
 #' @details The parameters of a Dirichlet group are drawn together, so that
-#' they sum to 1 in every draw. Use [set.seed()] before for reproducible
-#' draws.
+#' they sum to 1 in every draw.
+#'
+#' The SAR values are drawn too, from a lognormal distribution around their
+#' value in the parameter list, with standard deviation `sar_sd` times the
+#' value. SAR values with the same value for the same tissue come from the same
+#' simulation and are drawn together; SAR values of 0 stay 0.
+#'
+#' The SAR values are drawn after the other parameters, so the draws of the
+#' other parameters do not depend on `sar_sd`. Use [set.seed()] before for
+#' reproducible draws.
 #'
 #' @param n Number of parameter sets
 #' @param params Parameter list, as returned by [RFDose::load_params()]. Its
 #' values are the means of the distributions.
 #' @param distributions Nested list of distributions, as returned by
 #' [RFDose::load_distributions()]
+#' @param sar_sd Standard deviation of the SAR values, relative to their value.
+#' With 0, the SAR values are not drawn.
 #'
 #' @returns Matrix with one row per parameter set and one column per drawn
-#' parameter, named by its path in the parameter list (sections separated by
-#' "."). Parameters that are not drawn keep their value in `params`.
+#' parameter and SAR value, named by its path in the parameter list (sections
+#' separated by "."). Parameters that are not drawn keep their value in `params`.
 #'
 #' @export
 #' @seealso [RFDose::load_distributions()]
 simulate_params <- function(
     n,
     params        = load_params(),
-    distributions = load_distributions()) {
+    distributions = load_distributions(),
+    sar_sd        = 0.25) {
   if (length(n) != 1 || !is.numeric(n) || is.na(n) || n < 1 || n != round(n)) {
     stop("n must be a positive whole number.")
+  }
+  if (length(sar_sd) != 1 || !is.numeric(sar_sd) || !is.finite(sar_sd) || sar_sd < 0) {
+    stop("sar_sd must be a single number, 0 or more.")
   }
   specs <- list_distributions(distributions)
   means <- vapply(specs, function(spec) get_param(params, spec$key), numeric(1))
@@ -169,7 +183,53 @@ simulate_params <- function(
       error = function(e) stop("Group ", group, ": ", conditionMessage(e), call. = FALSE))
   }
 
+  # SAR values ----------------------------------------------------------------
+  # One factor (mean 1) per simulation, i.e. per value and tissue
+  if (sar_sd > 0) {
+    sar         <- list_sar(params)
+    simulation  <- paste(sar$tissue, sprintf("%.17g", sar$value))
+    simulations <- unique(simulation)
+    factors     <- matrix(vapply(simulations, function(s) r_lognormal(n, mean = 1, sd = sar_sd),
+                                 numeric(n)),
+                          nrow = n)
+    sar_draws   <- factors[, match(simulation, simulations), drop = FALSE] *
+      matrix(sar$value, nrow = n, ncol = nrow(sar), byrow = TRUE)
+    colnames(sar_draws) <- sar$name
+    draws <- cbind(draws, sar_draws)
+  }
+
   draws
+}
+
+# =============================================================================
+#' List SAR values
+#'
+#' Lists the SAR values of a parameter list (the values in the tissue sections
+#' of each device), except those that are 0.
+#'
+#' @param params Parameter list, as returned by [RFDose::load_params()]
+#'
+#' @returns Data frame with one row per SAR value that is not 0: its path in the
+#' parameter list (`name`, sections separated by "."), its tissue and its value.
+list_sar <- function(params) {
+  rows <- lapply(names(params$devices), function(device) {
+    tissues <- names(Filter(is.list, params$devices[[device]]))
+    lapply(tissues, function(tissue) {
+      values <- params$devices[[device]][[tissue]]
+      if (any(grepl(".", c(device, tissue, names(values)), fixed = TRUE))) {
+        stop("SAR value of ", device, " > ", tissue, ": names must not contain \".\".")
+      }
+      data.frame(
+        name   = paste("devices", device, tissue, names(values), sep = "."),
+        tissue = tissue,
+        value  = vapply(values, function(value) as.numeric(value), numeric(1)),
+        row.names = NULL)
+    })
+  })
+  sar <- do.call(rbind, unlist(rows, recursive = FALSE))
+  sar <- sar[sar$value != 0, ]
+  rownames(sar) <- NULL
+  sar
 }
 
 # =============================================================================

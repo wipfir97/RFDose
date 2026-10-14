@@ -12,6 +12,7 @@ calculate_emf_doses_stochastic(
   distributions = NULL,
   default_value_file = NULL,
   sar_file = NULL,
+  sar_sd = 0.25,
   probs = c(0.025, 0.5, 0.975),
   keep_draws = FALSE
 )
@@ -37,6 +38,9 @@ distributions are used.}
 \item{sar_file}{(experimental) Path to a .yaml file with SAR values, as for
 \code{\link[=calculate_emf_doses]{calculate_emf_doses()}}.}
 
+\item{sar_sd}{Standard deviation of the SAR values, relative to their value
+(default: 25\%). With 0, the SAR values are not drawn.}
+
 \item{probs}{Probabilities of the quantiles of the doses (default: median and
 95\% interval)}
 
@@ -56,7 +60,7 @@ calculated by \code{\link[=calculate_emf_doses]{calculate_emf_doses()}}
 
 With \code{keep_draws = TRUE}, a list with this data frame (\code{summary}), the doses
 of every draw (\code{doses}, an array row x draw x exposure source) and the drawn
-parameters (\code{params}, a matrix draw x parameter).
+parameters and SAR values (\code{params}, a matrix draw x parameter).
 }
 \description{
 Stochastic version of \code{\link[=calculate_emf_doses]{calculate_emf_doses()}}: calculates the doses
@@ -65,9 +69,9 @@ parameter distributions, and summarises the doses of all draws.
 }
 \details{
 The parameter sets are drawn with \code{\link[=simulate_params]{simulate_params()}}: parameters
-with a distribution (see \code{\link[=load_distributions]{load_distributions()}}) vary around their
-value in the parameter file; all other parameters, the SAR values and the
-input data keep their values. Every row is calculated with the same
+with a distribution (see \code{\link[=load_distributions]{load_distributions()}}) and the SAR values
+vary around their value in the parameter and SAR files; all other parameters
+and the input data keep their values. Every row is calculated with the same
 parameter sets, so the doses of a row do not depend on the other rows. Use
 \code{\link[=set.seed]{set.seed()}} before for reproducible results.
 }
