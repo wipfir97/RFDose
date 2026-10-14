@@ -3,8 +3,8 @@
 ## the parameter Excel file. The file only gives the shape of each distribution:
 ## its mean is the parameter value in params.yaml, so run params.R first.
 
-# Parameter Excel file (outside this repository)
-params_xlsx <- "J:/EEH/EMF/GOLIAT/03_Work_Package_1/04_Task 1.6_Dose_model/SDM/Output_power/params_sources.xlsx"
+source("data-raw/source_params/reading_params_sources.R") # creates `params_copy`
+
 params_yaml <- file.path("inst", "extdata", "params.yaml")
 dists_yaml  <- file.path("inst", "extdata", "params_distributions.yaml")
 
@@ -33,12 +33,7 @@ listed_groups <- c(
   "devices > data > data_3g_prop_no5g" = "data_tech_no5g",
   "devices > data > data_4g_prop_no5g" = "data_tech_no5g")
 
-# Read from a temporary copy, so the file can stay open in Excel
-params_copy <- tempfile(fileext = ".xlsx")
-if (!file.copy(params_xlsx, params_copy)) {
-  stop("Cannot copy parameter file: ", params_xlsx)
-}
-rows <- as.data.frame(readxl::read_excel(params_copy, col_types = "text", trim_ws = FALSE))
+rows <- as.data.frame(readxl::read_excel(params_copy, sheet = "params", col_types = "text", trim_ws = FALSE))
 rows$row <- seq_len(nrow(rows)) + 1 # Excel row (row 1 is the header), for messages
 rows <- rows[!is.na(rows$parameters), ]
 

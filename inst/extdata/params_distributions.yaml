@@ -345,72 +345,72 @@ devices:
       max: 200.0
     data_4g_sub_ind_pwr:
       distribution: trunc_lognormal
-      sd: 23.369555519999999
+      sd: 33.539999999999999
       min: 0.0
       max: 200.0
     data_4g_urb_ind_pwr:
       distribution: trunc_lognormal
-      sd: 19.231691489999999
+      sd: 37.280000000000001
       min: 0.0
       max: 200.0
     data_4g_rur_ind_pwr:
       distribution: trunc_lognormal
-      sd: 27.507419546999998
+      sd: 47.369999999999997
       min: 0.0
       max: 200.0
     data_4g_sub_out_pwr:
       distribution: trunc_lognormal
-      sd: 20.521698678
+      sd: 32.170000000000002
       min: 0.0
       max: 200.0
     data_4g_urb_out_pwr:
       distribution: trunc_lognormal
-      sd: 16.343720772000001
+      sd: 28.719999999999999
       min: 0.0
       max: 200.0
     data_4g_rur_out_pwr:
       distribution: trunc_lognormal
-      sd: 24.699676583999999
+      sd: 44.119999999999997
       min: 0.0
       max: 200.0
     data_4g_travel_pwr:
       distribution: trunc_lognormal
-      sd: 22.289999999999999
+      sd: 33.100000000000001
       min: 0.0
       max: 200.0
     data_5g_sub_ind_pwr:
       distribution: trunc_lognormal
-      sd: 14.739000000000001
+      sd: 11.279999999999999
       min: 0.0
       max: 200.0
     data_5g_urb_ind_pwr:
       distribution: trunc_lognormal
-      sd: 13.904999999999999
+      sd: 24.739999999999998
       min: 0.0
       max: 200.0
     data_5g_rur_ind_pwr:
       distribution: trunc_lognormal
-      sd: 15.572999999999999
+      sd: 20.879999999999999
       min: 0.0
       max: 200.0
     data_5g_sub_out_pwr:
       distribution: trunc_lognormal
-      sd: 12.013500000000001
+      sd: 18.739999999999998
       min: 0.0
       max: 200.0
     data_5g_urb_out_pwr:
       distribution: trunc_lognormal
-      sd: 11.076000000000001
+      sd: 19.59
       min: 0.0
       max: 200.0
     data_5g_rur_out_pwr:
       distribution: trunc_lognormal
-      sd: 12.951000000000001
+      sd: 24.41
       min: 0.0
       max: 200.0
     data_5g_travel_pwr:
       distribution: trunc_lognormal
-      sd: 9.456
+      sd: 19.640000000000001
       min: 0.0
       max: 200.0
     wifi_2_dutycycle:
@@ -426,15 +426,15 @@ devices:
     data_3g_prop:
       distribution: dirichlet
       group: data_tech
-      a0: 75.0
+      a0: 100.0
     data_4g_prop:
       distribution: dirichlet
       group: data_tech
-      a0: 75.0
+      a0: 100.0
     data_5g_prop:
       distribution: dirichlet
       group: data_tech
-      a0: 75.0
+      a0: 100.0
     data_3g_low_dutycycle:
       distribution: beta
       alpha: 4.0
@@ -493,37 +493,37 @@ devices:
       alpha: 4.0
     data_4g_sub_ind_pwr:
       distribution: trunc_lognormal
-      sd: 23.369699999999998
+      sd: 33.539999999999999
       min: 0.0
       max: 200.0
     data_4g_sub_out_pwr:
       distribution: trunc_lognormal
-      sd: 20.521800000000002
+      sd: 32.170000000000002
       min: 0.0
       max: 200.0
     data_4g_urb_ind_pwr:
       distribution: trunc_lognormal
-      sd: 19.231799999999996
+      sd: 37.280000000000001
       min: 0.0
       max: 200.0
     data_4g_urb_out_pwr:
       distribution: trunc_lognormal
-      sd: 16.343699999999998
+      sd: 28.719999999999999
       min: 0.0
       max: 200.0
     data_4g_rur_ind_pwr:
       distribution: trunc_lognormal
-      sd: 27.507300000000001
+      sd: 47.369999999999997
       min: 0.0
       max: 200.0
     data_4g_rur_out_pwr:
       distribution: trunc_lognormal
-      sd: 24.699599999999997
+      sd: 44.119999999999997
       min: 0.0
       max: 200.0
     data_4g_travel_pwr:
       distribution: trunc_lognormal
-      sd: 22.289999999999999
+      sd: 33.100000000000001
       min: 0.0
       max: 200.0
     data_5g_low_dutycycle:
@@ -537,37 +537,37 @@ devices:
       alpha: 4.0
     data_5g_sub_ind_pwr:
       distribution: trunc_lognormal
-      sd: 14.739000000000001
+      sd: 11.279999999999999
       min: 0.0
       max: 200.0
     data_5g_sub_out_pwr:
       distribution: trunc_lognormal
-      sd: 12.013500000000001
+      sd: 18.739999999999998
       min: 0.0
       max: 200.0
     data_5g_urb_ind_pwr:
       distribution: trunc_lognormal
-      sd: 13.904999999999999
+      sd: 24.739999999999998
       min: 0.0
       max: 200.0
     data_5g_urb_out_pwr:
       distribution: trunc_lognormal
-      sd: 11.076000000000001
+      sd: 19.59
       min: 0.0
       max: 200.0
     data_5g_rur_ind_pwr:
       distribution: trunc_lognormal
-      sd: 15.572999999999999
+      sd: 20.879999999999999
       min: 0.0
       max: 200.0
     data_5g_rur_out_pwr:
       distribution: trunc_lognormal
-      sd: 12.951000000000001
+      sd: 24.41
       min: 0.0
       max: 200.0
     data_5g_travel_pwr:
       distribution: trunc_lognormal
-      sd: 9.456
+      sd: 19.640000000000001
       min: 0.0
       max: 200.0
     wifi_2_low_dutycycle:

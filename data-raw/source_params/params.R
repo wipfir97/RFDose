@@ -1,22 +1,15 @@
 ## code to prepare the parameter file (`inst/extdata/params.yaml`) goes here
 ## Non-SAR parameters (powers, duty cycles, proportions), from the columns
-## "parameters" and "mean" of the parameter Excel file, which also documents
-## the source of each value.
+## "parameters" and "mean" of the tab "params" of the parameter Excel file,
+## which also documents the source of each value.
 
-# Parameter Excel file (outside this repository)
-params_xlsx <- "J:/EEH/EMF/GOLIAT/03_Work_Package_1/04_Task 1.6_Dose_model/SDM/Output_power/params_sources.xlsx"
-
-# Read from a temporary copy, so the file can stay open in Excel
-params_copy <- tempfile(fileext = ".xlsx")
-if (!file.copy(params_xlsx, params_copy)) {
-  stop("Cannot copy parameter file: ", params_xlsx)
-}
+source("data-raw/source_params/reading_params_sources.R") # creates `params_copy` and `as_param()`
 
 # The column "parameters" has the layout of the YAML file: one row per section
 # (global, devices, each device, brain/body) without a mean, and one row per
 # parameter with its mean. Names are indented by two characters (spaces or
 # non-breaking spaces) per level. Read as text, to keep the indentation.
-rows <- readxl::read_excel(params_copy, col_types = "text", trim_ws = FALSE)
+rows <- readxl::read_excel(params_copy, sheet = "params", col_types = "text", trim_ws = FALSE)
 rows <- rows[!is.na(rows$parameters), c("parameters", "mean")]
 
 indent     <- attr(regexpr("^[ \u00a0]*", rows$parameters), "match.length")
@@ -36,11 +29,6 @@ if (any(!is.na(rows$mean) & is.na(rows$value))) {
 
 # Tissue sections without rows: SAR values are kept in separate files
 tissues <- c("brain", "body")
-
-# Whole numbers as integers, written without decimals in the YAML file
-as_param <- function(value) {
-  if (value == round(value) && abs(value) < .Machine$integer.max) as.integer(value) else value
-}
 
 # Nested list of parameters, built row by row from the path of section names
 params <- list()
@@ -79,7 +67,18 @@ header <- c(
   "# SAR values are kept in separate files (default: sar_goliat_average.yaml; also",
   "# sar_goliat_<phantom>.yaml and sar_etain.yaml) and merged by load_params().",
   "# Each SAR file also sets its own placement proportions (lptp, call), which",
-  "# replace the ones here.")
+  "# replace the ones here.",
+  "# Previous parameters: params_v1.0.yaml.")
+
+# Numbers written with 15 significant digits (1281.52, not 1281.519999999999982
+# as with the precision of the yaml package)
+write_number <- function(x) structure(as.character(x), class = "verbatim")
+params_yaml  <- file.path("inst", "extdata", "params.yaml")
 writeLines(
-  c(header, sub("\n$", "", yaml::as.yaml(params, precision = 15))),
-  file.path("inst", "extdata", "params.yaml"))
+  c(header, sub("\n$", "", yaml::as.yaml(params, handlers = list(numeric = write_number)))),
+  params_yaml)
+
+# Must read back as written (e.g. numbers must not be read as text)
+if (!isTRUE(all.equal(yaml::read_yaml(params_yaml), params, tolerance = 1e-12))) {
+  stop(params_yaml, " does not read back as written.")
+}

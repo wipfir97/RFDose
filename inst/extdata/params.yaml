@@ -6,6 +6,7 @@
 # sar_goliat_<phantom>.yaml and sar_etain.yaml) and merged by load_params().
 # Each SAR file also sets its own placement proportions (lptp, call), which
 # replace the ones here.
+# Previous parameters: params_v1.0.yaml.
 global:
   wifi_2_prop: 0.58
   wifi_5_prop: 0.42
@@ -61,15 +62,15 @@ devices:
     data_5g_prop_no5g: 0
     native_2g_dutycycle: 0.12
     native_3g_dutycycle: 0.979275
-    native_4g_dutycycle: 0.043038
+    native_4g_dutycycle: 0.04995
     native_5g_dutycycle: 0
-    native_2g_sub_ind_pwr: 1281.519999999999982
-    native_2g_urb_ind_pwr: 374.870000000000005
-    native_2g_rur_ind_pwr: 1371.230000000000018
-    native_2g_sub_out_pwr: 383.899999999999977
-    native_2g_urb_out_pwr: 173.810000000000002
-    native_2g_rur_out_pwr: 433.899999999999977
-    native_2g_travel_pwr: 383.899999999999977
+    native_2g_sub_ind_pwr: 1281.52
+    native_2g_urb_ind_pwr: 374.87
+    native_2g_rur_ind_pwr: 1371.23
+    native_2g_sub_out_pwr: 383.9
+    native_2g_urb_out_pwr: 173.81
+    native_2g_rur_out_pwr: 433.9
+    native_2g_travel_pwr: 383.9
     native_3g_sub_ind_pwr: 2.03
     native_3g_urb_ind_pwr: 0.97
     native_3g_rur_ind_pwr: 6.2
@@ -77,19 +78,19 @@ devices:
     native_3g_urb_out_pwr: 0.22
     native_3g_rur_out_pwr: 2.64
     native_3g_travel_pwr: 0.63
-    native_4g_sub_ind_pwr: 159.300000000000011
+    native_4g_sub_ind_pwr: 159.3
     native_4g_urb_ind_pwr: 140.5
-    native_4g_rur_ind_pwr: 178.099999999999994
+    native_4g_rur_ind_pwr: 178.1
     native_4g_sub_out_pwr: 109.75
-    native_4g_urb_out_pwr: 94.299999999999997
-    native_4g_rur_out_pwr: 125.200000000000003
+    native_4g_urb_out_pwr: 94.3
+    native_4g_rur_out_pwr: 125.2
     native_4g_travel_pwr: 109.75
-    native_5g_sub_ind_pwr: 159.300000000000011
+    native_5g_sub_ind_pwr: 159.3
     native_5g_urb_ind_pwr: 140.5
-    native_5g_rur_ind_pwr: 178.099999999999994
+    native_5g_rur_ind_pwr: 178.1
     native_5g_sub_out_pwr: 109.75
-    native_5g_urb_out_pwr: 94.299999999999997
-    native_5g_rur_out_pwr: 125.200000000000003
+    native_5g_urb_out_pwr: 94.3
+    native_5g_rur_out_pwr: 125.2
     native_5g_travel_pwr: 109.75
     data_2g_dutycycle: 0
     data_3g_dutycycle: 0.544567
@@ -109,20 +110,20 @@ devices:
     data_3g_urb_out_pwr: 0.26
     data_3g_rur_out_pwr: 2.68
     data_3g_travel_pwr: 0.87
-    data_4g_sub_ind_pwr: 77.8985184
-    data_4g_urb_ind_pwr: 64.105638299999995
-    data_4g_rur_ind_pwr: 91.691398489999997
-    data_4g_sub_out_pwr: 68.40566226
-    data_4g_urb_out_pwr: 54.479069240000001
-    data_4g_rur_out_pwr: 82.332255279999998
-    data_4g_travel_pwr: 74.299999999999997
-    data_5g_sub_ind_pwr: 49.130000000000003
-    data_5g_urb_ind_pwr: 46.350000000000001
-    data_5g_rur_ind_pwr: 51.909999999999997
-    data_5g_sub_out_pwr: 40.045000000000002
-    data_5g_urb_out_pwr: 36.920000000000002
-    data_5g_rur_out_pwr: 43.170000000000002
-    data_5g_travel_pwr: 31.52
+    data_4g_sub_ind_pwr: 75.93
+    data_4g_urb_ind_pwr: 52.04
+    data_4g_rur_ind_pwr: 87.82
+    data_4g_sub_out_pwr: 55.59
+    data_4g_urb_out_pwr: 59.57
+    data_4g_rur_out_pwr: 85.53
+    data_4g_travel_pwr: 66.64
+    data_5g_sub_ind_pwr: 17.19
+    data_5g_urb_ind_pwr: 36.41
+    data_5g_rur_ind_pwr: 37.76
+    data_5g_sub_out_pwr: 26.5
+    data_5g_urb_out_pwr: 34.95
+    data_5g_rur_out_pwr: 45.99
+    data_5g_travel_pwr: 23.26
     wifi_2_pwr: 100
     wifi_5_pwr: 200
     wifi_2_dutycycle: 0.02738
@@ -144,35 +145,35 @@ devices:
     data_3g_lowmed_dutycycle: 0.505
     data_3g_medhigh_dutycycle: 0.542
     data_3g_high_dutycycle: 0.783
-    data_3g_sub_ind_pwr: 114.025000000000006
-    data_3g_sub_out_pwr: 48.640999999999998
+    data_3g_sub_ind_pwr: 114.025
+    data_3g_sub_out_pwr: 48.641
     data_3g_urb_ind_pwr: 1.83654
     data_3g_urb_out_pwr: 0.78343
-    data_3g_rur_ind_pwr: 167.109000000000009
-    data_3g_rur_out_pwr: 71.284999999999997
-    data_3g_travel_pwr: 48.640000000000001
-    data_4g_low_dutycycle: 0.005561
-    data_4g_lowmed_dutycycle: 0.055613
-    data_4g_medhigh_dutycycle: 0.134413
+    data_3g_rur_ind_pwr: 167.109
+    data_3g_rur_out_pwr: 71.285
+    data_3g_travel_pwr: 48.64
+    data_4g_low_dutycycle: 0.0066
+    data_4g_lowmed_dutycycle: 0.066
+    data_4g_medhigh_dutycycle: 0.16205
     data_4g_high_dutycycle: 1
-    data_4g_sub_ind_pwr: 77.899000000000001
-    data_4g_sub_out_pwr: 68.406000000000006
-    data_4g_urb_ind_pwr: 64.105999999999995
-    data_4g_urb_out_pwr: 54.478999999999999
-    data_4g_rur_ind_pwr: 91.691000000000003
-    data_4g_rur_out_pwr: 82.331999999999994
-    data_4g_travel_pwr: 74.299999999999997
-    data_5g_low_dutycycle: 0.00514
-    data_5g_lowmed_dutycycle: 0.0514
-    data_5g_medhigh_dutycycle: 0.216038
+    data_4g_sub_ind_pwr: 75.93
+    data_4g_sub_out_pwr: 55.59
+    data_4g_urb_ind_pwr: 52.04
+    data_4g_urb_out_pwr: 59.57
+    data_4g_rur_ind_pwr: 87.82
+    data_4g_rur_out_pwr: 85.53
+    data_4g_travel_pwr: 66.64
+    data_5g_low_dutycycle: 0.023545
+    data_5g_lowmed_dutycycle: 0.23545
+    data_5g_medhigh_dutycycle: 0.47035
     data_5g_high_dutycycle: 1
-    data_5g_sub_ind_pwr: 49.130000000000003
-    data_5g_sub_out_pwr: 40.045000000000002
-    data_5g_urb_ind_pwr: 46.350000000000001
-    data_5g_urb_out_pwr: 36.920000000000002
-    data_5g_rur_ind_pwr: 51.909999999999997
-    data_5g_rur_out_pwr: 43.170000000000002
-    data_5g_travel_pwr: 31.52
+    data_5g_sub_ind_pwr: 17.19
+    data_5g_sub_out_pwr: 26.5
+    data_5g_urb_ind_pwr: 36.41
+    data_5g_urb_out_pwr: 34.95
+    data_5g_rur_ind_pwr: 37.76
+    data_5g_rur_out_pwr: 45.99
+    data_5g_travel_pwr: 23.26
     wifi_2_low_dutycycle: 0.0086
     wifi_2_lowmed_dutycycle: 0.022
     wifi_2_medhigh_dutycycle: 0.1378
