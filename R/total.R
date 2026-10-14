@@ -42,25 +42,7 @@ calculate_emf_doses <- function(
   # Parameter file(s) =========================================================
   params <- load_params(path = params, sar_path = sar_file)
   # Default values ============================================================
-  ## Load internal default value file if no default_value_file is supplied ----
-  defaultvars <- if (is.null(default_value_file)) {
-    yaml::read_yaml(
-      system.file(
-        "extdata",
-        "defaultvariables.yaml",
-        package = "RFDose"))
-  } else {
-    yaml::read_yaml(default_value_file)
-  }
-
-  ## Replace NAs with default values ------------------------------------------
-  results <- fill_missing_variables(
-    data           = data,
-    defaults       = defaultvars,
-    warn_threshold = 0.1) # show warning if column has more than 10% missing data
-
-  data     <- results$data
-  replaced <- results$replaced
+  data <- prepare_dose_data(data = data, default_value_file = default_value_file)
 
   # Calculate RF-EMF Dose for all entries in data set =========================
   ## Go through each row, calculate doses, append results as column
@@ -80,6 +62,39 @@ calculate_emf_doses <- function(
 
   ## Return output as data frame
   return(as.data.frame(results))
+}
+
+
+###############################################################################
+#' Prepare input data for the dose calculation
+#'
+#' Replaces missing values in the input data with default values.
+#'
+#' @param data A data frame. Must have the exact same columns as the provided example dataset.
+#' @param default_value_file Path to a .yaml file with default values to replace
+#' missing values (optional). If not specified, the internal default values are used.
+#'
+#' @returns The data frame with missing values replaced. Side effect of raising a
+#' warning if a column has more than 10% missing values.
+prepare_dose_data <- function(data, default_value_file = NULL) {
+  ## Load internal default value file if no default_value_file is supplied ----
+  defaultvars <- if (is.null(default_value_file)) {
+    yaml::read_yaml(
+      system.file(
+        "extdata",
+        "defaultvariables.yaml",
+        package = "RFDose"))
+  } else {
+    yaml::read_yaml(default_value_file)
+  }
+
+  ## Replace NAs with default values ------------------------------------------
+  results <- fill_missing_variables(
+    data           = data,
+    defaults       = defaultvars,
+    warn_threshold = 0.1) # show warning if column has more than 10% missing data
+
+  return(results$data)
 }
 
 
