@@ -4,7 +4,14 @@
 \alias{stochastic_doses}
 \title{Calculate doses for drawn parameter sets}
 \usage{
-stochastic_doses(samples, tissue, params, draws, known_warnings = character(0))
+stochastic_doses(
+  samples,
+  tissue,
+  params,
+  draws,
+  inputs = NULL,
+  known_warnings = character(0)
+)
 }
 \arguments{
 \item{samples}{List of samples (input values of a single observation each),
@@ -16,6 +23,9 @@ as for \code{\link[=total_dose]{total_dose()}}}
 
 \item{draws}{Drawn parameter sets, as returned by \code{\link[=simulate_params]{simulate_params()}}}
 
+\item{inputs}{Drawn inputs, as returned by \code{\link[=simulate_inputs]{simulate_inputs()}}
+(optional). If NULL, the inputs of the samples are used in every draw.}
+
 \item{known_warnings}{Warning messages that were already raised. Other
 warnings are raised once, with the number of times they occurred.}
 }
@@ -23,5 +33,6 @@ warnings are raised once, with the number of times they occurred.}
 Array of doses in mJ/kg/day: sample x draw x exposure source.
 }
 \description{
-Calculates the doses of each sample with each parameter set.
+Calculates the doses of each sample with each parameter set and its drawn
+inputs.
 }

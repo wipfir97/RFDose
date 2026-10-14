@@ -286,15 +286,47 @@ r_trunc_lognormal <- function(n, mean, sd, min, max) {
   if (mean <= min || mean >= max) {
     stop("mean must be between min and max.")
   }
+  q_trunc_lognormal(stats::runif(n), mean, sd, min, max)
+}
+
+# =============================================================================
+#' Quantiles of a truncated lognormal distribution
+#'
+#' Quantile function of the truncated lognormal distribution of
+#' [RFDose::r_trunc_lognormal()], which keeps the given mean.
+#'
+#' @param p Vector of probabilities
+#' @inheritParams r_trunc_lognormal
+#'
+#' @returns Vector of quantiles between `min` and `max`, increasing with `p`.
+#' All quantiles are equal to `mean` if `sd` is 0.
+q_trunc_lognormal <- function(p, mean, sd, min, max) {
+  check_shape(mean, "mean")
+  check_shape(sd, "sd")
+  check_shape(min, "min")
+  if (length(max) != 1 || !is.numeric(max) || is.na(max) || max <= min) {
+    stop("max must be a number larger than min.")
+  }
+  if (sd == 0) {
+    return(rep(mean, length(p)))
+  }
+  if (mean <= min || mean >= max) {
+    stop("mean must be between min and max.")
+  }
   sdlog   <- sqrt(log(1 + (sd / mean)^2))
   meanlog <- trunc_lognormal_meanlog(mean, sdlog, min, max)
 
   # Inverse of the distribution function, between its values at min and max
   # (from the upper tail if min is above the median, for precision)
-  upper <- log(min) > meanlog
-  p     <- sort(stats::plnorm(c(min, max), meanlog, sdlog, lower.tail = !upper))
-  draws <- stats::qlnorm(stats::runif(n, p[1], p[2]), meanlog, sdlog, lower.tail = !upper)
-  pmin(pmax(draws, min), max) # against rounding at the bounds
+  if (log(min) > meanlog) {
+    upper     <- stats::plnorm(c(min, max), meanlog, sdlog, lower.tail = FALSE)
+    quantiles <- stats::qlnorm(upper[1] - p * (upper[1] - upper[2]), meanlog, sdlog,
+                               lower.tail = FALSE)
+  } else {
+    lower     <- stats::plnorm(c(min, max), meanlog, sdlog)
+    quantiles <- stats::qlnorm(lower[1] + p * (lower[2] - lower[1]), meanlog, sdlog)
+  }
+  pmin(pmax(quantiles, min), max) # against rounding at the bounds
 }
 
 # =============================================================================
@@ -388,6 +420,31 @@ r_beta <- function(n, mean, alpha) {
     return(rep(mean, n))
   }
   stats::rbeta(n, shape1 = alpha, shape2 = alpha * (1 - mean) / mean)
+}
+
+# =============================================================================
+#' Quantiles of a beta distribution
+#'
+#' Quantile function of the beta distribution of [RFDose::r_beta()].
+#'
+#' @param p Vector of probabilities
+#' @inheritParams r_beta
+#'
+#' @returns Vector of quantiles between 0 and 1, increasing with `p`. All
+#' quantiles are equal to `mean` if `mean` is 0 or 1, or `alpha` is infinite.
+q_beta <- function(p, mean, alpha) {
+  check_shape(mean, "mean")
+  check_shape(alpha, "alpha")
+  if (mean > 1) {
+    stop("mean must be between 0 and 1.")
+  }
+  if (alpha == 0) {
+    stop("alpha must be larger than 0.")
+  }
+  if (mean == 0 || mean == 1 || is.infinite(alpha)) {
+    return(rep(mean, length(p)))
+  }
+  stats::qbeta(p, shape1 = alpha, shape2 = alpha * (1 - mean) / mean)
 }
 
 # =============================================================================

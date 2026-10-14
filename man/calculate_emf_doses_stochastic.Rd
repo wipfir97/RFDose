@@ -10,9 +10,11 @@ calculate_emf_doses_stochastic(
   n = 1000,
   params = NULL,
   distributions = NULL,
+  input_distributions = NULL,
   default_value_file = NULL,
   sar_file = NULL,
   sar_sd = 0.25,
+  draw_inputs = TRUE,
   probs = c(0.025, 0.5, 0.975),
   keep_draws = FALSE
 )
@@ -33,6 +35,11 @@ format, with the structure of the internal distribution file
 (\code{params_distributions.yaml}). Optional; if not specified, the default
 distributions are used.}
 
+\item{input_distributions}{(experimental) Path to an input distribution file
+in .yaml format, with the structure of the internal input distribution file
+(\code{input_distributions.yaml}). Optional; if not specified, the default input
+distributions are used.}
+
 \item{default_value_file}{List of default values to replace missing values (optional).}
 
 \item{sar_file}{(experimental) Path to a .yaml file with SAR values, as for
@@ -40,6 +47,8 @@ distributions are used.}
 
 \item{sar_sd}{Standard deviation of the SAR values, relative to their value
 (default: 25\%). With 0, the SAR values are not drawn.}
+
+\item{draw_inputs}{If FALSE, the inputs are not drawn.}
 
 \item{probs}{Probabilities of the quantiles of the doses (default: median and
 95\% interval)}
@@ -59,21 +68,28 @@ calculated by \code{\link[=calculate_emf_doses]{calculate_emf_doses()}}
 }
 
 With \code{keep_draws = TRUE}, a list with this data frame (\code{summary}), the doses
-of every draw (\code{doses}, an array row x draw x exposure source) and the drawn
-parameters and SAR values (\code{params}, a matrix draw x parameter).
+of every draw (\code{doses}, an array row x draw x exposure source), the drawn
+parameters and SAR values (\code{params}, a matrix draw x parameter) and the drawn
+inputs (\code{inputs}, a list of matrices row x draw, one per input).
 }
 \description{
 Stochastic version of \code{\link[=calculate_emf_doses]{calculate_emf_doses()}}: calculates the doses
-of each row many times, each time with another parameter set drawn from the
-parameter distributions, and summarises the doses of all draws.
+of each row many times, each time with other parameter values and input
+values drawn from their distributions, and summarises the doses of all draws.
 }
 \details{
 The parameter sets are drawn with \code{\link[=simulate_params]{simulate_params()}}: parameters
 with a distribution (see \code{\link[=load_distributions]{load_distributions()}}) and the SAR values
 vary around their value in the parameter and SAR files; all other parameters
-and the input data keep their values. Every row is calculated with the same
-parameter sets, so the doses of a row do not depend on the other rows. Use
-\code{\link[=set.seed]{set.seed()}} before for reproducible results.
+keep their values. Every row is calculated with the same parameter sets.
+
+The inputs are drawn with \code{\link[=simulate_inputs]{simulate_inputs()}}: inputs with a
+distribution (see \code{\link[=load_input_distributions]{load_input_distributions()}}) vary around their
+value in \code{data}, or around their default value if missing; all other inputs
+keep their values.
+
+The doses of a row do not depend on the other rows. Use \code{\link[=set.seed]{set.seed()}} before
+for reproducible results.
 }
 \seealso{
 \code{\link[=calculate_emf_doses]{calculate_emf_doses()}}, \code{\link[=simulate_params]{simulate_params()}}

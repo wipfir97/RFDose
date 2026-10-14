@@ -43,7 +43,7 @@ test_that("distributions without spread give the deterministic doses", {
   file <- degenerate_file()
   for (tissue in c("brain", "body")) {
     result <- calculate_emf_doses_stochastic(input, tissue = tissue, n = 3, distributions = file,
-                                             sar_sd = 0)
+                                             sar_sd = 0, draw_inputs = FALSE)
 
     expect_equal(result$mean, result$deterministic, tolerance = 1e-12, label = tissue)
     expect_equal(result$q2.5, result$deterministic, tolerance = 1e-12, label = tissue)
@@ -77,6 +77,10 @@ test_that("calculate_emf_doses_stochastic summarises every row and dose", {
   expect_equal(summary$dose[summary$row == 1], c(dose_cols, "total_dose"))
   expect_equal(dim(result$doses), c(nrow(example_data), 20, length(dose_cols)))
   expect_equal(dim(result$params), c(20, length(specs) + nrow(list_sar(params))))
+  expect_equal(names(result$inputs), names(load_input_distributions()))
+  for (name in names(result$inputs)) {
+    expect_equal(dim(result$inputs[[name]]), c(nrow(example_data), 20), label = name)
+  }
 
   # summary of the doses of every draw
   for (row in seq_len(nrow(example_data))) {
@@ -110,13 +114,45 @@ test_that("calculate_emf_doses_stochastic is reproducible with set.seed", {
 test_that("drawing the SAR values widens the doses", {
   for (tissue in c("brain", "body")) {
     set.seed(30)
-    without <- calculate_emf_doses_stochastic(input, tissue = tissue, n = 300, sar_sd = 0)
+    without <- calculate_emf_doses_stochastic(input, tissue = tissue, n = 300, sar_sd = 0,
+                                              draw_inputs = FALSE)
     set.seed(30)
-    with    <- calculate_emf_doses_stochastic(input, tissue = tissue, n = 300)
+    with    <- calculate_emf_doses_stochastic(input, tissue = tissue, n = 300, draw_inputs = FALSE)
 
     expect_equal(with$deterministic, without$deterministic)
     expect_true(all(with$sd > without$sd), label = tissue)
   }
+})
+
+test_that("drawing the inputs widens the doses, with the same parameter sets", {
+  for (tissue in c("brain", "body")) {
+    set.seed(32)
+    without <- calculate_emf_doses_stochastic(input, tissue = tissue, n = 300,
+                                              draw_inputs = FALSE, keep_draws = TRUE)
+    set.seed(32)
+    with    <- calculate_emf_doses_stochastic(input, tissue = tissue, n = 300, keep_draws = TRUE)
+
+    expect_null(without$inputs)
+    expect_identical(with$params, without$params)
+    expect_equal(with$summary$deterministic, without$summary$deterministic)
+    # (the WiFi dose does not depend on the drawn inputs: travel time moves time
+    # from home to travel, both with WiFi)
+    expect_true(all(with$summary$sd >= without$summary$sd), label = tissue)
+    total <- with$summary$dose == "total_dose"
+    expect_gt(with$summary$sd[total], without$summary$sd[total])
+  }
+})
+
+test_that("missing inputs are drawn around their default value", {
+  missing <- input
+  missing$travel_time <- NA
+  defaults <- yaml::read_yaml(system.file("extdata", "defaultvariables.yaml", package = "RFDose"))
+  set.seed(33)
+  result <- suppressWarnings(
+    calculate_emf_doses_stochastic(missing, tissue = "brain", n = 2000, keep_draws = TRUE))
+
+  expect_equal(mean(result$inputs$travel_time), defaults$travel_time, tolerance = 0.02)
+  expect_gt(stats::sd(result$inputs$travel_time), 0)
 })
 
 test_that("the doses of a row do not depend on the other rows", {

@@ -5,13 +5,13 @@
 
 source("data-raw/source_params/reading_params_sources.R") # creates `params_copy` and `as_param()`
 
-# Proportions of the urbanicity distribution (stochastic model): not input
-# variables, so they get no default value. Every default value is added as a
-# column to the input data.
-urbanicity_props <- c("urb_prop", "sub_prop", "rur_prop")
+# Probabilities of the urbanicity draw (stochastic model), one row per given and
+# drawn urbanicity (e.g. urban_sub_prop): not input variables, so they get no
+# default value. Every default value is added as a column to the input data.
+urbanicity_props <- "^(urban|suburban|rural)_(urb|sub|rur)_prop$"
 
 rows <- readxl::read_excel(params_copy, sheet = "defaultvariables", col_types = "text")
-rows <- rows[!is.na(rows$parameters) & !(rows$parameters %in% urbanicity_props),
+rows <- rows[!is.na(rows$parameters) & !grepl(urbanicity_props, rows$parameters),
              c("parameters", "mean")]
 
 if (any(is.na(rows$mean))) {

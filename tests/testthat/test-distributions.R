@@ -91,6 +91,25 @@ test_that("r_trunc_lognormal is the lognormal distribution without bounds", {
   expect_equal(trunc_lognormal_meanlog(2, sdlog, 0, Inf), log(2) - sdlog^2 / 2, tolerance = 1e-10)
 })
 
+test_that("q_trunc_lognormal is the quantile function of r_trunc_lognormal", {
+  set.seed(31)
+  draws <- r_trunc_lognormal(5, mean = 178.1, sd = 53.43, min = 0.001, max = 200)
+  set.seed(31)
+  p <- stats::runif(5)
+
+  expect_equal(q_trunc_lognormal(p, mean = 178.1, sd = 53.43, min = 0.001, max = 200), draws)
+})
+
+test_that("q_trunc_lognormal increases with p and keeps the mean", {
+  for (case in list(c(178.1, 53.43, 0.001, 200), c(10, 5, 9.5, 20), c(3, 0.6, 0, Inf))) {
+    p <- stats::ppoints(1e5)
+    q <- q_trunc_lognormal(p, mean = case[1], sd = case[2], min = case[3], max = case[4])
+
+    expect_true(all(diff(q) >= 0), label = paste(case, collapse = " "))
+    expect_equal(mean(q), case[1], tolerance = 1e-3, label = paste(case, collapse = " "))
+  }
+})
+
 test_that("r_trunc_lognormal gives the mean if sd is 0", {
   expect_equal(r_trunc_lognormal(3, mean = 2, sd = 0, min = 0, max = 5), c(2, 2, 2))
 })
@@ -126,6 +145,15 @@ test_that("r_beta gives the mean if mean is 0 or 1, or alpha is infinite", {
   expect_equal(r_beta(3, mean = 0, alpha = 4), c(0, 0, 0))
   expect_equal(r_beta(3, mean = 1, alpha = 4), c(1, 1, 1))
   expect_equal(r_beta(3, mean = 0.3, alpha = Inf), c(0.3, 0.3, 0.3))
+})
+
+test_that("q_beta is the quantile function of the beta distribution", {
+  p <- c(0.01, 0.3, 0.5, 0.9)
+
+  expect_equal(q_beta(p, mean = 0.3, alpha = 4), stats::qbeta(p, 4, 4 * 0.7 / 0.3))
+  expect_equal(q_beta(p, mean = 0, alpha = 4), rep(0, 4))
+  expect_equal(q_beta(p, mean = 1, alpha = 4), rep(1, 4))
+  expect_error(q_beta(p, mean = 1.2, alpha = 4), "mean")
 })
 
 test_that("r_beta stops for invalid values", {
