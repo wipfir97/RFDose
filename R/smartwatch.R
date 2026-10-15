@@ -68,6 +68,11 @@ smartwatch_dose <- function(
 #' * \eqn{mSAR_{watch}} is the momentary SAR
 #' * \eqn{duration_{watch}} is the use duration
 #'
+#' While worn, the smart-watch transfers data for `watch_transfer_dur` seconds
+#' per day of wearing. During the share `watch_transfer_active_prop` of this
+#' time it transmits actively, the rest of the time passively (parameters of
+#' the device `smartwatch`).
+#'
 #' @param tissue Tissue for which to calculate dose (default: "brain" or "body")
 #' @param duration_smartwatch duration of time smart-watch was worn in s/day
 #' @param params Parameter list (optional). If not specified, calculations use
@@ -93,9 +98,11 @@ smartwatch_watch_dose <- function(
   tissue_params <- load_tissue_params(params, "smartwatch", tissue)
 
   # Calculate active and passive use duration =================================
-  file_dur    <- (duration_smartwatch*120)/86400
-  active_dur  <- file_dur/2
-  passive_dur <- duration_smartwatch-(file_dur/2)
+  ## Data transfer while the smartwatch is worn: part of it is active
+  ## transmission, the rest of the time counts as passive
+  file_dur    <- duration_smartwatch * params$devices$smartwatch$watch_transfer_dur / 86400
+  active_dur  <- file_dur * params$devices$smartwatch$watch_transfer_active_prop
+  passive_dur <- duration_smartwatch - active_dur
   mode_dur <- list(
     active  = active_dur,
     passive = passive_dur

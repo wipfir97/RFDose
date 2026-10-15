@@ -31,6 +31,11 @@ Where:
 \item \eqn{mSAR_{watch}} is the momentary SAR
 \item \eqn{duration_{watch}} is the use duration
 }
+
+While worn, the smart-watch transfers data for \code{watch_transfer_dur} seconds
+per day of wearing. During the share \code{watch_transfer_active_prop} of this
+time it transmits actively, the rest of the time passively (parameters of
+the device \code{smartwatch}).
 }
 \examples{
 smartwatch_watch_dose(

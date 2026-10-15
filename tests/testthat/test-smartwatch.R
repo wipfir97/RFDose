@@ -237,3 +237,22 @@ test_that("smartwatch_phone_dose matches reference values", {
     expect_equal(result, case$output, tolerance = 1e-5)
   }
 })
+
+test_that("smartwatch_watch_dose uses the data transfer parameters", {
+  params <- load_params()
+  sar    <- load_tissue_params(params, "smartwatch", "body")[["watch_sar"]]
+  watch  <- params$devices$smartwatch
+
+  # without data transfer, the watch only transmits passively
+  no_transfer <- params
+  no_transfer$devices$smartwatch$watch_transfer_dur <- 0
+  expect_equal(smartwatch_watch_dose("body", 86400, params = no_transfer),
+               watch$watch_pwr_passive * sar * 86400)
+
+  # data transfer only active: active during the whole transfer time
+  all_active <- params
+  all_active$devices$smartwatch$watch_transfer_active_prop <- 1
+  expect_equal(smartwatch_watch_dose("body", 86400, params = all_active),
+               (watch$watch_pwr_active * watch$watch_transfer_dur +
+                  watch$watch_pwr_passive * (86400 - watch$watch_transfer_dur)) * sar)
+})

@@ -298,6 +298,9 @@ devices:
     watch_pwr_active: 1
     watch_pwr_passive: 0.002
     watch_phone_pwr: 0.002
+    # Added later: the values of version 1.0, then fixed in R/smartwatch.R
+    watch_transfer_dur: 120
+    watch_transfer_active_prop: 0.5
   headphones:
     headp_pwr: 0.002
     headp_phone_pwr: 0.16
