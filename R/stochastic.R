@@ -44,6 +44,7 @@
 #' @param keep_draws If TRUE, also return the doses and parameters of every draw.
 #'
 #' @returns A data frame with one row per row of `data` and dose, in mJ/kg/day:
+#' * `sample_id`: ID of the row, if `data` has a column `sample_id`
 #' * `row`: row of `data`
 #' * `dose`: exposure source (as the columns of [RFDose::calculate_emf_doses()]),
 #'   or `total_dose` for their sum
@@ -100,6 +101,9 @@ calculate_emf_doses_stochastic <- function(
                              inputs = inputs, known_warnings = raised)
 
   summary <- summarise_doses(deterministic, doses, probs = probs)
+  if ("sample_id" %in% names(data)) {
+    summary <- cbind(sample_id = data$sample_id[summary$row], summary)
+  }
   if (keep_draws) {
     return(list(summary = summary, doses = doses, params = draws, inputs = inputs))
   }

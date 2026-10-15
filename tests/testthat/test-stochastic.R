@@ -72,7 +72,7 @@ test_that("calculate_emf_doses_stochastic summarises every row and dose", {
                                            keep_draws = TRUE)
   summary <- result$summary
 
-  expect_equal(names(summary), summary_cols)
+  expect_equal(names(summary), c("sample_id", summary_cols))
   expect_equal(nrow(summary), nrow(example_data) * (length(dose_cols) + 1))
   expect_equal(summary$dose[summary$row == 1], c(dose_cols, "total_dose"))
   expect_equal(dim(result$doses), c(nrow(example_data), 20, length(dose_cols)))
@@ -160,8 +160,20 @@ test_that("the doses of a row do not depend on the other rows", {
   all_rows <- calculate_emf_doses_stochastic(example_data, tissue = "brain", n = 5)
   set.seed(25)
   one_row  <- calculate_emf_doses_stochastic(example_data[2, ], tissue = "brain", n = 5)
+  results  <- setdiff(names(one_row), "row")
 
-  expect_equal(all_rows[all_rows$row == 2, -1], one_row[, -1], ignore_attr = TRUE)
+  expect_equal(all_rows[all_rows$row == 2, results], one_row[, results], ignore_attr = TRUE)
+})
+
+test_that("the output has the sample_id of each row, if the data have one", {
+  set.seed(35)
+  with_id <- calculate_emf_doses_stochastic(example_data, tissue = "brain", n = 5)
+  set.seed(35)
+  without <- calculate_emf_doses_stochastic(input, tissue = "brain", n = 5)
+
+  expect_equal(names(with_id)[1], "sample_id")
+  expect_equal(with_id$sample_id, example_data$sample_id[with_id$row])
+  expect_false("sample_id" %in% names(without))
 })
 
 ## Physical properties in every draw ==========================================

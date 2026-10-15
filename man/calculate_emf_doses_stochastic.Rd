@@ -58,6 +58,7 @@ distributions are used.}
 \value{
 A data frame with one row per row of \code{data} and dose, in mJ/kg/day:
 \itemize{
+\item \code{sample_id}: ID of the row, if \code{data} has a column \code{sample_id}
 \item \code{row}: row of \code{data}
 \item \code{dose}: exposure source (as the columns of \code{\link[=calculate_emf_doses]{calculate_emf_doses()}}),
 or \code{total_dose} for their sum
