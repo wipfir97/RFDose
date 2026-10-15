@@ -88,16 +88,6 @@ devices:
     wifi_5_high_dutycycle:
       distribution: beta
       alpha: 4
-    wifi_2_pwr:
-      distribution: trunc_lognormal
-      sd_rel: 0.1
-      min: 0
-      max: 300
-    wifi_5_pwr:
-      distribution: trunc_lognormal
-      sd_rel: 0.1
-      min: 0
-      max: 300
   wifi:
     wifi_2_pwr:
       distribution: lognormal
@@ -434,6 +424,14 @@ devices:
     data_5g_prop:
       distribution: dirichlet
       group: data_tech
+      a0: 100
+    data_3g_prop_no5g:
+      distribution: dirichlet
+      group: data_tech_no5g
+      a0: 100
+    data_4g_prop_no5g:
+      distribution: dirichlet
+      group: data_tech_no5g
       a0: 100
     data_3g_low_dutycycle:
       distribution: beta

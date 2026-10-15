@@ -8,32 +8,7 @@ source("data-raw/source_params/reading_params_sources.R") # creates `params_copy
 params_yaml <- file.path("inst", "extdata", "params.yaml")
 dists_yaml  <- file.path("inst", "extdata", "params_distributions.yaml")
 
-# Dirichlet groups, used as long as the Excel file has no column "group"
-# (remove once the column is there)
-listed_groups <- c(
-  "global > wifi_2_prop"               = "wifi_band",
-  "global > wifi_5_prop"               = "wifi_band",
-  "global > home_prop"                 = "location",
-  "global > outd_prop"                 = "location",
-  "global > work_prop"                 = "location",
-  "devices > call > native_prop"       = "call_mode",
-  "devices > call > data_prop"         = "call_mode",
-  "devices > call > wifi_prop"         = "call_mode",
-  "devices > call > native_2g_prop"    = "native_tech",
-  "devices > call > native_3g_prop"    = "native_tech",
-  "devices > call > native_4g_prop"    = "native_tech",
-  "devices > call > data_3g_prop"      = "call_data_tech",
-  "devices > call > data_4g_prop"      = "call_data_tech",
-  "devices > call > data_5g_prop"      = "call_data_tech",
-  "devices > call > data_3g_prop_no5g" = "call_data_tech_no5g",
-  "devices > call > data_4g_prop_no5g" = "call_data_tech_no5g",
-  "devices > data > data_3g_prop"      = "data_tech",
-  "devices > data > data_4g_prop"      = "data_tech",
-  "devices > data > data_5g_prop"      = "data_tech",
-  "devices > data > data_3g_prop_no5g" = "data_tech_no5g",
-  "devices > data > data_4g_prop_no5g" = "data_tech_no5g")
-
-rows <- as.data.frame(readxl::read_excel(params_copy, sheet = "params", col_types = "text", trim_ws = FALSE))
+rows <-as.data.frame(readxl::read_excel(params_copy, sheet = "params", col_types = "text", trim_ws = FALSE))
 rows$row <- seq_len(nrow(rows)) + 1 # Excel row (row 1 is the header), for messages
 rows <- rows[!is.na(rows$parameters), ]
 
@@ -79,18 +54,12 @@ if (any(!is.na(rows$dist) & is.na(rows$m))) {
        paste(rows$row[!is.na(rows$dist) & is.na(rows$m)], collapse = ", "))
 }
 
-# Dirichlet group of each row
-if ("group" %in% names(rows)) {
-  rows$group <- trimws(rows$group)
-  rows$group[tolower(rows$group) %in% c("na", "-", "")] <- NA
-} else {
-  message("The Excel file has no column \"group\": using the groups listed in this script.")
-  if (!all(names(listed_groups) %in% rows$path)) {
-    stop("Listed group parameters not in the Excel file: ",
-         paste(setdiff(names(listed_groups), rows$path), collapse = ", "))
-  }
-  rows$group <- unname(listed_groups[rows$path])
+# Dirichlet group of each row (column "group")
+if (!("group" %in% names(rows))) {
+  stop("The Excel file has no column \"group\".")
 }
+rows$group <- trimws(rows$group)
+rows$group[tolower(rows$group) %in% c("na", "-", "")] <- NA
 if (any(!is.na(rows$group) & is.na(rows$m))) {
   stop("Group without a mean in row(s) ",
        paste(rows$row[!is.na(rows$group) & is.na(rows$m)], collapse = ", "))
