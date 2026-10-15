@@ -127,7 +127,7 @@ stochastic_doses <- function(samples, tissue, params, draws, inputs = NULL,
                              known_warnings = character(0)) {
   keys     <- strsplit(colnames(draws), ".", fixed = TRUE)
   doses    <- NULL
-  raised   <- character(0)
+  raised   <- integer(0) # number of times each warning message occurred
   withCallingHandlers(
     for (d in seq_len(nrow(draws))) {
       drawn <- set_params(params, draws[d, ], keys)
@@ -149,14 +149,15 @@ stochastic_doses <- function(samples, tissue, params, draws, inputs = NULL,
       }
     },
     warning = function(w) {
-      raised <<- c(raised, conditionMessage(w))
+      text <- conditionMessage(w)
+      raised[text] <<- if (is.na(raised[text])) 1L else raised[text] + 1L
       invokeRestart("muffleWarning")
     })
 
-  new_warnings <- raised[!(raised %in% known_warnings)]
-  for (text in unique(new_warnings)) {
-    warning(text, " (", sum(new_warnings == text), " times in ", nrow(draws),
-            " draws)", call. = FALSE)
+  new_warnings <- raised[!(names(raised) %in% known_warnings)]
+  for (text in names(new_warnings)) {
+    warning(text, " (", new_warnings[[text]], " times in ", nrow(draws), " draws)",
+            call. = FALSE)
   }
   doses
 }

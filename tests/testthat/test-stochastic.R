@@ -247,3 +247,20 @@ test_that("warnings about the input are raised once, not for every draw", {
   expect_equal(raised, unique(raised))
   expect_false(any(grepl("draws)", raised, fixed = TRUE)))
 })
+
+test_that("warnings that occur only in some draws are raised once, with their count", {
+  # mobile data use of 80000 s: below one day, but above in some draws
+  near <- input
+  near[c("mpd_dur_low", "mpd_dur_lowtomed", "mpd_dur_medtohigh", "mpd_dur_high")] <- 20000
+  raised <- character(0)
+  set.seed(34)
+  withCallingHandlers(
+    calculate_emf_doses_stochastic(near, tissue = "brain", n = 50),
+    warning = function(w) {
+      raised <<- c(raised, conditionMessage(w))
+      invokeRestart("muffleWarning")
+    })
+
+  expect_length(raised, 1)
+  expect_match(raised, "exceeds 86400 seconds per day. \\([0-9]+ times in 50 draws\\)")
+})
