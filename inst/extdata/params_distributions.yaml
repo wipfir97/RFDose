@@ -3,966 +3,966 @@
 # params_sources.xlsx, do not edit by hand.
 # The mean of each distribution is the parameter value (params.yaml), so only
 # its shape is given here. Parameters not listed here are not drawn.
-#   lognormal:       sd (standard deviation)
-#   trunc_lognormal: sd, min, max
+#   lognormal:       sd_rel (standard deviation relative to the mean)
+#   trunc_lognormal: sd_rel, min, max
 #   beta:            alpha (a0 = alpha/mean)
 #   dirichlet:       a0, group (drawn together, the parameters of a group sum to 1)
 global:
   wifi_2_prop:
     distribution: dirichlet
     group: wifi_band
-    a0: 100.0
+    a0: 100
   wifi_5_prop:
     distribution: dirichlet
     group: wifi_band
-    a0: 100.0
+    a0: 100
   home_prop:
     distribution: dirichlet
     group: location
-    a0: 100.0
+    a0: 100
   outd_prop:
     distribution: dirichlet
     group: location
-    a0: 100.0
+    a0: 100
   work_prop:
     distribution: dirichlet
     group: location
-    a0: 100.0
+    a0: 100
 devices:
   dect:
     dect_pwr:
       distribution: trunc_lognormal
-      sd: 25.0
-      min: 0.0
-      max: 300.0
+      sd_rel: 0.1
+      min: 0
+      max: 300
     dect_dutycycle:
       distribution: beta
-      alpha: 4.0
+      alpha: 4
   tblt:
     wifi_2_low_dutycycle:
       distribution: beta
-      alpha: 4.0
+      alpha: 4
     wifi_2_lowmed_dutycycle:
       distribution: beta
-      alpha: 4.0
+      alpha: 4
     wifi_2_medhigh_dutycycle:
       distribution: beta
-      alpha: 4.0
+      alpha: 4
     wifi_2_high_dutycycle:
       distribution: beta
-      alpha: 4.0
+      alpha: 4
     wifi_5_low_dutycycle:
       distribution: beta
-      alpha: 4.0
+      alpha: 4
     wifi_5_lowmed_dutycycle:
       distribution: beta
-      alpha: 4.0
+      alpha: 4
     wifi_5_medhigh_dutycycle:
       distribution: beta
-      alpha: 4.0
+      alpha: 4
     wifi_5_high_dutycycle:
       distribution: beta
-      alpha: 4.0
+      alpha: 4
   lptp:
     wifi_2_low_dutycycle:
       distribution: beta
-      alpha: 4.0
+      alpha: 4
     wifi_2_lowmed_dutycycle:
       distribution: beta
-      alpha: 4.0
+      alpha: 4
     wifi_2_medhigh_dutycycle:
       distribution: beta
-      alpha: 4.0
+      alpha: 4
     wifi_2_high_dutycycle:
       distribution: beta
-      alpha: 4.0
+      alpha: 4
     wifi_5_low_dutycycle:
       distribution: beta
-      alpha: 4.0
+      alpha: 4
     wifi_5_lowmed_dutycycle:
       distribution: beta
-      alpha: 4.0
+      alpha: 4
     wifi_5_medhigh_dutycycle:
       distribution: beta
-      alpha: 4.0
+      alpha: 4
     wifi_5_high_dutycycle:
       distribution: beta
-      alpha: 4.0
+      alpha: 4
     wifi_2_pwr:
       distribution: trunc_lognormal
-      sd: 10.0
-      min: 0.0
-      max: 300.0
+      sd_rel: 0.1
+      min: 0
+      max: 300
     wifi_5_pwr:
       distribution: trunc_lognormal
-      sd: 20.0
-      min: 0.0
-      max: 300.0
+      sd_rel: 0.1
+      min: 0
+      max: 300
   wifi:
     wifi_2_pwr:
       distribution: lognormal
-      sd: 0.0018
+      sd_rel: 0.1
     wifi_5_pwr:
       distribution: lognormal
-      sd: 0.0013
+      sd_rel: 0.1
   call:
     native_prop:
       distribution: dirichlet
       group: call_mode
-      a0: 50.0
+      a0: 50
     data_prop:
       distribution: dirichlet
       group: call_mode
-      a0: 50.0
+      a0: 50
     wifi_prop:
       distribution: dirichlet
       group: call_mode
-      a0: 50.0
+      a0: 50
     native_2g_prop:
       distribution: dirichlet
       group: native_tech
-      a0: 100.0
+      a0: 100
     native_3g_prop:
       distribution: dirichlet
       group: native_tech
-      a0: 100.0
+      a0: 100
     native_4g_prop:
       distribution: dirichlet
       group: native_tech
-      a0: 100.0
+      a0: 100
     data_3g_prop:
       distribution: dirichlet
       group: call_data_tech
-      a0: 100.0
+      a0: 100
     data_4g_prop:
       distribution: dirichlet
       group: call_data_tech
-      a0: 100.0
+      a0: 100
     data_5g_prop:
       distribution: dirichlet
       group: call_data_tech
-      a0: 100.0
+      a0: 100
     data_3g_prop_no5g:
       distribution: dirichlet
       group: call_data_tech_no5g
-      a0: 100.0
+      a0: 100
     data_4g_prop_no5g:
       distribution: dirichlet
       group: call_data_tech_no5g
-      a0: 100.0
+      a0: 100
     native_2g_dutycycle:
       distribution: beta
-      alpha: 4.0
+      alpha: 4
     native_3g_dutycycle:
       distribution: beta
-      alpha: 4.0
+      alpha: 4
     native_4g_dutycycle:
       distribution: beta
-      alpha: 4.0
+      alpha: 4
     native_2g_sub_ind_pwr:
       distribution: trunc_lognormal
-      sd: 384.45599999999996
+      sd_rel: 0.3
       min: 0.001
-      max: 2000.0
+      max: 2000
     native_2g_urb_ind_pwr:
       distribution: trunc_lognormal
-      sd: 112.460999999999999
+      sd_rel: 0.3
       min: 0.001
-      max: 2000.0
+      max: 2000
     native_2g_rur_ind_pwr:
       distribution: trunc_lognormal
-      sd: 411.368999999999971
+      sd_rel: 0.3
       min: 0.001
-      max: 2000.0
+      max: 2000
     native_2g_sub_out_pwr:
       distribution: trunc_lognormal
-      sd: 115.169999999999987
+      sd_rel: 0.3
       min: 0.001
-      max: 2000.0
+      max: 2000
     native_2g_urb_out_pwr:
       distribution: trunc_lognormal
-      sd: 52.143000000000001
+      sd_rel: 0.3
       min: 0.001
-      max: 2000.0
+      max: 2000
     native_2g_rur_out_pwr:
       distribution: trunc_lognormal
-      sd: 130.169999999999987
+      sd_rel: 0.3
       min: 0.001
-      max: 2000.0
+      max: 2000
     native_2g_travel_pwr:
       distribution: trunc_lognormal
-      sd: 115.169999999999987
+      sd_rel: 0.3
       min: 0.001
-      max: 2000.0
+      max: 2000
     native_3g_sub_ind_pwr:
       distribution: trunc_lognormal
-      sd: 0.609
+      sd_rel: 0.3
       min: 0.001
-      max: 250.0
+      max: 250
     native_3g_urb_ind_pwr:
       distribution: trunc_lognormal
-      sd: 0.291
+      sd_rel: 0.3
       min: 0.001
-      max: 250.0
+      max: 250
     native_3g_rur_ind_pwr:
       distribution: trunc_lognormal
-      sd: 1.86
+      sd_rel: 0.3
       min: 0.001
-      max: 250.0
+      max: 250
     native_3g_sub_out_pwr:
       distribution: trunc_lognormal
-      sd: 0.189
+      sd_rel: 0.3
       min: 0.001
-      max: 250.0
+      max: 250
     native_3g_urb_out_pwr:
       distribution: trunc_lognormal
-      sd: 0.066
+      sd_rel: 0.3
       min: 0.001
-      max: 250.0
+      max: 250
     native_3g_rur_out_pwr:
       distribution: trunc_lognormal
-      sd: 0.792
+      sd_rel: 0.3
       min: 0.001
-      max: 250.0
+      max: 250
     native_3g_travel_pwr:
       distribution: trunc_lognormal
-      sd: 0.189
+      sd_rel: 0.3
       min: 0.001
-      max: 250.0
+      max: 250
     native_4g_sub_ind_pwr:
       distribution: trunc_lognormal
-      sd: 47.789999999999999
+      sd_rel: 0.3
       min: 0.001
-      max: 200.0
+      max: 200
     native_4g_urb_ind_pwr:
       distribution: trunc_lognormal
-      sd: 42.149999999999999
+      sd_rel: 0.3
       min: 0.001
-      max: 200.0
+      max: 200
     native_4g_rur_ind_pwr:
       distribution: trunc_lognormal
-      sd: 53.43
+      sd_rel: 0.3
       min: 0.001
-      max: 200.0
+      max: 200
     native_4g_sub_out_pwr:
       distribution: trunc_lognormal
-      sd: 32.924999999999997
+      sd_rel: 0.3
       min: 0.001
-      max: 200.0
+      max: 200
     native_4g_urb_out_pwr:
       distribution: trunc_lognormal
-      sd: 28.289999999999999
+      sd_rel: 0.3
       min: 0.001
-      max: 200.0
+      max: 200
     native_4g_rur_out_pwr:
       distribution: trunc_lognormal
-      sd: 37.560000000000002
+      sd_rel: 0.3
       min: 0.001
-      max: 200.0
+      max: 200
     native_4g_travel_pwr:
       distribution: trunc_lognormal
-      sd: 32.924999999999997
+      sd_rel: 0.3
       min: 0.001
-      max: 200.0
+      max: 200
     native_5g_sub_ind_pwr:
       distribution: trunc_lognormal
-      sd: 47.789999999999999
+      sd_rel: 0.3
       min: 0.001
-      max: 200.0
+      max: 200
     native_5g_urb_ind_pwr:
       distribution: trunc_lognormal
-      sd: 42.149999999999999
+      sd_rel: 0.3
       min: 0.001
-      max: 200.0
+      max: 200
     native_5g_rur_ind_pwr:
       distribution: trunc_lognormal
-      sd: 53.43
+      sd_rel: 0.3
       min: 0.001
-      max: 200.0
+      max: 200
     native_5g_sub_out_pwr:
       distribution: trunc_lognormal
-      sd: 32.924999999999997
+      sd_rel: 0.3
       min: 0.001
-      max: 200.0
+      max: 200
     native_5g_urb_out_pwr:
       distribution: trunc_lognormal
-      sd: 28.289999999999999
+      sd_rel: 0.3
       min: 0.001
-      max: 200.0
+      max: 200
     native_5g_rur_out_pwr:
       distribution: trunc_lognormal
-      sd: 37.560000000000002
+      sd_rel: 0.3
       min: 0.001
-      max: 200.0
+      max: 200
     native_5g_travel_pwr:
       distribution: trunc_lognormal
-      sd: 32.924999999999997
+      sd_rel: 0.3
       min: 0.001
-      max: 200.0
+      max: 200
     data_3g_dutycycle:
       distribution: beta
-      alpha: 4.0
+      alpha: 4
     data_4g_dutycycle:
       distribution: beta
-      alpha: 4.0
+      alpha: 4
     data_5g_dutycycle:
       distribution: beta
-      alpha: 4.0
+      alpha: 4
     data_3g_sub_ind_pwr:
       distribution: trunc_lognormal
-      sd: 0.612
-      min: 0.0
-      max: 200.0
+      sd_rel: 0.3
+      min: 0
+      max: 200
     data_3g_urb_ind_pwr:
       distribution: trunc_lognormal
-      sd: 0.1815
-      min: 0.0
-      max: 200.0
+      sd_rel: 0.3
+      min: 0
+      max: 200
     data_3g_rur_ind_pwr:
       distribution: trunc_lognormal
-      sd: 1.884
-      min: 0.0
-      max: 200.0
+      sd_rel: 0.3
+      min: 0
+      max: 200
     data_3g_sub_out_pwr:
       distribution: trunc_lognormal
-      sd: 0.261
-      min: 0.0
-      max: 200.0
+      sd_rel: 0.3
+      min: 0
+      max: 200
     data_3g_urb_out_pwr:
       distribution: trunc_lognormal
-      sd: 0.078
-      min: 0.0
-      max: 200.0
+      sd_rel: 0.3
+      min: 0
+      max: 200
     data_3g_rur_out_pwr:
       distribution: trunc_lognormal
-      sd: 0.804
-      min: 0.0
-      max: 200.0
+      sd_rel: 0.3
+      min: 0
+      max: 200
     data_3g_travel_pwr:
       distribution: trunc_lognormal
-      sd: 0.261
-      min: 0.0
-      max: 200.0
+      sd_rel: 0.3
+      min: 0
+      max: 200
     data_4g_sub_ind_pwr:
       distribution: trunc_lognormal
-      sd: 33.539999999999999
-      min: 0.0
-      max: 200.0
+      sd_rel: 0.441722639273015
+      min: 0
+      max: 200
     data_4g_urb_ind_pwr:
       distribution: trunc_lognormal
-      sd: 37.280000000000001
-      min: 0.0
-      max: 200.0
+      sd_rel: 0.716372021521906
+      min: 0
+      max: 200
     data_4g_rur_ind_pwr:
       distribution: trunc_lognormal
-      sd: 47.369999999999997
-      min: 0.0
-      max: 200.0
+      sd_rel: 0.539398770211797
+      min: 0
+      max: 200
     data_4g_sub_out_pwr:
       distribution: trunc_lognormal
-      sd: 32.170000000000002
-      min: 0.0
-      max: 200.0
+      sd_rel: 0.578701205252743
+      min: 0
+      max: 200
     data_4g_urb_out_pwr:
       distribution: trunc_lognormal
-      sd: 28.719999999999999
-      min: 0.0
-      max: 200.0
+      sd_rel: 0.482121873426221
+      min: 0
+      max: 200
     data_4g_rur_out_pwr:
       distribution: trunc_lognormal
-      sd: 44.119999999999997
-      min: 0.0
-      max: 200.0
+      sd_rel: 0.515842394481468
+      min: 0
+      max: 200
     data_4g_travel_pwr:
       distribution: trunc_lognormal
-      sd: 33.100000000000001
-      min: 0.0
-      max: 200.0
+      sd_rel: 0.496698679471789
+      min: 0
+      max: 200
     data_5g_sub_ind_pwr:
       distribution: trunc_lognormal
-      sd: 11.279999999999999
-      min: 0.0
-      max: 200.0
+      sd_rel: 0.656195462478185
+      min: 0
+      max: 200
     data_5g_urb_ind_pwr:
       distribution: trunc_lognormal
-      sd: 24.739999999999998
-      min: 0.0
-      max: 200.0
+      sd_rel: 0.679483658335622
+      min: 0
+      max: 200
     data_5g_rur_ind_pwr:
       distribution: trunc_lognormal
-      sd: 20.879999999999999
-      min: 0.0
-      max: 200.0
+      sd_rel: 0.552966101694915
+      min: 0
+      max: 200
     data_5g_sub_out_pwr:
       distribution: trunc_lognormal
-      sd: 18.739999999999998
-      min: 0.0
-      max: 200.0
+      sd_rel: 0.707169811320755
+      min: 0
+      max: 200
     data_5g_urb_out_pwr:
       distribution: trunc_lognormal
-      sd: 19.59
-      min: 0.0
-      max: 200.0
+      sd_rel: 0.560515021459227
+      min: 0
+      max: 200
     data_5g_rur_out_pwr:
       distribution: trunc_lognormal
-      sd: 24.41
-      min: 0.0
-      max: 200.0
+      sd_rel: 0.530767558164818
+      min: 0
+      max: 200
     data_5g_travel_pwr:
       distribution: trunc_lognormal
-      sd: 19.640000000000001
-      min: 0.0
-      max: 200.0
+      sd_rel: 0.844368013757524
+      min: 0
+      max: 200
     wifi_2_dutycycle:
       distribution: beta
-      alpha: 4.0
+      alpha: 4
     wifi_5_dutycycle:
       distribution: beta
-      alpha: 4.0
+      alpha: 4
     bt_pwr:
       distribution: beta
-      alpha: 4.0
+      alpha: 4
   data:
     data_3g_prop:
       distribution: dirichlet
       group: data_tech
-      a0: 100.0
+      a0: 100
     data_4g_prop:
       distribution: dirichlet
       group: data_tech
-      a0: 100.0
+      a0: 100
     data_5g_prop:
       distribution: dirichlet
       group: data_tech
-      a0: 100.0
+      a0: 100
     data_3g_low_dutycycle:
       distribution: beta
-      alpha: 4.0
+      alpha: 4
     data_3g_lowmed_dutycycle:
       distribution: beta
-      alpha: 4.0
+      alpha: 4
     data_3g_medhigh_dutycycle:
       distribution: beta
-      alpha: 4.0
+      alpha: 4
     data_3g_high_dutycycle:
       distribution: beta
-      alpha: 4.0
+      alpha: 4
     data_3g_sub_ind_pwr:
       distribution: trunc_lognormal
-      sd: 34.207500000000003
-      min: 0.0
-      max: 250.0
+      sd_rel: 0.3
+      min: 0
+      max: 250
     data_3g_sub_out_pwr:
       distribution: trunc_lognormal
-      sd: 14.592299999999998
-      min: 0.0
-      max: 250.0
+      sd_rel: 0.3
+      min: 0
+      max: 250
     data_3g_urb_ind_pwr:
       distribution: trunc_lognormal
-      sd: 0.550962
-      min: 0.0
-      max: 250.0
+      sd_rel: 0.3
+      min: 0
+      max: 250
     data_3g_urb_out_pwr:
       distribution: trunc_lognormal
-      sd: 0.235029
-      min: 0.0
-      max: 250.0
+      sd_rel: 0.3
+      min: 0
+      max: 250
     data_3g_rur_ind_pwr:
       distribution: trunc_lognormal
-      sd: 50.1327
-      min: 0.0
-      max: 250.0
+      sd_rel: 0.3
+      min: 0
+      max: 250
     data_3g_rur_out_pwr:
       distribution: trunc_lognormal
-      sd: 21.385499999999997
-      min: 0.0
-      max: 250.0
+      sd_rel: 0.3
+      min: 0
+      max: 250
     data_3g_travel_pwr:
       distribution: trunc_lognormal
-      sd: 14.591999999999999
-      min: 0.0
-      max: 250.0
+      sd_rel: 0.3
+      min: 0
+      max: 250
     data_4g_low_dutycycle:
       distribution: beta
-      alpha: 4.0
+      alpha: 4
     data_4g_lowmed_dutycycle:
       distribution: beta
-      alpha: 4.0
+      alpha: 4
     data_4g_medhigh_dutycycle:
       distribution: beta
-      alpha: 4.0
+      alpha: 4
     data_4g_sub_ind_pwr:
       distribution: trunc_lognormal
-      sd: 33.539999999999999
-      min: 0.0
-      max: 200.0
+      sd_rel: 0.441722639273015
+      min: 0
+      max: 200
     data_4g_sub_out_pwr:
       distribution: trunc_lognormal
-      sd: 32.170000000000002
-      min: 0.0
-      max: 200.0
+      sd_rel: 0.578701205252743
+      min: 0
+      max: 200
     data_4g_urb_ind_pwr:
       distribution: trunc_lognormal
-      sd: 37.280000000000001
-      min: 0.0
-      max: 200.0
+      sd_rel: 0.716372021521906
+      min: 0
+      max: 200
     data_4g_urb_out_pwr:
       distribution: trunc_lognormal
-      sd: 28.719999999999999
-      min: 0.0
-      max: 200.0
+      sd_rel: 0.482121873426221
+      min: 0
+      max: 200
     data_4g_rur_ind_pwr:
       distribution: trunc_lognormal
-      sd: 47.369999999999997
-      min: 0.0
-      max: 200.0
+      sd_rel: 0.539398770211797
+      min: 0
+      max: 200
     data_4g_rur_out_pwr:
       distribution: trunc_lognormal
-      sd: 44.119999999999997
-      min: 0.0
-      max: 200.0
+      sd_rel: 0.515842394481468
+      min: 0
+      max: 200
     data_4g_travel_pwr:
       distribution: trunc_lognormal
-      sd: 33.100000000000001
-      min: 0.0
-      max: 200.0
+      sd_rel: 0.496698679471789
+      min: 0
+      max: 200
     data_5g_low_dutycycle:
       distribution: beta
-      alpha: 4.0
+      alpha: 4
     data_5g_lowmed_dutycycle:
       distribution: beta
-      alpha: 4.0
+      alpha: 4
     data_5g_medhigh_dutycycle:
       distribution: beta
-      alpha: 4.0
+      alpha: 4
     data_5g_sub_ind_pwr:
       distribution: trunc_lognormal
-      sd: 11.279999999999999
-      min: 0.0
-      max: 200.0
+      sd_rel: 0.656195462478185
+      min: 0
+      max: 200
     data_5g_sub_out_pwr:
       distribution: trunc_lognormal
-      sd: 18.739999999999998
-      min: 0.0
-      max: 200.0
+      sd_rel: 0.707169811320755
+      min: 0
+      max: 200
     data_5g_urb_ind_pwr:
       distribution: trunc_lognormal
-      sd: 24.739999999999998
-      min: 0.0
-      max: 200.0
+      sd_rel: 0.679483658335622
+      min: 0
+      max: 200
     data_5g_urb_out_pwr:
       distribution: trunc_lognormal
-      sd: 19.59
-      min: 0.0
-      max: 200.0
+      sd_rel: 0.560515021459227
+      min: 0
+      max: 200
     data_5g_rur_ind_pwr:
       distribution: trunc_lognormal
-      sd: 20.879999999999999
-      min: 0.0
-      max: 200.0
+      sd_rel: 0.552966101694915
+      min: 0
+      max: 200
     data_5g_rur_out_pwr:
       distribution: trunc_lognormal
-      sd: 24.41
-      min: 0.0
-      max: 200.0
+      sd_rel: 0.530767558164818
+      min: 0
+      max: 200
     data_5g_travel_pwr:
       distribution: trunc_lognormal
-      sd: 19.640000000000001
-      min: 0.0
-      max: 200.0
+      sd_rel: 0.844368013757524
+      min: 0
+      max: 200
     wifi_2_low_dutycycle:
       distribution: beta
-      alpha: 4.0
+      alpha: 4
     wifi_2_lowmed_dutycycle:
       distribution: beta
-      alpha: 4.0
+      alpha: 4
     wifi_2_medhigh_dutycycle:
       distribution: beta
-      alpha: 4.0
+      alpha: 4
     wifi_2_high_dutycycle:
       distribution: beta
-      alpha: 4.0
+      alpha: 4
     wifi_5_low_dutycycle:
       distribution: beta
-      alpha: 4.0
+      alpha: 4
     wifi_5_lowmed_dutycycle:
       distribution: beta
-      alpha: 4.0
+      alpha: 4
     wifi_5_medhigh_dutycycle:
       distribution: beta
-      alpha: 4.0
+      alpha: 4
     wifi_5_high_dutycycle:
       distribution: beta
-      alpha: 4.0
+      alpha: 4
   farf:
     home_urb_pwr_Other:
       distribution: lognormal
-      sd: 0.08969184
+      sd_rel: 0.2
     out_urb_pwr_Other:
       distribution: lognormal
-      sd: 0.258674118
+      sd_rel: 0.2
     work_urb_pwr_Other:
       distribution: lognormal
-      sd: 0.1277146
+      sd_rel: 0.2
     home_sub_pwr_Other:
       distribution: lognormal
-      sd: 0.053664
+      sd_rel: 0.2
     out_sub_pwr_Other:
       distribution: lognormal
-      sd: 0.154768
+      sd_rel: 0.2
     work_sub_pwr_Other:
       distribution: lognormal
-      sd: 0.076634
+      sd_rel: 0.2
     home_rur_pwr_Other:
       distribution: lognormal
-      sd: 0.017636
+      sd_rel: 0.2
     out_rur_pwr_Other:
       distribution: lognormal
-      sd: 0.050864
+      sd_rel: 0.2
     work_rur_pwr_Other:
       distribution: lognormal
-      sd: 0.025554
+      sd_rel: 0.2
     travel_pwr_Other:
       distribution: lognormal
-      sd: 0.131126
+      sd_rel: 0.2
     home_urb_pwr_AT:
       distribution: lognormal
-      sd: 0.105688
+      sd_rel: 0.2
     out_urb_pwr_AT:
       distribution: lognormal
-      sd: 0.30481
+      sd_rel: 0.2
     work_urb_pwr_AT:
       distribution: lognormal
-      sd: 0.021558
+      sd_rel: 0.2
     home_sub_pwr_AT:
       distribution: lognormal
-      sd: 0.073456
+      sd_rel: 0.2
     out_sub_pwr_AT:
       distribution: lognormal
-      sd: 0.211848
+      sd_rel: 0.2
     work_sub_pwr_AT:
       distribution: lognormal
-      sd: 0.049558
+      sd_rel: 0.2
     home_rur_pwr_AT:
       distribution: lognormal
-      sd: 0.041222
+      sd_rel: 0.2
     out_rur_pwr_AT:
       distribution: lognormal
-      sd: 0.118886
+      sd_rel: 0.2
     work_rur_pwr_AT:
       distribution: lognormal
-      sd: 0.077558
+      sd_rel: 0.2
     travel_pwr_AT:
       distribution: lognormal
-      sd: 0.206838
+      sd_rel: 0.2
     home_urb_pwr_BE:
       distribution: lognormal
-      sd: 0.059796
+      sd_rel: 0.2
     out_urb_pwr_BE:
       distribution: lognormal
-      sd: 0.172454
+      sd_rel: 0.2
     work_urb_pwr_BE:
       distribution: lognormal
-      sd: 0.043786
+      sd_rel: 0.2
     home_sub_pwr_BE:
       distribution: lognormal
-      sd: 0.038304
+      sd_rel: 0.2
     out_sub_pwr_BE:
       distribution: lognormal
-      sd: 0.110468
+      sd_rel: 0.2
     work_sub_pwr_BE:
       distribution: lognormal
-      sd: 0.03059
+      sd_rel: 0.2
     home_rur_pwr_BE:
       distribution: lognormal
-      sd: 0.01681
+      sd_rel: 0.2
     out_rur_pwr_BE:
       distribution: lognormal
-      sd: 0.04848
+      sd_rel: 0.2
     work_rur_pwr_BE:
       distribution: lognormal
-      sd: 0.017392
+      sd_rel: 0.2
     travel_pwr_BE:
       distribution: lognormal
-      sd: 0.097278
+      sd_rel: 0.2
     home_urb_pwr_FR:
       distribution: lognormal
-      sd: 0.247684
+      sd_rel: 0.2
     out_urb_pwr_FR:
       distribution: lognormal
-      sd: 0.714326
+      sd_rel: 0.2
     work_urb_pwr_FR:
       distribution: lognormal
-      sd: 0.344274
+      sd_rel: 0.2
     home_sub_pwr_FR:
       distribution: lognormal
-      sd: 0.129028
+      sd_rel: 0.2
     out_sub_pwr_FR:
       distribution: lognormal
-      sd: 0.372118
+      sd_rel: 0.2
     work_sub_pwr_FR:
       distribution: lognormal
-      sd: 0.179418
+      sd_rel: 0.2
     home_rur_pwr_FR:
       distribution: lognormal
-      sd: 0.010372
+      sd_rel: 0.2
     out_rur_pwr_FR:
       distribution: lognormal
-      sd: 0.02991
+      sd_rel: 0.2
     work_rur_pwr_FR:
       distribution: lognormal
-      sd: 0.014564
+      sd_rel: 0.2
     travel_pwr_FR:
       distribution: lognormal
-      sd: 0.230914
+      sd_rel: 0.2
     home_urb_pwr_HU:
       distribution: lognormal
-      sd: 0.079038
+      sd_rel: 0.2
     out_urb_pwr_HU:
       distribution: lognormal
-      sd: 0.227946
+      sd_rel: 0.2
     work_urb_pwr_HU:
       distribution: lognormal
-      sd: 0.06324
+      sd_rel: 0.2
     home_sub_pwr_HU:
       distribution: lognormal
-      sd: 0.046012
+      sd_rel: 0.2
     out_sub_pwr_HU:
       distribution: lognormal
-      sd: 0.132702
+      sd_rel: 0.2
     work_sub_pwr_HU:
       distribution: lognormal
-      sd: 0.05637
+      sd_rel: 0.2
     home_rur_pwr_HU:
       distribution: lognormal
-      sd: 0.012988
+      sd_rel: 0.2
     out_rur_pwr_HU:
       distribution: lognormal
-      sd: 0.037458
+      sd_rel: 0.2
     work_rur_pwr_HU:
       distribution: lognormal
-      sd: 0.049502
+      sd_rel: 0.2
     travel_pwr_HU:
       distribution: lognormal
-      sd: 0.087892
+      sd_rel: 0.2
     home_urb_pwr_IT:
       distribution: lognormal
-      sd: 0.06067
+      sd_rel: 0.2
     out_urb_pwr_IT:
       distribution: lognormal
-      sd: 0.174976
+      sd_rel: 0.2
     work_urb_pwr_IT:
       distribution: lognormal
-      sd: 0.08433
+      sd_rel: 0.2
     home_sub_pwr_IT:
       distribution: lognormal
-      sd: 0.038762
+      sd_rel: 0.2
     out_sub_pwr_IT:
       distribution: lognormal
-      sd: 0.111788
+      sd_rel: 0.2
     work_sub_pwr_IT:
       distribution: lognormal
-      sd: 0.045526
+      sd_rel: 0.2
     home_rur_pwr_IT:
       distribution: lognormal
-      sd: 0.016852
+      sd_rel: 0.2
     out_rur_pwr_IT:
       distribution: lognormal
-      sd: 0.048602
+      sd_rel: 0.2
     work_rur_pwr_IT:
       distribution: lognormal
-      sd: 0.00672
+      sd_rel: 0.2
     travel_pwr_IT:
       distribution: lognormal
-      sd: 0.056204
+      sd_rel: 0.2
     home_urb_pwr_NL:
       distribution: lognormal
-      sd: 0.070458
+      sd_rel: 0.2
     out_urb_pwr_NL:
       distribution: lognormal
-      sd: 0.203202
+      sd_rel: 0.2
     work_urb_pwr_NL:
       distribution: lognormal
-      sd: 0.097934
+      sd_rel: 0.2
     home_sub_pwr_NL:
       distribution: lognormal
-      sd: 0.043164
+      sd_rel: 0.2
     out_sub_pwr_NL:
       distribution: lognormal
-      sd: 0.124486
+      sd_rel: 0.2
     work_sub_pwr_NL:
       distribution: lognormal
-      sd: 0.06011
+      sd_rel: 0.2
     home_rur_pwr_NL:
       distribution: lognormal
-      sd: 0.01587
+      sd_rel: 0.2
     out_rur_pwr_NL:
       distribution: lognormal
-      sd: 0.04577
+      sd_rel: 0.2
     work_rur_pwr_NL:
       distribution: lognormal
-      sd: 0.022286
+      sd_rel: 0.2
     travel_pwr_NL:
       distribution: lognormal
-      sd: 0.13229
+      sd_rel: 0.2
     home_urb_pwr_PL:
       distribution: lognormal
-      sd: 0.129644
+      sd_rel: 0.2
     out_urb_pwr_PL:
       distribution: lognormal
-      sd: 0.373898
+      sd_rel: 0.2
     work_urb_pwr_PL:
       distribution: lognormal
-      sd: 0.31859
+      sd_rel: 0.2
     home_sub_pwr_PL:
       distribution: lognormal
-      sd: 0.07214
+      sd_rel: 0.2
     out_sub_pwr_PL:
       distribution: lognormal
-      sd: 0.208054
+      sd_rel: 0.2
     work_sub_pwr_PL:
       distribution: lognormal
-      sd: 0.161492
+      sd_rel: 0.2
     home_rur_pwr_PL:
       distribution: lognormal
-      sd: 0.014636
+      sd_rel: 0.2
     out_rur_pwr_PL:
       distribution: lognormal
-      sd: 0.04221
+      sd_rel: 0.2
     work_rur_pwr_PL:
       distribution: lognormal
-      sd: 0.004394
+      sd_rel: 0.2
     travel_pwr_PL:
       distribution: lognormal
-      sd: 0.167678
+      sd_rel: 0.2
     home_urb_pwr_ES:
       distribution: lognormal
-      sd: 0.058368
+      sd_rel: 0.2
     out_urb_pwr_ES:
       distribution: lognormal
-      sd: 0.168332
+      sd_rel: 0.2
     work_urb_pwr_ES:
       distribution: lognormal
-      sd: 0.201848
+      sd_rel: 0.2
     home_sub_pwr_ES:
       distribution: lognormal
-      sd: 0.0422
+      sd_rel: 0.2
     out_sub_pwr_ES:
       distribution: lognormal
-      sd: 0.121708
+      sd_rel: 0.2
     work_sub_pwr_ES:
       distribution: lognormal
-      sd: 0.119204
+      sd_rel: 0.2
     home_rur_pwr_ES:
       distribution: lognormal
-      sd: 0.026034
+      sd_rel: 0.2
     out_rur_pwr_ES:
       distribution: lognormal
-      sd: 0.075084
+      sd_rel: 0.2
     work_rur_pwr_ES:
       distribution: lognormal
-      sd: 0.03656
+      sd_rel: 0.2
     travel_pwr_ES:
       distribution: lognormal
-      sd: 0.119658
+      sd_rel: 0.2
     home_urb_pwr_CH:
       distribution: lognormal
-      sd: 0.024722
+      sd_rel: 0.2
     out_urb_pwr_CH:
       distribution: lognormal
-      sd: 0.0713
+      sd_rel: 0.2
     work_urb_pwr_CH:
       distribution: lognormal
-      sd: 0.017004
+      sd_rel: 0.2
     home_sub_pwr_CH:
       distribution: lognormal
-      sd: 0.018522
+      sd_rel: 0.2
     out_sub_pwr_CH:
       distribution: lognormal
-      sd: 0.053418
+      sd_rel: 0.2
     work_sub_pwr_CH:
       distribution: lognormal
-      sd: 0.017154
+      sd_rel: 0.2
     home_rur_pwr_CH:
       distribution: lognormal
-      sd: 0.012322
+      sd_rel: 0.2
     out_rur_pwr_CH:
       distribution: lognormal
-      sd: 0.035538
+      sd_rel: 0.2
     work_rur_pwr_CH:
       distribution: lognormal
-      sd: 0.017304
+      sd_rel: 0.2
     travel_pwr_CH:
       distribution: lognormal
-      sd: 0.062556
+      sd_rel: 0.2
     home_urb_pwr_UK:
       distribution: lognormal
-      sd: 0.06085
+      sd_rel: 0.2
     out_urb_pwr_UK:
       distribution: lognormal
-      sd: 0.175494
+      sd_rel: 0.2
     work_urb_pwr_UK:
       distribution: lognormal
-      sd: 0.08458
+      sd_rel: 0.2
     home_sub_pwr_UK:
       distribution: lognormal
-      sd: 0.035054
+      sd_rel: 0.2
     out_sub_pwr_UK:
       distribution: lognormal
-      sd: 0.101094
+      sd_rel: 0.2
     work_sub_pwr_UK:
       distribution: lognormal
-      sd: 0.046916
+      sd_rel: 0.2
     home_rur_pwr_UK:
       distribution: lognormal
-      sd: 0.009256
+      sd_rel: 0.2
     out_rur_pwr_UK:
       distribution: lognormal
-      sd: 0.026694
+      sd_rel: 0.2
     work_rur_pwr_UK:
       distribution: lognormal
-      sd: 0.009252
+      sd_rel: 0.2
     travel_pwr_UK:
       distribution: lognormal
-      sd: 0.149954
+      sd_rel: 0.2
   smartwatch:
     watch_pwr_active:
       distribution: lognormal
-      sd: 0.2
+      sd_rel: 0.2
     watch_pwr_passive:
       distribution: lognormal
-      sd: 0.0004
+      sd_rel: 0.2
     watch_phone_pwr:
       distribution: lognormal
-      sd: 0.0004
+      sd_rel: 0.2
   headphones:
     headp_pwr:
       distribution: lognormal
-      sd: 0.0004
+      sd_rel: 0.2
     headp_phone_pwr:
       distribution: lognormal
-      sd: 0.032
+      sd_rel: 0.2
   hotspot:
     hotspot_pwr:
       distribution: lognormal
-      sd: 1.03511456
+      sd_rel: 0.2
   vr:
     vr_2_dutycycle:
       distribution: beta
-      alpha: 4.0
+      alpha: 4
     vr_5_dutycycle:
       distribution: beta
-      alpha: 4.0
+      alpha: 4
     vr_online_prop:
       distribution: beta
-      alpha: 4.0
+      alpha: 4
   gaming:
     gaming_online_prop:
       distribution: beta
-      alpha: 4.0
+      alpha: 4
     gaming_2_dutycycle:
       distribution: beta
-      alpha: 4.0
+      alpha: 4
     gaming_5_dutycycle:
       distribution: beta
-      alpha: 4.0
+      alpha: 4

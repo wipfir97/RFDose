@@ -7,8 +7,9 @@
 #'
 #' @details Each drawn parameter has a distribution and the values that set
 #' its shape:
-#' * `lognormal`: `sd` (standard deviation)
-#' * `trunc_lognormal`: `sd`, `min`, `max` (lognormal truncated to `min`-`max`)
+#' * `lognormal`: `sd_rel` (standard deviation relative to the mean)
+#' * `trunc_lognormal`: `sd_rel`, `min`, `max` (lognormal truncated to
+#'   `min`-`max`)
 #' * `beta`: `alpha` (a0 = alpha/mean)
 #' * `dirichlet`: `a0` and `group`. The parameters of a group are drawn
 #'   together and sum to 1.
@@ -157,8 +158,9 @@ simulate_params <- function(
     spec <- specs[[name]]
     draws[, name] <- tryCatch(
       switch(spec$distribution,
-        lognormal       = r_lognormal(n, means[[name]], spec$sd),
-        trunc_lognormal = r_trunc_lognormal(n, means[[name]], spec$sd, spec$min, spec$max),
+        lognormal       = r_lognormal(n, means[[name]], spec$sd_rel * means[[name]]),
+        trunc_lognormal = r_trunc_lognormal(n, means[[name]], spec$sd_rel * means[[name]],
+                                            spec$min, spec$max),
         beta            = r_beta(n, means[[name]], spec$alpha),
         dirichlet       = NA_real_, # drawn below, with its group
         stop("unknown distribution '", spec$distribution, "'")),

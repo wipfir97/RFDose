@@ -22,8 +22,9 @@ the parameter list.
 Each drawn parameter has a distribution and the values that set
 its shape:
 \itemize{
-\item \code{lognormal}: \code{sd} (standard deviation)
-\item \code{trunc_lognormal}: \code{sd}, \code{min}, \code{max} (lognormal truncated to \code{min}-\code{max})
+\item \code{lognormal}: \code{sd_rel} (standard deviation relative to the mean)
+\item \code{trunc_lognormal}: \code{sd_rel}, \code{min}, \code{max} (lognormal truncated to
+\code{min}-\code{max})
 \item \code{beta}: \code{alpha} (a0 = alpha/mean)
 \item \code{dirichlet}: \code{a0} and \code{group}. The parameters of a group are drawn
 together and sum to 1.

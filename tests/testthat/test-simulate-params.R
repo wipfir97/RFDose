@@ -65,6 +65,18 @@ test_that("the draws stay within the bounds of their distributions", {
   expect_true(all(t(draws[, truncated]) >= lower & t(draws[, truncated]) <= upper))
 })
 
+test_that("the spread stays relative to the mean, also with other parameter values", {
+  # e.g. another parameter file: three times the means of the lognormal parameters
+  lognormal <- names(specs)[types == "lognormal"]
+  tripled   <- set_params(params, 3 * means[lognormal])
+  sd_rel    <- vapply(specs[lognormal], function(spec) spec$sd_rel, numeric(1))
+  set.seed(15)
+  drawn     <- simulate_params(2e4, params = tripled, distributions = dists, sar_sd = 0)[, lognormal]
+
+  expect_equal(colMeans(drawn), 3 * means[lognormal], tolerance = 0.01)
+  expect_equal(apply(drawn, 2, stats::sd) / (3 * means[lognormal]), sd_rel, tolerance = 0.05)
+})
+
 test_that("the proportions of each Dirichlet group sum to 1 in every draw", {
   for (group in unique(groups[!is.na(groups)])) {
     members <- names(groups)[groups %in% group]

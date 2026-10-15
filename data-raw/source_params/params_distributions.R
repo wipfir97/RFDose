@@ -160,17 +160,20 @@ for (i in which(!is.na(rows$m))) {
          paste(sub("alpha", "alpha_a0", needed), collapse = ", "), ".")
   }
 
+  # The sd is written relative to the mean, so it also fits other means (e.g.
+  # in another parameter file)
   spec <- switch(dist,
     lognormal = {
       if (m <= 0 || rows$sd[i] <= 0) stop(where, ": lognormal needs mean > 0 and sd > 0.")
-      list(distribution = "lognormal", sd = rows$sd[i])
+      list(distribution = "lognormal", sd_rel = rows$sd[i] / m)
     },
     trunc_lognormal = {
       if (rows$sd[i] <= 0) stop(where, ": trunc_lognormal needs sd > 0.")
       if (!(rows$min[i] >= 0 && rows$min[i] < m && m < rows$max[i])) {
         stop(where, ": trunc_lognormal needs 0 <= min < mean < max.")
       }
-      list(distribution = "trunc_lognormal", sd = rows$sd[i], min = rows$min[i], max = rows$max[i])
+      list(distribution = "trunc_lognormal", sd_rel = rows$sd[i] / m,
+           min = rows$min[i], max = rows$max[i])
     },
     beta = {
       if (m < 0 || m > 1 || rows$alpha[i] <= 0) stop(where, ": beta needs 0 <= mean <= 1 and alpha > 0.")
@@ -223,12 +226,14 @@ header <- c(
   "# params_sources.xlsx, do not edit by hand.",
   "# The mean of each distribution is the parameter value (params.yaml), so only",
   "# its shape is given here. Parameters not listed here are not drawn.",
-  "#   lognormal:       sd (standard deviation)",
-  "#   trunc_lognormal: sd, min, max",
+  "#   lognormal:       sd_rel (standard deviation relative to the mean)",
+  "#   trunc_lognormal: sd_rel, min, max",
   "#   beta:            alpha (a0 = alpha/mean)",
   "#   dirichlet:       a0, group (drawn together, the parameters of a group sum to 1)")
+# Numbers written with 15 significant digits
+write_number <- function(x) structure(as.character(x), class = "verbatim")
 writeLines(
-  c(header, sub("\n$", "", yaml::as.yaml(dists, precision = 15))),
+  c(header, sub("\n$", "", yaml::as.yaml(dists, handlers = list(numeric = write_number)))),
   dists_yaml)
 
 # Must read back as written (e.g. numbers must not be read as text)

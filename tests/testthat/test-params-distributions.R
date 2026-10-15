@@ -5,8 +5,8 @@ specs  <- list_distributions(load_distributions())
 
 # Shape values of each distribution
 shape_fields <- list(
-  lognormal       = "sd",
-  trunc_lognormal = c("sd", "min", "max"),
+  lognormal       = "sd_rel",
+  trunc_lognormal = c("sd_rel", "min", "max"),
   beta            = "alpha",
   dirichlet       = c("group", "a0"))
 
@@ -37,21 +37,21 @@ test_that("every distribution is known and has its shape values only", {
 })
 
 ## Values =====================================================================
-test_that("lognormal distributions have mean > 0 and sd > 0", {
+test_that("lognormal distributions have mean > 0 and sd_rel > 0", {
   for (spec in Filter(function(spec) spec$distribution == "lognormal", specs)) {
     label <- paste(spec$key, collapse = " > ")
 
-    expect_true(is_number(spec$sd) && spec$sd > 0, label = label)
+    expect_true(is_number(spec$sd_rel) && spec$sd_rel > 0, label = label)
     expect_gt(params[[spec$key]], 0, label = label)
   }
 })
 
-test_that("truncated lognormal distributions have sd > 0 and 0 <= min < mean < max", {
+test_that("truncated lognormal distributions have sd_rel > 0 and 0 <= min < mean < max", {
   for (spec in Filter(function(spec) spec$distribution == "trunc_lognormal", specs)) {
     label <- paste(spec$key, collapse = " > ")
     mean  <- params[[spec$key]]
 
-    expect_true(is_number(spec$sd) && spec$sd > 0, label = label)
+    expect_true(is_number(spec$sd_rel) && spec$sd_rel > 0, label = label)
     expect_true(is_number(spec$min) && is_number(spec$max), label = label)
     expect_true(spec$min >= 0 && spec$min < mean && mean < spec$max, label = label)
   }

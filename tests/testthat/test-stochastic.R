@@ -13,8 +13,8 @@ degenerate_file <- function() {
   no_spread <- rapply(dists, function(x) x, how = "replace")
   for (spec in specs) {
     shape <- switch(spec$distribution,
-      lognormal       = list(sd = 0),
-      trunc_lognormal = list(sd = 0),
+      lognormal       = list(sd_rel = 0),
+      trunc_lognormal = list(sd_rel = 0),
       beta            = list(alpha = Inf),
       dirichlet       = list(a0 = Inf))
     no_spread[[spec$key]] <- utils::modifyList(no_spread[[spec$key]], shape)
