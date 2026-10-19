@@ -16,7 +16,8 @@ calculate_emf_doses_stochastic(
   sar_sd = 0.25,
   draw_inputs = TRUE,
   probs = c(0.025, 0.5, 0.975),
-  keep_draws = FALSE
+  keep_draws = FALSE,
+  seed = NULL
 )
 }
 \arguments{
@@ -56,6 +57,10 @@ package (e.g. \code{"goliat_average"}, the default; see
 95\% interval)}
 
 \item{keep_draws}{If TRUE, also return the doses and parameters of every draw.}
+
+\item{seed}{Random seed for reproducible draws (optional), as for
+\code{\link[=set.seed]{set.seed()}}. The random state of the session is restored afterwards. If
+NULL, the draws continue from the current random state.}
 }
 \value{
 A data frame with one row per row of \code{data} and dose, in mJ/kg/day:
@@ -95,8 +100,9 @@ The model takes the travel time from the time at home. If the travel time
 of a draw is longer than the drawn time at home, it is capped at the time at
 home, with a warning.
 
-The doses of a row do not depend on the other rows. Use \code{\link[=set.seed]{set.seed()}} before
-for reproducible results.
+The doses of a row do not depend on the other rows. Give a \code{seed} (or use
+\code{\link[=set.seed]{set.seed()}} before) for reproducible results: the same seed and arguments
+give the same draws.
 }
 \seealso{
 \code{\link[=calculate_emf_doses]{calculate_emf_doses()}}, \code{\link[=simulate_params]{simulate_params()}}

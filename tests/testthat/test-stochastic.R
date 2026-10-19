@@ -111,6 +111,30 @@ test_that("calculate_emf_doses_stochastic is reproducible with set.seed", {
   expect_identical(calculate_emf_doses_stochastic(input, tissue = "body", n = 5), first)
 })
 
+test_that("calculate_emf_doses_stochastic is reproducible with seed", {
+  set.seed(36)
+  before <- calculate_emf_doses_stochastic(input, tissue = "body", n = 5, keep_draws = TRUE)
+  first  <- calculate_emf_doses_stochastic(input, tissue = "body", n = 5, keep_draws = TRUE,
+                                           seed = 36)
+
+  expect_identical(first, before)
+  expect_identical(calculate_emf_doses_stochastic(input, tissue = "body", n = 5,
+                                                  keep_draws = TRUE, seed = 36), first)
+  expect_false(identical(calculate_emf_doses_stochastic(input, tissue = "body", n = 5,
+                                                        keep_draws = TRUE, seed = 37), first))
+})
+
+test_that("seed does not change the random state of the session", {
+  set.seed(38)
+  expected <- stats::runif(3)
+  set.seed(38)
+  calculate_emf_doses_stochastic(input, tissue = "body", n = 5, seed = 39)
+
+  expect_identical(stats::runif(3), expected)
+  expect_error(calculate_emf_doses_stochastic(input, tissue = "body", n = 5, seed = 1.5), "seed")
+  expect_error(calculate_emf_doses_stochastic(input, tissue = "body", n = 5, seed = "a"), "seed")
+})
+
 test_that("drawing the SAR values widens the doses", {
   for (tissue in c("brain", "body")) {
     set.seed(30)

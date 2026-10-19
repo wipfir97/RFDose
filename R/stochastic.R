@@ -20,8 +20,9 @@
 #' of a draw is longer than the drawn time at home, it is capped at the time at
 #' home, with a warning.
 #'
-#' The doses of a row do not depend on the other rows. Use [set.seed()] before
-#' for reproducible results.
+#' The doses of a row do not depend on the other rows. Give a `seed` (or use
+#' [set.seed()] before) for reproducible results: the same seed and arguments
+#' give the same draws.
 #'
 #' @param data A data frame. Must have the exact same columns as the provided example dataset.
 #' Columns must not be missing. Missing values will be replaced with default values.
@@ -48,6 +49,9 @@
 #' @param probs Probabilities of the quantiles of the doses (default: median and
 #' 95% interval)
 #' @param keep_draws If TRUE, also return the doses and parameters of every draw.
+#' @param seed Random seed for reproducible draws (optional), as for
+#' [set.seed()]. The random state of the session is restored afterwards. If
+#' NULL, the draws continue from the current random state.
 #'
 #' @returns A data frame with one row per row of `data` and dose, in mJ/kg/day:
 #' * `sample_id`: ID of the row, if `data` has a column `sample_id`
@@ -78,9 +82,26 @@ calculate_emf_doses_stochastic <- function(
     sar_sd              = 0.25,
     draw_inputs         = TRUE,
     probs               = c(0.025, 0.5, 0.975),
-    keep_draws          = FALSE) {
+    keep_draws          = FALSE,
+    seed                = NULL) {
   if (!is.numeric(probs) || anyNA(probs) || any(probs < 0 | probs > 1)) {
     stop("probs must be numbers between 0 and 1.")
+  }
+  # Random seed ===============================================================
+  ## (the random state of the session is restored on exit)
+  if (!is.null(seed)) {
+    if (length(seed) != 1 || !is.numeric(seed) || !is.finite(seed) || seed != round(seed)) {
+      stop("seed must be a single whole number.")
+    }
+    old_seed <- get0(".Random.seed", envir = globalenv(), inherits = FALSE)
+    on.exit(
+      if (is.null(old_seed)) {
+        rm(list = ".Random.seed", envir = globalenv())
+      } else {
+        assign(".Random.seed", old_seed, envir = globalenv())
+      },
+      add = TRUE)
+    set.seed(seed)
   }
   # Parameter and distribution files ==========================================
   params        <- load_params(path = params, sar_path = sar_file)

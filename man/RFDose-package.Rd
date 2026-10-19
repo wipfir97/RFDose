@@ -63,7 +63,7 @@ row are drawn around its own values, so the doses of a row do not depend on
 the other rows. For each row and exposure source, and for the total dose,
 the result gives the deterministic dose, the mean and standard deviation of
 the doses of all draws, and their quantiles (default: median and 95\%
-interval). Use \code{\link[=set.seed]{set.seed()}} before the calculation for reproducible results.
+interval). Give a \code{seed} for reproducible results.
 }
 
 \seealso{

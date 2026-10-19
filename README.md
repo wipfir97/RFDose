@@ -105,12 +105,11 @@ Behind the scenes, `calculate_emf_doses()` calls various source-specific dose fu
 
 ### Stochastic dose calculation
 
-`calculate_emf_doses_stochastic()` gives the uncertainty of the doses. It calculates the doses of each row `n` times (default: 1000), each time with parameters, SAR values and input values drawn from their distributions (see [Uncertainty in the stochastic model](#uncertainty-in-the-stochastic-model)), and summarises the doses of all draws. It takes the same arguments as `calculate_emf_doses()`, including `sar_file`. Use `set.seed()` before for reproducible results.
+`calculate_emf_doses_stochastic()` gives the uncertainty of the doses. It calculates the doses of each row `n` times (default: 1000), each time with parameters, SAR values and input values drawn from their distributions (see [Uncertainty in the stochastic model](#uncertainty-in-the-stochastic-model)), and summarises the doses of all draws. It takes the same arguments as `calculate_emf_doses()`, including `sar_file`. Give a `seed` for reproducible results: the same seed and arguments give the same draws.
 
 ```{r}
 # Calculate example doses with their uncertainty
-set.seed(1)
-calculate_emf_doses_stochastic(example_data, tissue = "brain", n = 1000)
+calculate_emf_doses_stochastic(example_data, tissue = "brain", n = 1000, seed = 1)
 ```
 
 The result has one row per row of `data` and exposure source, plus the total dose (`total_dose`), in mJ/kg/day:
@@ -137,6 +136,7 @@ Options:
 * `draw_inputs = FALSE`: the input values are not drawn, so the uncertainty comes from the parameters and SAR values only
 * `distributions`, `input_distributions`: own distribution files (YAML), with the structure of the inbuilt files [`params_distributions.yaml`](inst/extdata/params_distributions.yaml) and [`input_distributions.yaml`](inst/extdata/input_distributions.yaml)
 * `keep_draws = TRUE`: also returns the doses, parameters and inputs of every draw
+* `seed`: random seed for reproducible draws (as `set.seed()` before, but without changing the random state of the session)
 
 The calculation takes about 25 seconds for the 3 rows of the example data with 1000 draws, and grows with the number of rows and draws.
 

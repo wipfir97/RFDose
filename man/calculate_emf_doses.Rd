@@ -49,3 +49,33 @@ This function will be removed in the future.
 \details{
 Additional details will follow.
 }
+\examples{
+# Brain doses of the example data, in mJ/kg/day: the input columns, plus one
+# column per exposure source
+doses   <- calculate_emf_doses(example_data, tissue = "brain")
+sources <- c("call_dose", "data_dose", "dect_dose", "farf_dose", "wifi_dose",
+             "lptp_dose", "tblt_dose", "other_dose")
+doses[, c("sample_id", sources)]
+
+# Total brain dose of each row
+rowSums(doses[, sources])
+
+# Whole-body doses
+body <- calculate_emf_doses(example_data, tissue = "body")
+body[, c("sample_id", sources)]
+
+# With the SAR values of one GOLIAT phantom (see available_sar_files())
+duke <- calculate_emf_doses(example_data, tissue = "brain", sar_file = "goliat_duke")
+duke[, c("sample_id", sources)]
+
+# With your own parameter and SAR files (YAML, with the structure of the
+# included files)
+\dontrun{
+calculate_emf_doses(
+  example_data,
+  tissue   = "brain",
+  params   = "path_to_my_file/my_params.yaml",
+  sar_file = "path_to_my_file/my_sar.yaml")
+}
+
+}

@@ -50,7 +50,7 @@
 #' the other rows. For each row and exposure source, and for the total dose,
 #' the result gives the deterministic dose, the mean and standard deviation of
 #' the doses of all draws, and their quantiles (default: median and 95%
-#' interval). Use [set.seed()] before the calculation for reproducible results.
+#' interval). Give a `seed` for reproducible results.
 #'
 #' @seealso [calculate_emf_doses()], [calculate_emf_doses_stochastic()],
 #' [available_sar_files()], [load_params()]
