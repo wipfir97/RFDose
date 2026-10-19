@@ -1,8 +1,8 @@
-# RFDose - Deterministic RF-EMF Dose Calculator
+# RFDose - Deterministic and Stochastic RF-EMF Dose Calculator
 
 ## About
 
-RFDose implements the deterministic RF-EMF dose calculations developed in Jalilian et al. (publication in writing stage). Version 2.0.0 is based on the most up-to-date dose calculations (October 2026).
+RFDose implements the deterministic RF-EMF dose calculations developed in Jalilian et al. (publication in writing stage). Version 2.0.0 is based on the most up-to-date dose calculations (October 2026). It also includes a first version of a stochastic dose model, which estimates the uncertainty of the doses (see [Stochastic dose calculation](#stochastic-dose-calculation)).
 
 For detailed information about the package functions, please refer to the [package manual](./doc/RFDose_2.0.0.pdf). We are also preparing a short publication on `RFDose`, which will contain further background information. 
 
@@ -12,6 +12,7 @@ For detailed information about the package functions, please refer to the [packa
 * To get the same doses as version 1.0.0, use the ETAIN SAR values: `calculate_emf_doses(data, tissue, sar_file = "etain")`
 * `calculate_emf_doses` has a new optional input variable "sar_file" to choose the SAR values (see the [use example](#use-example))
 * The inbuilt parameter file [`params.yaml`](inst/extdata/params.yaml) no longer contains SAR values: they are in separate SAR files
+* New function `calculate_emf_doses_stochastic` gives the uncertainty of the doses (see [Stochastic dose calculation](#stochastic-dose-calculation))
 
 **Information for users of previous test versions (0.2.0, 0.3.0)**
 
@@ -81,11 +82,11 @@ The package includes these SAR files, which `sar_file` takes by name (`available
 Each of these files also sets the laptop and headphone placement proportions that go with its SAR values. The assumptions behind the GOLIAT files are described in [GOLIAT SAR values](#goliat-sar-values).
 
 ```{r}
-# Calculate example doses with the ETAIN SAR values
+# Calculate example doses with the GOLIAT SAR values, average of the four phantoms (default)
 calculate_emf_doses(
   example_data, 
   tissue = "brain", 
-  sar_file = "etain")
+  sar_file = "goliat_average")
 
 # Calculate example doses with the SAR values of one GOLIAT phantom
 calculate_emf_doses(
@@ -101,6 +102,52 @@ calculate_emf_doses(
 ```
 
 Behind the scenes, `calculate_emf_doses()` calls various source-specific dose functions, which calculate the individual contributions of different sources (e.g. mobile phone calls). These functions may be used individually. 
+
+### Stochastic dose calculation
+
+`calculate_emf_doses_stochastic()` gives the uncertainty of the doses. It calculates the doses of each row `n` times (default: 1000), each time with parameters, SAR values and input values drawn from their distributions (see [Uncertainty in the stochastic model](#uncertainty-in-the-stochastic-model)), and summarises the doses of all draws. It takes the same arguments as `calculate_emf_doses()`, including `sar_file`. Use `set.seed()` before for reproducible results.
+
+```{r}
+# Calculate example doses with their uncertainty
+set.seed(1)
+calculate_emf_doses_stochastic(example_data, tissue = "brain", n = 1000)
+```
+
+The result has one row per row of `data` and exposure source, plus the total dose (`total_dose`), in mJ/kg/day:
+
+```
+ sample_id row       dose deterministic  mean    sd  q2.5   q50 q97.5
+     TEST1   1  call_dose          73.2  75.4  44.1  22.3  66.0 186.1
+     TEST1   1  data_dose         203.1 207.2  79.6  99.6 192.1 404.9
+     ...
+     TEST1   1 total_dose         565.0 565.9 119.0 367.6 551.3 828.0
+```
+
+|Column|Description|
+|-|-|
+|sample\_id, row|ID (if `data` has a column `sample_id`) and row number in `data`|
+|dose|Exposure source (as the columns of `calculate_emf_doses()`), or `total_dose` for their sum|
+|deterministic|Dose with the values of the parameter file, as calculated by `calculate_emf_doses()`|
+|mean, sd|Mean and standard deviation of the doses of all draws|
+|q2.5, q50, q97.5|Median and 95% interval of the doses of all draws (other quantiles with `probs`)|
+
+Options:
+
+* `sar_sd`: standard deviation of the SAR values, relative to their value (default: 0.25). With 0, the SAR values are not drawn
+* `draw_inputs = FALSE`: the input values are not drawn, so the uncertainty comes from the parameters and SAR values only
+* `distributions`, `input_distributions`: own distribution files (YAML), with the structure of the inbuilt files [`params_distributions.yaml`](inst/extdata/params_distributions.yaml) and [`input_distributions.yaml`](inst/extdata/input_distributions.yaml)
+* `keep_draws = TRUE`: also returns the doses, parameters and inputs of every draw
+
+The calculation takes about 25 seconds for the 3 rows of the example data with 1000 draws, and grows with the number of rows and draws.
+
+```{r}
+# Uncertainty from the parameters and SAR values only, with the GOLIAT SAR values (average of the four phantoms)
+calculate_emf_doses_stochastic(
+  example_data, 
+  tissue = "brain", 
+  sar_file = "goliat_average", 
+  draw_inputs = FALSE)
+```
 
 \---
 
@@ -217,6 +264,18 @@ Default values are specified in [this YAML file](./inst/extdata/defaultvariables
 
 The doses depend on the SAR values used (GOLIAT by default, see [GOLIAT SAR values](#goliat-sar-values)).
 
+### Uncertainty in the stochastic model
+
+`calculate_emf_doses_stochastic()` draws three kinds of values. Each distribution is centred on the value used by the deterministic calculation, and only its shape is given in the distribution files:
+
+|Drawn values|Distributions|File|
+|-|-|-|
+|Parameters (260): output powers, duty cycles, proportions, far-field power densities|Lognormal and truncated lognormal (powers), beta (duty cycles, single proportions), Dirichlet (proportions that sum to 1, drawn together); mean = value in `params.yaml`|[`params_distributions.yaml`](inst/extdata/params_distributions.yaml)|
+|SAR values|Lognormal around their value, with a relative standard deviation of 25% (`sar_sd`). SAR values from the same simulation are drawn together; SAR values of 0 stay 0|-|
+|Inputs (27): durations, proportions, urbanicity, commuting time|Truncated lognormal for durations (relative standard deviation 20%, between 0 and 86400 s), beta and Dirichlet for proportions, categorical for urbanicity (given value kept with probability 0.8); centred on the value in `data`, or on the default value if missing. Durations of 0 stay 0|[`input_distributions.yaml`](inst/extdata/input_distributions.yaml)|
+
+Every row is calculated with the same parameter sets, and the inputs of a row are drawn around its own values, so the doses of a row do not depend on the other rows. The distribution files are generated from the same Excel file as the parameters and default values (`data-raw/source_params/`).
+
 ## GOLIAT SAR values
 
 The GOLIAT SAR files (`inst/extdata/sar_goliat_*.yaml`) contain SAR values from GOLIAT dosimetric simulations, used instead of the ETAIN SAR values ([`sar_etain.yaml`](inst/extdata/sar_etain.yaml)). There is one file per phantom (Duke, Ella, Eartha, Thelonious) and one with the average of the four phantoms (`sar_goliat_average.yaml`), which is the default. The files are generated by [`data-raw/source-sar-goliat/sar_goliat.R`](data-raw/source-sar-goliat/sar_goliat.R) from the GOLIAT results file (`Final_Data_All_2026_LAST.xlsx`, not included in this repository), which is read by [`data-raw/source-sar-goliat/reading_raw_goliat_sar.R`](data-raw/source-sar-goliat/reading_raw_goliat_sar.R).
@@ -298,7 +357,7 @@ Contributors will be listed here.
 
 |Version|Description|
 |-|-|
-|2.0.0|SAR values from GOLIAT dosimetric simulations included: one file per phantom and one with their average (`inst/extdata/sar_goliat_*.yaml`). All SAR values are now taken from GOLIAT instead of ETAIN, except for the sources without a similar GOLIAT simulation (smartwatch, headphones, Bluetooth headset), which keep their ETAIN values. The average of the four phantoms is the default; the ETAIN SAR values remain available with `sar_file` (`sar_etain.yaml`). See [GOLIAT SAR values](#goliat-sar-values)|
+|2.0.0|SAR values from GOLIAT dosimetric simulations included: one file per phantom and one with their average (`inst/extdata/sar_goliat_*.yaml`). All SAR values are now taken from GOLIAT instead of ETAIN, except for the sources without a similar GOLIAT simulation (smartwatch, headphones, Bluetooth headset), which keep their ETAIN values. The average of the four phantoms is the default; the ETAIN SAR values remain available with `sar_file` (`sar_etain.yaml`). See [GOLIAT SAR values](#goliat-sar-values). Output power parameters updated with data from GOLIAT Task 1.2. First version of the stochastic dose model (`calculate_emf_doses_stochastic()`, see [Stochastic dose calculation](#stochastic-dose-calculation))|
 |1.0.0|Updated version based on finalized dose calculations in Jalilian et al. (manuscript in preparation)|
 |0.3.0|Updated version with major changes in dose calculations (based on dose calculator 7.6). Based on dose calculator version 7.6|
 |0.2.0|Revised draft version with updated calculations, variables, and unit tests. Based on dose calculator version 7.3|

@@ -12,7 +12,7 @@ Character vector of SAR file names.
 \description{
 Lists the names of the SAR files included in the package. A name can be used
 instead of a file path to choose the SAR values, e.g.
-\code{calculate_emf_doses(data, tissue, sar_file = "etain")}.
+\code{calculate_emf_doses(data, tissue, sar_file = "goliat_average")}.
 }
 \details{
 \itemize{

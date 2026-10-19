@@ -1,3 +1,17 @@
+# Version 2.0.0
+
+* GOLIAT SAR values replace the ETAIN SAR values
+  * One file per phantom (Duke, Ella, Eartha, Thelonious), with their average as the default
+  * Smartwatch, headphones and Bluetooth headset keep their ETAIN values
+  * New argument `sar_file` to choose the SAR values, e.g. `sar_file = "goliat_average"`; the ETAIN values of version 1.0.0 remain available
+* Output power parameters updated with data from GOLIAT Task 1.2
+  * New 4G and 5G output powers and duty cycles of the mobile phone
+  * Parameters taken from one Excel file with their sources; previous parameters in `params_v1.0.yaml`
+  * `use_5g` is TRUE by default
+* First version of the stochastic dose model
+  * New function `calculate_emf_doses_stochastic()`: doses with parameters, SAR values and inputs drawn from their distributions
+
+
 # Version 1.0.0
 
 * First official (not preliminary) version

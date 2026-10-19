@@ -27,8 +27,8 @@
 #' @returns List of parameters loaded from yaml input file(s)
 #'
 #' @examples
-#' goliat <- load_params()
-#' etain  <- load_params(sar_path = "etain")
+#' params <- load_params()
+#' params <- load_params(sar_path = "goliat_average") # the same, with the SAR file named
 #'
 #' @export
 #' @seealso [RFDose::load_tissue_params()], [RFDose::available_sar_files()]
@@ -58,7 +58,7 @@ load_params <- function(path = NULL, sar_path = NULL) {
 #'
 #' Lists the names of the SAR files included in the package. A name can be used
 #' instead of a file path to choose the SAR values, e.g.
-#' `calculate_emf_doses(data, tissue, sar_file = "etain")`.
+#' `calculate_emf_doses(data, tissue, sar_file = "goliat_average")`.
 #'
 #' @details
 #' * `"goliat_average"`: GOLIAT, average of the four phantoms (default)

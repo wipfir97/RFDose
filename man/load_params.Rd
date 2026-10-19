@@ -38,8 +38,8 @@ values (e.g. placement proportions), which replace those of the parameter
 file.
 }
 \examples{
-goliat <- load_params()
-etain  <- load_params(sar_path = "etain")
+params <- load_params()
+params <- load_params(sar_path = "goliat_average") # the same, with the SAR file named
 
 }
 \seealso{
