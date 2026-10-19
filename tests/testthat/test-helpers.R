@@ -71,6 +71,39 @@ test_that("load_params merges SAR values from sar_path into parameters", {
   expect_null(result$devices$dect$body)
 })
 
+## SAR files by name ==========================================================
+test_that("available_sar_files lists the SAR files of the package", {
+  expect_setequal(available_sar_files(),
+                  c("etain", "goliat_average", "goliat_duke", "goliat_ella",
+                    "goliat_eartha", "goliat_thelonious"))
+})
+
+test_that("a SAR file name gives the same parameters as its path", {
+  for (name in available_sar_files()) {
+    path <- system.file("extdata", paste0("sar_", name, ".yaml"), package = "RFDose")
+
+    expect_equal(load_params(sar_path = name), load_params(sar_path = path), label = name)
+  }
+  expect_equal(load_params(sar_path = "goliat_average"), load_params())
+  expect_equal(load_params(sar_path = "ETAIN"), load_params(sar_path = "etain"))
+})
+
+test_that("an unknown SAR file stops with the available names", {
+  expect_error(load_params(sar_path = "goliat"), "SAR file not found.*\"etain\"")
+  expect_error(load_params(sar_path = file.path(tempdir(), "no_such_file.yaml")), "not found")
+  expect_error(load_params(sar_path = c("etain", "goliat_average")), "must be one of")
+})
+
+test_that("calculate_emf_doses takes the SAR file by name", {
+  etain_path <- system.file("extdata", "sar_etain.yaml", package = "RFDose")
+
+  expect_equal(calculate_emf_doses(example_data, tissue = "brain", sar_file = "etain"),
+               calculate_emf_doses(example_data, tissue = "brain", sar_file = etain_path))
+  expect_false(isTRUE(all.equal(
+    calculate_emf_doses(example_data, tissue = "brain", sar_file = "etain"),
+    calculate_emf_doses(example_data, tissue = "brain", sar_file = "goliat_average"))))
+})
+
 ## load_tissue_params =========================================================
 make_test_params <- function() {
   list(

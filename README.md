@@ -9,7 +9,7 @@ For detailed information about the package functions, please refer to the [packa
 **Information for users of version 1.0.0**
 
 * `calculate_emf_doses` now uses the GOLIAT SAR values (average of four phantoms) by default instead of the ETAIN SAR values, so the doses differ from version 1.0.0
-* To get the same doses as version 1.0.0, use the ETAIN SAR values: `calculate_emf_doses(data, tissue, sar_file = system.file("extdata", "sar_etain.yaml", package = "RFDose"))`
+* To get the same doses as version 1.0.0, use the ETAIN SAR values: `calculate_emf_doses(data, tissue, sar_file = "etain")`
 * `calculate_emf_doses` has a new optional input variable "sar_file" to choose the SAR values (see the [use example](#use-example))
 * The inbuilt parameter file [`params.yaml`](inst/extdata/params.yaml) no longer contains SAR values: they are in separate SAR files
 
@@ -70,11 +70,13 @@ calculate_emf_doses(
 
 To change only the SAR values, provide a YAML file containing SAR values, following the same structure as the [inbuilt SAR files](inst/extdata/sar_goliat_average.yaml). All other parameters keep their default values (or the values of `params`, if supplied), except device parameters that the SAR file sets itself (e.g. placement proportions that go with its SAR values).
 
-The package includes these SAR files (in `inst/extdata/`):
+The package includes these SAR files, which `sar_file` takes by name (`available_sar_files()` lists them):
 
-* GOLIAT, average of the four phantoms: `sar_goliat_average.yaml` (default)
-* GOLIAT, one file per phantom: `sar_goliat_duke.yaml`, `sar_goliat_ella.yaml`, `sar_goliat_eartha.yaml`, `sar_goliat_thelonious.yaml`
-* ETAIN: `sar_etain.yaml`
+|Name|SAR values|File in `inst/extdata/`|
+|-|-|-|
+|`"goliat_average"`|GOLIAT, average of the four phantoms (default)|`sar_goliat_average.yaml`|
+|`"goliat_duke"`, `"goliat_ella"`, `"goliat_eartha"`, `"goliat_thelonious"`|GOLIAT, one phantom|`sar_goliat_<phantom>.yaml`|
+|`"etain"`|ETAIN|`sar_etain.yaml`|
 
 Each of these files also sets the laptop and headphone placement proportions that go with its SAR values. The assumptions behind the GOLIAT files are described in [GOLIAT SAR values](#goliat-sar-values).
 
@@ -83,7 +85,13 @@ Each of these files also sets the laptop and headphone placement proportions tha
 calculate_emf_doses(
   example_data, 
   tissue = "brain", 
-  sar_file = system.file("extdata", "sar_etain.yaml", package = "RFDose"))
+  sar_file = "etain")
+
+# Calculate example doses with the SAR values of one GOLIAT phantom
+calculate_emf_doses(
+  example_data, 
+  tissue = "brain", 
+  sar_file = "goliat_duke")
 
 # Calculate example doses with own SAR file
 calculate_emf_doses(

@@ -24,14 +24,19 @@ default parameters. SAR values may be left out (see \code{sar_file}).}
 
 \item{default_value_file}{List of default values to replace missing values (optional).}
 
-\item{sar_file}{(experimental) Path to a .yaml file with SAR values, matching
-the structure of the internal SAR files (e.g. \code{sar_etain.yaml},
-\code{sar_goliat_average.yaml}). Optional; its values replace those of \code{params},
-including device parameters it sets with its SAR values (e.g. placement
-proportions). If not specified, the SAR values of \code{params} are used, or the
-default SAR values (GOLIAT, average of four phantoms) if \code{params} has none.
-For the ETAIN SAR values, use
-\code{sar_file = system.file("extdata", "sar_etain.yaml", package = "RFDose")}.}
+\item{sar_file}{SAR values (optional): the name of a SAR file included in the
+package, or the path to your own .yaml file with the structure of the
+included SAR files. Included SAR files (see \code{\link[=available_sar_files]{available_sar_files()}}):
+\itemize{
+\item \code{"goliat_average"}: GOLIAT, average of the four phantoms (default)
+\item \code{"goliat_duke"}, \code{"goliat_ella"}, \code{"goliat_eartha"}, \code{"goliat_thelonious"}:
+GOLIAT, one phantom
+\item \code{"etain"}: ETAIN
+}
+
+Its values replace those of \code{params}, including device parameters it sets
+with its SAR values (e.g. placement proportions). If not specified, the SAR
+values of \code{params} are used, or the default SAR values if \code{params} has none.}
 }
 \value{
 A data frame. Columns contain the calculated RF-EMF dose

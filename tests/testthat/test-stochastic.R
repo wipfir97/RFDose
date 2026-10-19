@@ -276,3 +276,16 @@ test_that("warnings that occur only in some draws are raised once, with their co
   expect_length(raised, 1)
   expect_match(raised, "exceeds 86400 seconds per day. \\([0-9]+ times in 50 draws\\)")
 })
+
+## SAR file by name ===========================================================
+test_that("calculate_emf_doses_stochastic takes the SAR file by name", {
+  etain_path <- system.file("extdata", "sar_etain.yaml", package = "RFDose")
+  set.seed(30)
+  by_name <- calculate_emf_doses_stochastic(make_test_input(), tissue = "brain", n = 5, sar_file = "etain")
+  set.seed(30)
+  by_path <- calculate_emf_doses_stochastic(make_test_input(), tissue = "brain", n = 5, sar_file = etain_path)
+
+  expect_identical(by_name, by_path)
+  expect_error(calculate_emf_doses_stochastic(make_test_input(), tissue = "brain", n = 5, sar_file = "goliat"),
+               "SAR file not found")
+})

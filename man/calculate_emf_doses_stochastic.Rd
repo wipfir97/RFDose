@@ -42,7 +42,9 @@ distributions are used.}
 
 \item{default_value_file}{List of default values to replace missing values (optional).}
 
-\item{sar_file}{(experimental) Path to a .yaml file with SAR values, as for
+\item{sar_file}{SAR values (optional): the name of a SAR file included in the
+package (e.g. \code{"goliat_average"}, the default, or \code{"etain"}; see
+\code{\link[=available_sar_files]{available_sar_files()}}) or the path to your own .yaml file, as for
 \code{\link[=calculate_emf_doses]{calculate_emf_doses()}}.}
 
 \item{sar_sd}{Standard deviation of the SAR values, relative to their value

@@ -10,7 +10,10 @@ load_params(path = NULL, sar_path = NULL)
 \item{path}{Path of parameter file to load (must be a YAML file). If null,
 default non-SAR parameters are loaded. The file may contain SAR values or not.}
 
-\item{sar_path}{Path of a YAML file with SAR values (optional), with the
+\item{sar_path}{SAR values (optional): the name of a SAR file included in the
+package (see \code{\link[=available_sar_files]{available_sar_files()}}: \code{"goliat_average"},
+\code{"goliat_duke"}, \code{"goliat_ella"}, \code{"goliat_eartha"}, \code{"goliat_thelonious"}
+or \code{"etain"}), or the path of a YAML file with SAR values, with the
 structure devices > device > tissue > SAR values. Its values replace those
 of the parameters loaded from \code{path}. Besides SAR values, it may set device
 parameters that go with them (e.g. placement proportions such as \code{legs_prop}).}
@@ -26,7 +29,7 @@ as a nested list.
 Default parameters are split in two files: non-SAR parameters
 (\code{params.yaml}) and SAR values, which are merged into a single list.
 The default SAR values are those of GOLIAT, averaged over four phantoms
-(\code{sar_goliat_average.yaml}). The ETAIN SAR values are in \code{sar_etain.yaml}.
+(\code{"goliat_average"}). The ETAIN SAR values are \code{"etain"}.
 
 SAR values are taken from \code{sar_path} if given. Otherwise, the SAR values of
 the parameter file are used, or the default SAR values if the parameter file
@@ -34,6 +37,11 @@ has none. A SAR file may also set device parameters that go with its SAR
 values (e.g. placement proportions), which replace those of the parameter
 file.
 }
+\examples{
+goliat <- load_params()
+etain  <- load_params(sar_path = "etain")
+
+}
 \seealso{
-\code{\link[=load_tissue_params]{load_tissue_params()}}
+\code{\link[=load_tissue_params]{load_tissue_params()}}, \code{\link[=available_sar_files]{available_sar_files()}}
 }

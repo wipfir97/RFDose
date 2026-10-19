@@ -7,7 +7,7 @@
 #' @details Default parameters are split in two files: non-SAR parameters
 #' (`params.yaml`) and SAR values, which are merged into a single list.
 #' The default SAR values are those of GOLIAT, averaged over four phantoms
-#' (`sar_goliat_average.yaml`). The ETAIN SAR values are in `sar_etain.yaml`.
+#' (`"goliat_average"`). The ETAIN SAR values are `"etain"`.
 #'
 #' SAR values are taken from `sar_path` if given. Otherwise, the SAR values of
 #' the parameter file are used, or the default SAR values if the parameter file
@@ -17,14 +17,21 @@
 #'
 #' @param path Path of parameter file to load (must be a YAML file). If null,
 #' default non-SAR parameters are loaded. The file may contain SAR values or not.
-#' @param sar_path Path of a YAML file with SAR values (optional), with the
+#' @param sar_path SAR values (optional): the name of a SAR file included in the
+#' package (see [RFDose::available_sar_files()]: `"goliat_average"`,
+#' `"goliat_duke"`, `"goliat_ella"`, `"goliat_eartha"`, `"goliat_thelonious"`
+#' or `"etain"`), or the path of a YAML file with SAR values, with the
 #' structure devices > device > tissue > SAR values. Its values replace those
 #' of the parameters loaded from `path`. Besides SAR values, it may set device
 #' parameters that go with them (e.g. placement proportions such as `legs_prop`).
 #' @returns List of parameters loaded from yaml input file(s)
 #'
+#' @examples
+#' goliat <- load_params()
+#' etain  <- load_params(sar_path = "etain")
+#'
 #' @export
-#' @seealso [RFDose::load_tissue_params()]
+#' @seealso [RFDose::load_tissue_params()], [RFDose::available_sar_files()]
 load_params <- function(path = NULL, sar_path = NULL) {
   if (is.null(path)) {
     path <- system.file("extdata", "params.yaml", package = "RFDose")
@@ -37,13 +44,65 @@ load_params <- function(path = NULL, sar_path = NULL) {
     any(vapply(device, is.list, logical(1)))
   }, logical(1)))
   if (is.null(sar_path) && !has_sar) {
-    sar_path <- system.file("extdata", "sar_goliat_average.yaml", package = "RFDose")
+    sar_path <- "goliat_average"
   }
 
   if (!is.null(sar_path)) {
-    params <- utils::modifyList(params, yaml::read_yaml(sar_path))
+    params <- utils::modifyList(params, yaml::read_yaml(sar_file_path(sar_path)))
   }
   return(params)
+}
+
+# =============================================================================
+#' SAR files included in the package
+#'
+#' Lists the names of the SAR files included in the package. A name can be used
+#' instead of a file path to choose the SAR values, e.g.
+#' `calculate_emf_doses(data, tissue, sar_file = "etain")`.
+#'
+#' @details
+#' * `"goliat_average"`: GOLIAT, average of the four phantoms (default)
+#' * `"goliat_duke"`, `"goliat_ella"`, `"goliat_eartha"`, `"goliat_thelonious"`:
+#'   GOLIAT, one phantom
+#' * `"etain"`: ETAIN
+#'
+#' Each SAR file also sets the placement proportions that go with its SAR
+#' values.
+#'
+#' @returns Character vector of SAR file names.
+#'
+#' @examples
+#' available_sar_files()
+#'
+#' @export
+#' @seealso [RFDose::load_params()], [RFDose::calculate_emf_doses()]
+available_sar_files <- function() {
+  files <- list.files(system.file("extdata", package = "RFDose"), pattern = "^sar_.*\\.yaml$")
+  sub("^sar_(.*)\\.yaml$", "\\1", files)
+}
+
+# =============================================================================
+#' Path of a SAR file
+#'
+#' @param sar_file Name of a SAR file included in the package (see
+#' [RFDose::available_sar_files()], case is ignored) or path of a YAML file
+#'
+#' @returns Path of the SAR file. Side effect of stopping calculation if the
+#' file does not exist.
+sar_file_path <- function(sar_file) {
+  names <- available_sar_files()
+  if (!is.character(sar_file) || length(sar_file) != 1 || is.na(sar_file)) {
+    stop("The SAR file must be one of ", paste0('"', names, '"', collapse = ", "),
+         ", or the path of a YAML file.")
+  }
+  if (tolower(sar_file) %in% names) {
+    return(system.file("extdata", paste0("sar_", tolower(sar_file), ".yaml"), package = "RFDose"))
+  }
+  if (!file.exists(sar_file)) {
+    stop("SAR file not found: \"", sar_file, "\". Use one of ",
+         paste0('"', names, '"', collapse = ", "), ", or the path of a YAML file.")
+  }
+  sar_file
 }
 
 # =============================================================================

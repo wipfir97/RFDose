@@ -34,7 +34,9 @@
 #' (`input_distributions.yaml`). Optional; if not specified, the default input
 #' distributions are used.
 #' @param default_value_file List of default values to replace missing values (optional).
-#' @param sar_file (experimental) Path to a .yaml file with SAR values, as for
+#' @param sar_file SAR values (optional): the name of a SAR file included in the
+#' package (e.g. `"goliat_average"`, the default, or `"etain"`; see
+#' [RFDose::available_sar_files()]) or the path to your own .yaml file, as for
 #' [RFDose::calculate_emf_doses()].
 #' @param sar_sd Standard deviation of the SAR values, relative to their value
 #' (default: 25%). With 0, the SAR values are not drawn.

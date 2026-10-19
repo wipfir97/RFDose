@@ -15,14 +15,17 @@
 #' of the internal parameter file. Optional; if not specified, calculations use
 #' default parameters. SAR values may be left out (see `sar_file`).
 #' @param default_value_file List of default values to replace missing values (optional).
-#' @param sar_file (experimental) Path to a .yaml file with SAR values, matching
-#' the structure of the internal SAR files (e.g. `sar_etain.yaml`,
-#' `sar_goliat_average.yaml`). Optional; its values replace those of `params`,
-#' including device parameters it sets with its SAR values (e.g. placement
-#' proportions). If not specified, the SAR values of `params` are used, or the
-#' default SAR values (GOLIAT, average of four phantoms) if `params` has none.
-#' For the ETAIN SAR values, use
-#' `sar_file = system.file("extdata", "sar_etain.yaml", package = "RFDose")`.
+#' @param sar_file SAR values (optional): the name of a SAR file included in the
+#' package, or the path to your own .yaml file with the structure of the
+#' included SAR files. Included SAR files (see [RFDose::available_sar_files()]):
+#' * `"goliat_average"`: GOLIAT, average of the four phantoms (default)
+#' * `"goliat_duke"`, `"goliat_ella"`, `"goliat_eartha"`, `"goliat_thelonious"`:
+#'   GOLIAT, one phantom
+#' * `"etain"`: ETAIN
+#'
+#' Its values replace those of `params`, including device parameters it sets
+#' with its SAR values (e.g. placement proportions). If not specified, the SAR
+#' values of `params` are used, or the default SAR values if `params` has none.
 #'
 #' @returns A data frame. Columns contain the calculated RF-EMF dose
 #' of each row in mJ/kg/day, for each exposure source and each tissue.
