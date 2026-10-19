@@ -10,6 +10,7 @@
   * `use_5g` is TRUE by default
 * First version of the stochastic dose model
   * New function `calculate_emf_doses_stochastic()`: doses with parameters, SAR values and inputs drawn from their distributions
+  * Argument `seed` for reproducible draws
 
 
 # Version 1.0.0
