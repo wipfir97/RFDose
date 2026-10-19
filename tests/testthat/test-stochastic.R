@@ -234,13 +234,13 @@ test_that("the physical properties of the doses hold in every draw", {
 
 ## Errors and warnings ========================================================
 test_that("an error in a draw names the row and the draw", {
-  # travel time just below the time at home, which some draws of home_prop fall below
-  far <- input
-  far$travel_time <- 0.69 * 86400
+  # share of time at home drawn above 1 in some draws, which the model rejects
+  dists <- tempfile(fileext = ".yaml")
+  yaml::write_yaml(list(global = list(home_prop = list(distribution = "lognormal", sd_rel = 0.5))), dists)
   set.seed(28)
 
-  expect_error(calculate_emf_doses_stochastic(far, tissue = "brain", n = 200),
-               "Row 1, draw [0-9]+: Calculation not defined")
+  expect_error(calculate_emf_doses_stochastic(input, tissue = "brain", n = 200, distributions = dists),
+               "Row 1, draw [0-9]+: Input proportion\\(s\\) are not between 0 and 1")
 })
 
 test_that("warnings about the input are raised once, not for every draw", {
@@ -275,6 +275,27 @@ test_that("warnings that occur only in some draws are raised once, with their co
 
   expect_length(raised, 1)
   expect_match(raised, "exceeds 86400 seconds per day. \\([0-9]+ times in 50 draws\\)")
+})
+
+## Travel time ================================================================
+test_that("a travel time longer than the drawn time at home is capped at it", {
+  # 16 h of travel: longer than the drawn time at home (about 17 h) in some draws
+  long <- input
+  long$travel_time <- 16 * 3600
+  for (draw_inputs in c(TRUE, FALSE)) {
+    raised <- character(0)
+    set.seed(35)
+    result <- withCallingHandlers(
+      calculate_emf_doses_stochastic(long, tissue = "body", n = 50, draw_inputs = draw_inputs,
+                                     keep_draws = TRUE),
+      warning = function(w) {
+        raised <<- c(raised, conditionMessage(w))
+        invokeRestart("muffleWarning")
+      })
+
+    expect_match(raised, "capped at the time at home\\. \\([0-9]+ times in 50 draws\\)", all = FALSE)
+    expect_true(all(is.finite(result$doses)))
+  }
 })
 
 ## SAR file by name ===========================================================

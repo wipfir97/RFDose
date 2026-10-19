@@ -91,6 +91,10 @@ distribution (see \code{\link[=load_input_distributions]{load_input_distribution
 value in \code{data}, or around their default value if missing; all other inputs
 keep their values.
 
+The model takes the travel time from the time at home. If the travel time
+of a draw is longer than the drawn time at home, it is capped at the time at
+home, with a warning.
+
 The doses of a row do not depend on the other rows. Use \code{\link[=set.seed]{set.seed()}} before
 for reproducible results.
 }

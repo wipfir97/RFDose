@@ -16,6 +16,10 @@
 #' value in `data`, or around their default value if missing; all other inputs
 #' keep their values.
 #'
+#' The model takes the travel time from the time at home. If the travel time
+#' of a draw is longer than the drawn time at home, it is capped at the time at
+#' home, with a warning.
+#'
 #' The doses of a row do not depend on the other rows. Use [set.seed()] before
 #' for reproducible results.
 #'
@@ -137,10 +141,18 @@ stochastic_doses <- function(samples, tissue, params, draws, inputs = NULL,
   withCallingHandlers(
     for (d in seq_len(nrow(draws))) {
       drawn <- set_params(params, draws[d, ], keys)
+      # The travel time is taken from the time at home (see location_props()),
+      # so it can be at most the drawn time at home (minus a tiny margin, so
+      # that rounding cannot make the time at home negative)
+      home_time <- drawn$global$home_prop * 86400 * (1 - 1e-12)
       for (i in seq_along(samples)) {
         sample <- samples[[i]]
         for (input in names(inputs)) {
           sample[[input]] <- inputs[[input]][i, d]
+        }
+        if (sample[["travel_time"]] > home_time) {
+          sample[["travel_time"]] <- home_time
+          warning("The travel time was longer than the drawn time at home, so it was capped at the time at home.")
         }
         dose <- tryCatch(
           total_dose(sample, tissue = tissue, params = drawn),
