@@ -59,6 +59,19 @@ test_that("lognormal inputs keep their value as mean, with a relative sd of sd_r
   }
 })
 
+test_that("durations just below 24 h are drawn just below 24 h, with their value as mean", {
+  near <- data[1, ]
+  near$smartwatch_duration <- 86000
+  near$headphone_duration  <- 86399
+  set.seed(44)
+  x <- simulate_inputs(2000, near, specs)
+
+  for (name in c("smartwatch_duration", "headphone_duration")) {
+    expect_true(all(x[[name]] > 0 & x[[name]] <= 86400), label = name)
+    expect_equal(mean(x[[name]]), near[[name]], tolerance = 1e-3, label = name)
+  }
+})
+
 test_that("beta inputs keep their value as mean and stay between 0 and 1", {
   for (name in names(specs)[types == "beta"]) {
     x     <- draws[[name]]

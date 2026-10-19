@@ -25,3 +25,8 @@ All quantiles are equal to \code{mean} if \code{sd} is 0.
 Quantile function of the truncated lognormal distribution of
 \code{\link[=r_trunc_lognormal]{r_trunc_lognormal()}}, which keeps the given mean.
 }
+\details{
+The probabilities are computed as logarithms, so that the quantiles
+are also right very close to a bound (e.g. a mean just below \code{max}), where
+the probabilities can be too small to be stored as numbers.
+}

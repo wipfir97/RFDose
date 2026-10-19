@@ -297,6 +297,10 @@ r_trunc_lognormal <- function(n, mean, sd, min, max) {
 #' Quantile function of the truncated lognormal distribution of
 #' [RFDose::r_trunc_lognormal()], which keeps the given mean.
 #'
+#' @details The probabilities are computed as logarithms, so that the quantiles
+#' are also right very close to a bound (e.g. a mean just below `max`), where
+#' the probabilities can be too small to be stored as numbers.
+#'
 #' @param p Vector of probabilities
 #' @inheritParams r_trunc_lognormal
 #'
@@ -319,15 +323,22 @@ q_trunc_lognormal <- function(p, mean, sd, min, max) {
   meanlog <- trunc_lognormal_meanlog(mean, sdlog, min, max)
 
   # Inverse of the distribution function, between its values at min and max
-  # (from the upper tail if min is above the median, for precision)
+  # (from the upper tail if min is above the median, for precision). The
+  # probabilities are taken as logarithms: close to a bound they can be too
+  # small to be stored as numbers.
   if (log(min) > meanlog) {
-    upper     <- stats::plnorm(c(min, max), meanlog, sdlog, lower.tail = FALSE)
-    quantiles <- stats::qlnorm(upper[1] - p * (upper[1] - upper[2]), meanlog, sdlog,
-                               lower.tail = FALSE)
+    # log of S(min) - p * (S(min) - S(max)), with S the upper tail
+    upper     <- stats::plnorm(c(min, max), meanlog, sdlog, lower.tail = FALSE, log.p = TRUE)
+    target    <- upper[1] + log((1 - p) + p * exp(upper[2] - upper[1]))
+    quantiles <- stats::qlnorm(target, meanlog, sdlog, lower.tail = FALSE, log.p = TRUE)
   } else {
-    lower     <- stats::plnorm(c(min, max), meanlog, sdlog)
-    quantiles <- stats::qlnorm(lower[1] + p * (lower[2] - lower[1]), meanlog, sdlog)
+    # log of F(min) + p * (F(max) - F(min)), with F the lower tail
+    lower     <- stats::plnorm(c(min, max), meanlog, sdlog, log.p = TRUE)
+    target    <- lower[2] + log(p + (1 - p) * exp(lower[1] - lower[2]))
+    quantiles <- stats::qlnorm(target, meanlog, sdlog, log.p = TRUE)
   }
+  quantiles[p == 0] <- min
+  quantiles[p == 1] <- max
   pmin(pmax(quantiles, min), max) # against rounding at the bounds
 }
 

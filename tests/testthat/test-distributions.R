@@ -110,6 +110,25 @@ test_that("q_trunc_lognormal increases with p and keeps the mean", {
   }
 })
 
+test_that("q_trunc_lognormal keeps the mean very close to a bound", {
+  # the probabilities at the bounds are far too small to be stored as numbers here
+  for (case in list(c(86000, 17200, 0, 86400), c(86399, 17279.8, 0, 86400),
+                    c(199.9, 59.97, 0, 200), c(100.1, 30.03, 100, 2000))) {
+    p <- stats::ppoints(1e5)
+    q <- q_trunc_lognormal(p, mean = case[1], sd = case[2], min = case[3], max = case[4])
+
+    expect_true(all(q >= case[3] & q <= case[4]), label = paste(case, collapse = " "))
+    expect_true(all(diff(q) >= 0), label = paste(case, collapse = " "))
+    expect_equal(mean(q), case[1], tolerance = 1e-6, label = paste(case, collapse = " "))
+  }
+})
+
+test_that("q_trunc_lognormal gives min and max for p = 0 and p = 1", {
+  expect_equal(q_trunc_lognormal(c(0, 1), mean = 178.1, sd = 53.43, min = 0.001, max = 200), c(0.001, 200))
+  expect_equal(q_trunc_lognormal(c(0, 1), mean = 10, sd = 5, min = 9.5, max = 20), c(9.5, 20))
+  expect_equal(q_trunc_lognormal(c(0, 1), mean = 3, sd = 0.6, min = 0, max = Inf), c(0, Inf))
+})
+
 test_that("r_trunc_lognormal gives the mean if sd is 0", {
   expect_equal(r_trunc_lognormal(3, mean = 2, sd = 0, min = 0, max = 5), c(2, 2, 2))
 })
