@@ -1,7 +1,5 @@
 # =============================================================================
 #' Calculate Dose from Cordless Calls
-#' 
-#' test
 #'
 #' Calculates RF-EMF dose from making calls with cordless phone (also known as
 #' DECT phone).
@@ -14,7 +12,7 @@
 #' Where:
 #'
 #' * \eqn{Dose_{DECT}} is the dose from DECT/cordless phone calls
-#' * \eqn{mSAR_{DECT}} is the momentary SAR value in mJ/kg
+#' * \eqn{mSAR_{DECT}} is the momentary SAR value in mW/kg (see [dect_msar()])
 #' * \eqn{duration_{DECT}} is the duration of the calls in s/day
 #'
 #' @param tissue Tissue for which to calculate dose (default: "brain" or "body")
@@ -69,15 +67,17 @@ cordless_dose <- function(
 #' @details
 #' The mSAR is calculated as
 #'
-#' \deqn{mSAR_{DECT} = nSAR_{DECT}*outputpower_{DECT}}
+#' \deqn{mSAR_{DECT} = nSAR_{DECT} \times P_{DECT}}
 #'
 #' Where:
 #'
-#' * \eqn{mSAR_{DECT}} is the mSAR from DECT/cordless phone calls
-#' * \eqn{nSAR_{DECT}} is the nSAR (normalized specific absorption rate) in W/kg/W
-#' * \eqn{outputpower_{DECT}} is the duration of the calls in mW
+#' * \eqn{mSAR_{DECT}} is the mSAR from DECT/cordless phone calls in mW/kg
+#' * \eqn{nSAR_{DECT}} is the nSAR (normalized specific absorption rate) in
+#'   W/kg/W, weighted over the positions of the phone (see [dect_sar()])
+#' * \eqn{P_{DECT}} is the mean output power of the phone in mW, including the
+#'   duty cycle (see [dect_pwr()])
 #'
-#' @param tissue Tissue for which to calculate dose (default: "brain" or "body")
+#' @param tissue Tissue for which to calculate mSAR (default: "brain" or "body")
 #' @param ear_prop Proportion of time cordless phone is held against ear
 #' during calls.
 #' @param params Parameter list (optional). If not specified, calculations use
@@ -115,12 +115,18 @@ dect_msar <- function(
 # =============================================================================
 #' Calculate Output Power of DECT/Cordless Phone
 #'
-#' Calculates the output power of DECT/cordless phone during a call.
+#' Calculates the mean output power of DECT/cordless phone during a call.
+#'
+#' @details
+#' \deqn{P_{DECT} = DC \times P}
+#'
+#' where \eqn{P} is the output power of the phone in mW and \eqn{DC} its duty
+#' cycle.
 #'
 #' @param params Parameter list (optional). If not specified, calculations use
 #' default parameters.
 #'
-#' @returns DECT/cordless phone output power in mW
+#' @returns DECT/cordless phone output power in mW, including the duty cycle
 #'
 #' @export
 dect_pwr <- function(
@@ -134,6 +140,13 @@ dect_pwr <- function(
 #'
 #' Calculates nSAR (normalized specific absorption rate) from making calls with
 #' cordless phone (also known as DECT phone).
+#'
+#' @details
+#' \deqn{nSAR_{DECT} = p_{ear} \times nSAR_{ear} + (1 - p_{ear}) \times nSAR_{speaker}}
+#'
+#' where \eqn{p_{ear}} is the proportion of the call with the phone against the
+#' ear (`ear_prop`), the rest in speaker mode, and the nSAR values are in
+#' W/kg/W.
 #'
 #' @param tissue Tissue for which to calculate the nSAR (default: "brain" or "body")
 #' @param ear_prop Proportion of time cordless phone is held against ear

@@ -12,8 +12,9 @@
 #' Where:
 #'
 #' * \eqn{Dose_{tablet}} is the dose from tablet use
-#' * \eqn{mSAR_{tablet}} is the momentary SAR value in mJ/kg
-#' * \eqn{duration_{tablet}} is the duration of tablet use
+#' * \eqn{mSAR_{tablet}} is the momentary SAR value in mW/kg (see [tablet_msar()])
+#' * \eqn{duration_{tablet}} is the duration of tablet use in s/day (sum of the
+#'   durations of the four activities)
 #'
 #' We distinguish between 4 types of activities:
 #'
@@ -88,13 +89,15 @@ tablet_dose <- function(
 #'
 #' The mSAR is calculated as:
 #'
-#' \deqn{mSAR_{tablet} = nSAR_{tablet}*outputpower_{tablet}}
+#' \deqn{mSAR_{tablet} = \sum_{b} s_{b} \times nSAR_{b} \times P_{b}}
 #'
 #' Where:
 #'
-#' * \eqn{mSAR_{tablet}} is the mSAR from tablet use
-#' * \eqn{nSAR_{tablet}} is the normalised SAR value in mJ/kg
-#' * \eqn{outputpower_{tablet}} is the duration of tablet use
+#' * \eqn{mSAR_{tablet}} is the mSAR from tablet use in mW/kg
+#' * \eqn{s_{b}} is the share of the WiFi frequency band \eqn{b} (2.4 and 5 GHz)
+#' * \eqn{nSAR_{b}} is the normalised SAR value in W/kg/W (see [tablet_sar()])
+#' * \eqn{P_{b}} is the mean output power of the tablet in mW, including the
+#'   duty cycles of the activities (see [tablet_pwr()])
 #'
 #'
 #' We distinguish between 4 types of activities:
@@ -170,11 +173,17 @@ tablet_msar <- function(
 # =============================================================================
 #' Calculate Tablet Output Power
 #'
-#' Calculates the tablet output power during use
+#' Calculates the mean tablet output power during use
 #'
 #' @details
 #' The output power depends on the frequency band (2.4 GHz or 5.0 GHz) and the
-#' type of activity.
+#' type of activity:
+#'
+#' \deqn{P = P_{wifi} \times \sum_{k} q_{k} \times DC_{k}}
+#'
+#' where \eqn{P_{wifi}} is the output power of the band in mW, \eqn{q_{k}} the
+#' share of the activity \eqn{k} in the use time (see [act_pwr_props()]) and
+#' \eqn{DC_{k}} its duty cycle.
 #'
 #' @param band WiFi frequency band ("2" for 2.4 GHz, "5" for 5.0 GHz)
 #' @param dur_low Duration (in seconds per day) of low output power activities on tablet
@@ -184,7 +193,7 @@ tablet_msar <- function(
 #' @param params Parameter list (optional). If not specified, calculations use
 #' default parameters.
 #'
-#' @returns Output power in mW
+#' @returns Output power in mW, including the duty cycles
 #'
 #' @examples
 #' tablet_pwr(

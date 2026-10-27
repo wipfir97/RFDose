@@ -28,14 +28,20 @@ mpd_pwr_wifi(
 default parameters.}
 }
 \value{
-Output power in mW
+Output power in mW, including the duty cycles
 }
 \description{
-Calculates the mobile phone output power during WiFi use
+Calculates the mean output power of the mobile phone during WiFi use
 }
 \details{
 The output power depends on the frequency band (2.4 GHz or 5.0 GHz) and the
-type of activity.
+type of activity:
+
+\deqn{P = P_{wifi} \times \sum_{k} q_{k} \times DC_{k}}
+
+where \eqn{P_{wifi}} is the output power of the band in mW, \eqn{q_{k}} the
+share of the activity \eqn{k} in the use time (see \code{\link[=act_pwr_props]{act_pwr_props()}}) and
+\eqn{DC_{k}} its duty cycle.
 }
 \examples{
 mpd_pwr_wifi(

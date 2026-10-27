@@ -2,7 +2,7 @@
 % Please edit documentation in R/farfield.R
 \name{farfield_pwr}
 \alias{farfield_pwr}
-\title{Calculate Output Power of Far-field Sources}
+\title{Calculate Power Density of Far-field Sources}
 \usage{
 farfield_pwr(country, urbanicity, travel_time, params = load_params())
 }
@@ -19,13 +19,22 @@ Switzerland = "CH", United Kingdom = "UK", elsewhere = "Other")}
 default parameters.}
 }
 \value{
-Output power in mW/m**2
+Power density in mW/m\eqn{^2}
 }
 \description{
-Calculates the output power of far-field sources
+Calculates the power density of far-field sources
 }
 \details{
-The output power depends on the country, urbanicity, and time spent commuting.
+The power density depends on the country, urbanicity, and time spent
+commuting:
+
+\deqn{S = t_{home} \times S_{home} + t_{work} \times S_{work} + t_{out} \times S_{out} + t_{travel} \times S_{travel}}
+
+where \eqn{t} are the shares of the day at home, at work, outdoors and
+commuting (see \code{\link[=location_props]{location_props()}}) and \eqn{S_{home}}, \eqn{S_{work}},
+\eqn{S_{out}}, \eqn{S_{travel}} the power densities there in
+mW/m\eqn{^2}, for the country (and, except while commuting, for the
+urbanicity).
 }
 \examples{
 farfield_pwr(

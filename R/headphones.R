@@ -55,7 +55,7 @@ headphones_dose <- function(
 }
 
 # =============================================================================
-#' Calculate RF-EMF Dose from Smart Watch (earset contribution only)
+#' Calculate RF-EMF Dose from Bluetooth Headphones (earset contribution only)
 #'
 #' Calculates the tissue-specific RF-EMF dose from Bluetooth headphone use (earset
 #' contribution only).
@@ -65,11 +65,15 @@ headphones_dose <- function(
 #' The RF-EMF dose from Bluetooth headphone use (earset
 #' contribution) is calculated as:
 #'
-#' \deqn{Dose_{earset} = mSAR_{earset} * duration_{earset}}
+#' \deqn{Dose_{earset} = 2 \times mSAR_{earset} \times duration_{earset}}
+#' \deqn{mSAR_{earset} = nSAR_{earset} \times P_{earset}}
 #'
 #' Where:
 #'
-#' * \eqn{mSAR_{earset}} is the momentary SAR for the headphone connection
+#' * 2 is the number of earphones (assumption)
+#' * \eqn{mSAR_{earset}} is the momentary SAR of one earphone in mW/kg
+#' * \eqn{nSAR_{earset}} is the normalized SAR of one earphone in W/kg/W
+#' * \eqn{P_{earset}} is the output power of one earphone in mW
 #' * \eqn{duration_{earset}} is the use duration in s/day
 #'
 #' @param tissue Tissue for which to calculate dose (default: "brain" or "body")
@@ -104,7 +108,7 @@ headphones_earset_dose <- function(
 }
 
 # =============================================================================
-#' Calculate RF-EMF Dose from Smart Watch (phone contribution only)
+#' Calculate RF-EMF Dose from Bluetooth Headphones (phone contribution only)
 #'
 #' Calculates the tissue-specific RF-EMF dose from Bluetooth headphone use (phone
 #' contribution only).
@@ -114,11 +118,16 @@ headphones_earset_dose <- function(
 #' The RF-EMF dose from Bluetooth headphone use (phone
 #' contribution) is calculated as:
 #'
-#' \deqn{Dose_{phone} = mSAR_{phone} * duration_{phone}}
+#' \deqn{Dose_{phone} = mSAR_{phone} \times duration_{phone}}
+#' \deqn{mSAR_{phone} = nSAR_{phone} \times P_{phone}}
 #'
 #' Where:
 #'
-#' * \eqn{mSAR_{phone}} is the momentary SAR for the headphone connection
+#' * \eqn{mSAR_{phone}} is the momentary SAR for the headphone connection in
+#'   mW/kg
+#' * \eqn{nSAR_{phone}} is the normalized SAR of the phone in W/kg/W
+#' * \eqn{P_{phone}} is the output power of the phone's connection to the
+#'   headphones in mW
 #' * \eqn{duration_{phone}} is the use duration in s/day
 #'
 #' @param tissue Tissue for which to calculate dose (default: "brain" or "body")

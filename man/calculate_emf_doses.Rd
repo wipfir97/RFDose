@@ -39,12 +39,11 @@ with its SAR values (e.g. placement proportions). If not specified, the SAR
 values of \code{params} are used, or the default SAR values if \code{params} has none.}
 }
 \value{
-A data frame. Columns contain the calculated RF-EMF dose
-of each row in mJ/kg/day, for each exposure source and each tissue.
+A data frame: the columns of \code{data}, plus one column per exposure
+source with the RF-EMF dose of each row in mJ/kg/day for the chosen tissue.
 }
 \description{
 Wrapper function that calculates RF-EMF doses for a data frame of observations.
-This function will be removed in the future.
 }
 \details{
 Additional details will follow.

@@ -7,12 +7,14 @@
 #'
 #' The RF-EMF dose from far-field sources is calculated as:
 #'
-#' \deqn{Dose_{farfield} = mSAR_{farfield}*86400}
+#' \deqn{Dose_{farfield} = mSAR_{farfield} \times 86400}
 #'
 #' Where:
 #'
 #' * \eqn{Dose_{farfield}} is the dose from far-field sources
-#' * \eqn{mSAR_{farfield}} is the momentary SAR value in mJ/kg
+#' * \eqn{mSAR_{farfield}} is the momentary SAR value in mW/kg (see
+#'   [farfield_msar()])
+#' * 86400 s/day: the far-field exposure lasts the whole day
 #'
 #' @param tissue Tissue for which to calculate dose (default: "brain" or "body")
 #' @param country Country of residence (Austria = "AT", Belgium = "BE", France = FR,
@@ -69,7 +71,12 @@ farfield_dose <- function(
 #' Calculates the mSAR of far-field sources
 #'
 #' @details
-#' The output power depends on the country, urbanicity, and time spent commuting.
+#' \deqn{mSAR_{farfield} = nSAR_{farfield} \times S}
+#'
+#' where \eqn{nSAR_{farfield}} is the normalized SAR in W/kg per W/m\eqn{^2}
+#' (see [farfield_sar()]) and \eqn{S} the power density in mW/m\eqn{^2} (see
+#' [farfield_pwr()]). The power density depends on the country, urbanicity,
+#' and time spent commuting.
 #'
 #' @param tissue Tissue for which to calculate nSAR (default: "brain" or "body")
 #' @param country Country of residence (Austria = "AT", Belgium = "BE", France = FR,
@@ -80,7 +87,7 @@ farfield_dose <- function(
 #' @param params Parameter list (optional). If not specified, calculations use
 #' default parameters.
 #'
-#' @returns mSAR in W/kg/W/m**2
+#' @returns mSAR in mW/kg
 #'
 #' @examples
 #' farfield_msar(
@@ -97,7 +104,7 @@ farfield_msar <- function(
     urbanicity,
     travel_time,
     params = load_params()) {
-  # Calculate output power / farfield exposure ================================
+  # Calculate power density / farfield exposure ===============================
   pwr <- farfield_pwr(
     country     = country,
     urbanicity  = urbanicity,
@@ -116,12 +123,21 @@ farfield_msar <- function(
 }
 
 # =============================================================================
-#' Calculate Output Power of Far-field Sources
+#' Calculate Power Density of Far-field Sources
 #'
-#' Calculates the output power of far-field sources
+#' Calculates the power density of far-field sources
 #'
 #' @details
-#' The output power depends on the country, urbanicity, and time spent commuting.
+#' The power density depends on the country, urbanicity, and time spent
+#' commuting:
+#'
+#' \deqn{S = t_{home} \times S_{home} + t_{work} \times S_{work} + t_{out} \times S_{out} + t_{travel} \times S_{travel}}
+#'
+#' where \eqn{t} are the shares of the day at home, at work, outdoors and
+#' commuting (see [location_props()]) and \eqn{S_{home}}, \eqn{S_{work}},
+#' \eqn{S_{out}}, \eqn{S_{travel}} the power densities there in
+#' mW/m\eqn{^2}, for the country (and, except while commuting, for the
+#' urbanicity).
 #'
 #' @param country Country of residence (Austria = "AT", Belgium = "BE", France = FR,
 #' Hungary = "HU", Italy = "IT", Netherlands = "NL", Poland = "PL", Spain = "ES",
@@ -131,7 +147,7 @@ farfield_msar <- function(
 #' @param params Parameter list (optional). If not specified, calculations use
 #' default parameters.
 #'
-#' @returns Output power in mW/m**2
+#' @returns Power density in mW/m\eqn{^2}
 #'
 #' @examples
 #' farfield_pwr(
@@ -187,7 +203,7 @@ farfield_pwr <- function(
 #' @param params Parameter list (optional). If not specified, calculations use
 #' default parameters.
 #'
-#' @returns nSAR in W/kg/W/m**2
+#' @returns nSAR in W/kg per W/m\eqn{^2} of incident power density
 #'
 #' @examples
 #' farfield_sar(

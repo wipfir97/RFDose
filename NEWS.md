@@ -1,3 +1,11 @@
+# Version 2.0.1
+
+* Documentation: formulas and units corrected and completed for all exposure sources (mSAR in mW/kg, power density of far-field sources and WiFi router in mW/m²)
+* Package manual (`doc/`) ordered by exposure source, built with `data-raw/build_manual.R`
+* `mpc_bt_earset_msar()` and `mpc_bt_phone_msar()` no longer have the unused argument `headp_ear_num` (the number of earphones is applied in `mobilecall_dose()`)
+* `wifi_msar()` no longer has the unused arguments `travel_time` and `wifi_prop_travel` (they set the exposure time in `wifi_dose()`)
+
+
 # Version 2.0.0
 
 * GOLIAT SAR values replace the ETAIN SAR values

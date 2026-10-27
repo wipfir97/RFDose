@@ -36,13 +36,16 @@ Calculates the tissue-specific momentary SAR (mSAR) from laptop use.
 \details{
 The mSAR is calculated as:
 
-\deqn{mSAR_{laptop} = nSAR_{laptop}*outputpower_{laptop}}
+\deqn{mSAR_{laptop} = \sum_{b} s_{b} \times nSAR_{b} \times P_{b}}
 
 Where:
 \itemize{
-\item \eqn{mSAR_{laptop}} is the mSAR from laptop use
-\item \eqn{nSAR_{laptop}} is the normalised SAR value in mJ/kg
-\item \eqn{outputpower_{laptop}} is the duration of laptop use
+\item \eqn{mSAR_{laptop}} is the mSAR from laptop use in mW/kg
+\item \eqn{s_{b}} is the share of the WiFi frequency band \eqn{b} (2.4 and 5 GHz)
+\item \eqn{nSAR_{b}} is the normalised SAR value in W/kg/W, weighted over the
+placements of the laptop (see \code{\link[=laptop_sar]{laptop_sar()}})
+\item \eqn{P_{b}} is the mean output power of the laptop in mW, including the
+duty cycles of the activities (see \code{\link[=laptop_pwr]{laptop_pwr()}})
 }
 
 We distinguish between 4 types of activities:

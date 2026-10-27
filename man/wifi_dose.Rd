@@ -7,7 +7,7 @@
 wifi_dose(tissue, travel_time, wifi_prop_travel, params = load_params())
 }
 \arguments{
-\item{tissue}{Tissue for which to calculate nSAR (default: "brain" or "body")}
+\item{tissue}{Tissue for which to calculate dose (default: "brain" or "body")}
 
 \item{travel_time}{Time spent commuting in seconds per day}
 
@@ -26,14 +26,24 @@ Calculates the tissue-specific RF-EMF dose from WiFi router
 \details{
 The RF-EMF dose from WiFi router is calculated as:
 
-\deqn{Dose_{WiFi} = mSAR_{farfield}*duration_{WiFi}}
+\deqn{Dose_{WiFi} = mSAR_{WiFi} \times duration_{WiFi}}
 
 Where:
 \itemize{
 \item \eqn{Dose_{WiFi}} is the dose from WiFi Router
-\item \eqn{mSAR_{WiFi}} is the momentary SAR value in mJ/kg
+\item \eqn{mSAR_{WiFi}} is the momentary SAR value in mW/kg (see \code{\link[=wifi_msar]{wifi_msar()}})
 \item \eqn{duration_{WiFi}} is the duration of time exposed to a WiFi router in seconds/day
 }
+
+The exposure lasts the whole time at home and at work, none of the time
+outdoors, and the whole time commuting if WiFi is used while commuting
+(\code{wifi_prop_travel} above 0):
+
+\deqn{duration_{WiFi} = 86400 \times (t_{home} + t_{work} + t_{travel})}
+
+where \eqn{t} are the shares of the day at home, at work and commuting (see
+\code{\link[=location_props]{location_props()}}); \eqn{t_{travel}} counts only if \code{wifi_prop_travel} is
+above 0.
 }
 \examples{
 wifi_dose(

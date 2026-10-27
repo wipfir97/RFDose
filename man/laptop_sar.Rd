@@ -21,8 +21,14 @@ nSAR in W/kg/W
 Calculates tissue-specific nSAR from laptop use.
 }
 \details{
-The normalized specific absorption rate (nSAR) depends on the tissue and
-the frequency band.
+The normalized specific absorption rate (nSAR) depends on the tissue, the
+frequency band and the placement of the laptop (on the legs or on a table):
+
+\deqn{nSAR = f_{legs} \times nSAR_{legs} + f_{table} \times nSAR_{table}}
+
+where \eqn{f_{legs}} and \eqn{f_{table}} are the proportions of the
+placements (parameters \code{legs_prop} and \code{tabl_prop}, set by the SAR file) and
+the nSAR values are in W/kg/W.
 }
 \examples{
 laptop_sar(

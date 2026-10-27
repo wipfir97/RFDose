@@ -3,17 +3,13 @@
 cases_wifi_msar <- list(
   list(
     input = list(
-      tissue           = "brain",
-      travel_time      = 1850,
-      wifi_prop_travel = 0.31
+      tissue = "brain"
     ),
     output = 0.00001692
   ),
   list(
     input = list(
-      tissue           = "body",
-      travel_time      = 1850,
-      wifi_prop_travel = 0.31
+      tissue = "body"
     ),
     output = 0.00006839
   )

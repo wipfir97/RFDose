@@ -41,8 +41,9 @@ The laptop RF-EMF dose is calculated as:
 Where:
 \itemize{
 \item \eqn{Dose_{laptop}} is the dose from laptop use
-\item \eqn{mSAR_{laptop}} is the momentary SAR value in mJ/kg
-\item \eqn{duration_{laptop}} is the duration of laptop use
+\item \eqn{mSAR_{laptop}} is the momentary SAR value in mW/kg (see \code{\link[=laptop_msar]{laptop_msar()}})
+\item \eqn{duration_{laptop}} is the duration of laptop use in s/day (sum of the
+durations of the four activities)
 }
 
 We distinguish between 4 types of activities:

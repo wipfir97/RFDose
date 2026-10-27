@@ -7,15 +7,25 @@
 #'
 #' The RF-EMF dose from WiFi router is calculated as:
 #'
-#' \deqn{Dose_{WiFi} = mSAR_{farfield}*duration_{WiFi}}
+#' \deqn{Dose_{WiFi} = mSAR_{WiFi} \times duration_{WiFi}}
 #'
 #' Where:
 #'
 #' * \eqn{Dose_{WiFi}} is the dose from WiFi Router
-#' * \eqn{mSAR_{WiFi}} is the momentary SAR value in mJ/kg
+#' * \eqn{mSAR_{WiFi}} is the momentary SAR value in mW/kg (see [wifi_msar()])
 #' * \eqn{duration_{WiFi}} is the duration of time exposed to a WiFi router in seconds/day
 #'
-#' @param tissue Tissue for which to calculate nSAR (default: "brain" or "body")
+#' The exposure lasts the whole time at home and at work, none of the time
+#' outdoors, and the whole time commuting if WiFi is used while commuting
+#' (`wifi_prop_travel` above 0):
+#'
+#' \deqn{duration_{WiFi} = 86400 \times (t_{home} + t_{work} + t_{travel})}
+#'
+#' where \eqn{t} are the shares of the day at home, at work and commuting (see
+#' [location_props()]); \eqn{t_{travel}} counts only if `wifi_prop_travel` is
+#' above 0.
+#'
+#' @param tissue Tissue for which to calculate dose (default: "brain" or "body")
 #' @param travel_time Time spent commuting in seconds per day
 #' @param wifi_prop_travel Proportion of time connected to WiFi (vs mobile data)
 #' while commuting
@@ -66,10 +76,8 @@ wifi_dose <- function(
   # Calculate mSAR ============================================================
   ## Brain --------------------------------------------------------------------
   msar <- wifi_msar(
-    tissue           = tissue,
-    travel_time      = travel_time,
-    wifi_prop_travel = wifi_prop_travel,
-    params           = params
+    tissue = tissue,
+    params = params
   )
 
   # Calculate dose and return result ==========================================
@@ -83,30 +91,28 @@ wifi_dose <- function(
 #' Calculates the mSAR of WiFi Router
 #'
 #' @details
-#' The output power depends on the time spent commuting and the proportion of
-#' time a WiFi connection (vs mobile data) is used while commuting.
+#' \deqn{mSAR_{WiFi} = \sum_{b} s_{b} \times nSAR_{b} \times S_{b}}
 #'
-#' @param tissue Tissue for which to calculate nSAR (default: "brain" or "body")
-#' @param travel_time Time spent commuting in seconds per day
-#' @param wifi_prop_travel Proportion of time connected to WiFi (vs mobile data)
-#' while commuting
+#' where \eqn{s_{b}} is the share of the frequency band \eqn{b} (2.4 and 5
+#' GHz), \eqn{nSAR_{b}} the normalized SAR in W/kg per W/m\eqn{^2} (see
+#' [wifi_sar()]) and \eqn{S_{b}} the power density of the WiFi router in
+#' mW/m\eqn{^2} (see [wifi_pwr()]). The time spent commuting and the WiFi use
+#' while commuting only change the exposure time (see [wifi_dose()]).
+#'
+#' @param tissue Tissue for which to calculate mSAR (default: "brain" or "body")
 #' @param params Parameter list (optional). If not specified, calculations use
 #' default parameters.
 #'
-#' @returns mSAR in W/kg/W/m**2
+#' @returns mSAR in mW/kg
 #'
 #' @examples
 #' wifi_msar(
-#'   tissue           = "body",
-#'   travel_time      = 1800,
-#'   wifi_prop_travel = 0.5)
+#'   tissue = "body")
 #'
 #' @export
 #' @seealso [wifi_pwr()], [wifi_sar()]
 wifi_msar <- function(
     tissue,
-    travel_time,
-    wifi_prop_travel,
     params = load_params()) {
   # Calculate mSAR ============================================================
   bands <- c("2", "5") # 2.4 GHz, 5.0 GHz
@@ -114,7 +120,7 @@ wifi_msar <- function(
     vapply(
       bands,
       \(band) {
-        # Output power
+        # Power density
         pwr <- wifi_pwr(
           band = band,
           params = params
@@ -139,18 +145,18 @@ wifi_msar <- function(
 
 
 # =============================================================================
-#' Calculate Output Power of WiFi Router
+#' Calculate Power Density of WiFi Router
 #'
-#' Calculates the output power of WiFi router
+#' Calculates the power density of WiFi router
 #'
 #' @details
-#' The output power depends on the WiFi frequency band.
+#' The power density depends on the WiFi frequency band.
 #'
 #' @param band Frequency band ("2" for 2.4 GHz, "5" for 5.0 GHz)
 #' @param params Parameter list (optional). If not specified, calculations use
 #' default parameters.
 #'
-#' @returns Output power in mW/m**2
+#' @returns Power density in mW/m\eqn{^2}
 #'
 #' @examples
 #' wifi_pwr(
@@ -181,7 +187,7 @@ wifi_pwr <- function(
 #' @param params Parameter list (optional). If not specified, calculations use
 #' default parameters.
 #'
-#' @returns nSAR in W/kg/W/m**2
+#' @returns nSAR in W/kg per W/m\eqn{^2} of incident power density
 #'
 #' @examples
 #' wifi_sar(

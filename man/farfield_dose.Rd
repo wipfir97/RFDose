@@ -29,12 +29,14 @@ Calculates the tissue-specific RF-EMF dose from far-field sources
 \details{
 The RF-EMF dose from far-field sources is calculated as:
 
-\deqn{Dose_{farfield} = mSAR_{farfield}*86400}
+\deqn{Dose_{farfield} = mSAR_{farfield} \times 86400}
 
 Where:
 \itemize{
 \item \eqn{Dose_{farfield}} is the dose from far-field sources
-\item \eqn{mSAR_{farfield}} is the momentary SAR value in mJ/kg
+\item \eqn{mSAR_{farfield}} is the momentary SAR value in mW/kg (see
+\code{\link[=farfield_msar]{farfield_msar()}})
+\item 86400 s/day: the far-field exposure lasts the whole day
 }
 }
 \examples{

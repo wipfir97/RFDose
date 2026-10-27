@@ -13,13 +13,19 @@ mpc_pwr_wifi(band, params = load_params())
 default parameters.}
 }
 \value{
-Output power in mW
+Output power in mW, including the duty cycle
 }
 \description{
-Calculates the mobile phone output power during calls using WiFi connection.
+Calculates the mean output power of the mobile phone during calls using WiFi
+connection.
 }
 \details{
-The output power depends on the frequency band (2.4 GHz or 5.0 GHz)
+The output power depends on the frequency band (2.4 GHz or 5.0 GHz):
+
+\deqn{P = DC \times P_{wifi}}
+
+where \eqn{P_{wifi}} is the output power of the band in mW and \eqn{DC} its
+duty cycle.
 }
 \examples{
 mpc_pwr_wifi(

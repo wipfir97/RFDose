@@ -59,8 +59,9 @@ The mobile data RF-EMF dose is calculated as:
 Where:
 \itemize{
 \item \eqn{Dose_{data}} is the dose from mobile data use
-\item \eqn{mSAR_{data}} is the momentary SAR value in mJ/kg
-\item \eqn{duration_{data}} is the duration of mobile data use
+\item \eqn{mSAR_{data}} is the momentary SAR value in mW/kg (see \code{\link[=mpd_msar]{mpd_msar()}})
+\item \eqn{duration_{data}} is the duration of mobile data use in s/day (sum of
+the durations of the four activities)
 }
 
 We distinguish between 4 types of mobile data use:

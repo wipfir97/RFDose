@@ -35,7 +35,7 @@ to headphones}
 
 \item{travel_time}{Time spent commuting in seconds per day}
 
-\item{headp_ear_num}{Number of Bluetooth headphones used during call}
+\item{headp_ear_num}{Number of Bluetooth earphones worn during the call (0, 1 or 2)}
 
 \item{wifi_prop_home}{Proportion of time connected to WiFi (vs mobile data)
 at home}
@@ -58,25 +58,35 @@ headphones, and from headphones themselves
 }
 \details{
 The mobile call RF-EMF dose is calculated as:
-\deqn{Dose_{mobilecall} = Dose_{phone} + Dose_{bluetooth}}
+
+\deqn{Dose_{mobilecall} = Dose_{phone} + Dose_{earset} + Dose_{btphone}}
+
+with
+
+\deqn{Dose_{phone} = mSAR_{phone} \times duration}
+\deqn{Dose_{earset} = mSAR_{earset} \times p_{headp} \times n_{ear} \times duration}
+\deqn{Dose_{btphone} = mSAR_{btphone} \times p_{headp} \times duration}
 
 Where:
 \itemize{
-\item \eqn{Dose_{mobilecall}} is the total dose from all mobile call activities
 \item \eqn{Dose_{phone}} is the dose from the mobile phone (no Bluetooth)
-\item \eqn{Dose_{bluetooth}} is the dose from using Bluetooth headphones
-during the call.
+\item \eqn{Dose_{earset}} and \eqn{Dose_{btphone}} are the doses from the
+Bluetooth earphones and from the Bluetooth connection of the phone
+\item \eqn{mSAR_{phone}}, \eqn{mSAR_{earset}} and \eqn{mSAR_{btphone}} are the
+momentary SAR values in mW/kg (see \code{\link[=mpc_msar]{mpc_msar()}}, \code{\link[=mpc_bt_earset_msar]{mpc_bt_earset_msar()}}
+and \code{\link[=mpc_bt_phone_msar]{mpc_bt_phone_msar()}})
+\item \eqn{p_{headp}} is the proportion of the call with Bluetooth headphones
+(\code{headp_prop}) and \eqn{n_{ear}} the number of earphones (\code{headp_ear_num})
+\item \eqn{duration} is the call duration in s/day
 }
 
-For each source (phone and bluetooth), the dose is calculated as:
-
-\deqn{mSAR * duration}
-
-Where:
-\itemize{
-\item \eqn{mSAR} is the momentary SAR value in mJ/kg
-\item \eqn{duration} is the call duration in seconds
-}
+The phone is in speaker mode for the rest of the call,
+\eqn{1 - p_{ear} - p_{headp}}. The call goes over the native network for the
+proportion \eqn{p_{native}} (parameter \code{native_prop}), over WiFi for
+\eqn{p_{wifi} = (1 - p_{native}) \times (t_{home} w_{home} + t_{work} w_{work} + t_{travel} w_{travel})}
+and over mobile data for the rest, where \eqn{t} are the shares of the day
+at home, at work and commuting (see \code{\link[=location_props]{location_props()}}) and \eqn{w} the
+WiFi proportions (\code{wifi_prop_home}, \code{wifi_prop_work}, \code{wifi_prop_travel}).
 }
 \examples{
 mobilecall_dose(

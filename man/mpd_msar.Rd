@@ -58,16 +58,25 @@ and WiFi) use for a specific tissue
 \details{
 The mSAR is calculated as
 
-\deqn{mSAR = nSAR_{mobiledata} \times
-outputpower_{mobiledata} + nSAR_{wifi} \times outputpower_{wifi}}
+\deqn{mSAR = (1 - p_{wifi}) \times mSAR_{data} + p_{wifi} \times mSAR_{wifi}}
+
+with, for each network \eqn{n} (mobile data or WiFi),
+
+\deqn{mSAR_{n} = \sum_{b} s_{n,b} \times nSAR_{n,b} \times P_{n,b}}
 
 where
 \itemize{
-\item \eqn{nSAR_{data}}, \eqn{nSAR_{wifi}} are the nSAR
-(normalized specific absorption rates, in W/kg/W) from data use using
-mobile data or WiFi networks, respectively
-\item \eqn{outputpower_{data}}, \eqn{outputpower_{wifi}} are the output powers (mW)
-of the device (mobilephone) using mobile data or WiFi networks, respectively
+\item \eqn{p_{wifi} = t_{home} w_{home} + t_{work} w_{work} + t_{travel} w_{travel}}
+is the proportion of use over WiFi, with \eqn{t} the shares of the day at
+home, at work and commuting (see \code{\link[=location_props]{location_props()}}) and \eqn{w} the WiFi
+proportions (\code{wifi_prop_home}, \code{wifi_prop_work}, \code{wifi_prop_travel}); no
+WiFi is used outdoors
+\item \eqn{s_{n,b}} is the share of the frequency band \eqn{b}: 3G to 5G for
+mobile data (without 5G if \code{use_5g} is FALSE), 2.4 and 5 GHz for WiFi
+\item \eqn{nSAR_{n,b}} is the normalized SAR in W/kg/W (see \code{\link[=mpd_sar_data]{mpd_sar_data()}},
+\code{\link[=mpd_sar_wifi]{mpd_sar_wifi()}})
+\item \eqn{P_{n,b}} is the mean output power of the phone in mW, including the
+duty cycles of the activities (see \code{\link[=mpd_pwr_data]{mpd_pwr_data()}}, \code{\link[=mpd_pwr_wifi]{mpd_pwr_wifi()}})
 }
 }
 \examples{

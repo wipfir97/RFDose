@@ -7,7 +7,7 @@
 dect_msar(tissue, ear_prop, params = load_params())
 }
 \arguments{
-\item{tissue}{Tissue for which to calculate dose (default: "brain" or "body")}
+\item{tissue}{Tissue for which to calculate mSAR (default: "brain" or "body")}
 
 \item{ear_prop}{Proportion of time cordless phone is held against ear
 during calls.}
@@ -25,13 +25,15 @@ DECT phone).
 \details{
 The mSAR is calculated as
 
-\deqn{mSAR_{DECT} = nSAR_{DECT}*outputpower_{DECT}}
+\deqn{mSAR_{DECT} = nSAR_{DECT} \times P_{DECT}}
 
 Where:
 \itemize{
-\item \eqn{mSAR_{DECT}} is the mSAR from DECT/cordless phone calls
-\item \eqn{nSAR_{DECT}} is the nSAR (normalized specific absorption rate) in W/kg/W
-\item \eqn{outputpower_{DECT}} is the duration of the calls in mW
+\item \eqn{mSAR_{DECT}} is the mSAR from DECT/cordless phone calls in mW/kg
+\item \eqn{nSAR_{DECT}} is the nSAR (normalized specific absorption rate) in
+W/kg/W, weighted over the positions of the phone (see \code{\link[=dect_sar]{dect_sar()}})
+\item \eqn{P_{DECT}} is the mean output power of the phone in mW, including the
+duty cycle (see \code{\link[=dect_pwr]{dect_pwr()}})
 }
 }
 \examples{

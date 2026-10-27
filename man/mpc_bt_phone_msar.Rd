@@ -2,25 +2,33 @@
 % Please edit documentation in R/mobilecall.R
 \name{mpc_bt_phone_msar}
 \alias{mpc_bt_phone_msar}
-\title{Calculate mobile call dose from Bluetooth headphones (phone only)}
+\title{Calculate mobile call mSAR for Bluetooth headphones (phone only)}
 \usage{
-mpc_bt_phone_msar(tissue, headp_ear_num, params = load_params())
+mpc_bt_phone_msar(tissue, params = load_params())
 }
 \arguments{
 \item{tissue}{Tissue for which to calculate mSAR (default: "brain" or "body")}
-
-\item{headp_ear_num}{Number of Bluetooth earphones worn during call (0, 1, or 2)}
 
 \item{params}{Parameter list (optional). If not specified, calculations use
 default parameters.}
 }
 \value{
-Dose from Bluetooth calls (phone contribution only) in mW/kg)
+mSAR from Bluetooth calls (phone contribution only) in mW/kg
 }
 \description{
-Calculates the RF-EMF dose from mobile calling using Bluetooth headphones
-(phone contribution only; the contribution of the headphones/earset is calculated
-separately).
+Calculates the mSAR for mobile calling using Bluetooth headphones
+(Bluetooth connection of the phone only; the contribution of the
+headphones/earset is calculated separately).
+}
+\details{
+The mSAR is calculated as
+
+\deqn{mSAR_{btphone} = P_{bt} \times (f_{face} \times nSAR_{face} + f_{pock} \times nSAR_{pock} + f_{else} \times nSAR_{else})}
+
+where \eqn{P_{bt}} is the Bluetooth output power in mW, \eqn{f} the
+proportions of the places of the phone during calls with headphones
+(parameters \code{headp_face_prop}, \code{headp_pock_prop}, \code{headp_else_prop}) and
+the nSAR values are in W/kg/W.
 }
 \examples{
 mpc_bt_phone_msar(

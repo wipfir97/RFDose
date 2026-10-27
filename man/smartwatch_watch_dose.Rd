@@ -24,18 +24,28 @@ contribution only).
 \details{
 The RF-EMF dose from smart-watch use (watch contribution) is calculated as:
 
-\deqn{Dose_{watch} = mSAR_{watch} * duration_{watch}}
+\deqn{Dose_{watch} = nSAR_{watch} \times (P_{active} \times t_{active} + P_{passive} \times t_{passive})}
 
 Where:
 \itemize{
-\item \eqn{mSAR_{watch}} is the momentary SAR
-\item \eqn{duration_{watch}} is the use duration
+\item \eqn{nSAR_{watch}} is the normalized SAR of the watch in W/kg/W
+\item \eqn{P_{active}} and \eqn{P_{passive}} are the output powers of the watch
+in mW when transmitting actively and passively
+\item \eqn{t_{active}} and \eqn{t_{passive}} are the times of active and passive
+transmission in s/day
 }
 
 While worn, the smart-watch transfers data for \code{watch_transfer_dur} seconds
 per day of wearing. During the share \code{watch_transfer_active_prop} of this
 time it transmits actively, the rest of the time passively (parameters of
-the device \code{smartwatch}).
+the device \code{smartwatch}):
+
+\deqn{t_{active} = duration \times T_{transfer} / 86400 \times f_{active}}
+\deqn{t_{passive} = duration - t_{active}}
+
+with \eqn{duration} the time the watch is worn in s/day, \eqn{T_{transfer}}
+the transfer time (\code{watch_transfer_dur}) in s per day of wearing and
+\eqn{f_{active}} the active share (\code{watch_transfer_active_prop}).
 }
 \examples{
 smartwatch_watch_dose(

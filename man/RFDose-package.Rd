@@ -8,54 +8,65 @@
 \description{
 Calculates the daily dose of radiofrequency electromagnetic fields (RF-EMF)
 absorbed by the brain or the whole body, in mJ/kg/day, for each person of a
-cohort. The doses are calculated from the self-reported use of wireless
-devices and the environment of each person, for eight exposure sources:
-mobile phone calls, mobile data, cordless phone, far-field sources, WiFi
-router, laptop, tablet and other devices. Use \code{\link[=calculate_emf_doses]{calculate_emf_doses()}} for
-the doses and \code{\link[=calculate_emf_doses_stochastic]{calculate_emf_doses_stochastic()}} for their uncertainty.
+cohort, from the self-reported use of wireless devices and the environment
+of each person. A deterministic model gives the doses
+(\code{\link[=calculate_emf_doses]{calculate_emf_doses()}}) and a stochastic model their uncertainty
+(\code{\link[=calculate_emf_doses_stochastic]{calculate_emf_doses_stochastic()}}).
 }
-\section{Main changes in version 2.0.0}{
+\section{Deterministic dose model}{
 
+\code{\link[=calculate_emf_doses]{calculate_emf_doses()}} calculates the doses of each row of the data (one
+person) for eight exposure sources: mobile phone calls, mobile data,
+cordless phone, far-field sources, WiFi router, laptop, tablet and other
+devices (smartwatch, VR headset, hotspot, Bluetooth headphones and portable
+gaming consoles). The dose of a source is its momentary SAR (mSAR, in
+mW/kg) times the exposure time (in s/day):
 \itemize{
-\item SAR values from the GOLIAT dosimetric simulations replace the ETAIN SAR
-values: one SAR file per phantom (Duke, Ella, Eartha, Thelonious) and one
-with their average, which is the default. Smartwatch, headphones and
-Bluetooth headset keep their ETAIN values, as GOLIAT has no similar
-simulation. The argument \code{sar_file} chooses the SAR values by name (see
-\code{\link[=available_sar_files]{available_sar_files()}}), e.g. \code{sar_file = "goliat_average"}. The ETAIN
-SAR values of version 1.0.0 remain available.
-\item Output power parameters updated with data from GOLIAT Task 1.2: 4G and 5G
-output powers and duty cycles of the mobile phone. The parameters and
-default values are taken from one Excel file that documents the source of
-each value; the parameters of version 1.0.0 are kept in
-\code{params_v1.0.yaml}. The default value of \code{use_5g} is now TRUE.
-\item First version of the stochastic dose model, \code{\link[=calculate_emf_doses_stochastic]{calculate_emf_doses_stochastic()}}.
+\item Near-field sources (devices used close to the body): the mSAR is the
+normalized SAR (nSAR, in W/kg per W of output power) times the output
+power of the device (in mW), including its duty cycle.
+\item Far-field sources (mobile phone base stations and broadcast stations) and
+WiFi router: the mSAR is the nSAR (in W/kg per W/m\eqn{^2} of incident
+power density) times the power density (in mW/m\eqn{^2}).
 }
+
+Output powers, power densities and nSAR values are averaged over the
+networks, frequency bands, places, activities and positions of the device,
+weighted by their shares (see the source functions, e.g.
+\code{\link[=mobilecall_dose]{mobilecall_dose()}}). The calculation uses three kinds of values:
+\itemize{
+\item Inputs: the columns of the data (durations of use, proportions,
+urbanicity, country, commuting time, use of 5G), as in \link{example_data}.
+Missing values are replaced by default values (\code{defaultvariables.yaml}).
+\item Parameters: output powers, duty cycles, proportions and far-field power
+densities (\code{params.yaml}, or your own file with the argument \code{params}).
+\item SAR values: from a SAR file (argument \code{sar_file}): GOLIAT values averaged
+over four phantoms by default, one phantom, or ETAIN (see
+\code{\link[=available_sar_files]{available_sar_files()}}).
+}
+
+The result has one column per exposure source with its dose in mJ/kg/day for
+the chosen tissue (argument \code{tissue}: "brain" or "body").
 }
 
 \section{Stochastic dose model}{
 
 \code{\link[=calculate_emf_doses_stochastic]{calculate_emf_doses_stochastic()}} estimates the uncertainty of the doses.
-It repeats the dose calculation \code{n} times (default: 1000). In each draw,
-three kinds of values vary around the values of the deterministic
-calculation:
+It repeats the deterministic calculation \code{n} times (default: 1000), each
+time with the parameters, SAR values and inputs drawn around their values:
 \itemize{
-\item Parameters: output powers, duty cycles, proportions and far-field power
-densities, with the distributions of \code{params_distributions.yaml}
+\item Parameters: with the distributions of \code{params_distributions.yaml}
 (lognormal or truncated lognormal for powers, beta for duty cycles and
-single proportions, Dirichlet for proportions that sum to 1). The mean of
-each distribution is the value of the parameter in \code{params.yaml}. See
-\code{\link[=simulate_params]{simulate_params()}}.
-\item SAR values: lognormal around their value, with a relative standard
-deviation of 25\% (argument \code{sar_sd}). SAR values from the same simulation
-are drawn together, and SAR values of 0 stay 0.
+single proportions, Dirichlet for proportions that sum to 1), whose mean
+is the value of the parameter. See \code{\link[=simulate_params]{simulate_params()}}.
+\item SAR values: lognormal, with a relative standard deviation of 25\%
+(argument \code{sar_sd}). SAR values from the same simulation are drawn
+together, and SAR values of 0 stay 0.
 \item Inputs: durations, proportions, urbanicity and commuting time, with the
 distributions of \code{input_distributions.yaml} (truncated lognormal with a
 relative standard deviation of 20\% for durations, beta or Dirichlet for
-proportions, categorical for urbanicity). Each input is drawn around its
-value in the data, or around its default value if missing. Durations of 0
-stay 0. See \code{\link[=simulate_inputs]{simulate_inputs()}}; \code{draw_inputs = FALSE} keeps the inputs
-fixed.
+proportions, categorical for urbanicity). Durations of 0 stay 0. See
+\code{\link[=simulate_inputs]{simulate_inputs()}}; \code{draw_inputs = FALSE} keeps the inputs fixed.
 }
 
 All rows are calculated with the same parameter draws, and the inputs of a

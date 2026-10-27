@@ -23,12 +23,19 @@ Calculates the tissue-specific RF-EMF dose from VR headset
 \details{
 The RF-EMF dose from VR headset is calculated as:
 
-\deqn{Dose_{vr} = mSAR_{vr} * duration_{vr}}
+\deqn{Dose_{vr} = mSAR_{vr} \times f_{online} \times duration_{vr}}
+\deqn{mSAR_{vr} = \sum_{b} s_{b} \times nSAR_{b} \times DC_{b} \times P_{b}}
 
 Where:
 \itemize{
-\item \eqn{mSAR_{vr}} is the mSAR of virtual reality headet use
-\item \eqn{Dduration_{vr}} is the duration of VR headset use in s/day
+\item \eqn{mSAR_{vr}} is the mSAR of virtual reality headset use online in mW/kg
+\item \eqn{f_{online}} is the share of the use time online (parameter
+\code{vr_online_prop})
+\item \eqn{s_{b}} is the share of the WiFi frequency band \eqn{b} (2.4 and 5 GHz)
+\item \eqn{nSAR_{b}} is the normalized SAR in W/kg/W
+\item \eqn{P_{b}} and \eqn{DC_{b}} are the output power in mW and the duty cycle
+of the headset
+\item \eqn{duration_{vr}} is the duration of VR headset use in s/day
 }
 }
 \examples{

@@ -53,17 +53,25 @@ a specific tissue.
 \details{
 The mSAR is calculated as
 
-\deqn{mSAR = nSAR_{native}\times outputpower_{native} + nSAR_{data} \times
-outputpower_{data} + nSAR_{wifi} \times outputpower_{wifi}}
+\deqn{mSAR = p_{native} \times mSAR_{native} + p_{data} \times mSAR_{data} + p_{wifi} \times mSAR_{wifi}}
+
+with, for each network \eqn{n} (native, data or WiFi),
+
+\deqn{mSAR_{n} = \sum_{b} s_{n,b} \times nSAR_{n,b} \times P_{n,b}}
 
 where
 \itemize{
-\item \eqn{nSAR_{native}}, \eqn{nSAR_{data}}, \eqn{nSAR_{wifi}} are the nSAR
-(normalized specific absorption rates, in W/kg/W) from mobile phone calls using
-native, mobile data, or WiFi networks, respectively
-\item \eqn{outputpower_{native}}, \eqn{outputpower_{data}},
-\eqn{outputpower_{wifi}} are the output powers in mW of the device (mobile
-phone) using native, mobile data, or WiFi networks, respectively
+\item \eqn{p_{native}}, \eqn{p_{data}}, \eqn{p_{wifi}} are the proportions of the
+call over the native network, mobile data or WiFi (\code{prop_native},
+\code{prop_data}, \code{prop_wifi})
+\item \eqn{s_{n,b}} is the share of the frequency band \eqn{b}: 2G to 5G for
+native calls, 3G to 5G for data calls (without 5G if \code{use_5g} is FALSE),
+2.4 and 5 GHz for WiFi calls
+\item \eqn{nSAR_{n,b}} is the normalized SAR in W/kg/W, weighted over the
+positions of the phone (see \code{\link[=mpc_sar_native]{mpc_sar_native()}}, \code{\link[=mpc_sar_data]{mpc_sar_data()}},
+\code{\link[=mpc_sar_wifi]{mpc_sar_wifi()}})
+\item \eqn{P_{n,b}} is the mean output power of the phone in mW, including the
+duty cycle (see \code{\link[=mpc_pwr_native]{mpc_pwr_native()}}, \code{\link[=mpc_pwr_data]{mpc_pwr_data()}}, \code{\link[=mpc_pwr_wifi]{mpc_pwr_wifi()}})
 }
 }
 \examples{

@@ -24,12 +24,16 @@ contribution only).
 \details{
 The RF-EMF dose from smart-watch use (phone contribution) is calculated as:
 
-\deqn{Dose_{phone} = mSAR_{phone} * duration_{phone}}
+\deqn{Dose_{phone} = mSAR_{phone} \times duration_{phone}}
+\deqn{mSAR_{phone} = nSAR_{phone} \times P_{phone}}
 
 Where:
 \itemize{
-\item \eqn{mSAR_{phone}} is the momentary SAR
-\item \eqn{duration_{phone}} is the use duration
+\item \eqn{mSAR_{phone}} is the momentary SAR in mW/kg
+\item \eqn{nSAR_{phone}} is the normalized SAR of the phone in W/kg/W
+\item \eqn{P_{phone}} is the output power of the phone's connection to the watch
+in mW
+\item \eqn{duration_{phone}} is the time the watch is worn in s/day
 }
 }
 \examples{

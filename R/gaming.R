@@ -7,12 +7,19 @@
 #'
 #' The RF-EMF dose from online gaming is calculated as:
 #'
-#' \deqn{Dose_{gaming} = mSAR_{gaming} * duration_{gaming}}
+#' \deqn{Dose_{gaming} = mSAR_{gaming} \times duration_{gaming}}
+#' \deqn{mSAR_{gaming} = f_{online} \times \sum_{b} s_{b} \times nSAR_{b} \times DC_{b} \times P_{b}}
 #'
 #' Where:
 #'
-#' * \eqn{mSAR_{gaming}} is the mSAR of gaming
-#' * \eqn{Dduration_{gaming}} is the duration of gaming with portable console in s/day
+#' * \eqn{mSAR_{gaming}} is the mSAR of gaming in mW/kg
+#' * \eqn{f_{online}} is the share of the gaming time online (parameter
+#'   `gaming_online_prop`)
+#' * \eqn{s_{b}} is the share of the WiFi frequency band \eqn{b} (2.4 and 5 GHz)
+#' * \eqn{nSAR_{b}} is the normalized SAR in W/kg/W
+#' * \eqn{P_{b}} and \eqn{DC_{b}} are the output power in mW and the duty cycle
+#'   of the console
+#' * \eqn{duration_{gaming}} is the duration of gaming with portable console in s/day
 #'
 #' @param tissue Tissue for which to calculate dose (default: "brain" or "body")
 #' @param duration_gaming duration of gaming with portable console in s/day

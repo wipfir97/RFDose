@@ -21,13 +21,18 @@ Switzerland = "CH", United Kingdom = "UK", elsewhere = "Other")}
 default parameters.}
 }
 \value{
-mSAR in W/kg/W/m**2
+mSAR in mW/kg
 }
 \description{
 Calculates the mSAR of far-field sources
 }
 \details{
-The output power depends on the country, urbanicity, and time spent commuting.
+\deqn{mSAR_{farfield} = nSAR_{farfield} \times S}
+
+where \eqn{nSAR_{farfield}} is the normalized SAR in W/kg per W/m\eqn{^2}
+(see \code{\link[=farfield_sar]{farfield_sar()}}) and \eqn{S} the power density in mW/m\eqn{^2} (see
+\code{\link[=farfield_pwr]{farfield_pwr()}}). The power density depends on the country, urbanicity,
+and time spent commuting.
 }
 \examples{
 farfield_msar(

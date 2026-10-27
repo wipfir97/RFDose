@@ -15,7 +15,7 @@ wifi_sar(tissue, band, params = load_params())
 default parameters.}
 }
 \value{
-nSAR in W/kg/W/m**2
+nSAR in W/kg per W/m\eqn{^2} of incident power density
 }
 \description{
 Calculates tissue-specific nSAR from WiFi Router

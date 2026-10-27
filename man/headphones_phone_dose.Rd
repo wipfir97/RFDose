@@ -2,7 +2,7 @@
 % Please edit documentation in R/headphones.R
 \name{headphones_phone_dose}
 \alias{headphones_phone_dose}
-\title{Calculate RF-EMF Dose from Smart Watch (phone contribution only)}
+\title{Calculate RF-EMF Dose from Bluetooth Headphones (phone contribution only)}
 \usage{
 headphones_phone_dose(tissue, duration_headphones, params = load_params())
 }
@@ -25,11 +25,16 @@ contribution only).
 The RF-EMF dose from Bluetooth headphone use (phone
 contribution) is calculated as:
 
-\deqn{Dose_{phone} = mSAR_{phone} * duration_{phone}}
+\deqn{Dose_{phone} = mSAR_{phone} \times duration_{phone}}
+\deqn{mSAR_{phone} = nSAR_{phone} \times P_{phone}}
 
 Where:
 \itemize{
-\item \eqn{mSAR_{phone}} is the momentary SAR for the headphone connection
+\item \eqn{mSAR_{phone}} is the momentary SAR for the headphone connection in
+mW/kg
+\item \eqn{nSAR_{phone}} is the normalized SAR of the phone in W/kg/W
+\item \eqn{P_{phone}} is the output power of the phone's connection to the
+headphones in mW
 \item \eqn{duration_{phone}} is the use duration in s/day
 }
 }

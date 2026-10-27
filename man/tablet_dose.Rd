@@ -41,8 +41,9 @@ The tablet RF-EMF dose is calculated as:
 Where:
 \itemize{
 \item \eqn{Dose_{tablet}} is the dose from tablet use
-\item \eqn{mSAR_{tablet}} is the momentary SAR value in mJ/kg
-\item \eqn{duration_{tablet}} is the duration of tablet use
+\item \eqn{mSAR_{tablet}} is the momentary SAR value in mW/kg (see \code{\link[=tablet_msar]{tablet_msar()}})
+\item \eqn{duration_{tablet}} is the duration of tablet use in s/day (sum of the
+durations of the four activities)
 }
 
 We distinguish between 4 types of activities:

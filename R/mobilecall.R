@@ -11,24 +11,34 @@
 #'
 #' @details
 #' The mobile call RF-EMF dose is calculated as:
-#' \deqn{Dose_{mobilecall} = Dose_{phone} + Dose_{bluetooth}}
+#'
+#' \deqn{Dose_{mobilecall} = Dose_{phone} + Dose_{earset} + Dose_{btphone}}
+#'
+#' with
+#'
+#' \deqn{Dose_{phone} = mSAR_{phone} \times duration}
+#' \deqn{Dose_{earset} = mSAR_{earset} \times p_{headp} \times n_{ear} \times duration}
+#' \deqn{Dose_{btphone} = mSAR_{btphone} \times p_{headp} \times duration}
 #'
 #' Where:
 #'
-#' * \eqn{Dose_{mobilecall}} is the total dose from all mobile call activities
 #' * \eqn{Dose_{phone}} is the dose from the mobile phone (no Bluetooth)
-#' * \eqn{Dose_{bluetooth}} is the dose from using Bluetooth headphones
-#' during the call.
+#' * \eqn{Dose_{earset}} and \eqn{Dose_{btphone}} are the doses from the
+#'   Bluetooth earphones and from the Bluetooth connection of the phone
+#' * \eqn{mSAR_{phone}}, \eqn{mSAR_{earset}} and \eqn{mSAR_{btphone}} are the
+#'   momentary SAR values in mW/kg (see [mpc_msar()], [mpc_bt_earset_msar()]
+#'   and [mpc_bt_phone_msar()])
+#' * \eqn{p_{headp}} is the proportion of the call with Bluetooth headphones
+#'   (`headp_prop`) and \eqn{n_{ear}} the number of earphones (`headp_ear_num`)
+#' * \eqn{duration} is the call duration in s/day
 #'
-#'
-#' For each source (phone and bluetooth), the dose is calculated as:
-#'
-#' \deqn{mSAR * duration}
-#'
-#' Where:
-#'
-#' * \eqn{mSAR} is the momentary SAR value in mJ/kg
-#' * \eqn{duration} is the call duration in seconds
+#' The phone is in speaker mode for the rest of the call,
+#' \eqn{1 - p_{ear} - p_{headp}}. The call goes over the native network for the
+#' proportion \eqn{p_{native}} (parameter `native_prop`), over WiFi for
+#' \eqn{p_{wifi} = (1 - p_{native}) \times (t_{home} w_{home} + t_{work} w_{work} + t_{travel} w_{travel})}
+#' and over mobile data for the rest, where \eqn{t} are the shares of the day
+#' at home, at work and commuting (see [location_props()]) and \eqn{w} the
+#' WiFi proportions (`wifi_prop_home`, `wifi_prop_work`, `wifi_prop_travel`).
 #'
 #' @param tissue Tissue for which to calculate dose (default: "brain" or "body")
 #' @param duration Duration of mobile phone call in seconds per day
@@ -38,7 +48,7 @@
 #' @param urbanicity Urbanicity of home / workplace (rural, suburban, or urban)
 #' @param use_5g TRUE if 5g services are used for calls, FALSE if not
 #' @param travel_time Time spent commuting in seconds per day
-#' @param headp_ear_num Number of Bluetooth headphones used during call
+#' @param headp_ear_num Number of Bluetooth earphones worn during the call (0, 1 or 2)
 #' @param wifi_prop_home Proportion of time connected to WiFi (vs mobile data)
 #' at home
 #' @param wifi_prop_work Proportion of time connected to WiFi (vs mobile data)
@@ -162,17 +172,25 @@ mobilecall_dose <- function(
 #' @details
 #' The mSAR is calculated as
 #'
-#' \deqn{mSAR = nSAR_{native}\times outputpower_{native} + nSAR_{data} \times
-#' outputpower_{data} + nSAR_{wifi} \times outputpower_{wifi}}
+#' \deqn{mSAR = p_{native} \times mSAR_{native} + p_{data} \times mSAR_{data} + p_{wifi} \times mSAR_{wifi}}
+#'
+#' with, for each network \eqn{n} (native, data or WiFi),
+#'
+#' \deqn{mSAR_{n} = \sum_{b} s_{n,b} \times nSAR_{n,b} \times P_{n,b}}
 #'
 #' where
 #'
-#' * \eqn{nSAR_{native}}, \eqn{nSAR_{data}}, \eqn{nSAR_{wifi}} are the nSAR
-#' (normalized specific absorption rates, in W/kg/W) from mobile phone calls using
-#' native, mobile data, or WiFi networks, respectively
-#' * \eqn{outputpower_{native}}, \eqn{outputpower_{data}},
-#' \eqn{outputpower_{wifi}} are the output powers in mW of the device (mobile
-#' phone) using native, mobile data, or WiFi networks, respectively
+#' * \eqn{p_{native}}, \eqn{p_{data}}, \eqn{p_{wifi}} are the proportions of the
+#'   call over the native network, mobile data or WiFi (`prop_native`,
+#'   `prop_data`, `prop_wifi`)
+#' * \eqn{s_{n,b}} is the share of the frequency band \eqn{b}: 2G to 5G for
+#'   native calls, 3G to 5G for data calls (without 5G if `use_5g` is FALSE),
+#'   2.4 and 5 GHz for WiFi calls
+#' * \eqn{nSAR_{n,b}} is the normalized SAR in W/kg/W, weighted over the
+#'   positions of the phone (see [mpc_sar_native()], [mpc_sar_data()],
+#'   [mpc_sar_wifi()])
+#' * \eqn{P_{n,b}} is the mean output power of the phone in mW, including the
+#'   duty cycle (see [mpc_pwr_native()], [mpc_pwr_data()], [mpc_pwr_wifi()])
 #'
 #' @param tissue Tissue for which to calculate mSAR (default: "brain" or "body")
 #' @param prop_native Proportion of mobile call using native connection
@@ -324,20 +342,28 @@ mpc_msar <- function(
 # Mobilecall output power (nativecall) by technology (2G, 3g, 4g, 5g) ---------
 #' Calculate Mobile Phone Output Power during Native Mobile Phone Calls
 #'
-#' Calculates the mobile phone output power during calls using native network.
+#' Calculates the mean output power of the mobile phone during calls using the
+#' native network.
 #'
 #' @details
-#' The output power depends in the technology used and the location in which the
-#' call is performed (urbanicity, indoors/outdoors/commuting)
+#' The output power depends on the technology and on where the call is made
+#' (urbanicity; indoors, outdoors or commuting):
 #'
+#' \deqn{P = DC \times (t_{ind} \times P_{ind} + t_{out} \times P_{out} + t_{travel} \times P_{travel})}
 #'
-#' @param band Technology (2G, 3g, 4g, or 5g) used for the call
+#' where \eqn{t_{ind}}, \eqn{t_{out}} and \eqn{t_{travel}} are the shares of
+#' the day at home or at work, outdoors and commuting (see [location_props()]),
+#' \eqn{P_{ind}}, \eqn{P_{out}} and \eqn{P_{travel}} the output powers there in
+#' mW (indoors and outdoors: for the urbanicity), and \eqn{DC} the duty cycle
+#' of the technology.
+#'
+#' @param band Technology ("2g", "3g", "4g" or "5g") used for the call
 #' @param urbanicity Urbanicity of home / workplace (rural, suburban, or urban)
 #' @param travel_time Time spent commuting in seconds per day
 #' @param params Parameter list (optional). If not specified, calculations use
 #' default parameters.
 #'
-#' @returns Output power in mW
+#' @returns Output power in mW, including the duty cycle
 #'
 #' @examples
 #' mpc_pwr_native(
@@ -387,12 +413,19 @@ mpc_pwr_native <- function(
 #'
 #' @details
 #' The normalized specific absorption rate (nSAR) depends on the tissue, the
-#' technology (2G, 3g, 4g or 5g), and the location of the phone during the
-#' call (against ear, with Bluetooth headphones, in speaker mode)
+#' technology (2G, 3G, 4G or 5G), and the position of the phone during the
+#' call (against the ear, with Bluetooth headphones, in speaker mode):
 #'
+#' \deqn{nSAR = p_{ear} \times nSAR_{ear} + p_{headp} \times nSAR_{headp} + p_{speaker} \times nSAR_{speaker}}
+#' \deqn{nSAR_{headp} = f_{face} \times nSAR_{face} + f_{pock} \times nSAR_{pock} + f_{else} \times nSAR_{else}}
+#'
+#' where \eqn{p} are the proportions of the call in each position (`ear_prop`,
+#' `headp_prop`, `speaker_prop`), \eqn{f} the proportions of the places of the
+#' phone during calls with headphones (parameters `headp_face_prop`,
+#' `headp_pock_prop`, `headp_else_prop`), and the nSAR values are in W/kg/W.
 #'
 #' @param tissue Tissue for which to calculate nSAR (default: "brain" or "body")
-#' @param band Technology (2G, 3g, 4g, or 5g) used for the call
+#' @param band Technology ("2g", "3g", "4g" or "5g") used for the call
 #' @param headp_prop Proportion of call performed with active Bluetooth connection
 #' to headphones
 #' @param ear_prop Proportion of call performed with phone held against ear
@@ -445,20 +478,28 @@ mpc_sar_native <- function(
 # Mobilecall data output power by technology ----------------------------------
 #' Calculate Mobile Phone Output Power during Data Mobile Phone Calls
 #'
-#' Calculates the mobile phone output power during calls using mobile data.
+#' Calculates the mean output power of the mobile phone during calls using
+#' mobile data.
 #'
 #' @details
-#' The output power depends in the technology used and the location in which the
-#' call is performed (urbanicity, indoors/outdoors/commuting)
+#' The output power depends on the technology and on where the call is made
+#' (urbanicity; indoors, outdoors or commuting):
 #'
+#' \deqn{P = DC \times (t_{ind} \times P_{ind} + t_{out} \times P_{out} + t_{travel} \times P_{travel})}
 #'
-#' @param band Technology (3g, 4g, or 5g) used for the call
+#' where \eqn{t_{ind}}, \eqn{t_{out}} and \eqn{t_{travel}} are the shares of
+#' the day at home or at work, outdoors and commuting (see [location_props()]),
+#' \eqn{P_{ind}}, \eqn{P_{out}} and \eqn{P_{travel}} the output powers there in
+#' mW (indoors and outdoors: for the urbanicity), and \eqn{DC} the duty cycle
+#' of the technology.
+#'
+#' @param band Technology ("3g", "4g" or "5g") used for the call
 #' @param urbanicity Urbanicity of home / workplace (rural, suburban, or urban)
 #' @param travel_time Time spent commuting in seconds per day
 #' @param params Parameter list (optional). If not specified, calculations use
 #' default parameters.
 #'
-#' @returns Output power in mW
+#' @returns Output power in mW, including the duty cycle
 #'
 #' @examples
 #' mpc_pwr_data(
@@ -513,12 +554,19 @@ mpc_pwr_data <- function(
 #'
 #' @details
 #' The normalized specific absorption rate (nSAR) depends on the tissue, the
-#' technology (2G, 3g, 4g or 5g), and the location of the phone during the
-#' call (against ear, with Bluetooth headphones, in speaker mode)
+#' technology (3G, 4G or 5G), and the position of the phone during the call
+#' (against the ear, with Bluetooth headphones, in speaker mode):
 #'
+#' \deqn{nSAR = p_{ear} \times nSAR_{ear} + p_{headp} \times nSAR_{headp} + p_{speaker} \times nSAR_{speaker}}
+#' \deqn{nSAR_{headp} = f_{face} \times nSAR_{face} + f_{pock} \times nSAR_{pock} + f_{else} \times nSAR_{else}}
+#'
+#' where \eqn{p} are the proportions of the call in each position (`ear_prop`,
+#' `headp_prop`, `speaker_prop`), \eqn{f} the proportions of the places of the
+#' phone during calls with headphones (parameters `headp_face_prop`,
+#' `headp_pock_prop`, `headp_else_prop`), and the nSAR values are in W/kg/W.
 #'
 #' @param tissue Tissue for which to calculate nSAR (default: "brain" or "body")
-#' @param band Technology (2G, 3g, 4g, or 5g) used for the call
+#' @param band Technology ("3g", "4g" or "5g") used for the call
 #' @param headp_prop Proportion of call performed with active Bluetooth connection
 #' to headphones
 #' @param ear_prop Proportion of call performed with phone held against ear
@@ -572,17 +620,22 @@ mpc_sar_data <- function(
 # Mobilecall output power (WiFi call) -----------------------------------------
 #' Calculate Mobile Phone Output Power during WiFi Mobile Phone Calls
 #'
-#' Calculates the mobile phone output power during calls using WiFi connection.
+#' Calculates the mean output power of the mobile phone during calls using WiFi
+#' connection.
 #'
 #' @details
-#' The output power depends on the frequency band (2.4 GHz or 5.0 GHz)
+#' The output power depends on the frequency band (2.4 GHz or 5.0 GHz):
 #'
+#' \deqn{P = DC \times P_{wifi}}
+#'
+#' where \eqn{P_{wifi}} is the output power of the band in mW and \eqn{DC} its
+#' duty cycle.
 #'
 #' @param band Frequency band ("2" for 2.4 GHz, "5" for 5.0 GHz) used for the call
 #' @param params Parameter list (optional). If not specified, calculations use
 #' default parameters.
 #'
-#' @returns Output power in mW
+#' @returns Output power in mW, including the duty cycle
 #'
 #' @examples
 #' mpc_pwr_wifi(
@@ -615,9 +668,16 @@ mpc_pwr_wifi <- function(
 #'
 #' @details
 #' The normalized specific absorption rate (nSAR) depends on the tissue, the
-#' technology (2.4gHz or 5.0GHz), and the location of the phone during the
-#' call (against ear, with Bluetooth headphones, in speaker mode)
+#' frequency band (2.4 GHz or 5.0 GHz), and the position of the phone during
+#' the call (against the ear, with Bluetooth headphones, in speaker mode):
 #'
+#' \deqn{nSAR = p_{ear} \times nSAR_{ear} + p_{headp} \times nSAR_{headp} + p_{speaker} \times nSAR_{speaker}}
+#' \deqn{nSAR_{headp} = f_{face} \times nSAR_{face} + f_{pock} \times nSAR_{pock} + f_{else} \times nSAR_{else}}
+#'
+#' where \eqn{p} are the proportions of the call in each position (`ear_prop`,
+#' `headp_prop`, `speaker_prop`), \eqn{f} the proportions of the places of the
+#' phone during calls with headphones (parameters `headp_face_prop`,
+#' `headp_pock_prop`, `headp_else_prop`), and the nSAR values are in W/kg/W.
 #'
 #' @param tissue Tissue for which to calculate nSAR (default: "brain" or "body")
 #' @param band Frequency band ("2" for 2.4 GHz, "5" for 5.0 GHz) used for the call
@@ -679,12 +739,20 @@ mpc_sar_wifi <- function(
 #' (headphone/earset only; the contribution of the mobile phone is calculated
 #' separately).
 #'
+#' @details
+#' The mSAR of one earphone is calculated as
+#'
+#' \deqn{mSAR_{earset} = nSAR_{earset} \times P_{bt}}
+#'
+#' where \eqn{nSAR_{earset}} is the normalized SAR of the earphone in W/kg/W
+#' and \eqn{P_{bt}} the Bluetooth output power in mW. [mobilecall_dose()]
+#' multiplies it by the number of earphones.
+#'
 #' @param tissue Tissue for which to calculate mSAR (default: "brain" or "body")
-#' @param headp_ear_num Number of Bluetooth earphones worn during call (0, 1, or 2)
 #' @param params Parameter list (optional). If not specified, calculations use
 #' default parameters.
 #'
-#' @returns mSAR from Bluetooth calls (headphones/earset only) in mJ/kg/day)
+#' @returns mSAR from Bluetooth calls (one earphone only) in mW/kg
 #'
 #' @seealso [mpc_bt_phone_msar()]
 #'
@@ -696,7 +764,6 @@ mpc_sar_wifi <- function(
 #' @export
 mpc_bt_earset_msar <- function(
     tissue,
-    headp_ear_num,
     params = load_params()) {
   # Load tissue params ========================================================
   tissue_params <- load_tissue_params(params, "call", tissue)
@@ -712,18 +779,27 @@ mpc_bt_earset_msar <- function(
   return(msar)
 }
 
-#' Calculate mobile call dose from Bluetooth headphones (phone only)
+#' Calculate mobile call mSAR for Bluetooth headphones (phone only)
 #'
-#' Calculates the RF-EMF dose from mobile calling using Bluetooth headphones
-#' (phone contribution only; the contribution of the headphones/earset is calculated
-#' separately).
+#' Calculates the mSAR for mobile calling using Bluetooth headphones
+#' (Bluetooth connection of the phone only; the contribution of the
+#' headphones/earset is calculated separately).
+#'
+#' @details
+#' The mSAR is calculated as
+#'
+#' \deqn{mSAR_{btphone} = P_{bt} \times (f_{face} \times nSAR_{face} + f_{pock} \times nSAR_{pock} + f_{else} \times nSAR_{else})}
+#'
+#' where \eqn{P_{bt}} is the Bluetooth output power in mW, \eqn{f} the
+#' proportions of the places of the phone during calls with headphones
+#' (parameters `headp_face_prop`, `headp_pock_prop`, `headp_else_prop`) and
+#' the nSAR values are in W/kg/W.
 #'
 #' @param tissue Tissue for which to calculate mSAR (default: "brain" or "body")
-#' @param headp_ear_num Number of Bluetooth earphones worn during call (0, 1, or 2)
 #' @param params Parameter list (optional). If not specified, calculations use
 #' default parameters.
 #'
-#' @returns Dose from Bluetooth calls (phone contribution only) in mW/kg)
+#' @returns mSAR from Bluetooth calls (phone contribution only) in mW/kg
 #'
 #' @seealso [mpc_bt_earset_msar()]
 #'
@@ -735,7 +811,6 @@ mpc_bt_earset_msar <- function(
 #' @export
 mpc_bt_phone_msar <- function(
     tissue,
-    headp_ear_num,
     params = load_params()) {
   # Load tissue params ========================================================
   tissue_params <- load_tissue_params(params, "call", tissue)

@@ -32,7 +32,7 @@ The dose is calculated as
 Where:
 \itemize{
 \item \eqn{Dose_{DECT}} is the dose from DECT/cordless phone calls
-\item \eqn{mSAR_{DECT}} is the momentary SAR value in mJ/kg
+\item \eqn{mSAR_{DECT}} is the momentary SAR value in mW/kg (see \code{\link[=dect_msar]{dect_msar()}})
 \item \eqn{duration_{DECT}} is the duration of the calls in s/day
 }
 }

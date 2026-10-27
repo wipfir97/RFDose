@@ -11,8 +11,14 @@ dect_pwr(params = load_params())
 default parameters.}
 }
 \value{
-DECT/cordless phone output power in mW
+DECT/cordless phone output power in mW, including the duty cycle
 }
 \description{
-Calculates the output power of DECT/cordless phone during a call.
+Calculates the mean output power of DECT/cordless phone during a call.
+}
+\details{
+\deqn{P_{DECT} = DC \times P}
+
+where \eqn{P} is the output power of the phone in mW and \eqn{DC} its duty
+cycle.
 }

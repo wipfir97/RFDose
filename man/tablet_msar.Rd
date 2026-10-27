@@ -36,13 +36,15 @@ Calculates the tissue-specific momentary SAR (mSAR) from tablet use.
 \details{
 The mSAR is calculated as:
 
-\deqn{mSAR_{tablet} = nSAR_{tablet}*outputpower_{tablet}}
+\deqn{mSAR_{tablet} = \sum_{b} s_{b} \times nSAR_{b} \times P_{b}}
 
 Where:
 \itemize{
-\item \eqn{mSAR_{tablet}} is the mSAR from tablet use
-\item \eqn{nSAR_{tablet}} is the normalised SAR value in mJ/kg
-\item \eqn{outputpower_{tablet}} is the duration of tablet use
+\item \eqn{mSAR_{tablet}} is the mSAR from tablet use in mW/kg
+\item \eqn{s_{b}} is the share of the WiFi frequency band \eqn{b} (2.4 and 5 GHz)
+\item \eqn{nSAR_{b}} is the normalised SAR value in W/kg/W (see \code{\link[=tablet_sar]{tablet_sar()}})
+\item \eqn{P_{b}} is the mean output power of the tablet in mW, including the
+duty cycles of the activities (see \code{\link[=tablet_pwr]{tablet_pwr()}})
 }
 
 We distinguish between 4 types of activities:

@@ -4,34 +4,32 @@
 \alias{wifi_msar}
 \title{Calculate mSAR of WiFi Router}
 \usage{
-wifi_msar(tissue, travel_time, wifi_prop_travel, params = load_params())
+wifi_msar(tissue, params = load_params())
 }
 \arguments{
-\item{tissue}{Tissue for which to calculate nSAR (default: "brain" or "body")}
-
-\item{travel_time}{Time spent commuting in seconds per day}
-
-\item{wifi_prop_travel}{Proportion of time connected to WiFi (vs mobile data)
-while commuting}
+\item{tissue}{Tissue for which to calculate mSAR (default: "brain" or "body")}
 
 \item{params}{Parameter list (optional). If not specified, calculations use
 default parameters.}
 }
 \value{
-mSAR in W/kg/W/m**2
+mSAR in mW/kg
 }
 \description{
 Calculates the mSAR of WiFi Router
 }
 \details{
-The output power depends on the time spent commuting and the proportion of
-time a WiFi connection (vs mobile data) is used while commuting.
+\deqn{mSAR_{WiFi} = \sum_{b} s_{b} \times nSAR_{b} \times S_{b}}
+
+where \eqn{s_{b}} is the share of the frequency band \eqn{b} (2.4 and 5
+GHz), \eqn{nSAR_{b}} the normalized SAR in W/kg per W/m\eqn{^2} (see
+\code{\link[=wifi_sar]{wifi_sar()}}) and \eqn{S_{b}} the power density of the WiFi router in
+mW/m\eqn{^2} (see \code{\link[=wifi_pwr]{wifi_pwr()}}). The time spent commuting and the WiFi use
+while commuting only change the exposure time (see \code{\link[=wifi_dose]{wifi_dose()}}).
 }
 \examples{
 wifi_msar(
-  tissue           = "body",
-  travel_time      = 1800,
-  wifi_prop_travel = 0.5)
+  tissue = "body")
 
 }
 \seealso{

@@ -22,6 +22,13 @@ Tissue-specific nSAR from DECT/cordless phone calls in W/kg/W
 Calculates nSAR (normalized specific absorption rate) from making calls with
 cordless phone (also known as DECT phone).
 }
+\details{
+\deqn{nSAR_{DECT} = p_{ear} \times nSAR_{ear} + (1 - p_{ear}) \times nSAR_{speaker}}
+
+where \eqn{p_{ear}} is the proportion of the call with the phone against the
+ear (\code{ear_prop}), the rest in speaker mode, and the nSAR values are in
+W/kg/W.
+}
 \examples{
 dect_sar(
   tissue      = "brain",

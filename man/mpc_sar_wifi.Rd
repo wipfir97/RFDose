@@ -36,8 +36,16 @@ Calculates tissue-specific nSAR from mobile phone calls using WiFi connection.
 }
 \details{
 The normalized specific absorption rate (nSAR) depends on the tissue, the
-technology (2.4gHz or 5.0GHz), and the location of the phone during the
-call (against ear, with Bluetooth headphones, in speaker mode)
+frequency band (2.4 GHz or 5.0 GHz), and the position of the phone during
+the call (against the ear, with Bluetooth headphones, in speaker mode):
+
+\deqn{nSAR = p_{ear} \times nSAR_{ear} + p_{headp} \times nSAR_{headp} + p_{speaker} \times nSAR_{speaker}}
+\deqn{nSAR_{headp} = f_{face} \times nSAR_{face} + f_{pock} \times nSAR_{pock} + f_{else} \times nSAR_{else}}
+
+where \eqn{p} are the proportions of the call in each position (\code{ear_prop},
+\code{headp_prop}, \code{speaker_prop}), \eqn{f} the proportions of the places of the
+phone during calls with headphones (parameters \code{headp_face_prop},
+\code{headp_pock_prop}, \code{headp_else_prop}), and the nSAR values are in W/kg/W.
 }
 \examples{
 mpc_sar_wifi(

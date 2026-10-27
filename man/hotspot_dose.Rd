@@ -23,12 +23,16 @@ Calculates the tissue-specific RF-EMF dose from hotspot
 \details{
 The RF-EMF dose from hotspot use is calculated as:
 
-\deqn{Dose_{hotspot} = mSAR_{hotspot} * duration_{hotspot}}
+\deqn{Dose_{hotspot} = mSAR_{hotspot} \times duration_{hotspot}}
+\deqn{mSAR_{hotspot} = nSAR_{hotspot} \times P_{hotspot}}
 
 Where:
 \itemize{
-\item \eqn{mSAR_{hotspot}} is the mSAR of hotspot use
-\item \eqn{Dduration_{hotspot}} is the duration of hotspot use in s/day
+\item \eqn{mSAR_{hotspot}} is the mSAR of hotspot use in mW/kg
+\item \eqn{nSAR_{hotspot}} is the normalized SAR of the phone in W/kg/W
+\item \eqn{P_{hotspot}} is the mean output power of the phone used as hotspot in
+mW
+\item \eqn{duration_{hotspot}} is the duration of hotspot use in s/day
 }
 }
 \examples{

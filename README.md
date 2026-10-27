@@ -4,7 +4,7 @@
 
 RFDose implements the deterministic RF-EMF dose calculations developed in Jalilian et al. (publication in writing stage). Version 2.0.0 is based on the most up-to-date dose calculations (October 2026). It also includes a first version of a stochastic dose model, which estimates the uncertainty of the doses (see [Stochastic dose calculation](#stochastic-dose-calculation)).
 
-For detailed information about the package functions, please refer to the [package manual](./doc/RFDose_2.0.0.pdf). We are also preparing a short publication on `RFDose`, which will contain further background information. 
+For detailed information about the package functions, please refer to the [package manual](./doc/RFDose_2.0.1.pdf). We are also preparing a short publication on `RFDose`, which will contain further background information. 
 
 **Information for users of version 1.0.0**
 
@@ -357,6 +357,7 @@ Contributors will be listed here.
 
 |Version|Description|
 |-|-|
+|2.0.1|Documentation: formulas and units corrected for all exposure sources; package manual ordered by exposure source. Unused arguments removed from `mpc_bt_earset_msar()`, `mpc_bt_phone_msar()` and `wifi_msar()`|
 |2.0.0|SAR values from GOLIAT dosimetric simulations included: one file per phantom and one with their average (`inst/extdata/sar_goliat_*.yaml`). All SAR values are now taken from GOLIAT instead of ETAIN, except for the sources without a similar GOLIAT simulation (smartwatch, headphones, Bluetooth headset), which keep their ETAIN values. The average of the four phantoms is the default; the ETAIN SAR values remain available with `sar_file` (`sar_etain.yaml`). See [GOLIAT SAR values](#goliat-sar-values). Output power parameters updated with data from GOLIAT Task 1.2. First version of the stochastic dose model (`calculate_emf_doses_stochastic()`, see [Stochastic dose calculation](#stochastic-dose-calculation))|
 |1.0.0|Updated version based on finalized dose calculations in Jalilian et al. (manuscript in preparation)|
 |0.3.0|Updated version with major changes in dose calculations (based on dose calculator 7.6). Based on dose calculator version 7.6|

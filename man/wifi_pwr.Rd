@@ -2,7 +2,7 @@
 % Please edit documentation in R/wifi.R
 \name{wifi_pwr}
 \alias{wifi_pwr}
-\title{Calculate Output Power of WiFi Router}
+\title{Calculate Power Density of WiFi Router}
 \usage{
 wifi_pwr(band, params = load_params())
 }
@@ -13,13 +13,13 @@ wifi_pwr(band, params = load_params())
 default parameters.}
 }
 \value{
-Output power in mW/m**2
+Power density in mW/m\eqn{^2}
 }
 \description{
-Calculates the output power of WiFi router
+Calculates the power density of WiFi router
 }
 \details{
-The output power depends on the WiFi frequency band.
+The power density depends on the WiFi frequency band.
 }
 \examples{
 wifi_pwr(

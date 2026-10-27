@@ -12,8 +12,9 @@
 #' Where:
 #'
 #' * \eqn{Dose_{laptop}} is the dose from laptop use
-#' * \eqn{mSAR_{laptop}} is the momentary SAR value in mJ/kg
-#' * \eqn{duration_{laptop}} is the duration of laptop use
+#' * \eqn{mSAR_{laptop}} is the momentary SAR value in mW/kg (see [laptop_msar()])
+#' * \eqn{duration_{laptop}} is the duration of laptop use in s/day (sum of the
+#'   durations of the four activities)
 #'
 #'
 #'
@@ -97,13 +98,16 @@ laptop_dose <- function(
 #'
 #' The mSAR is calculated as:
 #'
-#' \deqn{mSAR_{laptop} = nSAR_{laptop}*outputpower_{laptop}}
+#' \deqn{mSAR_{laptop} = \sum_{b} s_{b} \times nSAR_{b} \times P_{b}}
 #'
 #' Where:
 #'
-#' * \eqn{mSAR_{laptop}} is the mSAR from laptop use
-#' * \eqn{nSAR_{laptop}} is the normalised SAR value in mJ/kg
-#' * \eqn{outputpower_{laptop}} is the duration of laptop use
+#' * \eqn{mSAR_{laptop}} is the mSAR from laptop use in mW/kg
+#' * \eqn{s_{b}} is the share of the WiFi frequency band \eqn{b} (2.4 and 5 GHz)
+#' * \eqn{nSAR_{b}} is the normalised SAR value in W/kg/W, weighted over the
+#'   placements of the laptop (see [laptop_sar()])
+#' * \eqn{P_{b}} is the mean output power of the laptop in mW, including the
+#'   duty cycles of the activities (see [laptop_pwr()])
 #'
 #'
 #' We distinguish between 4 types of activities:
@@ -179,11 +183,17 @@ laptop_msar <- function(
 # =============================================================================
 #' Calculate Laptop Output Power
 #'
-#' Calculates the laptop output power during use
+#' Calculates the mean laptop output power during use
 #'
 #' @details
 #' The output power depends on the frequency band (2.4 GHz or 5.0 GHz) and the
-#' type of activity.
+#' type of activity:
+#'
+#' \deqn{P = P_{wifi} \times \sum_{k} q_{k} \times DC_{k}}
+#'
+#' where \eqn{P_{wifi}} is the output power of the band in mW, \eqn{q_{k}} the
+#' share of the activity \eqn{k} in the use time (see [act_pwr_props()]) and
+#' \eqn{DC_{k}} its duty cycle.
 #'
 #' @param band WiFi frequency band ("2" for 2.4 GHz, "5" for 5.0 GHz)
 #' @param dur_low Duration (in seconds per day) of low output power activities on laptop
@@ -193,7 +203,7 @@ laptop_msar <- function(
 #' @param params Parameter list (optional). If not specified, calculations use
 #' default parameters.
 #'
-#' @returns Output power in mW
+#' @returns Output power in mW, including the duty cycles
 #'
 #' @examples
 #' laptop_pwr(
@@ -242,8 +252,14 @@ laptop_pwr <- function(
 #' Calculates tissue-specific nSAR from laptop use.
 #'
 #' @details
-#' The normalized specific absorption rate (nSAR) depends on the tissue and
-#' the frequency band.
+#' The normalized specific absorption rate (nSAR) depends on the tissue, the
+#' frequency band and the placement of the laptop (on the legs or on a table):
+#'
+#' \deqn{nSAR = f_{legs} \times nSAR_{legs} + f_{table} \times nSAR_{table}}
+#'
+#' where \eqn{f_{legs}} and \eqn{f_{table}} are the proportions of the
+#' placements (parameters `legs_prop` and `tabl_prop`, set by the SAR file) and
+#' the nSAR values are in W/kg/W.
 #'
 #' @param tissue Tissue for which to calculate nSAR (default: "brain" or "body")
 #' @param band Frequency band ("2" for 2.4 GHz, "5" for 5.0 GHz)

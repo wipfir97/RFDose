@@ -7,7 +7,7 @@
 mpc_pwr_data(band, urbanicity, travel_time, params = load_params())
 }
 \arguments{
-\item{band}{Technology (3g, 4g, or 5g) used for the call}
+\item{band}{Technology ("3g", "4g" or "5g") used for the call}
 
 \item{urbanicity}{Urbanicity of home / workplace (rural, suburban, or urban)}
 
@@ -17,14 +17,23 @@ mpc_pwr_data(band, urbanicity, travel_time, params = load_params())
 default parameters.}
 }
 \value{
-Output power in mW
+Output power in mW, including the duty cycle
 }
 \description{
-Calculates the mobile phone output power during calls using mobile data.
+Calculates the mean output power of the mobile phone during calls using
+mobile data.
 }
 \details{
-The output power depends in the technology used and the location in which the
-call is performed (urbanicity, indoors/outdoors/commuting)
+The output power depends on the technology and on where the call is made
+(urbanicity; indoors, outdoors or commuting):
+
+\deqn{P = DC \times (t_{ind} \times P_{ind} + t_{out} \times P_{out} + t_{travel} \times P_{travel})}
+
+where \eqn{t_{ind}}, \eqn{t_{out}} and \eqn{t_{travel}} are the shares of
+the day at home or at work, outdoors and commuting (see \code{\link[=location_props]{location_props()}}),
+\eqn{P_{ind}}, \eqn{P_{out}} and \eqn{P_{travel}} the output powers there in
+mW (indoors and outdoors: for the urbanicity), and \eqn{DC} the duty cycle
+of the technology.
 }
 \examples{
 mpc_pwr_data(

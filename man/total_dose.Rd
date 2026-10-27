@@ -16,7 +16,9 @@ match the names and data types of the provided example dataset and must not be N
 default parameters.}
 }
 \value{
-Total RF-EMF dose in mJ/kg/day for the specified tissue.
+Named vector of the RF-EMF doses of the 8 exposure sources
+(\code{call_dose}, \code{data_dose}, \code{dect_dose}, \code{farf_dose}, \code{wifi_dose},
+\code{lptp_dose}, \code{tblt_dose}, \code{other_dose}) in mJ/kg/day for the specified tissue.
 }
 \description{
 Calculates the total RF-EMF dose from all available RF-EMF sources

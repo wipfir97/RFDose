@@ -4,23 +4,30 @@
 \alias{mpc_bt_earset_msar}
 \title{Calculate mobile call mSAR for Bluetooth headphones (headphones only)}
 \usage{
-mpc_bt_earset_msar(tissue, headp_ear_num, params = load_params())
+mpc_bt_earset_msar(tissue, params = load_params())
 }
 \arguments{
 \item{tissue}{Tissue for which to calculate mSAR (default: "brain" or "body")}
-
-\item{headp_ear_num}{Number of Bluetooth earphones worn during call (0, 1, or 2)}
 
 \item{params}{Parameter list (optional). If not specified, calculations use
 default parameters.}
 }
 \value{
-mSAR from Bluetooth calls (headphones/earset only) in mJ/kg/day)
+mSAR from Bluetooth calls (one earphone only) in mW/kg
 }
 \description{
 Calculates the mSAR for mobile calling using Bluetooth headphones
 (headphone/earset only; the contribution of the mobile phone is calculated
 separately).
+}
+\details{
+The mSAR of one earphone is calculated as
+
+\deqn{mSAR_{earset} = nSAR_{earset} \times P_{bt}}
+
+where \eqn{nSAR_{earset}} is the normalized SAR of the earphone in W/kg/W
+and \eqn{P_{bt}} the Bluetooth output power in mW. \code{\link[=mobilecall_dose]{mobilecall_dose()}}
+multiplies it by the number of earphones.
 }
 \examples{
 mpc_bt_earset_msar(

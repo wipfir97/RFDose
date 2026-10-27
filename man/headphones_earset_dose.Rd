@@ -2,7 +2,7 @@
 % Please edit documentation in R/headphones.R
 \name{headphones_earset_dose}
 \alias{headphones_earset_dose}
-\title{Calculate RF-EMF Dose from Smart Watch (earset contribution only)}
+\title{Calculate RF-EMF Dose from Bluetooth Headphones (earset contribution only)}
 \usage{
 headphones_earset_dose(tissue, duration_headphones, params = load_params())
 }
@@ -25,11 +25,15 @@ contribution only).
 The RF-EMF dose from Bluetooth headphone use (earset
 contribution) is calculated as:
 
-\deqn{Dose_{earset} = mSAR_{earset} * duration_{earset}}
+\deqn{Dose_{earset} = 2 \times mSAR_{earset} \times duration_{earset}}
+\deqn{mSAR_{earset} = nSAR_{earset} \times P_{earset}}
 
 Where:
 \itemize{
-\item \eqn{mSAR_{earset}} is the momentary SAR for the headphone connection
+\item 2 is the number of earphones (assumption)
+\item \eqn{mSAR_{earset}} is the momentary SAR of one earphone in mW/kg
+\item \eqn{nSAR_{earset}} is the normalized SAR of one earphone in W/kg/W
+\item \eqn{P_{earset}} is the output power of one earphone in mW
 \item \eqn{duration_{earset}} is the use duration in s/day
 }
 }

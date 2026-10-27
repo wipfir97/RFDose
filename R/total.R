@@ -2,7 +2,6 @@
 #' Calculate Total RF-EMF Doses for ALL samples
 #'
 #' Wrapper function that calculates RF-EMF doses for a data frame of observations.
-#' This function will be removed in the future.
 #'
 #' @details
 #' Additional details will follow.
@@ -27,8 +26,8 @@
 #' with its SAR values (e.g. placement proportions). If not specified, the SAR
 #' values of `params` are used, or the default SAR values if `params` has none.
 #'
-#' @returns A data frame. Columns contain the calculated RF-EMF dose
-#' of each row in mJ/kg/day, for each exposure source and each tissue.
+#' @returns A data frame: the columns of `data`, plus one column per exposure
+#' source with the RF-EMF dose of each row in mJ/kg/day for the chosen tissue.
 #'
 #' @examples
 #' # Brain doses of the example data, in mJ/kg/day: the input columns, plus one
@@ -146,7 +145,9 @@ prepare_dose_data <- function(data, default_value_file = NULL) {
 #' @param params Parameter list (optional). If not specified, calculations use
 #' default parameters.
 #'
-#' @returns Total RF-EMF dose in mJ/kg/day for the specified tissue.
+#' @returns Named vector of the RF-EMF doses of the 8 exposure sources
+#' (`call_dose`, `data_dose`, `dect_dose`, `farf_dose`, `wifi_dose`,
+#' `lptp_dose`, `tblt_dose`, `other_dose`) in mJ/kg/day for the specified tissue.
 #'
 #' @export
 total_dose <- function(

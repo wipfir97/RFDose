@@ -12,8 +12,9 @@
 #' Where:
 #'
 #' * \eqn{Dose_{data}} is the dose from mobile data use
-#' * \eqn{mSAR_{data}} is the momentary SAR value in mJ/kg
-#' * \eqn{duration_{data}} is the duration of mobile data use
+#' * \eqn{mSAR_{data}} is the momentary SAR value in mW/kg (see [mpd_msar()])
+#' * \eqn{duration_{data}} is the duration of mobile data use in s/day (sum of
+#'   the durations of the four activities)
 #'
 #' @details
 #'
@@ -125,16 +126,25 @@ mobiledata_dose <- function(
 #' @details
 #' The mSAR is calculated as
 #'
-#' \deqn{mSAR = nSAR_{mobiledata} \times
-#' outputpower_{mobiledata} + nSAR_{wifi} \times outputpower_{wifi}}
+#' \deqn{mSAR = (1 - p_{wifi}) \times mSAR_{data} + p_{wifi} \times mSAR_{wifi}}
+#'
+#' with, for each network \eqn{n} (mobile data or WiFi),
+#'
+#' \deqn{mSAR_{n} = \sum_{b} s_{n,b} \times nSAR_{n,b} \times P_{n,b}}
 #'
 #' where
 #'
-#' * \eqn{nSAR_{data}}, \eqn{nSAR_{wifi}} are the nSAR
-#' (normalized specific absorption rates, in W/kg/W) from data use using
-#' mobile data or WiFi networks, respectively
-#' * \eqn{outputpower_{data}}, \eqn{outputpower_{wifi}} are the output powers (mW)
-#' of the device (mobilephone) using mobile data or WiFi networks, respectively
+#' * \eqn{p_{wifi} = t_{home} w_{home} + t_{work} w_{work} + t_{travel} w_{travel}}
+#'   is the proportion of use over WiFi, with \eqn{t} the shares of the day at
+#'   home, at work and commuting (see [location_props()]) and \eqn{w} the WiFi
+#'   proportions (`wifi_prop_home`, `wifi_prop_work`, `wifi_prop_travel`); no
+#'   WiFi is used outdoors
+#' * \eqn{s_{n,b}} is the share of the frequency band \eqn{b}: 3G to 5G for
+#'   mobile data (without 5G if `use_5g` is FALSE), 2.4 and 5 GHz for WiFi
+#' * \eqn{nSAR_{n,b}} is the normalized SAR in W/kg/W (see [mpd_sar_data()],
+#'   [mpd_sar_wifi()])
+#' * \eqn{P_{n,b}} is the mean output power of the phone in mW, including the
+#'   duty cycles of the activities (see [mpd_pwr_data()], [mpd_pwr_wifi()])
 #'
 #' @param tissue Tissue for which to calculate mSAR (default: "brain" or "body")
 #' @param duration_low Duration (in seconds per day) of low output power activities
@@ -280,14 +290,23 @@ mpd_msar <- function(
 # Calculate output power (data)
 #' Calculate Mobile Phone Output Power during Mobile Data Use
 #'
-#' Calculates the mobile phone output power during mobile data use.
+#' Calculates the mean output power of the mobile phone during mobile data use.
 #'
 #' @details
-#' The output power depends in the technology used, the location in which the
-#' mobile data network (urbanicity, indoors/outdoors/commuting), and the activity
-#' the phone is used for.
+#' The output power depends on the technology, on where the phone is used
+#' (urbanicity; indoors, outdoors or commuting), and on the activities the
+#' phone is used for:
 #'
-#' @param band Technology (3g, 4g, or 5g)
+#' \deqn{P = \sum_{l} \sum_{k} t_{l} \times q_{k} \times DC_{k} \times P_{l}}
+#'
+#' where \eqn{l} is the place (indoors, i.e. at home or at work; outdoors;
+#' commuting), \eqn{k} the activity (low to high output power), \eqn{t_{l}} the
+#' share of the day at the place (see [location_props()]), \eqn{q_{k}} the share
+#' of the activity in the use time (see [act_pwr_props()]), \eqn{DC_{k}} the duty
+#' cycle of the activity, and \eqn{P_{l}} the output power at the place in mW
+#' (indoors and outdoors: for the urbanicity).
+#'
+#' @param band Technology ("3g", "4g" or "5g")
 #' @param duration_low Duration (in seconds per day) of low output power activities
 #' @param duration_lowmed Duration (in seconds per day) of low-medium output power activities
 #' @param duration_medhigh Duration (in seconds per day) of medium-high output power activities
@@ -297,7 +316,7 @@ mpd_msar <- function(
 #' @param params Parameter list (optional). If not specified, calculations use
 #' default parameters.
 #'
-#' @returns Output power in mW
+#' @returns Output power in mW, including the duty cycles
 #'
 #' @examples
 #' mpd_pwr_data(
@@ -381,11 +400,17 @@ mpd_pwr_data <- function(
 # Wifi ========================================================================
 #' Calculate Mobile Phone Output Power during WiFi Use
 #'
-#' Calculates the mobile phone output power during WiFi use
+#' Calculates the mean output power of the mobile phone during WiFi use
 #'
 #' @details
 #' The output power depends on the frequency band (2.4 GHz or 5.0 GHz) and the
-#' type of activity.
+#' type of activity:
+#'
+#' \deqn{P = P_{wifi} \times \sum_{k} q_{k} \times DC_{k}}
+#'
+#' where \eqn{P_{wifi}} is the output power of the band in mW, \eqn{q_{k}} the
+#' share of the activity \eqn{k} in the use time (see [act_pwr_props()]) and
+#' \eqn{DC_{k}} its duty cycle.
 #'
 #' @param band WiFi frequency band ("2" for 2.4 GHz, "5" for 5.0 GHz)
 #' @param duration_low Duration (in seconds per day) of low output power activities
@@ -395,7 +420,7 @@ mpd_pwr_data <- function(
 #' @param params Parameter list (optional). If not specified, calculations use
 #' default parameters.
 #'
-#' @returns Output power in mW
+#' @returns Output power in mW, including the duty cycles
 #'
 #' @examples
 #' mpd_pwr_wifi(

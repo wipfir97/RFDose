@@ -16,7 +16,7 @@ mpd_pwr_data(
 )
 }
 \arguments{
-\item{band}{Technology (3g, 4g, or 5g)}
+\item{band}{Technology ("3g", "4g" or "5g")}
 
 \item{duration_low}{Duration (in seconds per day) of low output power activities}
 
@@ -34,15 +34,24 @@ mpd_pwr_data(
 default parameters.}
 }
 \value{
-Output power in mW
+Output power in mW, including the duty cycles
 }
 \description{
-Calculates the mobile phone output power during mobile data use.
+Calculates the mean output power of the mobile phone during mobile data use.
 }
 \details{
-The output power depends in the technology used, the location in which the
-mobile data network (urbanicity, indoors/outdoors/commuting), and the activity
-the phone is used for.
+The output power depends on the technology, on where the phone is used
+(urbanicity; indoors, outdoors or commuting), and on the activities the
+phone is used for:
+
+\deqn{P = \sum_{l} \sum_{k} t_{l} \times q_{k} \times DC_{k} \times P_{l}}
+
+where \eqn{l} is the place (indoors, i.e. at home or at work; outdoors;
+commuting), \eqn{k} the activity (low to high output power), \eqn{t_{l}} the
+share of the day at the place (see \code{\link[=location_props]{location_props()}}), \eqn{q_{k}} the share
+of the activity in the use time (see \code{\link[=act_pwr_props]{act_pwr_props()}}), \eqn{DC_{k}} the duty
+cycle of the activity, and \eqn{P_{l}} the output power at the place in mW
+(indoors and outdoors: for the urbanicity).
 }
 \examples{
 mpd_pwr_data(
