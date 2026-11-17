@@ -38,7 +38,7 @@ library(RFDose)
 
 ### Use Example
 
-Load the example data set, which contains data from 3 hypothetical samples.
+Load the example data set, which contains data from 3 hypothetical study participants.
 
 For a quick start, you can load the in-build example data set. Each row corresponds to one person, with 3 hypothetical data points. 
 
