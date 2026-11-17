@@ -4,5 +4,3 @@ inst/doc
 .Rhistory
 .Rdata
 *.Rcheck/
-^.*\.Rcheck$
-

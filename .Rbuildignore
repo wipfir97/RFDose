@@ -7,3 +7,5 @@
 ^LICENSE\.md$
 ^dev$
 ^.*\.Rcheck$
+^\.github$
+^CODE_OF_CONDUCT\.md$
