@@ -6,3 +6,4 @@
 ^tests/manual$
 ^LICENSE\.md$
 ^dev$
+^.*\.Rcheck$
