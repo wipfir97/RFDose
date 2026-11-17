@@ -84,4 +84,18 @@ interval). Give a \code{seed} for reproducible results.
 \author{
 \strong{Maintainer}: Irina Wipf \email{irina.wipf@swisstph.ch}
 
+Authors:
+\itemize{
+  \item Irina Wipf \email{irina.wipf@swisstph.ch}
+  \item Nicolas Loizeau \email{nicolas.loizeau@swisstph.ch}
+  \item Gianni Ardielli
+  \item Fabrice Keller
+}
+
+Other contributors:
+\itemize{
+  \item Hamed Jalilian [contributor]
+  \item Martin Röösli [contributor]
+}
+
 }

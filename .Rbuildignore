@@ -5,3 +5,4 @@
 ^data-raw$
 ^tests/manual$
 ^LICENSE\.md$
+^dev$
