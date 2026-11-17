@@ -2,8 +2,13 @@ Package: RFDose
 Type: Package
 Title: Deterministic and stochastic radiofrequency electromagnetic field (RF-EMF) dose calculator
 Version: 2.0.1
-Authors@R:
-    person("Irina", "Wipf", , "irina.wipf@swisstph.ch", role = c("aut", "cre"))
+Authors@R: c(
+    person(given = "Irina", family = "Wipf", email = "irina.wipf@swisstph.ch", role = c("aut", "cre")),
+    person(given = "Hamed", family = "Jalilian", role = c("ctb")),
+    person(given = "Nicolas", family = "Loizeau", email = "nicolas.loizeau@swisstph.ch", role = c("aut")),
+    person(given = "Gianni", family = "Ardielli", role = c("aut")),
+    person(given = "Fabrice", family = "Keller", role = c("aut")),
+    person(given = "Martin", family = "Röösli", role = c("ctb")))
 Description: Package for calculating RF-EMF doses for cohorts. Calculates the
     daily RF-EMF dose of the brain and the whole body from the self-reported use
     of wireless devices and the environment, with SAR values from the GOLIAT
