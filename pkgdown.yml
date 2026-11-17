@@ -1,0 +1,10 @@
+pandoc: 3.8.3
+pkgdown: 2.2.1
+pkgdown_sha: ~
+articles:
+  introduction: introduction.html
+  RFDose: RFDose.html
+last_built: 2026-11-17T17:10Z
+urls:
+  reference: https://wipfir97.github.io/RFDose/reference
+  article: https://wipfir97.github.io/RFDose/articles

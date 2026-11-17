@@ -1,0 +1,6 @@
+# RFDose
+
+``` r
+
+library(RFDose)
+```
