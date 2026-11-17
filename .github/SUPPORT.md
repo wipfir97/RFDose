@@ -1,6 +1,7 @@
 # Getting help with RFDose
 
 Thanks for using RFDose!
+
 Before filing an issue, there are a few places to explore and pieces to put together to make the process as smooth as possible.
 
 ## Make a reprex
@@ -25,11 +26,3 @@ Before opening a new issue, be sure to [search issues and pull requests](https:/
 By default, the search will be pre-populated with `is:issue is:open`. 
 You can [edit the qualifiers](https://help.github.com/articles/searching-issues-and-pull-requests/)  (e.g. `is:pr`, `is:closed`) as needed. 
 For example, you'd simply remove `is:open` to search _all_ issues in the repo, open or closed.
-
-## What happens next?
-
-To be as efficient as possible, development of tidyverse packages tends to be very bursty, so you shouldn't worry if you don't get an immediate response.
-Typically we don't look at a repo until a sufficient quantity of issues accumulates, then there’s a burst of intense activity as we focus our efforts. 
-That makes development more efficient because it avoids expensive context switching between problems, at the cost of taking longer to get back to you. 
-This process makes a good reprex particularly important because it might be multiple months between your initial report and when we start working on it. 
-If we can’t reproduce the bug, we can’t fix it!
