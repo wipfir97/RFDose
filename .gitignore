@@ -5,3 +5,6 @@ inst/doc
 .Rdata
 *.Rcheck/
 docs
+
+/.quarto/
+**/*.quarto_ipynb
