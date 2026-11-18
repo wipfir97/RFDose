@@ -103,51 +103,7 @@ calculate_emf_doses(
 
 Behind the scenes, `calculate_emf_doses()` calls various source-specific dose functions, which calculate the individual contributions of different sources (e.g. mobile phone calls). These functions may be used individually. 
 
-### Stochastic dose calculation
 
-`calculate_emf_doses_stochastic()` gives the uncertainty of the doses. It calculates the doses of each row `n` times (default: 1000), each time with parameters, SAR values and input values drawn from their distributions (see [Uncertainty in the stochastic model](#uncertainty-in-the-stochastic-model)), and summarises the doses of all draws. It takes the same arguments as `calculate_emf_doses()`, including `sar_file`. Give a `seed` for reproducible results: the same seed and arguments give the same draws.
-
-```{r}
-# Calculate example doses with their uncertainty
-calculate_emf_doses_stochastic(example_data, tissue = "brain", n = 1000, seed = 1)
-```
-
-The result has one row per row of `data` and exposure source, plus the total dose (`total_dose`), in mJ/kg/day:
-
-```
- sample_id row       dose deterministic  mean    sd  q2.5   q50 q97.5
-     TEST1   1  call_dose          73.2  75.4  44.1  22.3  66.0 186.1
-     TEST1   1  data_dose         203.1 207.2  79.6  99.6 192.1 404.9
-     ...
-     TEST1   1 total_dose         565.0 565.9 119.0 367.6 551.3 828.0
-```
-
-|Column|Description|
-|-|-|
-|sample\_id, row|ID (if `data` has a column `sample_id`) and row number in `data`|
-|dose|Exposure source (as the columns of `calculate_emf_doses()`), or `total_dose` for their sum|
-|deterministic|Dose with the values of the parameter file, as calculated by `calculate_emf_doses()`|
-|mean, sd|Mean and standard deviation of the doses of all draws|
-|q2.5, q50, q97.5|Median and 95% interval of the doses of all draws (other quantiles with `probs`)|
-
-Options:
-
-* `sar_sd`: standard deviation of the SAR values, relative to their value (default: 0.25). With 0, the SAR values are not drawn
-* `draw_inputs = FALSE`: the input values are not drawn, so the uncertainty comes from the parameters and SAR values only
-* `distributions`, `input_distributions`: own distribution files (YAML), with the structure of the inbuilt files [`params_distributions.yaml`](inst/extdata/params_distributions.yaml) and [`input_distributions.yaml`](inst/extdata/input_distributions.yaml)
-* `keep_draws = TRUE`: also returns the doses, parameters and inputs of every draw
-* `seed`: random seed for reproducible draws (as `set.seed()` before, but without changing the random state of the session)
-
-The calculation takes about 25 seconds for the 3 rows of the example data with 1000 draws, and grows with the number of rows and draws.
-
-```{r}
-# Uncertainty from the parameters and SAR values only, with the GOLIAT SAR values (average of the four phantoms)
-calculate_emf_doses_stochastic(
-  example_data, 
-  tissue = "brain", 
-  sar_file = "goliat_average", 
-  draw_inputs = FALSE)
-```
 
 \---
 

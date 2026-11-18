@@ -1,0 +1,83 @@
+---
+title: "Stochastic Calculations"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{stochastic_calculations}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(RFDose)
+```
+
+
+`calculate_emf_doses_stochastic()` gives the uncertainty of the doses. It calculates the doses of each row `n` times (default: 1000), each time with parameters, SAR values and input values drawn from their distributions (see [Uncertainty in the stochastic model](#uncertainty-in-the-stochastic-model)), and summarises the doses of all draws. It takes the same arguments as `calculate_emf_doses()`, including `sar_file`. Give a `seed` for reproducible results: the same seed and arguments give the same draws.
+
+## How to use stochastic calculations
+
+```{r}
+# Calculate example doses with their uncertainty
+result <- calculate_emf_doses_stochastic(
+  example_data, 
+  tissue = "brain", 
+  n = 1000, 
+  seed = 1)
+head(result)
+```
+
+The result has one row per row of `data` and exposure source, plus the total dose (`total_dose`), in mJ/kg/day:
+
+```
+ sample_id row       dose deterministic  mean    sd  q2.5   q50 q97.5
+     TEST1   1  call_dose          73.2  75.4  44.1  22.3  66.0 186.1
+     TEST1   1  data_dose         203.1 207.2  79.6  99.6 192.1 404.9
+     ...
+     TEST1   1 total_dose         565.0 565.9 119.0 367.6 551.3 828.0
+```
+
+|Column|Description|
+|-|-|
+|sample\_id, row|ID (if `data` has a column `sample_id`) and row number in `data`|
+|dose|Exposure source (as the columns of `calculate_emf_doses()`), or `total_dose` for their sum|
+|deterministic|Dose with the values of the parameter file, as calculated by `calculate_emf_doses()`|
+|mean, sd|Mean and standard deviation of the doses of all draws|
+|q2.5, q50, q97.5|Median and 95% interval of the doses of all draws (other quantiles with `probs`)|
+
+Options:
+
+* `sar_sd`: standard deviation of the SAR values, relative to their value (default: 0.25). With 0, the SAR values are not drawn
+* `draw_inputs = FALSE`: the input values are not drawn, so the uncertainty comes from the parameters and SAR values only
+* `distributions`, `input_distributions`: own distribution files (YAML), with the structure of the inbuilt files [`params_distributions.yaml`](inst/extdata/params_distributions.yaml) and [`input_distributions.yaml`](inst/extdata/input_distributions.yaml)
+* `keep_draws = TRUE`: also returns the doses, parameters and inputs of every draw
+* `seed`: random seed for reproducible draws (as `set.seed()` before, but without changing the random state of the session)
+
+The calculation takes about 25 seconds for the 3 rows of the example data with 1000 draws, and grows with the number of rows and draws.
+
+```{r}
+# Uncertainty from the parameters and SAR values only, with the GOLIAT SAR values (average of the four phantoms)
+calculate_emf_doses_stochastic(
+  example_data, 
+  tissue = "brain", 
+  sar_file = "goliat_average", 
+  draw_inputs = FALSE)
+```
+
+## Uncertainty in the stochastic model
+
+`calculate_emf_doses_stochastic()` draws three kinds of values. Each distribution is centred on the value used by the deterministic calculation, and only its shape is given in the distribution files:
+
+|Drawn values|Distributions|File|
+|-|-|-|
+|Parameters (260): output powers, duty cycles, proportions, far-field power densities|Lognormal and truncated lognormal (powers), beta (duty cycles, single proportions), Dirichlet (proportions that sum to 1, drawn together); mean = value in `params.yaml`|[`params_distributions.yaml`](inst/extdata/params_distributions.yaml)|
+|SAR values|Lognormal around their value, with a relative standard deviation of 25% (`sar_sd`). SAR values from the same simulation are drawn together; SAR values of 0 stay 0|-|
+|Inputs (27): durations, proportions, urbanicity, commuting time|Truncated lognormal for durations (relative standard deviation 20%, between 0 and 86400 s), beta and Dirichlet for proportions, categorical for urbanicity (given value kept with probability 0.8); centred on the value in `data`, or on the default value if missing. Durations of 0 stay 0|[`input_distributions.yaml`](inst/extdata/input_distributions.yaml)|
+
+Every row is calculated with the same parameter sets, and the inputs of a row are drawn around its own values, so the doses of a row do not depend on the other rows. The distribution files are generated from the same Excel file as the parameters and default values (`data-raw/source_params/`).
