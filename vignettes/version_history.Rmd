@@ -1,5 +1,5 @@
 ---
-title: "version_history"
+title: "Development History"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{version_history}

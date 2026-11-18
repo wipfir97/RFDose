@@ -47,7 +47,7 @@ default parameters.}
 Momentary SAR (mSAR) in mW/kg
 }
 \description{
-Calculates mSAR (momentary specifc absorption rate) from mobile calls for
+Calculates mSAR (momentary specific absorption rate) from mobile calls for
 a specific tissue.
 }
 \details{

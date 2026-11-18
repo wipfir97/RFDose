@@ -52,7 +52,7 @@ default parameters.}
 Momentary SAR (mSAR) from mobile data use in mW/kg
 }
 \description{
-Calculates mSAR (momentary specifc absorption rate) from data (mobile data
+Calculates mSAR (momentary specific absorption rate) from data (mobile data
 and WiFi) use for a specific tissue
 }
 \details{

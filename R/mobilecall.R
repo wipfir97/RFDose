@@ -166,7 +166,7 @@ mobilecall_dose <- function(
 # Mobilecall mSAR =============================================================
 #' Calculation of mSAR from Mobile Phone Calls
 #'
-#' Calculates mSAR (momentary specifc absorption rate) from mobile calls for
+#' Calculates mSAR (momentary specific absorption rate) from mobile calls for
 #' a specific tissue.
 #'
 #' @details

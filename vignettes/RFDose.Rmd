@@ -22,45 +22,46 @@ library(RFDose)
 
 RFDose is an R package designed to estimate personal radio-frequency electromagnetic field (RF-EMF) doses. It takes into account different device types and tissues, as well as exposure from far-field sources.
 
-## Goals
+## Background
 
--  Provide reproducible RF-EMF dose estimates based on user input variables and pre-defined parameters.
-
-
-## Theoretical Background
-
-The calculations in this package are based on Jalilian et al (publication in writing stage). 
+The calculations in this package are based on an RF-EMF dose model developed by Jalilian et al (publication in writing stage as of November 2026). On [this page](https://wipfir97.github.io/RFDose/articles/dose_model_background.html), you can find a summary of the background of this model. 
 
 ## Expected Input Data
 
-The expected input is a csv file that contains ...
+The expected input data will be described here once finalized. 
 
-## Example Useage
-### Basic Use
-```{r}
-# Example use
-print("Insert use example here!")
-```
+## Example Usage
 
-### Customizing Parameters
-
-By default, RFDose uses a pre-defined parameter list. However, it is possible to override these parameters. If you would like to do so, please follow these steps:
 
 ```{r}
-# Example use
-print("Insert use example here!")
+# Load example data from three hypothetical study participants
+data(example_data)
+# View example data
+head(example_data)
 ```
-### Generated output and documentation
 
-Running the `{r}calculate_emf_doses()` function returns a data frame with a column containing the dose for each exposure source and tissue, as well as the total dose (which is simply the doses of each exposure source added together for a particular tissue).
+
 ```{r}
-# Example use
-print("Insert use example here!")
+# Calculate example doses
+calculate_emf_doses(example_data, tissue = "brain") # brain dose
+calculate_emf_doses(example_data, tissue = "body")  # body dose
 ```
-In addition, in the future `{r}calculate_emf_doses()` will also generate a log file that records the parameters used in the calculations and the number of missing variables that were replaced by default variables.
+
 
 ## Development Status
 
+The `RFDose` package is still undergoing development. The calculations of the dose may change in future versions. 
+
 ## References
 
+* Detailed background on the RF-EMF dose model by Jalilian et al. (manuscript in preparation)
+* Short research paper on the `RFDOSE` package (manuscript in preparation)
+* The [online version](https://swisstph.shinyapps.io/rfdose-online/) of `RFDose`
+* The [GOLIAT project website](https://projectgoliat.eu/)
+* The [ETAIN project website](https://www.etainproject.eu/)
+
 ## Contributors and Acknowledgements
+
+Individual contributors will be listed here and in the `RFDose` research paper once finalized.
+
+`RFDose` was developed as part of the [GOLIAT](https://projectgoliat.eu/) and [ETAIN](https://www.etainproject.eu/) consortia.

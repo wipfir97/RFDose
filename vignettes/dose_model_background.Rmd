@@ -1,5 +1,5 @@
 ---
-title: "dose_model_background"
+title: "RF-EMF Dose Model Background"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{dose_model_background}
@@ -18,6 +18,8 @@ knitr::opts_chunk$set(
 library(RFDose)
 ```
 ## Background
+
+We will soon add a brief summary of the dose model here.
 
 For detailed information and scientific background, please refer to the manuscript by Jalilian et al. (manuscript in preparation, will be linked here once published).
 
@@ -59,12 +61,12 @@ An overview of the included variables is shown below.
 
 For the activity variables (mpd, laptop, tablet)
 
-* low output power activities: sending e-mails, browsing intenet, scrolling/chatting on social media
+* low output power activities: sending e-mails, browsing internet, scrolling/chatting on social media
 * low-medium output power activities: online gaming, music streaming, voice messaging
 * medium-high output power activities: watching or uploading videos on social media, video calls, video streaming
 * high output power activities: uploading large files
 
-|Name|Unit|Type|Contraints|Description|Used for source(s)|
+|Name|Unit|Type|Constraints|Description|Used for source(s)|
 |-|-|-|-|-|-|
 |use\_5g|-|logical|TRUE or FALSE|Use of 5g (mobile phone only)|mpc, mpd|
 |travel\_time|s|numeric|>=0 and <=59350|Time spent commuting (public transport or car) per day|mpc, mpd, far-field, wifi|
@@ -93,7 +95,7 @@ For the activity variables (mpd, laptop, tablet)
 |tblt\_dur\_high|s|numeric|>=0 and <= 86400|Daily duration of high output power activities on tablet|tblt|
 |hotspot\_duration|s|numeric|>=0 and <= 86400|Daily duration of using mobile phone as hotspot|other|
 |smartwatch\_duration|s|numeric|>=0 and <= 86400|Daily duration of wearing smartwatch on wrist|other|
-|vr\_duration|s|numeric|>=0 and <= 86400|Daily durarion of virtual reality headset use|other|
+|vr\_duration|s|numeric|>=0 and <= 86400|Daily duration of virtual reality headset use|other|
 |headphone\_duration|s|numeric|>=0 and <= 86400|Daily duration of using bluetooth headphones (all types of usage except for mobile phone call)|other|
 |gaming\_duration|s|numeric|>=0 and <= 86400|Daily duration of using portable gaming devices (eg. Nintendo Switch, Steamdeck, etc.)|other|
 

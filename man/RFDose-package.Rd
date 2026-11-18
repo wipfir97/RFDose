@@ -4,82 +4,16 @@
 \name{RFDose-package}
 \alias{RFDose}
 \alias{RFDose-package}
-\title{RFDose: Deterministic and Stochastic RF-EMF Dose Calculator}
+\title{RFDose: Deterministic and stochastic radiofrequency electromagnetic field (RF-EMF) dose calculator}
 \description{
-Calculates the daily dose of radiofrequency electromagnetic fields (RF-EMF)
-absorbed by the brain or the whole body, in mJ/kg/day, for each person of a
-cohort, from the self-reported use of wireless devices and the environment
-of each person. A deterministic model gives the doses
-(\code{\link[=calculate_emf_doses]{calculate_emf_doses()}}) and a stochastic model their uncertainty
-(\code{\link[=calculate_emf_doses_stochastic]{calculate_emf_doses_stochastic()}}).
+Package for calculating RF-EMF doses for cohorts. Calculates the daily RF-EMF dose of the brain and the whole body from the self-reported use of wireless devices and the environment, with SAR values from the GOLIAT dosimetric simulations. A stochastic version estimates the uncertainty of the doses by drawing the parameters, SAR values and inputs from their distributions.
 }
-\section{Deterministic dose model}{
-
-\code{\link[=calculate_emf_doses]{calculate_emf_doses()}} calculates the doses of each row of the data (one
-person) for eight exposure sources: mobile phone calls, mobile data,
-cordless phone, far-field sources, WiFi router, laptop, tablet and other
-devices (smartwatch, VR headset, hotspot, Bluetooth headphones and portable
-gaming consoles). The dose of a source is its momentary SAR (mSAR, in
-mW/kg) times the exposure time (in s/day):
-\itemize{
-\item Near-field sources (devices used close to the body): the mSAR is the
-normalized SAR (nSAR, in W/kg per W of output power) times the output
-power of the device (in mW), including its duty cycle.
-\item Far-field sources (mobile phone base stations and broadcast stations) and
-WiFi router: the mSAR is the nSAR (in W/kg per W/m\eqn{^2} of incident
-power density) times the power density (in mW/m\eqn{^2}).
-}
-
-Output powers, power densities and nSAR values are averaged over the
-networks, frequency bands, places, activities and positions of the device,
-weighted by their shares (see the source functions, e.g.
-\code{\link[=mobilecall_dose]{mobilecall_dose()}}). The calculation uses three kinds of values:
-\itemize{
-\item Inputs: the columns of the data (durations of use, proportions,
-urbanicity, country, commuting time, use of 5G), as in \link{example_data}.
-Missing values are replaced by default values (\code{defaultvariables.yaml}).
-\item Parameters: output powers, duty cycles, proportions and far-field power
-densities (\code{params.yaml}, or your own file with the argument \code{params}).
-\item SAR values: from a SAR file (argument \code{sar_file}): GOLIAT values averaged
-over four phantoms by default, one phantom, or ETAIN (see
-\code{\link[=available_sar_files]{available_sar_files()}}).
-}
-
-The result has one column per exposure source with its dose in mJ/kg/day for
-the chosen tissue (argument \code{tissue}: "brain" or "body").
-}
-
-\section{Stochastic dose model}{
-
-\code{\link[=calculate_emf_doses_stochastic]{calculate_emf_doses_stochastic()}} estimates the uncertainty of the doses.
-It repeats the deterministic calculation \code{n} times (default: 1000), each
-time with the parameters, SAR values and inputs drawn around their values:
-\itemize{
-\item Parameters: with the distributions of \code{params_distributions.yaml}
-(lognormal or truncated lognormal for powers, beta for duty cycles and
-single proportions, Dirichlet for proportions that sum to 1), whose mean
-is the value of the parameter. See \code{\link[=simulate_params]{simulate_params()}}.
-\item SAR values: lognormal, with a relative standard deviation of 25\%
-(argument \code{sar_sd}). SAR values from the same simulation are drawn
-together, and SAR values of 0 stay 0.
-\item Inputs: durations, proportions, urbanicity and commuting time, with the
-distributions of \code{input_distributions.yaml} (truncated lognormal with a
-relative standard deviation of 20\% for durations, beta or Dirichlet for
-proportions, categorical for urbanicity). Durations of 0 stay 0. See
-\code{\link[=simulate_inputs]{simulate_inputs()}}; \code{draw_inputs = FALSE} keeps the inputs fixed.
-}
-
-All rows are calculated with the same parameter draws, and the inputs of a
-row are drawn around its own values, so the doses of a row do not depend on
-the other rows. For each row and exposure source, and for the total dose,
-the result gives the deterministic dose, the mean and standard deviation of
-the doses of all draws, and their quantiles (default: median and 95\%
-interval). Give a \code{seed} for reproducible results.
-}
-
 \seealso{
-\code{\link[=calculate_emf_doses]{calculate_emf_doses()}}, \code{\link[=calculate_emf_doses_stochastic]{calculate_emf_doses_stochastic()}},
-\code{\link[=available_sar_files]{available_sar_files()}}, \code{\link[=load_params]{load_params()}}
+Useful links:
+\itemize{
+  \item \url{https://wipfir97.github.io/RFDose/}
+}
+
 }
 \author{
 \strong{Maintainer}: Irina Wipf \email{irina.wipf@swisstph.ch}
@@ -99,3 +33,4 @@ Other contributors:
 }
 
 }
+\keyword{internal}
