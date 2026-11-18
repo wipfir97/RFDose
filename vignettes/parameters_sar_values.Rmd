@@ -18,7 +18,10 @@ knitr::opts_chunk$set(
 library(RFDose)
 ```
 
-### Parameters
+More information about parameters and SAR values will be added here.
+
+
+## Parameters
 
 Parameters are specified in YAML files: [`params.yaml`](./inst/extdata/params.yaml) for all parameters except SAR values, and a SAR file for the SAR values ([`sar_goliat_average.yaml`](./inst/extdata/sar_goliat_average.yaml) by default, see [GOLIAT SAR values](#goliat-sar-values)). Parameters are obtained from measurements, dosimetric simulations, and literature- more detailed descriptions of each parameter, including units and data sources, will be included in Jalilian et al. (manuscript in preparation).
 

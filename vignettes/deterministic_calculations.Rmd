@@ -18,21 +18,26 @@ knitr::opts_chunk$set(
 library(RFDose)
 ```
 
-Use your own parameters by providing a custom file. This file must be in YAML format and follow the same structure as the [inbuilt parameter file](inst/extdata/params.yaml), which contains all parameters except SAR values. SAR values may be added to the file (with the structure of the [inbuilt SAR files](inst/extdata/sar_goliat_average.yaml)); otherwise the default SAR values (GOLIAT, average of four phantoms) are used.
+## Basic Example
 
-*Note that the R package does not currently check the structure of custom parameter files, so mismatches may result in faulty calculations.*
+A basic example will be added here.
 
-```{r}
-# Calculate example doses with own parameter file
-calculate_emf_doses(
-  example_data, 
-  tissue = "brain", 
-  params = "path_to_my_file/my_params.yaml")
-```
+## Using individual source functions
 
-To change only the SAR values, provide a YAML file containing SAR values, following the same structure as the [inbuilt SAR files](inst/extdata/sar_goliat_average.yaml). All other parameters keep their default values (or the values of `params`, if supplied), except device parameters that the SAR file sets itself (e.g. placement proportions that go with its SAR values).
+Behind the scenes, `calculate_emf_doses()` calls various source-specific dose functions, which calculate the individual contributions of different sources (e.g. mobile phone calls). These functions may be used individually. 
 
-The package includes these SAR files, which `sar_file` takes by name (`available_sar_files()` lists them):
+An example will be added here.
+
+
+## Using Your Own Parameter File
+
+Use your own parameters by providing a custom file using the `params` argument. This file must be in YAML format and follow the same structure as the [inbuilt parameter file](inst/extdata/params.yaml), which contains all parameters except SAR values (for changing the SAR values, please check the next section). 
+
+**Note that the R package does not currently check the structure of custom parameter files, so mismatches may result in faulty calculations.**
+
+## Changing the SAR Values
+
+`RFDose` provides the following SAR values to use for the calculations, which the input argument `sar_file` takes by name (`available_sar_files()` lists them):
 
 |Name|SAR values|File in `inst/extdata/`|
 |-|-|-|
@@ -54,36 +59,31 @@ calculate_emf_doses(
   example_data, 
   tissue = "brain", 
   sar_file = "goliat_duke")
-
-# Calculate example doses with own SAR file
-calculate_emf_doses(
-  example_data, 
-  tissue = "brain", 
-  sar_file = "path_to_my_file/my_sar.yaml")
 ```
 
-Behind the scenes, `calculate_emf_doses()` calls various source-specific dose functions, which calculate the individual contributions of different sources (e.g. mobile phone calls). These functions may be used individually. 
+If you would like to provide your own SAR values to the calculations, provide a YAML file containing the SAR values. Make sure it follows the same structure as the [inbuilt SAR files](inst/extdata/sar_goliat_average.yaml). All other parameters keep their default values (or the values of `params`, if supplied), except device parameters that the SAR file sets itself (e.g. placement proportions that go with its SAR values).
 
-### Output
+## Missing data and default values
+
+`RFDose` currently handles missing values by replacing them with default values, which are derived from survey responses of the ongoing [GOLIAT consortium studies](https://projectgoliat.eu/).
+
+Default values are specified in [this YAML file](./inst/extdata/defaultvariables.yaml)
+
+
+## Output
 
 `calculate_emf_doses` returns a data frame containing the original data columns, as well as one additional column per source with its dose contribution in mJ/kg/day for the chosen tissue:
 
 |Column|Source|
 |-|-|
-|call\_dose|Mobile phone calls (mpc)|
-|data\_dose|Mobile data (mpd)|
-|dect\_dose|Cordless phone (dect)|
-|farf\_dose|Far-field (farf)|
-|wifi\_dose|WiFi router (wifi)|
-|lptp\_dose|Laptop (lptp)|
-|tblt\_dose|Tablet (tblt)|
-|other\_dose|Other devices: smartwatch, VR headset, hotspot, Bluetooth headphones, and gaming consoles (other)|
+|call_dose|Mobile phone calls (mpc)|
+|data_dose|Mobile data (mpd)|
+|dect_dose|Cordless phone (dect)|
+|farf_dose|Far-field (farf)|
+|wifi_dose|WiFi router (wifi)|
+|lptp_dose|Laptop (lptp)|
+|tblt_dose|Tablet (tblt)|
+|other_dose|Other devices: smartwatch, VR headset, hotspot, Bluetooth headphones, and gaming consoles (other)|
 
 The doses depend on the SAR values used (GOLIAT by default, see [GOLIAT SAR values](#goliat-sar-values)).
-
-### Missing data and default values
-
-`RFDose` currently handles missing values by replacing them with default values, which are derived from survey responses of the ongoing [GOLIAT consortium studies](https://projectgoliat.eu/).
-
-Default values are specified in [this YAML file](./inst/extdata/defaultvariables.yaml)
 

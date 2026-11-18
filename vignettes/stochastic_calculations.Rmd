@@ -45,7 +45,7 @@ The result has one row per row of `data` and exposure source, plus the total dos
 
 |Column|Description|
 |-|-|
-|sample\_id, row|ID (if `data` has a column `sample_id`) and row number in `data`|
+|sample_id, row|ID (if `data` has a column `sample_id`) and row number in `data`|
 |dose|Exposure source (as the columns of `calculate_emf_doses()`), or `total_dose` for their sum|
 |deterministic|Dose with the values of the parameter file, as calculated by `calculate_emf_doses()`|
 |mean, sd|Mean and standard deviation of the doses of all draws|

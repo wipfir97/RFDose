@@ -6,7 +6,7 @@ RFDose implements the deterministic RF-EMF dose calculations developed in Jalili
 
 For detailed information about the package functions, please refer to the [package manual](./doc/RFDose_2.0.1.pdf). We are also preparing a short publication on `RFDose`, which will contain further background information. 
 
-\---
+
 
 ## How Do I Use RFDose?
 
@@ -46,9 +46,13 @@ calculate_emf_doses(example_data, tissue = "body")  # body dose
 
 References to more detailed guides will be added here.
 
+
+
 ## How can I contribute to `RFDose`?
 
 Information on how to contribute to `RFDose` will be added here. 
+
+
 
 ## Where can I learn more?
 
@@ -58,11 +62,14 @@ Information on how to contribute to `RFDose` will be added here.
 * The [GOLIAT project website](https://projectgoliat.eu/)
 * The [ETAIN project website](https://www.etainproject.eu/)
 
+
+
 ## How can I use and cite RFDose?
 
 License: [MIT license](http://opensource.org/licenses/MIT)
 
 The author list is not complete yet. Citation will be added here. 
+
 
 ## Who contributed to RFDose?
 
