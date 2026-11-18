@@ -1,27 +1,23 @@
 # RFDose
 
-## Deterministic and Stochastic RF-EMF Dose Calculator
+**Deterministic and Stochastic RF-EMF Dose Calculator**
 
 ## What is RFDose?
 
 RFDose is an R package that estimates personal exposure to
 radiofrequency electromagnetic fields (RF-EMF). It is based on the
 RF-EMF dose model of Jalilian et al. (publication in review stage as of
-November 2026).
+November 2026). We are currently preparing a short publication on
+`RFDose`, which will contain further background information.
 
 ![Overview of the RFDose package
 workflow](reference/figures/overview.svg)
 
 Overview of the RFDose package workflow
 
-We are currenlty preparing a short publication on `RFDose`, which will
-contain further background information.
-
 ## How Do I Use RFDose?
 
 ### Installation
-
-Install `RFDose` using the `remotes` R package.
 
 `{r} # Install package remotes::install_github("wipfir97/RFDose") # Load package library(RFDose)`
 

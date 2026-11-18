@@ -1,4 +1,4 @@
-# deterministic_calculations
+# Deterministic Calculations
 
 ``` r
 

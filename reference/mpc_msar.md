@@ -1,6 +1,6 @@
 # Calculation of mSAR from Mobile Phone Calls
 
-Calculates mSAR (momentary specifc absorption rate) from mobile calls
+Calculates mSAR (momentary specific absorption rate) from mobile calls
 for a specific tissue.
 
 ## Usage

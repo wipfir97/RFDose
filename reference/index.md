@@ -2,9 +2,6 @@
 
 ## All functions
 
-- [`RFDose`](https://wipfir97.github.io/RFDose/reference/RFDose-package.md)
-  [`RFDose-package`](https://wipfir97.github.io/RFDose/reference/RFDose-package.md)
-  : RFDose: Deterministic and Stochastic RF-EMF Dose Calculator
 - [`act_pwr_props()`](https://wipfir97.github.io/RFDose/reference/act_pwr_props.md)
   : Get low/lowmed/medhigh/high activity power proportions
 - [`available_sar_files()`](https://wipfir97.github.io/RFDose/reference/available_sar_files.md)

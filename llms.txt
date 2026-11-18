@@ -1,27 +1,23 @@
 # RFDose
 
-## Deterministic and Stochastic RF-EMF Dose Calculator
+**Deterministic and Stochastic RF-EMF Dose Calculator**
 
 ## What is RFDose?
 
 RFDose is an R package that estimates personal exposure to
 radiofrequency electromagnetic fields (RF-EMF). It is based on the
 RF-EMF dose model of Jalilian et al. (publication in review stage as of
-November 2026).
+November 2026). We are currently preparing a short publication on
+`RFDose`, which will contain further background information.
 
 ![Overview of the RFDose package
 workflow](reference/figures/overview.svg)
 
 Overview of the RFDose package workflow
 
-We are currenlty preparing a short publication on `RFDose`, which will
-contain further background information.
-
 ## How Do I Use RFDose?
 
 ### Installation
-
-Install `RFDose` using the `remotes` R package.
 
 `{r} # Install package remotes::install_github("wipfir97/RFDose") # Load package library(RFDose)`
 
@@ -92,9 +88,6 @@ Contributors will be listed in the `RFDose` research paper.
 
 ## All functions
 
-- [`RFDose`](https://wipfir97.github.io/RFDose/reference/RFDose-package.md)
-  [`RFDose-package`](https://wipfir97.github.io/RFDose/reference/RFDose-package.md)
-  : RFDose: Deterministic and Stochastic RF-EMF Dose Calculator
 - [`act_pwr_props()`](https://wipfir97.github.io/RFDose/reference/act_pwr_props.md)
   : Get low/lowmed/medhigh/high activity power proportions
 - [`available_sar_files()`](https://wipfir97.github.io/RFDose/reference/available_sar_files.md)
@@ -285,11 +278,14 @@ Contributors will be listed in the `RFDose` research paper.
 
 ### All vignettes
 
-- [deterministic_calculations](https://wipfir97.github.io/RFDose/articles/deterministic_calculations.md):
-- [dose_model_background](https://wipfir97.github.io/RFDose/articles/dose_model_background.md):
-- [RFDose](https://wipfir97.github.io/RFDose/articles/introduction.md):
-- [parameters_sar_values](https://wipfir97.github.io/RFDose/articles/parameters_sar_values.md):
+- [Deterministic
+  Calculations](https://wipfir97.github.io/RFDose/articles/deterministic_calculations.md):
+- [RF-EMF Dose Model
+  Background](https://wipfir97.github.io/RFDose/articles/dose_model_background.md):
+- [Parameters and SAR
+  Values](https://wipfir97.github.io/RFDose/articles/parameters_sar_values.md):
 - [RFDose](https://wipfir97.github.io/RFDose/articles/RFDose.md):
 - [Stochastic
   Calculations](https://wipfir97.github.io/RFDose/articles/stochastic_calculations.md):
-- [version_history](https://wipfir97.github.io/RFDose/articles/version_history.md):
+- [Development
+  History](https://wipfir97.github.io/RFDose/articles/version_history.md):

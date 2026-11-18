@@ -1,6 +1,6 @@
 # Calculation of mSAR from Mobile Phone Data
 
-Calculates mSAR (momentary specifc absorption rate) from data (mobile
+Calculates mSAR (momentary specific absorption rate) from data (mobile
 data and WiFi) use for a specific tissue
 
 ## Usage

@@ -1,4 +1,4 @@
-# dose_model_background
+# RF-EMF Dose Model Background
 
 ``` r
 
@@ -6,6 +6,8 @@ library(RFDose)
 ```
 
 ## Background
+
+We will soon add a brief summary of the dose model here.
 
 For detailed information and scientific background, please refer to the
 manuscript by Jalilian et al. (manuscript in preparation, will be linked
@@ -49,7 +51,7 @@ An overview of the included variables is shown below.
 
 For the activity variables (mpd, laptop, tablet)
 
-- low output power activities: sending e-mails, browsing intenet,
+- low output power activities: sending e-mails, browsing internet,
   scrolling/chatting on social media
 - low-medium output power activities: online gaming, music streaming,
   voice messaging
@@ -57,7 +59,7 @@ For the activity variables (mpd, laptop, tablet)
   social media, video calls, video streaming
 - high output power activities: uploading large files
 
-| Name | Unit | Type | Contraints | Description | Used for source(s) |
+| Name | Unit | Type | Constraints | Description | Used for source(s) |
 |----|----|----|----|----|----|
 | use_5g | \- | logical | TRUE or FALSE | Use of 5g (mobile phone only) | mpc, mpd |
 | travel_time | s | numeric | \>=0 and \<=59350 | Time spent commuting (public transport or car) per day | mpc, mpd, far-field, wifi |
@@ -86,7 +88,7 @@ For the activity variables (mpd, laptop, tablet)
 | tblt_dur_high | s | numeric | \>=0 and \<= 86400 | Daily duration of high output power activities on tablet | tblt |
 | hotspot_duration | s | numeric | \>=0 and \<= 86400 | Daily duration of using mobile phone as hotspot | other |
 | smartwatch_duration | s | numeric | \>=0 and \<= 86400 | Daily duration of wearing smartwatch on wrist | other |
-| vr_duration | s | numeric | \>=0 and \<= 86400 | Daily durarion of virtual reality headset use | other |
+| vr_duration | s | numeric | \>=0 and \<= 86400 | Daily duration of virtual reality headset use | other |
 | headphone_duration | s | numeric | \>=0 and \<= 86400 | Daily duration of using bluetooth headphones (all types of usage except for mobile phone call) | other |
 | gaming_duration | s | numeric | \>=0 and \<= 86400 | Daily duration of using portable gaming devices (eg. Nintendo Switch, Steamdeck, etc.) | other |
 

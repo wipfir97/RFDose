@@ -33,12 +33,11 @@
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
-<li><a class="dropdown-item" href="../articles/deterministic_calculations.html">deterministic_calculations</a></li>
-    <li><a class="dropdown-item" href="../articles/dose_model_background.html">dose_model_background</a></li>
-    <li><a class="dropdown-item" href="../articles/introduction.html">RFDose</a></li>
-    <li><a class="dropdown-item" href="../articles/parameters_sar_values.html">parameters_sar_values</a></li>
+<li><a class="dropdown-item" href="../articles/deterministic_calculations.html">Deterministic Calculations</a></li>
+    <li><a class="dropdown-item" href="../articles/dose_model_background.html">RF-EMF Dose Model Background</a></li>
+    <li><a class="dropdown-item" href="../articles/parameters_sar_values.html">Parameters and SAR Values</a></li>
     <li><a class="dropdown-item" href="../articles/stochastic_calculations.html">Stochastic Calculations</a></li>
-    <li><a class="dropdown-item" href="../articles/version_history.html">version_history</a></li>
+    <li><a class="dropdown-item" href="../articles/version_history.html">Development History</a></li>
   </ul>
 </li>
 <li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
@@ -80,74 +79,154 @@ device types and tissues, as well as exposure from far-field
 sources.</p>
 </div>
 <div class="section level2">
-<h2 id="goals">Goals<a class="anchor" aria-label="anchor" href="#goals"></a>
+<h2 id="background">Background<a class="anchor" aria-label="anchor" href="#background"></a>
 </h2>
-<ul>
-<li>Provide reproducible RF-EMF dose estimates based on user input
-variables and pre-defined parameters.</li>
-</ul>
-</div>
-<div class="section level2">
-<h2 id="theoretical-background">Theoretical Background<a class="anchor" aria-label="anchor" href="#theoretical-background"></a>
-</h2>
-<p>The calculations in this package are based on Jalilian et al
-(publication in writing stage).</p>
+<p>The calculations in this package are based on an RF-EMF dose model
+developed by Jalilian et al (publication in writing stage as of November
+2026). On <a href="https://wipfir97.github.io/RFDose/articles/dose_model_background.html">this
+page</a>, you can find a summary of the background of this model.</p>
 </div>
 <div class="section level2">
 <h2 id="expected-input-data">Expected Input Data<a class="anchor" aria-label="anchor" href="#expected-input-data"></a>
 </h2>
-<p>The expected input is a csv file that contains …</p>
+<p>The expected input data will be described here once finalized.</p>
 </div>
 <div class="section level2">
-<h2 id="example-useage">Example Useage<a class="anchor" aria-label="anchor" href="#example-useage"></a>
+<h2 id="example-usage">Example Usage<a class="anchor" aria-label="anchor" href="#example-usage"></a>
 </h2>
-<div class="section level3">
-<h3 id="basic-use">Basic Use<a class="anchor" aria-label="anchor" href="#basic-use"></a>
-</h3>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Example use</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="st">"Insert use example here!"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "Insert use example here!"</span></span></code></pre></div>
-</div>
-<div class="section level3">
-<h3 id="customizing-parameters">Customizing Parameters<a class="anchor" aria-label="anchor" href="#customizing-parameters"></a>
-</h3>
-<p>By default, RFDose uses a pre-defined parameter list. However, it is
-possible to override these parameters. If you would like to do so,
-please follow these steps:</p>
+<code class="sourceCode R"><span><span class="co"># Load example data from three hypothetical study participants</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">example_data</span><span class="op">)</span></span>
+<span><span class="co"># View example data</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">example_data</span><span class="op">)</span></span>
+<span><span class="co">#&gt;   sample_id use_5g travel_time country urbanicity headp_ear_num mpc_duration</span></span>
+<span><span class="co">#&gt; 1     TEST1   TRUE        1800   Other   suburban             2          425</span></span>
+<span><span class="co">#&gt; 2     TEST2   TRUE        1800      CH      rural             2          120</span></span>
+<span><span class="co">#&gt; 3     TEST3  FALSE        1800      ES      urban             1          903</span></span>
+<span><span class="co">#&gt;   mpc_ear_prop mpc_headp_prop mpd_wifi_prop_home mpd_wifi_prop_travel</span></span>
+<span><span class="co">#&gt; 1         0.66           0.17                0.5                  0.5</span></span>
+<span><span class="co">#&gt; 2         0.80           0.00                0.5                  0.5</span></span>
+<span><span class="co">#&gt; 3         0.90           0.10                0.5                  0.5</span></span>
+<span><span class="co">#&gt;   mpd_wifi_prop_work mpd_dur_low mpd_dur_lowtomed mpd_dur_medtohigh</span></span>
+<span><span class="co">#&gt; 1                0.5        4860              540              4860</span></span>
+<span><span class="co">#&gt; 2                0.5           0                0                 0</span></span>
+<span><span class="co">#&gt; 3                0.5           0                0                 0</span></span>
+<span><span class="co">#&gt;   mpd_dur_high dect_duration dect_ear_prop lptp_dur_low lptp_dur_lowtomed</span></span>
+<span><span class="co">#&gt; 1          540           204           0.9         1967               219</span></span>
+<span><span class="co">#&gt; 2            0           580           0.8            0                 0</span></span>
+<span><span class="co">#&gt; 3            0            90           0.5            0                 0</span></span>
+<span><span class="co">#&gt;   lptp_dur_medtohigh lptp_dur_high tblt_dur_low tblt_dur_lowtomed</span></span>
+<span><span class="co">#&gt; 1               1967           219          728                81</span></span>
+<span><span class="co">#&gt; 2                  0             0            0                 0</span></span>
+<span><span class="co">#&gt; 3                  0             0            0                 0</span></span>
+<span><span class="co">#&gt;   tblt_dur_medtohigh tblt_dur_high hotspot_duration smartwatch_duration</span></span>
+<span><span class="co">#&gt; 1                728            81                0                   0</span></span>
+<span><span class="co">#&gt; 2                  0             0                0               86400</span></span>
+<span><span class="co">#&gt; 3                  0             0              600                   0</span></span>
+<span><span class="co">#&gt;   vr_duration headphone_duration gaming_duration</span></span>
+<span><span class="co">#&gt; 1           0                  0             600</span></span>
+<span><span class="co">#&gt; 2        1200                  0               0</span></span>
+<span><span class="co">#&gt; 3           0               8280            1200</span></span></code></pre></div>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Example use</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="st">"Insert use example here!"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "Insert use example here!"</span></span></code></pre></div>
-</div>
-<div class="section level3">
-<h3 id="generated-output-and-documentation">Generated output and documentation<a class="anchor" aria-label="anchor" href="#generated-output-and-documentation"></a>
-</h3>
-<p>Running the <code>{r}calculate_emf_doses()</code> function returns a
-data frame with a column containing the dose for each exposure source
-and tissue, as well as the total dose (which is simply the doses of each
-exposure source added together for a particular tissue).</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># Example use</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="st">"Insert use example here!"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; [1] "Insert use example here!"</span></span></code></pre></div>
-<p>In addition, in the future <code>{r}calculate_emf_doses()</code> will
-also generate a log file that records the parameters used in the
-calculations and the number of missing variables that were replaced by
-default variables.</p>
-</div>
+<code class="sourceCode R"><span><span class="co"># Calculate example doses</span></span>
+<span><span class="fu"><a href="../reference/calculate_emf_doses.html">calculate_emf_doses</a></span><span class="op">(</span><span class="va">example_data</span>, tissue <span class="op">=</span> <span class="st">"brain"</span><span class="op">)</span> <span class="co"># brain dose</span></span>
+<span><span class="co">#&gt;   sample_id use_5g travel_time country urbanicity headp_ear_num mpc_duration</span></span>
+<span><span class="co">#&gt; 1     TEST1   TRUE        1800   Other   suburban             2          425</span></span>
+<span><span class="co">#&gt; 2     TEST2   TRUE        1800      CH      rural             2          120</span></span>
+<span><span class="co">#&gt; 3     TEST3  FALSE        1800      ES      urban             1          903</span></span>
+<span><span class="co">#&gt;   mpc_ear_prop mpc_headp_prop mpd_wifi_prop_home mpd_wifi_prop_travel</span></span>
+<span><span class="co">#&gt; 1         0.66           0.17                0.5                  0.5</span></span>
+<span><span class="co">#&gt; 2         0.80           0.00                0.5                  0.5</span></span>
+<span><span class="co">#&gt; 3         0.90           0.10                0.5                  0.5</span></span>
+<span><span class="co">#&gt;   mpd_wifi_prop_work mpd_dur_low mpd_dur_lowtomed mpd_dur_medtohigh</span></span>
+<span><span class="co">#&gt; 1                0.5        4860              540              4860</span></span>
+<span><span class="co">#&gt; 2                0.5           0                0                 0</span></span>
+<span><span class="co">#&gt; 3                0.5           0                0                 0</span></span>
+<span><span class="co">#&gt;   mpd_dur_high dect_duration dect_ear_prop lptp_dur_low lptp_dur_lowtomed</span></span>
+<span><span class="co">#&gt; 1          540           204           0.9         1967               219</span></span>
+<span><span class="co">#&gt; 2            0           580           0.8            0                 0</span></span>
+<span><span class="co">#&gt; 3            0            90           0.5            0                 0</span></span>
+<span><span class="co">#&gt;   lptp_dur_medtohigh lptp_dur_high tblt_dur_low tblt_dur_lowtomed</span></span>
+<span><span class="co">#&gt; 1               1967           219          728                81</span></span>
+<span><span class="co">#&gt; 2                  0             0            0                 0</span></span>
+<span><span class="co">#&gt; 3                  0             0            0                 0</span></span>
+<span><span class="co">#&gt;   tblt_dur_medtohigh tblt_dur_high hotspot_duration smartwatch_duration</span></span>
+<span><span class="co">#&gt; 1                728            81                0                   0</span></span>
+<span><span class="co">#&gt; 2                  0             0                0               86400</span></span>
+<span><span class="co">#&gt; 3                  0             0              600                   0</span></span>
+<span><span class="co">#&gt;   vr_duration headphone_duration gaming_duration call_dose data_dose dect_dose</span></span>
+<span><span class="co">#&gt; 1           0                  0             600   73.1587  203.0995  87.01276</span></span>
+<span><span class="co">#&gt; 2        1200                  0               0   27.8527    0.0000 221.80559</span></span>
+<span><span class="co">#&gt; 3           0               8280            1200  170.9787    0.0000  22.50849</span></span>
+<span><span class="co">#&gt;   farf_dose wifi_dose lptp_dose tblt_dose other_dose</span></span>
+<span><span class="co">#&gt; 1 160.64975  2.804097  11.41956  25.70129   1.150865</span></span>
+<span><span class="co">#&gt; 2  38.33047  2.804097   0.00000   0.00000 163.734543</span></span>
+<span><span class="co">#&gt; 3 231.51558  2.804097   0.00000   0.00000   4.693819</span></span>
+<span><span class="fu"><a href="../reference/calculate_emf_doses.html">calculate_emf_doses</a></span><span class="op">(</span><span class="va">example_data</span>, tissue <span class="op">=</span> <span class="st">"body"</span><span class="op">)</span>  <span class="co"># body dose</span></span>
+<span><span class="co">#&gt;   sample_id use_5g travel_time country urbanicity headp_ear_num mpc_duration</span></span>
+<span><span class="co">#&gt; 1     TEST1   TRUE        1800   Other   suburban             2          425</span></span>
+<span><span class="co">#&gt; 2     TEST2   TRUE        1800      CH      rural             2          120</span></span>
+<span><span class="co">#&gt; 3     TEST3  FALSE        1800      ES      urban             1          903</span></span>
+<span><span class="co">#&gt;   mpc_ear_prop mpc_headp_prop mpd_wifi_prop_home mpd_wifi_prop_travel</span></span>
+<span><span class="co">#&gt; 1         0.66           0.17                0.5                  0.5</span></span>
+<span><span class="co">#&gt; 2         0.80           0.00                0.5                  0.5</span></span>
+<span><span class="co">#&gt; 3         0.90           0.10                0.5                  0.5</span></span>
+<span><span class="co">#&gt;   mpd_wifi_prop_work mpd_dur_low mpd_dur_lowtomed mpd_dur_medtohigh</span></span>
+<span><span class="co">#&gt; 1                0.5        4860              540              4860</span></span>
+<span><span class="co">#&gt; 2                0.5           0                0                 0</span></span>
+<span><span class="co">#&gt; 3                0.5           0                0                 0</span></span>
+<span><span class="co">#&gt;   mpd_dur_high dect_duration dect_ear_prop lptp_dur_low lptp_dur_lowtomed</span></span>
+<span><span class="co">#&gt; 1          540           204           0.9         1967               219</span></span>
+<span><span class="co">#&gt; 2            0           580           0.8            0                 0</span></span>
+<span><span class="co">#&gt; 3            0            90           0.5            0                 0</span></span>
+<span><span class="co">#&gt;   lptp_dur_medtohigh lptp_dur_high tblt_dur_low tblt_dur_lowtomed</span></span>
+<span><span class="co">#&gt; 1               1967           219          728                81</span></span>
+<span><span class="co">#&gt; 2                  0             0            0                 0</span></span>
+<span><span class="co">#&gt; 3                  0             0            0                 0</span></span>
+<span><span class="co">#&gt;   tblt_dur_medtohigh tblt_dur_high hotspot_duration smartwatch_duration</span></span>
+<span><span class="co">#&gt; 1                728            81                0                   0</span></span>
+<span><span class="co">#&gt; 2                  0             0                0               86400</span></span>
+<span><span class="co">#&gt; 3                  0             0              600                   0</span></span>
+<span><span class="co">#&gt;   vr_duration headphone_duration gaming_duration call_dose data_dose dect_dose</span></span>
+<span><span class="co">#&gt; 1           0                  0             600  34.36364  216.1555 32.619818</span></span>
+<span><span class="co">#&gt; 2        1200                  0               0  12.50237    0.0000 83.750219</span></span>
+<span><span class="co">#&gt; 3           0               8280            1200  78.02167    0.0000  8.809607</span></span>
+<span><span class="co">#&gt;   farf_dose wifi_dose lptp_dose tblt_dose other_dose</span></span>
+<span><span class="co">#&gt; 1 180.14249  5.638597  129.2898  34.31277   1.865883</span></span>
+<span><span class="co">#&gt; 2  42.98136  5.638597    0.0000   0.00000 109.850750</span></span>
+<span><span class="co">#&gt; 3 259.60694  5.638597    0.0000   0.00000  17.733269</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="development-status">Development Status<a class="anchor" aria-label="anchor" href="#development-status"></a>
 </h2>
+<p>The <code>RFDose</code> package is still undergoing development. The
+calculations of the dose may change in future versions.</p>
 </div>
 <div class="section level2">
 <h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
 </h2>
+<ul>
+<li>Detailed background on the RF-EMF dose model by Jalilian et
+al. (manuscript in preparation)</li>
+<li>Short research paper on the <code>RFDOSE</code> package (manuscript
+in preparation)</li>
+<li>The <a href="https://swisstph.shinyapps.io/rfdose-online/" class="external-link">online
+version</a> of <code>RFDose</code>
+</li>
+<li>The <a href="https://projectgoliat.eu/" class="external-link">GOLIAT project
+website</a>
+</li>
+<li>The <a href="https://www.etainproject.eu/" class="external-link">ETAIN project
+website</a>
+</li>
+</ul>
 </div>
 <div class="section level2">
 <h2 id="contributors-and-acknowledgements">Contributors and Acknowledgements<a class="anchor" aria-label="anchor" href="#contributors-and-acknowledgements"></a>
 </h2>
+<p>Individual contributors will be listed here and in the
+<code>RFDose</code> research paper once finalized.</p>
+<p><code>RFDose</code> was developed as part of the <a href="https://projectgoliat.eu/" class="external-link">GOLIAT</a> and <a href="https://www.etainproject.eu/" class="external-link">ETAIN</a> consortia.</p>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>
