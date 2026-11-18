@@ -4,7 +4,8 @@ pkgdown_sha: ~
 articles:
   introduction: introduction.html
   RFDose: RFDose.html
-last_built: 2026-11-17T17:10Z
+  stochastic_calculations: stochastic_calculations.html
+last_built: 2026-11-18T09:29Z
 urls:
   reference: https://wipfir97.github.io/RFDose/reference
   article: https://wipfir97.github.io/RFDose/articles

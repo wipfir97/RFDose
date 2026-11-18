@@ -122,96 +122,48 @@ calculate_emf_doses( example_data, tissue = “brain”, sar_file =
 
     Behind the scenes, `calculate_emf_doses()` calls various source-specific dose functions, which calculate the individual contributions of different sources (e.g. mobile phone calls). These functions may be used individually.
 
-    ### Stochastic dose calculation
 
-    `calculate_emf_doses_stochastic()` gives the uncertainty of the doses. It calculates the doses of each row `n` times (default: 1000), each time with parameters, SAR values and input values drawn from their distributions (see [Uncertainty in the stochastic model](#uncertainty-in-the-stochastic-model)), and summarises the doses of all draws. It takes the same arguments as `calculate_emf_doses()`, including `sar_file`. Give a `seed` for reproducible results: the same seed and arguments give the same draws.
 
-    ```{r}
-    # Calculate example doses with their uncertainty
-    calculate_emf_doses_stochastic(example_data, tissue = "brain", n = 1000, seed = 1)
+    \---
 
-The result has one row per row of `data` and exposure source, plus the
-total dose (`total_dose`), in mJ/kg/day:
+    ## How can I contribute to `RFDose`?
 
-     sample_id row       dose deterministic  mean    sd  q2.5   q50 q97.5
-         TEST1   1  call_dose          73.2  75.4  44.1  22.3  66.0 186.1
-         TEST1   1  data_dose         203.1 207.2  79.6  99.6 192.1 404.9
-         ...
-         TEST1   1 total_dose         565.0 565.9 119.0 367.6 551.3 828.0
+    Information on how to contribute to `RFDose` will be added here.
 
-| Column | Description |
-|----|----|
-| sample_id, row | ID (if `data` has a column `sample_id`) and row number in `data` |
-| dose | Exposure source (as the columns of [`calculate_emf_doses()`](https://wipfir97.github.io/RFDose/reference/calculate_emf_doses.md)), or `total_dose` for their sum |
-| deterministic | Dose with the values of the parameter file, as calculated by [`calculate_emf_doses()`](https://wipfir97.github.io/RFDose/reference/calculate_emf_doses.md) |
-| mean, sd | Mean and standard deviation of the doses of all draws |
-| q2.5, q50, q97.5 | Median and 95% interval of the doses of all draws (other quantiles with `probs`) |
+    ## Background
 
-Options:
+    For detailed information and scientific background, please refer to the manuscript by Jalilian et al. (manuscript in preparation, will be linked here once published).
 
-- `sar_sd`: standard deviation of the SAR values, relative to their
-  value (default: 0.25). With 0, the SAR values are not drawn
-- `draw_inputs = FALSE`: the input values are not drawn, so the
-  uncertainty comes from the parameters and SAR values only
-- `distributions`, `input_distributions`: own distribution files (YAML),
-  with the structure of the inbuilt files
-  [`params_distributions.yaml`](https://wipfir97.github.io/RFDose/inst/extdata/params_distributions.yaml)
-  and
-  [`input_distributions.yaml`](https://wipfir97.github.io/RFDose/inst/extdata/input_distributions.yaml)
-- `keep_draws = TRUE`: also returns the doses, parameters and inputs of
-  every draw
-- `seed`: random seed for reproducible draws (as
-  [`set.seed()`](https://rdrr.io/r/base/Random.html) before, but without
-  changing the random state of the session)
+    ### Exposure sources
 
-The calculation takes about 25 seconds for the 3 rows of the example
-data with 1000 draws, and grows with the number of rows and draws.
+    We consider the following RF-EMF exposure sources:
 
-`{r} # Uncertainty from the parameters and SAR values only, with the GOLIAT SAR values (average of the four phantoms) calculate_emf_doses_stochastic( example_data, tissue = "brain", sar_file = "goliat_average", draw_inputs = FALSE)`
+    |Exposure|Abbreviation|Description|
+    |-|-|-|
+    |Mobile calling|mpc|Voice calling using mobile phone, with or without App|
+    |Mobile data|mpd|WiFi and mobile data use on mobile phone|
+    |WiFi|wifi|WiFi router|
+    |Cordless Phone|dect|Cordless phone (=DECT phone) use|
+    |Laptop|lptp|Laptop use|
+    |Tablet|tblt|Tablet use|
+    |Far-field|farf|Far-field exposure from mobile phone base stations and broadcast stations|
+    |Other|other|Other devices: smartwatch, VR headset, hotspot, bluetooth headphones, and gaming consoles|
 
--–
+    ### Calculation
 
-## How can I contribute to `RFDose`?
-
-Information on how to contribute to `RFDose` will be added here.
-
-## Background
-
-For detailed information and scientific background, please refer to the
-manuscript by Jalilian et al. (manuscript in preparation, will be linked
-here once published).
-
-### Exposure sources
-
-We consider the following RF-EMF exposure sources:
-
-| Exposure | Abbreviation | Description |
-|----|----|----|
-| Mobile calling | mpc | Voice calling using mobile phone, with or without App |
-| Mobile data | mpd | WiFi and mobile data use on mobile phone |
-| WiFi | wifi | WiFi router |
-| Cordless Phone | dect | Cordless phone (=DECT phone) use |
-| Laptop | lptp | Laptop use |
-| Tablet | tblt | Tablet use |
-| Far-field | farf | Far-field exposure from mobile phone base stations and broadcast stations |
-| Other | other | Other devices: smartwatch, VR headset, hotspot, bluetooth headphones, and gaming consoles |
-
-### Calculation
-
-``` bash
-total_dose()
-├── mobilecall_dose()     
-│    └── mobilecall_dose()
-│         ├── mobilecall_nsar()
-│         └── mobilecall_pwr()
-├── mobiledata_dose()   
-├── cordless_dose() 
-├── laptop_dose()
-├── tablet_dose()
-├── other_dose_wrapper()
-├── wifi_dose()
-└── farfield_dose()
-```
+    ```bash
+    total_dose()
+    ├── mobilecall_dose()
+    │    └── mobilecall_dose()
+    │         ├── mobilecall_nsar()
+    │         └── mobilecall_pwr()
+    ├── mobiledata_dose()
+    ├── cordless_dose()
+    ├── laptop_dose()
+    ├── tablet_dose()
+    ├── other_dose_wrapper()
+    ├── wifi_dose()
+    └── farfield_dose()
 
 ### Variables
 

@@ -4,3 +4,5 @@
 
 - [RFDose](https://wipfir97.github.io/RFDose/articles/introduction.md):
 - [RFDose](https://wipfir97.github.io/RFDose/articles/RFDose.md):
+- [Stochastic
+  Calculations](https://wipfir97.github.io/RFDose/articles/stochastic_calculations.md):
