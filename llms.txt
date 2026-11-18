@@ -5,17 +5,17 @@
 ## What is RFDose?
 
 RFDose is an R package that estimates personal exposure to
-radiofrequency electromagnetic fields (RF-EMF).
+radiofrequency electromagnetic fields (RF-EMF). It is based on the
+RF-EMF dose model of Jalilian et al. (publication in review stage as of
+November 2026).
 
-RFDose is based on the RF-EMF dose model of Jalilian et al. (publication
-in review stage as of November 2026).
+![Overview of the RFDose package
+workflow](reference/figures/overview.svg)
 
-For detailed information about the package functions, please refer to
-the [package
-manual](https://wipfir97.github.io/RFDose/doc/RFDose_2.0.1.pdf) and the
-[package documentation website](https://wipfir97.github.io/RFDose/). We
-are also preparing a short publication on `RFDose`, which will contain
-further background information.
+Overview of the RFDose package workflow
+
+We are currenlty preparing a short publication on `RFDose`, which will
+contain further background information.
 
 ## How Do I Use RFDose?
 
@@ -51,6 +51,11 @@ calculations use the GOLIAT SAR values, averaged over four phantoms (see
 - Estimate uncertainty in dose estimates using [stochastic dose
   calculations](https://wipfir97.github.io/RFDose/articles/stochastic_calculations.html).
 
+For detailed information about the package functions, please refer to
+the [package
+manual](https://wipfir97.github.io/RFDose/doc/RFDose_2.0.1.pdf) and the
+[package documentation website](https://wipfir97.github.io/RFDose/)
+
 ## How can I contribute to `RFDose`?
 
 Please check our [contributing
@@ -72,7 +77,8 @@ like to contribute to `RFDose`.
 
 License: [MIT license](http://opensource.org/licenses/MIT)
 
-The author list is not complete yet. Citation will be added here.
+The author list is not complete yet. Once finalized, the citation will
+be added here.
 
 ## Who contributed to RFDose?
 
